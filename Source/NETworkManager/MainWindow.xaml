@@ -85,7 +85,7 @@
     <mah:MetroWindow.LeftWindowCommands>
         <mah:WindowCommands ShowSeparators="False">
             <!-- Fix some design issues with margin -2 and -1 -->
-            <Grid Background="{DynamicResource ResourceKey=MahApps.Brushes.ThemeBackground}"
+            <Grid Background="Transparent"
                   Visibility="{Binding Source={x:Static Member=settings:ConfigurationManager.Current}, Path=IsAdmin, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
                   Margin="-2,-1,0,0">
                 <TextBlock Text="Administrator" Foreground="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}"
@@ -143,13 +143,23 @@
             <ComboBox ItemsSource="{Binding Path=ProfileFiles}"
                       SelectedItem="{Binding Path=SelectedProfileFile, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                       IsDropDownOpen="{Binding Path=IsProfileFileDropDownOpened}"
-                      Background="{DynamicResource ResourceKey=MahApps.Brushes.ThemeBackground}"
                       BorderThickness="0"
                       MinWidth="180"
                       HorizontalAlignment="Left"
                       Focusable="False"
                       VerticalAlignment="Center"
                       Height="30">
+                <!-- In the title bar: subtle tint like the secondary buttons (Brushes.Button.*), integrated in the frame -->
+                <ComboBox.Style>
+                    <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource DefaultComboBox}">
+                        <Setter Property="Background" Value="{DynamicResource Brushes.Button.Background}" />
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="{DynamicResource Brushes.Button.MouseOver}" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </ComboBox.Style>
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <Grid>
@@ -277,8 +287,9 @@
                         shell:WindowChrome.IsHitTestVisibleInChrome="True">
                     <Button.Template>
                         <ControlTemplate TargetType="{x:Type Button}">
+                            <!-- Subtle tint like the secondary buttons (Brushes.Button.*), integrated in the frame -->
                             <Border x:Name="Border"
-                                    Background="{DynamicResource MahApps.Brushes.ThemeBackground}"
+                                    Background="{DynamicResource Brushes.Button.Background}"
                                     CornerRadius="{StaticResource CornerRadius.Control}"
                                     Padding="10,0">
                                 <Grid>
@@ -313,7 +324,7 @@
                             <ControlTemplate.Triggers>
                                 <Trigger Property="IsMouseOver" Value="True">
                                     <Setter TargetName="Border" Property="Background"
-                                            Value="{DynamicResource MahApps.Brushes.Gray9}" />
+                                            Value="{DynamicResource Brushes.Button.MouseOver}" />
                                 </Trigger>
                                 <Trigger Property="IsEnabled" Value="False">
                                     <Setter TargetName="Border" Property="Opacity" Value="0.5" />
