@@ -15,11 +15,12 @@
                 <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
                 <Setter Property="Opacity" Value="0.55" />
             </Trigger>
+            <!-- Subtle tint of the theme foreground, see AppearanceManager.ApplyControlStateBrushes -->
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Gray10}" />
+                <Setter Property="Background" Value="{DynamicResource Brushes.Control.MouseOver}" />
             </Trigger>
             <Trigger Property="Button.IsPressed" Value="True">
-                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Gray9}" />
+                <Setter Property="Background" Value="{DynamicResource Brushes.Control.Pressed}" />
                 <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
             </Trigger>
         </Style.Triggers>

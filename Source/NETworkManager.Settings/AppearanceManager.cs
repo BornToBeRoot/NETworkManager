@@ -37,6 +37,16 @@ public static class AppearanceManager
     };
 
     /// <summary>
+    ///     Resource key of the background of a control (e.g. button, ComboBox) when the mouse is over it.
+    /// </summary>
+    public const string ControlMouseOverBrushKey = "Brushes.Control.MouseOver";
+
+    /// <summary>
+    ///     Resource key of the background of a control (e.g. button, ComboBox) while it is pressed.
+    /// </summary>
+    public const string ControlPressedBrushKey = "Brushes.Control.Pressed";
+
+    /// <summary>
     ///     Name of the folder inside the application directory where the custom themes are stored.
     /// </summary>
     private const string ThemeFolderName = "Themes";
@@ -138,9 +148,39 @@ public static class AppearanceManager
     }
 
     /// <summary>
-    /// 
+    ///     Set the backgrounds of controls (e.g. buttons, ComboBox) for mouse over and pressed: the foreground color of
+    ///     the theme with a low opacity, a subtle tint in every theme (also custom themes) instead of the light gray of
+    ///     MahApps (Gray9, Gray7, Gray5), which stands out in the dark theme.
     /// </summary>
-    /// <param name="theme"></param>
+    /// <param name="theme">Theme that was applied.</param>
+    private static void ApplyControlStateBrushes(Theme theme)
+    {
+        var foreground = theme.Resources["MahApps.Colors.ThemeForeground"] is Color color ? color : Colors.Gray;
+
+        var appResources = System.Windows.Application.Current.Resources;
+
+        appResources[ControlMouseOverBrushKey] = CreateFrozenBrush(foreground, 0.08);
+        appResources[ControlPressedBrushKey] = CreateFrozenBrush(foreground, 0.12);
+    }
+
+    /// <summary>
+    ///     Create a frozen brush with the given color and opacity.
+    /// </summary>
+    /// <param name="color">Color of the brush.</param>
+    /// <param name="opacity">Opacity of the brush (0 - 1).</param>
+    /// <returns>Frozen brush.</returns>
+    private static SolidColorBrush CreateFrozenBrush(Color color, double opacity)
+    {
+        var brush = new SolidColorBrush(color) { Opacity = opacity };
+        brush.Freeze();
+
+        return brush;
+    }
+
+    /// <summary>
+    ///     Apply the brush overrides of the built-in light / dark theme (not for custom themes).
+    /// </summary>
+    /// <param name="theme">Theme name as "theme.accent".</param>
     private static void ApplyCustomThemeFixes(string theme)
     {
         // Don't apply on custom themes (only built-in light/dark themes)
@@ -180,6 +220,7 @@ public static class AppearanceManager
     #region Events
     private static void Current_ThemeChanged(object sender, ThemeChangedEventArgs e)
     {
+        ApplyControlStateBrushes(e.NewTheme);
         ApplyCustomThemeFixes(e.NewTheme.Name);
     }
     #endregion
