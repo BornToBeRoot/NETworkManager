@@ -51,7 +51,7 @@
         </Style>
         <Style x:Key="RunCommandKeyTextBlock" TargetType="{x:Type TextBlock}"
                BasedOn="{StaticResource DefaultTextBlock}">
-            <Setter Property="FontFamily" Value="Consolas" />
+            <Setter Property="FontFamily" Value="{StaticResource Fonts.Family.Mono}" />
             <Setter Property="FontSize" Value="11" />
             <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray5}" />
         </Style>
@@ -104,7 +104,7 @@
                 </Rectangle>
                 <TextBox x:Name="TextBoxInput" Grid.Column="1"
                          FontSize="18"
-                         FontFamily="Consolas"
+                         FontFamily="{StaticResource Fonts.Family.Mono}"
                          Text="{Binding Input, UpdateSourceTrigger=PropertyChanged}"
                          mah:TextBoxHelper.Watermark="{Binding Watermark}"
                          PreviewKeyDown="TextBoxInput_OnPreviewKeyDown">
@@ -164,7 +164,7 @@
             <ItemsControl.ItemTemplate>
                 <DataTemplate DataType="{x:Type networkManager:RunCommandHintPart}">
                     <TextBlock Text="{Binding Text}"
-                               FontFamily="Consolas"
+                               FontFamily="{StaticResource Fonts.Family.Mono}"
                                Margin="0,0,7,0">
                         <TextBlock.Style>
                             <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DefaultTextBlock}">
@@ -305,19 +305,19 @@
                                             <!-- Commands are shown in the font of the input -->
                                             <DataTrigger Binding="{Binding Kind}"
                                                          Value="{x:Static networkManager:RunCommandSuggestionKind.History}">
-                                                <Setter Property="FontFamily" Value="Consolas" />
+                                                <Setter Property="FontFamily" Value="{StaticResource Fonts.Family.Mono}" />
                                             </DataTrigger>
                                             <DataTrigger Binding="{Binding Kind}"
                                                          Value="{x:Static networkManager:RunCommandSuggestionKind.Target}">
-                                                <Setter Property="FontFamily" Value="Consolas" />
+                                                <Setter Property="FontFamily" Value="{StaticResource Fonts.Family.Mono}" />
                                             </DataTrigger>
                                             <DataTrigger Binding="{Binding Kind}"
                                                          Value="{x:Static networkManager:RunCommandSuggestionKind.Clipboard}">
-                                                <Setter Property="FontFamily" Value="Consolas" />
+                                                <Setter Property="FontFamily" Value="{StaticResource Fonts.Family.Mono}" />
                                             </DataTrigger>
                                             <DataTrigger Binding="{Binding Kind}"
                                                          Value="{x:Static networkManager:RunCommandSuggestionKind.Example}">
-                                                <Setter Property="FontFamily" Value="Consolas" />
+                                                <Setter Property="FontFamily" Value="{StaticResource Fonts.Family.Mono}" />
                                             </DataTrigger>
                                         </Style.Triggers>
                                     </Style>
@@ -332,7 +332,7 @@
                         </StackPanel>
                         <TextBlock Grid.Column="4"
                                    Text="{Binding Info}"
-                                   FontFamily="Consolas"
+                                   FontFamily="{StaticResource Fonts.Family.Mono}"
                                    Foreground="{DynamicResource MahApps.Brushes.Gray5}"
                                    VerticalAlignment="Center"
                                    MaxWidth="{Binding InfoMaxWidth, RelativeSource={RelativeSource AncestorType={x:Type views:RunCommandChildWindow}}}"

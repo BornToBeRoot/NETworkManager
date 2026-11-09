@@ -60,7 +60,7 @@
     <Style x:Key="StatusMessageTextBlock" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource WrapTextBlock}" />
 
     <Style x:Key="ConsoleTextBlock" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DefaultTextBlock}">
-        <Setter Property="FontFamily" Value="Consolas" />
+        <Setter Property="FontFamily" Value="{StaticResource Fonts.Family.Mono}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray3}" />
     </Style>
     

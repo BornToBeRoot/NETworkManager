@@ -1175,7 +1175,7 @@
                                                             </Grid.RowDefinitions>
                                                             <TextBlock Grid.Column="0" VerticalAlignment="Center"
                                                                        Style="{StaticResource DefaultTextBlock}"
-                                                                       FontFamily="Consolas"
+                                                                       FontFamily="{StaticResource Fonts.Family.Mono}"
                                                                        Text="{Binding Path=Subnetmask}" />
                                                             <TextBlock Grid.Column="1" VerticalAlignment="Center"
                                                                        Style="{StaticResource DefaultTextBlock}"

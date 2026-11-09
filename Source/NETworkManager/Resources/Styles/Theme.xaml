@@ -1,0 +1,11 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <!--
+        Theme-independent design resources used by the styles and views. Theme-dependent brushes (status colors,
+        mouse over / pressed) are set by AppearanceManager on every theme change.
+    -->
+
+    <!-- Monospace font (console output, run command, MAC addresses). Cascadia Mono ships with Windows 11,
+         Windows 10 falls back to Consolas. -->
+    <FontFamily x:Key="Fonts.Family.Mono">Cascadia Mono, Consolas</FontFamily>
+</ResourceDictionary>
