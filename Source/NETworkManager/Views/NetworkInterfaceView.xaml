@@ -545,7 +545,7 @@
                                         </MultiBinding>
                                     </TextBlock.Visibility>
                                 </TextBlock>
-                                <TextBox Grid.Column="2" Grid.Row="19"
+                                <TextBox FontFamily="{StaticResource Fonts.Family.Mono}" Grid.Column="2" Grid.Row="19"
                                          Text="{Binding SelectedNetworkInterface.DNSSuffix}">
                                     <TextBox.Visibility>
                                         <MultiBinding

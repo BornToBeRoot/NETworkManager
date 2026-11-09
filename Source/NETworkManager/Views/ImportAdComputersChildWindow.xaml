@@ -73,7 +73,7 @@
             <!-- Server -->
             <TextBlock Grid.Column="0" Grid.Row="2"
                        Text="{x:Static localization:Strings.LdapServer}" />
-            <TextBox x:Name="TextBoxLdapServer"
+            <TextBox FontFamily="{StaticResource Fonts.Family.Mono}" x:Name="TextBoxLdapServer"
                      Grid.Column="2" Grid.Row="2"
                      mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleDomain}"
                      Style="{StaticResource DefaultTextBox}">

@@ -71,7 +71,7 @@
                 <TextBlock Grid.Column="4" Grid.Row="0" Text="{x:Static localization:Strings.DNSServer}"
                            Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" />
                 <!-- DNS servers (name and servers) and history, like the ports of the Port Scanner -->
-                <ComboBox x:Name="ComboBoxDNSServers"
+                <ComboBox FontFamily="{StaticResource Fonts.Family.Mono}" x:Name="ComboBoxDNSServers"
                           Grid.Column="6" Grid.Row="0"
                           ItemsSource="{Binding DNSServers}"
                           TextSearch.TextPath="Text"

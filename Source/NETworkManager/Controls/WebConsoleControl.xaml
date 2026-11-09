@@ -95,7 +95,7 @@
                     </Rectangle.Style>
                 </Rectangle>
             </Button>
-            <TextBox x:Name="TextBoxUrl" Grid.Column="6" Style="{StaticResource DefaultTextBox}"
+            <TextBox FontFamily="{StaticResource Fonts.Family.Mono}" x:Name="TextBoxUrl" Grid.Column="6" Style="{StaticResource DefaultTextBox}"
                      IsReadOnly="{Binding IsLoading}">
                 <TextBox.Text>
                     <Binding Path="Url" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
