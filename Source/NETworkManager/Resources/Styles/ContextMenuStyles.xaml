@@ -4,6 +4,45 @@
            BasedOn="{StaticResource MahApps.Styles.ContextMenu}">
         <Setter Property="FontSize" Value="14" />
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Gray8}" />
+        <!-- Space between the rounded border and the items -->
+        <Setter Property="Padding" Value="0,4" />
+        <!-- Template of MahApps (MahApps.Styles.ContextMenu, 2.4.11) with rounded corners (also the shadow) -->
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ContextMenu}">
+                    <Grid>
+                        <Border x:Name="LayoutRoot"
+                                Background="{TemplateBinding Background}"
+                                CornerRadius="{StaticResource CornerRadius.Overlay}" />
+                        <Border x:Name="Border"
+                                Padding="{TemplateBinding Padding}"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="{StaticResource CornerRadius.Overlay}"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                            <ScrollViewer x:Name="SubMenuScrollViewer"
+                                          CanContentScroll="True"
+                                          Style="{DynamicResource {ComponentResourceKey ResourceId=MenuScrollViewer, TypeInTargetAssembly={x:Type FrameworkElement}}}">
+                                <ItemsPresenter x:Name="ItemsPresenter"
+                                                Margin="0"
+                                                Grid.IsSharedSizeScope="True"
+                                                KeyboardNavigation.DirectionalNavigation="Cycle"
+                                                KeyboardNavigation.TabNavigation="Cycle"
+                                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                            </ScrollViewer>
+                        </Border>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="HasDropShadow" Value="True">
+                            <Setter TargetName="Border" Property="Margin" Value="0 0 6 6" />
+                            <Setter TargetName="LayoutRoot" Property="Effect" Value="{DynamicResource MahApps.DropShadowEffect.Menu}" />
+                            <Setter TargetName="LayoutRoot" Property="Margin" Value="0 0 6 6" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
         <Style.Resources>
             <SolidColorBrush x:Key="MahApps.Brushes.SubMenu.Border" Color="{DynamicResource MahApps.Colors.Gray8}" />
             <SolidColorBrush x:Key="MahApps.Brushes.RightArrowFill" Color="{DynamicResource MahApps.Colors.Gray3}" />
