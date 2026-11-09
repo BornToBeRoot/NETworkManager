@@ -3,13 +3,14 @@
                     xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls">
     <Style x:Key="ImageButtonForDropDown" TargetType="{x:Type Button}" BasedOn="{StaticResource ImageButton}">
         <Setter Property="BorderThickness" Value="0" />
-        <Setter Property="mah:ControlsHelper.CornerRadius" Value="{StaticResource CornerRadius.Control.Inner}" />
+        <Setter Property="mah:ControlsHelper.CornerRadius" Value="{StaticResource CornerRadius.Control}" />
     </Style>
 
     <Style x:Key="ImageDropDrownButton" TargetType="{x:Type mah:DropDownButton}">
         <Setter Property="Height" Value="35" />
-        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Gray8}" />
-        <Setter Property="BorderThickness" Value="1" />
+        <!-- Icon-only like ImageButton: transparent, the inner button shows the mouse over / pressed background -->
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
         <Setter Property="mah:ControlsHelper.CornerRadius" Value="{StaticResource CornerRadius.Control}" />
         <Setter Property="ButtonStyle" Value="{StaticResource ImageButtonForDropDown}" />
         <!-- Passed to the inner button -->

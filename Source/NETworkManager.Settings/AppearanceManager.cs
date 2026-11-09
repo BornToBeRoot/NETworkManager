@@ -47,6 +47,21 @@ public static class AppearanceManager
     public const string ControlPressedBrushKey = "Brushes.Control.Pressed";
 
     /// <summary>
+    ///     Resource key of the background of a (secondary) button, e.g. "Export...", "Cancel".
+    /// </summary>
+    public const string ButtonBackgroundBrushKey = "Brushes.Button.Background";
+
+    /// <summary>
+    ///     Resource key of the background of a (secondary) button when the mouse is over it.
+    /// </summary>
+    public const string ButtonMouseOverBrushKey = "Brushes.Button.MouseOver";
+
+    /// <summary>
+    ///     Resource key of the background of a (secondary) button while it is pressed.
+    /// </summary>
+    public const string ButtonPressedBrushKey = "Brushes.Button.Pressed";
+
+    /// <summary>
     ///     Resource key of the border of an input (e.g. TextBox, ComboBox) when the mouse is over it.
     /// </summary>
     public const string ControlBorderMouseOverBrushKey = "Brushes.Control.Border.MouseOver";
@@ -168,8 +183,8 @@ public static class AppearanceManager
     }
 
     /// <summary>
-    ///     Set the backgrounds of controls (e.g. buttons, ComboBox) for mouse over and pressed and the border of inputs
-    ///     for mouse over: the foreground color of
+    ///     Set the backgrounds of controls (e.g. icon buttons, ComboBox) for mouse over and pressed, the backgrounds of
+    ///     (secondary) buttons and the border of inputs for mouse over: the foreground color of
     ///     the theme with a low opacity, a subtle tint in every theme (also custom themes) instead of the light gray of
     ///     MahApps (Gray9, Gray7, Gray5), which stands out in the dark theme.
     /// </summary>
@@ -183,6 +198,10 @@ public static class AppearanceManager
         appResources[ControlMouseOverBrushKey] = CreateFrozenBrush(foreground, 0.08);
         appResources[ControlPressedBrushKey] = CreateFrozenBrush(foreground, 0.12);
         appResources[ControlBorderMouseOverBrushKey] = CreateFrozenBrush(foreground, 0.35);
+
+        appResources[ButtonBackgroundBrushKey] = CreateFrozenBrush(foreground, 0.06);
+        appResources[ButtonMouseOverBrushKey] = CreateFrozenBrush(foreground, 0.10);
+        appResources[ButtonPressedBrushKey] = CreateFrozenBrush(foreground, 0.14);
     }
 
     /// <summary>
