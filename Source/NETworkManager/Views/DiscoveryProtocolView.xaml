@@ -162,7 +162,7 @@
                                              Text="{Binding DiscoveryPackage.DeviceDescription, Mode=OneWay, Converter={StaticResource StringNullOrEmptyToStringConverter}}" />
                                     <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.Port}" />
                                     <TextBox Grid.Column="2" Grid.Row="2"
-                                             Text="{Binding DiscoveryPackage.Port, Mode=OneWay, Converter={StaticResource StringNullOrEmptyToStringConverter}}" />
+                                             Text="{Binding DiscoveryPackage.Port, Mode=OneWay, Converter={StaticResource StringNullOrEmptyToStringConverter}}" FontFamily="{StaticResource Fonts.Family.Mono}" />
                                     <TextBlock Grid.Column="0" Grid.Row="3"
                                                Text="{x:Static localization:Strings.PortDescription}" />
                                     <TextBox Grid.Column="2" Grid.Row="3"
@@ -177,11 +177,11 @@
                                     <TextBlock Grid.Column="0" Grid.Row="6"
                                                Text="{x:Static localization:Strings.IPAddress}" />
                                     <TextBox Grid.Column="2" Grid.Row="6"
-                                             Text="{Binding DiscoveryPackage.IPAddress, Mode=OneWay, Converter={StaticResource StringNullOrEmptyToStringConverter}}" />
+                                             Text="{Binding DiscoveryPackage.IPAddress, Mode=OneWay, Converter={StaticResource StringNullOrEmptyToStringConverter}}" FontFamily="{StaticResource Fonts.Family.Mono}" />
                                     <TextBlock Grid.Column="0" Grid.Row="7"
                                                Text="{x:Static localization:Strings.Management}" />
                                     <TextBox Grid.Column="2" Grid.Row="7"
-                                             Text="{Binding DiscoveryPackage.Management, Mode=OneWay, Converter={StaticResource StringNullOrEmptyToStringConverter}}" />
+                                             Text="{Binding DiscoveryPackage.Management, Mode=OneWay, Converter={StaticResource StringNullOrEmptyToStringConverter}}" FontFamily="{StaticResource Fonts.Family.Mono}" />
                                     <TextBlock Grid.Column="0" Grid.Row="8"
                                                Text="{x:Static localization:Strings.ChassisId}" />
                                     <TextBox Grid.Column="2" Grid.Row="8"

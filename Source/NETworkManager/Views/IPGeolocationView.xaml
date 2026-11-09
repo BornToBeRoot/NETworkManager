@@ -253,7 +253,7 @@
                             <TextBlock Grid.Column="0" Grid.Row="1"
                                        Text="{x:Static localization:Strings.IPAddress}" />
                             <TextBox Grid.Column="2" Grid.Row="1"
-                                     Text="{Binding Result.Query, Converter={StaticResource StringNullOrEmptyToStringConverter}}" />
+                                     Text="{Binding Result.Query, Converter={StaticResource StringNullOrEmptyToStringConverter}}" FontFamily="{StaticResource Fonts.Family.Mono}" />
                             <TextBlock Grid.Column="0" Grid.Row="2"
                                        Text="{x:Static localization:Strings.PTRRecord}" />
                             <TextBox Grid.Column="2" Grid.Row="2"

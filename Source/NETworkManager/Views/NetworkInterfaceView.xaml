@@ -279,7 +279,7 @@
                                 <TextBlock Grid.Column="0" Grid.Row="3"
                                            Text="{x:Static localization:Strings.PhysicalAddress}" />
                                 <TextBox Grid.Column="2" Grid.Row="3"
-                                         Text="{Binding SelectedNetworkInterface.PhysicalAddress, Converter={StaticResource PhysicalAddressToStringConverter}}" />
+                                         Text="{Binding SelectedNetworkInterface.PhysicalAddress, Converter={StaticResource PhysicalAddressToStringConverter}}" FontFamily="{StaticResource Fonts.Family.Mono}" />
                                 <TextBlock Grid.Column="0" Grid.Row="4"
                                            Text="{x:Static localization:Strings.Status}" />
                                 <TextBox Grid.Column="2" Grid.Row="4"
@@ -333,7 +333,7 @@
                                     </TextBlock.Visibility>
                                 </TextBlock>
                                 <TextBox Grid.Column="2" Grid.Row="8"
-                                         Text="{Binding SelectedNetworkInterface.IPv4Address, Converter={StaticResource IPAddressSubnetmaskTupleArrayToStringConverter}}">
+                                         Text="{Binding SelectedNetworkInterface.IPv4Address, Converter={StaticResource IPAddressSubnetmaskTupleArrayToStringConverter}}" FontFamily="{StaticResource Fonts.Family.Mono}">
                                     <TextBox.Visibility>
                                         <MultiBinding
                                             Converter="{StaticResource BooleansAndToVisibilityCollapsedConverter}">
@@ -353,7 +353,7 @@
                                     </TextBlock.Visibility>
                                 </TextBlock>
                                 <TextBox Grid.Column="2" Grid.Row="9"
-                                         Text="{Binding SelectedNetworkInterface.IPv4Gateway, Converter={StaticResource IPAddressArrayToStringConverter}}">
+                                         Text="{Binding SelectedNetworkInterface.IPv4Gateway, Converter={StaticResource IPAddressArrayToStringConverter}}" FontFamily="{StaticResource Fonts.Family.Mono}">
                                     <TextBox.Visibility>
                                         <MultiBinding
                                             Converter="{StaticResource BooleansAndToVisibilityCollapsedConverter}">
@@ -391,7 +391,7 @@
                                     </TextBlock.Visibility>
                                 </TextBlock>
                                 <TextBox Grid.Column="2" Grid.Row="11"
-                                         Text="{Binding SelectedNetworkInterface.DhcpServer, Converter={StaticResource IPAddressArrayToStringConverter}}">
+                                         Text="{Binding SelectedNetworkInterface.DhcpServer, Converter={StaticResource IPAddressArrayToStringConverter}}" FontFamily="{StaticResource Fonts.Family.Mono}">
                                     <TextBox.Visibility>
                                         <MultiBinding
                                             Converter="{StaticResource BooleansAndToVisibilityCollapsedConverter}">
@@ -469,7 +469,7 @@
                                     </TextBlock.Visibility>
                                 </TextBlock>
                                 <TextBox Grid.Column="2" Grid.Row="15"
-                                         Text="{Binding SelectedNetworkInterface.IPv6AddressLinkLocal, Converter={StaticResource IPAddressArrayToStringConverter}}">
+                                         Text="{Binding SelectedNetworkInterface.IPv6AddressLinkLocal, Converter={StaticResource IPAddressArrayToStringConverter}}" FontFamily="{StaticResource Fonts.Family.Mono}">
                                     <TextBox.Visibility>
                                         <MultiBinding
                                             Converter="{StaticResource BooleansAndToVisibilityCollapsedConverter}">
@@ -489,7 +489,7 @@
                                     </TextBlock.Visibility>
                                 </TextBlock>
                                 <TextBox Grid.Column="2" Grid.Row="16"
-                                         Text="{Binding SelectedNetworkInterface.IPv6Address, Converter={StaticResource IPAddressArrayToStringConverter}}">
+                                         Text="{Binding SelectedNetworkInterface.IPv6Address, Converter={StaticResource IPAddressArrayToStringConverter}}" FontFamily="{StaticResource Fonts.Family.Mono}">
                                     <TextBox.Visibility>
                                         <MultiBinding
                                             Converter="{StaticResource BooleansAndToVisibilityCollapsedConverter}">
@@ -509,7 +509,7 @@
                                     </TextBlock.Visibility>
                                 </TextBlock>
                                 <TextBox Grid.Column="2" Grid.Row="17"
-                                         Text="{Binding SelectedNetworkInterface.IPv6Gateway , Converter={StaticResource IPAddressArrayToStringConverter}}">
+                                         Text="{Binding SelectedNetworkInterface.IPv6Gateway , Converter={StaticResource IPAddressArrayToStringConverter}}" FontFamily="{StaticResource Fonts.Family.Mono}">
                                     <TextBox.Visibility>
                                         <MultiBinding
                                             Converter="{StaticResource BooleansAndToVisibilityCollapsedConverter}">
@@ -564,7 +564,7 @@
                                     </TextBlock.Visibility>
                                 </TextBlock>
                                 <TextBox Grid.Column="2" Grid.Row="20"
-                                         Text="{Binding SelectedNetworkInterface.DNSServer, Converter={StaticResource IPAddressArrayToStringConverter}}">
+                                         Text="{Binding SelectedNetworkInterface.DNSServer, Converter={StaticResource IPAddressArrayToStringConverter}}" FontFamily="{StaticResource Fonts.Family.Mono}">
                                     <TextBox.Visibility>
                                         <MultiBinding
                                             Converter="{StaticResource BooleansAndToVisibilityCollapsedConverter}">
@@ -1179,7 +1179,7 @@
                                                                        Text="{Binding Path=Subnetmask}" />
                                                             <TextBlock Grid.Column="1" VerticalAlignment="Center"
                                                                        Style="{StaticResource DefaultTextBlock}"
-                                                                       Text="{Binding Path=CIDR,StringFormat=/{0}}"
+                                                                       Text="{Binding Path=CIDR,StringFormat=/{0}}" FontFamily="{StaticResource Fonts.Family.Mono}"
                                                                        Foreground="{DynamicResource MahApps.Brushes.Gray2}" />
                                                         </Grid>
                                                     </DataTemplate>

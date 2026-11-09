@@ -26,7 +26,7 @@
                                     VerticalAlignment="Center">
                             <TextBlock Text="{Binding Ssid}"
                                        Style="{StaticResource AccentTextBlock}" />
-                            <TextBlock Text="{Binding Bssid}"
+                            <TextBlock Text="{Binding Bssid}" FontFamily="{StaticResource Fonts.Family.Mono}"
                                        Style="{StaticResource ConsoleTextBlock}" />
                         </StackPanel>
                         <StackPanel Grid.Column="4" Orientation="Vertical"
