@@ -3,11 +3,75 @@
                     xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
                     xmlns:controls="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls"
                     xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters">
+    <BooleanToVisibilityConverter x:Key="ComboBoxBooleanToVisibilityConverter" />
+
     <Style x:Key="DefaultComboBox" TargetType="{x:Type ComboBox}" BasedOn="{StaticResource MahApps.Styles.ComboBox}">
         <Style.Resources>
             <!-- Disabled: hide the semi-transparent white overlay of MahApps (washed out, especially in the dark theme)
                  and dim the control instead, see trigger -->
             <SolidColorBrush x:Key="MahApps.Brushes.Control.Disabled" Color="Transparent" />
+            <!-- Drop-down toggle of MahApps (MahApps.Styles.ToggleButton.ComboBoxDropDown, 2.4.11) with subtle mouse over /
+                 pressed backgrounds (see AppearanceManager.ApplyControlStateBrushes) instead of Gray5 / Gray3 / Gray7 -->
+            <Style x:Key="MahApps.Styles.ToggleButton.ComboBoxDropDown" TargetType="{x:Type ToggleButton}">
+                <Setter Property="ClickMode" Value="Press" />
+                <Setter Property="Focusable" Value="False" />
+                <Setter Property="IsTabStop" Value="False" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type ToggleButton}">
+                            <Grid x:Name="ToggleButtonRootGrid" Background="{TemplateBinding Background}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition x:Name="TextColumn" Width="*" />
+                                    <ColumnDefinition x:Name="ButtonColumn" Width="Auto" />
+                                    <ColumnDefinition x:Name="ToggleButtonColumn" Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <Button x:Name="PART_ClearText"
+                                        Grid.Column="1"
+                                        Width="{TemplateBinding mah:TextBoxHelper.ButtonWidth}"
+                                        mah:TextBoxHelper.IsClearTextButtonBehaviorEnabled="{Binding RelativeSource={RelativeSource AncestorType={x:Type ComboBox}}, Path=(mah:TextBoxHelper.ClearTextButton), Mode=OneWay}"
+                                        Content="{TemplateBinding mah:TextBoxHelper.ButtonContent}"
+                                        ContentTemplate="{TemplateBinding mah:TextBoxHelper.ButtonContentTemplate}"
+                                        Focusable="False"
+                                        FontFamily="{TemplateBinding mah:TextBoxHelper.ButtonFontFamily}"
+                                        FontSize="{TemplateBinding mah:TextBoxHelper.ButtonFontSize}"
+                                        Foreground="{TemplateBinding Foreground}"
+                                        IsTabStop="False"
+                                        Style="{DynamicResource MahApps.Styles.Button.Chromeless}"
+                                        Visibility="{Binding RelativeSource={RelativeSource AncestorType={x:Type ComboBox}}, Path=(mah:TextBoxHelper.ClearTextButton), Converter={StaticResource ComboBoxBooleanToVisibilityConverter}}" />
+                                <Grid x:Name="BtnArrowBackground"
+                                      Grid.Column="2"
+                                      Width="{TemplateBinding mah:TextBoxHelper.ButtonWidth}"
+                                      Background="Transparent">
+                                    <Path x:Name="Arrow"
+                                          Width="8"
+                                          Height="4"
+                                          HorizontalAlignment="Center"
+                                          Data="{DynamicResource ComboBoxDownArrowGeometry}"
+                                          Fill="{DynamicResource MahApps.Brushes.Gray1}"
+                                          IsHitTestVisible="false"
+                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                          Stretch="Uniform" />
+                                </Grid>
+                            </Grid>
+                            <ControlTemplate.Triggers>
+                                <Trigger SourceName="BtnArrowBackground" Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="BtnArrowBackground" Property="Background" Value="{DynamicResource Brushes.Control.MouseOver}" />
+                                </Trigger>
+                                <Trigger SourceName="PART_ClearText" Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="PART_ClearText" Property="Background" Value="{DynamicResource Brushes.Control.MouseOver}" />
+                                    <Setter TargetName="PART_ClearText" Property="Foreground" Value="{DynamicResource MahApps.Brushes.Accent}" />
+                                </Trigger>
+                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsPressed}" Value="True">
+                                    <Setter TargetName="BtnArrowBackground" Property="Background" Value="{DynamicResource Brushes.Control.Pressed}" />
+                                </DataTrigger>
+                                <Trigger SourceName="PART_ClearText" Property="IsPressed" Value="True">
+                                    <Setter TargetName="PART_ClearText" Property="Background" Value="{DynamicResource Brushes.Control.Pressed}" />
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
         </Style.Resources>
         <Setter Property="FontSize" Value="14" />
         <!--<Setter Property="BorderThickness" Value="0,0,0,1" />-->
@@ -15,6 +79,15 @@
         <Setter Property="mah:ControlsHelper.FocusBorderBrush" Value="{DynamicResource MahApps.Brushes.Gray8}" />
         <Setter Property="Validation.ErrorTemplate" Value="{StaticResource DefaultErrorTemplate}" />
         <Style.Triggers>
+            <!-- Not editable: subtle mouse over background instead of Gray9 of MahApps (a style trigger wins over the
+                 trigger of the template) -->
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsEditable" Value="False" />
+                    <Condition Property="IsMouseOver" Value="True" />
+                </MultiTrigger.Conditions>
+                <Setter Property="Background" Value="{DynamicResource Brushes.Control.MouseOver}" />
+            </MultiTrigger>
             <Trigger Property="IsEnabled" Value="False">
                 <Setter Property="Opacity" Value="0.55" />
             </Trigger>
