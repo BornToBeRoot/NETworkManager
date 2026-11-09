@@ -67,9 +67,10 @@ public static class AppearanceManager
     public const string SurfaceCardBrushKey = "Brushes.Surface.Card";
 
     /// <summary>
-    ///     Resource key of the background of a side panel (navigation, profiles), to separate it from the main view.
+    ///     Resource key of the background of the main window frame around and between the boxes (navigation, main view,
+    ///     profiles).
     /// </summary>
-    public const string SurfacePanelBrushKey = "Brushes.Surface.Panel";
+    public const string SurfaceFrameBrushKey = "Brushes.Surface.Frame";
 
     /// <summary>
     ///     Resource key of the background of a selected row (data grid) when the mouse is over it.
@@ -220,13 +221,12 @@ public static class AppearanceManager
 
         appResources[SurfaceCardBrushKey] = CreateFrozenBrush(foreground, 0.03);
 
-        // Opaque (the navigation is shown above the main view when it is expanded): 4 % of the foreground on the
-        // background of the theme
+        // Opaque (window background): 4 % of the foreground on the background of the theme
         var background = theme.Resources["MahApps.Colors.ThemeBackground"] is Color backgroundColor
             ? backgroundColor
             : Colors.White;
 
-        appResources[SurfacePanelBrushKey] = CreateFrozenBrush(Blend(background, foreground, 0.04), 1);
+        appResources[SurfaceFrameBrushKey] = CreateFrozenBrush(Blend(background, foreground, 0.04), 1);
 
         ApplyDataGridBrushes(theme, foreground);
     }

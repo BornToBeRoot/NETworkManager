@@ -1,8 +1,21 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls">
     <!-- Card: a group of values on its own (e.g. Dashboard widget), rounded with a subtle background -->
     <Style x:Key="CardBorder" TargetType="{x:Type Border}">
         <Setter Property="Background" Value="{DynamicResource Brushes.Surface.Card}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Gray8}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CornerRadius" Value="{StaticResource CornerRadius.Card}" />
+    </Style>
+
+    <!--
+        Box of the main window layout (navigation, main view, tool area of a host view, settings) on the frame
+        (Brushes.Surface.Frame). Profile panel: ProfileExpander. ClipBorder clips the content to the rounded corners
+        (not native windows like Remote Desktop / PuTTY).
+    -->
+    <Style x:Key="ViewBox" TargetType="{x:Type mah:ClipBorder}">
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ThemeBackground}" />
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Gray8}" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="CornerRadius" Value="{StaticResource CornerRadius.Card}" />

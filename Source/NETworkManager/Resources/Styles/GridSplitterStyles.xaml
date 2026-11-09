@@ -62,6 +62,14 @@
             </Setter.Value>
         </Setter>
     </Style>
+
+    <!-- Between two boxes (tool area and profile panel): the gap of the frame, no line -->
+    <Style x:Key="VerticalGapGridSplitter" TargetType="{x:Type GridSplitter}" BasedOn="{StaticResource VerticalGridSplitter}">
+        <Setter Property="Width" Value="6" />
+        <Setter Property="Margin" Value="0" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Background" Value="Transparent" />
+    </Style>
     
     <Style x:Key="HorizontalGridSplitter" TargetType="{x:Type GridSplitter}">
         <Setter Property="Height" Value="7" />
