@@ -69,6 +69,7 @@ Release date: **xx.xx.2026**
 - Actions that require elevated rights now show a tooltip with the reason when they are disabled because the application is not running as administrator (e.g. **Apply**, **Flush DNS cache** and **Release & Renew** in **Network Interface**, the context menu and **Add entry...** in **Hosts File Editor**, **Firewall** and **Neighbor Table**, and **Capture** in **Discovery Protocol**). [#3626](https://github.com/BornToBeRoot/NETworkManager/pull/3626)
 - The collapsed/expanded state of profile groups (e.g. **linux-server**) is now remembered per profile file and shared across all tools, instead of resetting every time you switch tools or restart the application. [#3539](https://github.com/BornToBeRoot/NETworkManager/pull/3539)
 - The **Experimental features** setting in **Settings > Update** is removed: features in testing are marked with a **Beta** label at their own setting instead (e.g. **Read Windows host information** of the **IP Scanner**). [#3691](https://github.com/BornToBeRoot/NETworkManager/pull/3691)
+- Disabled inputs and buttons (e.g. while a scan or refresh is running) are dimmed instead of covered by a light gray overlay (especially visible in the dark theme); disabled buttons keep their color. [#XXXX](https://github.com/BornToBeRoot/NETworkManager/pull/XXXX)
 
 **Profiles**
 
