@@ -385,10 +385,9 @@
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
-                            <!-- 48 like the items and the settings entry (+ 1 line = 49 like the header of the
-                                 settings), aligned with the tab headers (48) of the tools -->
+                            <!-- 36, aligned with the tab headers (36) of the tools -->
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="48" />
+                                <RowDefinition Height="36" />
                             </Grid.RowDefinitions>
                             <Button Grid.Column="0" Grid.Row="0"
                                     Command="{Binding OpenApplicationListCommand}"

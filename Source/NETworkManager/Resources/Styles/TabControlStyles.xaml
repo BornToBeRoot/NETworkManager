@@ -4,8 +4,8 @@
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray3}" />
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderThickness" Value="0" />
-        <!-- 48 like the tab headers of the tools (Dragablz) and the header of the navigation -->
-        <Setter Property="Height" Value="48" />
+        <!-- 36 like the tab headers of the tools (Dragablz) and the header of the navigation -->
+        <Setter Property="Height" Value="36" />
         <Setter Property="Margin" Value="0" />
         <Setter Property="Padding" Value="10,0" />
         <Setter Property="MinWidth" Value="150" />

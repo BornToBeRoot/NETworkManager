@@ -79,8 +79,8 @@
                                 </Style.Triggers>
                             </Style>
                         </Border.Style>
-                        <!-- 48 like the header of the navigation -->
-                        <Grid Height="48">
+                        <!-- 36 like the header of the navigation -->
+                        <Grid Height="36">
                             <Grid.InputBindings>
                                 <MouseBinding Command="dragablz:TabablzControl.CloseItemCommand" Gesture="MiddleClick" />
                             </Grid.InputBindings>
