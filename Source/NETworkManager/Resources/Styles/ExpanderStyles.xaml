@@ -210,8 +210,10 @@
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="ExpandDirection" Value="Right" />
         <Setter Property="Padding" Value="10" />
+        <!-- Side panel (like the navigation): own background to separate it from the main view -->
+        <Setter Property="Background" Value="{DynamicResource Brushes.Surface.Panel}" />
         <Setter Property="mahAppsControls:HeaderedControlHelper.HeaderBackground"
-                Value="Transparent" />
+                Value="{DynamicResource Brushes.Surface.Panel}" />
         <Setter Property="mahAppsControls:HeaderedControlHelper.HeaderForeground"
                 Value="{StaticResource ResourceKey=MahApps.Brushes.Gray3}" />
         <Setter Property="mahAppsControls:ControlsHelper.ContentCharacterCasing"

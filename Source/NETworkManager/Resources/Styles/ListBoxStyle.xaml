@@ -7,6 +7,8 @@
     <Style TargetType="{x:Type ListBox}" BasedOn="{StaticResource DefaultListBox}" />
 
     <Style x:Key="ProfileListBox" TargetType="{x:Type ListBox}" BasedOn="{StaticResource DefaultListBox}">
+        <!-- On the profile panel (Brushes.Surface.Panel) -->
+        <Setter Property="Background" Value="Transparent" />
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled" />
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
     </Style>

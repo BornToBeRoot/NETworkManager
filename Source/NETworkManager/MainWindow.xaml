@@ -339,8 +339,9 @@
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
+            <!-- Side panel (like the profiles): own background to separate it from the main view -->
             <Border Grid.Column="0" Grid.Row="0" BorderBrush="{DynamicResource MahApps.Brushes.Gray8}"
-                    BorderThickness="0,0,1,0">
+                    BorderThickness="0,0,1,0" Background="{DynamicResource Brushes.Surface.Panel}">
                 <Grid x:Name="ApplicationViewGrid">
                     <Grid.RowDefinitions>
                         <!-- 1 = Search, 2 = ApplicationList, 3 = Settings-->
@@ -594,6 +595,7 @@
                                   SelectedItem="{Binding SelectedApplication, Mode=TwoWay}"
                                   SelectionChanged="ListViewApplication_OnSelectionChanged"
                                   SelectionMode="Single"
+                                  Background="Transparent"
                                   BorderThickness="0"
                                   dd:DragDrop.IsDragSource="True"
                                   dd:DragDrop.IsDropTarget="True">
