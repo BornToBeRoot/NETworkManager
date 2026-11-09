@@ -342,8 +342,10 @@
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <!-- Navigation: box on the frame of the window (like the main view and the profiles) -->
-            <mah:ClipBorder Grid.Column="0" Grid.Row="0" Margin="6,0,0,6" Style="{StaticResource ViewBox}">
+            <!-- Navigation: box on the frame of the window (like the main view and the profiles), with the color of the
+                 frame - part of the window, the main view and the profiles stand out -->
+            <mah:ClipBorder Grid.Column="0" Grid.Row="0" Margin="6,0,0,6" Style="{StaticResource ViewBox}"
+                            Background="{DynamicResource Brushes.Surface.Frame}">
                 <Grid x:Name="ApplicationViewGrid">
                     <Grid.RowDefinitions>
                         <!-- 1 = Search, 2 = ApplicationList, 3 = Settings-->
