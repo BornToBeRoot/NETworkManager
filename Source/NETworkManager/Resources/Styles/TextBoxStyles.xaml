@@ -48,6 +48,8 @@
         <Setter Property="ContextMenu" Value="{StaticResource CutCopyPasteContextMenu}" />
         <Setter Property="Validation.ErrorTemplate" Value="{StaticResource DefaultErrorTemplate}" />
         <Setter Property="mah:TextBoxHelper.Watermark" Value="{x:Static localization:Strings.SearchDots}" />
+        <!-- Underline only: takes the color of the surface it is on (e.g. navigation, profile panel) -->
+        <Setter Property="Background" Value="Transparent" />
         <Setter Property="mah:TextBoxHelper.ClearTextButton" Value="True" />
         <Style.Triggers>
             <Trigger Property="mah:TextBoxHelper.HasText" Value="True">
