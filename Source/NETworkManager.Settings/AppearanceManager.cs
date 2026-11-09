@@ -67,6 +67,11 @@ public static class AppearanceManager
     public const string SurfaceCardBrushKey = "Brushes.Surface.Card";
 
     /// <summary>
+    ///     Resource key of the background of a selected row (data grid) when the mouse is over it.
+    /// </summary>
+    public const string DataGridSelectionMouseOverBrushKey = "Brushes.DataGrid.Selection.MouseOver";
+
+    /// <summary>
     ///     Resource key of the border of an input (e.g. TextBox, ComboBox) when the mouse is over it.
     /// </summary>
     public const string ControlBorderMouseOverBrushKey = "Brushes.Control.Border.MouseOver";
@@ -209,6 +214,38 @@ public static class AppearanceManager
         appResources[ButtonPressedBrushKey] = CreateFrozenBrush(foreground, 0.14);
 
         appResources[SurfaceCardBrushKey] = CreateFrozenBrush(foreground, 0.03);
+
+        ApplyDataGridBrushes(theme, foreground);
+    }
+
+    /// <summary>
+    ///     Override the selection brushes of the data grids (MahApps uses them via DynamicResource): a tint of the accent
+    ///     color with the normal text instead of the accent color with white text, a neutral tint on mouse over instead
+    ///     of the accent color and no accent border around the selected row.
+    /// </summary>
+    /// <param name="theme">Theme that was applied.</param>
+    /// <param name="foreground">Foreground color of the theme.</param>
+    private static void ApplyDataGridBrushes(Theme theme, Color foreground)
+    {
+        var accent = theme.Resources["MahApps.Colors.Accent"] is Color color ? color : Colors.Gray;
+
+        var appResources = System.Windows.Application.Current.Resources;
+
+        var foregroundBrush = CreateFrozenBrush(foreground, 1);
+        var transparentBrush = CreateFrozenBrush(Colors.Transparent, 1);
+
+        appResources["MahApps.Brushes.DataGrid.Selection.Background"] = CreateFrozenBrush(accent, 0.30);
+        appResources["MahApps.Brushes.DataGrid.Selection.Background.Inactive"] = CreateFrozenBrush(accent, 0.20);
+        appResources["MahApps.Brushes.DataGrid.Selection.Background.MouseOver"] = CreateFrozenBrush(foreground, 0.08);
+        appResources[DataGridSelectionMouseOverBrushKey] = CreateFrozenBrush(accent, 0.38);
+
+        appResources["MahApps.Brushes.DataGrid.Selection.BorderBrush"] = transparentBrush;
+        appResources["MahApps.Brushes.DataGrid.Selection.BorderBrush.Inactive"] = transparentBrush;
+        appResources["MahApps.Brushes.DataGrid.Selection.BorderBrush.MouseOver"] = transparentBrush;
+
+        appResources["MahApps.Brushes.DataGrid.Selection.Text"] = foregroundBrush;
+        appResources["MahApps.Brushes.DataGrid.Selection.Text.Inactive"] = foregroundBrush;
+        appResources["MahApps.Brushes.DataGrid.Selection.Text.MouseOver"] = foregroundBrush;
     }
 
     /// <summary>
