@@ -353,10 +353,10 @@
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <!-- Navigation: box on the frame of the window (like the main view and the profiles), with the color of the
-                 frame - part of the window, the main view and the profiles stand out -->
-            <mah:ClipBorder Grid.Column="0" Grid.Row="0" Margin="6,0,0,6" Style="{StaticResource ViewBox}"
-                            Background="{DynamicResource Brushes.Surface.Frame}">
+            <!-- Navigation: part of the window (color of the frame, no border, like the side bar of VS Code), the main
+                 view and the profiles are the boxes. Same margins as the boxes (aligned header / tab lines). -->
+            <mah:ClipBorder Grid.Column="0" Grid.Row="0" Margin="6,6,0,6" Style="{StaticResource ViewBox}"
+                            Background="{DynamicResource Brushes.Surface.Frame}" BorderThickness="0">
                 <Grid x:Name="ApplicationViewGrid">
                     <Grid.RowDefinitions>
                         <!-- 1 = Search, 2 = ApplicationList, 3 = Settings-->
@@ -1018,7 +1018,7 @@
                 </Grid>
             </mah:ClipBorder>
             <!-- Main view: box on the frame, unless the view has its own boxes (tool area + profile panel) -->
-            <mah:ClipBorder Grid.Column="1" Grid.Row="0" Margin="6,0,6,6">
+            <mah:ClipBorder Grid.Column="1" Grid.Row="0" Margin="6,6,6,6">
                 <mah:ClipBorder.Style>
                     <Style TargetType="{x:Type mah:ClipBorder}" BasedOn="{StaticResource ViewBox}">
                         <Style.Triggers>
@@ -1049,7 +1049,7 @@
                 </Style>
             </Grid.Style>
             <!-- Settings: box on the frame of the window -->
-            <mah:ClipBorder Margin="6,0,6,6" Style="{StaticResource ViewBox}">
+            <mah:ClipBorder Margin="6,6,6,6" Style="{StaticResource ViewBox}">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="49" />
