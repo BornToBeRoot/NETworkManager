@@ -62,11 +62,6 @@ public static class AppearanceManager
     public const string ButtonPressedBrushKey = "Brushes.Button.Pressed";
 
     /// <summary>
-    ///     Resource key of the background of a card (e.g. Dashboard widget, Ping Monitor host).
-    /// </summary>
-    public const string SurfaceCardBrushKey = "Brushes.Surface.Card";
-
-    /// <summary>
     ///     Resource key of the background of the main window frame around and between the boxes (navigation, main view,
     ///     profiles).
     /// </summary>
@@ -200,7 +195,7 @@ public static class AppearanceManager
 
     /// <summary>
     ///     Set the backgrounds of controls (e.g. icon buttons, ComboBox) for mouse over and pressed, the backgrounds of
-    ///     (secondary) buttons and cards and the border of inputs for mouse over: the foreground color of
+    ///     (secondary) buttons, the frame of the window and the border of inputs for mouse over: the foreground color of
     ///     the theme with a low opacity, a subtle tint in every theme (also custom themes) instead of the light gray of
     ///     MahApps (Gray9, Gray7, Gray5), which stands out in the dark theme.
     /// </summary>
@@ -218,8 +213,6 @@ public static class AppearanceManager
         appResources[ButtonBackgroundBrushKey] = CreateFrozenBrush(foreground, 0.06);
         appResources[ButtonMouseOverBrushKey] = CreateFrozenBrush(foreground, 0.10);
         appResources[ButtonPressedBrushKey] = CreateFrozenBrush(foreground, 0.14);
-
-        appResources[SurfaceCardBrushKey] = CreateFrozenBrush(foreground, 0.03);
 
         // Opaque (window background): 4 % of the foreground on the background of the theme
         var background = theme.Resources["MahApps.Colors.ThemeBackground"] is Color backgroundColor

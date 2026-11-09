@@ -159,10 +159,8 @@
     <Style x:Key="PingMonitorExpander"
            TargetType="{x:Type TypeName=Expander}"
            BasedOn="{StaticResource ResourceKey=DefaultExpander}">
-        <!-- Card like the Dashboard widgets (CardBorder): rounded, subtle background -->
-        <Setter Property="Background" Value="{DynamicResource Brushes.Surface.Card}" />
-        <Setter Property="mahAppsControls:HeaderedControlHelper.HeaderBackground"
-                Value="{DynamicResource Brushes.Surface.Card}" />
+        <!-- Card like the Dashboard widgets (CardBorder): rounded border, background of the box it is in -->
+        <Setter Property="Background" Value="Transparent" />
         <Setter Property="mahAppsControls:ControlsHelper.CornerRadius" Value="{StaticResource CornerRadius.Card}" />
         <Setter Property="mahAppsControls:ExpanderHelper.HeaderDownStyle"
                 Value="{DynamicResource ResourceKey=PingMonitorExpanderDownHeader}" />
