@@ -4,22 +4,22 @@
            BasedOn="{StaticResource MahApps.Styles.ContextMenu}">
         <Setter Property="FontSize" Value="14" />
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Gray8}" />
-        <!-- Space between the rounded border and the items -->
-        <Setter Property="Padding" Value="0,4" />
-        <!-- Template of MahApps (MahApps.Styles.ContextMenu, 2.4.11) with rounded corners (also the shadow) -->
+        <!-- Template of MahApps (MahApps.Styles.ContextMenu, 2.4.11) with rounded corners (also the shadow). Radius of
+             the controls: the items fill the menu, the square highlight of the first / last item would stick out of a
+             larger radius. -->
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ContextMenu}">
                     <Grid>
                         <Border x:Name="LayoutRoot"
                                 Background="{TemplateBinding Background}"
-                                CornerRadius="{StaticResource CornerRadius.Overlay}" />
+                                CornerRadius="{StaticResource CornerRadius.Control}" />
                         <Border x:Name="Border"
                                 Padding="{TemplateBinding Padding}"
                                 Background="{TemplateBinding Background}"
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
-                                CornerRadius="{StaticResource CornerRadius.Overlay}"
+                                CornerRadius="{StaticResource CornerRadius.Control}"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
                             <ScrollViewer x:Name="SubMenuScrollViewer"
                                           CanContentScroll="True"
