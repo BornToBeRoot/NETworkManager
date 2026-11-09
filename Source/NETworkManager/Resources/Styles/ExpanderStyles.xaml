@@ -75,6 +75,26 @@
                 Value="{DynamicResource ResourceKey=ExpanderDownHeader}" />
     </Style>
 
+    <!--
+        Section of a list (e.g. a group of the Ping Monitor): no box around it, the header has a thin line below and
+        the content starts 10 below the line.
+    -->
+    <Style x:Key="SectionExpanderDownHeader"
+           BasedOn="{StaticResource ResourceKey=ExpanderDownHeader}"
+           TargetType="{x:Type TypeName=ToggleButton}">
+        <Setter Property="BorderThickness" Value="0,0,0,1" />
+        <Setter Property="BorderBrush" Value="{DynamicResource ResourceKey=MahApps.Brushes.Gray8}" />
+        <Setter Property="Padding" Value="0,0,0,6" />
+    </Style>
+
+    <Style x:Key="SectionExpander"
+           TargetType="{x:Type TypeName=Expander}"
+           BasedOn="{StaticResource ResourceKey=DefaultExpander}">
+        <Setter Property="Padding" Value="0,10,0,0" />
+        <Setter Property="mahAppsControls:ExpanderHelper.HeaderDownStyle"
+                Value="{DynamicResource ResourceKey=SectionExpanderDownHeader}" />
+    </Style>
+
     <!-- Header style for bordered expanders (e.g. the ping monitor host): adds a small
          left margin so the chevron does not sit flush against the visible border. -->
     <Style x:Key="PingMonitorExpanderDownHeader"

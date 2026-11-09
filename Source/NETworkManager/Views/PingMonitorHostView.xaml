@@ -214,7 +214,7 @@
                                                         <Setter.Value>
                                                             <ControlTemplate>
                                                                 <Expander IsExpanded="True"
-                                                                          Style="{StaticResource ResourceKey=DefaultExpander}">
+                                                                          Style="{StaticResource ResourceKey=SectionExpander}">
                                                                     <Expander.Header>
                                                                         <Grid>
                                                                             <Grid.ColumnDefinitions>
@@ -226,9 +226,12 @@
                                                                             </Grid.ColumnDefinitions>
                                                                             <Rectangle Grid.Column="0" Grid.ColumnSpan="5"
                                                                                        Fill="Transparent" />
+                                                                            <!-- Section header: group name semibold in the text color -->
                                                                             <TextBlock Grid.Column="0" Grid.Row="0"
                                                                                        Text="{Binding Path=(CollectionViewGroup.Name)}"
-                                                                                       Style="{DynamicResource ResourceKey=HeaderTextBlock}" />
+                                                                                       Style="{StaticResource ResourceKey=DefaultTextBlock}"
+                                                                                       FontSize="16" FontWeight="SemiBold"
+                                                                                       VerticalAlignment="Center" />
                                                                             <StackPanel Grid.Column="2" Grid.Row="0"
                                                                                     Orientation="Horizontal"
                                                                                     VerticalAlignment="Center">
