@@ -227,15 +227,14 @@
     <Style x:Key="ProfileExpander"
            TargetType="{x:Type TypeName=Expander}"
            BasedOn="{StaticResource ResourceKey=MahApps.Styles.Expander}">
-        <!-- Box on the frame of the main window (like the navigation and the tool area, see ViewBox) -->
-        <Setter Property="BorderThickness" Value="1" />
-        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Gray8}" />
-        <Setter Property="mahAppsControls:ControlsHelper.CornerRadius" Value="{StaticResource CornerRadius.Card}" />
+        <!-- The box (ViewBox) is around the expander in ProfileExpanderPanel: the header is hidden when expanded, the
+             MahApps template would round only the bottom of the content -->
+        <Setter Property="BorderThickness" Value="0" />
         <Setter Property="ExpandDirection" Value="Right" />
         <Setter Property="Padding" Value="10" />
-        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ThemeBackground}" />
+        <Setter Property="Background" Value="Transparent" />
         <Setter Property="mahAppsControls:HeaderedControlHelper.HeaderBackground"
-                Value="{DynamicResource MahApps.Brushes.ThemeBackground}" />
+                Value="Transparent" />
         <Setter Property="mahAppsControls:HeaderedControlHelper.HeaderForeground"
                 Value="{StaticResource ResourceKey=MahApps.Brushes.Gray3}" />
         <Setter Property="mahAppsControls:ControlsHelper.ContentCharacterCasing"
