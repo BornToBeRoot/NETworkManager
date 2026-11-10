@@ -186,10 +186,8 @@
                                         </Rectangle.Style>
                                     </Rectangle>
                                 </Button>
-                                <TextBlock Grid.Row="1" Style="{StaticResource HeaderTextBlock}"
-                                           Foreground="{DynamicResource MahApps.Brushes.Gray3}"
-                                           Text="{x:Static localization:Strings.SearchedSettingNotFound}" Margin="10,0"
-                                           TextWrapping="Wrap" TextAlignment="Center" />
+                                <TextBlock Grid.Row="1" Style="{StaticResource MessageTextBlock}"
+                                           Text="{x:Static localization:Strings.SearchedSettingNotFound}" />
                             </Grid>
                         </Grid>
                     </Border>
