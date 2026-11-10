@@ -576,7 +576,8 @@ SemiBold (section headers), `MessageTextBlock` 16 gray (messages in empty areas)
   (redefined with the same key).
 
 **Icons**: Lucide only (see [XAML Style](#xaml-style)); 16 × 16 `Rectangle` with `MahApps.Brushes.Gray3` fill and the icon
-as opacity mask (`VisualBrush`), stroke 1.75 (`LucideIcon.DefaultStrokeThickness`). Icons of the context menu actions:
+as opacity mask (`VisualBrush`), stroke 1.75 (`LucideIcon.DefaultStrokeThickness`). Icons that cover only a
+small part of the 24 box (plus, minus, X, chevrons, arrows) are drawn 1.25 times larger (`LucideIcon.SmallIcons`). Icons of the context menu actions:
 see `.claude/skills/feature-review/references/conventions.md`.
 
 **Motion** (only `Opacity` / `RenderTransform`, 150–250 ms, quadratic ease-out, no bounce, no staggered lists, **no view /

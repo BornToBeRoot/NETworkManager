@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Markup;
@@ -14,6 +15,7 @@ namespace NETworkManager.Controls;
 ///
 ///     The whole 24 x 24 box is part of the drawing (transparent), so a <see cref="VisualBrush" /> with the icon (e.g. as
 ///     opacity mask of a rectangle, see <see cref="LucideExtension" />) shows every icon in the same size and position.
+///     Icons that only cover a small part of the box (plus, X, chevrons, ...) use a smaller box (see SmallIcons).
 /// </summary>
 public class LucideIcon : FrameworkElement
 {
@@ -26,6 +28,20 @@ public class LucideIcon : FrameworkElement
     ///     Default thickness of the lines in units (Lucide: 2). Thinner lines look calmer, especially at 16 px.
     /// </summary>
     public const double DefaultStrokeThickness = 1.75;
+
+    /// <summary>
+    ///     Box of the icons that only cover a small part of the 24 units (plus, minus, X, chevrons, arrows: 12 - 14
+    ///     units, most icons about 20): drawn in a smaller box (1.25 times larger), so they look as large as the other
+    ///     icons and as before with the MahApps icons (stretched to their outline).
+    /// </summary>
+    private const double SmallIconBox = 19.2;
+
+    private static readonly HashSet<LucideIconKind> SmallIcons =
+    [
+        LucideIconKind.Plus, LucideIconKind.Minus, LucideIconKind.X, LucideIconKind.ChevronDown,
+        LucideIconKind.ChevronUp, LucideIconKind.ChevronLeft, LucideIconKind.ChevronRight,
+        LucideIconKind.ChevronsRight, LucideIconKind.ArrowDown, LucideIconKind.ArrowLeft, LucideIconKind.ArrowUp
+    ];
 
     private static readonly ConcurrentDictionary<LucideIconKind, (Geometry Stroke, Geometry Fill)> Geometries = new();
 
@@ -93,13 +109,16 @@ public class LucideIcon : FrameworkElement
         if (size <= 0)
             return;
 
-        var scale = size / Size;
+        // Box in units (centered in the 24 units), see SmallIcons
+        var box = SmallIcons.Contains(Kind) ? SmallIconBox : Size;
+        var inset = (Size - box) / 2;
+        var scale = size / box;
 
-        drawingContext.PushTransform(new MatrixTransform(scale, 0, 0, scale, (ActualWidth - size) / 2,
-            (ActualHeight - size) / 2));
+        drawingContext.PushTransform(new MatrixTransform(scale, 0, 0, scale,
+            (ActualWidth - size) / 2 - inset * scale, (ActualHeight - size) / 2 - inset * scale));
 
         // The whole box, so the bounds are the same for all icons (VisualBrush)
-        drawingContext.DrawRectangle(Brushes.Transparent, null, new Rect(0, 0, Size, Size));
+        drawingContext.DrawRectangle(Brushes.Transparent, null, new Rect(inset, inset, box, box));
 
         var (stroke, fill) = GetGeometries(Kind);
 
