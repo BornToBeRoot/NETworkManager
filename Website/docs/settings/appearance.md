@@ -22,8 +22,11 @@ Theme of the application which is based on [`MahApps.Metro themes`](https://maha
 - `Midnight` - dark blue
 - `Steel` - blue-gray
 - `Indigo` - dark violet-blue
+- `Mist` - light blue-gray, like the Blue theme of Visual Studio
+- `Soft` - light gray, less bright than `Light`
+- `Paper` - warm, paper-like
 
-`Black`, `Midnight`, `Steel` and `Indigo` are variants of `Dark` with a different background; all accents can be used with every theme.
+`Black`, `Midnight`, `Steel` and `Indigo` are variants of `Dark`, `Mist`, `Soft` and `Paper` dimmed variants of `Light` with a different background; all accents can be used with every theme.
 
 ### Accent
 
