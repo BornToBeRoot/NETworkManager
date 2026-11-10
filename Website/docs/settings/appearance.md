@@ -75,6 +75,43 @@ Custom themes override the [`Accent`](#accent) and [`Theme`](#theme) settings.
 
 :::
 
+### Animations
+
+Animations of the application, e.g. when a dialog is opened or closed (short zoom and fade).
+
+**Type:** `NETworkManager.Models.Appearance.AnimationMode`
+
+**Default:** `System`
+
+**Possible values:**
+
+- `System` - Follow the Windows setting **Animation effects** (Windows 11: Settings > Accessibility > Visual effects, Windows 10: Settings > Ease of Access > Display > **Show animations in Windows**). It is often turned off on terminal servers, in virtual machines and in Remote Desktop sessions.
+- `On` - Always show animations.
+- `Off` - Never show animations.
+
+<details className="alert alert--info">
+<summary>System-Wide Policy</summary>
+
+This setting can be controlled by administrators using a system-wide policy. See [System-Wide Policies](../system-wide-policies.md) for more information.
+
+**Policy Property:** `Appearance_Animations`
+
+**Values:**
+
+- `true` - Force enable animations for all users
+- `false` - Force disable animations for all users (e.g. on a terminal server)
+- Omit the property - Allow users to control this setting themselves
+
+**Example:**
+
+```json
+{
+  "Appearance_Animations": false
+}
+```
+
+</details>
+
 ### Apply theme to PowerShell console
 
 Apply the current application theme to the PowerShell console global profile(s).
