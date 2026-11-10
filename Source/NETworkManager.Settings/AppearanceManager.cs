@@ -236,7 +236,36 @@ public static class AppearanceManager
         appResources[SurfaceFrameBrushKey] = CreateFrozenBrush(Blend(background, foreground, 0.04), 1);
 
         ApplyDataGridBrushes(theme, foreground);
+        ApplyToggleSwitchDisabledBrushes(theme);
     }
+
+    /// <summary>
+    ///     Disabled toggle switches keep their normal colors (MahApps: gray) and are dimmed by the style
+    ///     (<c>DefaultToggleSwitch</c>), like the inputs and buttons. The template of MahApps uses the disabled brushes
+    ///     via DynamicResource, so they are replaced by the normal brushes of the theme.
+    /// </summary>
+    /// <param name="theme">Theme that was applied.</param>
+    private static void ApplyToggleSwitchDisabledBrushes(Theme theme)
+    {
+        var appResources = System.Windows.Application.Current.Resources;
+
+        foreach (var name in ToggleSwitchBrushNames)
+        {
+            var key = $"MahApps.Brushes.ToggleSwitch.{name}";
+
+            if (theme.Resources[key] is Brush brush)
+                appResources[$"{key}Disabled"] = brush;
+        }
+    }
+
+    /// <summary>
+    ///     Brushes of the toggle switch (MahApps) that have a disabled variant (<c>...Disabled</c>).
+    /// </summary>
+    private static readonly string[] ToggleSwitchBrushNames =
+    [
+        "ContainerBackground", "ContentForeground", "HeaderForeground", "FillOff", "FillOn", "StrokeOff", "StrokeOn",
+        "KnobFillOff", "KnobFillOn"
+    ];
 
     /// <summary>
     ///     Override the selection brushes of the data grids (MahApps uses them via DynamicResource): a tint of the accent
