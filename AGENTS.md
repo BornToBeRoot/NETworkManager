@@ -39,6 +39,7 @@ REPOSITORY_ROOT/
 ├── Scripts/                          # Build and automation scripts
 │   ├── Create-FileHash.ps1           # Generate file hashes
 │   ├── Create-FlagFromSVG.ps1        # Create flag images
+│   ├── Create-LucideIcons.ps1        # Import the used Lucide icons (LucideIcons.cs) and their license
 │   ├── Create-OUIListFromWeb.ps1     # Update OUI (MAC vendor) list
 │   ├── Create-PortListFromWeb.ps1    # Update port list database
 │   ├── Create-PublicSuffixListFromWeb.ps1  # Update public suffix list (RDAP: registered domain of a hostname)
@@ -74,7 +75,9 @@ REPOSITORY_ROOT/
 
 **UI Framework & Design**:
 - **MahApps.Metro** - Modern UI toolkit providing Metro-style controls and themes
-- **MahApps.Metro.IconPacks** - Icon libraries (FontAwesome, Material, Modern, Octicons)
+- **Lucide** - Icons (https://lucide.dev), imported from the SVG files by `Scripts/Create-LucideIcons.ps1` into
+  `Source/NETworkManager.Controls/LucideIcons.cs` (only the used icons, see `$Icons` in the script) and drawn as lines by
+  `LucideIcon` (stroke 1.75); license in `Source/NETworkManager.Documentation/Licenses/Lucide.txt`
 - **MahApps.Metro.SimpleChildWindow** - Dialog windows
 - **Dragablz** - Tearable/draggable tab control
 - **GongSolutions.Wpf.DragDrop** (`gong-wpf-dragdrop`) - Drag and drop framework
@@ -304,7 +307,9 @@ The website is deployed to GitHub Pages at: https://borntoberoot.net/NETworkMana
 ### XAML Style
 
 - **MahApps.Metro Controls**: Use Metro-styled controls
-- **Icon Packs**: Use `IconPacks` namespace for icons
+- **Icons**: Lucide only - `{icons:Lucide Kind=Router}` (`xmlns:icons="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls"`),
+  usually as `Visual` of a `VisualBrush` (opacity mask of a `Rectangle`), in C# `new LucideIcon { Kind = LucideIconKind.Router }`.
+  A new icon: add its name to `$Icons` in `Scripts/Create-LucideIcons.ps1` and run the script (don't edit `LucideIcons.cs`)
 - **Resource Dictionaries**: Shared styles in `Resources/` directory
 - **Naming**: Use `x:Name` for elements that need code-behind access
 
