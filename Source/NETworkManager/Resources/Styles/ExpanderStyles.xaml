@@ -254,6 +254,10 @@
                 Value="Normal" />
         <Setter Property="mahAppsControls:ExpanderHelper.HeaderRightStyle"
                 Value="{DynamicResource ResourceKey=ProfileExpanderClosed}" />
+        <!-- ‹ (collapsed header) and › (button in the panel) are different elements: the new one turns into its
+             direction; the profiles fade in -->
+        <Setter Property="networkManager:ExpanderAnimation.IsEnabled" Value="True" />
+        <Setter Property="networkManager:ExpanderAnimation.SwapChevron" Value="True" />
         <Style.Triggers>
             <Trigger Property="IsExpanded" Value="True">
                 <Setter Property="ExpandDirection" Value="Down" />

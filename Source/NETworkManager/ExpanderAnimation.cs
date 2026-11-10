@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
+using System.Windows.Threading;
 using NETworkManager.Settings;
 
 namespace NETworkManager;
@@ -38,6 +39,25 @@ public static class ExpanderAnimation
     public static bool GetIsEnabled(UIElement element) =>
         (bool)element.GetValue(IsEnabledProperty);
 
+    /// <summary>
+    /// The chevron of the collapsed and of the expanded state are different elements (e.g. the profile panel: ‹ in the
+    /// header when collapsed, a › button in the content when expanded): the chevron that is shown after the change
+    /// starts in the other direction and rotates into its own (looks like one chevron that turns). Set with
+    /// <see cref="IsEnabledProperty"/>.
+    /// </summary>
+    public static readonly DependencyProperty SwapChevronProperty =
+        DependencyProperty.RegisterAttached(
+            "SwapChevron",
+            typeof(bool),
+            typeof(ExpanderAnimation),
+            new PropertyMetadata(false));
+
+    public static void SetSwapChevron(UIElement element, bool value) =>
+        element.SetValue(SwapChevronProperty, value);
+
+    public static bool GetSwapChevron(UIElement element) =>
+        (bool)element.GetValue(SwapChevronProperty);
+
     private static void OnIsEnabledChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
         if (d is not Expander expander)
@@ -61,7 +81,10 @@ public static class ExpanderAnimation
         if (!ReferenceEquals(e.OriginalSource, sender) || sender is not Expander expander)
             return;
 
-        RotateChevron(expander, 180, 0);
+        if (GetSwapChevron(expander))
+            SwapChevron(expander);
+        else
+            RotateChevron(expander, 180, 0);
 
         if (AppearanceManager.AnimationsEnabled && expander.Content is UIElement content)
             content.BeginAnimation(UIElement.OpacityProperty, new DoubleAnimation(0, 1, Duration)
@@ -73,7 +96,33 @@ public static class ExpanderAnimation
         if (!ReferenceEquals(e.OriginalSource, sender) || sender is not Expander expander)
             return;
 
-        RotateChevron(expander, 0, 180);
+        if (GetSwapChevron(expander))
+            SwapChevron(expander);
+        else
+            RotateChevron(expander, 0, 180);
+    }
+
+    /// <summary>
+    /// <see cref="SwapChevronProperty"/>: after the layout of the new state (the header template / content changes),
+    /// the visible chevron turns from the other direction (180 degrees) into its own (0).
+    /// </summary>
+    private static void SwapChevron(Expander expander)
+    {
+        if (!AppearanceManager.AnimationsEnabled)
+            return;
+
+        expander.Dispatcher.BeginInvoke(DispatcherPriority.Loaded, () =>
+        {
+            if (FindChevron(expander) is not { } chevron)
+                return;
+
+            var rotate = new RotateTransform(180);
+            chevron.RenderTransformOrigin = new Point(0.5, 0.5);
+            chevron.RenderTransform = rotate;
+
+            rotate.BeginAnimation(RotateTransform.AngleProperty, new DoubleAnimation(180, 0, Duration)
+                { EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseOut } });
+        });
     }
 
     /// <summary>
@@ -111,8 +160,8 @@ public static class ExpanderAnimation
     }
 
     /// <summary>
-    /// The chevron of the header: the first element named <see cref="ChevronName"/> (breadth-first, the header is above
-    /// the chevrons of nested expanders in the content).
+    /// The chevron: the first visible element named <see cref="ChevronName"/> or with this tag (if several in one view,
+    /// e.g. the profile panel) - breadth-first, the header is above the chevrons of nested expanders in the content.
     /// </summary>
     private static FrameworkElement FindChevron(DependencyObject root)
     {
@@ -123,7 +172,12 @@ public static class ExpanderAnimation
         {
             var element = queue.Dequeue();
 
-            if (element is FrameworkElement { Name: ChevronName } chevron && !ReferenceEquals(element, root))
+            // Hidden part (e.g. the other state): not its chevrons
+            if (element is UIElement { IsVisible: false })
+                continue;
+
+            if (element is FrameworkElement chevron && !ReferenceEquals(element, root) &&
+                (chevron.Name == ChevronName || chevron.Tag as string == ChevronName))
                 return chevron;
 
             for (var i = 0; i < VisualTreeHelper.GetChildrenCount(element); i++)
