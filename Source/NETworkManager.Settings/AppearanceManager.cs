@@ -162,13 +162,17 @@ public static class AppearanceManager
 
     static AppearanceManager()
     {
-        // Themes of MahApps (Light, Dark) and the additional themes (Black, Midnight, ...), created when used
+        // Themes of MahApps (Light, Dark) and the additional themes (Black, Midnight, ...), created when used; sorted
+        // from light to dark (by the brightness of the background), so the light and dark themes are next to each other
         Themes = [.. ThemeManager.Current.Themes
             .GroupBy(x => x.BaseColorScheme)
             .Select(x => x.First())
             .Select(x => new ThemeColorInfo
-            { Name = x.BaseColorScheme, Color = x.Resources["MahApps.Brushes.ThemeBackground"] as Brush }),
-            .. ThemeVariants.Themes.Select(x => new ThemeColorInfo { Name = x.Name, Color = CreateFrozenBrush(x.Background, 1) })];
+            { Name = x.BaseColorScheme, Color = x.Resources["MahApps.Brushes.ThemeBackground"] as Brush })
+            .Concat(ThemeVariants.Themes.Select(x => new ThemeColorInfo { Name = x.Name, Color = CreateFrozenBrush(x.Background, 1) }))
+            .OrderByDescending(x => x.Color is SolidColorBrush { Color: var color }
+                ? 0.2126 * color.R + 0.7152 * color.G + 0.0722 * color.B
+                : 0)];
 
         // Accents of MahApps and the additional accents (Sky, Ocean, ...), sorted by name
         Accents = [.. ThemeManager.Current.Themes
