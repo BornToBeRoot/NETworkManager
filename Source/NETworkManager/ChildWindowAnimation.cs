@@ -9,24 +9,19 @@ using NETworkManager.Settings;
 namespace NETworkManager;
 
 /// <summary>
-/// Attached property that zooms a dialog (<see cref="ChildWindow"/> with the <c>DefaultChildWindowTemplate</c>) when
-/// it is opened (grows from 92 % to its size, ease-out) and closed (shrinks to 98 %, ease-in). The overlay fades in /
-/// out in the template (Show / Hide visual states), the zoom runs at the same time.
+/// Attached properties that animate a dialog (<see cref="ChildWindow"/> with the <c>DefaultChildWindowTemplate</c>)
+/// when it is opened and closed. The overlay fades in / out in the template (Show / Hide visual states), the animation
+/// runs at the same time. See <see cref="ChildWindowAnimationKind"/> for the kinds.
 ///
-/// Done in code instead of the storyboards of the template: the zoom starts after the first layout of the dialog
+/// Done in code instead of the storyboards of the template: the animation starts after the first layout of the dialog
 /// (otherwise a heavy dialog, e.g. the profile dialog, is shown when the animation is almost over) and checks
 /// whether animations are enabled each time a dialog is opened (see <see cref="AppearanceManager.AnimationsEnabled"/>).
 ///
-/// The zoom is applied to the <c>WindowScale</c> grid inside <c>PART_Window</c>: the ChildWindow sets the
+/// The animation is applied to the <c>WindowScale</c> grid inside <c>PART_Window</c>: the ChildWindow sets the
 /// RenderTransform of the window itself (TranslateTransform to move the dialog).
 /// </summary>
 public static class ChildWindowAnimation
 {
-    private const double ShowScale = 0.92;
-    private const double HideScale = 0.98;
-
-    private static readonly Duration ShowDuration = new(TimeSpan.FromMilliseconds(220));
-
     // Same as the fade out of the overlay (HideStoryboard), the dialog is removed when it ends
     private static readonly Duration HideDuration = new(TimeSpan.FromMilliseconds(100));
 
@@ -42,6 +37,22 @@ public static class ChildWindowAnimation
 
     public static bool GetIsEnabled(UIElement element) =>
         (bool)element.GetValue(IsEnabledProperty);
+
+    /// <summary>
+    /// Kind of the animation (default: <see cref="ChildWindowAnimationKind.Zoom"/>).
+    /// </summary>
+    public static readonly DependencyProperty KindProperty =
+        DependencyProperty.RegisterAttached(
+            "Kind",
+            typeof(ChildWindowAnimationKind),
+            typeof(ChildWindowAnimation),
+            new PropertyMetadata(ChildWindowAnimationKind.Zoom));
+
+    public static void SetKind(UIElement element, ChildWindowAnimationKind value) =>
+        element.SetValue(KindProperty, value);
+
+    public static ChildWindowAnimationKind GetKind(UIElement element) =>
+        (ChildWindowAnimationKind)element.GetValue(KindProperty);
 
     private static void OnIsEnabledChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
@@ -64,60 +75,88 @@ public static class ChildWindowAnimation
         if (childWindow.Template?.FindName("WindowScale", childWindow) is not FrameworkElement windowScale)
             return;
 
-        // Own transform (a transform of the template could be frozen / shared)
-        if (windowScale.RenderTransform is not ScaleTransform { IsFrozen: false } scaleTransform)
+        // Own transforms (a transform of the template could be frozen / shared)
+        if (windowScale.RenderTransform is not TransformGroup { IsFrozen: false, Children: [ScaleTransform scale, TranslateTransform translate] })
         {
-            scaleTransform = new ScaleTransform();
-            windowScale.RenderTransform = scaleTransform;
+            scale = new ScaleTransform();
+            translate = new TranslateTransform();
+            windowScale.RenderTransform = new TransformGroup { Children = { scale, translate } };
         }
 
         if (!IsAnimationEnabled())
         {
-            Animate(scaleTransform, 1, null, null);
+            Set(scale, translate, 1, 0);
             return;
         }
 
+        var (showScale, showOffsetY, showDuration, hideScale) = GetKind(childWindow) switch
+        {
+            // Command palette: slides down a little from the top
+            ChildWindowAnimationKind.SlideDown => (0.98, -12.0, TimeSpan.FromMilliseconds(180), 1.0),
+            _ => (0.92, 0.0, TimeSpan.FromMilliseconds(220), 0.98)
+        };
+
         if (childWindow.IsOpen)
         {
-            // Hold the start value until the dialog is laid out and rendered for the first time
-            Animate(scaleTransform, ShowScale, null, null);
+            // Hold the start values until the dialog is laid out and rendered for the first time
+            Set(scale, translate, showScale, showOffsetY);
 
             childWindow.Dispatcher.BeginInvoke(DispatcherPriority.Loaded, () =>
             {
                 if (childWindow.IsOpen)
-                    Animate(scaleTransform, 1, ShowDuration, new CubicEase { EasingMode = EasingMode.EaseOut });
+                    Animate(scale, translate, 1, 0, new Duration(showDuration),
+                        new CubicEase { EasingMode = EasingMode.EaseOut });
             });
         }
         else
         {
-            Animate(scaleTransform, HideScale, HideDuration, new CubicEase { EasingMode = EasingMode.EaseIn });
+            // Faster, without a slide (only the fade of the overlay for SlideDown)
+            Animate(scale, translate, hideScale, 0, HideDuration, new CubicEase { EasingMode = EasingMode.EaseIn });
         }
     }
 
     /// <summary>
-    /// Animates the scale to the value, or sets it immediately without a duration.
+    /// Sets the values immediately (removes a running animation).
     /// </summary>
-    private static void Animate(ScaleTransform scaleTransform, double to, Duration? duration,
-        IEasingFunction easingFunction)
+    private static void Set(ScaleTransform scale, TranslateTransform translate, double scaleValue, double offsetY)
     {
-        if (duration == null)
-        {
-            // Remove a running animation, then set the value
-            scaleTransform.BeginAnimation(ScaleTransform.ScaleXProperty, null);
-            scaleTransform.BeginAnimation(ScaleTransform.ScaleYProperty, null);
-            scaleTransform.ScaleX = to;
-            scaleTransform.ScaleY = to;
-            return;
-        }
+        scale.BeginAnimation(ScaleTransform.ScaleXProperty, null);
+        scale.BeginAnimation(ScaleTransform.ScaleYProperty, null);
+        translate.BeginAnimation(TranslateTransform.YProperty, null);
+        scale.ScaleX = scaleValue;
+        scale.ScaleY = scaleValue;
+        translate.Y = offsetY;
+    }
 
-        var animation = new DoubleAnimation(to, duration.Value) { EasingFunction = easingFunction };
+    private static void Animate(ScaleTransform scale, TranslateTransform translate, double scaleValue, double offsetY,
+        Duration duration, IEasingFunction easingFunction)
+    {
+        var scaleAnimation = new DoubleAnimation(scaleValue, duration) { EasingFunction = easingFunction };
 
-        scaleTransform.BeginAnimation(ScaleTransform.ScaleXProperty, animation);
-        scaleTransform.BeginAnimation(ScaleTransform.ScaleYProperty, animation);
+        scale.BeginAnimation(ScaleTransform.ScaleXProperty, scaleAnimation);
+        scale.BeginAnimation(ScaleTransform.ScaleYProperty, scaleAnimation);
+        translate.BeginAnimation(TranslateTransform.YProperty,
+            new DoubleAnimation(offsetY, duration) { EasingFunction = easingFunction });
     }
 
     /// <summary>
     /// Settings > Appearance > Animations (or the system-wide policy), by default the Windows setting.
     /// </summary>
     private static bool IsAnimationEnabled() => AppearanceManager.AnimationsEnabled;
+}
+
+/// <summary>
+/// Kind of the animation of a dialog, see <see cref="ChildWindowAnimation"/>.
+/// </summary>
+public enum ChildWindowAnimationKind
+{
+    /// <summary>
+    /// Grows from 92 % to its size (220 ms, ease-out), shrinks to 98 % when closed (100 ms, ease-in).
+    /// </summary>
+    Zoom,
+
+    /// <summary>
+    /// Slides down 12 px and grows from 98 % (180 ms, ease-out), only fades out when closed (e.g. run command).
+    /// </summary>
+    SlideDown
 }
