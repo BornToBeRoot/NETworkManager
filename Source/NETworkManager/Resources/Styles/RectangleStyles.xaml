@@ -187,7 +187,7 @@
         <Setter Property="Fill" Value="{DynamicResource Brushes.Status.Success}" />
         <Setter Property="OpacityMask">
             <Setter.Value>
-                <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=ScanLine}" />
+                <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=EthernetPort}" />
             </Setter.Value>
         </Setter>
     </Style>
