@@ -14,6 +14,7 @@
                                xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
                                xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
                                Style="{StaticResource DefaultChildWindow}"
+                               Background="{DynamicResource Brushes.CommandPalette.Background}"
                                networkManager:ChildWindowAnimation.Kind="SlideDown"
                                Title="{x:Static localization:Strings.RunCommand}"
                                CloseButtonCommand="{Binding CancelCommand}"

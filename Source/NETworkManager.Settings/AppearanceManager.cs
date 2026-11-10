@@ -99,7 +99,13 @@ public static class AppearanceManager
     /// </summary>
     public const string SurfaceWindowInactiveBrushKey = "Brushes.Surface.Window.Inactive";
 
+    /// <summary>
+    ///     Resource key of the background of the run command (with the accent glow a glow along the top edge).
+    /// </summary>
+    public const string CommandPaletteBackgroundBrushKey = "Brushes.CommandPalette.Background";
+
     private static Color _frameColor = Colors.White;
+    private static Color _backgroundColor = Colors.White;
     private static Color _accentColor = Colors.Gray;
 
     /// <summary>
@@ -259,6 +265,32 @@ public static class AppearanceManager
 
         // Inactive window: half of the glow (like the title bar of an inactive window in Windows)
         resources[SurfaceWindowInactiveBrushKey] = CreateWindowBrush(amount / 2);
+
+        resources[CommandPaletteBackgroundBrushKey] = CreateCommandPaletteBrush(amount);
+    }
+
+    /// <summary>
+    ///     Background of the run command (command palette): the background of the dialogs, with the accent glow a soft
+    ///     glow of the accent along the top edge (2.5 x the amount of the glow, e.g. 25 % with Medium) that fades out
+    ///     within 40 px (absolute, independent of the height of the dialog).
+    /// </summary>
+    private static Brush CreateCommandPaletteBrush(double amount)
+    {
+        if (amount <= 0)
+            return CreateFrozenBrush(_backgroundColor, 1);
+
+        var gradient = new LinearGradientBrush
+        {
+            MappingMode = BrushMappingMode.Absolute,
+            StartPoint = new System.Windows.Point(0, 0),
+            EndPoint = new System.Windows.Point(0, 40)
+        };
+
+        gradient.GradientStops.Add(new GradientStop(Blend(_backgroundColor, _accentColor, Math.Min(1, amount * 2.5)), 0));
+        gradient.GradientStops.Add(new GradientStop(_backgroundColor, 1));
+        gradient.Freeze();
+
+        return gradient;
     }
 
     /// <summary>
@@ -359,6 +391,7 @@ public static class AppearanceManager
         appResources[NavigationSelectedBrushKey] = CreateFrozenBrush(accent, 0.15);
 
         _frameColor = frame;
+        _backgroundColor = background;
         _accentColor = accent;
         ApplyWindowBrush();
 
