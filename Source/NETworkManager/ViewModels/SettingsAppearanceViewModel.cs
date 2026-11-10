@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows.Data;
-using System.Windows.Media;
 
 namespace NETworkManager.ViewModels;
 
@@ -17,23 +16,12 @@ public class SettingsAppearanceViewModel : ViewModelBase
 
     public ICollectionView Themes { get; }
 
-    /// <summary>
-    ///     Light themes (Light, Mist, Soft, Paper), shown in an own row.
-    /// </summary>
-    public ICollectionView LightThemes { get; }
-
-    /// <summary>
-    ///     Dark themes (Dark, Black, Midnight, ...), shown in an own row.
-    /// </summary>
-    public ICollectionView DarkThemes { get; }
-
     public ThemeColorInfo SelectedTheme
     {
         get;
         set
         {
-            // null: the other row (light / dark) clears its selection when a theme of this row is selected
-            if (value == null || value == field)
+            if (value == field)
                 return;
 
             if (!_isLoading && !UseCustomTheme)
@@ -176,10 +164,6 @@ public class SettingsAppearanceViewModel : ViewModelBase
         _isLoading = true;
 
         Themes = new CollectionViewSource { Source = AppearanceManager.Themes }.View;
-        LightThemes = new CollectionViewSource { Source = AppearanceManager.Themes }.View;
-        LightThemes.Filter = x => x is ThemeColorInfo info && !IsDark(info);
-        DarkThemes = new CollectionViewSource { Source = AppearanceManager.Themes }.View;
-        DarkThemes.Filter = x => x is ThemeColorInfo info && IsDark(info);
         Accents = new CollectionViewSource { Source = AppearanceManager.Accents }.View;
         CustomThemes = new CollectionViewSource { Source = AppearanceManager.CustomThemes }.View;
 
@@ -187,13 +171,6 @@ public class SettingsAppearanceViewModel : ViewModelBase
 
         _isLoading = false;
     }
-
-    /// <summary>
-    ///     A theme is dark if its background (color of the theme) is dark.
-    /// </summary>
-    private static bool IsDark(ThemeColorInfo theme) =>
-        theme.Color is SolidColorBrush { Color: var color } &&
-        0.2126 * color.R + 0.7152 * color.G + 0.0722 * color.B < 128;
 
     private void LoadSettings()
     {
