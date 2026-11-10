@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using MahApps.Metro.IconPacks;
+using NETworkManager.Controls;
 using NETworkManager.Models;
 
 namespace NETworkManager.Settings;
@@ -21,28 +21,28 @@ public static class SettingsViewManager
     public static List<SettingsViewInfo> List =>
     [
         // General
-        new(SettingsName.General, new PackIconModern { Kind = PackIconModernKind.Layer },
+        new(SettingsName.General, new LucideIcon { Kind = LucideIconKind.Layers },
             SettingsGroup.General),
-        new(SettingsName.Window, new PackIconOcticons { Kind = PackIconOcticonsKind.Browser },
+        new(SettingsName.Window, new LucideIcon { Kind = LucideIconKind.AppWindow },
             SettingsGroup.General),
-        new(SettingsName.Appearance, new PackIconMaterial { Kind = PackIconMaterialKind.Palette },
+        new(SettingsName.Appearance, new LucideIcon { Kind = LucideIconKind.Palette },
             SettingsGroup.General),
-        new(SettingsName.Language, new PackIconMaterial { Kind = PackIconMaterialKind.Translate },
+        new(SettingsName.Language, new LucideIcon { Kind = LucideIconKind.Languages },
             SettingsGroup.General),
-        new(SettingsName.Network, new PackIconModern { Kind = PackIconModernKind.Network },
+        new(SettingsName.Network, new LucideIcon { Kind = LucideIconKind.EthernetPort },
             SettingsGroup.General),
-        new(SettingsName.Status, new PackIconMaterial { Kind = PackIconMaterialKind.Pulse },
+        new(SettingsName.Status, new LucideIcon { Kind = LucideIconKind.Activity },
             SettingsGroup.General),
         new(SettingsName.HotKeys,
-            new PackIconFontAwesome { Kind = PackIconFontAwesomeKind.KeyboardRegular },
+            new LucideIcon { Kind = LucideIconKind.Keyboard },
             SettingsGroup.General),
-        new(SettingsName.Autostart, new PackIconMaterial { Kind = PackIconMaterialKind.Power },
+        new(SettingsName.Autostart, new LucideIcon { Kind = LucideIconKind.Power },
             SettingsGroup.General),
         new(SettingsName.Update,
-            new PackIconMaterial { Kind = PackIconMaterialKind.RocketLaunchOutline }, SettingsGroup.General),
+            new LucideIcon { Kind = LucideIconKind.Rocket }, SettingsGroup.General),
         new(SettingsName.Profiles,
-            new PackIconFontAwesome { Kind = PackIconFontAwesomeKind.ServerSolid }, SettingsGroup.General),
-        new(SettingsName.Settings, new PackIconMaterialLight { Kind = PackIconMaterialLightKind.Cog },
+            new LucideIcon { Kind = LucideIconKind.Server }, SettingsGroup.General),
+        new(SettingsName.Settings, new LucideIcon { Kind = LucideIconKind.Settings },
             SettingsGroup.General),
 
         // Applications

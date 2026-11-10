@@ -7,7 +7,7 @@
              xmlns:controls="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls"
              xmlns:validators="clr-namespace:NETworkManager.Validators;assembly=NETworkManager.Validators"
              xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
-             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:icons="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls"
              xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
              xmlns:network="clr-namespace:NETworkManager.Models.Network;assembly=NETworkManager.Models"
              xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
@@ -141,7 +141,7 @@
                 </Button.Resources>
                 <Rectangle Width="20" Height="20" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                     <Rectangle.OpacityMask>
-                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=FolderSearchOutline}" />
+                        <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=FolderSearch}" />
                     </Rectangle.OpacityMask>
                 </Rectangle>
             </Button>
@@ -520,10 +520,10 @@
                     <Rectangle>
                         <Rectangle.Resources>
                             <VisualBrush x:Key="VisualControlPlay" Stretch="Uniform"
-                                         Visual="{iconPacks:Material Kind=Play}" />
+                                         Visual="{icons:Lucide Kind=Play}" />
                             <VisualBrush x:Key="VisualMagnify" Stretch="Uniform"
-                                         Visual="{iconPacks:Material Kind=Magnify}" />
-                            <VisualBrush x:Key="VisualClose" Stretch="Uniform" Visual="{iconPacks:Material Kind=Close}" />
+                                         Visual="{icons:Lucide Kind=Search}" />
+                            <VisualBrush x:Key="VisualClose" Stretch="Uniform" Visual="{icons:Lucide Kind=X}" />
                         </Rectangle.Resources>
                         <Rectangle.Style>
                             <Style TargetType="{x:Type Rectangle}" BasedOn="{StaticResource ButtonWithImageRectangle}">
@@ -640,7 +640,7 @@
                         <MenuItem.Icon>
                             <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                 <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=FileMoveOutline}" />
+                                    <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=FileOutput}" />
                                 </Rectangle.OpacityMask>
                             </Rectangle>
                         </MenuItem.Icon>
@@ -651,7 +651,7 @@
                         <MenuItem.Icon>
                             <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                 <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=FileMoveOutline}" />
+                                    <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=FileOutput}" />
                                 </Rectangle.OpacityMask>
                             </Rectangle>
                         </MenuItem.Icon>

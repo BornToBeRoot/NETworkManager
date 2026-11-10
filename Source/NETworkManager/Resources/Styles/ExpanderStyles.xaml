@@ -1,7 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:mahAppsControls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-                    xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+                    xmlns:icons="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls"
                     xmlns:networkManager="clr-namespace:NETworkManager">
     <Style x:Key="ExpanderDownHeader"
            BasedOn="{StaticResource ResourceKey=MahApps.Styles.ToggleButton.ExpanderHeader.Down}"
@@ -29,7 +29,7 @@
                                     <RotateTransform Angle="180" />
                                 </Rectangle.RenderTransform>
                                 <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ChevronDown}" />
+                                    <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=ChevronDown}" />
                                 </Rectangle.OpacityMask>
                             </Rectangle>
                             <mahAppsControls:ContentControlEx Grid.Column="1"
@@ -133,7 +133,7 @@
                                     <RotateTransform Angle="180" />
                                 </Rectangle.RenderTransform>
                                 <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ChevronDown}" />
+                                    <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=ChevronDown}" />
                                 </Rectangle.OpacityMask>
                             </Rectangle>
                             <mahAppsControls:ContentControlEx Grid.Column="1"
@@ -208,7 +208,7 @@
                                        VerticalAlignment="Center"
                                        HorizontalAlignment="Center">
                                 <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ChevronLeft}" />
+                                    <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=ChevronLeft}" />
                                 </Rectangle.OpacityMask>
                             </Rectangle>
                             <TextBlock Grid.Row="1"

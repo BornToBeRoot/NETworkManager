@@ -6,7 +6,7 @@
              xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:validators="clr-namespace:NETworkManager.Validators;assembly=NETworkManager.Validators"
              xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
-             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:icons="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls"
              xmlns:utilities="clr-namespace:NETworkManager.Utilities;assembly=NETworkManager.Utilities"
              xmlns:controls="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls"
              xmlns:wpfHelpers="clr-namespace:NETworkManager.Utilities.WPF;assembly=NETworkManager.Utilities.WPF"
@@ -93,7 +93,7 @@
                     </Button.Resources>
                     <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                         <Rectangle.OpacityMask>
-                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Restore}" />
+                            <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=Undo2}" />
                         </Rectangle.OpacityMask>
                     </Rectangle>
                 </Button>
@@ -248,7 +248,7 @@
                         </Button.Resources>
                         <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                             <Rectangle.OpacityMask>
-                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Restore}" />
+                                <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=Undo2}" />
                             </Rectangle.OpacityMask>
                         </Rectangle>
                     </Button>
@@ -326,7 +326,7 @@
                         <MenuItem.Icon>
                             <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                 <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Close}" />
+                                    <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=X}" />
                                 </Rectangle.OpacityMask>
                             </Rectangle>
                         </MenuItem.Icon>
@@ -338,7 +338,7 @@
                         <MenuItem.Icon>
                             <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                 <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Edit}" />
+                                    <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=Pencil}" />
                                 </Rectangle.OpacityMask>
                             </Rectangle>
                         </MenuItem.Icon>
@@ -348,7 +348,7 @@
                         <MenuItem.Icon>
                             <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                 <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Close}" />
+                                    <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=X}" />
                                 </Rectangle.OpacityMask>
                             </Rectangle>
                         </MenuItem.Icon>
@@ -394,7 +394,7 @@
                     </Grid.ColumnDefinitions>
                     <Rectangle Style="{StaticResource ButtonWithImageRectangle}">
                         <Rectangle.OpacityMask>
-                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Plus}" />
+                            <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=Plus}" />
                         </Rectangle.OpacityMask>
                     </Rectangle>
                     <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.AddDots}"

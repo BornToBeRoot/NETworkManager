@@ -9,7 +9,7 @@
              xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:mahAppsControls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
              xmlns:validators="clr-namespace:NETworkManager.Validators;assembly=NETworkManager.Validators"
-             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:icons="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls"
              xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
              xmlns:network="clr-namespace:NETworkManager.Models.Network;assembly=NETworkManager.Models"
              xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
@@ -124,7 +124,7 @@
                         <Rectangle Width="20" Height="20" Margin="10,0,10,0"
                                    Fill="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}">
                             <Rectangle.OpacityMask>
-                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Network}" />
+                                <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=EthernetPort}" />
                             </Rectangle.OpacityMask>
                         </Rectangle>
                     </mah:DropDownButton.Content>
@@ -165,7 +165,7 @@
                         <Rectangle Width="20" Height="20" Margin="10,0,10,0"
                                    Fill="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}">
                             <Rectangle.OpacityMask>
-                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Tune}" />
+                                <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=SlidersHorizontal}" />
                             </Rectangle.OpacityMask>
                         </Rectangle>
                     </mah:DropDownButton.Content>
@@ -278,9 +278,9 @@
                             <Rectangle Grid.Column="0" Grid.Row="0">
                                 <Rectangle.Resources>
                                     <VisualBrush x:Key="VisualControlPlay" Stretch="Uniform"
-                                                 Visual="{iconPacks:Material Kind=Play}" />
+                                                 Visual="{icons:Lucide Kind=Play}" />
                                     <VisualBrush x:Key="VisualClose" Stretch="Uniform"
-                                                 Visual="{iconPacks:Material Kind=Close}" />
+                                                 Visual="{icons:Lucide Kind=X}" />
                                 </Rectangle.Resources>
                                 <Rectangle.Style>
                                     <Style TargetType="{x:Type Rectangle}"
@@ -485,7 +485,7 @@
                         <MenuItem.Icon>
                             <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                 <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Refresh}" />
+                                    <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=RefreshCw}" />
                                 </Rectangle.OpacityMask>
                             </Rectangle>
                         </MenuItem.Icon>
@@ -497,7 +497,7 @@
                         <MenuItem.Icon>
                             <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                 <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=NetworkPort}" />
+                                    <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=ScanLine}" />
                                 </Rectangle.OpacityMask>
                             </Rectangle>
                         </MenuItem.Icon>
@@ -508,7 +508,7 @@
                         <MenuItem.Icon>
                             <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                 <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=RadarScreen}" />
+                                    <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=Radar}" />
                                 </Rectangle.OpacityMask>
                             </Rectangle>
                         </MenuItem.Icon>
@@ -519,7 +519,7 @@
                         <MenuItem.Icon>
                             <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                 <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=TransitConnection}" />
+                                    <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=Route}" />
                                 </Rectangle.OpacityMask>
                             </Rectangle>
                         </MenuItem.Icon>
@@ -528,7 +528,7 @@
                         <MenuItem.Icon>
                             <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                 <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=SearchWeb}" />
+                                    <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=Globe}" />
                                 </Rectangle.OpacityMask>
                             </Rectangle>
                         </MenuItem.Icon>
@@ -537,7 +537,7 @@
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                     <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=SearchWeb}" />
+                                        <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=Globe}" />
                                     </Rectangle.OpacityMask>
                                 </Rectangle>
                             </MenuItem.Icon>
@@ -548,7 +548,7 @@
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                     <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=SearchWeb}" />
+                                        <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=Globe}" />
                                     </Rectangle.OpacityMask>
                                 </Rectangle>
                             </MenuItem.Icon>
@@ -558,7 +558,7 @@
                         <MenuItem.Icon>
                             <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                 <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=CardAccountDetailsOutline}" />
+                                    <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=IdCard}" />
                                 </Rectangle.OpacityMask>
                             </Rectangle>
                         </MenuItem.Icon>
@@ -567,7 +567,7 @@
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                     <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=CardAccountDetailsOutline}" />
+                                        <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=IdCard}" />
                                     </Rectangle.OpacityMask>
                                 </Rectangle>
                             </MenuItem.Icon>
@@ -578,7 +578,7 @@
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                     <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=CardAccountDetailsOutline}" />
+                                        <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=IdCard}" />
                                     </Rectangle.OpacityMask>
                                 </Rectangle>
                             </MenuItem.Icon>
@@ -590,7 +590,7 @@
                         <MenuItem.Icon>
                             <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                 <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=RemoteDesktop}" />
+                                    <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=Monitor}" />
                                 </Rectangle.OpacityMask>
                             </Rectangle>
                         </MenuItem.Icon>
@@ -601,7 +601,7 @@
                         <MenuItem.Icon>
                             <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                 <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Powershell}" />
+                                    <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=SquareChevronRight}" />
                                 </Rectangle.OpacityMask>
                             </Rectangle>
                         </MenuItem.Icon>
@@ -612,7 +612,7 @@
                         <MenuItem.Icon>
                             <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                 <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:FontAwesome Kind=TerminalSolid}" />
+                                    <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=Terminal}" />
                                 </Rectangle.OpacityMask>
                             </Rectangle>
                         </MenuItem.Icon>
@@ -623,7 +623,7 @@
                         <MenuItem.Icon>
                             <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                 <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=EyeOutline}" />
+                                    <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=Eye}" />
                                 </Rectangle.OpacityMask>
                             </Rectangle>
                         </MenuItem.Icon>
@@ -633,7 +633,7 @@
                         <MenuItem.Icon>
                             <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                 <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Browser}" />
+                                    <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=AppWindow}" />
                                 </Rectangle.OpacityMask>
                             </Rectangle>
                         </MenuItem.Icon>
@@ -644,7 +644,7 @@
                         <MenuItem.Icon>
                             <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                 <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Switch}" />
+                                    <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=Server}" />
                                 </Rectangle.OpacityMask>
                             </Rectangle>
                         </MenuItem.Icon>
@@ -655,7 +655,7 @@
                         <MenuItem.Icon>
                             <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                 <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Power}" />
+                                    <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=Power}" />
                                 </Rectangle.OpacityMask>
                             </Rectangle>
                         </MenuItem.Icon>
@@ -665,7 +665,7 @@
                         <MenuItem.Icon>
                             <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                 <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Application}" />
+                                    <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=AppWindow}" />
                                 </Rectangle.OpacityMask>
                             </Rectangle>
                         </MenuItem.Icon>
@@ -676,7 +676,7 @@
                         <MenuItem.Icon>
                             <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                 <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Plus}" />
+                                    <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=Plus}" />
                                 </Rectangle.OpacityMask>
                             </Rectangle>
                         </MenuItem.Icon>
@@ -686,7 +686,7 @@
                         <MenuItem.Icon>
                             <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                 <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentCopy}" />
+                                    <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=Copy}" />
                                 </Rectangle.OpacityMask>
                             </Rectangle>
                         </MenuItem.Icon>
@@ -872,7 +872,7 @@
                         <MenuItem.Icon>
                             <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                 <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=FileMoveOutline}" />
+                                    <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=FileOutput}" />
                                 </Rectangle.OpacityMask>
                             </Rectangle>
                         </MenuItem.Icon>
@@ -885,7 +885,7 @@
                         <MenuItem.Icon>
                             <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                 <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Refresh}" />
+                                    <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=RefreshCw}" />
                                 </Rectangle.OpacityMask>
                             </Rectangle>
                         </MenuItem.Icon>
@@ -895,7 +895,7 @@
                         <MenuItem.Icon>
                             <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                 <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentCopy}" />
+                                    <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=Copy}" />
                                 </Rectangle.OpacityMask>
                             </Rectangle>
                         </MenuItem.Icon>
@@ -931,7 +931,7 @@
                         <MenuItem.Icon>
                             <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                 <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=FileMoveOutline}" />
+                                    <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=FileOutput}" />
                                 </Rectangle.OpacityMask>
                             </Rectangle>
                         </MenuItem.Icon>
@@ -958,7 +958,7 @@
                                 <Rectangle x:Name="ExpandRowDetails" Height="16" Width="16"
                                            Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                     <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ChevronUp}" />
+                                        <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=ChevronUp}" />
                                     </Rectangle.OpacityMask>
                                 </Rectangle>
                             </Button>
@@ -969,7 +969,7 @@
                                     <Setter TargetName="ExpandRowDetails" Property="OpacityMask">
                                         <Setter.Value>
                                             <VisualBrush Stretch="Uniform"
-                                                         Visual="{iconPacks:Material Kind=ChevronDown}" />
+                                                         Visual="{icons:Lucide Kind=ChevronDown}" />
                                         </Setter.Value>
                                     </Setter>
                                 </DataTrigger>
@@ -1013,7 +1013,7 @@
                                             <Setter Property="OpacityMask">
                                                 <Setter.Value>
                                                     <VisualBrush Stretch="Uniform"
-                                                                 Visual="{iconPacks:Material Kind=Monitor}" />
+                                                                 Visual="{icons:Lucide Kind=Monitor}" />
                                                 </Setter.Value>
                                             </Setter>
                                         </DataTrigger>
@@ -1023,7 +1023,7 @@
                                             <Setter Property="OpacityMask">
                                                 <Setter.Value>
                                                     <VisualBrush Stretch="Uniform"
-                                                                 Visual="{iconPacks:Material Kind=RouterNetwork}" />
+                                                                 Visual="{icons:Lucide Kind=Router}" />
                                                 </Setter.Value>
                                             </Setter>
                                         </DataTrigger>
@@ -1033,7 +1033,7 @@
                                             <Setter Property="OpacityMask">
                                                 <Setter.Value>
                                                     <VisualBrush Stretch="Uniform"
-                                                                 Visual="{iconPacks:Material Kind=Dns}" />
+                                                                 Visual="{icons:Lucide Kind=Server}" />
                                                 </Setter.Value>
                                             </Setter>
                                         </DataTrigger>
@@ -1043,7 +1043,7 @@
                                             <Setter Property="OpacityMask">
                                                 <Setter.Value>
                                                     <VisualBrush Stretch="Uniform"
-                                                                 Visual="{iconPacks:Material Kind=IpNetwork}" />
+                                                                 Visual="{icons:Lucide Kind=Network}" />
                                                 </Setter.Value>
                                             </Setter>
                                         </DataTrigger>
@@ -1076,7 +1076,7 @@
                                     <Setter TargetName="ChangeIcon" Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray5}" />
                                     <Setter TargetName="ChangeIcon" Property="OpacityMask">
                                         <Setter.Value>
-                                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Plus}" />
+                                            <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=Plus}" />
                                         </Setter.Value>
                                     </Setter>
                                     <Setter TargetName="ChangeText" Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray5}" />
@@ -1085,7 +1085,7 @@
                                     <Setter TargetName="ChangeIcon" Property="Fill" Value="{DynamicResource Brushes.Status.Error}" />
                                     <Setter TargetName="ChangeIcon" Property="OpacityMask">
                                         <Setter.Value>
-                                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Minus}" />
+                                            <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=Minus}" />
                                         </Setter.Value>
                                     </Setter>
                                     <Setter TargetName="ChangeText" Property="Foreground" Value="{DynamicResource Brushes.Status.Error}" />
@@ -1094,7 +1094,7 @@
                                     <Setter TargetName="ChangeIcon" Property="Fill" Value="{DynamicResource Brushes.Status.Warning}" />
                                     <Setter TargetName="ChangeIcon" Property="OpacityMask">
                                         <Setter.Value>
-                                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=SwapHorizontal}" />
+                                            <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=ArrowLeftRight}" />
                                         </Setter.Value>
                                     </Setter>
                                     <Setter TargetName="ChangeText" Property="Foreground" Value="{DynamicResource Brushes.Status.Warning}" />
@@ -1188,7 +1188,7 @@
                                     <Setter TargetName="OSIcon" Property="Visibility" Value="Visible" />
                                     <Setter TargetName="OSIcon" Property="OpacityMask">
                                         <Setter.Value>
-                                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=MicrosoftWindows}" />
+                                            <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=AppWindow}" />
                                         </Setter.Value>
                                     </Setter>
                                 </MultiDataTrigger>
@@ -1200,7 +1200,7 @@
                                     <Setter TargetName="OSIcon" Property="Visibility" Value="Visible" />
                                     <Setter TargetName="OSIcon" Property="OpacityMask">
                                         <Setter.Value>
-                                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Console}" />
+                                            <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=Terminal}" />
                                         </Setter.Value>
                                     </Setter>
                                 </MultiDataTrigger>
@@ -1212,7 +1212,7 @@
                                     <Setter TargetName="OSIcon" Property="Visibility" Value="Visible" />
                                     <Setter TargetName="OSIcon" Property="OpacityMask">
                                         <Setter.Value>
-                                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Switch}" />
+                                            <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=Server}" />
                                         </Setter.Value>
                                     </Setter>
                                 </MultiDataTrigger>
@@ -1222,7 +1222,7 @@
                                     <Setter TargetName="OSIcon" Property="OpacityMask">
                                         <Setter.Value>
                                             <VisualBrush Stretch="Uniform"
-                                                         Visual="{iconPacks:Material Kind=MicrosoftWindows}" />
+                                                         Visual="{icons:Lucide Kind=AppWindow}" />
                                         </Setter.Value>
                                     </Setter>
                                 </DataTrigger>

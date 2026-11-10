@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:network="clr-namespace:NETworkManager.Models.Network;assembly=NETworkManager.Models"
-             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:icons="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls"
              xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
              xmlns:controls="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls"
              xmlns:validators="clr-namespace:NETworkManager.Validators;assembly=NETworkManager.Validators"
@@ -72,7 +72,7 @@
                                Fill="{DynamicResource MahApps.Brushes.Gray3}">
                         <Rectangle.OpacityMask>
                             <VisualBrush Stretch="Uniform"
-                                         Visual="{iconPacks:Material Kind=ContentSave}" />
+                                         Visual="{icons:Lucide Kind=Save}" />
                         </Rectangle.OpacityMask>
                     </Rectangle>
                 </MenuItem.Icon>
@@ -120,9 +120,9 @@
                                                         <Rectangle Width="24" Height="24">
                                                             <Rectangle.Resources>
                                                                 <VisualBrush x:Key="VisualUp" Stretch="Uniform"
-                                                                             Visual="{iconPacks:Modern Kind=Network}" />
+                                                                             Visual="{icons:Lucide Kind=EthernetPort}" />
                                                                 <VisualBrush x:Key="VisualDown" Stretch="Uniform"
-                                                                             Visual="{iconPacks:Modern Kind=NetworkDisconnect}" />
+                                                                             Visual="{icons:Lucide Kind=Unplug}" />
                                                             </Rectangle.Resources>
                                                             <Rectangle.Style>
                                                                 <Style TargetType="{x:Type Rectangle}">
@@ -206,7 +206,7 @@
                                             <Rectangle Width="24" Height="24"
                                                        wpfHelpers:ReloadAnimationHelper.IsReloading="{Binding IsNetworkInterfaceLoading}">
                                                 <Rectangle.OpacityMask>
-                                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Refresh}" />
+                                                    <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=RefreshCw}" />
                                                 </Rectangle.OpacityMask>
                                                 <Rectangle.Style>
                                                     <Style TargetType="{x:Type Rectangle}">
@@ -602,7 +602,7 @@
                                                 </Grid.ColumnDefinitions>
                                                 <Rectangle Style="{StaticResource ButtonWithImageRectangle}">
                                                     <Rectangle.OpacityMask>
-                                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Network}" />
+                                                        <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=EthernetPort}" />
                                                     </Rectangle.OpacityMask>
                                                 </Rectangle>
                                                 <TextBlock Grid.Column="1"
@@ -637,7 +637,7 @@
                                                 <Rectangle Style="{StaticResource ButtonWithImageRectangle}">
                                                     <Rectangle.OpacityMask>
                                                         <VisualBrush Stretch="Uniform"
-                                                                     Visual="{iconPacks:FontAwesome Kind=NetworkWiredSolid}" />
+                                                                     Visual="{icons:Lucide Kind=Network}" />
                                                     </Rectangle.OpacityMask>
                                                 </Rectangle>
                                                 <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.IPScanner}"
@@ -661,7 +661,7 @@
                                                            Style="{StaticResource ResourceKey=ButtonWithImageRectangle}">
                                                     <Rectangle.OpacityMask>
                                                         <VisualBrush Stretch="Uniform"
-                                                                     Visual="{iconPacks:Material Kind=FileMoveOutline}" />
+                                                                     Visual="{icons:Lucide Kind=FileOutput}" />
                                                     </Rectangle.OpacityMask>
                                                 </Rectangle>
                                                 <TextBlock Grid.Column="1" Grid.Row="0"
@@ -698,9 +698,9 @@
                                                         <Rectangle Width="24" Height="24">
                                                             <Rectangle.Resources>
                                                                 <VisualBrush x:Key="VisualUp" Stretch="Uniform"
-                                                                             Visual="{iconPacks:Modern Kind=Network}" />
+                                                                             Visual="{icons:Lucide Kind=EthernetPort}" />
                                                                 <VisualBrush x:Key="VisualDown" Stretch="Uniform"
-                                                                             Visual="{iconPacks:Modern Kind=NetworkDisconnect}" />
+                                                                             Visual="{icons:Lucide Kind=Unplug}" />
                                                             </Rectangle.Resources>
                                                             <Rectangle.Style>
                                                                 <Style TargetType="{x:Type Rectangle}">
@@ -784,7 +784,7 @@
                                             <Rectangle Width="24" Height="24"
                                                        wpfHelpers:ReloadAnimationHelper.IsReloading="{Binding IsNetworkInterfaceLoading}">
                                                 <Rectangle.OpacityMask>
-                                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Refresh}" />
+                                                    <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=RefreshCw}" />
                                                 </Rectangle.OpacityMask>
                                                 <Rectangle.Style>
                                                     <Style TargetType="{x:Type Rectangle}">
@@ -840,7 +840,7 @@
                                         <StackPanel Orientation="Horizontal">
                                             <Rectangle Width="16" Height="16" VerticalAlignment="Center">
                                                 <Rectangle.OpacityMask>
-                                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=AccessPoint}" />
+                                                    <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=RadioTower}" />
                                                 </Rectangle.OpacityMask>
                                                 <Rectangle.Style>
                                                     <Style TargetType="{x:Type Rectangle}">
@@ -979,9 +979,9 @@
                                                             <Rectangle Width="24" Height="24">
                                                                 <Rectangle.Resources>
                                                                     <VisualBrush x:Key="VisualUp" Stretch="Uniform"
-                                                                                 Visual="{iconPacks:Modern Kind=Network}" />
+                                                                                 Visual="{icons:Lucide Kind=EthernetPort}" />
                                                                     <VisualBrush x:Key="VisualDown" Stretch="Uniform"
-                                                                                 Visual="{iconPacks:Modern Kind=NetworkDisconnect}" />
+                                                                                 Visual="{icons:Lucide Kind=Unplug}" />
                                                                 </Rectangle.Resources>
                                                                 <Rectangle.Style>
                                                                     <Style TargetType="{x:Type Rectangle}">
@@ -1066,7 +1066,7 @@
                                                            wpfHelpers:ReloadAnimationHelper.IsReloading="{Binding IsNetworkInterfaceLoading}">
                                                     <Rectangle.OpacityMask>
                                                         <VisualBrush Stretch="Uniform"
-                                                                     Visual="{iconPacks:Material Kind=Refresh}" />
+                                                                     Visual="{icons:Lucide Kind=RefreshCw}" />
                                                     </Rectangle.OpacityMask>
                                                     <Rectangle.Style>
                                                         <Style TargetType="{x:Type Rectangle}">
@@ -1314,7 +1314,7 @@
                                                     <Rectangle Style="{StaticResource ButtonWithImageRectangle}">
                                                         <Rectangle.OpacityMask>
                                                             <VisualBrush Stretch="Uniform"
-                                                                         Visual="{iconPacks:Modern Kind=ListDelete}" />
+                                                                         Visual="{icons:Lucide Kind=ListX}" />
                                                         </Rectangle.OpacityMask>
                                                     </Rectangle>
                                                     <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.FlushDNSCache}"
@@ -1331,7 +1331,7 @@
                                                     </Grid.ColumnDefinitions>
                                                     <Rectangle Style="{StaticResource ButtonWithImageRectangle}" Margin="10,4,0,4">
                                                         <Rectangle.OpacityMask>
-                                                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Refresh}" />
+                                                            <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=RefreshCw}" />
                                                         </Rectangle.OpacityMask>
                                                     </Rectangle>
                                                     <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.ReleaseRenew}"
@@ -1388,7 +1388,7 @@
                                                                Margin="10,4,0,4">
                                                         <Rectangle.OpacityMask>
                                                             <VisualBrush Stretch="Uniform"
-                                                                         Visual="{iconPacks:Material Kind=ExpansionCardVariant}" />
+                                                                         Visual="{icons:Lucide Kind=EthernetPort}" />
                                                         </Rectangle.OpacityMask>
                                                     </Rectangle>
                                                     <TextBlock Grid.Column="1"
@@ -1407,7 +1407,7 @@
                                                                    Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                                             <Rectangle.OpacityMask>
                                                                 <VisualBrush Stretch="Uniform"
-                                                                             Visual="{iconPacks:Modern Kind=ListAddBelow}" />
+                                                                             Visual="{icons:Lucide Kind=ListPlus}" />
                                                             </Rectangle.OpacityMask>
                                                         </Rectangle>
                                                     </MenuItem.Icon>
@@ -1422,7 +1422,7 @@
                                                                    Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                                             <Rectangle.OpacityMask>
                                                                 <VisualBrush Stretch="Uniform"
-                                                                             Visual="{iconPacks:Modern Kind=ListDelete}" />
+                                                                             Visual="{icons:Lucide Kind=ListX}" />
                                                             </Rectangle.OpacityMask>
                                                         </Rectangle>
                                                     </MenuItem.Icon>
@@ -1443,7 +1443,7 @@
                                                 <Rectangle Style="{StaticResource ButtonWithImageRectangle}">
                                                     <Rectangle.OpacityMask>
                                                         <VisualBrush Stretch="Uniform"
-                                                                     Visual="{iconPacks:Material Kind=ContentSave}" />
+                                                                     Visual="{icons:Lucide Kind=Save}" />
                                                     </Rectangle.OpacityMask>
                                                 </Rectangle>
                                                 <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.Apply}"
@@ -1508,7 +1508,7 @@
                                                                Margin="10,5,0,5"
                                                                Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                                         <Rectangle.OpacityMask>
-                                                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Shield}" />
+                                                            <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=Shield}" />
                                                         </Rectangle.OpacityMask>
                                                     </Rectangle>
                                                     <TextBlock Grid.Column="1"
@@ -1548,7 +1548,7 @@
                         </Grid.ColumnDefinitions>
                         <Rectangle Style="{StaticResource ButtonWithImageRectangle}">
                             <Rectangle.OpacityMask>
-                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Network}" />
+                                <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=EthernetPort}" />
                             </Rectangle.OpacityMask>
                         </Rectangle>
                         <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.NetworkConnectionsDots}"

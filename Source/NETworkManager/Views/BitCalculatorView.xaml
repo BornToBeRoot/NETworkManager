@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
-             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:icons="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls"
              xmlns:mahAppsControls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
              xmlns:validators="clr-namespace:NETworkManager.Validators;assembly=NETworkManager.Validators"
              xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
@@ -93,7 +93,7 @@
                                     <Rectangle Style="{StaticResource ButtonWithImageRectangle}">
                                         <Rectangle.OpacityMask>
                                             <VisualBrush Stretch="Uniform"
-                                                         Visual="{iconPacks:Material Kind=Calculator}" />
+                                                         Visual="{icons:Lucide Kind=Calculator}" />
                                         </Rectangle.OpacityMask>
                                     </Rectangle>
                                     <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.Calculate}"
@@ -204,7 +204,7 @@
                                 <Rectangle Grid.Column="0" Grid.Row="0"
                                            Style="{StaticResource ResourceKey=ButtonWithImageRectangle}">
                                     <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=FileMoveOutline}" />
+                                        <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=FileOutput}" />
                                     </Rectangle.OpacityMask>
                                 </Rectangle>
                                 <TextBlock Grid.Column="1" Grid.Row="0"

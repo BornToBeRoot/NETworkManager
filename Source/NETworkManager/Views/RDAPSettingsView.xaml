@@ -9,7 +9,7 @@
              xmlns:wpfHelpers="clr-namespace:NETworkManager.Utilities.WPF;assembly=NETworkManager.Utilities.WPF"
              xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
              xmlns:rdap="clr-namespace:NETworkManager.Models.RDAP;assembly=NETworkManager.Models"
-             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:icons="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls"
              mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:RDAPSettingsViewModel}">
     <UserControl.Resources>
         <converters:DateTimeToStringConverter x:Key="DateTimeToStringConverter" />
@@ -74,7 +74,7 @@
                         </Grid.ColumnDefinitions>
                         <Rectangle Style="{StaticResource ButtonWithImageRectangle}">
                             <Rectangle.OpacityMask>
-                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Download}" />
+                                <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=Download}" />
                             </Rectangle.OpacityMask>
                         </Rectangle>
                         <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.UpdateNow}"
@@ -92,7 +92,7 @@
                         </Grid.ColumnDefinitions>
                         <Rectangle Style="{StaticResource ButtonWithImageRectangle}">
                             <Rectangle.OpacityMask>
-                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=FolderOpenOutline}" />
+                                <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=FolderOpen}" />
                             </Rectangle.OpacityMask>
                         </Rectangle>
                         <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.OpenLocation}"

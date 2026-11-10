@@ -7,7 +7,7 @@
              xmlns:validators="clr-namespace:NETworkManager.Validators;assembly=NETworkManager.Validators"
              xmlns:mahAppsControls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
              xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
-             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:icons="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls"
              xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
              xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
@@ -85,7 +85,7 @@
                                 <Rectangle>
                                     <Rectangle.Resources>
                                         <VisualBrush x:Key="VisualMagnify" Stretch="Uniform"
-                                                     Visual="{iconPacks:Material Kind=Magnify}" />
+                                                     Visual="{icons:Lucide Kind=Search}" />
                                     </Rectangle.Resources>
                                     <Rectangle.Style>
                                         <Style TargetType="{x:Type Rectangle}"
@@ -164,7 +164,7 @@
                             <Rectangle Grid.Column="0" Grid.Row="0"
                                        Style="{StaticResource ResourceKey=ButtonWithImageRectangle}">
                                 <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=FileMoveOutline}" />
+                                    <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=FileOutput}" />
                                 </Rectangle.OpacityMask>
                             </Rectangle>
                             <TextBlock Grid.Column="1" Grid.Row="0"

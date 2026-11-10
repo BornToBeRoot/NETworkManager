@@ -1,6 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+                    xmlns:icons="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls"
                     xmlns:dragablz="clr-namespace:Dragablz;assembly=Dragablz"
                     xmlns:dockablz="clr-namespace:Dragablz.Dockablz;assembly=Dragablz"
                     xmlns:networkManagerControls="clr-namespace:NETworkManager.Controls"
@@ -172,7 +172,7 @@
                                     <Rectangle Width="16" Height="16" Style="{StaticResource DragablzTabHeaderCloseIcon}">
                                         <Rectangle.OpacityMask>
                                             <VisualBrush Stretch="Uniform"
-                                                         Visual="{iconPacks:Material Kind=WindowClose}" />
+                                                         Visual="{icons:Lucide Kind=X}" />
                                         </Rectangle.OpacityMask>
                                     </Rectangle>
                                 </Button>

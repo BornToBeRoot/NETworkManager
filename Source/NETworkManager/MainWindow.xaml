@@ -6,7 +6,7 @@
                  xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
                  xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
                  xmlns:dd="clr-namespace:GongSolutions.Wpf.DragDrop;assembly=GongSolutions.Wpf.DragDrop"
-                 xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+                 xmlns:icons="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls"
                  xmlns:shell="clr-namespace:ControlzEx.Windows.Shell;assembly=ControlzEx"
                  xmlns:controls="clr-namespace:NETworkManager.Controls"
                  xmlns:interactivity="http://schemas.microsoft.com/xaml/behaviors"
@@ -39,7 +39,7 @@
                 <MenuItem.Icon>
                     <Rectangle Width="16" Height="16" Fill="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}">
                         <Rectangle.OpacityMask>
-                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=OpenInNew}" />
+                            <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=ExternalLink}" />
                         </Rectangle.OpacityMask>
                     </Rectangle>
                 </MenuItem.Icon>
@@ -48,7 +48,7 @@
                 <MenuItem.Icon>
                     <Rectangle Width="16" Height="16" Fill="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}">
                         <Rectangle.OpacityMask>
-                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Pulse}" />
+                            <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=Activity}" />
                         </Rectangle.OpacityMask>
                     </Rectangle>
                 </MenuItem.Icon>
@@ -57,7 +57,7 @@
                 <MenuItem.Icon>
                     <Rectangle Width="16" Height="16" Fill="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}">
                         <Rectangle.OpacityMask>
-                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:MaterialLight Kind=Cog}" />
+                            <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=Settings}" />
                         </Rectangle.OpacityMask>
                     </Rectangle>
                 </MenuItem.Icon>
@@ -66,7 +66,7 @@
                 <MenuItem.Icon>
                     <Rectangle Width="16" Height="16" Fill="{DynamicResource Brushes.Status.Error}">
                         <Rectangle.OpacityMask>
-                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=WindowClose}" />
+                            <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=X}" />
                         </Rectangle.OpacityMask>
                     </Rectangle>
                 </MenuItem.Icon>
@@ -101,7 +101,7 @@
                     <Rectangle Width="20" Height="20"
                            Fill="{DynamicResource ResourceKey=MahApps.Brushes.Accent}">
                         <Rectangle.OpacityMask>
-                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ProgressCheck}" />
+                            <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=CircleCheck}" />
                         </Rectangle.OpacityMask>
                     </Rectangle>
                     <TextBlock Text="{x:Static Member=localization:Strings.RestartRequired}"
@@ -119,7 +119,7 @@
                 <Rectangle Width="20" Height="20"
                            Fill="{DynamicResource ResourceKey=MahApps.Brushes.Accent}">
                     <Rectangle.OpacityMask>
-                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=RocketLaunchOutline}" />
+                        <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=Rocket}" />
                     </Rectangle.OpacityMask>
                 </Rectangle>
             </Button>
@@ -133,7 +133,7 @@
                 <Rectangle Width="20" Height="20"
                            Fill="{DynamicResource ResourceKey=MahApps.Brushes.Accent}">
                     <Rectangle.OpacityMask>
-                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=InterfacePassword}" />
+                        <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=Lock}" />
                     </Rectangle.OpacityMask>
                 </Rectangle>
             </Button>
@@ -173,7 +173,7 @@
                                         <Setter Property="OpacityMask">
                                             <Setter.Value>
                                                 <VisualBrush Stretch="Uniform"
-                                                             Visual="{iconPacks:FontAwesome Kind=UserSolid}" />
+                                                             Visual="{icons:Lucide Kind=User}" />
                                             </Setter.Value>
                                         </Setter>
                                         <Style.Triggers>
@@ -181,7 +181,7 @@
                                                 <Setter Property="OpacityMask">
                                                     <Setter.Value>
                                                         <VisualBrush Stretch="Uniform"
-                                                                     Visual="{iconPacks:FontAwesome Kind=UserLockSolid}" />
+                                                                     Visual="{icons:Lucide Kind=UserLock}" />
                                                     </Setter.Value>
                                                 </Setter>
                                             </DataTrigger>
@@ -203,7 +203,7 @@
                     <Rectangle Width="20" Height="20"
                                Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
                         <Rectangle.OpacityMask>
-                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Github}" />
+                            <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=Github}" />
                         </Rectangle.OpacityMask>
                     </Rectangle>
                 </StackPanel>
@@ -218,7 +218,7 @@
                     <Rectangle Width="20" Height="20"
                                Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
                         <Rectangle.OpacityMask>
-                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Bug}" />
+                            <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=Bug}" />
                         </Rectangle.OpacityMask>
                     </Rectangle>
                 </StackPanel>
@@ -231,7 +231,7 @@
                     <Rectangle Width="20" Height="20"
                                Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
                         <Rectangle.OpacityMask>
-                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Book}" />
+                            <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=BookOpen}" />
                         </Rectangle.OpacityMask>
                     </Rectangle>
                 </StackPanel>
@@ -244,7 +244,7 @@
                 <StackPanel Orientation="Horizontal">
                     <Rectangle Width="20" Height="20">
                         <Rectangle.OpacityMask>
-                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Heart}" />
+                            <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=Heart}" />
                         </Rectangle.OpacityMask>
                         <Rectangle.Style>
                             <Style TargetType="Rectangle">
@@ -303,7 +303,7 @@
                                                Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                         <Rectangle.OpacityMask>
                                             <VisualBrush Stretch="Uniform"
-                                                         Visual="{iconPacks:FontAwesome Kind=TerminalSolid}" />
+                                                         Visual="{icons:Lucide Kind=Terminal}" />
                                         </Rectangle.OpacityMask>
                                     </Rectangle>
                                     <TextBlock Grid.Column="1"
@@ -447,7 +447,7 @@
                                 <Rectangle Grid.Column="0" Width="16" Height="16" Margin="0,0,-2,0">
                                     <Rectangle.OpacityMask>
                                         <VisualBrush Stretch="Uniform"
-                                                     Visual="{iconPacks:Material Kind=ChevronDoubleRight}" />
+                                                     Visual="{icons:Lucide Kind=ChevronsRight}" />
                                     </Rectangle.OpacityMask>
                                     <Rectangle.Style>
                                         <Style TargetType="{x:Type Rectangle}">
@@ -572,7 +572,7 @@
                                 </ToggleButton.Style>
                                 <Rectangle Width="16" Height="16">
                                     <Rectangle.Resources>
-                                        <VisualBrush x:Key="VisualPin" Visual="{iconPacks:Modern Kind=Pin}" />
+                                        <VisualBrush x:Key="VisualPin" Visual="{icons:Lucide Kind=Pin}" />
                                     </Rectangle.Resources>
                                     <Rectangle.Style>
                                         <Style TargetType="{x:Type Rectangle}">
@@ -900,7 +900,7 @@
                             <Rectangle Width="24" Height="24">
                                 <Rectangle.OpacityMask>
                                     <VisualBrush Stretch="Uniform"
-                                                 Visual="{iconPacks:Material Kind=FilterRemoveOutline}" />
+                                                 Visual="{icons:Lucide Kind=FunnelX}" />
                                 </Rectangle.OpacityMask>
                                 <Rectangle.Style>
                                     <Style TargetType="{x:Type Rectangle}">
@@ -970,7 +970,7 @@
                                 </Grid.ColumnDefinitions>
                                 <Rectangle Grid.Column="0" Width="24" Height="24" Margin="0,0,-2,0">
                                     <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:MaterialLight Kind=Cog}" />
+                                        <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=Settings}" />
                                     </Rectangle.OpacityMask>
                                     <Rectangle.Style>
                                         <Style TargetType="{x:Type Rectangle}">
@@ -1106,7 +1106,7 @@
                                     <Rectangle Grid.Column="0" Width="16" Height="16">
                                         <Rectangle.OpacityMask>
                                             <VisualBrush Stretch="Uniform"
-                                                         Visual="{iconPacks:MaterialLight Kind=ArrowLeft}" />
+                                                         Visual="{icons:Lucide Kind=ArrowLeft}" />
                                         </Rectangle.OpacityMask>
                                         <Rectangle.Style>
                                             <Style TargetType="{x:Type Rectangle}">

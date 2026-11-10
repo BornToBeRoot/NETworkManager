@@ -7,7 +7,7 @@
                  xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
                  xmlns:networkManager="clr-namespace:NETworkManager"
                  xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
-                 xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+                 xmlns:icons="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls"
                  mc:Ignorable="d" d:DataContext="{d:DesignInstance networkManager:StatusWindow}"
                  TitleAlignment="Left"
                  Style="{DynamicResource ResourceKey=FrameWindow}"
@@ -36,7 +36,7 @@
                     <Rectangle Width="16" Height="16"
                                Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
                         <Rectangle.OpacityMask>
-                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=OpenInNew}" />
+                            <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=ExternalLink}" />
                         </Rectangle.OpacityMask>
                     </Rectangle>
                 </StackPanel>

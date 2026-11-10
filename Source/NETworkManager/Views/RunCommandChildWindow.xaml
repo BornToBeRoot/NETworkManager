@@ -12,7 +12,7 @@
                                xmlns:wpfHelpers="clr-namespace:NETworkManager.Utilities.WPF;assembly=NETworkManager.Utilities.WPF"
                                xmlns:simpleChildWindow="clr-namespace:MahApps.Metro.SimpleChildWindow;assembly=MahApps.Metro.SimpleChildWindow"
                                xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
-                               xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+                               xmlns:icons="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls"
                                Style="{StaticResource DefaultChildWindow}"
                                networkManager:ChildWindowAnimation.Kind="SlideDown"
                                Title="{x:Static localization:Strings.RunCommand}"
@@ -29,19 +29,19 @@
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
         <!-- Like the run command in the title bar -->
         <VisualBrush x:Key="RunCommandInputIcon" Stretch="Uniform"
-                     Visual="{iconPacks:FontAwesome Kind=TerminalSolid}" />
+                     Visual="{icons:Lucide Kind=Terminal}" />
         <VisualBrush x:Key="RunCommandSettingsIcon" Stretch="Uniform"
-                     Visual="{iconPacks:MaterialLight Kind=Cog}" />
+                     Visual="{icons:Lucide Kind=Settings}" />
         <VisualBrush x:Key="RunCommandProfileIcon" Stretch="Uniform"
-                     Visual="{iconPacks:FontAwesome Kind=ServerSolid}" />
+                     Visual="{icons:Lucide Kind=Server}" />
         <VisualBrush x:Key="RunCommandHistoryIcon" Stretch="Uniform"
-                     Visual="{iconPacks:Material Kind=History}" />
+                     Visual="{icons:Lucide Kind=History}" />
         <VisualBrush x:Key="RunCommandTypeIcon" Stretch="Uniform"
-                     Visual="{iconPacks:Material Kind=TagOutline}" />
+                     Visual="{icons:Lucide Kind=Tag}" />
         <VisualBrush x:Key="RunCommandDNSServerIcon" Stretch="Uniform"
-                     Visual="{iconPacks:Material Kind=Dns}" />
+                     Visual="{icons:Lucide Kind=Server}" />
         <VisualBrush x:Key="RunCommandPortProfileIcon" Stretch="Uniform"
-                     Visual="{iconPacks:Material Kind=FormatListBulleted}" />
+                     Visual="{icons:Lucide Kind=List}" />
         <!-- Key of the key hints (e.g. "Enter") -->
         <Style x:Key="RunCommandKeyBorder" TargetType="{x:Type Border}">
             <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Gray8}" />
@@ -131,7 +131,7 @@
                            Fill="{DynamicResource Brushes.Status.Success}"
                            Visibility="{Binding IsValid, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
                     <Rectangle.OpacityMask>
-                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=CheckCircleOutline}" />
+                        <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=CircleCheck}" />
                     </Rectangle.OpacityMask>
                 </Rectangle>
                 <Rectangle x:Name="RectangleInvalid" Grid.Column="2"
@@ -142,7 +142,7 @@
                            Visibility="{Binding IsInvalid, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
                     <!-- Circle like the check (the style has an octagon) -->
                     <Rectangle.OpacityMask>
-                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=AlertCircleOutline}" />
+                        <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=CircleAlert}" />
                     </Rectangle.OpacityMask>
                     <Rectangle.ToolTip>
                         <ToolTip x:Name="ToolTipInvalid" Content="{Binding ValidationMessage}"
@@ -378,7 +378,7 @@
                             <!-- Like the close button of the Ping Monitor (red on hover) -->
                             <Rectangle Width="16" Height="16">
                                 <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Fill" Visual="{iconPacks:Material Kind=WindowClose}" />
+                                    <VisualBrush Stretch="Fill" Visual="{icons:Lucide Kind=X}" />
                                 </Rectangle.OpacityMask>
                                 <Rectangle.Style>
                                     <Style TargetType="{x:Type Rectangle}">

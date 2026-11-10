@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:icons="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls"
              xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
              xmlns:controls="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls"
              xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
@@ -45,7 +45,7 @@
                             ToolTip="{x:Static Member=localization:Strings.AddGroupDots}">
                         <Rectangle Width="16" Height="16">
                             <Rectangle.OpacityMask>
-                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Plus}" />
+                                <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=Plus}" />
                             </Rectangle.OpacityMask>
                             <Rectangle.Style>
                                 <Style TargetType="{x:Type TypeName=Rectangle}">
@@ -74,7 +74,7 @@
                                         <Rectangle Width="16" Height="16"
                                                    Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                             <Rectangle.OpacityMask>
-                                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Edit}" />
+                                                <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=Pencil}" />
                                             </Rectangle.OpacityMask>
                                         </Rectangle>
                                     </MenuItem.Icon>
@@ -85,7 +85,7 @@
                                         <Rectangle Width="16" Height="16"
                                                    Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                             <Rectangle.OpacityMask>
-                                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Close}" />
+                                                <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=X}" />
                                             </Rectangle.OpacityMask>
                                         </Rectangle>
                                     </MenuItem.Icon>
@@ -147,7 +147,7 @@
                         <StackPanel Orientation="Horizontal">
                             <Rectangle Width="16" Height="16">
                                 <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=MonitorArrowDownVariant}" />
+                                    <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=MonitorDown}" />
                                 </Rectangle.OpacityMask>
                                 <Rectangle.Style>
                                     <Style TargetType="{x:Type TypeName=Rectangle}">
@@ -195,9 +195,9 @@
                         <Rectangle Width="16" Height="16">
                             <Rectangle.Resources>
                                 <VisualBrush x:Key="VisualFilter" Stretch="Uniform"
-                                             Visual="{iconPacks:Material Kind=FilterOutline}" />
+                                             Visual="{icons:Lucide Kind=Funnel}" />
                                 <VisualBrush x:Key="VisualFilterRemove" Stretch="Uniform"
-                                             Visual="{iconPacks:Material Kind=FilterMultipleOutline}" />
+                                             Visual="{icons:Lucide Kind=ListFilter}" />
                             </Rectangle.Resources>
                             <Rectangle.Style>
                                 <Style TargetType="{x:Type TypeName=Rectangle}">
@@ -289,7 +289,7 @@
                                                    Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                             <Rectangle.OpacityMask>
                                                 <VisualBrush Stretch="Uniform"
-                                                             Visual="{iconPacks:Material Kind=ContentSaveOutline}" />
+                                                             Visual="{icons:Lucide Kind=Save}" />
                                             </Rectangle.OpacityMask>
                                         </Rectangle>
                                     </Button>
@@ -301,7 +301,7 @@
                                                    Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                             <Rectangle.OpacityMask>
                                                 <VisualBrush Stretch="Uniform"
-                                                             Visual="{iconPacks:Material Kind=FilterRemoveOutline}" />
+                                                             Visual="{icons:Lucide Kind=FunnelX}" />
                                             </Rectangle.OpacityMask>
                                         </Rectangle>
                                     </Button>
@@ -316,7 +316,7 @@
                             ToolTip="{x:Static Member=localization:Strings.AddProfileDots}">
                         <Rectangle Width="16" Height="16">
                             <Rectangle.OpacityMask>
-                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Plus}" />
+                                <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=Plus}" />
                             </Rectangle.OpacityMask>
                             <Rectangle.Style>
                                 <Style TargetType="{x:Type TypeName=Rectangle}">
@@ -353,7 +353,7 @@
                                 <MenuItem.Icon>
                                     <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                         <Rectangle.OpacityMask>
-                                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Close}" />
+                                            <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=X}" />
                                         </Rectangle.OpacityMask>
                                     </Rectangle>
                                 </MenuItem.Icon>
@@ -365,7 +365,7 @@
                                 <MenuItem.Icon>
                                     <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                         <Rectangle.OpacityMask>
-                                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Edit}" />
+                                            <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=Pencil}" />
                                         </Rectangle.OpacityMask>
                                     </Rectangle>
                                 </MenuItem.Icon>
@@ -376,7 +376,7 @@
                                     <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                         <Rectangle.OpacityMask>
                                             <VisualBrush Stretch="Uniform"
-                                                         Visual="{iconPacks:Material Kind=ContentDuplicate}" />
+                                                         Visual="{icons:Lucide Kind=CopyPlus}" />
                                         </Rectangle.OpacityMask>
                                     </Rectangle>
                                 </MenuItem.Icon>
@@ -386,7 +386,7 @@
                                 <MenuItem.Icon>
                                     <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                         <Rectangle.OpacityMask>
-                                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Close}" />
+                                            <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=X}" />
                                         </Rectangle.OpacityMask>
                                     </Rectangle>
                                 </MenuItem.Icon>
@@ -532,9 +532,9 @@
                                 <Rectangle Grid.Column="0" Width="20" Height="20">
                                     <Rectangle.Resources>
                                         <VisualBrush x:Key="VisualPlus" Stretch="Uniform"
-                                                     Visual="{iconPacks:Material Kind=Plus}" />
+                                                     Visual="{icons:Lucide Kind=Plus}" />
                                         <VisualBrush x:Key="VisualClear" Stretch="Uniform"
-                                                     Visual="{iconPacks:Material Kind=FilterRemoveOutline}" />
+                                                     Visual="{icons:Lucide Kind=FunnelX}" />
                                     </Rectangle.Resources>
                                     <Rectangle.Style>
                                         <Style TargetType="{x:Type TypeName=Rectangle}">
@@ -602,7 +602,7 @@
                     <Rectangle Grid.Column="0" Grid.Row="0"
                                Width="20" Height="20">
                         <Rectangle.OpacityMask>
-                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=InterfacePassword}" />
+                            <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=Lock}" />
                         </Rectangle.OpacityMask>
                         <Rectangle.Style>
                             <Style TargetType="{x:Type Rectangle}">

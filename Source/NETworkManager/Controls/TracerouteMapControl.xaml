@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:icons="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls"
              xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
              xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
              mc:Ignorable="d"
@@ -126,8 +126,8 @@
                 <Rectangle Width="16" Height="16"
                            VerticalAlignment="Center">
                     <Rectangle.Resources>
-                        <VisualBrush x:Key="VisualChevronUp" Stretch="Uniform" Visual="{iconPacks:Material Kind=ChevronUp}" />
-                        <VisualBrush x:Key="VisualChevronDown" Stretch="Uniform" Visual="{iconPacks:Material Kind=ChevronDown}" />
+                        <VisualBrush x:Key="VisualChevronUp" Stretch="Uniform" Visual="{icons:Lucide Kind=ChevronUp}" />
+                        <VisualBrush x:Key="VisualChevronDown" Stretch="Uniform" Visual="{icons:Lucide Kind=ChevronDown}" />
                     </Rectangle.Resources>
                     <Rectangle.Style>
                         <Style TargetType="{x:Type TypeName=Rectangle}">
@@ -177,7 +177,7 @@
                 <Rectangle Width="16" Height="16"
                            VerticalAlignment="Center">
                     <Rectangle.OpacityMask>
-                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=FitToScreenOutline}" />
+                        <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=Scan}" />
                     </Rectangle.OpacityMask>
                     <Rectangle.Style>
                         <Style TargetType="{x:Type TypeName=Rectangle}">

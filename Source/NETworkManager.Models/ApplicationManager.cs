@@ -1,4 +1,4 @@
-﻿using MahApps.Metro.IconPacks;
+﻿using NETworkManager.Controls;
 using NETworkManager.Utilities;
 using System;
 using System.Collections.Generic;
@@ -66,96 +66,96 @@ public static class ApplicationManager
         switch (name)
         {
             case ApplicationName.Dashboard:
-                canvas.Children.Add(new PackIconMaterial { Kind = PackIconMaterialKind.ViewDashboardVariant });
+                canvas.Children.Add(new LucideIcon { Kind = LucideIconKind.LayoutDashboard });
                 break;
             case ApplicationName.NetworkInterface:
-                canvas.Children.Add(new PackIconModern { Kind = PackIconModernKind.Network });
+                canvas.Children.Add(new LucideIcon { Kind = LucideIconKind.EthernetPort });
                 break;
             case ApplicationName.WiFi:
-                canvas.Children.Add(new PackIconMaterial { Kind = PackIconMaterialKind.AccessPointNetwork });
+                canvas.Children.Add(new LucideIcon { Kind = LucideIconKind.Wifi });
                 break;
             case ApplicationName.IPScanner:
-                canvas.Children.Add(new PackIconFontAwesome { Kind = PackIconFontAwesomeKind.NetworkWiredSolid });
+                canvas.Children.Add(new LucideIcon { Kind = LucideIconKind.Network });
                 break;
             case ApplicationName.PortScanner:
-                canvas.Children.Add(new PackIconModern { Kind = PackIconModernKind.NetworkPort });
+                canvas.Children.Add(new LucideIcon { Kind = LucideIconKind.ScanLine });
                 break;
             case ApplicationName.PingMonitor:
-                canvas.Children.Add(new PackIconModern { Kind = PackIconModernKind.RadarScreen });
+                canvas.Children.Add(new LucideIcon { Kind = LucideIconKind.Radar });
                 break;
             case ApplicationName.Traceroute:
-                canvas.Children.Add(new PackIconModern { Kind = PackIconModernKind.TransitConnection });
+                canvas.Children.Add(new LucideIcon { Kind = LucideIconKind.Route });
                 break;
             case ApplicationName.DNSLookup:
-                canvas.Children.Add(new PackIconMaterial { Kind = PackIconMaterialKind.SearchWeb });
+                canvas.Children.Add(new LucideIcon { Kind = LucideIconKind.Globe });
                 break;
             case ApplicationName.RemoteDesktop:
-                canvas.Children.Add(new PackIconMaterial { Kind = PackIconMaterialKind.RemoteDesktop });
+                canvas.Children.Add(new LucideIcon { Kind = LucideIconKind.Monitor });
                 break;
             case ApplicationName.PowerShell:
-                canvas.Children.Add(new PackIconMaterial { Kind = PackIconMaterialKind.Powershell });
+                canvas.Children.Add(new LucideIcon { Kind = LucideIconKind.SquareChevronRight });
                 break;
             case ApplicationName.PuTTY:
-                canvas.Children.Add(new PackIconFontAwesome { Kind = PackIconFontAwesomeKind.TerminalSolid });
+                canvas.Children.Add(new LucideIcon { Kind = LucideIconKind.Terminal });
                 break;
             case ApplicationName.TigerVNC:
-                canvas.Children.Add(new PackIconMaterial { Kind = PackIconMaterialKind.EyeOutline });
+                canvas.Children.Add(new LucideIcon { Kind = LucideIconKind.Eye });
                 break;
             case ApplicationName.WebConsole:
-                canvas.Children.Add(new PackIconModern { Kind = PackIconModernKind.Browser });
+                canvas.Children.Add(new LucideIcon { Kind = LucideIconKind.AppWindow });
                 break;
             case ApplicationName.SNMP:
-                canvas.Children.Add(new PackIconMaterial { Kind = PackIconMaterialKind.Switch });
+                canvas.Children.Add(new LucideIcon { Kind = LucideIconKind.Server });
                 break;
             case ApplicationName.SNTPLookup:
-                canvas.Children.Add(new PackIconMaterial { Kind = PackIconMaterialKind.ClockCheckOutline });
+                canvas.Children.Add(new LucideIcon { Kind = LucideIconKind.ClockCheck });
                 break;
             case ApplicationName.HostsFileEditor:
-                canvas.Children.Add(new PackIconMaterial { Kind = PackIconMaterialKind.FileEditOutline });
+                canvas.Children.Add(new LucideIcon { Kind = LucideIconKind.FilePenLine });
                 break;
             case ApplicationName.DiscoveryProtocol:
-                canvas.Children.Add(new PackIconMaterial { Kind = PackIconMaterialKind.SwapHorizontal });
+                canvas.Children.Add(new LucideIcon { Kind = LucideIconKind.ArrowLeftRight });
                 break;
             case ApplicationName.WakeOnLAN:
-                canvas.Children.Add(new PackIconMaterial { Kind = PackIconMaterialKind.Power });
+                canvas.Children.Add(new LucideIcon { Kind = LucideIconKind.Power });
                 break;
             case ApplicationName.RDAP:
-                canvas.Children.Add(new PackIconMaterial { Kind = PackIconMaterialKind.CardAccountDetailsOutline });
+                canvas.Children.Add(new LucideIcon { Kind = LucideIconKind.IdCard });
                 break;
             case ApplicationName.Whois:
-                canvas.Children.Add(new PackIconMaterial { Kind = PackIconMaterialKind.CloudSearchOutline });
+                canvas.Children.Add(new LucideIcon { Kind = LucideIconKind.FileSearch });
                 break;
             case ApplicationName.IPGeolocation:
-                canvas.Children.Add(new PackIconMaterial { Kind = PackIconMaterialKind.MapSearchOutline });
+                canvas.Children.Add(new LucideIcon { Kind = LucideIconKind.MapPin });
                 break;
             case ApplicationName.SubnetCalculator:
-                canvas.Children.Add(new PackIconModern { Kind = PackIconModernKind.Calculator });
+                canvas.Children.Add(new LucideIcon { Kind = LucideIconKind.Calculator });
                 break;
             case ApplicationName.BitCalculator:
-                canvas.Children.Add(new PackIconModern { Kind = PackIconModernKind.TypeBit });
+                canvas.Children.Add(new LucideIcon { Kind = LucideIconKind.Binary });
                 break;
             case ApplicationName.Lookup:
-                canvas.Children.Add(new PackIconMaterial { Kind = PackIconMaterialKind.DatabaseSearch });
+                canvas.Children.Add(new LucideIcon { Kind = LucideIconKind.DatabaseSearch });
                 break;
             case ApplicationName.Connections:
-                canvas.Children.Add(new PackIconModern { Kind = PackIconModernKind.Connect });
+                canvas.Children.Add(new LucideIcon { Kind = LucideIconKind.PlugZap });
                 break;
             case ApplicationName.Listeners:
-                canvas.Children.Add(new PackIconMaterial { Kind = PackIconMaterialKind.Wan });
+                canvas.Children.Add(new LucideIcon { Kind = LucideIconKind.RadioTower });
                 break;
             case ApplicationName.NeighborTable:
 #pragma warning disable CS0618
             case ApplicationName.ARPTable:
 #pragma warning restore CS0618
-                canvas.Children.Add(new PackIconMaterial { Kind = PackIconMaterialKind.TableOfContents });
+                canvas.Children.Add(new LucideIcon { Kind = LucideIconKind.Table });
                 break;
             case ApplicationName.Firewall:
-                canvas.Children.Add(new PackIconMaterial { Kind = PackIconMaterialKind.WallFire });
+                canvas.Children.Add(new LucideIcon { Kind = LucideIconKind.BrickWallFire });
                 break;
             case ApplicationName.None:
             case ApplicationName.AWSSessionManager:
             default:
-                canvas.Children.Add(new PackIconModern { Kind = PackIconModernKind.SmileyFrown });
+                canvas.Children.Add(new LucideIcon { Kind = LucideIconKind.Frown });
                 break;
         }
 

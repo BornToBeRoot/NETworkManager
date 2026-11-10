@@ -1,4 +1,4 @@
-using MahApps.Metro.IconPacks;
+using NETworkManager.Controls;
 using NETworkManager.Localization;
 using NETworkManager.Models;
 using NETworkManager.Settings;
@@ -51,7 +51,7 @@ public partial class NotificationWindow : INotifyPropertyChanged
     public Brush ApplicationIconBrush { get; }
     public string ApplicationTitle { get; }
 
-    public PackIconMaterialKind IconKind { get; }
+    public LucideIconKind IconKind { get; }
     public Brush IconBrush { get; }
     public string NotificationTitle { get; }
     public IReadOnlyList<NotificationLineItem> Lines { get; }
@@ -153,16 +153,16 @@ public partial class NotificationWindow : INotifyPropertyChanged
     /// </summary>
     /// <param name="status">Status of the notification.</param>
     /// <returns>Icon and brush.</returns>
-    private static (PackIconMaterialKind kind, Brush brush) GetStatusIcon(NotificationStatus status)
+    private static (LucideIconKind kind, Brush brush) GetStatusIcon(NotificationStatus status)
     {
         var brush = GetStatusBrush(status);
 
         var kind = status switch
         {
-            NotificationStatus.Up => PackIconMaterialKind.LanConnect,
-            NotificationStatus.Down => PackIconMaterialKind.LanDisconnect,
-            NotificationStatus.UpAndDown => PackIconMaterialKind.Lan,
-            _ => PackIconMaterialKind.LanPending
+            NotificationStatus.Up => LucideIconKind.Cable,
+            NotificationStatus.Down => LucideIconKind.Unplug,
+            NotificationStatus.UpAndDown => LucideIconKind.Network,
+            _ => LucideIconKind.Cable
         };
 
         return (kind, brush);

@@ -9,7 +9,7 @@
                                xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
                                xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
                                xmlns:simpleChildWindow="clr-namespace:MahApps.Metro.SimpleChildWindow;assembly=MahApps.Metro.SimpleChildWindow"
-                               xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"                               
+                               xmlns:icons="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls"                               
                                CloseButtonCommand="{Binding Path=CancelCommand}"
                                Style="{StaticResource DefaultChildWindow}"                               
                                Loaded="ChildWindow_OnLoaded"

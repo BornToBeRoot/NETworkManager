@@ -19,7 +19,7 @@
                                xmlns:interactivity="http://schemas.microsoft.com/xaml/behaviors"
                                xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
                                xmlns:profiles="clr-namespace:NETworkManager.Profiles;assembly=NETworkManager.Profiles"
-                               xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+                               xmlns:icons="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls"
                                xmlns:simpleChildWindow="clr-namespace:MahApps.Metro.SimpleChildWindow;assembly=MahApps.Metro.SimpleChildWindow"                               
                                CloseButtonCommand="{Binding CancelCommand}"
                                Style="{StaticResource DefaultChildWindow}"
@@ -1303,7 +1303,7 @@
                                                    Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                             <Rectangle.OpacityMask>
                                                 <VisualBrush Stretch="Uniform"
-                                                             Visual="{iconPacks:Material Kind=SearchWeb}" />
+                                                             Visual="{icons:Lucide Kind=Globe}" />
                                             </Rectangle.OpacityMask>
                                         </Rectangle>
                                     </Button>
@@ -1378,7 +1378,7 @@
                                         <Rectangle Width="16" Height="16"
                                                    Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                             <Rectangle.OpacityMask>
-                                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Plus}" />
+                                                <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=Plus}" />
                                             </Rectangle.OpacityMask>
                                         </Rectangle>
                                     </Button>
@@ -1413,7 +1413,7 @@
                                                         <Rectangle Width="12" Height="12">
                                                             <Rectangle.OpacityMask>
                                                                 <VisualBrush Stretch="Uniform"
-                                                                             Visual="{iconPacks:Material Kind=WindowClose}" />
+                                                                             Visual="{icons:Lucide Kind=X}" />
                                                             </Rectangle.OpacityMask>
                                                             <Rectangle.Style>
                                                                 <Style TargetType="{x:Type Rectangle}">

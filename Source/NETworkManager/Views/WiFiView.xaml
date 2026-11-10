@@ -2,7 +2,7 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
-             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:icons="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls"
              xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
              xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
              xmlns:internalControls="clr-namespace:NETworkManager.Controls"
@@ -123,9 +123,9 @@
                                                         <Rectangle Width="24" Height="24">
                                                             <Rectangle.Resources>
                                                                 <VisualBrush x:Key="VisualUp" Stretch="Uniform"
-                                                                             Visual="{iconPacks:Modern Kind=Network}" />
+                                                                             Visual="{icons:Lucide Kind=EthernetPort}" />
                                                                 <VisualBrush x:Key="VisualDown" Stretch="Uniform"
-                                                                             Visual="{iconPacks:Modern Kind=NetworkDisconnect}" />
+                                                                             Visual="{icons:Lucide Kind=Unplug}" />
                                                             </Rectangle.Resources>
                                                             <Rectangle.Style>
                                                                 <Style TargetType="{x:Type TypeName=Rectangle}">
@@ -217,7 +217,7 @@
                                                        wpfHelpers:ReloadAnimationHelper.IsReloading="{Binding IsAdaptersLoading}">
                                                 <Rectangle.OpacityMask>
                                                     <VisualBrush Stretch="Uniform"
-                                                                 Visual="{iconPacks:Material Kind=Refresh}" />
+                                                                 Visual="{icons:Lucide Kind=RefreshCw}" />
                                                 </Rectangle.OpacityMask>
                                                 <Rectangle.Style>
                                                     <Style TargetType="{x:Type TypeName=Rectangle}">
@@ -320,7 +320,7 @@
                                                            wpfHelpers:ReloadAnimationHelper.IsReloading="{Binding Path=IsBackgroundSearchRunning}">
                                                     <Rectangle.OpacityMask>
                                                         <VisualBrush Stretch="Uniform"
-                                                                     Visual="{iconPacks:Material Kind=Refresh}" />
+                                                                     Visual="{icons:Lucide Kind=RefreshCw}" />
                                                     </Rectangle.OpacityMask>
                                                     <Rectangle.Style>
                                                         <Style TargetType="{x:Type TypeName=Rectangle}">
@@ -373,7 +373,7 @@
                                                                    Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                                             <Rectangle.OpacityMask>
                                                                 <VisualBrush Stretch="Uniform"
-                                                                             Visual="{iconPacks:Material Kind=WifiPlus}" />
+                                                                             Visual="{icons:Lucide Kind=Wifi}" />
                                                             </Rectangle.OpacityMask>
                                                         </Rectangle>
                                                     </MenuItem.Icon>
@@ -386,7 +386,7 @@
                                                                    Fill="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}">
                                                             <Rectangle.OpacityMask>
                                                                 <VisualBrush Stretch="Uniform"
-                                                                             Visual="{iconPacks:Material Kind=Close}" />
+                                                                             Visual="{icons:Lucide Kind=X}" />
                                                             </Rectangle.OpacityMask>
                                                         </Rectangle>
                                                     </MenuItem.Icon>
@@ -467,7 +467,7 @@
                                                                    Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                                             <Rectangle.OpacityMask>
                                                                 <VisualBrush Stretch="Uniform"
-                                                                             Visual="{iconPacks:Material Kind=FileMoveOutline}" />
+                                                                             Visual="{icons:Lucide Kind=FileOutput}" />
                                                             </Rectangle.OpacityMask>
                                                         </Rectangle>
                                                     </MenuItem.Icon>
@@ -494,7 +494,7 @@
                                                                    Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                                             <Rectangle.OpacityMask>
                                                                 <VisualBrush Stretch="Uniform"
-                                                                             Visual="{iconPacks:Material Kind=FileMoveOutline}" />
+                                                                             Visual="{icons:Lucide Kind=FileOutput}" />
                                                             </Rectangle.OpacityMask>
                                                         </Rectangle>
                                                     </MenuItem.Icon>
@@ -531,34 +531,34 @@
                                                             <Rectangle.Resources>
                                                                 <VisualBrush x:Key="VisualBars4"
                                                                              Stretch="Uniform"
-                                                                             Visual="{iconPacks:Material Kind=WifiStrength4}" />
+                                                                             Visual="{icons:Lucide Kind=Wifi}" />
                                                                 <VisualBrush x:Key="VisualBars4Lock"
                                                                              Stretch="Uniform"
-                                                                             Visual="{iconPacks:Material Kind=WifiStrength4Lock}" />
+                                                                             Visual="{icons:Lucide Kind=WifiLock}" />
                                                                 <VisualBrush x:Key="VisualBars3"
                                                                              Stretch="Uniform"
-                                                                             Visual="{iconPacks:Material Kind=WifiStrength3}" />
+                                                                             Visual="{icons:Lucide Kind=WifiHigh}" />
                                                                 <VisualBrush x:Key="VisualBars3Lock"
                                                                              Stretch="Uniform"
-                                                                             Visual="{iconPacks:Material Kind=WifiStrength3Lock}" />
+                                                                             Visual="{icons:Lucide Kind=WifiHighLock}" />
                                                                 <VisualBrush x:Key="VisualBars2"
                                                                              Stretch="Uniform"
-                                                                             Visual="{iconPacks:Material Kind=WifiStrength2}" />
+                                                                             Visual="{icons:Lucide Kind=WifiLow}" />
                                                                 <VisualBrush x:Key="VisualBars2Lock"
                                                                              Stretch="Uniform"
-                                                                             Visual="{iconPacks:Material Kind=WifiStrength2Lock}" />
+                                                                             Visual="{icons:Lucide Kind=WifiLowLock}" />
                                                                 <VisualBrush x:Key="VisualBars1"
                                                                              Stretch="Uniform"
-                                                                             Visual="{iconPacks:Material Kind=WifiStrength1}" />
+                                                                             Visual="{icons:Lucide Kind=WifiZero}" />
                                                                 <VisualBrush x:Key="VisualBars1Lock"
                                                                              Stretch="Uniform"
-                                                                             Visual="{iconPacks:Material Kind=WifiStrength1Lock}" />
+                                                                             Visual="{icons:Lucide Kind=WifiZeroLock}" />
                                                                 <VisualBrush x:Key="VisualBars0"
                                                                              Stretch="Uniform"
-                                                                             Visual="{iconPacks:Material Kind=WifiStrengthOutline}" />
+                                                                             Visual="{icons:Lucide Kind=WifiZero}" />
                                                                 <VisualBrush x:Key="VisualBars0Lock"
                                                                              Stretch="Uniform"
-                                                                             Visual="{iconPacks:Material Kind=WifiStrengthLockOutline}" />
+                                                                             Visual="{icons:Lucide Kind=WifiZeroLock}" />
                                                             </Rectangle.Resources>
                                                             <Rectangle.Style>
                                                                 <Style TargetType="{x:Type TypeName=Rectangle}">
@@ -695,7 +695,7 @@
                                                                 <Setter TargetName="ChangeIcon" Property="OpacityMask">
                                                                     <Setter.Value>
                                                                         <VisualBrush Stretch="Uniform"
-                                                                                     Visual="{iconPacks:Material Kind=Plus}" />
+                                                                                     Visual="{icons:Lucide Kind=Plus}" />
                                                                     </Setter.Value>
                                                                 </Setter>
                                                                 <Setter TargetName="ChangeText" Property="Foreground"
@@ -707,7 +707,7 @@
                                                                 <Setter TargetName="ChangeIcon" Property="OpacityMask">
                                                                     <Setter.Value>
                                                                         <VisualBrush Stretch="Uniform"
-                                                                                     Visual="{iconPacks:Material Kind=Minus}" />
+                                                                                     Visual="{icons:Lucide Kind=Minus}" />
                                                                     </Setter.Value>
                                                                 </Setter>
                                                                 <Setter TargetName="ChangeText" Property="Foreground"
@@ -719,7 +719,7 @@
                                                                 <Setter TargetName="ChangeIcon" Property="OpacityMask">
                                                                     <Setter.Value>
                                                                         <VisualBrush Stretch="Uniform"
-                                                                                     Visual="{iconPacks:Material Kind=SwapHorizontal}" />
+                                                                                     Visual="{icons:Lucide Kind=ArrowLeftRight}" />
                                                                     </Setter.Value>
                                                                 </Setter>
                                                                 <Setter TargetName="ChangeText" Property="Foreground"
@@ -1000,7 +1000,7 @@
                                        Style="{StaticResource ResourceKey=ButtonWithImageRectangle}">
                                 <Rectangle.OpacityMask>
                                     <VisualBrush Stretch="Uniform"
-                                                 Visual="{iconPacks:Material Kind=Refresh}" />
+                                                 Visual="{icons:Lucide Kind=RefreshCw}" />
                                 </Rectangle.OpacityMask>
                             </Rectangle>
                             <TextBlock Grid.Column="1" Grid.Row="0"
@@ -1056,7 +1056,7 @@
                             </Grid.ColumnDefinitions>
                             <Rectangle Style="{StaticResource ButtonWithImageRectangle}">
                                 <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:MaterialLight Kind=Cog}" />
+                                    <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=Settings}" />
                                 </Rectangle.OpacityMask>
                             </Rectangle>
                             <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.OpenSettings}"
@@ -1076,7 +1076,7 @@
                             </Grid.ColumnDefinitions>
                             <Rectangle Style="{StaticResource ButtonWithImageRectangle}">
                                 <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Refresh}" />
+                                    <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=RefreshCw}" />
                                 </Rectangle.OpacityMask>
                             </Rectangle>
                             <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.Refresh}"

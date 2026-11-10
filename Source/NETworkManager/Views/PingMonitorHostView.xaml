@@ -5,7 +5,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
-             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:icons="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls"
              xmlns:mahAppsControls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
              xmlns:validators="clr-namespace:NETworkManager.Validators;assembly=NETworkManager.Validators"
              xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
@@ -55,7 +55,7 @@
                     <Rectangle Width="16" Height="16"
                                Fill="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}">
                         <Rectangle.OpacityMask>
-                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Play}" />
+                            <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=Play}" />
                         </Rectangle.OpacityMask>
                     </Rectangle>
                 </MenuItem.Icon>
@@ -146,9 +146,9 @@
                                                 <Rectangle Grid.Column="0" Grid.Row="0">
                                                     <Rectangle.Resources>
                                                         <VisualBrush x:Key="VisualControlPlay" Stretch="Uniform"
-                                                                     Visual="{iconPacks:Material Kind=Play}" />
+                                                                     Visual="{icons:Lucide Kind=Play}" />
                                                         <VisualBrush x:Key="VisualClose" Stretch="Uniform"
-                                                                     Visual="{iconPacks:Material Kind=Close}" />
+                                                                     Visual="{icons:Lucide Kind=X}" />
                                                     </Rectangle.Resources>
                                                     <Rectangle.Style>
                                                         <Style TargetType="{x:Type TypeName=Rectangle}"
@@ -312,7 +312,7 @@
                                                                                 <Rectangle Width="16" Height="16">
                                                                                     <Rectangle.OpacityMask>
                                                                                         <VisualBrush Stretch="Uniform"
-                                                                                                Visual="{iconPacks:Material Kind=DotsVertical}" />
+                                                                                                Visual="{icons:Lucide Kind=EllipsisVertical}" />
                                                                                     </Rectangle.OpacityMask>
                                                                                     <Rectangle.Style>
                                                                                         <Style
@@ -340,7 +340,7 @@
                                                                                                            Fill="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}">
                                                                                                     <Rectangle.OpacityMask>
                                                                                                         <VisualBrush Stretch="Uniform"
-                                                                                                                Visual="{iconPacks:Material Kind=Play}" />
+                                                                                                                Visual="{icons:Lucide Kind=Play}" />
                                                                                                     </Rectangle.OpacityMask>
                                                                                                 </Rectangle>
                                                                                             </MenuItem.Icon>
@@ -353,7 +353,7 @@
                                                                                                            Fill="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}">
                                                                                                     <Rectangle.OpacityMask>
                                                                                                         <VisualBrush Stretch="Uniform"
-                                                                                                                Visual="{iconPacks:Material Kind=Pause}" />
+                                                                                                                Visual="{icons:Lucide Kind=Pause}" />
                                                                                                     </Rectangle.OpacityMask>
                                                                                                 </Rectangle>
                                                                                             </MenuItem.Icon>
@@ -367,7 +367,7 @@
                                                                                                            Fill="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}">
                                                                                                     <Rectangle.OpacityMask>
                                                                                                         <VisualBrush Stretch="Fill"
-                                                                                                                Visual="{iconPacks:Material Kind=WindowClose}" />
+                                                                                                                Visual="{icons:Lucide Kind=X}" />
                                                                                                     </Rectangle.OpacityMask>
                                                                                                 </Rectangle>
                                                                                             </MenuItem.Icon>

@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:dragablz="clr-namespace:Dragablz;assembly=Dragablz"
-             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:icons="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls"
              xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
              xmlns:controls="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls"
              xmlns:dockablz="clr-namespace:Dragablz.Dockablz;assembly=Dragablz"
@@ -51,7 +51,7 @@
                                Fill="{DynamicResource MahApps.Brushes.Gray3}">
                         <Rectangle.OpacityMask>
                             <VisualBrush Stretch="Uniform"
-                                         Visual="{iconPacks:Material Kind=EyeOutline}" />
+                                         Visual="{icons:Lucide Kind=Eye}" />
                         </Rectangle.OpacityMask>
                     </Rectangle>
                 </MenuItem.Icon>
@@ -63,7 +63,7 @@
                                Fill="{DynamicResource MahApps.Brushes.Gray3}">
                         <Rectangle.OpacityMask>
                             <VisualBrush Stretch="Uniform"
-                                         Visual="{iconPacks:Material Kind=EyeOutline}" />
+                                         Visual="{icons:Lucide Kind=Eye}" />
                         </Rectangle.OpacityMask>
                     </Rectangle>
                 </MenuItem.Icon>
@@ -110,7 +110,7 @@
                                                                    Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                                             <Rectangle.OpacityMask>
                                                                 <VisualBrush Stretch="Uniform"
-                                                                             Visual="{iconPacks:Material Kind=Restart}" />
+                                                                             Visual="{icons:Lucide Kind=RotateCcw}" />
                                                             </Rectangle.OpacityMask>
                                                         </Rectangle>
                                                     </MenuItem.Icon>
@@ -133,7 +133,7 @@
                                                 <Rectangle Width="16" Height="16" Style="{StaticResource DragablzTabHeaderCloseIcon}">
                                                     <Rectangle.OpacityMask>
                                                         <VisualBrush Stretch="Uniform"
-                                                                     Visual="{iconPacks:Material Kind=WindowClose}" />
+                                                                     Visual="{icons:Lucide Kind=X}" />
                                                     </Rectangle.OpacityMask>
                                                 </Rectangle>
                                             </Button>
@@ -174,7 +174,7 @@
                                             Focusable="False">
                                         <Rectangle Width="16" Height="16">
                                             <Rectangle.OpacityMask>
-                                                <VisualBrush Stretch="Fill" Visual="{iconPacks:Material Kind=Plus}" />
+                                                <VisualBrush Stretch="Fill" Visual="{icons:Lucide Kind=Plus}" />
                                             </Rectangle.OpacityMask>
                                             <Rectangle.Style>
                                                 <Style TargetType="{x:Type Rectangle}">
@@ -208,7 +208,7 @@
                                     </Grid.ColumnDefinitions>
                                     <Rectangle Width="20" Height="20">
                                         <Rectangle.OpacityMask>
-                                            <VisualBrush Stretch="Fill" Visual="{iconPacks:Material Kind=Plus}" />
+                                            <VisualBrush Stretch="Fill" Visual="{icons:Lucide Kind=Plus}" />
                                         </Rectangle.OpacityMask>
                                         <Rectangle.Style>
                                             <Style TargetType="{x:Type Rectangle}">
@@ -273,7 +273,7 @@
                         </Grid.ColumnDefinitions>
                         <Rectangle Style="{StaticResource ButtonWithImageRectangle}">
                             <Rectangle.OpacityMask>
-                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:MaterialLight Kind=Cog}" />
+                                <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=Settings}" />
                             </Rectangle.OpacityMask>
                         </Rectangle>
                         <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.OpenSettings}"
