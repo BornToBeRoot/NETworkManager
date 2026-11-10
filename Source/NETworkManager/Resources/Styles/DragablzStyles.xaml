@@ -15,6 +15,7 @@
     <Style x:Key="DragablzTabHeaderTextBlock" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource HeaderTextBlock}">
         <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Control}" />
         <Setter Property="FontSize" Value="14" />
+        <Setter Property="FontWeight" Value="Normal" />
         <Setter Property="Width" Value="150" />
         <Setter Property="TextTrimming" Value="CharacterEllipsis" />
         <Style.Triggers>
