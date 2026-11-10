@@ -79,11 +79,18 @@ If you add, change or delete a theme in the folder, you must restart the applica
 
 ### Accent glow
 
-Shows a subtle glow of the accent color in the top left corner of the main window (window background, title bar and navigation). The boxes (tool, profiles) are not changed.
+Glow of the accent color in the top left corner of the windows with a frame (main window, window of dragged-out tabs, status window: window background, title bar and navigation). While a window is inactive, the glow is weaker. Behind dialogs, the darkened window gets a faint tint of the accent. The boxes (tool, profiles) are not changed.
 
-**Type:** `Boolean`
+**Type:** `NETworkManager.Models.Appearance.AccentGlowIntensity`
 
-**Default:** `Enabled` (new installations; existing settings keep their value)
+**Default:** `Medium`
+
+**Possible values:**
+
+- `Off`
+- `Subtle`
+- `Medium`
+- `Strong`
 
 ### Use custom themes
 
