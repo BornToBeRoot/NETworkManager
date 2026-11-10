@@ -703,20 +703,41 @@
                                                 </Style.Triggers>
                                             </Style>
                                         </Grid.Style>
-                                        <!-- Pill behind the item (mouse over / selected), inset so the icon stays centered in
-                                             the collapsed navigation -->
+                                        <!-- Pill behind the item (selected; mouse over: layer below that fades in), inset so the
+                                             icon stays centered in the collapsed navigation -->
+                                        <Border Grid.Column="0" Grid.ColumnSpan="2" Margin="4,2" Opacity="0"
+                                                IsHitTestVisible="False"
+                                                Background="{DynamicResource Brushes.Control.MouseOver}"
+                                                CornerRadius="{StaticResource CornerRadius.Control}">
+                                            <Border.Style>
+                                                <Style TargetType="{x:Type Border}">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding Path=IsMouseOver, RelativeSource={RelativeSource AncestorType={x:Type ListViewItem}}}" Value="True">
+                                                        <DataTrigger.EnterActions>
+                                                            <BeginStoryboard>
+                                                                <Storyboard>
+                                                                    <DoubleAnimation Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.1" />
+                                                                </Storyboard>
+                                                            </BeginStoryboard>
+                                                        </DataTrigger.EnterActions>
+                                                        <DataTrigger.ExitActions>
+                                                            <BeginStoryboard>
+                                                                <Storyboard>
+                                                                    <DoubleAnimation Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.15" />
+                                                                </Storyboard>
+                                                            </BeginStoryboard>
+                                                        </DataTrigger.ExitActions>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                                </Style>
+                                            </Border.Style>
+                                        </Border>
                                         <Border Grid.Column="0" Grid.ColumnSpan="2" Margin="4,2"
                                                 CornerRadius="{StaticResource CornerRadius.Control}">
                                             <Border.Style>
                                                 <Style TargetType="{x:Type Border}">
                                                     <Setter Property="Background" Value="Transparent" />
                                                     <Style.Triggers>
-                                                        <DataTrigger
-                                                            Binding="{Binding Path=IsMouseOver, RelativeSource={RelativeSource AncestorType={x:Type ListViewItem}}}"
-                                                            Value="True">
-                                                            <Setter Property="Background"
-                                                                    Value="{DynamicResource Brushes.Control.MouseOver}" />
-                                                        </DataTrigger>
                                                         <DataTrigger
                                                             Binding="{Binding Path=IsSelected, RelativeSource={RelativeSource AncestorType={x:Type ListViewItem}}}"
                                                             Value="True">

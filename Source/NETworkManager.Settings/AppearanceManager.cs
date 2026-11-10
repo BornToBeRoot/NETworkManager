@@ -62,6 +62,16 @@ public static class AppearanceManager
     public const string ButtonPressedBrushKey = "Brushes.Button.Pressed";
 
     /// <summary>
+    ///     Key of the layer that fades in on mouse over above the background of a (secondary) button.
+    /// </summary>
+    public const string ButtonMouseOverOverlayBrushKey = "Brushes.Button.MouseOverOverlay";
+
+    /// <summary>
+    ///     Key of the layer that fades in while a button / control is pressed (above the mouse over layer).
+    /// </summary>
+    public const string ControlPressedOverlayBrushKey = "Brushes.Control.PressedOverlay";
+
+    /// <summary>
     ///     Resource key of the background of the main window frame around and between the boxes (navigation, main view,
     ///     profiles).
     /// </summary>
@@ -227,6 +237,12 @@ public static class AppearanceManager
         appResources[ButtonBackgroundBrushKey] = CreateFrozenBrush(foreground, 0.06);
         appResources[ButtonMouseOverBrushKey] = CreateFrozenBrush(foreground, 0.10);
         appResources[ButtonPressedBrushKey] = CreateFrozenBrush(foreground, 0.14);
+
+        // Layers above the background of the buttons that fade in (DefaultButton): on the button background (6 %) the
+        // mouse over layer gives 10 %, with the pressed layer 14 % (on a transparent icon button with the 8 % mouse
+        // over layer about 12 %) - the same colors as the backgrounds above
+        appResources[ButtonMouseOverOverlayBrushKey] = CreateFrozenBrush(foreground, 1 - 0.90 / 0.94);
+        appResources[ControlPressedOverlayBrushKey] = CreateFrozenBrush(foreground, 1 - 0.86 / 0.90);
 
         // Opaque (window background): 4 % of the foreground on the background of the theme
         var background = theme.Resources["MahApps.Colors.ThemeBackground"] is Color backgroundColor

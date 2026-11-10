@@ -1,11 +1,82 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls">
+                    xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+                    xmlns:networkManager="clr-namespace:NETworkManager">
     <!--
         Buttons: primary (HighlightedButton, accent fill), secondary (DefaultButton, ImageWithTextButton: subtle fill of
         the theme foreground, no border) and icon-only (ImageButton: transparent until the mouse is over it). The
         backgrounds are set by AppearanceManager.ApplyControlStateBrushes.
+
+        Mouse over / pressed: layers above the background fade in (100 ms / 60 ms, out 150 ms / 100 ms) instead of
+        switching the background (ButtonHelper.MouseOverOverlay / PressedOverlay). Template of MahApps
+        (MahApps.Styles.Button.Flat, 2.4.11) with the two layers.
     -->
+    <ControlTemplate x:Key="DefaultButtonTemplate" TargetType="{x:Type ButtonBase}">
+        <mah:ClipBorder x:Name="Border"
+                        Margin="0"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="{TemplateBinding mah:ControlsHelper.CornerRadius}"
+                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+            <Grid>
+                <Border x:Name="MouseOverOverlay" Opacity="0" IsHitTestVisible="False"
+                        Background="{TemplateBinding networkManager:ButtonHelper.MouseOverOverlay}" />
+                <Border x:Name="PressedOverlay" Opacity="0" IsHitTestVisible="False"
+                        Background="{TemplateBinding networkManager:ButtonHelper.PressedOverlay}" />
+                <mah:ContentControlEx x:Name="PART_ContentPresenter"
+                                      Padding="{TemplateBinding Padding}"
+                                      HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                      VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                      Content="{TemplateBinding Content}"
+                                      ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.ContentCharacterCasing)}"
+                                      ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                      ContentTemplate="{TemplateBinding ContentTemplate}"
+                                      ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                                      RecognizesAccessKey="{TemplateBinding mah:ControlsHelper.RecognizesAccessKey}"
+                                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+            </Grid>
+        </mah:ClipBorder>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Trigger.EnterActions>
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation Storyboard.TargetName="MouseOverOverlay" Storyboard.TargetProperty="Opacity"
+                                             To="1" Duration="0:0:0.1" />
+                        </Storyboard>
+                    </BeginStoryboard>
+                </Trigger.EnterActions>
+                <Trigger.ExitActions>
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation Storyboard.TargetName="MouseOverOverlay" Storyboard.TargetProperty="Opacity"
+                                             To="0" Duration="0:0:0.15" />
+                        </Storyboard>
+                    </BeginStoryboard>
+                </Trigger.ExitActions>
+            </Trigger>
+            <Trigger Property="IsPressed" Value="True">
+                <Trigger.EnterActions>
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation Storyboard.TargetName="PressedOverlay" Storyboard.TargetProperty="Opacity"
+                                             To="1" Duration="0:0:0.06" />
+                        </Storyboard>
+                    </BeginStoryboard>
+                </Trigger.EnterActions>
+                <Trigger.ExitActions>
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation Storyboard.TargetName="PressedOverlay" Storyboard.TargetProperty="Opacity"
+                                             To="0" Duration="0:0:0.1" />
+                        </Storyboard>
+                    </BeginStoryboard>
+                </Trigger.ExitActions>
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
     <Style x:Key="DefaultButton" TargetType="{x:Type Button}" BasedOn="{StaticResource MahApps.Styles.Button.Flat}">
         <Setter Property="MinWidth" Value="100" />
         <Setter Property="MinHeight" Value="35" />
@@ -15,6 +86,9 @@
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
         <Setter Property="mah:ControlsHelper.CornerRadius" Value="{StaticResource CornerRadius.Control}" />
         <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual.Ring}" />
+        <Setter Property="Template" Value="{StaticResource DefaultButtonTemplate}" />
+        <Setter Property="networkManager:ButtonHelper.MouseOverOverlay" Value="{DynamicResource Brushes.Button.MouseOverOverlay}" />
+        <Setter Property="networkManager:ButtonHelper.PressedOverlay" Value="{DynamicResource Brushes.Control.PressedOverlay}" />
         <Style.Triggers>
             <!-- Disabled: keep the background (also of HighlightedButton) and the foreground (MahApps Flat sets Gray2),
                  dim the button instead, like the inputs -->
@@ -22,18 +96,22 @@
                 <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
                 <Setter Property="Opacity" Value="0.55" />
             </Trigger>
+            <!-- The background stays (the layers of the template fade in), overrides the triggers of MahApps Flat -->
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="{DynamicResource Brushes.Button.MouseOver}" />
+                <Setter Property="Background" Value="{DynamicResource Brushes.Button.Background}" />
             </Trigger>
             <Trigger Property="Button.IsPressed" Value="True">
-                <Setter Property="Background" Value="{DynamicResource Brushes.Button.Pressed}" />
+                <Setter Property="Background" Value="{DynamicResource Brushes.Button.Background}" />
                 <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
             </Trigger>
         </Style.Triggers>
     </Style>
 
+    <!-- Accent: switches to Accent2 / Accent3 (no layers) -->
     <Style x:Key="HighlightedButton" TargetType="{x:Type Button}" BasedOn="{StaticResource DefaultButton}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Accent}" />
+        <Setter Property="networkManager:ButtonHelper.MouseOverOverlay" Value="Transparent" />
+        <Setter Property="networkManager:ButtonHelper.PressedOverlay" Value="Transparent" />
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
                 <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Accent2}" />
@@ -54,12 +132,14 @@
         <Setter Property="Padding" Value="0" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="Background" Value="Transparent" />
+        <!-- Transparent until the mouse is over it: 8 % layer, about 12 % pressed -->
+        <Setter Property="networkManager:ButtonHelper.MouseOverOverlay" Value="{DynamicResource Brushes.Control.MouseOver}" />
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="{DynamicResource Brushes.Control.MouseOver}" />
+                <Setter Property="Background" Value="Transparent" />
             </Trigger>
             <Trigger Property="Button.IsPressed" Value="True">
-                <Setter Property="Background" Value="{DynamicResource Brushes.Control.Pressed}" />
+                <Setter Property="Background" Value="Transparent" />
             </Trigger>
         </Style.Triggers>
     </Style>
@@ -77,23 +157,54 @@
         </Setter>
     </Style>
 
-    <!-- Settings entry at the bottom of the navigation: rounded pill on mouse over, like the application list -->
+    <!-- Settings entry at the bottom of the navigation: rounded pill on mouse over (fades in), like the application
+         list -->
     <Style x:Key="SettingsButton" TargetType="{x:Type Button}">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
                     <Grid Background="{TemplateBinding Background}">
-                        <Border x:Name="Pill" Margin="4,2" Background="Transparent"
+                        <Border x:Name="Pill" Margin="4,2" Opacity="0"
+                                Background="{DynamicResource Brushes.Control.MouseOver}"
+                                CornerRadius="{StaticResource CornerRadius.Control}" />
+                        <Border x:Name="PressedPill" Margin="4,2" Opacity="0"
+                                Background="{DynamicResource Brushes.Control.PressedOverlay}"
                                 CornerRadius="{StaticResource CornerRadius.Control}" />
                         <ContentPresenter VerticalAlignment="Center" />
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="Pill" Property="Background" Value="{DynamicResource Brushes.Control.MouseOver}" />
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="Pill" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.1" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="Pill" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.15" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
-                            <Setter TargetName="Pill" Property="Background" Value="{DynamicResource Brushes.Control.Pressed}" />
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="PressedPill" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.06" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="PressedPill" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.1" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
