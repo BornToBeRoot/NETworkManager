@@ -6077,7 +6077,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Glow of the accent color in the top left corner of the windows (window background, title bar and navigation), weaker while the window is inactive, and a faint tint of the accent behind dialogs..
+        ///   Looks up a localized string similar to Glow of the accent color in the top left corner of the windows (window background, title bar and navigation), weaker while the window is inactive..
         /// </summary>
         public static string HelpMessage_AccentGlow {
             get {

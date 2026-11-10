@@ -5502,7 +5502,7 @@ Do you want to start the scan?</value>
     <value>Accent glow</value>
   </data>
   <data name="HelpMessage_AccentGlow" xml:space="preserve">
-    <value>Glow of the accent color in the top left corner of the windows (window background, title bar and navigation), weaker while the window is inactive, and a faint tint of the accent behind dialogs.</value>
+    <value>Glow of the accent color in the top left corner of the windows (window background, title bar and navigation), weaker while the window is inactive.</value>
   </data>
   <data name="Theme_Black" xml:space="preserve">
     <value>Black</value>

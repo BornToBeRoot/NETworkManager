@@ -79,7 +79,7 @@ If you add, change or delete a theme in the folder, you must restart the applica
 
 ### Accent glow
 
-Glow of the accent color in the top left corner of the windows with a frame (main window, window of dragged-out tabs, status window: window background, title bar and navigation). While a window is inactive, the glow is weaker. Behind dialogs, the darkened window gets a faint tint of the accent. The boxes (tool, profiles) are not changed.
+Glow of the accent color in the top left corner of the windows with a frame (main window, window of dragged-out tabs, status window: window background, title bar and navigation). While a window is inactive, the glow is weaker. The boxes (tool, profiles) are not changed.
 
 **Type:** `NETworkManager.Models.Appearance.AccentGlowIntensity`
 
