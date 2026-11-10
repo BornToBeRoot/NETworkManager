@@ -69,6 +69,7 @@ Accent of the application which is based on [`MahApps.Metro themes`](https://mah
 - `Gold`
 - `Lavender`
 - `Slate`
+- `Graphite`
 
 :::note
 
