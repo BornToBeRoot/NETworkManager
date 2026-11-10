@@ -1,6 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:icons="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls">
+                    xmlns:icons="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls"
+                    xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters">
     <Style x:Key="ButtonWithImageRectangle" TargetType="{x:Type Rectangle}">
         <Setter Property="Width" Value="20" />
         <Setter Property="Height" Value="20" />
@@ -177,6 +178,27 @@
                 <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=Unplug}" />
             </Setter.Value>
         </Setter>
+    </Style>
+
+    <!-- Status of a value in a list (dot in front of the text, e.g. firewall action, TCP state): the level as Tag
+         (StatusLevel, e.g. via FirewallRuleActionToStatusLevelConverter), gray if neutral -->
+    <Style x:Key="StatusDot" TargetType="{x:Type Ellipse}">
+        <Setter Property="Width" Value="8" />
+        <Setter Property="Height" Value="8" />
+        <Setter Property="Margin" Value="0,0,8,0" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray5}" />
+        <Style.Triggers>
+            <Trigger Property="Tag" Value="{x:Static converters:StatusLevel.Success}">
+                <Setter Property="Fill" Value="{DynamicResource Brushes.Status.Success}" />
+            </Trigger>
+            <Trigger Property="Tag" Value="{x:Static converters:StatusLevel.Warning}">
+                <Setter Property="Fill" Value="{DynamicResource Brushes.Status.Warning}" />
+            </Trigger>
+            <Trigger Property="Tag" Value="{x:Static converters:StatusLevel.Error}">
+                <Setter Property="Fill" Value="{DynamicResource Brushes.Status.Error}" />
+            </Trigger>
+        </Style.Triggers>
     </Style>
 
     <!-- @FutureMe Don't touch this! Converter "PortOpenStyleConverter" returns to the x:Key -->

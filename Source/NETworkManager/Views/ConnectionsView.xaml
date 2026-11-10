@@ -18,6 +18,7 @@
     <UserControl.Resources>
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
         <converters:TcpStateToStringConverter x:Key="TcpStateToStringConverter" />
+        <converters:TcpStateToStatusLevelConverter x:Key="TcpStateToStatusLevelConverter" />
         <wpfHelpers:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
     </UserControl.Resources>
     <TabControl Style="{StaticResource DefaultTabControl}">
@@ -191,9 +192,20 @@
                         <DataGridTextColumn Header="{x:Static Member=localization:Strings.RemoteHostname}" FontFamily="{StaticResource Fonts.Family.Mono}"
                                             Binding="{Binding Path=(network:ConnectionInfo.RemoteHostname)}"
                                             SortMemberPath="RemoteHostname" MinWidth="100" />
-                        <DataGridTextColumn Header="{x:Static Member=localization:Strings.State}"
-                                            Binding="{Binding Path=(network:ConnectionInfo.TcpState), Converter={StaticResource ResourceKey=TcpStateToStringConverter}}"
-                                            SortMemberPath="TcpState" MinWidth="150" />
+                        <DataGridTemplateColumn Header="{x:Static Member=localization:Strings.State}"
+                                                ClipboardContentBinding="{Binding Path=(network:ConnectionInfo.TcpState), Converter={StaticResource ResourceKey=TcpStateToStringConverter}}"
+                                                SortMemberPath="TcpState" MinWidth="150">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                        <Ellipse Style="{StaticResource StatusDot}"
+                                                 Tag="{Binding Path=(network:ConnectionInfo.TcpState), Converter={StaticResource ResourceKey=TcpStateToStatusLevelConverter}}" />
+                                        <TextBlock Text="{Binding Path=(network:ConnectionInfo.TcpState), Converter={StaticResource ResourceKey=TcpStateToStringConverter}}"
+                                                   VerticalAlignment="Center" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
                         <DataGridTextColumn Header="{x:Static Member=localization:Strings.ProcessID}"
                                             Binding="{Binding Path=(network:ConnectionInfo.ProcessId)}"
                                             SortMemberPath="ProcessId" MinWidth="150" />

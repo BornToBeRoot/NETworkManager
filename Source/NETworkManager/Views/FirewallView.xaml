@@ -25,6 +25,7 @@
         <converters:FirewallProtocolToStringConverter x:Key="FirewallProtocolToStringConverter" />
         <converters:FirewallRuleDirectionToStringConverter x:Key="FirewallRuleDirectionToStringConverter" />
         <converters:FirewallRuleActionToStringConverter x:Key="FirewallRuleActionToStringConverter" />
+        <converters:FirewallRuleActionToStatusLevelConverter x:Key="FirewallRuleActionToStatusLevelConverter" />
         <converters:FirewallInterfaceTypeToStringConverter x:Key="FirewallInterfaceTypeToStringConverter" />
         <converters:FirewallNetworkProfilesToStringConverter x:Key="FirewallNetworkProfilesToStringConverter" />
         <converters:FirewallRuleSourceToStringConverter x:Key="FirewallRuleSourceToStringConverter" />
@@ -548,15 +549,12 @@
                                                     SortMemberPath="Action" MinWidth="70">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate DataType="{x:Type firewall:FirewallRule}">
-                                        <TextBlock x:Name="ActionText"
-                                                   Text="{Binding (firewall:FirewallRule.Action), Converter={StaticResource FirewallRuleActionToStringConverter}}"
-                                                   Foreground="{DynamicResource Brushes.Status.Error}"
-                                                   VerticalAlignment="Center" />
-                                        <DataTemplate.Triggers>
-                                            <DataTrigger Binding="{Binding (firewall:FirewallRule.Action)}" Value="{x:Static firewall:FirewallRuleAction.Allow}">
-                                                <Setter TargetName="ActionText" Property="Foreground" Value="{DynamicResource Brushes.Status.Success}" />
-                                            </DataTrigger>
-                                        </DataTemplate.Triggers>
+                                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                            <Ellipse Style="{StaticResource StatusDot}"
+                                                     Tag="{Binding (firewall:FirewallRule.Action), Converter={StaticResource FirewallRuleActionToStatusLevelConverter}}" />
+                                            <TextBlock Text="{Binding (firewall:FirewallRule.Action), Converter={StaticResource FirewallRuleActionToStringConverter}}"
+                                                       VerticalAlignment="Center" />
+                                        </StackPanel>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>

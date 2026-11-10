@@ -21,6 +21,7 @@
         <converters:BooleanToStringConverter x:Key="BooleanToStringConverter" />
         <converters:PhysicalAddressToStringConverter x:Key="PhysicalAddressToStringConverter" />
         <converters:NeighborStateToStringConverter x:Key="NeighborStateToStringConverter" />
+        <converters:NeighborStateToStatusLevelConverter x:Key="NeighborStateToStatusLevelConverter" />
         <wpfHelpers:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
     </UserControl.Resources>
     <UserControl.InputBindings>
@@ -190,10 +191,21 @@
                                             Binding="{Binding (network:NeighborInfo.MACAddress), Converter={StaticResource PhysicalAddressToStringConverter}}"
                                             SortMemberPath="MACAddress"
                                             MinWidth="180" />
-                        <DataGridTextColumn Header="{x:Static localization:Strings.State}"
-                                            Binding="{Binding (network:NeighborInfo.State), Converter={StaticResource NeighborStateToStringConverter}}"
-                                            SortMemberPath="State"
-                                            MinWidth="100" />
+                        <DataGridTemplateColumn Header="{x:Static localization:Strings.State}"
+                                                ClipboardContentBinding="{Binding (network:NeighborInfo.State), Converter={StaticResource NeighborStateToStringConverter}}"
+                                                SortMemberPath="State"
+                                                MinWidth="100">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                        <Ellipse Style="{StaticResource StatusDot}"
+                                                 Tag="{Binding (network:NeighborInfo.State), Converter={StaticResource NeighborStateToStatusLevelConverter}}" />
+                                        <TextBlock Text="{Binding (network:NeighborInfo.State), Converter={StaticResource NeighborStateToStringConverter}}"
+                                                   VerticalAlignment="Center" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
                         <DataGridTextColumn Header="{x:Static localization:Strings.Multicast}"
                                             Binding="{Binding (network:NeighborInfo.IsMulticast), Converter={StaticResource BooleanToStringConverter}}"
                                             SortMemberPath="IsMulticast"
