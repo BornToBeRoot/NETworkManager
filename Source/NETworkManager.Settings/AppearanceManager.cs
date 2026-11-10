@@ -162,16 +162,20 @@ public static class AppearanceManager
 
     static AppearanceManager()
     {
+        // Themes of MahApps (Light, Dark) and the additional themes (Black, Midnight, ...), created when used
         Themes = [.. ThemeManager.Current.Themes
             .GroupBy(x => x.BaseColorScheme)
             .Select(x => x.First())
             .Select(x => new ThemeColorInfo
-            { Name = x.BaseColorScheme, Color = x.Resources["MahApps.Brushes.ThemeBackground"] as Brush })];
+            { Name = x.BaseColorScheme, Color = x.Resources["MahApps.Brushes.ThemeBackground"] as Brush }),
+            .. ThemeVariants.Themes.Select(x => new ThemeColorInfo { Name = x.Name, Color = CreateFrozenBrush(x.Background, 1) })];
 
+        // Accents of MahApps and the additional accents (Sky, Ocean, ...), sorted by name
         Accents = [.. ThemeManager.Current.Themes
             .GroupBy(x => x.ColorScheme)
-            .OrderBy(x => x.Key)
-            .Select(x => new AccentColorInfo { Name = x.Key, Color = x.First().ShowcaseBrush })];
+            .Select(x => new AccentColorInfo { Name = x.Key, Color = x.First().ShowcaseBrush })
+            .Concat(ThemeVariants.Accents.Select(x => new AccentColorInfo { Name = x.Name, Color = CreateFrozenBrush(x.Color, 1) }))
+            .OrderBy(x => x.Name)];
 
         ThemeManager.Current.ThemeChanged += Current_ThemeChanged;
 
@@ -259,6 +263,9 @@ public static class AppearanceManager
     /// <param name="name">Theme name as "theme.accent" to apply.</param>
     public static void ChangeTheme(string name)
     {
+        // Additional themes / accents are created when they are used
+        ThemeVariants.EnsureTheme(name);
+
         ThemeManager.Current.ChangeTheme(System.Windows.Application.Current, name);
     }
 
@@ -306,7 +313,7 @@ public static class AppearanceManager
             ? backgroundColor
             : Colors.White;
 
-        var frame = theme.BaseColorScheme == ThemeManager.BaseColorDark
+        var frame = ThemeVariants.IsDark(theme)
             ? Blend(background, Colors.Black, 0.25)
             : Blend(background, foreground, 0.04);
 
@@ -394,7 +401,7 @@ public static class AppearanceManager
     /// <param name="theme">Theme that was applied.</param>
     private static void ApplyStatusBrushes(Theme theme)
     {
-        var isDark = theme.BaseColorScheme == ThemeManager.BaseColorDark;
+        var isDark = ThemeVariants.IsDark(theme);
 
         var appResources = System.Windows.Application.Current.Resources;
 

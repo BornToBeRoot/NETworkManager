@@ -5504,4 +5504,40 @@ Do you want to start the scan?</value>
   <data name="HelpMessage_AccentGlow" xml:space="preserve">
     <value>Shows a subtle glow of the accent color in the top left corner of the main window (window background, title bar and navigation).</value>
   </data>
+  <data name="Theme_Black" xml:space="preserve">
+    <value>Black</value>
+  </data>
+  <data name="Theme_Midnight" xml:space="preserve">
+    <value>Midnight</value>
+  </data>
+  <data name="Theme_Steel" xml:space="preserve">
+    <value>Steel</value>
+  </data>
+  <data name="Theme_Indigo" xml:space="preserve">
+    <value>Indigo</value>
+  </data>
+  <data name="Accent_Sky" xml:space="preserve">
+    <value>Sky</value>
+  </data>
+  <data name="Accent_Ocean" xml:space="preserve">
+    <value>Ocean</value>
+  </data>
+  <data name="Accent_Mint" xml:space="preserve">
+    <value>Mint</value>
+  </data>
+  <data name="Accent_Rose" xml:space="preserve">
+    <value>Rose</value>
+  </data>
+  <data name="Accent_Coral" xml:space="preserve">
+    <value>Coral</value>
+  </data>
+  <data name="Accent_Gold" xml:space="preserve">
+    <value>Gold</value>
+  </data>
+  <data name="Accent_Lavender" xml:space="preserve">
+    <value>Lavender</value>
+  </data>
+  <data name="Accent_Slate" xml:space="preserve">
+    <value>Slate</value>
+  </data>
 </root>
