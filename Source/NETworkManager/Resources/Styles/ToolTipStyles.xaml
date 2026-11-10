@@ -4,7 +4,7 @@
     <Style x:Key="DefaultToolTip" TargetType="{x:Type TypeName=ToolTip}"
            BasedOn="{StaticResource  ResourceKey=MahApps.Styles.ToolTip}">
         <Setter Property="FontSize" Value="14" />
-        <Setter Property="BorderBrush" Value="{DynamicResource  ResourceKey=MahApps.Brushes.Gray8}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource Brushes.Surface.Border}" />
         <Setter Property="Foreground" Value="{DynamicResource  ResourceKey=MahApps.Brushes.Text}" />
         <Setter Property="Background" Value="{DynamicResource  ResourceKey=MahApps.Brushes.Window.Background}" />
         <!-- Template of MahApps (MahApps.Styles.ToolTip, 2.4.11) with rounded corners and a shorter fade (open 120 ms,

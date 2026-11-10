@@ -25,7 +25,7 @@
                         <ColumnDefinition Width="250" />
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
-                    <Border Grid.Column="0" BorderBrush="{DynamicResource MahApps.Brushes.Gray8}"
+                    <Border Grid.Column="0" BorderBrush="{DynamicResource Brushes.Surface.Border}"
                             BorderThickness="0,0,1,0">
                         <Grid>
                             <Grid.RowDefinitions>

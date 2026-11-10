@@ -45,7 +45,7 @@
     <!-- Overwrite style from here to adjust the color of the gripper: https://github.com/MahApps/MahApps.Metro/blob/df8a3eb689caa921b936c4aeba15f5fe2bb57163/src/MahApps.Metro/Styles/Controls.DataGrid.xaml#L217 -->
     <Style x:Key="DefaultColumnHeaderGripper" TargetType="{x:Type Thumb}"
            BasedOn="{StaticResource MahApps.Styles.Thumb.ColumnHeaderGripper}">
-        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Gray8}" />
+        <Setter Property="Background" Value="{DynamicResource Brushes.Surface.Border}" />
         <Setter Property="Cursor" Value="SizeWE" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
@@ -67,7 +67,7 @@
         <Setter Property="mah:ControlsHelper.ContentCharacterCasing" Value="Normal" />
         <Setter Property="FontWeight" Value="SemiBold" />
         <Setter Property="BorderThickness" Value="0,0,0,1" />
-        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Gray8}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource Brushes.Surface.Border}" />
         <!-- Overwrite style from here to adjust the color of the gripper: https://github.com/MahApps/MahApps.Metro/blob/df8a3eb689caa921b936c4aeba15f5fe2bb57163/src/MahApps.Metro/Styles/Controls.DataGrid.xaml#L248 -->
         <Setter Property="Template">
             <Setter.Value>

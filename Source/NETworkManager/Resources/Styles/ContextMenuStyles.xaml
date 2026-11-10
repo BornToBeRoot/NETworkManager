@@ -3,7 +3,7 @@
     <Style x:Key="DefaultContextMenu" TargetType="{x:Type ContextMenu}"
            BasedOn="{StaticResource MahApps.Styles.ContextMenu}">
         <Setter Property="FontSize" Value="14" />
-        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Gray8}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource Brushes.Surface.Border}" />
         <!-- Template of MahApps (MahApps.Styles.ContextMenu, 2.4.11) with rounded corners (also the shadow). Radius of
              the controls: the items fill the menu, the square highlight of the first / last item would stick out of a
              larger radius. -->
@@ -44,7 +44,6 @@
             </Setter.Value>
         </Setter>
         <Style.Resources>
-            <SolidColorBrush x:Key="MahApps.Brushes.SubMenu.Border" Color="{DynamicResource MahApps.Colors.Gray8}" />
             <SolidColorBrush x:Key="MahApps.Brushes.RightArrowFill" Color="{DynamicResource MahApps.Colors.Gray3}" />
             <!-- Checkmark of a checkable menu item (accent color by default), like the icons of the menu items -->
             <SolidColorBrush x:Key="MahApps.Brushes.CheckmarkFill" Color="{DynamicResource MahApps.Colors.Gray3}" />

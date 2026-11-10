@@ -44,7 +44,7 @@
                      Visual="{icons:Lucide Kind=List}" />
         <!-- Key of the key hints (e.g. "Enter") -->
         <Style x:Key="RunCommandKeyBorder" TargetType="{x:Type Border}">
-            <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Gray8}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource Brushes.Surface.Border}" />
             <Setter Property="BorderThickness" Value="1" />
             <Setter Property="CornerRadius" Value="{StaticResource CornerRadius.Control}" />
             <Setter Property="Padding" Value="4,0" />
@@ -76,7 +76,7 @@
         <!-- Input: icon of the recognized command, input and validation -->
         <!-- Bottom border like the search (gray, also with the focus) -->
         <Border Grid.Row="0" BorderThickness="0,0,0,1" Padding="0,0,0,2"
-                BorderBrush="{DynamicResource MahApps.Brushes.Gray8}">
+                BorderBrush="{DynamicResource Brushes.Surface.Border}">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />

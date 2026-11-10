@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d">
     <Border Background="{DynamicResource MahApps.Brushes.Window.Background}"
-            BorderBrush="{DynamicResource MahApps.Brushes.Gray8}"
+            BorderBrush="{DynamicResource Brushes.Surface.Border}"
             BorderThickness="1"
             CornerRadius="{StaticResource CornerRadius.Control}"
             IsHitTestVisible="False">

@@ -93,7 +93,7 @@ public static class ComboBoxPopupBehavior
         popupBorder.CornerRadius = cornerRadius;
         popupBorder.Margin = shadowMargin;
         popupBorder.Padding = new Thickness(3);
-        popupBorder.SetResourceReference(Border.BorderBrushProperty, "MahApps.Brushes.Gray8");
+        popupBorder.SetResourceReference(Border.BorderBrushProperty, "Brushes.Surface.Border");
 
         // Small gap below the ComboBox (the popup of MahApps already allows transparency for the rounded corners)
         popup.VerticalOffset = 2;

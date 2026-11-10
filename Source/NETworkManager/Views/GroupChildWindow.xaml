@@ -47,7 +47,7 @@
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <Border BorderThickness="0,0,1,0" BorderBrush="{DynamicResource MahApps.Brushes.Gray8}">
+            <Border BorderThickness="0,0,1,0" BorderBrush="{DynamicResource Brushes.Surface.Border}">
                 <ScrollViewer ManipulationBoundaryFeedback="ScrollViewer_ManipulationBoundaryFeedback"
                               Margin="0,0,10,0">
                     <ListBox x:Name="ListBoxViews" ItemsSource="{Binding GroupViews}" Margin="0,0,10,0">
@@ -601,7 +601,7 @@
                                  instead of the ones of the settings -->
                             <TextBlock Text="{x:Static localization:Strings.OverrideDefaultSettings}"
                                        Style="{StaticResource HeaderTextBlock}" Margin="0" />
-                            <Separator Background="{DynamicResource MahApps.Brushes.Gray8}" Margin="0,10,0,10" />
+                            <Separator Background="{DynamicResource Brushes.Surface.Border}" Margin="0,10,0,10" />
                             <TextBlock Text="{x:Static localization:Strings.SNMP}"
                                        Style="{StaticResource CenterTextBlock}" Margin="0,0,0,10" />
                             <internalControls:SNMPCredentialsControl DataContext="{Binding IPScanner_SNMP}" />
@@ -637,7 +637,7 @@
                                            Text="{x:Static localization:Strings.OverrideDefaultSettings}"
                                            Style="{StaticResource HeaderTextBlock}" Margin="0" />
                                 <Separator Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="4"
-                                           Background="{DynamicResource MahApps.Brushes.Gray8}" Margin="0,0,0,10" />
+                                           Background="{DynamicResource Brushes.Surface.Border}" Margin="0,0,0,10" />
                                 <CheckBox Grid.Column="0" Grid.Row="4" Content="{x:Static localization:Strings.Ports}"
                                           IsChecked="{Binding PortScanner_OverridePorts}"
                                           Style="{StaticResource DefaultCheckBox}" />
@@ -690,7 +690,7 @@
                                            Text="{x:Static localization:Strings.OverrideDefaultSettings}"
                                            Style="{StaticResource HeaderTextBlock}" Margin="0" />
                                 <Separator Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="4"
-                                           Background="{DynamicResource MahApps.Brushes.Gray8}" Margin="0,0,0,10" />
+                                           Background="{DynamicResource Brushes.Surface.Border}" Margin="0,0,0,10" />
                                 <!-- DNS server of the group instead of the one selected in DNS Lookup: DNS servers (by
                                      name) and history, like the DNS server input of DNS Lookup -->
                                 <CheckBox Grid.Column="0" Grid.Row="4"
@@ -818,7 +818,7 @@
                                            Text="{x:Static localization:Strings.OverrideDefaultSettings}"
                                            Style="{StaticResource HeaderTextBlock}" Margin="0,10,0,0" />
                                 <Separator Grid.Column="0" Grid.Row="6" Grid.ColumnSpan="4"
-                                           Background="{DynamicResource MahApps.Brushes.Gray8}" Margin="0,0,0,10" />
+                                           Background="{DynamicResource Brushes.Surface.Border}" Margin="0,0,0,10" />
                                 <CheckBox Grid.Column="0" Grid.Row="8" VerticalAlignment="Top"
                                           Content="{x:Static localization:Strings.Display}"
                                           IsChecked="{Binding RemoteDesktop_OverrideDisplay}"
@@ -1433,7 +1433,7 @@
                                            Text="{x:Static localization:Strings.OverrideDefaultSettings}"
                                            Style="{StaticResource HeaderTextBlock}" Margin="0" />
                                 <Separator Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="4"
-                                           Background="{DynamicResource MahApps.Brushes.Gray8}" Margin="0,0,0,10" />
+                                           Background="{DynamicResource Brushes.Surface.Border}" Margin="0,0,0,10" />
                                 <CheckBox Grid.Column="0" Grid.Row="4"
                                           Content="{x:Static localization:Strings.Command}"
                                           IsChecked="{Binding PowerShell_OverrideCommand}"
@@ -1458,7 +1458,7 @@
                                                 <TextBlock Text="{x:Static localization:Strings.HelpMessage_ProfileHostPlaceholder}"
                                                            Style="{StaticResource DefaultTextBlock}"
                                                            TextWrapping="Wrap" Margin="0,0,0,8" />
-                                                <Border BorderBrush="{DynamicResource MahApps.Brushes.Gray8}"
+                                                <Border BorderBrush="{DynamicResource Brushes.Surface.Border}"
                                                         BorderThickness="1" CornerRadius="{StaticResource CornerRadius.Control}">
                                                     <Grid>
                                                         <Grid.ColumnDefinitions>
@@ -1483,7 +1483,7 @@
                                                         <TextBlock Grid.Row="0" Grid.Column="1"
                                                                    Text="{x:Static localization:Strings.Description}" FontWeight="Bold" />
                                                         <Rectangle Grid.Row="1" Grid.ColumnSpan="2" Grid.Column="0" Height="1"
-                                                                   Fill="{DynamicResource MahApps.Brushes.Gray8}" />
+                                                                   Fill="{DynamicResource Brushes.Surface.Border}" />
 
                                                         <!-- Placeholder -->
                                                         <TextBlock Grid.Row="2" Grid.Column="0" Text="{}{{Host}}" />
@@ -1546,7 +1546,7 @@
                                            Text="{x:Static localization:Strings.OverrideDefaultSettings}"
                                            Style="{StaticResource HeaderTextBlock}" Margin="0" />
                                 <Separator Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="4"
-                                           Background="{DynamicResource MahApps.Brushes.Gray8}" Margin="0,0,0,10" />
+                                           Background="{DynamicResource Brushes.Surface.Border}" Margin="0,0,0,10" />
                                 <CheckBox Grid.Column="0" Grid.Row="4"
                                           Content="{x:Static localization:Strings.Username}"
                                           IsChecked="{Binding PuTTY_OverrideUsername}"
@@ -1672,7 +1672,7 @@
                                                 <TextBlock Text="{x:Static localization:Strings.HelpMessage_ProfileHostPlaceholder}"
                                                            Style="{StaticResource DefaultTextBlock}"
                                                            TextWrapping="Wrap" Margin="0,0,0,8" />
-                                                <Border BorderBrush="{DynamicResource MahApps.Brushes.Gray8}"
+                                                <Border BorderBrush="{DynamicResource Brushes.Surface.Border}"
                                                         BorderThickness="1" CornerRadius="{StaticResource CornerRadius.Control}">
                                                     <Grid>
                                                         <Grid.ColumnDefinitions>
@@ -1697,7 +1697,7 @@
                                                         <TextBlock Grid.Row="0" Grid.Column="1"
                                                                    Text="{x:Static localization:Strings.Description}" FontWeight="Bold" />
                                                         <Rectangle Grid.Row="1" Grid.ColumnSpan="2" Grid.Column="0" Height="1"
-                                                                   Fill="{DynamicResource MahApps.Brushes.Gray8}" />
+                                                                   Fill="{DynamicResource Brushes.Surface.Border}" />
 
                                                         <!-- Placeholder -->
                                                         <TextBlock Grid.Row="2" Grid.Column="0" Text="{}{{Host}}" />
@@ -1738,7 +1738,7 @@
                                            Text="{x:Static localization:Strings.OverrideDefaultSettings}"
                                            Style="{StaticResource HeaderTextBlock}" Margin="0" />
                                 <Separator Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="4"
-                                           Background="{DynamicResource MahApps.Brushes.Gray8}" Margin="0,0,0,10" />
+                                           Background="{DynamicResource Brushes.Surface.Border}" Margin="0,0,0,10" />
                                 <CheckBox Grid.Column="0" Grid.Row="4" Content="{x:Static localization:Strings.Port}"
                                           IsChecked="{Binding TigerVNC_OverridePort}"
                                           Style="{StaticResource DefaultCheckBox}" />
@@ -1788,7 +1788,7 @@
                                            Text="{x:Static localization:Strings.OverrideDefaultSettings}"
                                            Style="{StaticResource HeaderTextBlock}" Margin="0" />
                                 <Separator Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="4"
-                                           Background="{DynamicResource MahApps.Brushes.Gray8}" Margin="0,0,0,10" />
+                                           Background="{DynamicResource Brushes.Surface.Border}" Margin="0,0,0,10" />
                                 <CheckBox Grid.Column="0" Grid.Row="4" Content="{x:Static localization:Strings.OID}"
                                           IsChecked="{Binding SNMP_OverrideOIDAndMode}"
                                           Style="{StaticResource DefaultCheckBox}" />

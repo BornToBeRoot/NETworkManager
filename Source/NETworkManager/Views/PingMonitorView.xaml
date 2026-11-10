@@ -17,7 +17,7 @@
     <Expander Style="{StaticResource PingMonitorExpander}"
               IsExpanded="{Binding ExpandHostView}"
               BorderThickness="1,1,1,1"
-              BorderBrush="{DynamicResource MahApps.Brushes.Gray8}"
+              BorderBrush="{DynamicResource Brushes.Surface.Border}"
               Margin="0,0,0,10">
         <Expander.ContextMenu>
             <ContextMenu Style="{StaticResource DefaultContextMenu}" MinWidth="150">

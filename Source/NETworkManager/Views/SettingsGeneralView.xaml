@@ -24,7 +24,7 @@
                  HorizontalAlignment="Left"
                  ItemsSource="{Binding Applications}"
                  SelectedItem="{Binding ApplicationSelectedItem}"
-                 BorderBrush="{DynamicResource MahApps.Brushes.Gray8}"
+                 BorderBrush="{DynamicResource Brushes.Surface.Border}"
                  Margin="0,0,0,10"
                  dd:DragDrop.IsDragSource="True"
                  dd:DragDrop.IsDropTarget="True">

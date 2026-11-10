@@ -1398,7 +1398,7 @@
                                     <DataTrigger
                                         Binding="{Binding Path=IsSelected, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGridRow}}"
                                         Value="False">
-                                        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Gray8}" />
+                                        <Setter Property="BorderBrush" Value="{DynamicResource Brushes.Surface.Border}" />
                                     </DataTrigger>
                                 </Style.Triggers>
                             </Style>

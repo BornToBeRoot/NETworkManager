@@ -166,7 +166,7 @@
 
             <!-- Vertical separator -->
             <Rectangle Grid.Row="0" Grid.Column="1" Grid.RowSpan="2"
-                       Fill="{DynamicResource ResourceKey=MahApps.Brushes.Gray8}"
+                       Fill="{DynamicResource Brushes.Surface.Border}"
                        Width="1" />
             
             <!-- Right header -->

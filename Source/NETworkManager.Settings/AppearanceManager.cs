@@ -376,6 +376,9 @@ public static class AppearanceManager
         // contrast comes from the frame)
         appResources[SurfaceBorderBrushKey] = CreateFrozenBrush(foreground, 0.10);
 
+        // Border of submenus (MahApps), like the context menus and the other surfaces
+        appResources["MahApps.Brushes.SubMenu.Border"] = appResources[SurfaceBorderBrushKey];
+
         // Selected item of the navigation: a light tint of the accent (mouse over stays the neutral tint)
         var accent = theme.Resources["MahApps.Colors.Accent"] is Color accentColor ? accentColor : Colors.Gray;
         appResources[NavigationSelectedBrushKey] = CreateFrozenBrush(accent, 0.15);

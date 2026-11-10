@@ -34,7 +34,7 @@
         <Setter Property="BorderThickness" Value="3" />
         <Setter Property="BorderBrush" Value="Transparent" />
         <Setter Property="Panel.ZIndex" Value="1" />
-        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Gray8}" />
+        <Setter Property="Background" Value="{DynamicResource Brushes.Surface.Border}" />
         <Setter Property="ShowsPreview" Value="True" />
         <Setter Property="PreviewStyle" Value="{StaticResource GridSplitterPreviewStyle}" />
         <Setter Property="HorizontalAlignment" Value="Stretch" />
@@ -90,7 +90,7 @@
         <Setter Property="BorderThickness" Value="3" />
         <Setter Property="BorderBrush" Value="Transparent" />
         <Setter Property="Panel.ZIndex" Value="1" />
-        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Gray8}" />
+        <Setter Property="Background" Value="{DynamicResource Brushes.Surface.Border}" />
         <Setter Property="ShowsPreview" Value="True" />
         <Setter Property="PreviewStyle" Value="{StaticResource GridSplitterPreviewStyle}" />
         <Setter Property="HorizontalAlignment" Value="Stretch" />

@@ -40,7 +40,7 @@
         the page.
     -->
     <Style x:Key="DragablzTabHeaderBorder" TargetType="{x:Type Border}">
-        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Gray8}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource Brushes.Surface.Border}" />
         <Setter Property="BorderThickness" Value="0,0,1,0" />
         <Setter Property="Background" Value="Transparent" />
         <Style.Triggers>
@@ -143,7 +143,7 @@
     <Style x:Key="DefaultTabablzControl" TargetType="{x:Type dragablz:TabablzControl}"
            BasedOn="{StaticResource MahAppsTabablzControlStyle}">
         <Setter Property="BorderThickness" Value="0,1,0,0" />
-        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Gray8}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource Brushes.Surface.Border}" />
         <Setter Property="ItemContainerStyle" Value="{StaticResource CustomHeaderItemTemplate}" />
         <Setter Property="AdjacentHeaderItemOffset" Value="0" />
         <Setter Property="Margin" Value="0,-2,0,0" />

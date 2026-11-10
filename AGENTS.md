@@ -520,7 +520,7 @@ of local colors, sizes or templates; theme-dependent brushes always with `Dynami
 |---|---|---|
 | `Brushes.Surface.Frame` | dark: background 25 % darker, light: 4 % foreground (or the theme's own frame) | window frame, title bar, navigation |
 | `Brushes.Surface.Window` / `.Inactive` | frame + accent glow (radial, top left), half glow when the window is inactive | `FrameWindow` background |
-| `Brushes.Surface.Border` | foreground 10 % | `ViewBox` / `CardBorder` border |
+| `Brushes.Surface.Border` | foreground 10 % | all lines and surface borders: boxes, cards, separators, tabs, grid headers, splitters, popups, tooltips, dialogs, group boxes (input / check box / radio borders keep `MahApps.Brushes.Gray8` for contrast) |
 | `Brushes.Navigation.Selected` | accent 15 % | selected tool in the navigation |
 | `Brushes.Control.MouseOver` / `.Pressed` | foreground 8 % / 12 % | hover / pressed of icon buttons, lists, tabs |
 | `Brushes.Control.Border.MouseOver` | foreground 35 % | input border on hover |

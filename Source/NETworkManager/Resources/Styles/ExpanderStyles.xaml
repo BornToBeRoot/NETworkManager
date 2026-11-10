@@ -92,7 +92,7 @@
            BasedOn="{StaticResource ResourceKey=ExpanderDownHeader}"
            TargetType="{x:Type TypeName=ToggleButton}">
         <Setter Property="BorderThickness" Value="0,0,0,1" />
-        <Setter Property="BorderBrush" Value="{DynamicResource ResourceKey=MahApps.Brushes.Gray8}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource Brushes.Surface.Border}" />
         <Setter Property="Padding" Value="0,0,0,6" />
     </Style>
 

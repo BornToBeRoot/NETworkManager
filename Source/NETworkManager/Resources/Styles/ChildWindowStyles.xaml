@@ -250,8 +250,8 @@
         <!-- Rounded with a thin border and a shadow -->
         <Setter Property="CornerRadius" Value="{StaticResource CornerRadius.Overlay}" />
         <Setter Property="BorderThickness" Value="1" />
-        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Gray8}" />
-        <Setter Property="NonActiveBorderBrush" Value="{DynamicResource MahApps.Brushes.Gray8}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource Brushes.Surface.Border}" />
+        <Setter Property="NonActiveBorderBrush" Value="{DynamicResource Brushes.Surface.Border}" />
         <Setter Property="EnableDropShadow" Value="True" />
         <!-- Dims the window behind the dialog (same in light and dark theme) -->
         <Setter Property="OverlayBrush" Value="{StaticResource Brushes.Overlay}" />

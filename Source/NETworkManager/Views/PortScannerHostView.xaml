@@ -40,7 +40,7 @@
                                     </MultiBinding>
                                 </TextBlock.Text>
                             </TextBlock>
-                            <Separator Background="{DynamicResource MahApps.Brushes.Gray8}"
+                            <Separator Background="{DynamicResource Brushes.Surface.Border}"
                                        Margin="0,10" />
                             <TextBlock Text="{Binding Description}"
                                        Style="{StaticResource InfoTextBlock}" TextWrapping="Wrap" />

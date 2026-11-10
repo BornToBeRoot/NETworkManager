@@ -56,7 +56,7 @@
 
                 <Path x:Name="CountriesPath"
                       Fill="{DynamicResource ResourceKey=MahApps.Brushes.Gray10}"
-                      Stroke="{DynamicResource ResourceKey=MahApps.Brushes.Gray8}"
+                      Stroke="{DynamicResource Brushes.Surface.Border}"
                       StrokeThickness="0.5" />
 
                 <!--
@@ -99,7 +99,7 @@
         -->
         <Border x:Name="InfoPanel"
                 Background="{DynamicResource ResourceKey=MahApps.Brushes.Window.Background}"
-                BorderBrush="{DynamicResource ResourceKey=MahApps.Brushes.Gray8}"
+                BorderBrush="{DynamicResource Brushes.Surface.Border}"
                 BorderThickness="1"
                 Padding="8,6"
                 Margin="10"
