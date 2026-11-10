@@ -793,8 +793,9 @@
                                                    Text="{Binding Name, Converter={StaticResource ApplicationNameToTranslatedStringConverter}}"
                                                    Margin="2,0,0,0">
                                             <TextBlock.Style>
+                                                <!-- 14 regular like the tabs (was the 18 header font) -->
                                                 <Style TargetType="{x:Type TextBlock}"
-                                                       BasedOn="{StaticResource HeaderTextBlock}">
+                                                       BasedOn="{StaticResource DefaultTextBlock}">
                                                     <Setter Property="Foreground"
                                                             Value="{DynamicResource MahApps.Brushes.Gray3}" />
                                                     <Setter Property="Margin" Value="0" />
@@ -988,8 +989,9 @@
                                 </Rectangle>
                                 <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.Settings}">
                                     <TextBlock.Style>
+                                        <!-- 14 regular like the tabs and the applications -->
                                         <Style TargetType="{x:Type TextBlock}"
-                                               BasedOn="{StaticResource HeaderTextBlock}">
+                                               BasedOn="{StaticResource DefaultTextBlock}">
                                             <Setter Property="Foreground"
                                                     Value="{DynamicResource MahApps.Brushes.Gray3}" />
                                             <Setter Property="Margin" Value="0" />
