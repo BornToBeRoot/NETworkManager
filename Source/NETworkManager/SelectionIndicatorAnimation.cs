@@ -8,12 +8,13 @@ namespace NETworkManager;
 
 /// <summary>
 /// Attached property for the accent indicator of a selected item (e.g. the navigation): bind it to the selection of
-/// the item. When the item is selected, the indicator grows from its center (height 0 to its size, 150 ms, ease-out).
+/// the item. When the item is selected, the indicator grows from its center (height 0 to its size, 250 ms, quadratic ease-out - visible
+/// over the whole duration, a cubic ease-out does most of it in the first 50 ms).
 /// Checks whether animations are enabled each time (see <see cref="AppearanceManager.AnimationsEnabled"/>).
 /// </summary>
 public static class SelectionIndicatorAnimation
 {
-    private static readonly Duration Duration = new(TimeSpan.FromMilliseconds(150));
+    private static readonly Duration Duration = new(TimeSpan.FromMilliseconds(250));
 
     public static readonly DependencyProperty IsSelectedProperty =
         DependencyProperty.RegisterAttached(
@@ -43,6 +44,6 @@ public static class SelectionIndicatorAnimation
         element.RenderTransformOrigin = new Point(0.5, 0.5);
 
         scale.BeginAnimation(ScaleTransform.ScaleYProperty,
-            new DoubleAnimation(0, 1, Duration) { EasingFunction = new CubicEase { EasingMode = EasingMode.EaseOut } });
+            new DoubleAnimation(0, 1, Duration) { EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseOut } });
     }
 }
