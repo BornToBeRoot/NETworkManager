@@ -3,7 +3,7 @@
                     xmlns:mahControls="http://metro.mahapps.com/winfx/xaml/controls"
                     xmlns:mahConverters="http://metro.mahapps.com/winfx/xaml/shared"
                     xmlns:simpleChildWindow="clr-namespace:MahApps.Metro.SimpleChildWindow;assembly=MahApps.Metro.SimpleChildWindow"
-                    xmlns:wpfHelpers="clr-namespace:NETworkManager.Utilities.WPF;assembly=NETworkManager.Utilities.WPF">
+                    xmlns:networkManager="clr-namespace:NETworkManager">
     <BooleanToVisibilityConverter x:Key="ChildWindowBooleanToVisibilityConverter" />
 
     <!--
@@ -51,12 +51,9 @@
                   FocusVisualStyle="{x:Null}"
                   UseLayoutRounding="True">
 
-                <!-- Scaled when the dialog is opened / closed, see the visual states. Not PART_Window: the ChildWindow
-                     sets its RenderTransform (TranslateTransform to move the dialog). -->
+                <!-- Scaled when the dialog is opened / closed, see ChildWindowAnimation. Not PART_Window: the
+                     ChildWindow sets its RenderTransform (TranslateTransform to move the dialog). -->
                 <Grid x:Name="WindowScale" RenderTransformOrigin="0.5,0.5">
-                    <Grid.RenderTransform>
-                        <ScaleTransform />
-                    </Grid.RenderTransform>
                     <Border x:Name="PART_GlowEffect"
                             Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
@@ -192,22 +189,6 @@
                                 <SplineDoubleKeyFrame KeyTime="00:00:00" Value="1" />
                                 <SplineDoubleKeyFrame KeyTime="00:00:00.100" Value="0" />
                             </DoubleAnimationUsingKeyFrames>
-                            <!-- Dialog shrinks a little while it fades out (ease-in, no scale with reduced motion,
-                                 see Motion) -->
-                            <DoubleAnimation Storyboard.TargetName="WindowScale"
-                                             Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleX)"
-                                             From="1" To="{x:Static wpfHelpers:Motion.DialogHideScale}" Duration="00:00:00.100">
-                                <DoubleAnimation.EasingFunction>
-                                    <CubicEase EasingMode="EaseIn" />
-                                </DoubleAnimation.EasingFunction>
-                            </DoubleAnimation>
-                            <DoubleAnimation Storyboard.TargetName="WindowScale"
-                                             Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)"
-                                             From="1" To="{x:Static wpfHelpers:Motion.DialogHideScale}" Duration="00:00:00.100">
-                                <DoubleAnimation.EasingFunction>
-                                    <CubicEase EasingMode="EaseIn" />
-                                </DoubleAnimation.EasingFunction>
-                            </DoubleAnimation>
                             <ObjectAnimationUsingKeyFrames BeginTime="00:00:00.100"
                                                            Storyboard.TargetName="PART_Overlay"
                                                            Storyboard.TargetProperty="(UIElement.Visibility)">
@@ -228,22 +209,6 @@
                                 <SplineDoubleKeyFrame KeyTime="00:00:00" Value="0" />
                                 <SplineDoubleKeyFrame KeyTime="00:00:00.200" Value="1" />
                             </DoubleAnimationUsingKeyFrames>
-                            <!-- Dialog grows to its size while the overlay fades in (ease-out, no scale with reduced
-                                 motion, see Motion) -->
-                            <DoubleAnimation Storyboard.TargetName="WindowScale"
-                                             Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleX)"
-                                             From="{x:Static wpfHelpers:Motion.DialogShowScale}" To="1" Duration="00:00:00.180">
-                                <DoubleAnimation.EasingFunction>
-                                    <CubicEase EasingMode="EaseOut" />
-                                </DoubleAnimation.EasingFunction>
-                            </DoubleAnimation>
-                            <DoubleAnimation Storyboard.TargetName="WindowScale"
-                                             Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)"
-                                             From="{x:Static wpfHelpers:Motion.DialogShowScale}" To="1" Duration="00:00:00.180">
-                                <DoubleAnimation.EasingFunction>
-                                    <CubicEase EasingMode="EaseOut" />
-                                </DoubleAnimation.EasingFunction>
-                            </DoubleAnimation>
                         </Storyboard>
                     </VisualState>
                 </VisualStateGroup>
@@ -274,6 +239,8 @@
 
     <Style x:Key="DefaultChildWindow" TargetType="{x:Type simpleChildWindow:ChildWindow}">
         <Setter Property="Template" Value="{StaticResource DefaultChildWindowTemplate}" />
+        <!-- Zoom when opened / closed -->
+        <Setter Property="networkManager:ChildWindowAnimation.IsEnabled" Value="True" />
         <Setter Property="ShowTitleBar" Value="True" />
         <Setter Property="ShowCloseButton" Value="True" />
         <Setter Property="CloseByEscape" Value="False" />
