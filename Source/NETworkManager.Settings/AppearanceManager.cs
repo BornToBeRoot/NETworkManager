@@ -263,8 +263,10 @@ public static class AppearanceManager
     /// <param name="name">Theme name as "theme.accent" to apply.</param>
     public static void ChangeTheme(string name)
     {
-        // Additional themes / accents are created when they are used
-        ThemeVariants.EnsureTheme(name);
+        // Additional themes / accents are created when they are used; if that fails (or the theme is unknown), fall back
+        // to the default theme instead of an exception
+        if (!ThemeVariants.EnsureTheme(name) || ThemeManager.Current.GetTheme(name) == null)
+            name = $"{GlobalStaticConfiguration.Appearance_Theme}.{GlobalStaticConfiguration.Appearance_Accent}";
 
         ThemeManager.Current.ChangeTheme(System.Windows.Application.Current, name);
     }

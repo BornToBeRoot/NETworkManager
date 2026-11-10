@@ -1,4 +1,5 @@
 ﻿using ControlzEx.Theming;
+using log4net;
 using MahApps.Metro.Theming;
 using System;
 using System.Collections.Generic;
@@ -24,6 +25,8 @@ namespace NETworkManager.Settings;
 /// </summary>
 public static class ThemeVariants
 {
+    private static readonly ILog Log = LogManager.GetLogger(typeof(ThemeVariants));
+
     /// <summary>
     ///     Additional themes with the background of the boxes (the frame is computed from it, see
     ///     <see cref="AppearanceManager" />).
@@ -66,7 +69,24 @@ public static class ThemeVariants
     ///     is an additional theme or accent and doesn't exist yet.
     /// </summary>
     /// <param name="name">Theme name as "theme.accent".</param>
-    public static void EnsureTheme(string name)
+    /// <returns><see langword="false" /> if the theme could not be created (the caller falls back to a theme of MahApps).</returns>
+    public static bool EnsureTheme(string name)
+    {
+        try
+        {
+            CreateTheme(name);
+
+            return true;
+        }
+        catch (Exception ex)
+        {
+            Log.Error($"Could not create the theme \"{name}\".", ex);
+
+            return false;
+        }
+    }
+
+    private static void CreateTheme(string name)
     {
         if (string.IsNullOrEmpty(name) || ThemeManager.Current.GetTheme(name) != null)
             return;
