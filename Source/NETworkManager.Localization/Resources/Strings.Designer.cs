@@ -178,6 +178,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Graphite.
+        /// </summary>
+        public static string Accent_Graphite {
+            get {
+                return ResourceManager.GetString("Accent_Graphite", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Green.
         /// </summary>
         public static string Accent_Green {

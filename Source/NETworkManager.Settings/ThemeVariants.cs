@@ -60,7 +60,9 @@ public static class ThemeVariants
         ("Coral", Color.FromRgb(0xE8, 0x65, 0x4E)),
         ("Gold", Color.FromRgb(0xC9, 0x96, 0x0C)),
         ("Lavender", Color.FromRgb(0x8E, 0x72, 0xD6)),
-        ("Slate", Color.FromRgb(0x5A, 0x76, 0x8F))
+        ("Slate", Color.FromRgb(0x5A, 0x76, 0x8F)),
+        // Neutral gray for a colorless look (slightly cool: not treated as a neutral gray of a tinted theme)
+        ("Graphite", Color.FromRgb(0x6E, 0x76, 0x81))
     ];
 
     // Source of an accent (the accent Blue of MahApps)

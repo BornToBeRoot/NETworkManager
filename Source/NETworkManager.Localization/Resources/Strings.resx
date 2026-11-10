@@ -5549,4 +5549,7 @@ Do you want to start the scan?</value>
   <data name="Theme_Paper" xml:space="preserve">
     <value>Paper</value>
   </data>
+  <data name="Accent_Graphite" xml:space="preserve">
+    <value>Graphite</value>
+  </data>
 </root>
