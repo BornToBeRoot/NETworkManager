@@ -162,7 +162,7 @@
         <Setter Property="Fill" Value="{DynamicResource Brushes.Status.Success}" />
         <Setter Property="OpacityMask">
             <Setter.Value>
-                <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=Cable}" />
+                <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=MonitorCheck}" />
             </Setter.Value>
         </Setter>
     </Style>
@@ -175,7 +175,7 @@
         <Setter Property="Fill" Value="{DynamicResource Brushes.Status.Error}" />
         <Setter Property="OpacityMask">
             <Setter.Value>
-                <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=Unplug}" />
+                <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=MonitorX}" />
             </Setter.Value>
         </Setter>
     </Style>

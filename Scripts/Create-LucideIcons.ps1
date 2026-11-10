@@ -23,7 +23,7 @@ $LicenseFilePath = Join-Path -Path $RepositoryRoot -ChildPath "Source/NETworkMan
 # Icons of Lucide used in the application
 $Icons = @(
     "activity", "app-window", "arrow-big-up", "arrow-down", "arrow-left", "arrow-left-right", "arrow-up", "binary",
-    "book-open", "box", "brick-wall-fire", "bug", "cable", "calculator", "check", "check-check", "chevron-down",
+    "book-open", "box", "brick-wall-fire", "bug", "calculator", "check", "check-check", "chevron-down",
     "chevron-left", "chevron-right", "chevron-up", "chevrons-right", "circle-alert", "circle-arrow-left",
     "circle-arrow-right", "circle-check", "circle-question-mark", "clipboard-paste", "clock-check", "cloud-download",
     "cloud-upload", "copy", "copy-plus", "database-search", "download", "ellipsis-vertical", "ethernet-port",
@@ -31,7 +31,7 @@ $Icons = @(
     "folder-open", "folder-search", "frown", "funnel", "funnel-x", "gauge", "globe", "grip-horizontal", "grip-vertical",
     "heart", "history", "id-card", "info", "key-round", "keyboard", "languages", "layers", "layout-dashboard", "list",
     "list-chevrons-down-up", "list-chevrons-up-down", "list-filter", "list-plus", "list-x", "lock", "map-pin",
-    "maximize", "maximize-2", "minimize", "minus", "monitor", "monitor-down", "network", "octagon-alert", "palette",
+    "maximize", "maximize-2", "minimize", "minus", "monitor", "monitor-check", "monitor-dot", "monitor-down", "monitor-x", "network", "octagon-alert", "palette",
     "pause", "pencil", "pin", "play", "plug-zap", "plus", "power", "radar", "radio-tower", "refresh-cw", "rocket",
     "rotate-ccw", "route", "router", "save", "scan", "scan-line", "scissors", "search", "server", "settings", "shield",
     "shield-lock", "shield-off", "sliders-horizontal", "square-chevron-right", "table", "tag", "terminal", "timer",

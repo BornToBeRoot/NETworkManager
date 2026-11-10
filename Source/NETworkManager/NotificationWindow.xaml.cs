@@ -159,10 +159,10 @@ public partial class NotificationWindow : INotifyPropertyChanged
 
         var kind = status switch
         {
-            NotificationStatus.Up => LucideIconKind.Cable,
-            NotificationStatus.Down => LucideIconKind.Unplug,
+            NotificationStatus.Up => LucideIconKind.MonitorCheck,
+            NotificationStatus.Down => LucideIconKind.MonitorX,
             NotificationStatus.UpAndDown => LucideIconKind.Network,
-            _ => LucideIconKind.Cable
+            _ => LucideIconKind.MonitorDot
         };
 
         return (kind, brush);

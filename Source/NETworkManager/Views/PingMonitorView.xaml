@@ -97,11 +97,11 @@
                            Visibility="{Binding IsErrorMessageDisplayed, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}">
                     <Rectangle.Resources>
                         <VisualBrush x:Key="VisualConnected" Stretch="Uniform"
-                                     Visual="{icons:Lucide Kind=Cable}" />
+                                     Visual="{icons:Lucide Kind=MonitorCheck}" />
                         <VisualBrush x:Key="VisualDisconnected" Stretch="Uniform"
-                                     Visual="{icons:Lucide Kind=Unplug}" />
+                                     Visual="{icons:Lucide Kind=MonitorX}" />
                         <VisualBrush x:Key="VisualPending" Stretch="Uniform"
-                                     Visual="{icons:Lucide Kind=Cable}" />
+                                     Visual="{icons:Lucide Kind=MonitorDot}" />
                     </Rectangle.Resources>
                     <Rectangle.Style>
                         <Style TargetType="{x:Type Rectangle}">
