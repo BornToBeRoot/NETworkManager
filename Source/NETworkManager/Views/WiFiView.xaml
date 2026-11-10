@@ -1,6 +1,7 @@
 ﻿<UserControl x:Class="NETworkManager.Views.WiFiView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
              xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
@@ -855,9 +856,7 @@
                                     <StackPanel Grid.Column="0" Grid.Row="2"
                                                 VerticalAlignment="Center"
                                                 Visibility="{Binding Path=IsNetworksLoading, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}">
-                                        <networkManager:LoadingIndicator IsActive="True"
-                                                                         Style="{DynamicResource ResourceKey=LoadingIndicatorArcsStyle}"
-                                                                         SpeedRatio="1"
+                                        <mah:ProgressRing IsActive="True" Style="{StaticResource ProgressRingLarge}"
                                                                          Margin="0,0,0,10" />
                                         <TextBlock
                                             Text="{x:Static Member=localization:Strings.SearchingForNetworksDots}"
@@ -968,11 +967,8 @@
                             <Rectangle Width="1"
                                        Stroke="{DynamicResource ResourceKey=MahApps.Brushes.Accent}"
                                        VerticalAlignment="Stretch" />
-                            <networkManager:LoadingIndicator IsActive="True"
-                                                             Style="{DynamicResource ResourceKey=LoadingIndicatorPulseStyle}"
+                            <mah:ProgressRing IsActive="True" Style="{StaticResource ProgressRingMedium}"
                                                              Visibility="{Binding IsConnecting, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
-                                                             Width="24" Height="24"
-                                                             SpeedRatio="1"
                                                              Margin="10,0,0,0" />
                             <TextBlock Style="{StaticResource ResourceKey=AccentTextBlock}"
                                        Text="{Binding Path=ConnectionStatusMessage}"
@@ -1015,9 +1011,7 @@
                 </Button>
                 <StackPanel VerticalAlignment="Center"
                             Visibility="{Binding Path=IsAdaptersLoading, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}">
-                    <networkManager:LoadingIndicator IsActive="True"
-                                                     Style="{DynamicResource ResourceKey=LoadingIndicatorArcsStyle}"
-                                                     SpeedRatio="1"
+                    <mah:ProgressRing IsActive="True" Style="{StaticResource ProgressRingLarge}"
                                                      Margin="0,0,0,10" />
                     <TextBlock Text="{x:Static Member=localization:Strings.SearchingWiFiAdaptersDots}"
                                Style="{StaticResource ResourceKey=MessageTextBlock}" />

@@ -52,7 +52,7 @@
             <TextBlock Grid.Row="1" Foreground="{DynamicResource MahApps.Brushes.Accent}"
                        Text="{Binding DisconnectReason}" Style="{DynamicResource DefaultTextBlock}"
                        Visibility="{Binding IsConnecting, Converter={StaticResource BooleanReverseToVisibilityHiddenConverter}}" />
-            <mah:ProgressRing Grid.Row="0" Grid.RowSpan="2" Height="50" Width="50" IsActive="{Binding IsConnecting}"
+            <mah:ProgressRing Style="{StaticResource ProgressRingLarge}" Grid.Row="0" Grid.RowSpan="2" IsActive="{Binding IsConnecting}"
                               Visibility="{Binding IsConnecting, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
             <Button Grid.Row="3" Content="{x:Static localization:Strings.Reconnect}"
                     Command="{Binding ReconnectCommand}"

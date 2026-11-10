@@ -54,7 +54,7 @@
                     <!-- Status (running): spinner + phase -->
                     <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center"
                                 Visibility="{Binding IsRunning, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
-                        <mah:ProgressRing Width="16" Height="16" IsActive="True"
+                        <mah:ProgressRing Style="{StaticResource ProgressRingSmall}" IsActive="True"
                                           Foreground="{DynamicResource MahApps.Brushes.Accent}" />
                         <TextBlock Text="{Binding StatusMessage}"
                                    Style="{StaticResource AccentTextBlock}"

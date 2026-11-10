@@ -178,11 +178,7 @@
             <WrapPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center"
                 HorizontalAlignment="Center"
                 Visibility="{Binding IsWpsChecking,Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
-                <networkManager:LoadingIndicator IsActive="True"
-                                             Style="{DynamicResource ResourceKey=LoadingIndicatorPulseStyle}"
-                                             Width="24"
-                                             Height="24" 
-                                             SpeedRatio="1" />
+                <mah:ProgressRing IsActive="True" Style="{StaticResource ProgressRingMedium}" />
                 <TextBlock Style="{StaticResource AccentTextBlock}"
                     Text="{x:Static localization:Strings.CheckingWPSDots}" VerticalAlignment="Center"
                     Margin="10,0,0,0" />

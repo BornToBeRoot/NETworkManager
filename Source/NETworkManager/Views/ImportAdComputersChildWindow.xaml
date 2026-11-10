@@ -196,11 +196,8 @@
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                <networkManager:LoadingIndicator Grid.Column="0" IsActive="True"
-                                                 Style="{DynamicResource ResourceKey=LoadingIndicatorPulseStyle}"
-                                                 Visibility="{Binding IsSearching, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}"
-                                                 Width="24" Height="24"
-                                                 SpeedRatio="1" Margin="0,0,10,0" />
+                <mah:ProgressRing Grid.Column="0" IsActive="True" Style="{StaticResource ProgressRingMedium}"
+                                                 Visibility="{Binding IsSearching, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Margin="0,0,10,0" />
                 <TextBlock Grid.Column="1"
                            Style="{StaticResource AccentTextBlock}"
                            Visibility="{Binding IsStatusMessageDisplayed, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}"

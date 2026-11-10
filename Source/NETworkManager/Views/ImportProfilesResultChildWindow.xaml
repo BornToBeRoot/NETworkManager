@@ -150,8 +150,7 @@
                     </DataGrid.Columns>
                 </DataGrid>
 
-                <mah:ProgressRing Grid.Row="0"
-                                  Height="50" Width="50"
+                <mah:ProgressRing Style="{StaticResource ProgressRingLarge}" Grid.Row="0"
                                   IsActive="{Binding Path=IsSearching}" />
 
                 <StackPanel Grid.Row="2" Orientation="Horizontal">

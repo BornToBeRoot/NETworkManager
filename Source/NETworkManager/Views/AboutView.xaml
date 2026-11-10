@@ -119,10 +119,8 @@
                                     </Hyperlink>
                                 </TextBlock>
                             </StackPanel>
-                            <mahAppsControls:ProgressRing Grid.Column="2" Grid.Row="0"
+                            <mahAppsControls:ProgressRing Style="{StaticResource ProgressRingMedium}" Grid.Column="2" Grid.Row="0"
                                                           Visibility="{Binding IsUpdateCheckRunning, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}"
-                                                          Height="{Binding ElementName=ButtonCheckForUpdates, Path=ActualHeight}"
-                                                          Width="{Binding ElementName=ButtonCheckForUpdates, Path=ActualHeight}"
                                                           HorizontalAlignment="Left"
                                                           IsActive="True" />
                             <TextBlock Grid.Column="2" Grid.Row="0"

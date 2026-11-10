@@ -106,7 +106,7 @@
                     </Binding>
                 </TextBox.Text>
             </TextBox>
-            <mah:ProgressRing Grid.Column="6" Width="20" Height="20" HorizontalAlignment="Right"
+            <mah:ProgressRing Style="{StaticResource ProgressRingSmall}" Grid.Column="6" HorizontalAlignment="Right"
                               Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityHiddenConverter}}"
                               Margin="0,0,4,0" />
             <Button Command="{Binding NavigateCommand}"

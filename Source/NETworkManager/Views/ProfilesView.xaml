@@ -480,8 +480,7 @@
                                                 SortMemberPath="Whois_Enabled" MinWidth="80" Width="Auto" />
                     </DataGrid.Columns>
                 </controls:MultiSelectDataGrid>
-                <mah:ProgressRing Grid.Column="0" Grid.Row="1"
-                                  Height="50" Width="50"
+                <mah:ProgressRing Style="{StaticResource ProgressRingLarge}" Grid.Column="0" Grid.Row="1"
                                   IsActive="{Binding Path=IsSearching}" />
                 <Grid Grid.Row="1" VerticalAlignment="Center">
                         <Grid.Style>

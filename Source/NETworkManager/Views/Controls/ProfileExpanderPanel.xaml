@@ -441,7 +441,7 @@
                             </Style>
                         </ListBox.ItemContainerStyle>
                     </ListBox>
-                    <mah:ProgressRing Grid.Row="2" Height="50" Width="50" IsActive="{Binding Path=IsSearching}" />
+                    <mah:ProgressRing Style="{StaticResource ProgressRingLarge}" Grid.Row="2" IsActive="{Binding Path=IsSearching}" />
                     <Grid Grid.Row="2" VerticalAlignment="Center">
                         <Grid.Style>
                             <Style TargetType="{x:Type TypeName=Grid}">

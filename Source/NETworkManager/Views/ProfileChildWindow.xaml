@@ -1308,7 +1308,7 @@
                                         </Rectangle>
                                     </Button>
                                 </Grid>
-                                <mah:ProgressRing Grid.Column="3" Grid.Row="2" Width="24" Height="24" Margin="10,0,0,0"
+                                <mah:ProgressRing Style="{StaticResource ProgressRingSmall}" Grid.Column="3" Grid.Row="2" Margin="10,0,0,0"
                                                   Visibility="{Binding IsResolveHostnameRunning, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
                                 <Rectangle Width="24" Height="24" Grid.Column="3" Grid.Row="2"
                                            ToolTip="{x:Static localization:Strings.WarningMessage_CouldNotResolveIPAddressForHostname}"
