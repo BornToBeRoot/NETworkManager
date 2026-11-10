@@ -565,6 +565,12 @@ SemiBold (section headers), `MessageTextBlock` 16 gray (messages in empty areas)
 - Progress: `DefaultMetroProgressBar` (accent on a subtle track) and `ProgressRingSmall` / `Medium` / `Large`
   (16 inline / 24 dialogs / 48 centered, `ProgressBarStyles.xaml`); scanner progress via `SmoothProgress.Value`.
 - Dialogs: `DefaultChildWindow` (own template, radius 8, shadow, overlay). Welcome / Upgrade keep their own overlay.
+- Status values in lists (e.g. firewall action, TCP / neighbor state): `StatusDot` (8 px `Ellipse` in front of the text,
+  `Tag` = `StatusLevel` None / Success / Warning / Error via a `*ToStatusLevelConverter`), text in the normal color.
+  Template columns set `ClipboardContentBinding` to keep the text for copying.
+- Empty areas (no results, missing prerequisite, restart as administrator): `EmptyStateMessage` (`Icon`, `Text`,
+  `IconSize` 40, 24 for notices below a list) instead of a bare `MessageTextBlock`; status lines and loading texts stay
+  `MessageTextBlock`.
 - Template copies of MahApps / SimpleChildWindow (keep in sync when updating these packages): ComboBox toggle,
   ToolTip, ContextMenu / submenu, scrollbar thumb, `DefaultChildWindowTemplate`, `MahApps.Styles.DataGridRow`
   (redefined with the same key).
