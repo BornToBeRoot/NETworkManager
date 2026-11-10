@@ -63,6 +63,9 @@ public static class GlobalStaticConfiguration
     public static int Profile_EncryptionKeySize => 256;
     public static int Profile_EncryptionIterations => 1000000;
 
+    // Window
+    public static int Window_MaxTabWidth => 300;
+
     // Filter for file dialog
     public static string ApplicationFileExtensionFilter => "Application (*.exe)|*.exe";
     public static string PuTTYPrivateKeyFileExtensionFilter => "PuTTY Private Key Files (*.ppk)|*.ppk";

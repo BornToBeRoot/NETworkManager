@@ -3966,6 +3966,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Dynamic tab width.
+        /// </summary>
+        public static string DynamicTabWidth {
+            get {
+                return ResourceManager.GetString("DynamicTabWidth", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Edit credentials.
         /// </summary>
         public static string EditCredentials {
@@ -6030,6 +6039,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The tabs of the tools (e.g. IP Scanner, Remote Desktop, PuTTY) are as wide as their title, up to the maximum tab width. Longer titles are shortened, the tooltip of the tab shows the full title. When disabled, all tabs have the same width..
+        /// </summary>
+        public static string HelpMessage_DynamicTabWidth {
+            get {
+                return ResourceManager.GetString("HelpMessage_DynamicTabWidth", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Find hosts in a local subnet that don&apos;t answer the ping, a port or NetBIOS (e.g. a firewall drops everything) by their entry in the neighbor table (ARP / NDP). To reach a host in a local subnet, Windows has to resolve its MAC address first, and a host answers this request even if its firewall drops everything else. No additional packets are sent, except to check an entry from earlier traffic again. Hosts behind a router can&apos;t be found this way. Only decides if a host is up - the MAC address and vendor are s [rest of string was truncated]&quot;;.
         /// </summary>
         public static string HelpMessage_FindHostsInTheLocalSubnet {
@@ -8001,6 +8019,15 @@ namespace NETworkManager.Localization.Resources {
         public static string MaximumNumberOfHopsReached {
             get {
                 return ResourceManager.GetString("MaximumNumberOfHopsReached", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Maximum tab width.
+        /// </summary>
+        public static string MaximumTabWidth {
+            get {
+                return ResourceManager.GetString("MaximumTabWidth", resourceCulture);
             }
         }
         
@@ -14155,6 +14182,15 @@ namespace NETworkManager.Localization.Resources {
         public static string SyncIsDisabled {
             get {
                 return ResourceManager.GetString("SyncIsDisabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tabs.
+        /// </summary>
+        public static string Tabs {
+            get {
+                return ResourceManager.GetString("Tabs", resourceCulture);
             }
         }
         

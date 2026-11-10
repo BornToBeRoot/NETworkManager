@@ -122,11 +122,11 @@
                                         </Grid.InputBindings>
                                         <StackPanel Orientation="Horizontal">
                                             <Grid ToolTip="{Binding Header}">
-                                                <TextBlock Text="{Binding Header}" Width="150" Margin="10,0"
+                                                <TextBlock Text="{Binding Header}" Margin="10,0"
                                                            VerticalAlignment="Center">
                                                     <TextBlock.Style>
                                                         <Style TargetType="{x:Type TextBlock}"
-                                                               BasedOn="{StaticResource HeaderTextBlock}">
+                                                               BasedOn="{StaticResource DragablzTabHeaderTextBlock}">
                                                             <Setter Property="Foreground"
                                                                     Value="{DynamicResource MahApps.Brushes.Gray3}" />
                                                             <Style.Triggers>

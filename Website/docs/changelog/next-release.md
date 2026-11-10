@@ -35,6 +35,7 @@ Release date: **xx.xx.2026**
 
 ## What's new?
 
+- New setting **Dynamic tab width** in [Settings > Window](../settings/window.md#dynamic-tab-width): the tabs of the tools (e.g. **IP Scanner**, **Remote Desktop**, **PuTTY**) are as wide as their title, up to a configurable maximum width (default `300`), instead of a fixed width of `150`. Long titles (e.g. hostnames) are shortened with `...`, the tooltip shows the full title. [#3055](https://github.com/BornToBeRoot/NETworkManager/issues/3055)
 - ARM64 builds are now available. [#3538](https://github.com/BornToBeRoot/NETworkManager/issues/3538)
 
 **Run command**

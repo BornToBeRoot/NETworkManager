@@ -249,6 +249,32 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     }
 
+    public bool Window_DynamicTabWidth
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public int Window_MaxTabWidth
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.Window_MaxTabWidth;
+
     // TrayIcon
 
     public bool TrayIcon_AlwaysShowIcon
