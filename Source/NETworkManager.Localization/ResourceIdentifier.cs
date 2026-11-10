@@ -3,6 +3,7 @@
 public enum ResourceIdentifier
 {
     Accent,
+    AnimationMode,
     ApplicationName,
     DiscoveryProtocol,
     IPStatus,

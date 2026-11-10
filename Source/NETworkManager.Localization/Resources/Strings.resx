@@ -5477,4 +5477,19 @@ Do you want to start the scan?</value>
   <data name="HelpMessage_DynamicTabWidth" xml:space="preserve">
     <value>The tabs of the tools (e.g. IP Scanner, Remote Desktop, PuTTY) are as wide as their title, up to the maximum tab width. Longer titles are shortened, the tooltip of the tab shows the full title. When disabled, all tabs have the same width.</value>
   </data>
+  <data name="Animations" xml:space="preserve">
+    <value>Animations</value>
+  </data>
+  <data name="AnimationMode_System" xml:space="preserve">
+    <value>System (Windows setting)</value>
+  </data>
+  <data name="AnimationMode_On" xml:space="preserve">
+    <value>On</value>
+  </data>
+  <data name="AnimationMode_Off" xml:space="preserve">
+    <value>Off</value>
+  </data>
+  <data name="HelpMessage_Animations" xml:space="preserve">
+    <value>Animations of the application, e.g. when a dialog is opened or closed. "System" follows the Windows setting "Animation effects" (Settings &gt; Accessibility &gt; Visual effects), which is often turned off on terminal servers and in remote sessions.</value>
+  </data>
 </root>

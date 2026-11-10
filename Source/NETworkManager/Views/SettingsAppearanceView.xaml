@@ -4,6 +4,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
              xmlns:appearance="clr-namespace:NETworkManager.Models.Appearance;assembly=NETworkManager.Models"
              xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
@@ -13,6 +14,8 @@
         <converters:AccentToStringConverter x:Key="AccentToStringConverter" />
         <converters:ThemeToStringConverter x:Key="ThemeToStringConverter" />
         <converters:BooleanReverseConverter x:Key="BooleanReverseConverter" />
+        <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
+        <converters:AnimationModeToStringConverter x:Key="AnimationModeToStringConverter" />
     </UserControl.Resources>
     <StackPanel>
         <TextBlock Text="{x:Static Member=localization:Strings.Theme}" Style="{StaticResource ResourceKey=HeaderTextBlock}" />
@@ -82,6 +85,37 @@
                 </DataTemplate>
             </ComboBox.ItemTemplate>
         </ComboBox>
+        <TextBlock Style="{StaticResource ResourceKey=HeaderTextBlock}" Text="{x:Static Member=localization:Strings.Animations}" />
+        <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+            <ComboBox ItemsSource="{Binding Path=AnimationModes}" SelectedItem="{Binding Path=AnimationMode}"
+                      IsEnabled="{Binding Path=IsAnimationsManagedByPolicy, Converter={StaticResource BooleanReverseConverter}}"
+                      Width="250" HorizontalAlignment="Left">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Converter={StaticResource AnimationModeToStringConverter}}" />
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+            <Rectangle Width="24" Height="24"
+                       ToolTip="{x:Static Member=localization:Strings.HelpMessage_Animations}"
+                       Style="{StaticResource ResourceKey=HelpImageRectangle}" VerticalAlignment="Center" Margin="10,0,0,0">
+                <Rectangle.Resources>
+                    <Style TargetType="{x:Type TypeName=ToolTip}" BasedOn="{StaticResource ResourceKey=HelpToolTip}" />
+                </Rectangle.Resources>
+            </Rectangle>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Margin="0,0,0,10"
+                    Visibility="{Binding Path=IsAnimationsManagedByPolicy, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+            <Rectangle Width="24" Height="24" Fill="{DynamicResource MahApps.Brushes.Accent}" VerticalAlignment="Center" Margin="0,0,5,0">
+                <Rectangle.OpacityMask>
+                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ShieldLock}" />
+                </Rectangle.OpacityMask>
+            </Rectangle>
+            <TextBlock Text="{x:Static localization:Strings.SettingManagedByAdministrator}"
+                       Style="{StaticResource AccentTextBlock}"
+                       VerticalAlignment="Center" />
+        </StackPanel>
+        <Border Height="10" />
         <TextBlock Style="{StaticResource ResourceKey=HeaderTextBlock}" Text="{x:Static Member=localization:Strings.PowerShell}" />
         <StackPanel Orientation="Horizontal">
             <mah:ToggleSwitch Header="{x:Static Member=localization:Strings.ApplyThemeToPowerShellConsole}"

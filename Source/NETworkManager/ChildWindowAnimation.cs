@@ -4,6 +4,7 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Threading;
 using MahApps.Metro.SimpleChildWindow;
+using NETworkManager.Settings;
 
 namespace NETworkManager;
 
@@ -14,7 +15,7 @@ namespace NETworkManager;
 ///
 /// Done in code instead of the storyboards of the template: the zoom starts after the first layout of the dialog
 /// (otherwise a heavy dialog, e.g. the profile dialog, is shown when the animation is almost over) and checks
-/// whether animations are enabled each time a dialog is opened.
+/// whether animations are enabled each time a dialog is opened (see <see cref="AppearanceManager.AnimationsEnabled"/>).
 ///
 /// The zoom is applied to the <c>WindowScale</c> grid inside <c>PART_Window</c>: the ChildWindow sets the
 /// RenderTransform of the window itself (TranslateTransform to move the dialog).
@@ -116,7 +117,7 @@ public static class ChildWindowAnimation
     }
 
     /// <summary>
-    /// Animations follow the Windows setting "Animation effects" (Settings > Accessibility > Visual effects).
+    /// Settings > Appearance > Animations (or the system-wide policy), by default the Windows setting.
     /// </summary>
-    private static bool IsAnimationEnabled() => SystemParameters.ClientAreaAnimation;
+    private static bool IsAnimationEnabled() => AppearanceManager.AnimationsEnabled;
 }

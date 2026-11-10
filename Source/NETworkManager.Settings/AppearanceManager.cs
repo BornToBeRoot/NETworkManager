@@ -117,6 +117,20 @@ public static class AppearanceManager
     /// <summary>
     ///     Load the MahApps.Metro themes and accents when needed.
     /// </summary>
+    /// <summary>
+    ///     Whether animations are shown (e.g. when a dialog is opened or closed): the system-wide policy
+    ///     (<see cref="PolicyInfo.Appearance_Animations" />), otherwise the setting; <see cref="AnimationMode.System" />
+    ///     follows the Windows setting "Animation effects". Read each time an animation starts, changes apply
+    ///     immediately.
+    /// </summary>
+    public static bool AnimationsEnabled =>
+        PolicyManager.Current?.Appearance_Animations ?? SettingsManager.Current.Appearance_Animations switch
+        {
+            AnimationMode.On => true,
+            AnimationMode.Off => false,
+            _ => SystemParameters.ClientAreaAnimation
+        };
+
     static AppearanceManager()
     {
         Themes = [.. ThemeManager.Current.Themes

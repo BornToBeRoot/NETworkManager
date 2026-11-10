@@ -898,6 +898,42 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Off.
+        /// </summary>
+        public static string AnimationMode_Off {
+            get {
+                return ResourceManager.GetString("AnimationMode_Off", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to On.
+        /// </summary>
+        public static string AnimationMode_On {
+            get {
+                return ResourceManager.GetString("AnimationMode_On", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to System (Windows setting).
+        /// </summary>
+        public static string AnimationMode_System {
+            get {
+                return ResourceManager.GetString("AnimationMode_System", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Animations.
+        /// </summary>
+        public static string Animations {
+            get {
+                return ResourceManager.GetString("Animations", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Answered.
         /// </summary>
         public static string Answered {
@@ -5911,6 +5947,15 @@ namespace NETworkManager.Localization.Resources {
         public static string HelpMessage_AdjustThreadsAutomatically {
             get {
                 return ResourceManager.GetString("HelpMessage_AdjustThreadsAutomatically", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Animations of the application, e.g. when a dialog is opened or closed. &quot;System&quot; follows the Windows setting &quot;Animation effects&quot; (Settings &gt; Accessibility &gt; Visual effects), which is often turned off on terminal servers and in remote sessions..
+        /// </summary>
+        public static string HelpMessage_Animations {
+            get {
+                return ResourceManager.GetString("HelpMessage_Animations", resourceCulture);
             }
         }
         

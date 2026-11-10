@@ -1,6 +1,7 @@
 ﻿using DnsClient;
 using Lextm.SharpSnmpLib.Messaging;
 using NETworkManager.Models;
+using NETworkManager.Models.Appearance;
 using NETworkManager.Models.Export;
 using NETworkManager.Models.Network;
 using NETworkManager.Models.PowerShell;
@@ -88,6 +89,7 @@ public static class GlobalStaticConfiguration
     public static string Appearance_Theme => "Dark";
     public static string Appearance_Accent => "Lime";
     public static bool Appearance_UseCustomTheme => false;
+    public static AnimationMode Appearance_Animations => AnimationMode.System;
 
     // Settings: Network
     public static bool Network_AddDNSSuffix => true;

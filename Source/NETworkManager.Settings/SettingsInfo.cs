@@ -2,6 +2,7 @@ using DnsClient;
 using Lextm.SharpSnmpLib.Messaging;
 using NETworkManager.Controls;
 using NETworkManager.Models;
+using NETworkManager.Models.Appearance;
 using NETworkManager.Models.Export;
 using NETworkManager.Models.Network;
 using NETworkManager.Models.PowerShell;
@@ -358,6 +359,19 @@ public class SettingsInfo : INotifyPropertyChanged
             OnPropertyChanged();
         }
     }
+
+    public AnimationMode Appearance_Animations
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.Appearance_Animations;
 
     public bool Appearance_PowerShellModifyGlobalProfile
     {
