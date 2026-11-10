@@ -360,7 +360,7 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     }
 
-    public bool Appearance_AccentGlow
+    public AccentGlowIntensity Appearance_AccentGlowIntensity
     {
         get;
         set
@@ -371,7 +371,7 @@ public class SettingsInfo : INotifyPropertyChanged
             field = value;
             OnPropertyChanged();
         }
-    } = GlobalStaticConfiguration.Appearance_AccentGlow;
+    } = GlobalStaticConfiguration.Appearance_AccentGlowIntensity;
 
     public AnimationMode Appearance_Animations
     {

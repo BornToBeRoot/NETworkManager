@@ -385,6 +385,42 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Medium.
+        /// </summary>
+        public static string AccentGlowIntensity_Medium {
+            get {
+                return ResourceManager.GetString("AccentGlowIntensity_Medium", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Off.
+        /// </summary>
+        public static string AccentGlowIntensity_Off {
+            get {
+                return ResourceManager.GetString("AccentGlowIntensity_Off", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Strong.
+        /// </summary>
+        public static string AccentGlowIntensity_Strong {
+            get {
+                return ResourceManager.GetString("AccentGlowIntensity_Strong", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Subtle.
+        /// </summary>
+        public static string AccentGlowIntensity_Subtle {
+            get {
+                return ResourceManager.GetString("AccentGlowIntensity_Subtle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Action.
         /// </summary>
         public static string Action {
@@ -6041,7 +6077,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Shows a subtle glow of the accent color in the top left corner of the main window (window background, title bar and navigation)..
+        ///   Looks up a localized string similar to Glow of the accent color in the top left corner of the windows (window background, title bar and navigation), weaker while the window is inactive, and a faint tint of the accent behind dialogs..
         /// </summary>
         public static string HelpMessage_AccentGlow {
             get {

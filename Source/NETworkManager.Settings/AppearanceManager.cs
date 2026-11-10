@@ -89,7 +89,7 @@ public static class AppearanceManager
 
     /// <summary>
     ///     Resource key of the background of the main window (window, title bar, navigation): the frame color, with
-    ///     <see cref="SettingsInfo.Appearance_AccentGlow" /> a subtle glow of the accent in the top left corner.
+    ///     <see cref="SettingsInfo.Appearance_AccentGlowIntensity" /> a subtle glow of the accent in the top left corner.
     /// </summary>
     public const string SurfaceWindowBrushKey = "Brushes.Surface.Window";
 
@@ -227,16 +227,29 @@ public static class AppearanceManager
 
     /// <summary>
     ///     Sets the background of the main window (<see cref="SurfaceWindowBrushKey" />): the frame color, or with the
-    ///     accent glow (Settings > Appearance) a radial gradient from 10 % of the accent in the top left corner to the
-    ///     frame color (about 700 x 500 px). Absolute coordinates: the window, the title bar and the navigation (all
+    ///     accent glow (Settings > Appearance) a radial gradient from 6 / 10 / 15 % of the accent (intensity) in the top
+    ///     left corner to the frame color (about 700 x 500 px). Absolute coordinates: the window, the title bar and the navigation (all
     ///     starting near the top left corner of the window) show one continuous gradient. Called on every theme change
     ///     and when the setting is changed.
     /// </summary>
+    /// <summary>
+    ///     Amount of the accent in the glow (0 = off).
+    /// </summary>
+    private static double GetAccentGlowAmount() => SettingsManager.Current?.Appearance_AccentGlowIntensity switch
+    {
+        AccentGlowIntensity.Subtle => 0.06,
+        AccentGlowIntensity.Medium => 0.10,
+        AccentGlowIntensity.Strong => 0.15,
+        _ => 0
+    };
+
     public static void ApplyWindowBrush()
     {
         Brush brush;
 
-        if (SettingsManager.Current?.Appearance_AccentGlow == true)
+        var amount = GetAccentGlowAmount();
+
+        if (amount > 0)
         {
             var gradient = new RadialGradientBrush
             {
@@ -247,7 +260,7 @@ public static class AppearanceManager
                 RadiusY = 500
             };
 
-            gradient.GradientStops.Add(new GradientStop(Blend(_frameColor, _accentColor, 0.10), 0));
+            gradient.GradientStops.Add(new GradientStop(Blend(_frameColor, _accentColor, amount), 0));
             gradient.GradientStops.Add(new GradientStop(_frameColor, 1));
             gradient.Freeze();
 
