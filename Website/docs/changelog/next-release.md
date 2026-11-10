@@ -82,6 +82,7 @@ Release date: **xx.xx.2026**
 - Colors: in the dark theme the boxes (tool, profiles) are raised on a darker window frame, the borders are softer, the selected tool in the navigation has a light tint of the accent color. The charts (**Ping Monitor**, bandwidth of the **Network Interface**, speed test, **WiFi** channels, **Traceroute** map) use colors with a good contrast in the light and dark theme and a fill below the lines that fades out. New installations use the accent color **Teal** (existing settings keep their accent). [#XXXX](https://github.com/BornToBeRoot/NETworkManager/pull/XXXX)
 - While a tab is dragged (e.g. to another window or to split the view), **Remote Desktop**, **PowerShell**, **PuTTY**, **TigerVNC** and **Web Console** show the icon of the tool and the title of the tab instead of an empty area. [#XXXX](https://github.com/BornToBeRoot/NETworkManager/pull/XXXX)
 - New icons: all icons (navigation, toolbars, context menus, messages, status) come from one icon family, [Lucide](https://lucide.dev), instead of five different icon packs. They are drawn as thin lines (calmer, especially at small sizes) and have the same size and position everywhere. [#XXXX](https://github.com/BornToBeRoot/NETworkManager/pull/XXXX)
+- Empty areas (e.g. no firewall rules or Wi-Fi networks found, the path of PuTTY not configured) show a large gray icon above the message; the notices to restart as administrator show a shield. [#XXXX](https://github.com/BornToBeRoot/NETworkManager/pull/XXXX)
 
 **Profiles**
 
