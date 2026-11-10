@@ -254,7 +254,7 @@
         <Setter Property="NonActiveBorderBrush" Value="{DynamicResource MahApps.Brushes.Gray8}" />
         <Setter Property="EnableDropShadow" Value="True" />
         <!-- Dims the window behind the dialog (same in light and dark theme) -->
-        <Setter Property="OverlayBrush" Value="{StaticResource Brushes.Overlay}" />
+        <Setter Property="OverlayBrush" Value="{DynamicResource Brushes.Overlay.Dialog}" />
         <Setter Property="TitleForeground" Value="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}" />
         <Setter Property="ChildWindowWidth" Value="500" />
         <Setter Property="ChildWindowMaxHeight" Value="500" />
