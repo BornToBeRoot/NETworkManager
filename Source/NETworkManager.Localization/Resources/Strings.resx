@@ -5486,4 +5486,16 @@ Do you want to start the scan?</value>
   <data name="HelpMessage_Animations" xml:space="preserve">
     <value>Animations of the application, e.g. when a dialog is opened or closed. "System" follows the Windows setting "Animation effects" (Settings &gt; Accessibility &gt; Visual effects), which is often turned off on terminal servers and in remote sessions.</value>
   </data>
+  <data name="ActiveConnections" xml:space="preserve">
+    <value>Active connections</value>
+  </data>
+  <data name="HostsFileEntries" xml:space="preserve">
+    <value>Hosts file entries</value>
+  </data>
+  <data name="ListeningPorts" xml:space="preserve">
+    <value>Listening ports</value>
+  </data>
+  <data name="NeighborEntries" xml:space="preserve">
+    <value>Neighbor entries</value>
+  </data>
 </root>

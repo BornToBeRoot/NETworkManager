@@ -35,7 +35,7 @@
                     </Grid.ColumnDefinitions>
                     <TextBlock Grid.Column="0"
                                Style="{StaticResource HeaderTextBlock}"
-                               Text="{x:Static localization:Strings.Listeners}"
+                               Text="{x:Static localization:Strings.ListeningPorts}"
                                VerticalAlignment="Center" />
                     <internalControls:RefreshStatusControl Grid.Column="1"
                                                            LastRefreshTime="{Binding LastRefreshTime}"

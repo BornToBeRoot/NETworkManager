@@ -304,6 +304,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Active connections.
+        /// </summary>
+        public static string ActiveConnections {
+            get {
+                return ResourceManager.GetString("ActiveConnections", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Imported from Active Directory on {0}.
         /// </summary>
         public static string ActiveDirectory_ImportDescription {
@@ -6609,6 +6618,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Hosts file entries.
+        /// </summary>
+        public static string HostsFileEntries {
+            get {
+                return ResourceManager.GetString("HostsFileEntries", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The entry was not found in the &quot;hosts&quot; file! Maybe the file has been modified..
         /// </summary>
         public static string HostsFileEntryNotFoundMessage {
@@ -7681,6 +7699,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Listening ports.
+        /// </summary>
+        public static string ListeningPorts {
+            get {
+                return ResourceManager.GetString("ListeningPorts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Live.
         /// </summary>
         public static string Live {
@@ -8334,6 +8361,15 @@ namespace NETworkManager.Localization.Resources {
         public static string Nameservers {
             get {
                 return ResourceManager.GetString("Nameservers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Neighbor entries.
+        /// </summary>
+        public static string NeighborEntries {
+            get {
+                return ResourceManager.GetString("NeighborEntries", resourceCulture);
             }
         }
         

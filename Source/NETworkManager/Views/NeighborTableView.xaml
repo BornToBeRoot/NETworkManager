@@ -47,7 +47,7 @@
                     </Grid.ColumnDefinitions>
                     <TextBlock Grid.Column="0"
                                Style="{StaticResource HeaderTextBlock}"
-                               Text="{x:Static localization:Strings.NeighborTable}"
+                               Text="{x:Static localization:Strings.NeighborEntries}"
                                VerticalAlignment="Center" />
                     <internalControls:RefreshStatusControl Grid.Column="1"
                                                            LastRefreshTime="{Binding LastRefreshTime}"

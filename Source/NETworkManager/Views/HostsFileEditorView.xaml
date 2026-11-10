@@ -45,7 +45,7 @@
                     </Grid.ColumnDefinitions>
                     <TextBlock Grid.Column="0"
                                Style="{StaticResource HeaderTextBlock}"
-                               Text="{x:Static localization:Strings.HostsFileEditor}"
+                               Text="{x:Static localization:Strings.HostsFileEntries}"
                                VerticalAlignment="Center" />
                     <internalControls:RefreshStatusControl Grid.Column="1"
                                                            LastRefreshTime="{Binding LastRefreshTime}"
