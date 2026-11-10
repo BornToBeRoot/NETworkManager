@@ -165,6 +165,8 @@
         <Setter Property="mah:ControlsHelper.MouseOverBorderBrush" Value="{DynamicResource Brushes.Control.Border.MouseOver}" />
         <Setter Property="Validation.ErrorTemplate" Value="{StaticResource DefaultErrorTemplate}" />
         <Setter Property="controls:ComboBoxReadOnlyBehavior.PreventSelectionWhenReadOnly" Value="True" />
+        <!-- Drop-down rounded with a shadow like the context menu -->
+        <Setter Property="controls:ComboBoxPopupBehavior.IsRounded" Value="True" />
         <Setter Property="mah:ControlsHelper.CornerRadius" Value="{StaticResource CornerRadius.Control}" />
         <Style.Triggers>
             <!-- Not editable: subtle mouse over background instead of Gray9 of MahApps (a style trigger wins over the
