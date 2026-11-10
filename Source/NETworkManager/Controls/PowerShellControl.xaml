@@ -19,24 +19,24 @@
     </local:UserControlBase.Resources>
     <Grid SizeChanged="WindowGrid_SizeChanged">
         <!-- Background color will prevent flickering when app inside the panel is closed -->
-        <WindowsFormsHost Background="{DynamicResource MahApps.Brushes.Window.Background}" Margin="10"
-                          DpiChanged="WindowsFormsHost_DpiChanged">
-            <WindowsFormsHost.Style>
-                <Style TargetType="{x:Type WindowsFormsHost}">
-                    <Style.Triggers>
-                        <DataTrigger
-                            Binding="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=IsPowerShellWindowDragging}"
-                            Value="True">
-                            <Setter Property="Visibility" Value="Hidden" />
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding IsConnected}" Value="False">
-                            <Setter Property="Visibility" Value="Hidden" />
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </WindowsFormsHost.Style>
-            <windowsForms:Panel x:Name="WindowHost" />
-        </WindowsFormsHost>
+        <!-- Screenshot / placeholder instead of the embedded window while a tab is dragged (drop zones of Dragablz
+             visible above it) -->
+        <local:EmbeddedWindowDragPresenter ApplicationName="PowerShell"
+                                           IsDragging="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=IsPowerShellWindowDragging}">
+            <WindowsFormsHost Background="{DynamicResource MahApps.Brushes.Window.Background}" Margin="10"
+                              DpiChanged="WindowsFormsHost_DpiChanged">
+                <WindowsFormsHost.Style>
+                    <Style TargetType="{x:Type WindowsFormsHost}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsConnected}" Value="False">
+                                <Setter Property="Visibility" Value="Hidden" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </WindowsFormsHost.Style>
+                <windowsForms:Panel x:Name="WindowHost" />
+            </WindowsFormsHost>
+        </local:EmbeddedWindowDragPresenter>
         <Grid VerticalAlignment="Center" HorizontalAlignment="Center" TextBlock.TextAlignment="Center"
               Visibility="{Binding IsConnected, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}">
             <Grid.RowDefinitions>

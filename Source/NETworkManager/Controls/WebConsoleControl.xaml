@@ -166,21 +166,21 @@
                 </Rectangle>
             </Button>
         </Grid>
-        <webview:WebView2 Grid.Row="2" x:Name="Browser">
-            <webview:WebView2.Style>
-                <Style TargetType="{x:Type webview:WebView2}">
-                    <Style.Triggers>
-                        <DataTrigger
-                            Binding="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=IsWebConsoleWindowDragging}"
-                            Value="True">
-                            <Setter Property="Visibility" Value="Hidden" />
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding FirstLoad}" Value="True">
-                            <Setter Property="Visibility" Value="Collapsed" />
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </webview:WebView2.Style>
-        </webview:WebView2>
+        <!-- Screenshot / placeholder instead of the embedded window while a tab is dragged (drop zones of Dragablz
+             visible above it) -->
+        <local:EmbeddedWindowDragPresenter Grid.Row="2" ApplicationName="WebConsole"
+                                           IsDragging="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=IsWebConsoleWindowDragging}">
+            <webview:WebView2 x:Name="Browser">
+                <webview:WebView2.Style>
+                    <Style TargetType="{x:Type webview:WebView2}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding FirstLoad}" Value="True">
+                                <Setter Property="Visibility" Value="Collapsed" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </webview:WebView2.Style>
+            </webview:WebView2>
+        </local:EmbeddedWindowDragPresenter>
     </Grid>
 </local:UserControlBase>
