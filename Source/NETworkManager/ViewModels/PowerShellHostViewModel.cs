@@ -514,7 +514,7 @@ public class PowerShellHostViewModel : ProfileHostViewModelBase
         Log.Debug("Write PowerShell profile to registry...");
 
         PowerShell.WriteDefaultProfileToRegistry(
-            SettingsManager.Current.Appearance_Theme,
+            ThemeVariants.ToBaseColorScheme(SettingsManager.Current.Appearance_Theme),
             SettingsManager.Current.PowerShell_ApplicationFilePath);
     }
 

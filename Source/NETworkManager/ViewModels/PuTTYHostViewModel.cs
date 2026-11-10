@@ -458,7 +458,7 @@ public class PuTTYHostViewModel : ProfileHostViewModelBase
 
         Log.Debug("Write PuTTY profile to registry...");
 
-        PuTTY.WriteDefaultProfileToRegistry(SettingsManager.Current.Appearance_Theme);
+        PuTTY.WriteDefaultProfileToRegistry(ThemeVariants.ToBaseColorScheme(SettingsManager.Current.Appearance_Theme));
     }
 
     #endregion
