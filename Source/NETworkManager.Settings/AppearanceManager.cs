@@ -455,8 +455,9 @@ public static class AppearanceManager
 
     /// <summary>
     ///     Set the status colors (success, warning, error) for a dark or light theme (also custom themes, based on their
-    ///     base color scheme). The dark colors are the original colors of the application, the light ones are darker
-    ///     to be readable on a white background (contrast ≥ 4:1).
+    ///     base color scheme). The dark colors are the original colors of the application (error brighter, the dark red
+    ///     was hard to read as thin icon lines on dark backgrounds), the light ones are darker to be readable on a white
+    ///     background (contrast ≥ 4:1).
     /// </summary>
     /// <param name="theme">Theme that was applied.</param>
     private static void ApplyStatusBrushes(Theme theme)
@@ -467,7 +468,7 @@ public static class AppearanceManager
 
         appResources[StatusSuccessBrushKey] = CreateFrozenBrush(isDark ? "#badc58" : "#558b16");
         appResources[StatusWarningBrushKey] = CreateFrozenBrush(isDark ? "#f1b856" : "#b06d00");
-        appResources[StatusErrorBrushKey] = CreateFrozenBrush("#b95353");
+        appResources[StatusErrorBrushKey] = CreateFrozenBrush(isDark ? "#e5605a" : "#b95353");
     }
 
     /// <summary>

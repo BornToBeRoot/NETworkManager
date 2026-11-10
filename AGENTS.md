@@ -525,7 +525,7 @@ of local colors, sizes or templates; theme-dependent brushes always with `Dynami
 | `Brushes.Control.MouseOver` / `.Pressed` | foreground 8 % / 12 % | hover / pressed of icon buttons, lists, tabs |
 | `Brushes.Control.Border.MouseOver` | foreground 35 % | input border on hover |
 | `Brushes.Button.Background` / `.MouseOver` / `.Pressed` | foreground 6 / 10 / 14 % | secondary buttons, title bar fields |
-| `Brushes.Status.Success` / `.Warning` / `.Error` | readable per theme (darker in light themes) | status icons and texts, validation - never hard-code `#badc58` etc. |
+| `Brushes.Status.Success` / `.Warning` / `.Error` | dark: `#badc58` / `#f1b856` / `#e5605a`, light: `#558b16` / `#b06d00` / `#b95353` | status icons and texts, validation - never hard-code `#badc58` etc. |
 | `MahApps.Brushes.DataGrid.Selection.*` | accent 30 % (selected), 38 % (selected + hover), hover foreground 8 % | data grids |
 
 Charts use `ChartColors` (theme-aware primary / secondary / WiFi palette, gradient `AreaFill`).
