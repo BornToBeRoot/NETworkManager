@@ -1,7 +1,5 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
-using Dragablz;
 using NETworkManager.Models;
 
 namespace NETworkManager.Controls;
@@ -10,19 +8,20 @@ namespace NETworkManager.Controls;
 ///     Hosts an embedded window (Remote Desktop, PowerShell, PuTTY, TigerVNC, WebView2) of a tab. While a window with
 ///     tabs of the application is dragged (<see cref="IsDragging" />, e.g. a tab is dragged out), the embedded window
 ///     is hidden: it is always drawn on top of WPF elements (airspace) and would cover the drop zones of Dragablz
-///     (split the tabs). Instead of an empty area, a screenshot of the embedded window is shown, like the content of
-///     the other tools (e.g. IP Scanner) stays visible during a drag. In the dragged window itself (just created, its
-///     content is not on the screen yet) and if no screenshot can be taken, a placeholder with the icon of the
-///     application and the title of the tab is shown.
+///     (split the tabs). Instead of an empty area, a placeholder with the icon of the application and the title of the
+///     tab is shown.
+///
+///     A screenshot of the embedded window was tried instead of the placeholder, but it is taken when the dragged
+///     window is already shown above the tab and the embedded window is not always drawn: parts of the dragged
+///     window, offset and blurry (DPI scaling) pictures.
+///
 ///     The template is defined in <c>Resources/Styles/EmbeddedWindowDragPresenterStyles.xaml</c>.
 /// </summary>
 [TemplatePart(Name = PartContent, Type = typeof(ContentPresenter))]
-[TemplatePart(Name = PartScreenshot, Type = typeof(Image))]
 [TemplatePart(Name = PartPlaceholder, Type = typeof(FrameworkElement))]
 public class EmbeddedWindowDragPresenter : ContentControl
 {
     private const string PartContent = "PART_Content";
-    private const string PartScreenshot = "PART_Screenshot";
     private const string PartPlaceholder = "PART_Placeholder";
 
     public static readonly DependencyProperty IsDraggingProperty = DependencyProperty.Register(nameof(IsDragging),
@@ -33,7 +32,6 @@ public class EmbeddedWindowDragPresenter : ContentControl
         new FrameworkPropertyMetadata(ApplicationName.None));
 
     private ContentPresenter _content;
-    private Image _screenshot;
     private FrameworkElement _placeholder;
 
     /// <summary>
@@ -60,7 +58,6 @@ public class EmbeddedWindowDragPresenter : ContentControl
         base.OnApplyTemplate();
 
         _content = GetTemplateChild(PartContent) as ContentPresenter;
-        _screenshot = GetTemplateChild(PartScreenshot) as Image;
         _placeholder = GetTemplateChild(PartPlaceholder) as FrameworkElement;
 
         Update(IsDragging);
@@ -75,62 +72,14 @@ public class EmbeddedWindowDragPresenter : ContentControl
     private void Update(bool isDragging)
     {
         // Template not applied (yet)
-        if (_content == null || _screenshot == null || _placeholder == null)
+        if (_content == null || _placeholder == null)
             return;
 
-        if (!isDragging)
-        {
-            _content.Visibility = Visibility.Visible;
-            _screenshot.Visibility = Visibility.Hidden;
-            _screenshot.Source = null;
-            _screenshot.ClearValue(WidthProperty);
-            _screenshot.ClearValue(HeightProperty);
-            _placeholder.Visibility = Visibility.Hidden;
+        _content.Visibility = isDragging ? Visibility.Hidden : Visibility.Visible;
 
-            return;
-        }
-
-        // Tab not shown (e.g. another tab is selected) - nothing to show, hide the embedded window as before
-        if (IsVisible)
-        {
-            // The dragged window was just created, its content is not on the screen yet: a screenshot would show
-            // what is behind it
-            var screenshot = IsInDraggedWindow() ? null : AirspacePanel.CaptureScreenshot(_content);
-
-            if (screenshot != null)
-            {
-                // Size of the content when the screenshot was taken (top left aligned), not stretched if the window
-                // is resized during the drag
-                _screenshot.Width = _content.ActualWidth;
-                _screenshot.Height = _content.ActualHeight;
-                _screenshot.Source = screenshot;
-                _screenshot.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                _placeholder.Visibility = Visibility.Visible;
-            }
-        }
-
-        _content.Visibility = Visibility.Hidden;
-    }
-
-    /// <summary>
-    ///     Whether this tab is in the window that is dragged (Dragablz sets <see cref="TabablzControl.IsDraggingWindow" />
-    ///     on the tab control of the dragged window).
-    /// </summary>
-    private bool IsInDraggedWindow()
-    {
-        DependencyObject element = this;
-
-        while (element != null)
-        {
-            if (element is TabablzControl { IsDraggingWindow: true })
-                return true;
-
-            element = VisualTreeHelper.GetParent(element);
-        }
-
-        return false;
+        // Only instead of a shown embedded window: e.g. a disconnected tab hides it and shows its own message
+        _placeholder.Visibility = isDragging && Content is UIElement { Visibility: Visibility.Visible }
+            ? Visibility.Visible
+            : Visibility.Hidden;
     }
 }

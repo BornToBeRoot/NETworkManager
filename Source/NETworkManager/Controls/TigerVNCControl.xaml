@@ -19,7 +19,7 @@
     </local:UserControlBase.Resources>
     <Grid SizeChanged="TigerVNCGrid_SizeChanged">
         <!-- Background color will prevent flickering when app inside the panel is closed -->
-        <!-- Screenshot / placeholder instead of the embedded window while a tab is dragged (drop zones of Dragablz
+        <!-- Placeholder instead of the embedded window while a tab is dragged (drop zones of Dragablz
              visible above it) -->
         <local:EmbeddedWindowDragPresenter ApplicationName="TigerVNC"
                                            IsDragging="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=IsTigerVNCWindowDragging}">

@@ -18,7 +18,7 @@
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
     </local:UserControlBase.Resources>
     <Grid x:Name="RdpGrid">
-        <!-- Screenshot / placeholder instead of the embedded window while a tab is dragged (drop zones of Dragablz
+        <!-- Placeholder instead of the embedded window while a tab is dragged (drop zones of Dragablz
              visible above it) -->
         <local:EmbeddedWindowDragPresenter ApplicationName="RemoteDesktop"
                                            IsDragging="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=IsRemoteDesktopWindowDragging}">

@@ -5,18 +5,13 @@
                     xmlns:controls="clr-namespace:NETworkManager.Controls">
     <converters:ApplicationNameToIconBrushConverter x:Key="EmbeddedWindowDragPresenterIconConverter" />
 
-    <!-- See EmbeddedWindowDragPresenter: screenshot / placeholder of an embedded window while a tab is dragged -->
+    <!-- See EmbeddedWindowDragPresenter: placeholder of an embedded window while a tab is dragged -->
     <Style TargetType="{x:Type controls:EmbeddedWindowDragPresenter}">
         <Setter Property="Focusable" Value="False" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:EmbeddedWindowDragPresenter}">
-                    <!-- ClipToBounds: the screenshot keeps its size if the window is made smaller during the drag -->
-                    <Grid ClipToBounds="True">
-                        <Image x:Name="PART_Screenshot"
-                               HorizontalAlignment="Left" VerticalAlignment="Top"
-                               Stretch="Fill"
-                               Visibility="Hidden" />
+                    <Grid>
                         <StackPanel x:Name="PART_Placeholder"
                                     HorizontalAlignment="Center" VerticalAlignment="Center"
                                     Visibility="Hidden">
