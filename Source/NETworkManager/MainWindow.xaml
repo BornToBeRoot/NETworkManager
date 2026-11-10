@@ -720,10 +720,11 @@
                                                 </Style>
                                             </Border.Style>
                                         </Border>
-                                        <!-- Accent indicator of the selected item, inside the pill -->
+                                        <!-- Accent indicator of the selected item, inside the pill (grows in when selected) -->
                                         <Rectangle Grid.Column="0" Width="3" Height="18" Margin="4,0,0,0"
                                                    RadiusX="1.5" RadiusY="1.5"
-                                                   HorizontalAlignment="Left" VerticalAlignment="Center">
+                                                   HorizontalAlignment="Left" VerticalAlignment="Center"
+                                                   networkManager:SelectionIndicatorAnimation.IsSelected="{Binding Path=IsSelected, RelativeSource={RelativeSource AncestorType={x:Type ListViewItem}}}">
                                             <Rectangle.Style>
                                                 <Style TargetType="{x:Type Rectangle}">
                                                     <Style.Triggers>
