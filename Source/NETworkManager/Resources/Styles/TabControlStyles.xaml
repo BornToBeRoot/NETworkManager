@@ -37,6 +37,17 @@
                                 <Setter TargetName="PART_Selector" Property="Visibility" Value="Visible" />
                             </Trigger.Setters>
                         </Trigger>
+                        <!-- Only one tab (e.g. Dashboard, Firewall): nothing to switch, show it as the title of the view
+                             (left aligned like the content, no accent line, no hover, not clickable / focusable).
+                             Must be the last trigger to beat the mouse over and selected triggers. -->
+                        <DataTrigger Binding="{Binding Path=Items.Count, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="1">
+                            <Setter Property="IsHitTestVisible" Value="False" />
+                            <Setter Property="Focusable" Value="False" />
+                            <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
+                            <Setter TargetName="PART_Grid" Property="Background" Value="Transparent" />
+                            <Setter TargetName="PART_Selector" Property="Visibility" Value="Collapsed" />
+                            <Setter TargetName="PART_HeaderContent" Property="HorizontalAlignment" Value="Left" />
+                        </DataTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
