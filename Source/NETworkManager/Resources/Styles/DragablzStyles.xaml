@@ -2,6 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
                     xmlns:dragablz="clr-namespace:Dragablz;assembly=Dragablz"
+                    xmlns:dockablz="clr-namespace:Dragablz.Dockablz;assembly=Dragablz"
                     xmlns:networkManagerControls="clr-namespace:NETworkManager.Controls"
                     xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
                     xmlns:settings="clr-namespace:NETworkManager.Settings;assembly=NETworkManager.Settings">
@@ -31,7 +32,12 @@
         Remote Desktop, PowerShell, PuTTY, TigerVNC and Web Console (host views and DragablzTabHostWindow, which only
         differ in their context menu). Change the look of the tabs here.
     -->
-    <!-- Tab: separator on the right, subtle background on mouse over -->
+    <!--
+        Tab (like VS Code): on the tab bar (frame color, see the dockablz:Layout style), separator on the right, subtle
+        background on mouse over. The selected tab has the background of the page and covers the line below the tab bar
+        (the header is drawn above the content of the TabablzControl and overlaps its top border by 1), so it is part of
+        the page.
+    -->
     <Style x:Key="DragablzTabHeaderBorder" TargetType="{x:Type Border}">
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Gray8}" />
         <Setter Property="BorderThickness" Value="0,0,1,0" />
@@ -39,6 +45,9 @@
         <Style.Triggers>
             <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type dragablz:DragablzItem}}, Path=IsMouseOver}" Value="True">
                 <Setter Property="Background" Value="{DynamicResource Brushes.Control.MouseOver}" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type dragablz:DragablzItem}}, Path=IsSelected}" Value="True">
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ThemeBackground}" />
             </DataTrigger>
         </Style.Triggers>
     </Style>
@@ -67,10 +76,10 @@
         </Style.Triggers>
     </Style>
 
-    <!-- Accent line of the selected tab -->
+    <!-- Accent line on top of the selected tab (like VS Code) -->
     <Style x:Key="DragablzTabHeaderAccentLine" TargetType="{x:Type Rectangle}">
         <Setter Property="Height" Value="2" />
-        <Setter Property="VerticalAlignment" Value="Bottom" />
+        <Setter Property="VerticalAlignment" Value="Top" />
         <Setter Property="IsHitTestVisible" Value="False" />
         <Setter Property="Fill" Value="Transparent" />
         <Style.Triggers>
@@ -137,7 +146,9 @@
         <Setter Property="ItemContainerStyle" Value="{StaticResource CustomHeaderItemTemplate}" />
         <Setter Property="AdjacentHeaderItemOffset" Value="0" />
         <Setter Property="Margin" Value="0,-2,0,0" />
-        <Setter Property="Background" Value="Transparent" />
+        <!-- Page (content) in the background of the box, the tab bar above it shows the frame color of the
+             dockablz:Layout -->
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ThemeBackground}" />
         <Setter Property="EmptyHeaderSizingHint" Value="PreviousTab" />
         <Setter Property="ContentTemplateSelector" Value="{x:Null}" />
         <Setter Property="HeaderItemTemplate">
@@ -181,4 +192,13 @@
     </Style>
 
     <Style TargetType="{x:Type dragablz:TabablzControl}" BasedOn="{StaticResource DefaultTabablzControl}" />
+
+    <!--
+        Tab bar in the frame color (like VS Code): the layout around the tab controls (tool area of the host views,
+        DragablzTabHostWindow) has the frame color, the content of the tab controls covers it except for the header
+        row - also for split tabs.
+    -->
+    <Style TargetType="{x:Type dockablz:Layout}">
+        <Setter Property="Background" Value="{DynamicResource Brushes.Surface.Frame}" />
+    </Style>
 </ResourceDictionary>
