@@ -7663,6 +7663,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Beautiful &amp; consistent icons.
+        /// </summary>
+        public static string Library_Lucide_Description {
+            get {
+                return ResourceManager.GetString("Library_Lucide_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to A toolkit for creating Metro / Modern UI styled WPF apps..
         /// </summary>
         public static string Library_MahAppsMetro_Description {
@@ -7785,6 +7794,15 @@ namespace NETworkManager.Localization.Resources {
         public static string License_BDS3Clause {
             get {
                 return ResourceManager.GetString("License_BDS3Clause", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ISC License.
+        /// </summary>
+        public static string License_ISCLicense {
+            get {
+                return ResourceManager.GetString("License_ISCLicense", resourceCulture);
             }
         }
         

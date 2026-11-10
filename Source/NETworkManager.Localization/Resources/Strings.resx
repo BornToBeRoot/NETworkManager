@@ -5564,4 +5564,10 @@ Do you want to start the scan?</value>
   <data name="AccentGlowIntensity_Strong" xml:space="preserve">
     <value>Strong</value>
   </data>
+  <data name="Library_Lucide_Description" xml:space="preserve">
+    <value>Beautiful &amp; consistent icons</value>
+  </data>
+  <data name="License_ISCLicense" xml:space="preserve">
+    <value>ISC License</value>
+  </data>
 </root>
