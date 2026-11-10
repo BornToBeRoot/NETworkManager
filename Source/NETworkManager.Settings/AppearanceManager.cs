@@ -83,6 +83,11 @@ public static class AppearanceManager
     public const string SurfaceBorderBrushKey = "Brushes.Surface.Border";
 
     /// <summary>
+    ///     Resource key of the background of the selected item of the navigation (tint of the accent).
+    /// </summary>
+    public const string NavigationSelectedBrushKey = "Brushes.Navigation.Selected";
+
+    /// <summary>
     ///     Resource key of the background of a selected row (data grid) when the mouse is over it.
     /// </summary>
     public const string DataGridSelectionMouseOverBrushKey = "Brushes.DataGrid.Selection.MouseOver";
@@ -265,6 +270,10 @@ public static class AppearanceManager
         // Border of the boxes and cards: a low opacity of the foreground (softer than Gray8 in the light theme, the
         // contrast comes from the frame)
         appResources[SurfaceBorderBrushKey] = CreateFrozenBrush(foreground, 0.10);
+
+        // Selected item of the navigation: a light tint of the accent (mouse over stays the neutral tint)
+        var accent = theme.Resources["MahApps.Colors.Accent"] is Color accentColor ? accentColor : Colors.Gray;
+        appResources[NavigationSelectedBrushKey] = CreateFrozenBrush(accent, 0.15);
 
         ApplyDataGridBrushes(theme, foreground);
         ApplyToggleSwitchDisabledBrushes(theme);

@@ -742,7 +742,7 @@
                                                             Binding="{Binding Path=IsSelected, RelativeSource={RelativeSource AncestorType={x:Type ListViewItem}}}"
                                                             Value="True">
                                                             <Setter Property="Background"
-                                                                    Value="{DynamicResource Brushes.Control.Pressed}" />
+                                                                    Value="{DynamicResource Brushes.Navigation.Selected}" />
                                                         </DataTrigger>
                                                     </Style.Triggers>
                                                 </Style>
