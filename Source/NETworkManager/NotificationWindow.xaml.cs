@@ -221,6 +221,33 @@ public partial class NotificationWindow : INotifyPropertyChanged
         Top = area.Bottom / scale - ActualHeight - NotificationManager.WindowMargin - offset;
     }
 
+    /// <summary>
+    /// Slides the popup in from the right edge of the screen (40 px, 200 ms, quadratic ease-out). Only the position:
+    /// the window is not transparent (rounded corners, shadow), so it can't fade. The animation is removed when it
+    /// ends, so <see cref="ApplyPosition"/> (stack changes) keeps working. Not without animations
+    /// (<see cref="AppearanceManager.AnimationsEnabled"/>).
+    /// </summary>
+    private void SlideIn()
+    {
+        if (!AppearanceManager.AnimationsEnabled)
+            return;
+
+        var animation = new System.Windows.Media.Animation.DoubleAnimation(Left + SlideInOffset, Left,
+            new Duration(TimeSpan.FromMilliseconds(200)))
+        {
+            EasingFunction = new System.Windows.Media.Animation.QuadraticEase
+                { EasingMode = System.Windows.Media.Animation.EasingMode.EaseOut },
+            FillBehavior = System.Windows.Media.Animation.FillBehavior.Stop
+        };
+
+        // The local value (set by ApplyPosition, also if the stack changed during the animation) applies again
+        animation.Completed += (_, _) => BeginAnimation(LeftProperty, null);
+
+        BeginAnimation(LeftProperty, animation);
+    }
+
+    private const double SlideInOffset = 40;
+
     private void CloseWindow()
     {
         _timer.Stop();
@@ -240,6 +267,7 @@ public partial class NotificationWindow : INotifyPropertyChanged
         base.OnSourceInitialized(e);
 
         ApplyPosition();
+        SlideIn();
 
         _stopwatch.Restart();
         _timer.Start();
