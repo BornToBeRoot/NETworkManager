@@ -46,17 +46,11 @@
                                 <Setter TargetName="PART_LineCover" Property="Visibility" Value="Visible" />
                             </Trigger.Setters>
                         </Trigger>
-                        <!-- Only one tab (e.g. Dashboard, Firewall): nothing to switch, show it as the title of the view
-                             (centered like the tabs, no accent line, no hover, not clickable / focusable).
-                             Must be the last trigger to beat the mouse over and selected triggers. -->
+                        <!-- Only one tab (e.g. Dashboard, Firewall): shown as the selected tab over the whole width (like
+                             VS Code with one open file), nothing to switch - not clickable / focusable, no mouse over -->
                         <DataTrigger Binding="{Binding Path=Items.Count, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="1">
                             <Setter Property="IsHitTestVisible" Value="False" />
                             <Setter Property="Focusable" Value="False" />
-                            <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
-                            <Setter TargetName="PART_Grid" Property="Background" Value="Transparent" />
-                            <Setter TargetName="PART_Selector" Property="Visibility" Value="Collapsed" />
-                            <!-- Title on the tab bar with the line below (no separator) -->
-                            <Setter TargetName="PART_LineCover" Property="Visibility" Value="Collapsed" />
                             <Setter Property="BorderThickness" Value="0" />
                         </DataTrigger>
                     </ControlTemplate.Triggers>
