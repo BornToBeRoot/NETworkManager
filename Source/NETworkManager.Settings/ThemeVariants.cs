@@ -16,7 +16,7 @@ namespace NETworkManager.Settings;
 ///     A theme is a copy of a MahApps theme with recolored resources (created when it is used, see
 ///     <see cref="EnsureTheme" />):
 ///     <list type="bullet">
-///         <item>Theme: the dark theme with the same accent, the neutral grays (backgrounds, borders, disabled text) get the
+///         <item>Theme: the dark / light theme with the same accent, the neutral grays (backgrounds, borders, disabled text) get the
 ///         background of the theme - dark grays fully, lighter grays less, the text stays neutral. The accent colors are not
 ///         changed.</item>
 ///         <item>Accent: the theme with the accent Blue, the colors of the accent (all opacities) and the highlight are
@@ -28,15 +28,24 @@ public static class ThemeVariants
     private static readonly ILog Log = LogManager.GetLogger(typeof(ThemeVariants));
 
     /// <summary>
-    ///     Additional themes with the background of the boxes (the frame is computed from it, see
-    ///     <see cref="AppearanceManager" />).
+    ///     Additional theme: name, background of the boxes, the theme of MahApps it is based on (Dark or Light) and an
+    ///     optional color of the frame (otherwise computed from the background, see <see cref="AppearanceManager" />).
     /// </summary>
-    public static readonly IReadOnlyList<(string Name, Color Background)> Themes =
+    public sealed record ThemeVariant(string Name, Color Background, string SourceBaseColorScheme, Color? Frame = null);
+
+    /// <summary>
+    ///     Additional themes: dark (Black, Midnight, Steel, Indigo) and dimmed light themes (Mist like the Blue theme
+    ///     of Visual Studio, Soft, Paper) with an own, clearly visible frame.
+    /// </summary>
+    public static readonly IReadOnlyList<ThemeVariant> Themes =
     [
-        ("Black", Color.FromRgb(0x14, 0x14, 0x14)),
-        ("Midnight", Color.FromRgb(0x1C, 0x22, 0x30)),
-        ("Steel", Color.FromRgb(0x2A, 0x30, 0x38)),
-        ("Indigo", Color.FromRgb(0x1F, 0x1C, 0x2E))
+        new("Black", Color.FromRgb(0x14, 0x14, 0x14), ThemeManager.BaseColorDark),
+        new("Midnight", Color.FromRgb(0x1C, 0x22, 0x30), ThemeManager.BaseColorDark),
+        new("Steel", Color.FromRgb(0x2A, 0x30, 0x38), ThemeManager.BaseColorDark),
+        new("Indigo", Color.FromRgb(0x1F, 0x1C, 0x2E), ThemeManager.BaseColorDark),
+        new("Mist", Color.FromRgb(0xF2, 0xF4, 0xF9), ThemeManager.BaseColorLight, Color.FromRgb(0xD6, 0xDB, 0xE9)),
+        new("Soft", Color.FromRgb(0xEC, 0xEC, 0xEC), ThemeManager.BaseColorLight, Color.FromRgb(0xDA, 0xDA, 0xDA)),
+        new("Paper", Color.FromRgb(0xF5, 0xF2, 0xEA), ThemeManager.BaseColorLight, Color.FromRgb(0xE3, 0xDE, 0xD3))
     ];
 
     /// <summary>
@@ -54,8 +63,7 @@ public static class ThemeVariants
         ("Slate", Color.FromRgb(0x5A, 0x76, 0x8F))
     ];
 
-    // Source of a theme (the dark theme of MahApps) and of an accent (the accent Blue of MahApps)
-    private static readonly string SourceBaseColorScheme = ThemeManager.BaseColorDark;
+    // Source of an accent (the accent Blue of MahApps)
     private const string SourceColorScheme = "Blue";
 
     // Neutral gray: difference of the channels up to this value
@@ -101,14 +109,14 @@ public static class ThemeVariants
         var theme = Themes.FirstOrDefault(x => x.Name == baseColorScheme);
         var accent = Accents.FirstOrDefault(x => x.Name == colorScheme);
 
-        var isTheme = theme.Name != null;
+        var isTheme = theme != null;
         var isAccent = accent.Name != null;
 
         if (!isTheme && !isAccent)
             return;
 
         var source = ThemeManager.Current.GetTheme(
-            $"{(isTheme ? SourceBaseColorScheme : baseColorScheme)}.{(isAccent ? SourceColorScheme : colorScheme)}");
+            $"{(isTheme ? theme.SourceBaseColorScheme : baseColorScheme)}.{(isAccent ? SourceColorScheme : colorScheme)}");
 
         if (source == null)
             return;
@@ -135,7 +143,13 @@ public static class ThemeVariants
     ///     that only knows Light and Dark (e.g. the console colors of PuTTY and PowerShell).
     /// </summary>
     public static string ToBaseColorScheme(string theme) =>
-        Themes.Any(x => x.Name == theme) ? SourceBaseColorScheme : theme;
+        Themes.FirstOrDefault(x => x.Name == theme)?.SourceBaseColorScheme ?? theme;
+
+    /// <summary>
+    ///     Own frame color of an additional theme (e.g. the light blue-gray of Mist), otherwise <see langword="null" />.
+    /// </summary>
+    public static Color? GetFrame(Theme theme) =>
+        Themes.FirstOrDefault(x => x.Name == theme.BaseColorScheme)?.Frame;
 
     /// <summary>
     ///     <see langword="true" /> if the theme has a dark background (the additional themes are dark, also custom

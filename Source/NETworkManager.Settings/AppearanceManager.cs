@@ -315,9 +315,10 @@ public static class AppearanceManager
             ? backgroundColor
             : Colors.White;
 
-        var frame = ThemeVariants.IsDark(theme)
+        // Additional themes can have an own frame (e.g. the light blue-gray of Mist)
+        var frame = ThemeVariants.GetFrame(theme) ?? (ThemeVariants.IsDark(theme)
             ? Blend(background, Colors.Black, 0.25)
-            : Blend(background, foreground, 0.04);
+            : Blend(background, foreground, 0.04));
 
         appResources[SurfaceFrameBrushKey] = CreateFrozenBrush(frame, 1);
 

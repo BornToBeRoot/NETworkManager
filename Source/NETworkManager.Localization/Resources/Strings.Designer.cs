@@ -14654,6 +14654,33 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Mist.
+        /// </summary>
+        public static string Theme_Mist {
+            get {
+                return ResourceManager.GetString("Theme_Mist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Paper.
+        /// </summary>
+        public static string Theme_Paper {
+            get {
+                return ResourceManager.GetString("Theme_Paper", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Soft.
+        /// </summary>
+        public static string Theme_Soft {
+            get {
+                return ResourceManager.GetString("Theme_Soft", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Steel.
         /// </summary>
         public static string Theme_Steel {

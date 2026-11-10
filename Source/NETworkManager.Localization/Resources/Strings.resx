@@ -5540,4 +5540,13 @@ Do you want to start the scan?</value>
   <data name="Accent_Slate" xml:space="preserve">
     <value>Slate</value>
   </data>
+  <data name="Theme_Mist" xml:space="preserve">
+    <value>Mist</value>
+  </data>
+  <data name="Theme_Soft" xml:space="preserve">
+    <value>Soft</value>
+  </data>
+  <data name="Theme_Paper" xml:space="preserve">
+    <value>Paper</value>
+  </data>
 </root>
