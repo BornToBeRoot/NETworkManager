@@ -90,6 +90,7 @@ Release date: **xx.xx.2026**
 
 **WiFi**
 
+- The **Channels** tab shows the charts of all bands (2.4, 5 and 6 GHz) one below the other in a scrollable list instead of two sub-tabs (**2.4 & 5 GHz**, **6 GHz**). [#XXXX](https://github.com/BornToBeRoot/NETworkManager/pull/XXXX)
 - The search filters after a short delay while typing instead of on every key press, `Enter` filters right away. [#3660](https://github.com/BornToBeRoot/NETworkManager/pull/3660)
 - The time of the last scan of the networks (`Last scan at 14:32`, the date in the tooltip) is shown in their header, with **Automatically update every** a countdown to the next scan; the line below only shows errors and the connection status. Reloading the network adapters is faster (the minimum of 2.5 seconds runs while loading) and the reload icon spins until it is finished. [#3685](https://github.com/BornToBeRoot/NETworkManager/pull/3685)
 - A channel width that could not be read from the beacon of the access point and is estimated is shown as `~80 MHz` (grid, copy and the tooltip of the **Channels** tab), the tooltip of the cell explains it. Estimated widths on 2.4 GHz are 20 MHz (40 MHz is rarely used there). [#3695](https://github.com/BornToBeRoot/NETworkManager/pull/3695)

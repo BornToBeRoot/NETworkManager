@@ -868,115 +868,87 @@
                         </Grid>
                     </TabItem>
                     <TabItem Header="{x:Static Member=localization:Strings.Channels}">
-                        <Grid Margin="10">
-                            <!-- Channels: 2.4 & 5 GHz on one tab, 6 GHz split into lower/upper on another -->
-                            <TabControl Style="{StaticResource ResourceKey=DefaultTabControl}"
-                                        Loaded="ChannelsTabControl_Loaded"
-                                        SelectionChanged="ChannelsTabControl_SelectionChanged">
-                                <TabItem Header="{x:Static Member=localization:Strings.GHz2dot4And5}">
-                                    <Grid Margin="0,10,0,0">
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="Auto" />
-                                            <RowDefinition Height="*" />
-                                            <RowDefinition Height="Auto" />
-                                            <RowDefinition Height="20" />
-                                            <RowDefinition Height="Auto" />
-                                            <RowDefinition Height="*" />
-                                            <RowDefinition Height="Auto" />
-                                        </Grid.RowDefinitions>
-                                        <TextBlock Grid.Row="0" Text="{x:Static Member=localization:Strings.GHz2dot4}"
-                                                   Style="{StaticResource ResourceKey=HeaderTextBlock}" />
-                                        <lvc:CartesianChart Grid.Row="1"
-                                                            Style="{StaticResource ResourceKey=WiFiChannelChart}"
-                                                            Series="{Binding Path=Chart2Dot4GHz.Series}"
-                                                            XAxes="{Binding Path=Chart2Dot4GHz.XAxes}"
-                                                            YAxes="{Binding Path=Chart2Dot4GHz.YAxes}"
-                                                            Sections="{Binding Path=Chart2Dot4GHz.Sections}">
-                                            <lvc:CartesianChart.Tooltip>
-                                                <controls:LiveChartsWiFiChannelTooltip />
-                                            </lvc:CartesianChart.Tooltip>
-                                        </lvc:CartesianChart>
-                                        <ScrollViewer Grid.Row="2"
-                                                      HorizontalScrollBarVisibility="Auto"
-                                                      VerticalScrollBarVisibility="Disabled"
-                                                      Margin="0,4,0,0">
-                                            <ItemsControl ItemsSource="{Binding Path=Chart2Dot4GHz.Legend}"
-                                                          Style="{StaticResource ResourceKey=WiFiChannelLegend}" />
-                                        </ScrollViewer>
-                                        <TextBlock Grid.Row="4" Text="{x:Static Member=localization:Strings.GHz5}"
-                                                   Style="{StaticResource ResourceKey=HeaderTextBlock}" />
-                                        <lvc:CartesianChart Grid.Row="5"
-                                                            Style="{StaticResource ResourceKey=WiFiChannelChart}"
-                                                            Series="{Binding Path=Chart5GHz.Series}"
-                                                            XAxes="{Binding Path=Chart5GHz.XAxes}"
-                                                            YAxes="{Binding Path=Chart5GHz.YAxes}"
-                                                            Sections="{Binding Path=Chart5GHz.Sections}">
-                                            <lvc:CartesianChart.Tooltip>
-                                                <controls:LiveChartsWiFiChannelTooltip />
-                                            </lvc:CartesianChart.Tooltip>
-                                        </lvc:CartesianChart>
-                                        <ScrollViewer Grid.Row="6"
-                                                      HorizontalScrollBarVisibility="Auto"
-                                                      VerticalScrollBarVisibility="Disabled"
-                                                      Margin="0,4,0,0">
-                                            <ItemsControl ItemsSource="{Binding Path=Chart5GHz.Legend}"
-                                                          Style="{StaticResource ResourceKey=WiFiChannelLegend}" />
-                                        </ScrollViewer>
-                                    </Grid>
-                                </TabItem>
-                                <TabItem Header="{x:Static Member=localization:Strings.GHz6}">
-                                    <Grid Margin="0,10,0,0">
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="Auto" />
-                                            <RowDefinition Height="*" />
-                                            <RowDefinition Height="Auto" />
-                                            <RowDefinition Height="20" />
-                                            <RowDefinition Height="Auto" />
-                                            <RowDefinition Height="*" />
-                                            <RowDefinition Height="Auto" />
-                                        </Grid.RowDefinitions>
-                                        <TextBlock Grid.Row="0" Text="{Binding Source={x:Static localization:Strings.GHz6}, StringFormat={}{0} (1 - 125)}"
-                                                   Style="{StaticResource ResourceKey=HeaderTextBlock}" />
-                                        <lvc:CartesianChart Grid.Row="1"
-                                                            Style="{StaticResource ResourceKey=WiFiChannelChart}"
-                                                            Series="{Binding Path=Chart6GHzLower.Series}"
-                                                            XAxes="{Binding Path=Chart6GHzLower.XAxes}"
-                                                            YAxes="{Binding Path=Chart6GHzLower.YAxes}"
-                                                            Sections="{Binding Path=Chart6GHzLower.Sections}">
-                                            <lvc:CartesianChart.Tooltip>
-                                                <controls:LiveChartsWiFiChannelTooltip />
-                                            </lvc:CartesianChart.Tooltip>
-                                        </lvc:CartesianChart>
-                                        <ScrollViewer Grid.Row="2"
-                                                      HorizontalScrollBarVisibility="Auto"
-                                                      VerticalScrollBarVisibility="Disabled"
-                                                      Margin="0,4,0,0">
-                                            <ItemsControl ItemsSource="{Binding Path=Chart6GHzLower.Legend}"
-                                                          Style="{StaticResource ResourceKey=WiFiChannelLegend}" />
-                                        </ScrollViewer>
-                                        <TextBlock Grid.Row="4" Text="{Binding Source={x:Static localization:Strings.GHz6}, StringFormat={}{0} (129 - 233)}"
-                                                   Style="{StaticResource ResourceKey=HeaderTextBlock}" />
-                                        <lvc:CartesianChart Grid.Row="5"
-                                                            Style="{StaticResource ResourceKey=WiFiChannelChart}"
-                                                            Series="{Binding Path=Chart6GHzUpper.Series}"
-                                                            XAxes="{Binding Path=Chart6GHzUpper.XAxes}"
-                                                            YAxes="{Binding Path=Chart6GHzUpper.YAxes}"
-                                                            Sections="{Binding Path=Chart6GHzUpper.Sections}">
-                                            <lvc:CartesianChart.Tooltip>
-                                                <controls:LiveChartsWiFiChannelTooltip />
-                                            </lvc:CartesianChart.Tooltip>
-                                        </lvc:CartesianChart>
-                                        <ScrollViewer Grid.Row="6"
-                                                      HorizontalScrollBarVisibility="Auto"
-                                                      VerticalScrollBarVisibility="Disabled"
-                                                      Margin="0,4,0,0">
-                                            <ItemsControl ItemsSource="{Binding Path=Chart6GHzUpper.Legend}"
-                                                          Style="{StaticResource ResourceKey=WiFiChannelLegend}" />
-                                        </ScrollViewer>
-                                    </Grid>
-                                </TabItem>
-                            </TabControl>
-                        </Grid>
+                        <!-- Channels: all bands one below the other (no tabs in the tab). The mouse wheel scrolls the
+                             list also over the charts and the legends (own horizontal ScrollViewer), see
+                             ScrollViewerChannels_PreviewMouseWheel -->
+                        <ScrollViewer VerticalScrollBarVisibility="Auto"
+                                      HorizontalScrollBarVisibility="Disabled"
+                                      PreviewMouseWheel="ScrollViewerChannels_PreviewMouseWheel">
+                            <StackPanel Margin="10">
+                                <TextBlock Text="{x:Static Member=localization:Strings.GHz2dot4}"
+                                           Style="{StaticResource ResourceKey=HeaderTextBlock}" />
+                                <lvc:CartesianChart Height="260"
+                                                    Style="{StaticResource ResourceKey=WiFiChannelChart}"
+                                                    Series="{Binding Path=Chart2Dot4GHz.Series}"
+                                                    XAxes="{Binding Path=Chart2Dot4GHz.XAxes}"
+                                                    YAxes="{Binding Path=Chart2Dot4GHz.YAxes}"
+                                                    Sections="{Binding Path=Chart2Dot4GHz.Sections}">
+                                    <lvc:CartesianChart.Tooltip>
+                                        <controls:LiveChartsWiFiChannelTooltip />
+                                    </lvc:CartesianChart.Tooltip>
+                                </lvc:CartesianChart>
+                                <ScrollViewer HorizontalScrollBarVisibility="Auto"
+                                              VerticalScrollBarVisibility="Disabled"
+                                              Margin="0,4,0,20">
+                                    <ItemsControl ItemsSource="{Binding Path=Chart2Dot4GHz.Legend}"
+                                                  Style="{StaticResource ResourceKey=WiFiChannelLegend}" />
+                                </ScrollViewer>
+                                <TextBlock Text="{x:Static Member=localization:Strings.GHz5}"
+                                           Style="{StaticResource ResourceKey=HeaderTextBlock}" />
+                                <lvc:CartesianChart Height="260"
+                                                    Style="{StaticResource ResourceKey=WiFiChannelChart}"
+                                                    Series="{Binding Path=Chart5GHz.Series}"
+                                                    XAxes="{Binding Path=Chart5GHz.XAxes}"
+                                                    YAxes="{Binding Path=Chart5GHz.YAxes}"
+                                                    Sections="{Binding Path=Chart5GHz.Sections}">
+                                    <lvc:CartesianChart.Tooltip>
+                                        <controls:LiveChartsWiFiChannelTooltip />
+                                    </lvc:CartesianChart.Tooltip>
+                                </lvc:CartesianChart>
+                                <ScrollViewer HorizontalScrollBarVisibility="Auto"
+                                              VerticalScrollBarVisibility="Disabled"
+                                              Margin="0,4,0,20">
+                                    <ItemsControl ItemsSource="{Binding Path=Chart5GHz.Legend}"
+                                                  Style="{StaticResource ResourceKey=WiFiChannelLegend}" />
+                                </ScrollViewer>
+                                <TextBlock Text="{Binding Source={x:Static localization:Strings.GHz6}, StringFormat={}{0} (1 - 125)}"
+                                           Style="{StaticResource ResourceKey=HeaderTextBlock}" />
+                                <lvc:CartesianChart Height="260"
+                                                    Style="{StaticResource ResourceKey=WiFiChannelChart}"
+                                                    Series="{Binding Path=Chart6GHzLower.Series}"
+                                                    XAxes="{Binding Path=Chart6GHzLower.XAxes}"
+                                                    YAxes="{Binding Path=Chart6GHzLower.YAxes}"
+                                                    Sections="{Binding Path=Chart6GHzLower.Sections}">
+                                    <lvc:CartesianChart.Tooltip>
+                                        <controls:LiveChartsWiFiChannelTooltip />
+                                    </lvc:CartesianChart.Tooltip>
+                                </lvc:CartesianChart>
+                                <ScrollViewer HorizontalScrollBarVisibility="Auto"
+                                              VerticalScrollBarVisibility="Disabled"
+                                              Margin="0,4,0,20">
+                                    <ItemsControl ItemsSource="{Binding Path=Chart6GHzLower.Legend}"
+                                                  Style="{StaticResource ResourceKey=WiFiChannelLegend}" />
+                                </ScrollViewer>
+                                <TextBlock Text="{Binding Source={x:Static localization:Strings.GHz6}, StringFormat={}{0} (129 - 233)}"
+                                           Style="{StaticResource ResourceKey=HeaderTextBlock}" />
+                                <lvc:CartesianChart Height="260"
+                                                    Style="{StaticResource ResourceKey=WiFiChannelChart}"
+                                                    Series="{Binding Path=Chart6GHzUpper.Series}"
+                                                    XAxes="{Binding Path=Chart6GHzUpper.XAxes}"
+                                                    YAxes="{Binding Path=Chart6GHzUpper.YAxes}"
+                                                    Sections="{Binding Path=Chart6GHzUpper.Sections}">
+                                    <lvc:CartesianChart.Tooltip>
+                                        <controls:LiveChartsWiFiChannelTooltip />
+                                    </lvc:CartesianChart.Tooltip>
+                                </lvc:CartesianChart>
+                                <ScrollViewer HorizontalScrollBarVisibility="Auto"
+                                              VerticalScrollBarVisibility="Disabled"
+                                              Margin="0,4,0,0">
+                                    <ItemsControl ItemsSource="{Binding Path=Chart6GHzUpper.Legend}"
+                                                  Style="{StaticResource ResourceKey=WiFiChannelLegend}" />
+                                </ScrollViewer>
+                            </StackPanel>
+                        </ScrollViewer>
                     </TabItem>
                 </TabControl>
                 <Grid Grid.Column="0" Grid.Row="1"

@@ -5762,15 +5762,6 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 2.4 &amp; 5 GHz.
-        /// </summary>
-        public static string GHz2dot4And5 {
-            get {
-                return ResourceManager.GetString("GHz2dot4And5", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to 5 GHz.
         /// </summary>
         public static string GHz5 {
