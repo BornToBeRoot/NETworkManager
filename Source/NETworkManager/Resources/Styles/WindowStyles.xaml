@@ -9,6 +9,8 @@
         <Setter Property="NonActiveGlowBrush" Value="{DynamicResource MahApps.Brushes.Gray8}" />
         <Setter Property="TitleForeground" Value="{DynamicResource MahApps.Brushes.Gray3}" />
         <Setter Property="ShowTitleBar" Value="True" />
+        <!-- Texts without an own font (e.g. TextBlocks) use the font of the controls (see Theme.xaml) -->
+        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Control}" />
         <!-- Rounded corners (Windows 11, Windows 10 doesn't support it) -->
         <Setter Property="wpfHelpers:WindowCornerHelper.RoundCorners" Value="True" />
     </Style>

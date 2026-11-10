@@ -9,6 +9,14 @@
          Windows 10 falls back to Consolas. -->
     <FontFamily x:Key="Fonts.Family.Mono">Cascadia Mono, Consolas</FontFamily>
 
+    <!-- Font of the controls and texts: Segoe UI Variable (Windows 11, named instance "Text" for small sizes),
+         Segoe UI on Windows 10. Overrides the fonts of MahApps (Fonts.xaml, 2.4.11), the window title and the header
+         font (Segoe UI Light, no longer used by the text styles) stay. -->
+    <FontFamily x:Key="MahApps.Fonts.Family.Control">Segoe UI Variable Text, Segoe UI, Lucida Sans Unicode, Verdana</FontFamily>
+    <FontFamily x:Key="MahApps.Fonts.Family.Button">Segoe UI Variable Text, Segoe UI, Lucida Sans Unicode, Verdana</FontFamily>
+    <FontFamily x:Key="MahApps.Fonts.Family.ToggleSwitch">Segoe UI Variable Text, Segoe UI, Lucida Sans Unicode, Verdana</FontFamily>
+    <FontFamily x:Key="MahApps.Fonts.Family.ToggleSwitch.Header">Segoe UI Variable Text, Segoe UI, Lucida Sans Unicode, Verdana</FontFamily>
+
     <!-- Corner radius of controls (buttons, inputs, tooltips) and of overlays (menus) -->
     <CornerRadius x:Key="CornerRadius.Control">4</CornerRadius>
     <!-- Element inside a control with a 1 px border, e.g. the button of a drop-down button -->
