@@ -141,13 +141,6 @@ public static class ThemeVariants
     }
 
     /// <summary>
-    ///     Base color scheme of MahApps (Light, Dark) of a theme name: the additional themes are dark variants. For code
-    ///     that only knows Light and Dark (e.g. the console colors of PuTTY and PowerShell).
-    /// </summary>
-    public static string ToBaseColorScheme(string theme) =>
-        Themes.FirstOrDefault(x => x.Name == theme)?.SourceBaseColorScheme ?? theme;
-
-    /// <summary>
     ///     Own frame color of an additional theme (e.g. the light blue-gray of Mist), otherwise <see langword="null" />.
     /// </summary>
     public static Color? GetFrame(Theme theme) =>

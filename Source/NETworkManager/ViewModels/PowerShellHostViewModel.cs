@@ -127,6 +127,9 @@ public class PowerShellHostViewModel : ProfileHostViewModelBase
         InitializeProfileHost();
 
         SettingsManager.Current.PropertyChanged += SettingsManager_PropertyChanged;
+
+        // Colors of the theme (also custom themes): the console blends into the application
+        AppearanceManager.ConsoleColorsChanged += (_, _) => WriteDefaultProfileToRegistry();
     }
 
     #endregion
@@ -513,9 +516,8 @@ public class PowerShellHostViewModel : ProfileHostViewModelBase
 
         Log.Debug("Write PowerShell profile to registry...");
 
-        PowerShell.WriteDefaultProfileToRegistry(
-            ThemeVariants.ToBaseColorScheme(SettingsManager.Current.Appearance_Theme),
-            SettingsManager.Current.PowerShell_ApplicationFilePath);
+        PowerShell.WriteDefaultProfileToRegistry(AppearanceManager.ConsoleBackground,
+            AppearanceManager.ConsoleForeground, SettingsManager.Current.PowerShell_ApplicationFilePath);
     }
 
     #endregion
@@ -531,7 +533,6 @@ public class PowerShellHostViewModel : ProfileHostViewModelBase
                 WriteDefaultProfileToRegistry();
                 break;
             case nameof(SettingsInfo.Appearance_PowerShellModifyGlobalProfile):
-            case nameof(SettingsInfo.Appearance_Theme):
                 WriteDefaultProfileToRegistry();
                 break;
         }

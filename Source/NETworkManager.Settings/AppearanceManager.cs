@@ -99,6 +99,28 @@ public static class AppearanceManager
     /// </summary>
     public const string SurfaceWindowInactiveBrushKey = "Brushes.Surface.Window.Inactive";
 
+    /// <summary>
+    ///     Background of the consoles (PuTTY, PowerShell): the background of the boxes of the current theme.
+    /// </summary>
+    public static (byte R, byte G, byte B) ConsoleBackground { get; private set; } = (0x25, 0x25, 0x25);
+
+    /// <summary>
+    ///     Text of the consoles (slightly muted foreground of the current theme).
+    /// </summary>
+    public static (byte R, byte G, byte B) ConsoleForeground { get; private set; } = (0xBB, 0xBB, 0xBB);
+
+    /// <summary>
+    ///     Bold text of the consoles (foreground of the current theme).
+    /// </summary>
+    public static (byte R, byte G, byte B) ConsoleBoldForeground { get; private set; } = (0xFF, 0xFF, 0xFF);
+
+    /// <summary>
+    ///     Raised after a theme change when the console colors are set (to update the profiles of PuTTY / PowerShell).
+    /// </summary>
+    public static event EventHandler ConsoleColorsChanged;
+
+    private static (byte R, byte G, byte B) ToRgb(Color color) => (color.R, color.G, color.B);
+
     private static Color _frameColor = Colors.White;
     private static Color _accentColor = Colors.Gray;
 
@@ -361,6 +383,13 @@ public static class AppearanceManager
         _frameColor = frame;
         _accentColor = accent;
         ApplyWindowBrush();
+
+        // Consoles (PuTTY, PowerShell): background of the box around them, the text a bit muted (like before:
+        // #BBBBBB on #252525), bold text in the foreground of the theme
+        ConsoleBackground = ToRgb(background);
+        ConsoleForeground = ToRgb(Blend(background, foreground, ThemeVariants.IsDark(theme) ? 0.75 : 0.88));
+        ConsoleBoldForeground = ToRgb(foreground);
+        ConsoleColorsChanged?.Invoke(null, EventArgs.Empty);
 
         ApplyDataGridBrushes(theme, foreground);
         ApplyToggleSwitchDisabledBrushes(theme);

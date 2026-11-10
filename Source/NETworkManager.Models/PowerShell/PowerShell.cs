@@ -50,39 +50,13 @@ public static class PowerShell
     ];
 
     /// <summary>
-    ///     Default DWORD registry keys for the global PowerShell profile with dark theme.
-    /// </summary>
-    /// <returns>List of <see cref="Tuple{T1,T2}" /> with registry key name and value.</returns>
-    private static List<Tuple<string, int>> GetProfileRegkeysDwordDark()
-    {
-        return DefaultProfileRegkeysDwordBase.Concat(
-        [
-            new Tuple<string, int>("DefaultBackground", 2434341), // HEX: 252525
-                new Tuple<string, int>("ColorTable00", 2434341),  // HEX: 252525
-                new Tuple<string, int>("ColorTable07", 13421772)  // HEX: cccccc
-        ]).ToList();
-    }
-
-    /// <summary>
-    ///     Default DWORD registry keys for the global PowerShell profile with white theme.
-    /// </summary>
-    /// <returns>List of <see cref="Tuple{T1,T2}" /> with registry key name and value.</returns>
-    private static List<Tuple<string, int>> GetProfileRegkeysDwordWhite()
-    {
-        return DefaultProfileRegkeysDwordBase.Concat(
-        [
-            new Tuple<string, int>("DefaultBackground", 16777215), // HEX: FFFFFF
-                new Tuple<string, int>("ColorTable00", 16777215), // HEX: FFFFFF
-                new Tuple<string, int>("ColorTable07", 2434341) // HEX: 252525
-        ]).ToList();
-    }
-
-    /// <summary>
     ///     Write default (global) PowerShell profile to registry.
     /// </summary>
-    /// <param name="theme">Theme of the PowerShell profile.</param>
     /// <param name="powerShellPath">Path to the PowerShell executable.</param>
-    public static void WriteDefaultProfileToRegistry(string theme, string powerShellPath)
+    /// <param name="background">Background of the console (DefaultBackground, ColorTable00).</param>
+    /// <param name="foreground">Text of the console (ColorTable07).</param>
+    public static void WriteDefaultProfileToRegistry((byte R, byte G, byte B) background,
+        (byte R, byte G, byte B) foreground, string powerShellPath)
     {
         var registryPath = @"Console\";
 
@@ -103,8 +77,13 @@ public static class PowerShell
 
         if (registryKey != null)
         {
-            foreach (var item in theme == "Dark" ? GetProfileRegkeysDwordDark() : GetProfileRegkeysDwordWhite())
+            foreach (var item in DefaultProfileRegkeysDwordBase)
                 registryKey.SetValue(item.Item1, item.Item2);
+
+            // Colors of the application theme (COLORREF: 0x00BBGGRR), the console blends into the application
+            registryKey.SetValue("DefaultBackground", ToColorRef(background));
+            registryKey.SetValue("ColorTable00", ToColorRef(background));
+            registryKey.SetValue("ColorTable07", ToColorRef(foreground));
 
             foreach (var item in DefaultProfileRegkeysSzBase)
                 registryKey.SetValue(item.Item1, item.Item2);
@@ -114,6 +93,8 @@ public static class PowerShell
 
         registryKey?.Close();
     }
+
+    private static int ToColorRef((byte R, byte G, byte B) color) => color.R | (color.G << 8) | (color.B << 16);
 
     /// <summary>
     ///     Build command line arguments based on a <see cref="PowerShellSessionInfo" />.
