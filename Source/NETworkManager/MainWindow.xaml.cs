@@ -912,11 +912,8 @@ public sealed partial class MainWindow : INotifyPropertyChanged
                 break;
             default:
                 Log.Error("Cannot show unknown application view: " + name);
-                return;
+                break;
         }
-
-        // Fade in + rise (not for applications with embedded windows)
-        ViewTransitionAnimation.Enter(ContentControlApplication, name);
     }
 
     private void OnApplicationViewHide(ApplicationName name)
