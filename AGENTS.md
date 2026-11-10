@@ -74,7 +74,8 @@ REPOSITORY_ROOT/
 - **Supported OS**: Windows 10 / Windows Server (22H2 or later) and Windows 11
 
 **UI Framework & Design**:
-- **MahApps.Metro** - Modern UI toolkit providing Metro-style controls and themes
+- **MahApps.Metro** - Modern UI toolkit providing Metro-style controls and themes (restyled, see
+  [UI Design System](#ui-design-system))
 - **Lucide** - Icons (https://lucide.dev), imported from the SVG files by `Scripts/Create-LucideIcons.ps1` into
   `Source/NETworkManager.Controls/LucideIcons.cs` (only the used icons, see `$Icons` in the script) and drawn as lines by
   `LucideIcon` (stroke 1.75); license in `Source/NETworkManager.Documentation/Licenses/Lucide.txt`
@@ -310,7 +311,7 @@ The website is deployed to GitHub Pages at: https://borntoberoot.net/NETworkMana
 - **Icons**: Lucide only - `{icons:Lucide Kind=Router}` (`xmlns:icons="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls"`),
   usually as `Visual` of a `VisualBrush` (opacity mask of a `Rectangle`), in C# `new LucideIcon { Kind = LucideIconKind.Router }`.
   A new icon: add its name to `$Icons` in `Scripts/Create-LucideIcons.ps1` and run the script (don't edit `LucideIcons.cs`)
-- **Resource Dictionaries**: Shared styles in `Resources/` directory
+- **Resource Dictionaries**: Shared styles in `Resources/Styles/` (tokens in `Theme.xaml`), see [UI Design System](#ui-design-system)
 - **Naming**: Use `x:Name` for elements that need code-behind access
 
 ### Documentation Style
@@ -493,12 +494,93 @@ git diff
 - **Property Change Notification**: `INotifyPropertyChanged` via `PropertyChangedBase`
 - **Dependency Injection**: Manual dependency management (no DI container)
 
-### UI Theming
+### UI Design System
 
-- **MahApps.Metro Themes**: Light/Dark theme support
-- **Accent Colors**: Customizable accent colors
-- **Resource Dictionaries**: Shared styles and templates
-- **Live Theme Switching**: Runtime theme changes
+Calm, productive look on top of MahApps.Metro (no WPF Fluent / WPF-UI). Use the existing tokens and styles below instead
+of local colors, sizes or templates; theme-dependent brushes always with `DynamicResource`.
+
+**Themes and accents** (`NETworkManager.Settings`):
+- MahApps themes `Light` / `Dark` plus own themes from `ThemeVariants`: dark Black, Midnight, Steel, Indigo (copies of
+  `Dark.<accent>`, neutral grays tinted toward the theme background) and light Mist, Soft, Paper (copies of
+  `Light.<accent>` with their own frame color). Own accents Sky, Ocean, Mint, Rose, Coral, Gold, Lavender, Slate,
+  Graphite (copies of `<theme>.Blue` with the accent replaced). They are created on demand in
+  `AppearanceManager.ChangeTheme` (`LibraryTheme` + `ThemeManager.AddLibraryTheme`); on failure the default theme is used.
+  A theme counts as dark by the brightness of its background (`ThemeVariants.IsDark`), not by its name.
+- Default accent for new installations: Teal. Custom themes (`Appearance_UseCustomTheme`) keep working.
+- Settings: `Appearance_Theme`, `Appearance_Accent`, `Appearance_AccentGlowIntensity` (Off / Subtle 6 % / Medium 10 %
+  (default) / Strong 15 %), `Appearance_Animations` (System / On / Off; policy `Appearance_Animations` in `config.json`
+  is a bool).
+- Console colors: `AppearanceManager.ConsoleBackground` / `ConsoleForeground` / `ConsoleBoldForeground` (event
+  `ConsoleColorsChanged`) are written to the PuTTY / PowerShell profiles, so the embedded consoles match the theme.
+
+**Theme-dependent brushes** - computed by `AppearanceManager` on every theme change (from `MahApps.Colors.ThemeForeground`
+/ `ThemeBackground` / `Accent`) and written into `Application.Current.Resources`:
+
+| Key | Value | Use |
+|---|---|---|
+| `Brushes.Surface.Frame` | dark: background 25 % darker, light: 4 % foreground (or the theme's own frame) | window frame, title bar, navigation |
+| `Brushes.Surface.Window` / `.Inactive` | frame + accent glow (radial, top left), half glow when the window is inactive | `FrameWindow` background |
+| `Brushes.Surface.Border` | foreground 10 % | `ViewBox` / `CardBorder` border |
+| `Brushes.Navigation.Selected` | accent 15 % | selected tool in the navigation |
+| `Brushes.Control.MouseOver` / `.Pressed` | foreground 8 % / 12 % | hover / pressed of icon buttons, lists, tabs |
+| `Brushes.Control.Border.MouseOver` | foreground 35 % | input border on hover |
+| `Brushes.Button.Background` / `.MouseOver` / `.Pressed` | foreground 6 / 10 / 14 % | secondary buttons, title bar fields |
+| `Brushes.Status.Success` / `.Warning` / `.Error` | readable per theme (darker in light themes) | status icons and texts, validation - never hard-code `#badc58` etc. |
+| `MahApps.Brushes.DataGrid.Selection.*` | accent 30 % (selected), 38 % (selected + hover), hover foreground 8 % | data grids |
+
+Charts use `ChartColors` (theme-aware primary / secondary / WiFi palette, gradient `AreaFill`).
+
+**Theme-independent resources** - `Resources/Styles/Theme.xaml` (merged first):
+- Fonts: `Segoe UI Variable Text, Segoe UI` for the MahApps control / button / toggle switch fonts and `DefaultWindow`;
+  `Fonts.Family.Mono` (`Cascadia Mono, Consolas`) for technical values: IP / MAC addresses, hostnames, ports, subnets,
+  gateways, DNS / DHCP / SNTP servers, BSSID, OIDs, URLs, DNS records, raw output (inputs with such a watermark too).
+  Names, descriptions, vendors, states, times, user names and paths use the UI font.
+- Corner radii: `CornerRadius.Control` 4 (buttons, inputs, menus, tooltips), `.Control.Inner` 3, `.Overlay` 8
+  (dialogs, popups), `.Card` 8 (boxes, cards). `Brushes.Overlay` (black 40 %, dialog overlay). `FocusVisual.Ring`
+  (gray 2 px ring, also the default focus visual - no accent).
+
+**Type scale** (`TextBlockStyles.xaml`): `DefaultTextBlock` 14 (also navigation, tab titles), `HeaderTextBlock` 16
+SemiBold (section headers), `MessageTextBlock` 16 gray (messages in empty areas), mono via `Fonts.Family.Mono`.
+
+**Layout and surfaces**:
+- Box layout: the window frame (`FrameWindow` style for main, tab host and status window) holds the navigation (frame
+  color, no border) and rounded boxes for the main view and the profiles (`ViewBox`: theme background,
+  `Brushes.Surface.Border`, radius 8; gap 6). Host views set `ViewLayoutHelper.HasOwnBoxes` (main view box transparent).
+- Cards (Dashboard widgets, Ping Monitor hosts): `CardBorder` (border only, no fill). Groups: `SectionExpander` (section
+  header, no box in box).
+- Headers 36 high (navigation header, Dragablz tabs, `DefaultTabItem`). Tabs: VS Code-like (shared styles
+  `DragablzTabHeaderBorder` / `Title` / `CloseIcon` / `AccentLine` in `DragablzStyles.xaml` - change the tab look only
+  there); a single tab is shown as the view title.
+- Data grids: row height 30, semibold headers, accent-tinted selection.
+- Windows have rounded corners on Windows 11 (`WindowCornerHelper.RoundCorners`, DWM).
+
+**Controls**:
+- Buttons: `HighlightedButton` (accent, the main action, e.g. **Scan**), `DefaultButton` / `ImageWithTextButton`
+  (subtle fill, min. width 100), `ImageButton` / `ImageDropDrownButton` (transparent icon buttons). Template
+  `DefaultButtonTemplate` with fading hover / pressed layers (`ButtonHelper.MouseOverOverlay` / `PressedOverlay`).
+- Disabled = `Opacity 0.55` (inputs, buttons, CheckBox / RadioButton / ToggleSwitch keep their colors), no MahApps veil.
+  Read-only inputs while a task runs: `IsReadOnly` + `ComboBoxReadOnlyBehavior` instead of disabled.
+- Inputs: radius 4, focus border gray (`Gray5`), hover border `Brushes.Control.Border.MouseOver`.
+- Drop-downs: `ComboBoxPopupBehavior` (rounded popup with shadow), implicit `ComboBoxItem` style in `DefaultComboBox`.
+- Progress: `DefaultMetroProgressBar` (accent on a subtle track) and `ProgressRingSmall` / `Medium` / `Large`
+  (16 inline / 24 dialogs / 48 centered, `ProgressBarStyles.xaml`); scanner progress via `SmoothProgress.Value`.
+- Dialogs: `DefaultChildWindow` (own template, radius 8, shadow, overlay). Welcome / Upgrade keep their own overlay.
+- Template copies of MahApps / SimpleChildWindow (keep in sync when updating these packages): ComboBox toggle,
+  ToolTip, ContextMenu / submenu, scrollbar thumb, `DefaultChildWindowTemplate`, `MahApps.Styles.DataGridRow`
+  (redefined with the same key).
+
+**Icons**: Lucide only (see [XAML Style](#xaml-style)); 16 × 16 `Rectangle` with `MahApps.Brushes.Gray3` fill and the icon
+as opacity mask (`VisualBrush`), stroke 1.75 (`LucideIcon.DefaultStrokeThickness`). Icons of the context menu actions:
+see `.claude/skills/feature-review/references/conventions.md`.
+
+**Motion** (only `Opacity` / `RenderTransform`, 150–250 ms, quadratic ease-out, no bounce, no staggered lists, **no view /
+content transitions** when switching tools; check `AppearanceManager.AnimationsEnabled` when an animation starts):
+`ChildWindowAnimation` (dialogs zoom 92 → 100 %, run command `Kind="SlideDown"`), `SelectionIndicatorAnimation`
+(navigation indicator), `ExpanderAnimation` (chevron rotates, content fades in; `SwapChevron` for the profile panel),
+`SmoothProgress`, tooltip fade, notification slide-in. Native windows (Remote Desktop, PuTTY, PowerShell, TigerVNC,
+WebView2) can't be animated, clipped or put in transparent windows.
+
+**Accent glow**: only in the window frame (`Brushes.Surface.Window`), not on dialogs, overlays or controls.
 
 ### Profile System
 
