@@ -461,6 +461,10 @@ Release date: **xx.xx.2026**
 
 - Fixed no message being shown after **Delete browsing data** in the settings (whether the browsing data was deleted or an error occurred), and an error (e.g. the WebView2 runtime is not installed) not being handled.
 
+**PowerShell**
+
+- Fixed **Apply theme to PowerShell console** not being applied to PowerShell from the Microsoft Store (path in `%LocalAppData%\Microsoft\WindowsApps\...`): the console profile is also written for the real path of the app. [#XXXX](https://github.com/BornToBeRoot/NETworkManager/pull/XXXX)
+
 **SNMP**
 
 - Fixed `Enter` in the search box of the OID profiles dialog closing the dialog with **OK**. It only filters the OID profiles now. [#3660](https://github.com/BornToBeRoot/NETworkManager/pull/3660)
