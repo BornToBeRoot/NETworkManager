@@ -249,8 +249,7 @@
                     </Style.Triggers>
                 </Style>
             </StackPanel.Style>
-            <TextBlock Text="{x:Static localization:Strings.MicrosoftEdgeWebView2RuntimeIsNotAvailable}"
-                       Style="{StaticResource MessageTextBlock}" Margin="0,0,0,10" />
+            <icons:EmptyStateMessage Icon="CircleAlert" Text="{x:Static localization:Strings.MicrosoftEdgeWebView2RuntimeIsNotAvailable}" Margin="0,0,0,10" />
             <TextBlock Style="{StaticResource DefaultTextBlock}" Margin="0,0,0,5" HorizontalAlignment="Center">
                 <Hyperlink Command="{Binding OpenWebsiteCommand}"
                            CommandParameter="{x:Static resources:Resources.MicrosoftEdgeWebView2Runtime_DownloadUrl}"

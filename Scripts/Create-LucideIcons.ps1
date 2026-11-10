@@ -36,7 +36,7 @@ $Icons = @(
     "rotate-ccw", "route", "router", "save", "scan", "scan-line", "scissors", "search", "server", "settings", "shield",
     "shield-lock", "shield-off", "sliders-horizontal", "square-chevron-right", "table", "tag", "terminal", "timer",
     "toggle-left", "toggle-right", "triangle-alert", "undo-2", "unplug", "user", "user-lock", "users", "wifi",
-    "wifi-high", "wifi-lock", "wifi-low", "wifi-zero", "x"
+    "wifi-high", "wifi-lock", "wifi-low", "wifi-off", "wifi-zero", "x"
 )
 
 # Lock of the icon wifi-lock (bottom right), for the Wi-Fi signal levels with lock

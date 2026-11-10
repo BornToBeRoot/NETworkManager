@@ -284,8 +284,7 @@
                       Margin="0,10,0,0">
                     <StackPanel VerticalAlignment="Center" HorizontalAlignment="Stretch"
                                 Margin="10">
-                        <TextBlock Text="{x:Static localization:Strings.NeighborTableAdminMessage}"
-                                   Style="{StaticResource MessageTextBlock}"
+                        <icons:EmptyStateMessage Icon="Shield" IconSize="24" Text="{x:Static localization:Strings.NeighborTableAdminMessage}"
                                    Margin="0,0,0,10" />
                         <Button Command="{Binding RestartAsAdminCommand}"
                                 HorizontalAlignment="Center"

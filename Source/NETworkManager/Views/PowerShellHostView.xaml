@@ -282,8 +282,7 @@
                     </Style.Triggers>
                 </Style>
             </StackPanel.Style>
-            <TextBlock Text="{x:Static localization:Strings.ConfigureThePathToPowerShellInTheSettingsDots}"
-                       Style="{StaticResource MessageTextBlock}" Margin="0,0,0,10" />
+            <icons:EmptyStateMessage Icon="Settings" Text="{x:Static localization:Strings.ConfigureThePathToPowerShellInTheSettingsDots}" Margin="0,0,0,10" />
             <Button HorizontalAlignment="Center" Command="{Binding OpenSettingsCommand}"
                     Style="{StaticResource ImageWithTextButton}">
                 <Button.Content>

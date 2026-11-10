@@ -1492,8 +1492,7 @@
                                       Margin="0,10,0,0">
                                     <StackPanel VerticalAlignment="Center" HorizontalAlignment="Stretch"
                                                 Margin="10">
-                                        <TextBlock Text="{x:Static localization:Strings.NetworkInterfaceConfigureAdminMessage}"
-                                                   Style="{StaticResource MessageTextBlock}"
+                                        <icons:EmptyStateMessage Icon="Shield" IconSize="24" Text="{x:Static localization:Strings.NetworkInterfaceConfigureAdminMessage}"
                                                    Margin="0,0,0,10" />
                                         <Button Command="{Binding RestartAsAdminCommand}"
                                                 HorizontalAlignment="Center"
@@ -1536,8 +1535,7 @@
         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center"
                     Visibility="{Binding NetworkInterfaces.Count, Converter={StaticResource IntZeroToVisibilityCollapsedConverter}}"
                     Margin="10">
-            <TextBlock Text="{x:Static localization:Strings.NoEnabledNetworkAdaptersFound}"
-                       Style="{StaticResource MessageTextBlock}" Margin="0,0,0,10" />
+            <icons:EmptyStateMessage Icon="EthernetPort" Text="{x:Static localization:Strings.NoEnabledNetworkAdaptersFound}" Margin="0,0,0,10" />
             <Button Command="{Binding OpenNetworkConnectionsCommand}" HorizontalAlignment="Center"
                     Style="{StaticResource ImageWithTextButton}">
                 <Button.Content>

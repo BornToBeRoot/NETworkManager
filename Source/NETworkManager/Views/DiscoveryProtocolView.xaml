@@ -232,14 +232,13 @@
                                 </Button.Content>
                             </Button>
                         </Grid>
-                        <TextBlock Grid.Column="0" Grid.Row="6"
+                        <icons:EmptyStateMessage Icon="ArrowLeftRight" Grid.Column="0" Grid.Row="6"
                                    Text="{x:Static localization:Strings.CaptureNetworkPacketsToViewLLDPorCDPInformation}"
-                                   Visibility="{Binding FirstRun, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}"
-                                   Style="{StaticResource MessageTextBlock}" />
-                        <TextBlock Grid.Column="0" Grid.Row="6"
+                                   Visibility="{Binding FirstRun, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
+                        <icons:EmptyStateMessage Icon="ArrowLeftRight" Grid.Column="0" Grid.Row="6"
                                    Text="{x:Static localization:Strings.NoDiscoveryProtocolPackagesReceived}">
-                            <TextBlock.Style>
-                                <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource MessageTextBlock}">
+                            <icons:EmptyStateMessage.Style>
+                                <Style TargetType="{x:Type icons:EmptyStateMessage}" BasedOn="{StaticResource DefaultEmptyStateMessage}">
                                     <Setter Property="Visibility" Value="Collapsed" />
                                     <Style.Triggers>
                                         <MultiDataTrigger>
@@ -254,8 +253,8 @@
                                         </MultiDataTrigger>
                                     </Style.Triggers>
                                 </Style>
-                            </TextBlock.Style>
-                        </TextBlock>
+                            </icons:EmptyStateMessage.Style>
+                        </icons:EmptyStateMessage>
                         <StackPanel Grid.Column="0" Grid.Row="6" VerticalAlignment="Center"
                                     Visibility="{Binding IsCapturing, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
                             <mah:ProgressRing IsActive="True" Style="{StaticResource ProgressRingLarge}" Margin="0,0,0,10" />
@@ -273,8 +272,7 @@
                               Margin="0,10,0,0">
                             <StackPanel VerticalAlignment="Center" HorizontalAlignment="Stretch"
                                         Margin="10">
-                                <TextBlock Text="{x:Static localization:Strings.NetworkPacketsCaptureAdminMessage}"
-                                           Style="{StaticResource MessageTextBlock}"
+                                <icons:EmptyStateMessage Icon="Shield" IconSize="24" Text="{x:Static localization:Strings.NetworkPacketsCaptureAdminMessage}"
                                            Margin="0,0,0,10" />
                                 <Button Command="{Binding RestartAsAdminCommand}"
                                         HorizontalAlignment="Center"

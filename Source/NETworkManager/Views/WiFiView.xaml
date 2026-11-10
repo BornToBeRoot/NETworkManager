@@ -831,11 +831,11 @@
                                                                 MinWidth="100" />
                                         </controls2:MultiSelectDataGrid.Columns>
                                     </controls2:MultiSelectDataGrid>
-                                    <TextBlock Grid.Row="2"
+                                    <icons:EmptyStateMessage Icon="WifiOff" Grid.Row="2"
                                                Text="{x:Static Member=localization:Strings.NoWiFiNetworksFound}">
-                                        <TextBlock.Style>
-                                            <Style TargetType="{x:Type TypeName=TextBlock}"
-                                                   BasedOn="{StaticResource ResourceKey=MessageTextBlock}">
+                                        <icons:EmptyStateMessage.Style>
+                                            <Style TargetType="{x:Type icons:EmptyStateMessage}"
+                                                   BasedOn="{StaticResource DefaultEmptyStateMessage}">
                                                 <Setter Property="Visibility" Value="Collapsed" />
                                                 <Style.Triggers>
                                                     <MultiDataTrigger>
@@ -851,8 +851,8 @@
                                                     </MultiDataTrigger>
                                                 </Style.Triggers>
                                             </Style>
-                                        </TextBlock.Style>
-                                    </TextBlock>
+                                        </icons:EmptyStateMessage.Style>
+                                    </icons:EmptyStateMessage>
                                     <StackPanel Grid.Column="0" Grid.Row="2"
                                                 VerticalAlignment="Center"
                                                 Visibility="{Binding Path=IsNetworksLoading, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}">
@@ -981,9 +981,8 @@
             <!-- Reload Adapter -->
             <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center"
                         Visibility="{Binding Path=Adapters.Count, Converter={StaticResource ResourceKey=IntZeroToVisibilityCollapsedConverter}}">
-                <TextBlock Text="{x:Static Member=localization:Strings.NoWiFiAdaptersFound}"
+                <icons:EmptyStateMessage Icon="WifiOff" Text="{x:Static Member=localization:Strings.NoWiFiAdaptersFound}"
                            Visibility="{Binding Path=IsAdaptersLoading, Converter={StaticResource ResourceKey=BooleanReverseToVisibilityCollapsedConverter}}"
-                           Style="{StaticResource ResourceKey=MessageTextBlock}"
                            Margin="0,0,0,10" />
                 <Button Command="{Binding Path=ReloadAdaptersCommand}"
                         IsEnabled="{Binding Path=IsAdaptersLoading, Converter={StaticResource ResourceKey=BooleanReverseConverter}}"
@@ -1022,8 +1021,7 @@
         <Grid
             Visibility="{Binding Path=SdkContractAvailable, Converter={StaticResource ResourceKey=BooleanReverseToVisibilityCollapsedConverter}}"
             Margin="10">
-            <TextBlock Text="{x:Static Member=localization:Strings.MicrosoftWindowsSDKContractsIsNotAvailable}"
-                       Style="{StaticResource ResourceKey=MessageTextBlock}" />
+            <icons:EmptyStateMessage Icon="CircleAlert" Text="{x:Static Member=localization:Strings.MicrosoftWindowsSDKContractsIsNotAvailable}" />
         </Grid>
         <!-- Wi-Fi adapter access disabled -->
         <StackPanel VerticalAlignment="Center" Margin="10">
@@ -1043,8 +1041,7 @@
                     </Style.Triggers>
                 </Style>
             </StackPanel.Style>
-            <TextBlock Text="{x:Static localization:Strings.WiFiAccessNotAvailableMessage}"
-                       Style="{StaticResource MessageTextBlock}" Margin="0,0,0,10" />
+            <icons:EmptyStateMessage Icon="ShieldOff" Text="{x:Static localization:Strings.WiFiAccessNotAvailableMessage}" Margin="0,0,0,10" />
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <Button Command="{Binding Path=OpenSettingsCommand}"
                         Style="{StaticResource ImageWithTextButton}">

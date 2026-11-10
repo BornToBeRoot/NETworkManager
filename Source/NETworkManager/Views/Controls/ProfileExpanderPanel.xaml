@@ -631,10 +631,9 @@
                             </Grid>
                         </Button>
                         <!-- Profile Manager error message -->
-                        <TextBlock
+                        <icons:EmptyStateMessage Icon="CircleAlert"
                             Text="{Binding Source={x:Static Member=settings:ConfigurationManager.Current}, Path=ProfileManagerErrorMessage}"
-                            Visibility="{Binding Source={x:Static Member=settings:ConfigurationManager.Current}, Path=ProfileManagerShowUnlock, Converter={StaticResource ResourceKey=BooleanReverseToVisibilityCollapsedConverter}}"
-                            Style="{StaticResource ResourceKey=MessageTextBlock}" />
+                            Visibility="{Binding Source={x:Static Member=settings:ConfigurationManager.Current}, Path=ProfileManagerShowUnlock, Converter={StaticResource ResourceKey=BooleanReverseToVisibilityCollapsedConverter}}" />
                     </Grid>
                 </Grid>
             </Grid>
