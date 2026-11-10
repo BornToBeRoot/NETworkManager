@@ -278,8 +278,9 @@
                     </WrapPanel>
                 </Grid>
                 <!-- Row 7: Admin note -->
-                <Grid Grid.Column="0" Grid.Row="7"
+                <Border Grid.Column="0" Grid.Row="7"
                       Background="{DynamicResource MahApps.Brushes.Gray10}"
+                      CornerRadius="{StaticResource CornerRadius.Card}"
                       Visibility="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=IsAdmin, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}"
                       Margin="0,10,0,0">
                     <StackPanel VerticalAlignment="Center" HorizontalAlignment="Stretch"
@@ -311,7 +312,7 @@
                             </Button.Content>
                         </Button>
                     </StackPanel>
-                </Grid>
+                </Border>
             </Grid>
         </TabItem>
     </TabControl>
