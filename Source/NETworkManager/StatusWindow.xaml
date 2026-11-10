@@ -56,15 +56,13 @@
             <ContentControl x:Name="ContentControlNetworkConnection"
                             Margin="10" />
         </mah:ClipBorder>
-        <ProgressBar Grid.Column="0" Grid.Row="1"
-                     Height="3"
-                     MinHeight="3"
-                     Margin="0"
-                     Minimum="0"
-                     Maximum="{Binding TimeMax, Mode=OneWay}"
-                     Value="{Binding Time, Mode=OneWay}"
-                     Visibility="{Binding ShowTime, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}"
-                     BorderThickness="0"
-                     Padding="0" />
+        <mah:MetroProgressBar Grid.Column="0" Grid.Row="1"
+                              Margin="0"
+                              Minimum="0"
+                              Maximum="{Binding TimeMax, Mode=OneWay}"
+                              Value="{Binding Time, Mode=OneWay}"
+                              Visibility="{Binding ShowTime, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}"
+                              BorderThickness="0"
+                              Padding="0" />
     </Grid>
 </mah:MetroWindow>

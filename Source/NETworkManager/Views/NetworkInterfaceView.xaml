@@ -579,10 +579,9 @@
                                     </Grid>
                                 </ScrollViewer>
                                 <mahAppsControls:MetroProgressBar Grid.Row="4"
-                                                                  Foreground="{DynamicResource MahApps.Brushes.Accent}"
                                                                   IsIndeterminate="True" Margin="0,0,0,10">
                                     <mahAppsControls:MetroProgressBar.Style>
-                                        <Style TargetType="{x:Type  mahAppsControls:MetroProgressBar}">
+                                        <Style TargetType="{x:Type mahAppsControls:MetroProgressBar}" BasedOn="{StaticResource DefaultMetroProgressBar}">
                                             <Setter Property="Visibility" Value="Collapsed" />
                                             <Style.Triggers>
                                                 <DataTrigger Binding="{Binding IsConfigurationRunning}" Value="True">
@@ -1278,10 +1277,9 @@
                                     </ScrollViewer>
                                 </Grid>
                                 <mahAppsControls:MetroProgressBar Grid.Row="2"
-                                                                  Foreground="{DynamicResource MahApps.Brushes.Accent}"
                                                                   IsIndeterminate="True" Margin="0,0,0,10">
                                     <mahAppsControls:MetroProgressBar.Style>
-                                        <Style TargetType="{x:Type  mahAppsControls:MetroProgressBar}">
+                                        <Style TargetType="{x:Type mahAppsControls:MetroProgressBar}" BasedOn="{StaticResource DefaultMetroProgressBar}">
                                             <Setter Property="Visibility" Value="Collapsed" />
                                             <Style.Triggers>
                                                 <DataTrigger Binding="{Binding IsConfigurationRunning}" Value="True">

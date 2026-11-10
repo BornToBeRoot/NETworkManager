@@ -1,0 +1,18 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls">
+    <!--
+        Progress bars of the application (busy bar below the input of the tools, scan progress, countdowns): accent
+        color on a subtle track (theme foreground with a low opacity - the MahApps track is 12 % white, invisible in
+        the light theme), 4 high.
+    -->
+    <Style x:Key="DefaultMetroProgressBar" TargetType="{x:Type mah:MetroProgressBar}"
+           BasedOn="{StaticResource MahApps.Styles.MetroProgressBar}">
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Accent}" />
+        <Setter Property="Background" Value="{DynamicResource Brushes.Control.MouseOver}" />
+        <Setter Property="MinHeight" Value="4" />
+        <Setter Property="Height" Value="4" />
+    </Style>
+
+    <Style TargetType="{x:Type mah:MetroProgressBar}" BasedOn="{StaticResource DefaultMetroProgressBar}" />
+</ResourceDictionary>

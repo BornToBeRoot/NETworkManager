@@ -131,12 +131,12 @@
                 </StackPanel>
             </Grid>
         </Grid>
-        <!-- Countdown ProgressBar — 3 px, depletes left-to-right -->
-        <ProgressBar Grid.Row="1"
-                     Minimum="0"
-                     Maximum="{Binding TimeMax, Mode=OneWay}"
-                     Value="{Binding TimeRemaining, Mode=OneWay}"
-                     BorderThickness="0"
-                     Padding="0" />
+        <!-- Countdown (style of the progress bars, see ProgressBarStyles) -->
+        <mah:MetroProgressBar Grid.Row="1"
+                              Minimum="0"
+                              Maximum="{Binding TimeMax, Mode=OneWay}"
+                              Value="{Binding TimeRemaining, Mode=OneWay}"
+                              BorderThickness="0"
+                              Padding="0" />
     </Grid>
 </mah:MetroWindow>

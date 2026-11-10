@@ -174,7 +174,6 @@
                             </Grid>
                             <mahAppsControls:MetroProgressBar Grid.Row="2" Margin="0,10,0,0"
                                                               Visibility="{Binding IsRunning, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}"
-                                                              Foreground="{DynamicResource MahApps.Brushes.Accent}"
                                                               IsIndeterminate="True" />
                             <TextBlock Grid.Row="3" Foreground="{DynamicResource MahApps.Brushes.Accent}"
                                        Text="{Binding StatusMessage}"

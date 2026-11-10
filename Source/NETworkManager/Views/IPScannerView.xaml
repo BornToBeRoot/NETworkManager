@@ -321,10 +321,9 @@
                     </Style>
                 </StackPanel.Style>
                 <mahAppsControls:MetroProgressBar Maximum="{Binding HostsToScan}"
-                                                  Foreground="{DynamicResource MahApps.Brushes.Accent}"
                                                   Value="{Binding HostsScanned}">
                     <mahAppsControls:MetroProgressBar.Style>
-                        <Style TargetType="{x:Type mahAppsControls:MetroProgressBar}">
+                        <Style TargetType="{x:Type mahAppsControls:MetroProgressBar}" BasedOn="{StaticResource DefaultMetroProgressBar}">
                             <Setter Property="IsIndeterminate" Value="False" />
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding PreparingScan}" Value="True">

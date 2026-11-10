@@ -140,10 +140,10 @@
                     </Button.Content>
                 </Button>
             </Grid>
-            <mah:MetroProgressBar Grid.Row="1" Margin="0,10,0,0" Foreground="{DynamicResource MahApps.Brushes.Accent}"
+            <mah:MetroProgressBar Grid.Row="1" Margin="0,10,0,0"
                                   IsIndeterminate="True">
                 <mah:MetroProgressBar.Style>
-                    <Style TargetType="{x:Type  mahAppsControls:MetroProgressBar}">
+                    <Style TargetType="{x:Type mahAppsControls:MetroProgressBar}" BasedOn="{StaticResource DefaultMetroProgressBar}">
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding IsRunning}" Value="False">
                                 <Setter Property="Visibility" Value="Collapsed" />

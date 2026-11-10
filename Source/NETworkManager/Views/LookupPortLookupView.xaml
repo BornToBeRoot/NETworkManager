@@ -94,7 +94,7 @@
                     </Button.Content>
                 </Button>
             </Grid>
-            <mahAppsControls:MetroProgressBar Grid.Row="1" Foreground="{DynamicResource MahApps.Brushes.Accent}"
+            <mahAppsControls:MetroProgressBar Grid.Row="1"
                                               IsIndeterminate="True"
                                               Visibility="{Binding IsRunning, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}"
                                               Margin="0,10,0,0" />
