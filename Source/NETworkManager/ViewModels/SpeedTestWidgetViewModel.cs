@@ -170,7 +170,7 @@ public class SpeedTestWidgetViewModel : ViewModelBase
 
     public SpeedTestWidgetViewModel()
     {
-        var downloadColor = SKColor.Parse("#1ba1e2");
+        var downloadColor = ChartColors.Primary;
         DownloadSeries =
         [
             new LineSeries<double>
@@ -181,11 +181,11 @@ public class SpeedTestWidgetViewModel : ViewModelBase
                 LineSmoothness = 0.3,
                 DataPadding = new LvcPoint(0, 0),
                 Stroke = new SolidColorPaint(downloadColor) { StrokeThickness = 1.5f },
-                Fill = new SolidColorPaint(downloadColor.WithAlpha(0x33))
+                Fill = ChartColors.AreaFill(downloadColor)
             }
         ];
 
-        var uploadColor = SKColor.Parse("#7fba00");
+        var uploadColor = ChartColors.Secondary;
         UploadSeries =
         [
             new LineSeries<double>
@@ -196,7 +196,7 @@ public class SpeedTestWidgetViewModel : ViewModelBase
                 LineSmoothness = 0.3,
                 DataPadding = new LvcPoint(0, 0),
                 Stroke = new SolidColorPaint(uploadColor) { StrokeThickness = 1.5f },
-                Fill = new SolidColorPaint(uploadColor.WithAlpha(0x33))
+                Fill = ChartColors.AreaFill(uploadColor)
             }
         ];
     }

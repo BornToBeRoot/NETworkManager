@@ -78,10 +78,11 @@ public partial class TracerouteMapControl
 
     // Hops/arrows and country labels follow the theme (accent / muted gray, via
     // SetResourceReference per element so they track theme switches a frozen brush couldn't).
-    // Cities deliberately don't: they keep a fixed brand blue (the speedtest download series'
-    // "#1ba1e2") so they stay a consistent "reference point" color that doesn't compete with the
-    // accent-colored traceroute path in either theme.
-    private static readonly Brush CityBrush = FreezeBrush(Color.FromRgb(0x1B, 0xA1, 0xE2));
+    // Cities deliberately don't follow the accent: they use the main chart color (ChartColors.Primary,
+    // like the speedtest download series, darker in the light theme) so they stay a consistent
+    // "reference point" color that doesn't compete with the accent-colored traceroute path.
+    // Created with the map (theme of that moment).
+    private readonly Brush _cityBrush = FreezeBrush(ChartColors.PrimaryWpf);
 
     // Shared by every label/dot so a single assignment (in ApplyTransform) keeps their on-screen
     // size constant while the map itself is scaled by the parent Canvas' zoom transform. Elements
@@ -353,7 +354,7 @@ public partial class TracerouteMapControl
             {
                 Width = CityDotSize,
                 Height = CityDotSize,
-                Fill = CityBrush,
+                Fill = _cityBrush,
                 RenderTransform = _inverseScaleTransform,
                 RenderTransformOrigin = new Point(0.5, 0.5)
             };
@@ -370,7 +371,7 @@ public partial class TracerouteMapControl
             {
                 Text = city.N,
                 FontSize = 11,
-                Foreground = CityBrush,
+                Foreground = _cityBrush,
                 IsHitTestVisible = false,
                 RenderTransform = _inverseScaleTransform,
                 RenderTransformOrigin = new Point(0.5, 0.5)

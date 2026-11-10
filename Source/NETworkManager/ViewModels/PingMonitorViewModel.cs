@@ -305,7 +305,7 @@ public class PingMonitorViewModel : ViewModelBase, IPingMonitorHostStatus
     {
         _pingValues = [];
 
-        var chartColor = SKColor.Parse("#1ba1e2");
+        var chartColor = ChartColors.Primary;
 
         var labelColor = Application.Current?.TryFindResource("MahApps.Brushes.Gray5") is System.Windows.Media.SolidColorBrush gray5
             ? new SKColor(gray5.Color.R, gray5.Color.G, gray5.Color.B, gray5.Color.A)
@@ -328,7 +328,7 @@ public class PingMonitorViewModel : ViewModelBase, IPingMonitorHostStatus
                 LineSmoothness = 0.3,
                 DataPadding = new LvcPoint(0, 0),
                 Stroke = new SolidColorPaint(chartColor) { StrokeThickness = 1.5f },
-                Fill = new SolidColorPaint(chartColor.WithAlpha(0x33))
+                Fill = ChartColors.AreaFill(chartColor)
             }
         ];
 

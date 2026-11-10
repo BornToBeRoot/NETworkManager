@@ -972,19 +972,6 @@ public class WiFiViewModel : ViewModelBase
         }
     }
 
-    /// <summary>
-    ///     Color palette used to assign a distinct, deterministic color to each network series.
-    ///     Assigning the stroke explicitly (instead of relying on the LiveCharts2 theme) keeps the
-    ///     legend, the chart and the tooltip in sync.
-    /// </summary>
-    private static readonly SKColor[] ChartPalette =
-    [
-        SKColor.Parse("#1ba1e2"), SKColor.Parse("#a4c400"), SKColor.Parse("#f0a30a"),
-        SKColor.Parse("#e51400"), SKColor.Parse("#6a00ff"), SKColor.Parse("#00aba9"),
-        SKColor.Parse("#d80073"), SKColor.Parse("#60a917"), SKColor.Parse("#fa6800"),
-        SKColor.Parse("#0050ef"), SKColor.Parse("#aa00ff"), SKColor.Parse("#825a2c")
-    ];
-
     // The Y axis is plotted in 0..100 space (signal strength + 100) so the area fill drops to the
     // bottom baseline; the axis labeler converts back to real dBm for display.
     private const double SignalOffset = 100;
@@ -1139,7 +1126,9 @@ public class WiFiViewModel : ViewModelBase
     /// </summary>
     private static (LineSeries<WiFiChannelPoint> Series, WiFiChannelLegendEntry Legend) BuildNetworkSeries(WiFiNetworkInfo network, int colorIndex)
     {
-        var color = ChartPalette[colorIndex % ChartPalette.Length];
+        // Distinct, deterministic color per network (theme-aware, see ChartColors); assigned explicitly instead of the
+        // LiveCharts2 theme so the legend, the chart and the tooltip are in sync
+        var color = ChartColors.GetPaletteColor(colorIndex);
 
         double dbm = network.AvailableNetwork.NetworkRssiInDecibelMilliwatts;
         var center = WiFiChannelAxis.ChannelToPosition(

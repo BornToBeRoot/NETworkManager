@@ -558,8 +558,8 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
 
         UpdateMaxBandwidthValues();
 
-        var downloadColor = SKColor.Parse("#1ba1e2");
-        var uploadColor = SKColor.Parse("#7fba00");
+        var downloadColor = ChartColors.Primary;
+        var uploadColor = ChartColors.Secondary;
 
         var labelColor = Application.Current?.TryFindResource("MahApps.Brushes.Gray5") is System.Windows.Media.SolidColorBrush gray5
             ? new SKColor(gray5.Color.R, gray5.Color.G, gray5.Color.B, gray5.Color.A)
@@ -582,7 +582,7 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
                 LineSmoothness = 0.3,
                 DataPadding = new LvcPoint(0, 0),
                 Stroke = new SolidColorPaint(downloadColor) { StrokeThickness = 1.5f },
-                Fill = new SolidColorPaint(downloadColor.WithAlpha(0x33))
+                Fill = ChartColors.AreaFill(downloadColor)
             },
             new LineSeries<LvlChartsDefaultInfo>
             {
@@ -595,7 +595,7 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
                 LineSmoothness = 0.3,
                 DataPadding = new LvcPoint(0, 0),
                 Stroke = new SolidColorPaint(uploadColor) { StrokeThickness = 1.5f },
-                Fill = new SolidColorPaint(uploadColor.WithAlpha(0x33))
+                Fill = ChartColors.AreaFill(uploadColor)
             }
         ];
 
