@@ -36,7 +36,8 @@ Release date: **xx.xx.2026**
 ## What's new?
 
 - New setting **Dynamic tab width** in [Settings > Window](../settings/window.md#dynamic-tab-width): the tabs of the tools (e.g. **IP Scanner**, **Remote Desktop**, **PuTTY**) are as wide as their title, up to a configurable maximum width (default `300`), instead of a fixed width of `150`. Long titles (e.g. hostnames) are shortened with `...`, the tooltip shows the full title. [#3055](https://github.com/BornToBeRoot/NETworkManager/issues/3055)
-- New setting **Accent glow** in [Settings > Appearance](../settings/appearance.md#accent-glow): a subtle glow of the accent color in the top left corner of the main window (default off). [#XXXX](https://github.com/BornToBeRoot/NETworkManager/pull/XXXX)
+- New setting **Accent glow** in [Settings > Appearance](../settings/appearance.md#accent-glow): a subtle glow of the accent color in the top left corner of the main window (on for new installations). [#XXXX](https://github.com/BornToBeRoot/NETworkManager/pull/XXXX)
+- New themes **Black**, **Midnight**, **Steel** and **Indigo** and new accent colors **Sky**, **Ocean**, **Mint**, **Rose**, **Coral**, **Gold**, **Lavender** and **Slate** in [Settings > Appearance](../settings/appearance.md#theme). All accents can be used with every theme. [#XXXX](https://github.com/BornToBeRoot/NETworkManager/pull/XXXX)
 - ARM64 builds are now available. [#3538](https://github.com/BornToBeRoot/NETworkManager/issues/3538)
 
 **Run command**

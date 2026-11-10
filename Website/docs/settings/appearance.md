@@ -18,6 +18,12 @@ Theme of the application which is based on [`MahApps.Metro themes`](https://maha
 
 - `Dark`
 - `Light`
+- `Black` - almost black (OLED look)
+- `Midnight` - dark blue
+- `Steel` - blue-gray
+- `Indigo` - dark violet-blue
+
+`Black`, `Midnight`, `Steel` and `Indigo` are variants of `Dark` with a different background; all accents can be used with every theme.
 
 ### Accent
 
@@ -52,6 +58,14 @@ Accent of the application which is based on [`MahApps.Metro themes`](https://mah
 - `Mauve`
 - `Taupe`
 - `Sienna`
+- `Sky`
+- `Ocean`
+- `Mint`
+- `Rose`
+- `Coral`
+- `Gold`
+- `Lavender`
+- `Slate`
 
 :::note
 
@@ -65,7 +79,7 @@ Shows a subtle glow of the accent color in the top left corner of the main windo
 
 **Type:** `Boolean`
 
-**Default:** `Disabled`
+**Default:** `Enabled` (new installations; existing settings keep their value)
 
 ### Use custom themes
 
