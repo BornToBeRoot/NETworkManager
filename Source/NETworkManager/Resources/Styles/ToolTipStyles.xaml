@@ -7,7 +7,8 @@
         <Setter Property="BorderBrush" Value="{DynamicResource  ResourceKey=MahApps.Brushes.Gray8}" />
         <Setter Property="Foreground" Value="{DynamicResource  ResourceKey=MahApps.Brushes.Text}" />
         <Setter Property="Background" Value="{DynamicResource  ResourceKey=MahApps.Brushes.Window.Background}" />
-        <!-- Template of MahApps (MahApps.Styles.ToolTip, 2.4.11) with rounded corners -->
+        <!-- Template of MahApps (MahApps.Styles.ToolTip, 2.4.11) with rounded corners and a shorter fade (open 120 ms,
+             close 100 ms instead of 300 / 400 ms) -->
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ToolTip}">
@@ -35,13 +36,13 @@
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="OpenStates">
                                 <VisualStateGroup.Transitions>
-                                    <VisualTransition GeneratedDuration="0:0:0.3" From="Open" To="Closed" />
+                                    <VisualTransition GeneratedDuration="0:0:0.1" From="Open" To="Closed" />
                                 </VisualStateGroup.Transitions>
                                 <VisualState x:Name="Closed">
                                     <Storyboard>
                                         <DoubleAnimationUsingKeyFrames Storyboard.TargetName="Root"
                                                                        Storyboard.TargetProperty="(UIElement.Opacity)">
-                                            <EasingDoubleKeyFrame KeyTime="0:0:0.4" Value="0" />
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.1" Value="0" />
                                         </DoubleAnimationUsingKeyFrames>
                                     </Storyboard>
                                 </VisualState>
@@ -49,7 +50,7 @@
                                     <Storyboard>
                                         <DoubleAnimationUsingKeyFrames Storyboard.TargetName="Root"
                                                                        Storyboard.TargetProperty="(UIElement.Opacity)">
-                                            <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="1" />
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.12" Value="1" />
                                         </DoubleAnimationUsingKeyFrames>
                                     </Storyboard>
                                 </VisualState>
@@ -82,13 +83,13 @@
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="OpenStates">
                                 <VisualStateGroup.Transitions>
-                                    <VisualTransition GeneratedDuration="0:0:0.3" From="Open" To="Closed" />
+                                    <VisualTransition GeneratedDuration="0:0:0.1" From="Open" To="Closed" />
                                 </VisualStateGroup.Transitions>
                                 <VisualState x:Name="Closed">
                                     <Storyboard>
                                         <DoubleAnimationUsingKeyFrames Storyboard.TargetName="Root"
                                                                        Storyboard.TargetProperty="(UIElement.Opacity)">
-                                            <EasingDoubleKeyFrame KeyTime="0:0:0.4" Value="0" />
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.1" Value="0" />
                                         </DoubleAnimationUsingKeyFrames>
                                     </Storyboard>
                                 </VisualState>
@@ -96,7 +97,7 @@
                                     <Storyboard>
                                         <DoubleAnimationUsingKeyFrames Storyboard.TargetName="Root"
                                                                        Storyboard.TargetProperty="(UIElement.Opacity)">
-                                            <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="1" />
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.12" Value="1" />
                                         </DoubleAnimationUsingKeyFrames>
                                     </Storyboard>
                                 </VisualState>
