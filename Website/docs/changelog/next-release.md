@@ -223,6 +223,7 @@ Release date: **xx.xx.2026**
 
 **Hosts File Editor**
 
+- The list has its own heading **Hosts file entries** instead of repeating the name of the tool. [#XXXX](https://github.com/BornToBeRoot/NETworkManager/pull/XXXX)
 - Added **Copy as...** to the context menu to create a new entry based on an existing one. The copy is added directly below the original entry. [0544698](https://github.com/BornToBeRoot/NETworkManager/commit/0544698aefc325ab36ca4c8e80250e1fe0b62d4a)
 - Multiple entries can now be selected to enable, disable or delete them at once, or to change their comment via **Edit entries...** (`F2`). The edit dialog switches to a bulk mode in which only the comment can be changed. [#3624](https://github.com/BornToBeRoot/NETworkManager/pull/3624)
 - Entries that don't change (e.g. enabling an already enabled entry, or confirming the edit dialog without changes) are no longer rewritten in the `hosts` file, so custom formatting such as tabs or alignment is kept. [#3624](https://github.com/BornToBeRoot/NETworkManager/pull/3624)
@@ -269,18 +270,21 @@ Release date: **xx.xx.2026**
 
 **Connections**
 
+- The list has its own heading **Active connections** instead of repeating the name of the tool. [#XXXX](https://github.com/BornToBeRoot/NETworkManager/pull/XXXX)
 - The search filters after a short delay while typing instead of on every key press (smoother with many connections), `Enter` filters right away. [#3660](https://github.com/BornToBeRoot/NETworkManager/pull/3660)
 - The time of the last refresh (`Reloaded at 14:32`, the date in the tooltip) is shown in the header instead of a status line below the list; with **Automatically update every**, a countdown to the next refresh (`Next refresh in 00:04`). A manual refresh is faster (the minimum of 2.5 seconds runs while loading, not before) and the refresh icon spins until it is finished. [#3685](https://github.com/BornToBeRoot/NETworkManager/pull/3685)
 - **Export...** exports the entries shown (search) in the order shown (sorting), the selected entries in the order shown instead of the order they were selected. The file is written in the background, so the window stays responsive. [#3696](https://github.com/BornToBeRoot/NETworkManager/pull/3696)
 
 **Listeners**
 
+- The list has its own heading **Listening ports** instead of repeating the name of the tool. [#XXXX](https://github.com/BornToBeRoot/NETworkManager/pull/XXXX)
 - The search filters after a short delay while typing instead of on every key press (smoother with many listeners), `Enter` filters right away. [#3660](https://github.com/BornToBeRoot/NETworkManager/pull/3660)
 - The time of the last refresh (`Reloaded at 14:32`, the date in the tooltip) is shown in the header instead of a status line below the list; with **Automatically update every**, a countdown to the next refresh (`Next refresh in 00:04`). A manual refresh is faster (the minimum of 2.5 seconds runs while loading, not before) and the refresh icon spins until it is finished. [#3685](https://github.com/BornToBeRoot/NETworkManager/pull/3685)
 - **Export...** exports the entries shown (search) in the order shown (sorting), the selected entries in the order shown instead of the order they were selected. The file is written in the background, so the window stays responsive. [#3696](https://github.com/BornToBeRoot/NETworkManager/pull/3696)
 
 **Neighbor Table**
 
+- The list has its own heading **Neighbor entries** instead of repeating the name of the tool. [#XXXX](https://github.com/BornToBeRoot/NETworkManager/pull/XXXX)
 - The search filters after a short delay while typing instead of on every key press (smoother with many entries), `Enter` filters right away. [#3660](https://github.com/BornToBeRoot/NETworkManager/pull/3660)
 - The time of the last refresh (`Reloaded at 14:32`, the date in the tooltip) is shown in the header instead of a status line below the list; with **Automatically update every**, a countdown to the next refresh (`Next refresh in 00:04`). The line below the list only shows errors. A manual refresh is faster (the minimum of 2.5 seconds runs while loading, not before) and the refresh icon spins until it is finished. [#3685](https://github.com/BornToBeRoot/NETworkManager/pull/3685)
 - **Export...** exports the entries shown (search) in the order shown (sorting), the selected entries in the order shown instead of the order they were selected. The file is written in the background, so the window stays responsive. [#3696](https://github.com/BornToBeRoot/NETworkManager/pull/3696)
