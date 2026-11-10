@@ -24,7 +24,6 @@
         <None Remove="Licenses\GongSolutions.Wpf.DragDrop.txt" />
         <None Remove="Licenses\IPNetwork.txt" />
         <None Remove="Licenses\LiveCharts2.txt" />
-        <None Remove="Licenses\LoadingIndicators.WPF.txt" />
         <None Remove="Licenses\log4net.txt" />
         <None Remove="Licenses\MahApps.Metro.IconPack.txt" />
         <None Remove="Licenses\MahApps.Metro.txt" />
@@ -68,9 +67,6 @@
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Content>
         <Content Include="Licenses\LiveCharts2.txt">
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </Content>
-        <Content Include="Licenses\LoadingIndicators.WPF.txt">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Content>
         <Content Include="Licenses\log4net.txt">
