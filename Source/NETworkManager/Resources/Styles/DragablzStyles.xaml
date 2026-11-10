@@ -8,9 +8,12 @@
     <!--
         Title of a tab (tools with tabs, also the own tab headers of Remote Desktop, PuTTY, ...): 150 wide, or as wide as
         the title up to the maximum tab width (Settings > Window > Dynamic tab width). Longer titles are shortened, the
-        tooltip of the tab shows the full title.
+        tooltip of the tab shows the full title. 14 in the font of the controls (not the 18 of the header font), like
+        DefaultTabItem.
     -->
     <Style x:Key="DragablzTabHeaderTextBlock" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource HeaderTextBlock}">
+        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Control}" />
+        <Setter Property="FontSize" Value="14" />
         <Setter Property="Width" Value="150" />
         <Setter Property="TextTrimming" Value="CharacterEllipsis" />
         <Style.Triggers>

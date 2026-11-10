@@ -17,8 +17,8 @@
                           Margin="0">
                         <ContentPresenter x:Name="PART_HeaderContent" Margin="{TemplateBinding Padding}"
                                           ContentSource="Header" VerticalAlignment="Center"
-                                          HorizontalAlignment="Center" TextBlock.FontSize="18"
-                                          TextBlock.FontFamily="{StaticResource MahApps.Fonts.Family.Header}"
+                                          HorizontalAlignment="Center" TextBlock.FontSize="14"
+                                          TextBlock.FontFamily="{DynamicResource MahApps.Fonts.Family.Control}"
                                           SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                         <!-- Accent line below the selected tab, like the tabs of the tools -->
                         <Rectangle x:Name="PART_Selector" VerticalAlignment="Bottom" Height="2" Visibility="Collapsed"
