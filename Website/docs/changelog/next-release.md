@@ -216,6 +216,14 @@ Release date: **xx.xx.2026**
 - IP addresses opened from another feature (e.g. **IP Scanner** > **DNS lookup** > **IP address**), from a profile or with the run command are looked up with `PTR` instead of the selected record type. [#3644](https://github.com/BornToBeRoot/NETworkManager/pull/3644)
 - **Export...** exports the results in the order shown (sorting), the selected results in the order shown instead of the order they were selected. The file is written in the background, so the window stays responsive. [#3696](https://github.com/BornToBeRoot/NETworkManager/pull/3696)
 
+**PowerShell**
+
+- The console uses the colors of the application theme (also the new and custom themes): the background of the box around it and a matching text color, updated when the theme is changed (with **Apply theme to PowerShell console**). [#XXXX](https://github.com/BornToBeRoot/NETworkManager/pull/XXXX)
+
+**PuTTY**
+
+- The terminal uses the colors of the application theme (also the new and custom themes): the background of the box around it and a matching text color, bold text readable in light themes; updated when the theme is changed. [#XXXX](https://github.com/BornToBeRoot/NETworkManager/pull/XXXX)
+
 **SNMP**
 
 - **Export...** exports the results in the order shown (sorting), the selected results in the order shown instead of the order they were selected. The file is written in the background, so the window stays responsive. [#3696](https://github.com/BornToBeRoot/NETworkManager/pull/3696)
