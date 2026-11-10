@@ -79,6 +79,7 @@ Release date: **xx.xx.2026**
 **Profiles**
 
 - **Settings > Profiles**: `Enter` in the search box filters the profiles right away instead of after the delay while typing. [#3660](https://github.com/BornToBeRoot/NETworkManager/pull/3660)
+- The profile and group dialogs open faster: the error marker of each page in the list only checks the inputs of its page (instead of the checks of all pages for every page). [#XXXX](https://github.com/BornToBeRoot/NETworkManager/pull/XXXX)
 
 **Dashboard**
 
@@ -311,6 +312,7 @@ Release date: **xx.xx.2026**
 - Fixed `Enter` in the search box of the import result importing the profiles (default button). It filters the found profiles right away now, instead of after the delay while typing. [#3660](https://github.com/BornToBeRoot/NETworkManager/pull/3660)
 - Fixed columns that couldn't be made wider than the window (by dragging or double-clicking the gripper) in the groups (Settings > Profiles) and the import result. The grid scrolls horizontally now, the last (or main) column still fills the remaining width. [#3557](https://github.com/BornToBeRoot/NETworkManager/issues/3557)
 - Fixed the names of the features in the group dialog shown without spaces (e.g. `RemoteDesktop` instead of **Remote Desktop**). [#3667](https://github.com/BornToBeRoot/NETworkManager/pull/3667)
+- Fixed closed dialogs (profile, group, import of Active Directory computers, import result, SNMP OID profiles) being kept in memory until the application was closed; resizing the main window also resized all of them. [#XXXX](https://github.com/BornToBeRoot/NETworkManager/pull/XXXX)
 - Fixed the profiles of a group renamed only by case (e.g. `servers` → `Servers`) keeping the old group name. Opening them in a feature with group settings (e.g. **Remote Desktop**, **PuTTY**) failed, and editing one could create a second group with the old name. Profile files with such profiles are repaired when they are loaded. [#3667](https://github.com/BornToBeRoot/NETworkManager/pull/3667)
 
 **Dashboard**
