@@ -5498,4 +5498,10 @@ Do you want to start the scan?</value>
   <data name="NeighborEntries" xml:space="preserve">
     <value>Neighbor entries</value>
   </data>
+  <data name="AccentGlow" xml:space="preserve">
+    <value>Accent glow</value>
+  </data>
+  <data name="HelpMessage_AccentGlow" xml:space="preserve">
+    <value>Shows a subtle glow of the accent color in the top left corner of the main window (window background, title bar and navigation).</value>
+  </data>
 </root>

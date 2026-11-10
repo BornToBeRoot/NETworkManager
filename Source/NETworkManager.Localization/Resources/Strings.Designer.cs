@@ -295,6 +295,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Accent glow.
+        /// </summary>
+        public static string AccentGlow {
+            get {
+                return ResourceManager.GetString("AccentGlow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Action.
         /// </summary>
         public static string Action {
@@ -5947,6 +5956,15 @@ namespace NETworkManager.Localization.Resources {
         public static string Help {
             get {
                 return ResourceManager.GetString("Help", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Shows a subtle glow of the accent color in the top left corner of the main window (window background, title bar and navigation)..
+        /// </summary>
+        public static string HelpMessage_AccentGlow {
+            get {
+                return ResourceManager.GetString("HelpMessage_AccentGlow", resourceCulture);
             }
         }
         

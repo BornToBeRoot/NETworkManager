@@ -88,6 +88,15 @@ public static class AppearanceManager
     public const string NavigationSelectedBrushKey = "Brushes.Navigation.Selected";
 
     /// <summary>
+    ///     Resource key of the background of the main window (window, title bar, navigation): the frame color, with
+    ///     <see cref="SettingsInfo.Appearance_AccentGlow" /> a subtle glow of the accent in the top left corner.
+    /// </summary>
+    public const string SurfaceWindowBrushKey = "Brushes.Surface.Window";
+
+    private static Color _frameColor = Colors.White;
+    private static Color _accentColor = Colors.Gray;
+
+    /// <summary>
     ///     Resource key of the background of a selected row (data grid) when the mouse is over it.
     /// </summary>
     public const string DataGridSelectionMouseOverBrushKey = "Brushes.DataGrid.Selection.MouseOver";
@@ -209,6 +218,42 @@ public static class AppearanceManager
     }
 
     /// <summary>
+    ///     Sets the background of the main window (<see cref="SurfaceWindowBrushKey" />): the frame color, or with the
+    ///     accent glow (Settings > Appearance) a radial gradient from 10 % of the accent in the top left corner to the
+    ///     frame color (about 700 x 500 px). Absolute coordinates: the window, the title bar and the navigation (all
+    ///     starting near the top left corner of the window) show one continuous gradient. Called on every theme change
+    ///     and when the setting is changed.
+    /// </summary>
+    public static void ApplyWindowBrush()
+    {
+        Brush brush;
+
+        if (SettingsManager.Current?.Appearance_AccentGlow == true)
+        {
+            var gradient = new RadialGradientBrush
+            {
+                MappingMode = BrushMappingMode.Absolute,
+                Center = new System.Windows.Point(0, 0),
+                GradientOrigin = new System.Windows.Point(0, 0),
+                RadiusX = 700,
+                RadiusY = 500
+            };
+
+            gradient.GradientStops.Add(new GradientStop(Blend(_frameColor, _accentColor, 0.10), 0));
+            gradient.GradientStops.Add(new GradientStop(_frameColor, 1));
+            gradient.Freeze();
+
+            brush = gradient;
+        }
+        else
+        {
+            brush = CreateFrozenBrush(_frameColor, 1);
+        }
+
+        System.Windows.Application.Current.Resources[SurfaceWindowBrushKey] = brush;
+    }
+
+    /// <summary>
     ///     Method to change the application theme (and accent).
     /// </summary>
     /// <param name="name">Theme name as "theme.accent" to apply.</param>
@@ -274,6 +319,10 @@ public static class AppearanceManager
         // Selected item of the navigation: a light tint of the accent (mouse over stays the neutral tint)
         var accent = theme.Resources["MahApps.Colors.Accent"] is Color accentColor ? accentColor : Colors.Gray;
         appResources[NavigationSelectedBrushKey] = CreateFrozenBrush(accent, 0.15);
+
+        _frameColor = frame;
+        _accentColor = accent;
+        ApplyWindowBrush();
 
         ApplyDataGridBrushes(theme, foreground);
         ApplyToggleSwitchDisabledBrushes(theme);

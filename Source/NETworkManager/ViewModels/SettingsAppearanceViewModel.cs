@@ -97,6 +97,25 @@ public class SettingsAppearanceViewModel : ViewModelBase
         }
     }
 
+    public bool AccentGlow
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            if (!_isLoading)
+            {
+                SettingsManager.Current.Appearance_AccentGlow = value;
+                AppearanceManager.ApplyWindowBrush();
+            }
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
     public IEnumerable<AnimationMode> AnimationModes => Enum.GetValues<AnimationMode>();
 
     public AnimationMode AnimationMode
@@ -164,6 +183,7 @@ public class SettingsAppearanceViewModel : ViewModelBase
             CustomThemes.Cast<ThemeInfo>()
                 .FirstOrDefault(x => x.Name == SettingsManager.Current.Appearance_CustomThemeName) ??
             CustomThemes.Cast<ThemeInfo>().FirstOrDefault();
+        AccentGlow = SettingsManager.Current.Appearance_AccentGlow;
         // If policy is set, show the policy value (on / off); otherwise show the user's setting
         AnimationMode = PolicyManager.Current?.Appearance_Animations is { } animationsPolicy
             ? animationsPolicy ? AnimationMode.On : AnimationMode.Off

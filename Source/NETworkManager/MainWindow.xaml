@@ -19,9 +19,9 @@
                  xmlns:models="clr-namespace:NETworkManager.Models;assembly=NETworkManager.Models"
                  mc:Ignorable="d"
                  Style="{DynamicResource ResourceKey=DefaultWindow}"
-                 Background="{DynamicResource Brushes.Surface.Frame}"
-                 WindowTitleBrush="{DynamicResource Brushes.Surface.Frame}"
-                 NonActiveWindowTitleBrush="{DynamicResource Brushes.Surface.Frame}"
+                 Background="{DynamicResource Brushes.Surface.Window}"
+                 WindowTitleBrush="{DynamicResource Brushes.Surface.Window}"
+                 NonActiveWindowTitleBrush="{DynamicResource Brushes.Surface.Window}"
                  MinWidth="800" MinHeight="600"
                  Width="1024" Height="768" 
                  SaveWindowPosition="True" TitleAlignment="Stretch"
@@ -360,10 +360,11 @@
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <!-- Navigation: part of the window (color of the frame, no border, like the side bar of VS Code), the main
-                 view and the profiles are the boxes. Same margins as the boxes (aligned header / tab lines). -->
+            <!-- Navigation: part of the window (background of the window incl. the optional accent glow, no border, like
+                 the side bar of VS Code), the main view and the profiles are the boxes. Same margins as the boxes
+                 (aligned header / tab lines). -->
             <mah:ClipBorder Grid.Column="0" Grid.Row="0" Margin="6,6,0,6" Style="{StaticResource ViewBox}"
-                            Background="{DynamicResource Brushes.Surface.Frame}" BorderThickness="0">
+                            Background="{DynamicResource Brushes.Surface.Window}" BorderThickness="0">
                 <Grid x:Name="ApplicationViewGrid">
                     <Grid.RowDefinitions>
                         <!-- 1 = Search, 2 = ApplicationList, 3 = Settings-->

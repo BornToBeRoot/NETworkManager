@@ -360,6 +360,19 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     }
 
+    public bool Appearance_AccentGlow
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.Appearance_AccentGlow;
+
     public AnimationMode Appearance_Animations
     {
         get;

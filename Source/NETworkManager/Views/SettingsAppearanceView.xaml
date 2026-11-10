@@ -66,6 +66,16 @@
             </ListBox.Template>
             <!-- /BUGFIX-->
         </ListView>
+        <StackPanel Orientation="Horizontal" Margin="0,0,0,20">
+            <mah:ToggleSwitch Header="{x:Static Member=localization:Strings.AccentGlow}" IsOn="{Binding Path=AccentGlow}" />
+            <Rectangle Width="24" Height="24"
+                       ToolTip="{x:Static Member=localization:Strings.HelpMessage_AccentGlow}"
+                       Style="{StaticResource ResourceKey=HelpImageRectangle}" VerticalAlignment="Top" Margin="10,0,0,0">
+                <Rectangle.Resources>
+                    <Style TargetType="{x:Type TypeName=ToolTip}" BasedOn="{StaticResource ResourceKey=HelpToolTip}" />
+                </Rectangle.Resources>
+            </Rectangle>
+        </StackPanel>
         <TextBlock Style="{StaticResource ResourceKey=HeaderTextBlock}" Text="{x:Static Member=localization:Strings.CustomThemes}" />
         <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
             <mah:ToggleSwitch Header="{x:Static Member=localization:Strings.UseCustomThemes}" IsOn="{Binding Path=UseCustomTheme}" />

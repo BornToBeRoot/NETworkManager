@@ -90,6 +90,7 @@ public static class GlobalStaticConfiguration
     public static string Appearance_Accent => "Lime";
     public static bool Appearance_UseCustomTheme => false;
     public static AnimationMode Appearance_Animations => AnimationMode.System;
+    public static bool Appearance_AccentGlow => false;
 
     // Settings: Network
     public static bool Network_AddDNSSuffix => true;
