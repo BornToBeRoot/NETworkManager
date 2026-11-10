@@ -230,7 +230,6 @@ A huge thank you to our supporters and contributors who make NETworkManager poss
   - [LiveCharts2](https://github.com/Live-Charts/LiveCharts2) - Beautiful, interactive charts, maps, and gauges.
   - [Lucide](https://lucide.dev/) - Beautiful & consistent icons.
   - [MahApps.Metro](https://mahapps.com/) - UI toolkit for WPF applications.
-  - [MahApps.Metro.IconPacks](https://github.com/MahApps/MahApps.Metro.IconPacks) - Awesome icon packs for WPF and UWP in one library.
   - [NetBeauty2](https://github.com/nulastudio/NetBeauty2) - Move .NET app runtime components and dependencies into a sub-directory.
   - [PSDiscoveryProtocol](https://github.com/lahell/PSDiscoveryProtocol) - PowerShell module for LLDP/CDP discovery.
 

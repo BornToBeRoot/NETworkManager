@@ -7681,15 +7681,6 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Some awesome icons for WPF and UWP all together....
-        /// </summary>
-        public static string Library_MahAppsMetroIconPacks_Description {
-            get {
-                return ResourceManager.GetString("Library_MahAppsMetroIconPacks_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Json.NET is a popular high-performance JSON framework for .NET.
         /// </summary>
         public static string Library_NewtonsoftJson_Description {

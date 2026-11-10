@@ -3019,9 +3019,6 @@ Error message:
   <data name="Library_LiveCharts_Description" xml:space="preserve">
     <value>Beautiful, interactive charts, maps, and gauges.</value>
   </data>
-  <data name="Library_MahAppsMetroIconPacks_Description" xml:space="preserve">
-    <value>Some awesome icons for WPF and UWP all together...</value>
-  </data>
   <data name="Library_MahAppsMetro_Description" xml:space="preserve">
     <value>A toolkit for creating Metro / Modern UI styled WPF apps.</value>
   </data>

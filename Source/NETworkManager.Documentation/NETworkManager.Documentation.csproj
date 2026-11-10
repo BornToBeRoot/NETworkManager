@@ -26,7 +26,6 @@
         <None Remove="Licenses\LiveCharts2.txt" />
         <None Remove="Licenses\log4net.txt" />
         <None Remove="Licenses\Lucide.txt" />
-        <None Remove="Licenses\MahApps.Metro.IconPack.txt" />
         <None Remove="Licenses\MahApps.Metro.txt" />
         <None Remove="Licenses\Microsoft.PowerShell.SDK.txt" />
         <None Remove="Licenses\Microsoft.Web.WebView2.txt" />
@@ -74,9 +73,6 @@
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Content>
         <Content Include="Licenses\Lucide.txt">
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </Content>
-        <Content Include="Licenses\MahApps.Metro.IconPack.txt">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Content>
         <Content Include="Licenses\MahApps.Metro.txt">
