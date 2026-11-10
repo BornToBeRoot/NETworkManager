@@ -87,7 +87,7 @@ public class AirspacePanel : ContentControl
         if (fix)
         {
             // Content not visible or not shown in a window - nothing to capture, keep the content
-            var screenshot = CreateScreenshotFromContent();
+            var screenshot = CaptureScreenshot(_airspaceContent);
 
             if (screenshot == null)
                 return;
@@ -111,9 +111,16 @@ public class AirspacePanel : ContentControl
         }
     }
 
-    private BitmapSource CreateScreenshotFromContent()
+    /// <summary>
+    ///     Takes a screenshot of the area of the element on the screen, including embedded windows (e.g. Remote
+    ///     Desktop, PuTTY, WebView2), which are not part of the WPF rendering. Also used to show the content of the
+    ///     embedded windows while a tab is dragged (<c>EmbeddedWindowDragPresenter</c>).
+    /// </summary>
+    /// <param name="element">Element to capture.</param>
+    /// <returns>Screenshot, or <see langword="null" /> if the element is not shown in a window or has no size.</returns>
+    public static BitmapSource CaptureScreenshot(FrameworkElement element)
     {
-        var presentationSource = PresentationSource.FromVisual(_airspaceContent);
+        var presentationSource = PresentationSource.FromVisual(element);
 
         if (presentationSource?.CompositionTarget == null)
             return null;
@@ -122,9 +129,9 @@ public class AirspacePanel : ContentControl
         // pixels, but the size is in device independent pixels and has to be scaled with the DPI of the monitor.
         var transformToDevice = presentationSource.CompositionTarget.TransformToDevice;
 
-        var upperLeftPoint = _airspaceContent.PointToScreen(new Point(0, 0));
-        var width = (int)Math.Round(_airspaceContent.ActualWidth * transformToDevice.M11);
-        var height = (int)Math.Round(_airspaceContent.ActualHeight * transformToDevice.M22);
+        var upperLeftPoint = element.PointToScreen(new Point(0, 0));
+        var width = (int)Math.Round(element.ActualWidth * transformToDevice.M11);
+        var height = (int)Math.Round(element.ActualHeight * transformToDevice.M22);
 
         if (width <= 0 || height <= 0)
             return null;
