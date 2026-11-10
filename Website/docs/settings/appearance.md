@@ -25,7 +25,7 @@ Accent of the application which is based on [`MahApps.Metro themes`](https://mah
 
 **Type:** `String`
 
-**Default:** `Lime`
+**Default:** `Teal` (`Lime` before version 2026.x.x - existing settings keep their accent)
 
 **Possible values:**
 
@@ -58,6 +58,14 @@ Accent of the application which is based on [`MahApps.Metro themes`](https://mah
 If you add, change or delete a theme in the folder, you must restart the application for the changes to be applied.
 
 :::
+
+### Accent glow
+
+Shows a subtle glow of the accent color in the top left corner of the main window (window background, title bar and navigation). The boxes (tool, profiles) are not changed.
+
+**Type:** `Boolean`
+
+**Default:** `Disabled`
 
 ### Use custom themes
 
