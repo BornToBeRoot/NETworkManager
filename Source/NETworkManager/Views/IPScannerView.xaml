@@ -1,6 +1,7 @@
 ﻿<UserControl x:Class="NETworkManager.Views.IPScannerView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:networkManager="clr-namespace:NETworkManager"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
@@ -321,7 +322,7 @@
                     </Style>
                 </StackPanel.Style>
                 <mahAppsControls:MetroProgressBar Maximum="{Binding HostsToScan}"
-                                                  Value="{Binding HostsScanned}">
+                                                  networkManager:SmoothProgress.Value="{Binding HostsScanned}">
                     <mahAppsControls:MetroProgressBar.Style>
                         <Style TargetType="{x:Type mahAppsControls:MetroProgressBar}" BasedOn="{StaticResource DefaultMetroProgressBar}">
                             <Setter Property="IsIndeterminate" Value="False" />

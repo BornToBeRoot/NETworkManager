@@ -1,6 +1,7 @@
 ﻿<UserControl x:Class="NETworkManager.Views.PortScannerView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:networkManager="clr-namespace:NETworkManager"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
@@ -179,7 +180,7 @@
                     </Style>
                 </StackPanel.Style>
                 <mahappsControls:MetroProgressBar Maximum="{Binding PortsToScan}"
-                                                  Value="{Binding PortsScanned}">
+                                                  networkManager:SmoothProgress.Value="{Binding PortsScanned}">
                     <mahappsControls:MetroProgressBar.Style>
                         <Style TargetType="{x:Type mahappsControls:MetroProgressBar}" BasedOn="{StaticResource DefaultMetroProgressBar}">
                             <Setter Property="IsIndeterminate" Value="False" />
