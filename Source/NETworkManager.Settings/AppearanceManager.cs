@@ -300,14 +300,14 @@ public static class AppearanceManager
         appResources[ControlPressedOverlayBrushKey] = CreateFrozenBrush(foreground, 1 - 0.86 / 0.90);
 
         // Opaque (window background) around the boxes (theme background): the boxes look raised on the frame like in
-        // Visual Studio / Windows 11. Dark: the background 18 % darker (MahApps dark: #1E1E1E frame, #252525 box);
+        // Visual Studio / Windows 11. Dark: the background 25 % darker (MahApps dark: #1C1C1C frame, #252525 box);
         // light: 4 % of the foreground on the background (light gray frame, white boxes).
         var background = theme.Resources["MahApps.Colors.ThemeBackground"] is Color backgroundColor
             ? backgroundColor
             : Colors.White;
 
         var frame = theme.BaseColorScheme == ThemeManager.BaseColorDark
-            ? Blend(background, Colors.Black, 0.18)
+            ? Blend(background, Colors.Black, 0.25)
             : Blend(background, foreground, 0.04);
 
         appResources[SurfaceFrameBrushKey] = CreateFrozenBrush(frame, 1);
