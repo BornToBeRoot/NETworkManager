@@ -7501,15 +7501,6 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to A collection of loading indicators for WPF.
-        /// </summary>
-        public static string Library_LoadingIndicatorsWPF_Description {
-            get {
-                return ResourceManager.GetString("Library_LoadingIndicatorsWPF_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to log4net is a tool to help the programmer output log statements to a variety of output targets..
         /// </summary>
         public static string Library_log4net_Description {
@@ -7659,15 +7650,6 @@ namespace NETworkManager.Localization.Resources {
         public static string License_MITLicense {
             get {
                 return ResourceManager.GetString("License_MITLicense", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Unlicense.
-        /// </summary>
-        public static string License_Unlicense {
-            get {
-                return ResourceManager.GetString("License_Unlicense", resourceCulture);
             }
         }
         

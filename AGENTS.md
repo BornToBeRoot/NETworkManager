@@ -78,7 +78,9 @@ REPOSITORY_ROOT/
 - **MahApps.Metro.SimpleChildWindow** - Dialog windows
 - **Dragablz** - Tearable/draggable tab control
 - **GongSolutions.Wpf.DragDrop** (`gong-wpf-dragdrop`) - Drag and drop framework
-- **Loading indicators** - Own implementation in `Source/NETworkManager/LoadingIndicators.cs` (styles e.g. `LoadingIndicatorArcsStyle`, `LoadingIndicatorPulseStyle`)
+- **Progress / loading** - MahApps `MetroProgressBar` (style `DefaultMetroProgressBar`) and `ProgressRing` in three sizes
+  (`ProgressRingSmall` 16 inline, `ProgressRingMedium` 24 dialogs, `ProgressRingLarge` 48 centered), see
+  `Resources/Styles/ProgressBarStyles.xaml`
 - **ControlzEx** - Shared WPF controls (dependency of MahApps.Metro)
 
 **Architecture Pattern**:
