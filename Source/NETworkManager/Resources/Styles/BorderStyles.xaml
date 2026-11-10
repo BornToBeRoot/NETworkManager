@@ -5,7 +5,7 @@
          (a tint would look like the frame of the window behind the box) -->
     <Style x:Key="CardBorder" TargetType="{x:Type Border}">
         <Setter Property="Background" Value="Transparent" />
-        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Gray8}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource Brushes.Surface.Border}" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="CornerRadius" Value="{StaticResource CornerRadius.Card}" />
     </Style>
@@ -17,7 +17,7 @@
     -->
     <Style x:Key="ViewBox" TargetType="{x:Type mah:ClipBorder}">
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ThemeBackground}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Gray8}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource Brushes.Surface.Border}" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="CornerRadius" Value="{StaticResource CornerRadius.Card}" />
     </Style>

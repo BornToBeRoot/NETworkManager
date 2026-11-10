@@ -78,6 +78,11 @@ public static class AppearanceManager
     public const string SurfaceFrameBrushKey = "Brushes.Surface.Frame";
 
     /// <summary>
+    ///     Resource key of the border of the boxes (main view, profiles, ...) and cards (e.g. Dashboard widgets).
+    /// </summary>
+    public const string SurfaceBorderBrushKey = "Brushes.Surface.Border";
+
+    /// <summary>
     ///     Resource key of the background of a selected row (data grid) when the mouse is over it.
     /// </summary>
     public const string DataGridSelectionMouseOverBrushKey = "Brushes.DataGrid.Selection.MouseOver";
@@ -244,12 +249,22 @@ public static class AppearanceManager
         appResources[ButtonMouseOverOverlayBrushKey] = CreateFrozenBrush(foreground, 1 - 0.90 / 0.94);
         appResources[ControlPressedOverlayBrushKey] = CreateFrozenBrush(foreground, 1 - 0.86 / 0.90);
 
-        // Opaque (window background): 4 % of the foreground on the background of the theme
+        // Opaque (window background) around the boxes (theme background): the boxes look raised on the frame like in
+        // Visual Studio / Windows 11. Dark: the background 18 % darker (MahApps dark: #1E1E1E frame, #252525 box);
+        // light: 4 % of the foreground on the background (light gray frame, white boxes).
         var background = theme.Resources["MahApps.Colors.ThemeBackground"] is Color backgroundColor
             ? backgroundColor
             : Colors.White;
 
-        appResources[SurfaceFrameBrushKey] = CreateFrozenBrush(Blend(background, foreground, 0.04), 1);
+        var frame = theme.BaseColorScheme == ThemeManager.BaseColorDark
+            ? Blend(background, Colors.Black, 0.18)
+            : Blend(background, foreground, 0.04);
+
+        appResources[SurfaceFrameBrushKey] = CreateFrozenBrush(frame, 1);
+
+        // Border of the boxes and cards: a low opacity of the foreground (softer than Gray8 in the light theme, the
+        // contrast comes from the frame)
+        appResources[SurfaceBorderBrushKey] = CreateFrozenBrush(foreground, 0.10);
 
         ApplyDataGridBrushes(theme, foreground);
         ApplyToggleSwitchDisabledBrushes(theme);
