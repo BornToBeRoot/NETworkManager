@@ -18,11 +18,11 @@
                             <Rectangle Width="48" Height="48"
                                        Fill="{DynamicResource MahApps.Brushes.Gray5}"
                                        OpacityMask="{Binding ApplicationName, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource EmbeddedWindowDragPresenterIconConverter}}" />
-                            <!-- Title of the shown (selected) tab -->
+                            <!-- Title of the tab (see EmbeddedWindowDragPresenter.Title) -->
                             <TextBlock Margin="0,10,0,0"
                                        HorizontalAlignment="Center"
                                        Style="{DynamicResource HeaderTextBlock}"
-                                       Text="{Binding SelectedItem.Header, RelativeSource={RelativeSource AncestorType={x:Type dragablz:TabablzControl}}}" />
+                                       Text="{Binding Title, RelativeSource={RelativeSource TemplatedParent}}" />
                         </StackPanel>
                         <ContentPresenter x:Name="PART_Content" />
                     </Grid>

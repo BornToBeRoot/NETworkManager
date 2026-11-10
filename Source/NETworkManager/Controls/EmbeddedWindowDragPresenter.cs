@@ -1,5 +1,8 @@
-﻿using System.Windows;
+﻿using System.Linq;
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
+using Dragablz;
 using NETworkManager.Models;
 
 namespace NETworkManager.Controls;
@@ -31,6 +34,9 @@ public class EmbeddedWindowDragPresenter : ContentControl
         nameof(ApplicationName), typeof(ApplicationName), typeof(EmbeddedWindowDragPresenter),
         new FrameworkPropertyMetadata(ApplicationName.None));
 
+    public static readonly DependencyProperty TitleProperty = DependencyProperty.Register(nameof(Title),
+        typeof(string), typeof(EmbeddedWindowDragPresenter), new FrameworkPropertyMetadata(string.Empty));
+
     private ContentPresenter _content;
     private FrameworkElement _placeholder;
 
@@ -51,6 +57,15 @@ public class EmbeddedWindowDragPresenter : ContentControl
     {
         get => (ApplicationName)GetValue(ApplicationNameProperty);
         set => SetValue(ApplicationNameProperty, value);
+    }
+
+    /// <summary>
+    ///     Title of the tab, for the placeholder (set when the drag starts).
+    /// </summary>
+    public string Title
+    {
+        get => (string)GetValue(TitleProperty);
+        set => SetValue(TitleProperty, value);
     }
 
     public override void OnApplyTemplate()
@@ -77,9 +92,40 @@ public class EmbeddedWindowDragPresenter : ContentControl
 
         _content.Visibility = isDragging ? Visibility.Hidden : Visibility.Visible;
 
+        if (isDragging)
+            Title = FindTabItem()?.Header ?? string.Empty;
+
         // Only instead of a shown embedded window: e.g. a disconnected tab hides it and shows its own message
         _placeholder.Visibility = isDragging && Content is UIElement { Visibility: Visibility.Visible }
             ? Visibility.Visible
             : Visibility.Hidden;
+    }
+
+    /// <summary>
+    ///     The tab of this embedded window: the tab of the surrounding TabablzControl whose view (e.g. PuTTYControl)
+    ///     contains this presenter. Not the selected item of the TabablzControl - in the window that was just
+    ///     created for a dragged-out tab, no tab is selected yet during the drag.
+    /// </summary>
+    private DragablzTabItem FindTabItem()
+    {
+        UserControl view = null;
+        DependencyObject element = this;
+
+        while (element != null)
+        {
+            element = VisualTreeHelper.GetParent(element);
+
+            switch (element)
+            {
+                case UserControl userControl when view == null:
+                    view = userControl;
+                    break;
+                case TabablzControl tabablzControl:
+                    return tabablzControl.Items.OfType<DragablzTabItem>().FirstOrDefault(x => ReferenceEquals(x.View, view))
+                           ?? tabablzControl.SelectedItem as DragablzTabItem;
+            }
+        }
+
+        return null;
     }
 }
