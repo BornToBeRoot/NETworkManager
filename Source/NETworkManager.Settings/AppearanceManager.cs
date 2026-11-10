@@ -88,10 +88,16 @@ public static class AppearanceManager
     public const string NavigationSelectedBrushKey = "Brushes.Navigation.Selected";
 
     /// <summary>
-    ///     Resource key of the background of the main window (window, title bar, navigation): the frame color, with
+    ///     Resource key of the background of the windows with a frame (FrameWindow: main window, tab window, status
+    ///     window; window, title bar, navigation): the frame color, with
     ///     <see cref="SettingsInfo.Appearance_AccentGlowIntensity" /> a subtle glow of the accent in the top left corner.
     /// </summary>
     public const string SurfaceWindowBrushKey = "Brushes.Surface.Window";
+
+    /// <summary>
+    ///     Resource key of the background of an inactive window (half of the glow), see <see cref="SurfaceWindowBrushKey" />.
+    /// </summary>
+    public const string SurfaceWindowInactiveBrushKey = "Brushes.Surface.Window.Inactive";
 
     private static Color _frameColor = Colors.White;
     private static Color _accentColor = Colors.Gray;
@@ -245,33 +251,38 @@ public static class AppearanceManager
 
     public static void ApplyWindowBrush()
     {
-        Brush brush;
-
         var amount = GetAccentGlowAmount();
 
-        if (amount > 0)
+        var resources = System.Windows.Application.Current.Resources;
+
+        resources[SurfaceWindowBrushKey] = CreateWindowBrush(amount);
+
+        // Inactive window: half of the glow (like the title bar of an inactive window in Windows)
+        resources[SurfaceWindowInactiveBrushKey] = CreateWindowBrush(amount / 2);
+    }
+
+    /// <summary>
+    ///     The frame color, with a glow of the accent (amount > 0) in the top left corner.
+    /// </summary>
+    private static Brush CreateWindowBrush(double amount)
+    {
+        if (amount <= 0)
+            return CreateFrozenBrush(_frameColor, 1);
+
+        var gradient = new RadialGradientBrush
         {
-            var gradient = new RadialGradientBrush
-            {
-                MappingMode = BrushMappingMode.Absolute,
-                Center = new System.Windows.Point(0, 0),
-                GradientOrigin = new System.Windows.Point(0, 0),
-                RadiusX = 700,
-                RadiusY = 500
-            };
+            MappingMode = BrushMappingMode.Absolute,
+            Center = new System.Windows.Point(0, 0),
+            GradientOrigin = new System.Windows.Point(0, 0),
+            RadiusX = 700,
+            RadiusY = 500
+        };
 
-            gradient.GradientStops.Add(new GradientStop(Blend(_frameColor, _accentColor, amount), 0));
-            gradient.GradientStops.Add(new GradientStop(_frameColor, 1));
-            gradient.Freeze();
+        gradient.GradientStops.Add(new GradientStop(Blend(_frameColor, _accentColor, amount), 0));
+        gradient.GradientStops.Add(new GradientStop(_frameColor, 1));
+        gradient.Freeze();
 
-            brush = gradient;
-        }
-        else
-        {
-            brush = CreateFrozenBrush(_frameColor, 1);
-        }
-
-        System.Windows.Application.Current.Resources[SurfaceWindowBrushKey] = brush;
+        return gradient;
     }
 
     /// <summary>

@@ -14,4 +14,20 @@
         <!-- Rounded corners (Windows 11, Windows 10 doesn't support it) -->
         <Setter Property="wpfHelpers:WindowCornerHelper.RoundCorners" Value="True" />
     </Style>
+
+    <!--
+        Window with the tinted frame and the content in boxes (main window, window of dragged-out tabs, status window):
+        frame color with the accent glow (Brushes.Surface.Window, see AppearanceManager.ApplyWindowBrush), half of the
+        glow while the window is inactive.
+    -->
+    <Style x:Key="FrameWindow" TargetType="{x:Type mahAppsControls:MetroWindow}" BasedOn="{StaticResource DefaultWindow}">
+        <Setter Property="Background" Value="{DynamicResource Brushes.Surface.Window}" />
+        <Setter Property="WindowTitleBrush" Value="{DynamicResource Brushes.Surface.Window}" />
+        <Setter Property="NonActiveWindowTitleBrush" Value="{DynamicResource Brushes.Surface.Window.Inactive}" />
+        <Style.Triggers>
+            <Trigger Property="IsActive" Value="False">
+                <Setter Property="Background" Value="{DynamicResource Brushes.Surface.Window.Inactive}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
 </ResourceDictionary>
