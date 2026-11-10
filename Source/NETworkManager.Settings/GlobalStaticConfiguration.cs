@@ -92,7 +92,8 @@ public static class GlobalStaticConfiguration
     public static string Appearance_Accent => "Teal";
     public static bool Appearance_UseCustomTheme => false;
     public static AnimationMode Appearance_Animations => AnimationMode.System;
-    public static bool Appearance_AccentGlow => false;
+    // On for new installations (subtle, static); saved in the settings, existing installations keep it off
+    public static bool Appearance_AccentGlow => true;
 
     // Settings: Network
     public static bool Network_AddDNSSuffix => true;
