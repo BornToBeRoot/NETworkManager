@@ -89,11 +89,14 @@ public static class ChildWindowAnimation
             return;
         }
 
-        var (showScale, showOffsetY, showDuration, hideScale) = GetKind(childWindow) switch
+        var (showScale, showOffsetY, showDuration, hideScale, showEasing) = GetKind(childWindow) switch
         {
-            // Command palette: slides down a little from the top
-            ChildWindowAnimationKind.SlideDown => (0.98, -12.0, TimeSpan.FromMilliseconds(180), 1.0),
-            _ => (0.92, 0.0, TimeSpan.FromMilliseconds(220), 0.98)
+            // Command palette: slides down a little from the top. Quadratic: visible over the whole duration (with a
+            // cubic ease-out the short slide was over after a few milliseconds)
+            ChildWindowAnimationKind.SlideDown => (0.98, -12.0, TimeSpan.FromMilliseconds(250), 1.0,
+                (IEasingFunction)new QuadraticEase { EasingMode = EasingMode.EaseOut }),
+            _ => (0.92, 0.0, TimeSpan.FromMilliseconds(220), 0.98,
+                new CubicEase { EasingMode = EasingMode.EaseOut })
         };
 
         if (childWindow.IsOpen)
@@ -104,8 +107,7 @@ public static class ChildWindowAnimation
             childWindow.Dispatcher.BeginInvoke(DispatcherPriority.Loaded, () =>
             {
                 if (childWindow.IsOpen)
-                    Animate(scale, translate, 1, 0, new Duration(showDuration),
-                        new CubicEase { EasingMode = EasingMode.EaseOut });
+                    Animate(scale, translate, 1, 0, new Duration(showDuration), showEasing);
             });
         }
         else
@@ -156,7 +158,8 @@ public enum ChildWindowAnimationKind
     Zoom,
 
     /// <summary>
-    /// Slides down 12 px and grows from 98 % (180 ms, ease-out), only fades out when closed (e.g. run command).
+    /// Slides down 12 px and grows from 98 % (250 ms, quadratic ease-out), only fades out when closed (e.g. run
+    /// command).
     /// </summary>
     SlideDown
 }
