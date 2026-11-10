@@ -263,6 +263,7 @@ Release date: **xx.xx.2026**
 - `Enter` in the search box filters the rules right away instead of after the delay while typing. [#3660](https://github.com/BornToBeRoot/NETworkManager/pull/3660)
 - The time of the last refresh (`Reloaded at 14:32`, the date in the tooltip) is shown in the header instead of a status line below the list; the line below the list only shows errors (e.g. rules loaded with errors, a failed action). A manual refresh is faster (the minimum of 2.5 seconds runs while loading, not before) and the refresh icon spins until the rules are loaded (also with **Show all rules**). [#3685](https://github.com/BornToBeRoot/NETworkManager/pull/3685)
 - **Export** exports the rules shown (search) in the order shown (sorting), the selected rules in the order shown instead of the order they were selected. The file is written in the background, so the window stays responsive. [#3696](https://github.com/BornToBeRoot/NETworkManager/pull/3696)
+- The **Action** column shows a colored dot (allow green, block red) in front of the text instead of colored text. [#XXXX](https://github.com/BornToBeRoot/NETworkManager/pull/XXXX)
 
 **Discovery Protocol**
 
@@ -286,6 +287,7 @@ Release date: **xx.xx.2026**
 - The search filters after a short delay while typing instead of on every key press (smoother with many connections), `Enter` filters right away. [#3660](https://github.com/BornToBeRoot/NETworkManager/pull/3660)
 - The time of the last refresh (`Reloaded at 14:32`, the date in the tooltip) is shown in the header instead of a status line below the list; with **Automatically update every**, a countdown to the next refresh (`Next refresh in 00:04`). A manual refresh is faster (the minimum of 2.5 seconds runs while loading, not before) and the refresh icon spins until it is finished. [#3685](https://github.com/BornToBeRoot/NETworkManager/pull/3685)
 - **Export...** exports the entries shown (search) in the order shown (sorting), the selected entries in the order shown instead of the order they were selected. The file is written in the background, so the window stays responsive. [#3696](https://github.com/BornToBeRoot/NETworkManager/pull/3696)
+- The **State** column shows a colored dot in front of the state: established green, connecting yellow, other states gray. [#XXXX](https://github.com/BornToBeRoot/NETworkManager/pull/XXXX)
 
 **Listeners**
 
@@ -300,6 +302,7 @@ Release date: **xx.xx.2026**
 - The search filters after a short delay while typing instead of on every key press (smoother with many entries), `Enter` filters right away. [#3660](https://github.com/BornToBeRoot/NETworkManager/pull/3660)
 - The time of the last refresh (`Reloaded at 14:32`, the date in the tooltip) is shown in the header instead of a status line below the list; with **Automatically update every**, a countdown to the next refresh (`Next refresh in 00:04`). The line below the list only shows errors. A manual refresh is faster (the minimum of 2.5 seconds runs while loading, not before) and the refresh icon spins until it is finished. [#3685](https://github.com/BornToBeRoot/NETworkManager/pull/3685)
 - **Export...** exports the entries shown (search) in the order shown (sorting), the selected entries in the order shown instead of the order they were selected. The file is written in the background, so the window stays responsive. [#3696](https://github.com/BornToBeRoot/NETworkManager/pull/3696)
+- The **State** column shows a colored dot in front of the state: reachable green, stale / delay / probe yellow, incomplete / unreachable red, permanent gray. [#XXXX](https://github.com/BornToBeRoot/NETworkManager/pull/XXXX)
 
 ## Bug Fixes
 
