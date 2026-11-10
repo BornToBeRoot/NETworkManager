@@ -99,17 +99,6 @@ public static class AppearanceManager
     /// </summary>
     public const string SurfaceWindowInactiveBrushKey = "Brushes.Surface.Window.Inactive";
 
-    /// <summary>
-    ///     Resource key of the overlay behind a dialog (dims the window, with the accent glow a faint tint of the accent
-    ///     behind the dialog).
-    /// </summary>
-    public const string DialogOverlayBrushKey = "Brushes.Overlay.Dialog";
-
-    /// <summary>
-    ///     Resource key of the overlay behind the run command (tint at the top, behind the palette).
-    /// </summary>
-    public const string CommandPaletteOverlayBrushKey = "Brushes.Overlay.CommandPalette";
-
     private static Color _frameColor = Colors.White;
     private static Color _accentColor = Colors.Gray;
 
@@ -270,47 +259,6 @@ public static class AppearanceManager
 
         // Inactive window: half of the glow (like the title bar of an inactive window in Windows)
         resources[SurfaceWindowInactiveBrushKey] = CreateWindowBrush(amount / 2);
-
-        resources[DialogOverlayBrushKey] = CreateDialogOverlayBrush(amount, 0.45);
-
-        // Run command: the palette is at the top of the window, the tint behind it
-        resources[CommandPaletteOverlayBrushKey] = CreateDialogOverlayBrush(amount, 0.12);
-    }
-
-    /// <summary>
-    ///     Overlay behind a dialog: black 40 % (dims the window in the light and dark theme), with the accent glow a
-    ///     faint tint of the accent in the center behind the dialog (2.5 x the amount of the glow, e.g. 25 % of the
-    ///     overlay color with Medium), fading to the black overlay at the edge.
-    /// </summary>
-    /// <param name="amount">Amount of the accent glow (0 = plain overlay).</param>
-    /// <param name="centerY">Vertical center of the tint (relative, where the dialog is).</param>
-    private static Brush CreateDialogOverlayBrush(double amount, double centerY)
-    {
-        const byte alpha = 0x66; // 40 %
-
-        if (amount <= 0)
-        {
-            var solid = new SolidColorBrush(Color.FromArgb(alpha, 0, 0, 0));
-            solid.Freeze();
-
-            return solid;
-        }
-
-        var center = Blend(Colors.Black, _accentColor, Math.Min(1, amount * 2.5));
-
-        var gradient = new RadialGradientBrush
-        {
-            Center = new System.Windows.Point(0.5, centerY),
-            GradientOrigin = new System.Windows.Point(0.5, centerY),
-            RadiusX = 0.6,
-            RadiusY = 0.6
-        };
-
-        gradient.GradientStops.Add(new GradientStop(Color.FromArgb(alpha, center.R, center.G, center.B), 0));
-        gradient.GradientStops.Add(new GradientStop(Color.FromArgb(alpha, 0, 0, 0), 1));
-        gradient.Freeze();
-
-        return gradient;
     }
 
     /// <summary>

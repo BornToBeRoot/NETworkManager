@@ -25,6 +25,8 @@
     <!-- Cards, e.g. Dashboard widgets, Ping Monitor hosts -->
     <CornerRadius x:Key="CornerRadius.Card">8</CornerRadius>
 
+    <!-- Overlay behind a dialog: dims the window (light and dark theme) -->
+    <SolidColorBrush x:Key="Brushes.Overlay" Color="Black" Opacity="0.4" />
 
     <!--
         Keyboard focus (Tab): gray ring with a gap of 1 px around the control, rounded like the controls. Replaces
