@@ -26,6 +26,60 @@
         </Style.Triggers>
     </Style>
 
+    <!--
+        Parts of a tab header, used by the HeaderItemTemplate of DefaultTabablzControl and by the own tab headers of
+        Remote Desktop, PowerShell, PuTTY, TigerVNC and Web Console (host views and DragablzTabHostWindow, which only
+        differ in their context menu). Change the look of the tabs here.
+    -->
+    <!-- Tab: separator on the right, subtle background on mouse over -->
+    <Style x:Key="DragablzTabHeaderBorder" TargetType="{x:Type Border}">
+        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Gray8}" />
+        <Setter Property="BorderThickness" Value="0,0,1,0" />
+        <Setter Property="Background" Value="Transparent" />
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type dragablz:DragablzItem}}, Path=IsMouseOver}" Value="True">
+                <Setter Property="Background" Value="{DynamicResource Brushes.Control.MouseOver}" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <!-- Title: gray, lighter on mouse over, theme foreground when selected -->
+    <Style x:Key="DragablzTabHeaderTitle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DragablzTabHeaderTextBlock}">
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray3}" />
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type dragablz:DragablzItem}}, Path=IsMouseOver}" Value="True">
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray5}" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type dragablz:DragablzItem}}, Path=IsSelected}" Value="True">
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <!-- Close button icon: error color on mouse over -->
+    <Style x:Key="DragablzTabHeaderCloseIcon" TargetType="{x:Type Rectangle}">
+        <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
+                <Setter Property="Fill" Value="{DynamicResource Brushes.Status.Error}" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <!-- Accent line of the selected tab -->
+    <Style x:Key="DragablzTabHeaderAccentLine" TargetType="{x:Type Rectangle}">
+        <Setter Property="Height" Value="2" />
+        <Setter Property="VerticalAlignment" Value="Bottom" />
+        <Setter Property="IsHitTestVisible" Value="False" />
+        <Setter Property="Fill" Value="Transparent" />
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type dragablz:DragablzItem}}, Path=IsSelected}" Value="True">
+                <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Accent}" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
     <Style TargetType="{x:Type Thumb}" x:Key="InvisibleThumbStyle">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Template">
@@ -89,87 +143,29 @@
         <Setter Property="HeaderItemTemplate">
             <Setter.Value>
                 <DataTemplate DataType="networkManagerControls:DragablzTabItem">
-                    <Border BorderBrush="{DynamicResource MahApps.Brushes.Gray8}" BorderThickness="0,0,1,0">
-                        <!-- Tab: subtle background on mouse over, accent line at the bottom of the selected tab -->
-                        <Border.Style>
-                            <Style TargetType="{x:Type Border}">
-                                <Setter Property="Background" Value="Transparent" />
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type dragablz:DragablzItem}}, Path=IsMouseOver}" Value="True">
-                                        <Setter Property="Background" Value="{DynamicResource Brushes.Control.MouseOver}" />
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Border.Style>
-                        <!-- 36 like the header of the navigation -->
+                    <Border Style="{StaticResource DragablzTabHeaderBorder}">
                         <Grid Height="36">
                             <Grid.InputBindings>
                                 <MouseBinding Command="dragablz:TabablzControl.CloseItemCommand" Gesture="MiddleClick" />
                             </Grid.InputBindings>
                             <StackPanel Orientation="Horizontal">
                                 <Grid ToolTip="{Binding Header}">
-                                    <TextBlock Text="{Binding Header}" Margin="10,0"
-                                               VerticalAlignment="Center">
-                                        <TextBlock.Style>
-                                            <Style TargetType="{x:Type TextBlock}"
-                                                   BasedOn="{StaticResource DragablzTabHeaderTextBlock}">
-                                                <Setter Property="Foreground"
-                                                        Value="{DynamicResource MahApps.Brushes.Gray3}" />
-                                                <Style.Triggers>
-                                                    <DataTrigger
-                                                        Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type dragablz:DragablzItem}}, Path=IsMouseOver}"
-                                                        Value="True">
-                                                        <Setter Property="Foreground"
-                                                                Value="{DynamicResource MahApps.Brushes.Gray5}" />
-                                                    </DataTrigger>
-                                                    <DataTrigger
-                                                        Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type dragablz:DragablzItem}}, Path=IsSelected}"
-                                                        Value="True">
-                                                        <Setter Property="Foreground"
-                                                                Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
-                                                    </DataTrigger>
-                                                </Style.Triggers>
-                                            </Style>
-                                        </TextBlock.Style>
-                                    </TextBlock>
+                                    <TextBlock Text="{Binding Header}" Margin="10,0" Style="{StaticResource DragablzTabHeaderTitle}" />
                                     <Thumb Style="{DynamicResource InvisibleThumbStyle}"
                                            dragablz:DragablzItem.IsCustomThumb="True" />
                                 </Grid>
                                 <Button Style="{StaticResource CleanButton}"
                                         Command="dragablz:TabablzControl.CloseItemCommand"
                                         ToolTip="{x:Static localization:Strings.Close}" Margin="0,0,10,0">
-                                    <Rectangle Width="16" Height="16">
+                                    <Rectangle Width="16" Height="16" Style="{StaticResource DragablzTabHeaderCloseIcon}">
                                         <Rectangle.OpacityMask>
                                             <VisualBrush Stretch="Uniform"
                                                          Visual="{iconPacks:Material Kind=WindowClose}" />
                                         </Rectangle.OpacityMask>
-                                        <Rectangle.Style>
-                                            <Style TargetType="{x:Type Rectangle}">
-                                                <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
-                                                <Style.Triggers>
-                                                    <DataTrigger
-                                                        Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}"
-                                                        Value="True">
-                                                        <Setter Property="Fill" Value="{DynamicResource Brushes.Status.Error}" />
-                                                    </DataTrigger>
-                                                </Style.Triggers>
-                                            </Style>
-                                        </Rectangle.Style>
                                     </Rectangle>
                                 </Button>
                             </StackPanel>
-                            <Rectangle Height="2" VerticalAlignment="Bottom" IsHitTestVisible="False">
-                                <Rectangle.Style>
-                                    <Style TargetType="{x:Type Rectangle}">
-                                        <Setter Property="Fill" Value="Transparent" />
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type dragablz:DragablzItem}}, Path=IsSelected}" Value="True">
-                                                <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Accent}" />
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </Rectangle.Style>
-                            </Rectangle>
+                            <Rectangle Style="{StaticResource DragablzTabHeaderAccentLine}" />
                         </Grid>
                     </Border>
                 </DataTemplate>
