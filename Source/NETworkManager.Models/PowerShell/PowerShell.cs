@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.IO;
+using System.Diagnostics;
 using System.Linq;
 using log4net;
 using Microsoft.Win32;
@@ -50,21 +53,109 @@ public static class PowerShell
     ];
 
     /// <summary>
-    ///     Write default (global) PowerShell profile to registry.
+    ///     Real paths of App Execution Aliases (Microsoft Store), resolved once per start of the application (the real
+    ///     path contains the version and changes with every update).
     /// </summary>
-    /// <param name="powerShellPath">Path to the PowerShell executable.</param>
+    private static readonly ConcurrentDictionary<string, string> ResolvedAliases = new(StringComparer.OrdinalIgnoreCase);
+
+    /// <summary>
+    ///     Write default (global) PowerShell profile to registry: the console settings of Windows (conhost) in
+    ///     HKCU\Console\&lt;title&gt;, the title is the path of the started executable (\ replaced by _, the Windows
+    ///     directory as %SystemRoot%).
+    ///
+    ///     PowerShell from the Microsoft Store is started via an App Execution Alias (e.g.
+    ///     %LocalAppData%\Microsoft\WindowsApps\Microsoft.PowerShell_8wekyb3d8bbwe\pwsh.exe), which starts the real
+    ///     executable in C:\Program Files\WindowsApps\Microsoft.PowerShell_7.x.x.0_x64__8wekyb3d8bbwe\pwsh.exe - the
+    ///     profile is written for the alias and for the real path, so it applies whichever the console uses as title.
+    ///     Resolving the alias starts it once (can take a moment, call it in the background).
+    /// </summary>
     /// <param name="background">Background of the console (DefaultBackground, ColorTable00).</param>
     /// <param name="foreground">Text of the console (ColorTable07).</param>
+    /// <param name="powerShellPath">Path to the PowerShell executable.</param>
     public static void WriteDefaultProfileToRegistry((byte R, byte G, byte B) background,
         (byte R, byte G, byte B) foreground, string powerShellPath)
+    {
+        WriteProfile(background, foreground, powerShellPath);
+
+        if (!IsAppExecutionAlias(powerShellPath))
+            return;
+
+        var realPath = ResolvedAliases.GetOrAdd(powerShellPath, ResolveAppExecutionAlias);
+
+        if (!string.IsNullOrEmpty(realPath) && !string.Equals(realPath, powerShellPath, StringComparison.OrdinalIgnoreCase))
+            WriteProfile(background, foreground, realPath);
+    }
+
+    /// <summary>
+    ///     Whether the path is an App Execution Alias of an app from the Microsoft Store
+    ///     (%LocalAppData%\Microsoft\WindowsApps\...).
+    /// </summary>
+    public static bool IsAppExecutionAlias(string path)
+    {
+        var aliasFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+            "Microsoft", "WindowsApps") + Path.DirectorySeparatorChar;
+
+        return !string.IsNullOrEmpty(path) && path.StartsWith(aliasFolder, StringComparison.OrdinalIgnoreCase);
+    }
+
+    /// <summary>
+    ///     Resolves the real executable of an App Execution Alias: starts it and asks for the path of its own process
+    ///     (works with Windows PowerShell and PowerShell 7).
+    /// </summary>
+    /// <returns>Real path or <see langword="null" /> if it could not be resolved.</returns>
+    private static string ResolveAppExecutionAlias(string aliasPath)
+    {
+        try
+        {
+            ProcessStartInfo info = new()
+            {
+                FileName = aliasPath,
+                Arguments = "-NoLogo -NoProfile -NonInteractive -Command \"(Get-Process -Id $PID).Path\"",
+                RedirectStandardOutput = true,
+                UseShellExecute = false,
+                CreateNoWindow = true
+            };
+
+            using var process = Process.Start(info);
+
+            if (process == null)
+                return null;
+
+            var output = process.StandardOutput.ReadToEnd().Trim();
+
+            if (!process.WaitForExit(10000))
+            {
+                process.Kill();
+                Log.Warn($"Timeout while resolving the App Execution Alias \"{aliasPath}\".");
+
+                return null;
+            }
+
+            Log.Info($"App Execution Alias \"{aliasPath}\" resolved to \"{output}\".");
+
+            return File.Exists(output) ? output : null;
+        }
+        catch (Exception ex)
+        {
+            Log.Error($"Could not resolve the App Execution Alias \"{aliasPath}\".", ex);
+
+            return null;
+        }
+    }
+
+    /// <summary>
+    ///     Writes the profile for the console title of the executable path.
+    /// </summary>
+    private static void WriteProfile((byte R, byte G, byte B) background, (byte R, byte G, byte B) foreground,
+        string powerShellPath)
     {
         var registryPath = @"Console\";
 
         var systemRoot = Environment.ExpandEnvironmentVariables("%SystemRoot%");
 
         // Windows PowerShell --> HKCU:\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe
-        if (powerShellPath.StartsWith(systemRoot))
-            registryPath += "%SystemRoot%" + powerShellPath.Substring(systemRoot.Length, powerShellPath.Length - systemRoot.Length).Replace(@"\", "_");
+        if (powerShellPath.StartsWith(systemRoot, StringComparison.OrdinalIgnoreCase))
+            registryPath += "%SystemRoot%" + powerShellPath.Substring(systemRoot.Length).Replace(@"\", "_");
         // PWSH -->  HKCU:\Console\C:_Program Files_PowerShell_7_pwsh.exe
         else
             registryPath += powerShellPath.Replace(@"\", "_");

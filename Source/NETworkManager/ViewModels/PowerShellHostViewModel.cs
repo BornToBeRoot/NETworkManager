@@ -516,8 +516,22 @@ public class PowerShellHostViewModel : ProfileHostViewModelBase
 
         Log.Debug("Write PowerShell profile to registry...");
 
-        PowerShell.WriteDefaultProfileToRegistry(AppearanceManager.ConsoleBackground,
-            AppearanceManager.ConsoleForeground, SettingsManager.Current.PowerShell_ApplicationFilePath);
+        var background = AppearanceManager.ConsoleBackground;
+        var foreground = AppearanceManager.ConsoleForeground;
+        var path = SettingsManager.Current.PowerShell_ApplicationFilePath;
+
+        // In the background: an App Execution Alias (Microsoft Store) is started once to resolve the real path
+        Task.Run(() =>
+        {
+            try
+            {
+                PowerShell.WriteDefaultProfileToRegistry(background, foreground, path);
+            }
+            catch (Exception ex)
+            {
+                Log.Error("Could not write the PowerShell profile to the registry.", ex);
+            }
+        });
     }
 
     #endregion
