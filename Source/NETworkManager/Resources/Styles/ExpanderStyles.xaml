@@ -216,7 +216,6 @@
                                        TextOptions.TextFormattingMode="Display"
                                        Foreground="{TemplateBinding Property=Foreground}"
                                        Style="{StaticResource ResourceKey=DefaultTextBlock}"
-                                       FontSize="18"
                                        Margin="0"
                                        VerticalAlignment="Center"
                                        HorizontalAlignment="Center">
