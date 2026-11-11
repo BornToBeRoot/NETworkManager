@@ -83,6 +83,7 @@ Release date: **xx.xx.2026**
 - While a tab is dragged (e.g. to another window or to split the view), **Remote Desktop**, **PowerShell**, **PuTTY**, **TigerVNC** and **Web Console** show the icon of the tool and the title of the tab instead of an empty area. [#XXXX](https://github.com/BornToBeRoot/NETworkManager/pull/XXXX)
 - New icons: all icons (navigation, toolbars, context menus, messages, status) come from one icon family, [Lucide](https://lucide.dev), instead of five different icon packs. They are drawn as thin lines (calmer, especially at small sizes) and have the same size and position everywhere. [#XXXX](https://github.com/BornToBeRoot/NETworkManager/pull/XXXX)
 - Empty areas (e.g. no firewall rules or Wi-Fi networks found, the path of PuTTY not configured) show a large gray icon above the message; the notices to restart as administrator show a shield. [#XXXX](https://github.com/BornToBeRoot/NETworkManager/pull/XXXX)
+- Status messages below the input (e.g. **IP Scanner**, **Port Scanner**, **DNS Lookup**, **Whois**, **SNMP**, **Wake on LAN**, **Network Interface**) show an icon and the color of the message: errors red, warnings yellow, success green (e.g. `Magic packet sent`), info gray (e.g. `Canceled by user`) - instead of the accent color for all messages. [#XXXX](https://github.com/BornToBeRoot/NETworkManager/pull/XXXX)
 
 **Profiles**
 
