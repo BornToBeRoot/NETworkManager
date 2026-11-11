@@ -168,12 +168,7 @@ public static class AppearanceManager
     ///     List who contains all MahApps.Metro accents.
     /// </summary>
     public static List<AccentColorInfo> Accents { get; set; }
-    #endregion
 
-    #region Constructor
-    /// <summary>
-    ///     Load the MahApps.Metro themes and accents when needed.
-    /// </summary>
     /// <summary>
     ///     Whether animations are shown (e.g. when a dialog is opened or closed): the system-wide policy
     ///     (<see cref="PolicyInfo.Appearance_Animations" />), otherwise the setting; <see cref="AnimationMode.System" />
@@ -187,7 +182,12 @@ public static class AppearanceManager
             AnimationMode.Off => false,
             _ => SystemParameters.ClientAreaAnimation
         };
+    #endregion
 
+    #region Constructor
+    /// <summary>
+    ///     Load the MahApps.Metro themes and accents when needed.
+    /// </summary>
     static AppearanceManager()
     {
         // Themes of MahApps (Light, Dark) and the additional themes (Black, Midnight, ...), created when used; sorted
@@ -276,13 +276,6 @@ public static class AppearanceManager
     }
 
     /// <summary>
-    ///     Sets the background of the main window (<see cref="SurfaceWindowBrushKey" />): the frame color, or with the
-    ///     accent glow (Settings > Appearance) a radial gradient from 6 / 10 / 15 % of the accent (intensity) in the top
-    ///     left corner to the frame color (about 700 x 500 px). Absolute coordinates: the window, the title bar and the navigation (all
-    ///     starting near the top left corner of the window) show one continuous gradient. Called on every theme change
-    ///     and when the setting is changed.
-    /// </summary>
-    /// <summary>
     ///     Amount of the accent in the glow (0 = off).
     /// </summary>
     private static double GetAccentGlowAmount() => SettingsManager.Current?.Appearance_AccentGlowIntensity switch
@@ -293,6 +286,13 @@ public static class AppearanceManager
         _ => 0
     };
 
+    /// <summary>
+    ///     Sets the background of the main window (<see cref="SurfaceWindowBrushKey" />): the frame color, or with the
+    ///     accent glow (Settings > Appearance) a radial gradient from 6 / 10 / 15 % of the accent (intensity) in the top
+    ///     left corner to the frame color (about 700 x 500 px). Absolute coordinates: the window, the title bar and the navigation (all
+    ///     starting near the top left corner of the window) show one continuous gradient. Called on every theme change
+    ///     and when the setting is changed.
+    /// </summary>
     public static void ApplyWindowBrush()
     {
         var amount = GetAccentGlowAmount();
