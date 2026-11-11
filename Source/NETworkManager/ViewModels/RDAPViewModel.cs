@@ -177,6 +177,22 @@ public class RDAPViewModel : ViewModelBase
     }
 
     /// <summary>
+    ///     Level of the status message (icon and color, see <see cref="StatusMessageText" />).
+    /// </summary>
+    public StatusLevel StatusMessageLevel
+    {
+        get;
+        private set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
     ///     Offer to open the domain in the Whois tool, if no RDAP server is known for it.
     /// </summary>
     public bool IsOpenInWhoisVisible
@@ -303,7 +319,7 @@ public class RDAPViewModel : ViewModelBase
 
         if (parseError != RDAPQueryParseError.None)
         {
-            ShowStatusMessage(RDAPQueryValidator.GetErrorMessage(parseError));
+            ShowStatusMessage(RDAPQueryValidator.GetErrorMessage(parseError), StatusLevel.Error);
             IsRunning = false;
 
             return;
@@ -346,18 +362,18 @@ public class RDAPViewModel : ViewModelBase
                 messages.Add(GetReferralErrorMessage(_result.ReferralError, query));
 
             if (messages.Count > 0)
-                ShowStatusMessage(string.Join(Environment.NewLine, messages));
+                ShowStatusMessage(string.Join(Environment.NewLine, messages), StatusLevel.Warning);
 
             ListHelper.Modify(SettingsManager.Current.RDAP_QueryHistory, Query,
                 SettingsManager.Current.General_HistoryListEntries);
         }
         catch (OperationCanceledException)
         {
-            ShowStatusMessage(Strings.CanceledByUserMessage);
+            ShowStatusMessage(Strings.CanceledByUserMessage, StatusLevel.None);
         }
         catch (RDAPException ex)
         {
-            ShowStatusMessage(GetErrorMessage(ex, query));
+            ShowStatusMessage(GetErrorMessage(ex, query), StatusLevel.Error);
 
             if (ex.Kind == RDAPErrorKind.NoServer && query.Type is RDAPQueryType.Domain or RDAPQueryType.TLD)
             {
@@ -368,7 +384,7 @@ public class RDAPViewModel : ViewModelBase
         catch (Exception ex)
         {
             Log.Error("Error while querying RDAP.", ex);
-            ShowStatusMessage(ex.Message);
+            ShowStatusMessage(ex.Message, StatusLevel.Error);
         }
         finally
         {
@@ -383,9 +399,10 @@ public class RDAPViewModel : ViewModelBase
         _cancellationTokenSource?.Cancel();
     }
 
-    private void ShowStatusMessage(string message)
+    private void ShowStatusMessage(string message, StatusLevel level)
     {
         StatusMessage = message;
+        StatusMessageLevel = level;
         IsStatusMessageDisplayed = true;
     }
 

@@ -594,10 +594,9 @@
             <mah:MetroProgressBar
                                   IsIndeterminate="True"
                                   Visibility="{Binding IsRunning, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
-            <TextBlock Foreground="{DynamicResource MahApps.Brushes.Accent}"
+            <controls:StatusMessageText Level="{Binding StatusMessageLevel}"
                        Text="{Binding StatusMessage}"
-                       Visibility="{Binding IsStatusMessageDisplayed, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}"
-                       Style="{StaticResource StatusMessageTextBlock}" />
+                       Visibility="{Binding IsStatusMessageDisplayed, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
         </Grid>
         <TextBlock Grid.Row="4" Grid.ColumnSpan="3" Grid.Column="0">
             <TextBlock.Style>

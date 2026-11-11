@@ -1,5 +1,6 @@
 ﻿using log4net;
 using MahApps.Metro.SimpleChildWindow;
+using NETworkManager.Controls;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models.Export;
 using NETworkManager.Models.Network;
@@ -196,6 +197,22 @@ public class DiscoveryProtocolViewModel : ViewModelBase
     }
 
     /// <summary>
+    ///     Level of the status message (icon and color, see <see cref="StatusMessageText" />).
+    /// </summary>
+    public StatusLevel StatusMessageLevel
+    {
+        get;
+        private set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
     /// Gets or sets a value indicating whether a discovery package has been received.
     /// </summary>
     public bool DiscoveryPackageReceived
@@ -309,6 +326,7 @@ public class DiscoveryProtocolViewModel : ViewModelBase
 
         IsStatusMessageDisplayed = false;
         StatusMessage = string.Empty;
+        StatusMessageLevel = StatusLevel.None;
 
         DiscoveryPackageReceived = false;
 
@@ -443,6 +461,9 @@ public class DiscoveryProtocolViewModel : ViewModelBase
 
         StatusMessage += e.Message;
 
+        if (StatusMessageLevel < StatusLevel.Warning)
+            StatusMessageLevel = StatusLevel.Warning;
+
         IsStatusMessageDisplayed = true;
     }
 
@@ -455,6 +476,7 @@ public class DiscoveryProtocolViewModel : ViewModelBase
             StatusMessage += Environment.NewLine;
 
         StatusMessage += e.Message;
+        StatusMessageLevel = StatusLevel.Error;
 
         IsStatusMessageDisplayed = true;
     }

@@ -232,6 +232,22 @@ public class DNSLookupViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    ///     Level of the status message (icon and color, see <see cref="StatusMessageText" />).
+    /// </summary>
+    public StatusLevel StatusMessageLevel
+    {
+        get;
+        private set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
     #endregion
 
     #region Contructor, load settings
@@ -256,7 +272,7 @@ public class DNSLookupViewModel : ViewModelBase
         {
             _message = message;
 
-            AppendStatusMessage(message);
+            AppendStatusMessage(message, StatusLevel.None);
         }
 
         _isLoading = true;
@@ -377,11 +393,12 @@ public class DNSLookupViewModel : ViewModelBase
     {
         IsStatusMessageDisplayed = false;
         StatusMessage = string.Empty;
+        StatusMessageLevel = StatusLevel.None;
 
         // Message of the tab (see constructor): still shown with the first lookup
         if (_message != null)
         {
-            AppendStatusMessage(_message);
+            AppendStatusMessage(_message, StatusLevel.None);
 
             _message = null;
         }
@@ -524,12 +541,16 @@ public class DNSLookupViewModel : ViewModelBase
     /// Appends the specified message to the current status message, adding a new line if a message already exists.
     /// </summary>
     /// <param name="message">The status message text to append. Cannot be null.</param>
-    private void AppendStatusMessage(string message)
+    private void AppendStatusMessage(string message, StatusLevel level = StatusLevel.Error)
     {
         if (!string.IsNullOrEmpty(StatusMessage))
             StatusMessage += Environment.NewLine;
 
         StatusMessage += message;
+
+        // The most severe message determines the level
+        if (level > StatusMessageLevel)
+            StatusMessageLevel = level;
         IsStatusMessageDisplayed = true;
     }
 
@@ -614,6 +635,7 @@ public class DNSLookupViewModel : ViewModelBase
             if (!IsStatusMessageDisplayed)
             {
                 StatusMessage = statusMessage;
+                StatusMessageLevel = StatusLevel.Error;
                 IsStatusMessageDisplayed = true;
 
                 return;
@@ -621,6 +643,7 @@ public class DNSLookupViewModel : ViewModelBase
 
             // Append the message
             StatusMessage += Environment.NewLine + statusMessage;
+            StatusMessageLevel = StatusLevel.Error;
         }));
     }
 

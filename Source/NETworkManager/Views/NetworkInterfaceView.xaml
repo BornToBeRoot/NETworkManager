@@ -1084,11 +1084,9 @@
                                                     </Rectangle.Style>
                                                 </Rectangle>
                                             </Button>
-                                            <TextBlock Grid.Column="0" Grid.Row="1"
-                                                       Foreground="{DynamicResource MahApps.Brushes.Accent}"
+                                            <icons:StatusMessageText Level="Warning" Grid.Column="0" Grid.Row="1"
                                                        Text="{x:Static localization:Strings.ConnectTheNetworkCardToConfigureIt}"
-                                                       Visibility="{Binding CanConfigure, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}"
-                                                       Style="{DynamicResource DefaultTextBlock}" Margin="0,10,0,0" />
+                                                       Visibility="{Binding CanConfigure, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" Margin="0,10,0,0" />
                                         </Grid>
                                     </StackPanel>
                                     <TextBlock Grid.Row="1" Style="{StaticResource HeaderTextBlock}"
@@ -1289,10 +1287,9 @@
                                         </Style>
                                     </mahAppsControls:MetroProgressBar.Style>
                                 </mahAppsControls:MetroProgressBar>
-                                <TextBlock Grid.Row="3" Foreground="{DynamicResource MahApps.Brushes.Accent}"
+                                <icons:StatusMessageText Level="{Binding StatusMessageLevel}" Grid.Row="3"
                                            Text="{Binding StatusMessage}"
-                                           Visibility="{Binding IsStatusMessageDisplayed, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}"
-                                           Style="{DynamicResource StatusMessageTextBlock}" Margin="0,0,0,10" />
+                                           Visibility="{Binding IsStatusMessageDisplayed, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Margin="0,0,0,10" />
                                 <Grid Grid.Row="4">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*" />

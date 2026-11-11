@@ -1,4 +1,5 @@
 using log4net;
+using NETworkManager.Controls;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models.RDAP;
 using NETworkManager.Settings;
@@ -66,6 +67,22 @@ public class RDAPSettingsViewModel : ViewModelBase
     }
 
     public string StatusMessage
+    {
+        get;
+        private set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
+    ///     Level of the status message (icon and color, see <see cref="StatusMessageText" />).
+    /// </summary>
+    public StatusLevel StatusMessageLevel
     {
         get;
         private set
@@ -173,10 +190,12 @@ public class RDAPSettingsViewModel : ViewModelBase
             await RDAPBootstrapService.GetInstance().UpdateNowAsync(CachePath);
 
             StatusMessage = Strings.BootstrapFilesAreUpToDate;
+            StatusMessageLevel = StatusLevel.Success;
         }
         catch (Exception ex)
         {
             StatusMessage = string.Format(Strings.RDAPBootstrapUnavailableX, ex.Message);
+            StatusMessageLevel = StatusLevel.Error;
         }
 
         IsStatusMessageDisplayed = true;

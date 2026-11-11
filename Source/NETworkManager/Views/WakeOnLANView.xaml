@@ -175,10 +175,9 @@
                             <mahAppsControls:MetroProgressBar Grid.Row="2" Margin="0,10,0,0"
                                                               Visibility="{Binding IsRunning, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}"
                                                               IsIndeterminate="True" />
-                            <TextBlock Grid.Row="3" Foreground="{DynamicResource MahApps.Brushes.Accent}"
+                            <icons:StatusMessageText Level="{Binding StatusMessageLevel}" Grid.Row="3"
                                        Text="{Binding StatusMessage}"
-                                       Visibility="{Binding IsStatusMessageDisplayed, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}"
-                                       Style="{DynamicResource StatusMessageTextBlock}" Margin="0,10,0,0" />
+                                       Visibility="{Binding IsStatusMessageDisplayed, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Margin="0,10,0,0" />
                         </Grid>
                     </TabItem>
                 </TabControl>

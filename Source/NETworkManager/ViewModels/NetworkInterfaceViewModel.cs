@@ -6,6 +6,7 @@ using LiveChartsCore.SkiaSharpView.Painting;
 using LiveChartsCore.SkiaSharpView.Painting.Effects;
 using log4net;
 using MahApps.Metro.SimpleChildWindow;
+using NETworkManager.Controls;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models;
 using NETworkManager.Models.Export;
@@ -116,6 +117,22 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
     /// Gets the status message.
     /// </summary>
     public string StatusMessage
+    {
+        get;
+        private set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
+    ///     Level of the status message (icon and color, see <see cref="StatusMessageText" />).
+    /// </summary>
+    public StatusLevel StatusMessageLevel
     {
         get;
         private set
@@ -1142,11 +1159,13 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
             ReloadNetworkInterfaces();
 
             StatusMessage = Strings.NetworkInterfaceConfigurationAppliedSuccessfully;
+            StatusMessageLevel = StatusLevel.Success;
             IsStatusMessageDisplayed = true;
         }
         catch (Exception ex)
         {
             StatusMessage = ex.Message;
+            StatusMessageLevel = StatusLevel.Error;
             IsStatusMessageDisplayed = true;
         }
         finally
@@ -1202,11 +1221,13 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
             ReloadNetworkInterfaces();
 
             StatusMessage = Strings.NetworkInterfaceConfigurationAppliedSuccessfully;
+            StatusMessageLevel = StatusLevel.Success;
             IsStatusMessageDisplayed = true;
         }
         catch (Exception ex)
         {
             StatusMessage = ex.Message;
+            StatusMessageLevel = StatusLevel.Error;
             IsStatusMessageDisplayed = true;
         }
         finally
@@ -1238,11 +1259,13 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
             await NetworkInterface.FlushDnsAsync();
 
             StatusMessage = Strings.FlushDNSCacheSuccessfully;
+            StatusMessageLevel = StatusLevel.Success;
             IsStatusMessageDisplayed = true;
         }
         catch (Exception ex)
         {
             StatusMessage = ex.Message;
+            StatusMessageLevel = StatusLevel.Error;
             IsStatusMessageDisplayed = true;
         }
         finally
@@ -1272,11 +1295,13 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
                 IPConfigReleaseRenewMode.Renew6 => Strings.IPv6AddressRenewedSuccessfully,
                 _ => string.Empty
             };
+            StatusMessageLevel = StatusLevel.Success;
             IsStatusMessageDisplayed = true;
         }
         catch (Exception ex)
         {
             StatusMessage = ex.Message;
+            StatusMessageLevel = StatusLevel.Error;
             IsStatusMessageDisplayed = true;
         }
         finally
@@ -1311,11 +1336,13 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
             ReloadNetworkInterfaces();
 
             StatusMessage = Strings.IPv4AddressAddedSuccessfully;
+            StatusMessageLevel = StatusLevel.Success;
             IsStatusMessageDisplayed = true;
         }
         catch (Exception ex)
         {
             StatusMessage = ex.Message;
+            StatusMessageLevel = StatusLevel.Error;
             IsStatusMessageDisplayed = true;
         }
         finally
@@ -1342,11 +1369,13 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
             ReloadNetworkInterfaces();
 
             StatusMessage = Strings.IPv4AddressRemovedSuccessfully;
+            StatusMessageLevel = StatusLevel.Success;
             IsStatusMessageDisplayed = true;
         }
         catch (Exception ex)
         {
             StatusMessage = ex.Message;
+            StatusMessageLevel = StatusLevel.Error;
             IsStatusMessageDisplayed = true;
         }
         finally

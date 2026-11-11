@@ -217,10 +217,9 @@
                     </TextBlock.Text>
                 </TextBlock>
             </StackPanel>
-            <TextBlock Grid.Row="2" Foreground="{DynamicResource MahApps.Brushes.Accent}"
+            <icons:StatusMessageText Level="{Binding StatusMessageLevel}" Grid.Row="2"
                        Text="{Binding StatusMessage}"
-                       Visibility="{Binding IsStatusMessageDisplayed, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}"
-                       Style="{DynamicResource StatusMessageTextBlock}" Margin="0,10,0,0" />
+                       Visibility="{Binding IsStatusMessageDisplayed, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Margin="0,10,0,0" />
         </Grid>
         <!-- Header of the result: "Last scan at" / countdown (trimmed first if the header is narrow), repeat and search -->
         <Grid Grid.Row="2">

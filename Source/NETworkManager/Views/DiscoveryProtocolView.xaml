@@ -88,11 +88,9 @@
                                 </Button.Content>
                             </Button>
                         </Grid>
-                        <TextBlock Grid.Column="0" Grid.Row="4"
-                                   Foreground="{DynamicResource MahApps.Brushes.Accent}"
+                        <icons:StatusMessageText Level="{Binding StatusMessageLevel}" Grid.Column="0" Grid.Row="4"
                                    Text="{Binding StatusMessage}"
                                    Visibility="{Binding IsStatusMessageDisplayed, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}"
-                                   Style="{DynamicResource StatusMessageTextBlock}"
                                    Margin="0,0,0,10" />
                         <TextBlock Grid.Column="0" Grid.Row="5"
                                    Text="{x:Static localization:Strings.Result}"
