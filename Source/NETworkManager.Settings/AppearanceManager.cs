@@ -234,6 +234,30 @@ public static class AppearanceManager
     }
 
     /// <summary>
+    ///     Theme whose resources were applied last (see <see cref="ApplyThemeResources" />).
+    /// </summary>
+    private static Theme _appliedTheme;
+
+    /// <summary>
+    ///     Apply the resources computed from the theme (brushes of controls, surfaces, status colors, light / dark
+    ///     overrides). Called on every theme change and after changing the theme: ControlzEx doesn't raise
+    ///     <see cref="ThemeManager.ThemeChanged" /> if the theme is already applied (e.g. at startup with the theme merged
+    ///     in App.xaml), so the resources are applied directly; the same theme is applied only once.
+    /// </summary>
+    /// <param name="theme">Theme that was applied.</param>
+    private static void ApplyThemeResources(Theme theme)
+    {
+        if (theme == null || ReferenceEquals(theme, _appliedTheme))
+            return;
+
+        _appliedTheme = theme;
+
+        ApplyControlStateBrushes(theme);
+        ApplyStatusBrushes(theme);
+        ApplyCustomThemeFixes(theme);
+    }
+
+    /// <summary>
     ///     Method to load the custom themes from a folder into the <see cref="ThemeManager" />.
     /// </summary>
     private static void LoadCustomThemes()
@@ -318,7 +342,10 @@ public static class AppearanceManager
         if (!ThemeVariants.EnsureTheme(name) || ThemeManager.Current.GetTheme(name) == null)
             name = $"{GlobalStaticConfiguration.Appearance_Theme}.{GlobalStaticConfiguration.Appearance_Accent}";
 
-        ThemeManager.Current.ChangeTheme(System.Windows.Application.Current, name);
+        var theme = ThemeManager.Current.ChangeTheme(System.Windows.Application.Current, name);
+
+        // Also if ThemeChanged wasn't raised (theme already applied)
+        ApplyThemeResources(theme);
     }
 
     /// <summary>
@@ -516,11 +543,11 @@ public static class AppearanceManager
     /// <summary>
     ///     Apply the brush overrides of the built-in light / dark theme (not for custom themes).
     /// </summary>
-    /// <param name="theme">Theme name as "theme.accent".</param>
-    private static void ApplyCustomThemeFixes(string theme)
+    /// <param name="theme">Theme that was applied.</param>
+    private static void ApplyCustomThemeFixes(Theme theme)
     {
-        // Don't apply on custom themes (only built-in light/dark themes)
-        if (CustomThemes.Any(x => x.Name.Equals(theme, StringComparison.OrdinalIgnoreCase)))
+        // Don't apply on custom themes (only built-in and additional themes)
+        if (CustomThemes.Any(x => x.Name.Equals(theme.Name, StringComparison.OrdinalIgnoreCase)))
             return;
 
         // Get application resources
@@ -531,17 +558,10 @@ public static class AppearanceManager
         appResources.MergedDictionaries.Remove(DarkThemeOverrideDictionary);
 
 
-        // Theme name is in format "theme.accent"
-        switch (theme.ToLowerInvariant().Split('.')[0])
-        {
-            case "light":
-                appResources.MergedDictionaries.Add(LightThemeOverrideDictionary);
-                break;
-
-            case "dark":
-                appResources.MergedDictionaries.Add(DarkThemeOverrideDictionary);
-                break;
-        }
+        // Light or dark by the background (also the additional themes, e.g. Mist, Midnight), not by the name
+        appResources.MergedDictionaries.Add(ThemeVariants.IsDark(theme)
+            ? DarkThemeOverrideDictionary
+            : LightThemeOverrideDictionary);
 
         // Refresh UI
         foreach (Window window in System.Windows.Application.Current.Windows)
@@ -556,9 +576,7 @@ public static class AppearanceManager
     #region Events
     private static void Current_ThemeChanged(object sender, ThemeChangedEventArgs e)
     {
-        ApplyControlStateBrushes(e.NewTheme);
-        ApplyStatusBrushes(e.NewTheme);
-        ApplyCustomThemeFixes(e.NewTheme.Name);
+        ApplyThemeResources(e.NewTheme);
     }
     #endregion
 }
