@@ -54,9 +54,10 @@ public static class PowerShell
 
     /// <summary>
     ///     Real paths of App Execution Aliases (Microsoft Store), resolved once per start of the application (the real
-    ///     path contains the version and changes with every update).
+    ///     path contains the version and changes with every update). Lazy, so parallel calls start the alias only once;
+    ///     a failed resolve is removed and tried again next time.
     /// </summary>
-    private static readonly ConcurrentDictionary<string, string> ResolvedAliases = new(StringComparer.OrdinalIgnoreCase);
+    private static readonly ConcurrentDictionary<string, Lazy<string>> ResolvedAliases = new(StringComparer.OrdinalIgnoreCase);
 
     /// <summary>
     ///     Write default (global) PowerShell profile to registry: the console settings of Windows (conhost) in
@@ -80,7 +81,12 @@ public static class PowerShell
         if (!IsAppExecutionAlias(powerShellPath))
             return;
 
-        var realPath = ResolvedAliases.GetOrAdd(powerShellPath, ResolveAppExecutionAlias);
+        var resolved = ResolvedAliases.GetOrAdd(powerShellPath, x => new Lazy<string>(() => ResolveAppExecutionAlias(x)));
+        var realPath = resolved.Value;
+
+        // Not resolved (e.g. timeout): try again with the next write
+        if (string.IsNullOrEmpty(realPath))
+            ResolvedAliases.TryRemove(new KeyValuePair<string, Lazy<string>>(powerShellPath, resolved));
 
         if (!string.IsNullOrEmpty(realPath) && !string.Equals(realPath, powerShellPath, StringComparison.OrdinalIgnoreCase))
             WriteProfile(background, foreground, realPath);
@@ -121,15 +127,21 @@ public static class PowerShell
             if (process == null)
                 return null;
 
-            var output = process.StandardOutput.ReadToEnd().Trim();
+            // Read asynchronously, so the timeout also applies if the process doesn't end (ReadToEnd would block)
+            var outputTask = process.StandardOutput.ReadToEndAsync();
 
             if (!process.WaitForExit(10000))
             {
-                process.Kill();
+                process.Kill(true);
                 Log.Warn($"Timeout while resolving the App Execution Alias \"{aliasPath}\".");
 
                 return null;
             }
+
+            if (!outputTask.Wait(2000))
+                return null;
+
+            var output = outputTask.Result.Trim();
 
             Log.Info($"App Execution Alias \"{aliasPath}\" resolved to \"{output}\".");
 
