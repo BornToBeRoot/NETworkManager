@@ -548,9 +548,7 @@ public class DNSLookupViewModel : ViewModelBase
 
         StatusMessage += message;
 
-        // The most severe message determines the level
-        if (level > StatusMessageLevel)
-            StatusMessageLevel = level;
+        StatusMessageLevel = StatusMessageLevel.MostSevere(level);
         IsStatusMessageDisplayed = true;
     }
 
@@ -635,7 +633,7 @@ public class DNSLookupViewModel : ViewModelBase
             if (!IsStatusMessageDisplayed)
             {
                 StatusMessage = statusMessage;
-                StatusMessageLevel = StatusLevel.Error;
+                StatusMessageLevel = StatusMessageLevel.MostSevere(StatusLevel.Error);
                 IsStatusMessageDisplayed = true;
 
                 return;
@@ -643,7 +641,7 @@ public class DNSLookupViewModel : ViewModelBase
 
             // Append the message
             StatusMessage += Environment.NewLine + statusMessage;
-            StatusMessageLevel = StatusLevel.Error;
+            StatusMessageLevel = StatusMessageLevel.MostSevere(StatusLevel.Error);
         }));
     }
 

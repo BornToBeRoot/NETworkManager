@@ -26,3 +26,15 @@ public enum StatusLevel
     /// </summary>
     Error
 }
+
+/// <summary>
+///     Helpers for <see cref="StatusLevel" />.
+/// </summary>
+public static class StatusLevelExtensions
+{
+    /// <summary>
+    ///     The more severe of two levels (None &lt; Success &lt; Warning &lt; Error), e.g. when a message is appended to the
+    ///     status message: the most severe message determines the icon and color.
+    /// </summary>
+    public static StatusLevel MostSevere(this StatusLevel level, StatusLevel other) => other > level ? other : level;
+}

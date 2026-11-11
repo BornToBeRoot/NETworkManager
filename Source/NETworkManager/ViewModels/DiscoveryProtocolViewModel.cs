@@ -461,8 +461,7 @@ public class DiscoveryProtocolViewModel : ViewModelBase
 
         StatusMessage += e.Message;
 
-        if (StatusMessageLevel < StatusLevel.Warning)
-            StatusMessageLevel = StatusLevel.Warning;
+        StatusMessageLevel = StatusMessageLevel.MostSevere(StatusLevel.Warning);
 
         IsStatusMessageDisplayed = true;
     }
@@ -476,7 +475,7 @@ public class DiscoveryProtocolViewModel : ViewModelBase
             StatusMessage += Environment.NewLine;
 
         StatusMessage += e.Message;
-        StatusMessageLevel = StatusLevel.Error;
+        StatusMessageLevel = StatusMessageLevel.MostSevere(StatusLevel.Error);
 
         IsStatusMessageDisplayed = true;
     }

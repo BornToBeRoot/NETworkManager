@@ -1516,8 +1516,8 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     /// <param name="message">Message to show.</param>
     private void AddStatusMessage(string message, StatusLevel level)
     {
-        // The most severe message determines the level
-        StatusMessageLevel = IsStatusMessageDisplayed && StatusMessageLevel > level ? StatusMessageLevel : level;
+        // Appended: the most severe message determines the level, otherwise the level of the new message
+        StatusMessageLevel = IsStatusMessageDisplayed ? StatusMessageLevel.MostSevere(level) : level;
         StatusMessage = IsStatusMessageDisplayed ? StatusMessage + Environment.NewLine + message : message;
         IsStatusMessageDisplayed = true;
     }
