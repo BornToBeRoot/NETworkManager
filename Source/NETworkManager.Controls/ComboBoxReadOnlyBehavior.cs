@@ -69,12 +69,15 @@ public static class ComboBoxReadOnlyBehavior
 
         switch (key)
         {
-            // Select another entry or open the drop-down (F4, Alt + Up / Down)
+            // Select another entry or open the drop-down (Alt + Up / Down)
             case Key.Up:
             case Key.Down:
             case Key.PageUp:
             case Key.PageDown:
-            case Key.F4:
+                e.Handled = true;
+                break;
+            // Open the drop-down - only F4 itself, Alt + F4 closes the window
+            case Key.F4 when e.Key != Key.System:
                 e.Handled = true;
                 break;
             // Not editable: select the first / last entry (editable: move the caret in the text)
