@@ -7,8 +7,6 @@ namespace NETworkManager.Views;
 
 public partial class SNMPOIDProfilesChildWindow
 {
-    private readonly Window _parentWindow;
-
     public SNMPOIDProfilesChildWindow(Window parentWindow)
     {
         InitializeComponent();
@@ -16,21 +14,7 @@ public partial class SNMPOIDProfilesChildWindow
         // Set the width and height of the child window based on the parent window size
         ChildWindowMaxWidth = 850;
         ChildWindowMaxHeight = 650;
-        ChildWindowWidth = parentWindow.ActualWidth * 0.85;
-        //ChildWindowHeight = parentWindow.ActualHeight * 0.85;
-
-        _parentWindow = parentWindow;
-
-        // Update the size of the child window when the parent window is resized (while the dialog is open,
-        // unsubscribed when it is closed - otherwise the parent window keeps every closed dialog in memory)
-        _parentWindow.SizeChanged += ParentWindow_SizeChanged;
-        Unloaded += (_, _) => _parentWindow.SizeChanged -= ParentWindow_SizeChanged;
-    }
-
-    private void ParentWindow_SizeChanged(object sender, SizeChangedEventArgs e)
-    {
-        ChildWindowWidth = _parentWindow.ActualWidth * 0.85;
-        //ChildWindowHeight = _parentWindow.ActualHeight * 0.85;
+        ChildWindowSizeHelper.FollowParentSize(this, parentWindow, height: false);
     }
 
     private void ChildWindow_OnLoaded(object sender, RoutedEventArgs e)
