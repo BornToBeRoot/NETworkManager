@@ -307,13 +307,10 @@ public class PingMonitorViewModel : ViewModelBase, IPingMonitorHostStatus
 
         var chartColor = ChartColors.Primary;
 
-        var labelColor = Application.Current?.TryFindResource("MahApps.Brushes.Gray5") is System.Windows.Media.SolidColorBrush gray5
-            ? new SKColor(gray5.Color.R, gray5.Color.G, gray5.Color.B, gray5.Color.A)
-            : new SKColor(0x68, 0x68, 0x68);
+        var labelColor = ChartColors.FromResource("MahApps.Brushes.Gray5", new SKColor(0x68, 0x68, 0x68));
 
-        var separatorColor = Application.Current?.TryFindResource("Brushes.Surface.Border") is System.Windows.Media.SolidColorBrush gray8
-            ? new SKColor(gray8.Color.R, gray8.Color.G, gray8.Color.B, gray8.Color.A)
-            : new SKColor(0x80, 0x80, 0x80);
+        // Incl. the opacity of the brush (10 %)
+        var separatorColor = ChartColors.FromResource("Brushes.Surface.Border", new SKColor(0x80, 0x80, 0x80, 0x40));
 
         Series =
         [

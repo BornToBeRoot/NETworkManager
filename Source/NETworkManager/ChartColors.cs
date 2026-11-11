@@ -65,6 +65,19 @@ public static class ChartColors
     }
 
     /// <summary>
+    /// Color of a brush of the application (e.g. <c>MahApps.Brushes.Gray5</c> for labels, <c>Brushes.Surface.Border</c>
+    /// for separators) for a chart, incl. the opacity of the brush (the surface brushes keep the color opaque and get
+    /// their low opacity from <see cref="Brush.Opacity" />).
+    /// </summary>
+    /// <param name="resourceKey">Resource key of a <see cref="SolidColorBrush" />.</param>
+    /// <param name="fallback">Color if the resource is not found.</param>
+    public static SKColor FromResource(string resourceKey, SKColor fallback) =>
+        Application.Current?.TryFindResource(resourceKey) is SolidColorBrush brush
+            ? new SKColor(brush.Color.R, brush.Color.G, brush.Color.B,
+                (byte)System.Math.Round(brush.Color.A * brush.Opacity))
+            : fallback;
+
+    /// <summary>
     /// <see cref="Primary"/> as WPF color (e.g. the traceroute map).
     /// </summary>
     public static Color PrimaryWpf => Color.FromRgb(Primary.Red, Primary.Green, Primary.Blue);
