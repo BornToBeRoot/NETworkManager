@@ -506,6 +506,11 @@ public class PowerShellHostViewModel : ProfileHostViewModelBase
         FocusEmbeddedWindow();
     }
 
+    /// <summary>
+    ///     Serializes the writes of the PowerShell profile (see <see cref="WriteDefaultProfileToRegistry" />).
+    /// </summary>
+    private static readonly object RegistryWriteLock = new();
+
     private void WriteDefaultProfileToRegistry()
     {
         if (!SettingsManager.Current.Appearance_PowerShellModifyGlobalProfile)
@@ -516,16 +521,18 @@ public class PowerShellHostViewModel : ProfileHostViewModelBase
 
         Log.Debug("Write PowerShell profile to registry...");
 
-        var background = AppearanceManager.ConsoleBackground;
-        var foreground = AppearanceManager.ConsoleForeground;
-        var path = SettingsManager.Current.PowerShell_ApplicationFilePath;
-
-        // In the background: an App Execution Alias (Microsoft Store) is started once to resolve the real path
+        // In the background: an App Execution Alias (Microsoft Store) is started once to resolve the real path. One
+        // write at a time with the current colors and path, so the last write always has the latest values (e.g. after
+        // several theme changes) - not the values of a task that was started earlier
         Task.Run(() =>
         {
             try
             {
-                PowerShell.WriteDefaultProfileToRegistry(background, foreground, path);
+                lock (RegistryWriteLock)
+                {
+                    PowerShell.WriteDefaultProfileToRegistry(AppearanceManager.ConsoleBackground,
+                        AppearanceManager.ConsoleForeground, SettingsManager.Current.PowerShell_ApplicationFilePath);
+                }
             }
             catch (Exception ex)
             {
