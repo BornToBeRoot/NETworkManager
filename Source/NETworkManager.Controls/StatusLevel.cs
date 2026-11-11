@@ -1,10 +1,8 @@
-﻿using System.Windows.Shapes;
-
-namespace NETworkManager.Converters;
+﻿namespace NETworkManager.Controls;
 
 /// <summary>
-///     Status of a value in a list (e.g. the action of a firewall rule), shown as colored dot (style <c>StatusDot</c>:
-///     <see cref="Ellipse" /> with the level as <c>Tag</c>) in front of the text.
+///     Status of a value or message: colored dot in front of a value in a list (style <c>StatusDot</c>, the level as
+///     <c>Tag</c>, e.g. the action of a firewall rule) or icon + color of a status message (<see cref="StatusMessageText" />).
 /// </summary>
 public enum StatusLevel
 {

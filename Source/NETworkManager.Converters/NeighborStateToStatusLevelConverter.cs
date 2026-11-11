@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using System.Windows.Data;
+using NETworkManager.Controls;
 using NETworkManager.Models.Network;
 
 namespace NETworkManager.Converters;

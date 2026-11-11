@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using System.Windows.Data;
+using NETworkManager.Controls;
 using NETworkManager.Models.Firewall;
 
 namespace NETworkManager.Converters;
