@@ -2,6 +2,7 @@
 using System.Windows.Media;
 using LiveChartsCore.Painting;
 using LiveChartsCore.SkiaSharpView.Painting;
+using NETworkManager.Settings;
 using SkiaSharp;
 
 namespace NETworkManager;
@@ -42,7 +43,7 @@ public static class ChartColors
     /// </summary>
     private static bool IsDark =>
         Application.Current?.TryFindResource("MahApps.Colors.ThemeBackground") is not Color background ||
-        0.2126 * background.R + 0.7152 * background.G + 0.0722 * background.B < 128;
+        ThemeVariants.IsDark(background);
 
     /// <summary>
     /// Main series (ping time, download, cities of the traceroute map).

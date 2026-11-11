@@ -198,9 +198,7 @@ public static class AppearanceManager
             .Select(x => new ThemeColorInfo
             { Name = x.BaseColorScheme, Color = x.Resources["MahApps.Brushes.ThemeBackground"] as Brush })
             .Concat(ThemeVariants.Themes.Select(x => new ThemeColorInfo { Name = x.Name, Color = CreateFrozenBrush(x.Background, 1) }))
-            .OrderByDescending(x => x.Color is SolidColorBrush { Color: var color }
-                ? 0.2126 * color.R + 0.7152 * color.G + 0.0722 * color.B
-                : 0)];
+            .OrderByDescending(x => x.Color is SolidColorBrush { Color: var color } ? ThemeVariants.Luminance(color) : 0)];
 
         // Accents of MahApps and the additional accents (Sky, Ocean, ...), sorted by name
         Accents = [.. ThemeManager.Current.Themes

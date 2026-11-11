@@ -151,7 +151,13 @@ public static class ThemeVariants
     ///     themes are detected by their background).
     /// </summary>
     public static bool IsDark(Theme theme) =>
-        theme.Resources["MahApps.Colors.ThemeBackground"] is not Color background || Luminance(background) < 128;
+        theme.Resources["MahApps.Colors.ThemeBackground"] is not Color background || IsDark(background);
+
+    /// <summary>
+    ///     <see langword="true" /> if the background color is dark (luminance below the middle). The one rule for light /
+    ///     dark in the application (themes, overrides, charts).
+    /// </summary>
+    public static bool IsDark(Color background) => Luminance(background) < 128;
 
     private static ResourceDictionary Copy(Theme source)
     {
@@ -253,7 +259,10 @@ public static class ThemeVariants
 
     private static Color WithAlpha(Color color, byte alpha) => Color.FromArgb(alpha, color.R, color.G, color.B);
 
-    private static double Luminance(Color color) => 0.2126 * color.R + 0.7152 * color.G + 0.0722 * color.B;
+    /// <summary>
+    ///     Relative luminance of a color (0 - 255, Rec. 709 weights), e.g. to sort the themes from light to dark.
+    /// </summary>
+    public static double Luminance(Color color) => 0.2126 * color.R + 0.7152 * color.G + 0.0722 * color.B;
 
     private static Color Blend(Color color, Color target, double amount) => Color.FromRgb(
         (byte)Math.Round(color.R + (target.R - color.R) * amount),
