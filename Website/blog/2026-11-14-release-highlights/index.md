@@ -1,16 +1,16 @@
 ---
 slug: release-highlights
-title: "What's New: Run Command, Visual Traceroute, a Smarter IP Scanner and a Fresh Look"
-description: "The next NETworkManager release brings a run command to start any tool from the keyboard, a world map for Traceroute, an IP Scanner that finds and identifies far more devices, and a redesigned interface with new themes - plus hundreds of improvements and bug fixes."
+title: "What's New: Run Command, Visual Traceroute, a Smarter IP Scanner, RDAP and a Fresh Look"
+description: "The next NETworkManager release brings a run command to start any tool from the keyboard, a world map for Traceroute, an IP Scanner that finds and identifies far more devices, RDAP as the modern successor of Whois, and a redesigned interface with new themes - plus hundreds of improvements and bug fixes."
 authors: [borntoberoot]
-tags: [release, run command, traceroute, ip scanner, theme, ui, new feature]
-keywords: [NETworkManager, release, what's new, run command, command palette, visual traceroute, traceroute map, IP Scanner, network discovery, device detection, theme, dark theme, redesign, UI]
+tags: [release, run command, traceroute, ip scanner, rdap, theme, ui, new feature]
+keywords: [NETworkManager, release, what's new, run command, command palette, visual traceroute, traceroute map, IP Scanner, network discovery, device detection, RDAP, Whois, theme, dark theme, redesign, UI]
 draft: true
 ---
 
 {/* TODO before publishing: rename the folder to the release date, set the version below, remove `draft: true`, replace the placeholders. */}
 
-The next release of NETworkManager (version **2026.x.x.0**) is one of the biggest so far: a **run command** to start any tool from the keyboard, a **world map** for Traceroute, an **IP Scanner** that finds and identifies far more devices, and a **redesigned interface** with new themes and accent colors. On top of that, it contains more than 150 improvements and more than 150 bug fixes across all tools.
+The next release of NETworkManager (version **2026.x.x.0**) is one of the biggest so far: a **run command** to start any tool from the keyboard, a **world map** for Traceroute, an **IP Scanner** that finds and identifies far more devices, the new **RDAP** tool, and a **redesigned interface** with new themes and accent colors. On top of that, it contains more than 150 improvements and more than 150 bug fixes across all tools.
 
 :::note[Placeholder]
 
@@ -86,6 +86,16 @@ Screenshot of the IP Scanner with the new columns (OS, open ports, web, since la
 
 Reading the Windows host information with credentials needs care in a domain - learn how NETworkManager prevents account lockouts in the [FAQ](https://borntoberoot.net/NETworkManager/docs/faq/windows-account-lockout-protection). All probes and settings are explained in the [IP Scanner documentation](https://borntoberoot.net/NETworkManager/docs/application/ip-scanner#how-hosts-are-found).
 
+## RDAP
+
+The new **RDAP** tool looks up who a domain, an IP address, an AS number or an organization is registered to - via the Registration Data Access Protocol, the standardized successor of Whois. Results are structured (details, events, nameservers, DNSSEC, contacts), come over HTTPS, and NETworkManager finds the responsible registry automatically, including the referral to the registrar for domains like `.com`. If a registry only offers Whois, the domain opens in the **Whois** tool with one click.
+
+![RDAP](../../docs/img/rdap.png)
+
+RDAP is also available from the context menu of the **IP Scanner** and **Traceroute** (e.g. the AS number of a hop) and from the run command (`rdap borntoberoot.net`).
+
+Learn more in the deep dive [Introducing RDAP](https://borntoberoot.net/NETworkManager/blog/introducing-rdap) and the [RDAP documentation](https://borntoberoot.net/NETworkManager/docs/application/rdap).
+
 ## A fresh look
 
 The whole interface was redesigned for a calmer, more modern look - without changing where things are:
@@ -106,7 +116,6 @@ Choose your theme and accent in [Settings > Appearance](https://borntoberoot.net
 
 ## More highlights
 
-- **RDAP**: the modern successor of Whois - [read the introduction](https://borntoberoot.net/NETworkManager/blog/introducing-rdap).
 - **WiFi**: see new, gone and changed access points since the last scan, with notifications.
 - **Tabs**: dynamic tab width, and dragged-out tabs can be dropped anywhere on a tab bar - a hint shows where.
 - **DNS**: a list of DNS servers with ports, and a DNS suffix for bare hostnames in all tools.
