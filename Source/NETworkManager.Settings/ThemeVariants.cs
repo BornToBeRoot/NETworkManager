@@ -197,29 +197,51 @@ public static class ThemeVariants
         if (resources["MahApps.Colors.ThemeBackground"] is not Color sourceBackground)
             return;
 
+        Recolor(resources, color => TintGray(color, sourceBackground, background));
+    }
+
+    /// <summary>
+    ///     A neutral gray of the source theme tinted toward the background of the additional theme: fully at the
+    ///     background, less for darker (black stays black) and lighter grays; other colors are not changed.
+    /// </summary>
+    private static Color TintGray(Color color, Color sourceBackground, Color background)
+    {
+        if (Math.Max(color.R, Math.Max(color.G, color.B)) - Math.Min(color.R, Math.Min(color.G, color.B)) >
+            NeutralTolerance)
+            return color;
+
         var sourceLuminance = Luminance(sourceBackground);
+        var luminance = Luminance(color);
 
-        Recolor(resources, color =>
-        {
-            if (Math.Max(color.R, Math.Max(color.G, color.B)) - Math.Min(color.R, Math.Min(color.G, color.B)) >
-                NeutralTolerance)
-                return color;
+        var weight = luminance <= sourceLuminance
+            ? sourceLuminance <= 0 ? 1 : luminance / sourceLuminance
+            : Math.Clamp(1 - (luminance - sourceLuminance) / (TintEndLuminance - sourceLuminance), 0, 1);
 
-            var luminance = Luminance(color);
+        if (weight <= 0)
+            return color;
 
-            // Weight of the tint: full at the background, less for darker (black stays black) and lighter grays
-            var weight = luminance <= sourceLuminance
-                ? sourceLuminance <= 0 ? 1 : luminance / sourceLuminance
-                : Math.Clamp(1 - (luminance - sourceLuminance) / (TintEndLuminance - sourceLuminance), 0, 1);
+        return Color.FromArgb(color.A,
+            Shift(color.R, background.R - sourceBackground.R, weight),
+            Shift(color.G, background.G - sourceBackground.G, weight),
+            Shift(color.B, background.B - sourceBackground.B, weight));
+    }
 
-            if (weight <= 0)
-                return color;
+    /// <summary>
+    ///     A neutral gray (e.g. of the light / dark overrides of <see cref="AppearanceManager" />) tinted like the grays of
+    ///     the theme, if it is an additional theme (e.g. Mist); otherwise the color itself.
+    /// </summary>
+    /// <param name="color">Neutral gray for the theme of MahApps the theme is based on.</param>
+    /// <param name="theme">Theme that is applied.</param>
+    internal static Color TintGray(Color color, Theme theme)
+    {
+        var variant = Themes.FirstOrDefault(x => x.Name == theme.BaseColorScheme);
 
-            return Color.FromArgb(color.A,
-                Shift(color.R, background.R - sourceBackground.R, weight),
-                Shift(color.G, background.G - sourceBackground.G, weight),
-                Shift(color.B, background.B - sourceBackground.B, weight));
-        });
+        if (variant == null ||
+            ThemeManager.Current.GetTheme($"{variant.SourceBaseColorScheme}.{SourceColorScheme}")?.Resources[
+                "MahApps.Colors.ThemeBackground"] is not Color sourceBackground)
+            return color;
+
+        return TintGray(color, sourceBackground, variant.Background);
     }
 
     /// <summary>

@@ -29,6 +29,12 @@ public static class AppearanceManager
     };
 
     /// <summary>
+    ///     Overrides of the applied theme (copy of <see cref="LightThemeOverrideDictionary" /> /
+    ///     <see cref="DarkThemeOverrideDictionary" />, tinted for an additional theme).
+    /// </summary>
+    private static ResourceDictionary _themeOverrideDictionary;
+
+    /// <summary>
     ///     Dictionary to override some brushes for the dark theme.
     /// </summary>
     private static readonly ResourceDictionary DarkThemeOverrideDictionary = new()
@@ -552,15 +558,23 @@ public static class AppearanceManager
         // Get application resources
         var appResources = System.Windows.Application.Current.Resources;
 
-        // Remove any existing theme overrides
-        appResources.MergedDictionaries.Remove(LightThemeOverrideDictionary);
-        appResources.MergedDictionaries.Remove(DarkThemeOverrideDictionary);
+        // Remove the overrides of the previous theme
+        if (_themeOverrideDictionary != null)
+            appResources.MergedDictionaries.Remove(_themeOverrideDictionary);
 
+        // Light or dark by the background (also the additional themes, e.g. Mist, Midnight), not by the name. The grays
+        // are tinted like the other grays of an additional theme (e.g. the blue-gray of Mist)
+        var source = ThemeVariants.IsDark(theme) ? DarkThemeOverrideDictionary : LightThemeOverrideDictionary;
 
-        // Light or dark by the background (also the additional themes, e.g. Mist, Midnight), not by the name
-        appResources.MergedDictionaries.Add(ThemeVariants.IsDark(theme)
-            ? DarkThemeOverrideDictionary
-            : LightThemeOverrideDictionary);
+        _themeOverrideDictionary = new ResourceDictionary();
+
+        foreach (var key in source.Keys)
+        {
+            if (source[key] is SolidColorBrush brush)
+                _themeOverrideDictionary[key] = CreateFrozenBrush(ThemeVariants.TintGray(brush.Color, theme), 1);
+        }
+
+        appResources.MergedDictionaries.Add(_themeOverrideDictionary);
 
         // Refresh UI
         foreach (Window window in System.Windows.Application.Current.Windows)
