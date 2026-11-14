@@ -512,6 +512,14 @@ public class PowerShellHostViewModel : ProfileHostViewModelBase
     /// </summary>
     private static readonly object AliasProfileWriteLock = new();
 
+    /// <summary>
+    ///     Console colors for the background write (see <see cref="WriteDefaultProfileToRegistry" />): set on the UI
+    ///     thread, read by the task as one reference (the color tuples could be read half written otherwise).
+    /// </summary>
+    private sealed record AliasProfileColors((byte R, byte G, byte B) Background, (byte R, byte G, byte B) Foreground);
+
+    private static volatile AliasProfileColors _aliasProfileColors;
+
     private void WriteDefaultProfileToRegistry()
     {
         if (!SettingsManager.Current.Appearance_PowerShellModifyGlobalProfile)
@@ -541,6 +549,9 @@ public class PowerShellHostViewModel : ProfileHostViewModelBase
         // App Execution Alias (Microsoft Store): the alias is started once to resolve the real path, in the background.
         // One write at a time with the current colors, so the last write always has the latest values (e.g. after
         // several theme changes) - not the values of a task that was started earlier
+        _aliasProfileColors = new AliasProfileColors(AppearanceManager.ConsoleBackground,
+            AppearanceManager.ConsoleForeground);
+
         Task.Run(() =>
         {
             try
@@ -549,9 +560,12 @@ public class PowerShellHostViewModel : ProfileHostViewModelBase
                 {
                     var realPath = PowerShell.ResolveAppExecutionAlias(powerShellPath);
 
-                    if (realPath != null)
-                        PowerShell.WriteDefaultProfileToRegistry(AppearanceManager.ConsoleBackground,
-                            AppearanceManager.ConsoleForeground, realPath);
+                    if (realPath == null)
+                        return;
+
+                    var colors = _aliasProfileColors;
+
+                    PowerShell.WriteDefaultProfileToRegistry(colors.Background, colors.Foreground, realPath);
                 }
             }
             catch (Exception ex)
