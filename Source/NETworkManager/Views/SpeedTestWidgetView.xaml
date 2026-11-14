@@ -105,7 +105,7 @@
                                                 <Condition Binding="{Binding IsRunning}" Value="True" />
                                                 <Condition Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True" />
                                             </MultiDataTrigger.Conditions>
-                                            <Setter Property="Fill" Value="Red" />
+                                            <Setter Property="Fill" Value="{DynamicResource Brushes.Status.Error}" />
                                         </MultiDataTrigger>
                                     </Style.Triggers>
                                 </Style>

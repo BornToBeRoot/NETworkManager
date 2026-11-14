@@ -128,7 +128,7 @@
                                     </MultiDataTrigger.Conditions>
                                     <MultiDataTrigger.Setters>
                                         <Setter Property="OpacityMask" Value="{StaticResource VisualDisconnected}" />
-                                        <Setter Property="Fill" Value="Red" />
+                                        <Setter Property="Fill" Value="{DynamicResource Brushes.Status.Error}" />
                                     </MultiDataTrigger.Setters>
                                 </MultiDataTrigger>
                             </Style.Triggers>
@@ -214,7 +214,7 @@
                                     <DataTrigger
                                         Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}"
                                         Value="True">
-                                        <Setter Property="Fill" Value="Red" />
+                                        <Setter Property="Fill" Value="{DynamicResource Brushes.Status.Error}" />
                                     </DataTrigger>
                                 </Style.Triggers>
                             </Style>

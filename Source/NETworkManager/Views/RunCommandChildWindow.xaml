@@ -387,7 +387,7 @@
                                             <DataTrigger
                                                 Binding="{Binding IsMouseOver, RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
                                                 Value="True">
-                                                <Setter Property="Fill" Value="Red" />
+                                                <Setter Property="Fill" Value="{DynamicResource Brushes.Status.Error}" />
                                             </DataTrigger>
                                         </Style.Triggers>
                                     </Style>
