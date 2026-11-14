@@ -34,7 +34,7 @@ Accent of the application which is based on [`MahApps.Metro themes`](https://mah
 
 **Type:** `String`
 
-**Default:** `Mint` (`Lime` before version 2026.11.14.0 - existing settings keep their accent)
+**Default:** `Mint`
 
 **Possible values:**
 
