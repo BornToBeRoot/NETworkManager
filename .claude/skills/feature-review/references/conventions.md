@@ -150,7 +150,9 @@ Reference: `HostsFileEditorView.xaml`, `FirewallView.xaml`.
 
 - Long tooltip text uses `WrapToolTip` (max. 400px, wrapping); help/warn/error icons use `HelpToolTip`,
   `WarnToolTip`, `ErrorToolTip` (`ToolTipStyles.xaml`, `RectangleStyles.xaml`).
-- Status text: `AccentTextBlock` / `StatusMessageTextBlock`, shown via `IsStatusMessageDisplayed`.
+- Status messages: `StatusMessageText` (`Text`, `Level` = `StatusLevel`: icon + color), shown via
+  `IsStatusMessageDisplayed`; the view model sets `StatusMessageLevel` with every message (appended messages:
+  `StatusLevel.MostSevere`). Never the accent color for messages.
 
 ## Layout
 

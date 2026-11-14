@@ -96,8 +96,6 @@
         <Setter Property="TextWrapping" Value="Wrap" />
     </Style>
 
-    <Style x:Key="StatusMessageTextBlock" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource WrapTextBlock}" />
-
     <!-- Status message of a tool (icons:StatusMessageText): icon (16) + text in the color of the level - info gray,
          success green, warning yellow, error red. Implicit style -->
     <Style x:Key="DefaultStatusMessageText" TargetType="{x:Type icons:StatusMessageText}">
