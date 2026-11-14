@@ -134,10 +134,11 @@ public static class ExpanderAnimation
         if (FindChevron(expander) is not { } chevron)
             return;
 
-        var animate = AppearanceManager.AnimationsEnabled;
+        // Not while hidden (e.g. all collapsed with the expander scrolled out / in a recycled container): nothing to see
+        var animate = AppearanceManager.AnimationsEnabled && expander.IsVisible;
 
         // Without animations: the trigger of the template sets the angle, unless an own transform was set before
-        // (animations turned off later) - then set its angle
+        // (animations turned off later, expander hidden) - then set its angle
         if (!animate)
         {
             if (chevron.RenderTransform is RotateTransform { IsFrozen: false } ownRotate)
@@ -162,6 +163,8 @@ public static class ExpanderAnimation
     /// <summary>
     /// The chevron: the first visible element named <see cref="ChevronName"/> or with this tag (if several in one view,
     /// e.g. the profile panel) - breadth-first, the header is above the chevrons of nested expanders in the content.
+    /// Visible by its own <see cref="UIElement.Visibility"/> (not <see cref="UIElement.IsVisible"/>), so the chevron is
+    /// also found while the expander itself is hidden.
     /// </summary>
     private static FrameworkElement FindChevron(DependencyObject root)
     {
@@ -173,7 +176,7 @@ public static class ExpanderAnimation
             var element = queue.Dequeue();
 
             // Hidden part (e.g. the other state): not its chevrons
-            if (element is UIElement { IsVisible: false })
+            if (element is UIElement { Visibility: not Visibility.Visible })
                 continue;
 
             if (element is FrameworkElement chevron && !ReferenceEquals(element, root) &&
