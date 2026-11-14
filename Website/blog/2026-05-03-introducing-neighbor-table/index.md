@@ -39,7 +39,7 @@ Each row in the table represents one cached neighbor entry and includes:
 | **State** | Current reachability state (Reachable, Stale, Permanent, …). |
 | **Multicast** | Indicates whether the IP address is a multicast address. |
 
-You can refresh the table at any time with `F5`, and right-click any row to copy or export individual values, or to delete the selected entry.
+You can refresh the table at any time with `F5` or let it update automatically (**Automatically update every**), and right-click any row to copy or export individual values, or to delete the selected entry. **Delete table** removes all dynamic entries at once (permanent entries are kept).
 
 ## Adding static entries
 
@@ -57,7 +57,7 @@ Adding and deleting neighbor entries requires administrator privileges. If NETwo
 
 ## Try it now
 
-You can test this feature in the [latest pre-release of NETworkManager](https://borntoberoot.net/NETworkManager/download#pre-release).
+The Neighbor Table is available in the [latest version of NETworkManager](https://borntoberoot.net/NETworkManager/download).
 
 More details are available in the [official documentation](https://borntoberoot.net/NETworkManager/docs/application/neighbor-table).
 
