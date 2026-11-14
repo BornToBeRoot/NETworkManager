@@ -55,7 +55,8 @@
     </Style>
 
     <!-- Message in an empty area with an icon above (e.g. no rules found, restart as administrator): gray icon
-         (IconSize, default 40) + the text like MessageTextBlock. Implicit style for icons:EmptyStateMessage -->
+         (IconSize, default 40) + the text like MessageTextBlock. Nothing is shown without a text (e.g. a bound error
+         message that is empty), also if the Visibility is set on the control. Implicit style for icons:EmptyStateMessage -->
     <Style x:Key="DefaultEmptyStateMessage" TargetType="{x:Type icons:EmptyStateMessage}">
         <Setter Property="Focusable" Value="False" />
         <Setter Property="IsTabStop" Value="False" />
@@ -64,7 +65,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type icons:EmptyStateMessage}">
-                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <StackPanel x:Name="Root" VerticalAlignment="Center" HorizontalAlignment="Center">
                         <icons:LucideIcon x:Name="Icon"
                                           Kind="{TemplateBinding Icon}"
                                           Width="{TemplateBinding IconSize}"
@@ -79,6 +80,12 @@
                     <ControlTemplate.Triggers>
                         <Trigger Property="Icon" Value="None">
                             <Setter TargetName="Icon" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+                        <Trigger Property="Text" Value="{x:Null}">
+                            <Setter TargetName="Root" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+                        <Trigger Property="Text" Value="">
+                            <Setter TargetName="Root" Property="Visibility" Value="Collapsed" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
