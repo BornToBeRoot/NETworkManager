@@ -570,8 +570,9 @@ SemiBold (section headers), `MessageTextBlock` 16 gray (messages in empty areas)
 - Status values in lists (e.g. firewall action, TCP / neighbor state): `StatusDot` (8 px `Ellipse` in front of the text,
   `Tag` = `StatusLevel` None / Success / Warning / Error via a `*ToStatusLevelConverter`), text in the normal color.
   Template columns set `ClipboardContentBinding` to keep the text for copying.
-- Empty areas (no results, missing prerequisite, restart as administrator): `EmptyStateMessage` (`Icon`, `Text`,
-  `IconSize` 40, 24 for notices below a list) instead of a bare `MessageTextBlock`; loading texts stay `MessageTextBlock`.
+- Empty areas (no results, missing prerequisite): `EmptyStateMessage` (`Icon`, `Text`, `IconSize` 40) instead of a bare
+  `MessageTextBlock`; loading texts stay `MessageTextBlock`. Restart as administrator below a list: `AdminNotice`
+  (`Text` = the tool's `*AdminMessage`, `Command`; one row: shield + message, button on the right).
 - Status messages of a tool (below the input, e.g. errors, "canceled by user", "magic packet sent"): `StatusMessageText`
   (`Text`, `Level` = `StatusLevel`: icon + color - info gray, success green, warning yellow, error red). The view model
   sets `StatusMessageLevel` with every `StatusMessage` (appended messages keep the most severe level). Never the accent

@@ -74,8 +74,8 @@ Reference: `HostsFileEditorView.xaml`, `FirewallView.xaml`, `NetworkInterfaceVie
   feature-specific permission like `HasPermissionToConfigure`).
 - Disabled actions get `wpfHelpers:PermissionToolTipHelper.Text` (the tool's `*AdminMessage`) and
   `PermissionToolTipHelper.HasPermission` — on buttons, context menu items and profile menu items.
-- A banner at the bottom (`MahApps.Brushes.Gray10` background, `MessageTextBlock` with the `*AdminMessage`,
-  **Restart as administrator** button with the `Shield` icon) is shown when not elevated.
+- A notice at the bottom (`icons:AdminNotice`: one row with shield + the `*AdminMessage`, **Restart as
+  Administrator** button on the right) is shown when not elevated.
 
 ## Data grids, selection and context menus
 

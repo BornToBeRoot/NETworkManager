@@ -4,14 +4,14 @@ using System.Windows.Controls;
 namespace NETworkManager.Controls;
 
 /// <summary>
-///     Message in an empty area (e.g. no rules found, restart as administrator, configure the path): a gray
+///     Message in an empty area (e.g. no rules found, configure the path): a gray
 ///     <see cref="Icon" /> above the <see cref="Text" />. The look (template, text style) is defined by the style
 ///     <c>DefaultEmptyStateMessage</c> of the application (TextBlockStyles.xaml, implicit style).
 /// </summary>
 public class EmptyStateMessage : Control
 {
     /// <summary>
-    ///     Default size of the icon (empty area). Notices (e.g. restart as administrator below a list) use 24.
+    ///     Default size of the icon (empty area).
     /// </summary>
     public const double DefaultIconSize = 40;
 
