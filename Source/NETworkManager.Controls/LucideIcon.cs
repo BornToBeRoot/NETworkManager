@@ -135,7 +135,10 @@ public class LucideIcon : FrameworkElement
                 LineJoin = PenLineJoin.Round
             };
 
-            pen.Freeze();
+            // Freezing the pen freezes its brush too: only if the brush is frozen already (a shared brush must not be
+            // frozen as a side effect, an animated / bound brush can't be frozen)
+            if (Foreground is not { IsFrozen: false })
+                pen.Freeze();
 
             drawingContext.DrawGeometry(null, pen, stroke);
         }
