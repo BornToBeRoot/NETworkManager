@@ -17,17 +17,20 @@ This is especially useful if you frequently spin up local services (lab environm
 
 ## Manage rules safely (and without touching your system rules)
 
-The Firewall view intentionally focuses on rules managed by NETworkManager only.
+By default, the Firewall view focuses on rules managed by NETworkManager.
 
 Every rule created via NETworkManager is stored with a `NETworkManager_` prefix in the Windows Firewall rule display name. This makes it easy to distinguish "your" rules from system-managed or third-party rules — and it allows NETworkManager to filter the list so you only see what it owns.
 
+If you need the full picture, enable **Show all rules** in **Settings > Firewall**: all active Windows Firewall rules are shown, with an icon that tells whether a rule is managed by NETworkManager, by another application or by a policy (Group Policy / MDM). Rules of other applications can be enabled, disabled or deleted, rules from a policy can't be changed locally - and every rule can be used as a template for a new one.
+
 ## What you can do with the new Firewall feature
 
-- View firewall rules created by NETworkManager
+- View firewall rules created by NETworkManager (or all rules, see above)
 - Add new inbound or outbound rules
-- Edit existing rules
-- Enable or disable rules quickly
-- Delete rules you no longer need
+- Edit existing rules (also with a double-click)
+- Create a new rule based on an existing one with **Copy as...**
+- Enable, disable or delete one or several rules at once
+- Search by name, program, ports, addresses and more
 - Copy or export rule information
 - Refresh the list with `F5`
 - Open the native Windows Firewall console (`WF.msc`) via the **Windows Firewall Settings** button
@@ -45,8 +48,8 @@ When creating or editing a rule, NETworkManager exposes the most common and impo
 - **Action**: Allow / Block
 - **Protocol**: Any, TCP, UDP, ICMPv4, ICMPv6, GRE, L2TP
 - **Local / Remote ports**: Available for TCP and UDP; multiple ports and ranges separated by `;`
-- **Local / Remote addresses**: Supports single IPs, ranges, subnets (CIDR and subnet masks), and keywords such as `LocalSubnet` or `Internet`
-- **Program**: Limit the rule to a specific executable (optional)
+- **Local / Remote addresses**: Supports single IPs, ranges and subnets (CIDR and subnet masks); remote addresses also keywords such as `LocalSubnet` or `Internet`
+- **Program**: Limit the rule to a specific executable (optional, select it with a file dialog)
 - **Interface type**: Any, Wired, Wireless, RemoteAccess
 - **Network profiles**: Domain / Private / Public (at least one must be selected)
 
@@ -58,6 +61,6 @@ Managing firewall rules requires elevated rights. If NETworkManager is not runni
 
 ## Try it now
 
-You can test this feature in the [latest pre-release of NETworkManager](https://borntoberoot.net/NETworkManager/download#pre-release).
+The Firewall is available in the [latest version of NETworkManager](https://borntoberoot.net/NETworkManager/download).
 
 If you find any issues or have suggestions for improvement, please open an [issue on GitHub](https://github.com/BornToBeRoot/NETworkManager/issues).
