@@ -624,25 +624,8 @@ public class DNSLookupViewModel : ViewModelBase
     /// </summary>
     private void DNSLookup_LookupError(object sender, DNSLookupErrorArgs e)
     {
-        Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
-        {
-            // Build the message based on the information in the DNSLookupErrorArgs
-            var statusMessage = $"{e.Query} @ {e.IPEndPoint} ==> {e.ErrorMessage}";
-
-            // Show the message
-            if (!IsStatusMessageDisplayed)
-            {
-                StatusMessage = statusMessage;
-                StatusMessageLevel = StatusMessageLevel.MostSevere(StatusLevel.Error);
-                IsStatusMessageDisplayed = true;
-
-                return;
-            }
-
-            // Append the message
-            StatusMessage += Environment.NewLine + statusMessage;
-            StatusMessageLevel = StatusMessageLevel.MostSevere(StatusLevel.Error);
-        }));
+        Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal,
+            new Action(() => AppendStatusMessage($"{e.Query} @ {e.IPEndPoint} ==> {e.ErrorMessage}")));
     }
 
     /// <summary>
