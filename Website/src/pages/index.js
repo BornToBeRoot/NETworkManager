@@ -120,6 +120,15 @@ export default function Home() {
           <Heading as="h2">See It in Action</Heading>
           <div className={styles.previewSingle}>
             <img
+              src="./img/preview-run-command.gif"
+              alt="Run command preview"
+            />
+            <p className={styles.previewCaption}>
+              Run command: start any tool from the keyboard with Ctrl+Shift+P.
+            </p>
+          </div>
+          <div className={styles.previewSingle}>
+            <img
               src="./img/preview-tabs-drag-drop.gif"
               alt="Tabs and drag & drop preview"
             />

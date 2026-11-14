@@ -59,7 +59,7 @@
 </div>
 
 <div align="center">
-  <img alt="NETworkManager Features Preview" src="https://github.com/BornToBeRoot/NETworkManager/blob/main/Website/static/img/preview-features.gif?raw=true" />
+  <img alt="NETworkManager Features Preview" src="https://github.com/BornToBeRoot/NETworkManager/blob/main/Website/static/img/social-card.png?raw=true" />
 </div>
 
 ## 🚀 Why NETworkManager?
@@ -142,21 +142,9 @@ Thank you for helping keep NETworkManager thriving!
 
 <div align="center">
 
-<img alt="NETworkManager tabs and drag & drop preview" src="https://github.com/BornToBeRoot/NETworkManager/blob/main/Website/static/img/preview-profiles.gif?raw=true" />
+<img alt="NETworkManager run command preview" src="https://github.com/BornToBeRoot/NETworkManager/blob/main/Website/static/img/preview-run-command.gif?raw=true" />
 
-Encrypted profile files, group & profile management.
-
----
-
-<img alt="NETworkManager tabs and drag & drop preview" src="https://github.com/BornToBeRoot/NETworkManager/blob/main/Website/static/img/preview-tabs-drag-drop.gif?raw=true" />
-
-Tabs and drag & drop functionality.
-
----
-
-<img alt="NETworkManager dark/light theme preview" src="https://github.com/BornToBeRoot/NETworkManager/blob/main/Website/static/img/preview-light-theme.png?raw=true" />
-
-Customizable light/dark themes and accent colors.
+Run command: start any tool from the keyboard with `Ctrl+Shift+P`.
 
 </div>
 

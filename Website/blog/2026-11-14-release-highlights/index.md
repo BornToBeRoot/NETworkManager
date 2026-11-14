@@ -38,11 +38,7 @@ subnet 10.0.0.0/16 /24
 - The input is **validated like in the tool** itself, and the dialog shows how it was understood (e.g. `Hosts: borntoberoot.net`, `Type: AAAA`).
 - Open it from the **Run command...** box in the title bar, or from anywhere in Windows with an optional **global hotkey** (`Ctrl+Alt+P`).
 
-:::note[Placeholder]
-
-Screenshot / GIF of the run command (e.g. typing `dns borntoberoot.net aaaa` with suggestions).
-
-:::
+![Run command](../../docs/img/run-command.gif)
 
 All commands and their syntax are listed in the [Run Command documentation](https://borntoberoot.net/NETworkManager/docs/run-command).
 
