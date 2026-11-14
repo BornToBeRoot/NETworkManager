@@ -461,8 +461,16 @@ public class PuTTYHostViewModel : ProfileHostViewModelBase
 
         Log.Debug("Write PuTTY profile to registry...");
 
-        PuTTY.WriteDefaultProfileToRegistry(AppearanceManager.ConsoleBackground, AppearanceManager.ConsoleForeground,
-            AppearanceManager.ConsoleBoldForeground);
+        // Also called on a theme change: an error (e.g. access denied) must not break it
+        try
+        {
+            PuTTY.WriteDefaultProfileToRegistry(AppearanceManager.ConsoleBackground,
+                AppearanceManager.ConsoleForeground, AppearanceManager.ConsoleBoldForeground);
+        }
+        catch (Exception ex)
+        {
+            Log.Error("Could not write the PuTTY profile to the registry.", ex);
+        }
     }
 
     #endregion

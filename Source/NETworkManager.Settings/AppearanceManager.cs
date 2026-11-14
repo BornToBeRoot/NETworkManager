@@ -115,7 +115,8 @@ public static class AppearanceManager
     public static (byte R, byte G, byte B) ConsoleBoldForeground { get; private set; } = (0xFF, 0xFF, 0xFF);
 
     /// <summary>
-    ///     Raised after a theme change when the console colors are set (to update the profiles of PuTTY / PowerShell).
+    ///     Raised after a theme change, when all resources and the console colors are set (to update the profiles of
+    ///     PuTTY / PowerShell).
     /// </summary>
     public static event EventHandler ConsoleColorsChanged;
 
@@ -260,7 +261,9 @@ public static class AppearanceManager
         ApplyStatusBrushes(theme);
         ApplyCustomThemeFixes(theme);
 
+        // After all resources are applied: a handler that fails can't leave the theme half applied
         ThemeResourcesChanged?.Invoke(null, EventArgs.Empty);
+        ConsoleColorsChanged?.Invoke(null, EventArgs.Empty);
     }
 
     /// <summary>
@@ -425,7 +428,6 @@ public static class AppearanceManager
         ConsoleBackground = ToRgb(background);
         ConsoleForeground = ToRgb(Blend(background, foreground, ThemeVariants.IsDark(theme) ? 0.75 : 0.88));
         ConsoleBoldForeground = ToRgb(foreground);
-        ConsoleColorsChanged?.Invoke(null, EventArgs.Empty);
 
         ApplyDataGridBrushes(theme, foreground);
         ApplyToggleSwitchDisabledBrushes(theme);
