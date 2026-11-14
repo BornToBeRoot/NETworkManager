@@ -110,7 +110,12 @@ Custom themes override the [`Accent`](#accent) and [`Theme`](#theme) settings.
 
 ### Animations
 
-Animations of the application, e.g. when a dialog is opened or closed (short zoom and fade).
+Animations of the application: dialogs zoom and fade in when they are opened (the run command slides down), the
+indicator of the selected tool in the navigation grows in, expanders rotate their arrow and fade in their content,
+notifications slide in and the progress of the scanners moves smoothly.
+
+Short fades of colors (e.g. the mouse over background of buttons and the navigation, tooltips, the darkened background
+behind a dialog) are always shown - they don't move anything.
 
 **Type:** `NETworkManager.Models.Appearance.AnimationMode`
 
@@ -120,7 +125,7 @@ Animations of the application, e.g. when a dialog is opened or closed (short zoo
 
 - `System` - Follow the Windows setting **Animation effects** (Windows 11: Settings > Accessibility > Visual effects, Windows 10: Settings > Ease of Access > Display > **Show animations in Windows**). It is often turned off on terminal servers, in virtual machines and in Remote Desktop sessions.
 - `On` - Always show animations.
-- `Off` - Never show animations.
+- `Off` - Don't show animations.
 
 <details className="alert alert--info">
 <summary>System-Wide Policy</summary>

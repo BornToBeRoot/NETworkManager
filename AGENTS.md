@@ -587,7 +587,9 @@ see `.claude/skills/feature-review/references/conventions.md`.
 content transitions** when switching tools; check `AppearanceManager.AnimationsEnabled` when an animation starts):
 `ChildWindowAnimation` (dialogs zoom 92 → 100 %, run command `Kind="SlideDown"`), `SelectionIndicatorAnimation`
 (navigation indicator), `ExpanderAnimation` (chevron rotates, content fades in; `SwapChevron` for the profile panel),
-`SmoothProgress`, tooltip fade, notification slide-in. Native windows (Remote Desktop, PuTTY, PowerShell, TigerVNC,
+`SmoothProgress`, notification slide-in. Short color / opacity fades in XAML storyboards (button and navigation hover /
+pressed layers, tooltip, dialog overlay) don't move anything and are always shown (documented in the Animations
+setting). Native windows (Remote Desktop, PuTTY, PowerShell, TigerVNC,
 WebView2) can't be animated, clipped or put in transparent windows.
 
 **Accent glow**: only in the window frame (`Brushes.Surface.Window`), not on dialogs, overlays or controls.
