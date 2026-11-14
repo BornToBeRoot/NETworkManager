@@ -82,9 +82,9 @@ public partial class TracerouteMapControl
     // Cities deliberately don't follow the accent: they use the main chart color (ChartColors.Primary,
     // like the speedtest download series, darker in the light theme) so they stay a consistent
     // "reference point" color that doesn't compete with the accent-colored traceroute path.
-    // Not frozen: shared by all dots / labels, its color is set again after a theme change (see
-    // AppearanceManager_ThemeResourcesChanged).
-    private readonly SolidColorBrush _cityBrush = new(ChartColors.PrimaryWpf);
+    // Frozen (shared by ~900 dots and ~900 labels), replaced on the dots / labels after a theme
+    // change (see ApplyCityBrush).
+    private Brush _cityBrush = FreezeBrush(ChartColors.PrimaryWpf);
 
     // Shared by every label/dot so a single assignment (in ApplyTransform) keeps their on-screen
     // size constant while the map itself is scaled by the parent Canvas' zoom transform. Elements
@@ -235,7 +235,7 @@ public partial class TracerouteMapControl
     private void TracerouteMapControl_Loaded(object sender, RoutedEventArgs e)
     {
         // Color of the cities: also if the theme was changed while the control was unloaded (e.g. tab dragged out)
-        _cityBrush.Color = ChartColors.PrimaryWpf;
+        ApplyCityBrush();
 
         AppearanceManager.ThemeResourcesChanged -= AppearanceManager_ThemeResourcesChanged;
         AppearanceManager.ThemeResourcesChanged += AppearanceManager_ThemeResourcesChanged;
@@ -258,7 +258,26 @@ public partial class TracerouteMapControl
 
     private void AppearanceManager_ThemeResourcesChanged(object sender, EventArgs e)
     {
-        _cityBrush.Color = ChartColors.PrimaryWpf;
+        ApplyCityBrush();
+    }
+
+    /// <summary>
+    /// Sets the color of the cities for the current theme (a new frozen brush on all dots and labels), if it changed.
+    /// </summary>
+    private void ApplyCityBrush()
+    {
+        var color = ChartColors.PrimaryWpf;
+
+        if (_cityBrush is SolidColorBrush current && current.Color == color)
+            return;
+
+        _cityBrush = FreezeBrush(color);
+
+        foreach (var dot in CitiesCanvas.Children.OfType<Ellipse>())
+            dot.Fill = _cityBrush;
+
+        foreach (var label in _cityLabels)
+            label.Foreground = _cityBrush;
     }
 
     private void TracerouteMapControl_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
@@ -1582,6 +1601,14 @@ public partial class TracerouteMapControl
     #endregion
 
     #region Country data
+
+    private static Brush FreezeBrush(Color color)
+    {
+        var brush = new SolidColorBrush(color);
+        brush.Freeze();
+
+        return brush;
+    }
 
     private static StreamGeometry BuildCountriesGeometry()
     {
