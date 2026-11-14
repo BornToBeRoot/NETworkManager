@@ -1,4 +1,5 @@
 {
+  "Appearance_Animations": false,
   "Update_CheckForUpdatesAtStartup": false,
   "Profiles_FolderLocation": "\\\\Server\\Shared\\NETworkManager\\Profiles",
   "Settings_FolderLocation": "%UserProfile%\\NETworkManager\\Settings"

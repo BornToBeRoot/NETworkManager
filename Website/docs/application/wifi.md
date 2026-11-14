@@ -120,9 +120,9 @@ The status of the connection (`Connecting to ...`, the result or the error) is s
 
 On the **Channels** tab, the networks of the selected adapter are drawn on the channels of their band, with their channel width and signal strength. This helps to find overlapping networks and a free channel.
 
-The tab is split into two sub-tabs:
+The charts are shown one below the other (scroll to see all):
 
-- **2.4 & 5 GHz**: one chart for the 2.4 GHz and one for the 5 GHz band. The unused range between the channels 64 and 100 of the 5 GHz band is compressed.
+- **2.4 GHz** and **5 GHz**: one chart per band. The unused range between the channels 64 and 100 of the 5 GHz band is compressed.
 - **6 GHz**: the lower (channels 1 - 125) and the upper channels (129 - 233) in two charts. A network whose channel crosses the split (e.g. 320 MHz around channel 127) is shown in both.
 
 Each network is drawn as a band over its whole channel width (20, 40, 80, 160 or 320 MHz), centered on the center of the channel (e.g. 80 MHz with the primary channel 36 covers the channels 36 - 48), so overlapping networks can be identified. If the channel width is estimated, the network is drawn around its primary channel. The legend below each chart lists the networks with their color (SSID and BSSID). The background shows the signal quality: excellent (-30 dBm and better), good (-67 to -30 dBm), reliable (-70 to -67 dBm), weak (-80 to -70 dBm) and poor (below -80 dBm).

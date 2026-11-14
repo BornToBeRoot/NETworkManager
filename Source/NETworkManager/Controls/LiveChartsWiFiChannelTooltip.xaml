@@ -5,8 +5,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d">
     <Border Background="{DynamicResource MahApps.Brushes.Window.Background}"
-            BorderBrush="{DynamicResource MahApps.Brushes.Gray8}"
+            BorderBrush="{DynamicResource Brushes.Surface.Border}"
             BorderThickness="1"
+            CornerRadius="{StaticResource CornerRadius.Control}"
             IsHitTestVisible="False">
         <ItemsControl Margin="10" ItemsSource="{Binding TooltipEntries}">
             <ItemsControl.ItemTemplate>
@@ -26,7 +27,7 @@
                                     VerticalAlignment="Center">
                             <TextBlock Text="{Binding Ssid}"
                                        Style="{StaticResource AccentTextBlock}" />
-                            <TextBlock Text="{Binding Bssid}"
+                            <TextBlock Text="{Binding Bssid}" FontFamily="{StaticResource Fonts.Family.Mono}"
                                        Style="{StaticResource ConsoleTextBlock}" />
                         </StackPanel>
                         <StackPanel Grid.Column="4" Orientation="Vertical"

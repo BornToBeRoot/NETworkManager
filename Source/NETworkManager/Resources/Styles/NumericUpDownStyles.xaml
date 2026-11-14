@@ -2,11 +2,23 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls">
     <Style x:Key="DefaultNumericUpDown" TargetType="{x:Type mah:NumericUpDown}">
+        <Style.Resources>
+            <!-- Disabled: no MahApps overlay, dimmed instead (see DefaultComboBox) -->
+            <SolidColorBrush x:Key="MahApps.Brushes.Control.Disabled" Color="Transparent" />
+        </Style.Resources>
         <Setter Property="Width" Value="150" />
         <Setter Property="HorizontalAlignment" Value="Left" />
         <Setter Property="FontSize" Value="14" />
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Gray8}" />
+        <Setter Property="mah:ControlsHelper.FocusBorderBrush" Value="{DynamicResource MahApps.Brushes.Gray5}" />
+        <Setter Property="mah:ControlsHelper.MouseOverBorderBrush" Value="{DynamicResource Brushes.Control.Border.MouseOver}" />
         <Setter Property="Validation.ErrorTemplate" Value="{StaticResource DefaultErrorTemplate}" />
+        <Setter Property="mah:ControlsHelper.CornerRadius" Value="{StaticResource CornerRadius.Control}" />
+        <Style.Triggers>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Opacity" Value="0.55" />
+            </Trigger>
+        </Style.Triggers>
     </Style>
 
     <Style TargetType="{x:Type mah:NumericUpDown}" BasedOn="{StaticResource DefaultNumericUpDown}" />

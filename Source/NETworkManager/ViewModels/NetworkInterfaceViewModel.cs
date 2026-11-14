@@ -3,9 +3,9 @@ using LiveChartsCore.Drawing;
 using LiveChartsCore.Kernel;
 using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore.SkiaSharpView.Painting;
-using LiveChartsCore.SkiaSharpView.Painting.Effects;
 using log4net;
 using MahApps.Metro.SimpleChildWindow;
+using NETworkManager.Controls;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models;
 using NETworkManager.Models.Export;
@@ -116,6 +116,22 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
     /// Gets the status message.
     /// </summary>
     public string StatusMessage
+    {
+        get;
+        private set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
+    ///     Level of the status message (icon and color, see <see cref="StatusMessageText" />).
+    /// </summary>
+    public StatusLevel StatusMessageLevel
     {
         get;
         private set
@@ -520,7 +536,32 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
         // React to settings changes (e.g. the configurable bandwidth chart time window)
         SettingsManager.Current.PropertyChanged += SettingsManager_PropertyChanged;
 
+        // Colors of the bandwidth chart for the new theme (the paints don't follow the theme)
+        AppearanceManager.ThemeResourcesChanged += (_, _) => ApplyBandwidthChartColors();
+
         _isLoading = false;
+    }
+
+    /// <summary>
+    /// Sets the colors of the bandwidth chart (series, axes, legend) for the current theme.
+    /// </summary>
+    private void ApplyBandwidthChartColors()
+    {
+        var colors = new[] { ChartColors.Primary, ChartColors.Secondary };
+
+        for (var i = 0; i < Series.Length && i < colors.Length; i++)
+        {
+            if (Series[i] is not LineSeries<LvlChartsDefaultInfo> series)
+                continue;
+
+            series.Stroke = ChartColors.LineStroke(colors[i]);
+            series.Fill = ChartColors.AreaFill(colors[i]);
+        }
+
+        ChartColors.ApplyAxisColors(BandwidthXAxes[0]);
+        ChartColors.ApplyAxisColors(BandwidthYAxes[0]);
+
+        BandwidthLegendTextPaint = new SolidColorPaint(ChartColors.LabelColor) { SKTypeface = SKTypeface.Default };
     }
 
     /// <summary>
@@ -558,16 +599,8 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
 
         UpdateMaxBandwidthValues();
 
-        var downloadColor = SKColor.Parse("#1ba1e2");
-        var uploadColor = SKColor.Parse("#7fba00");
-
-        var labelColor = Application.Current?.TryFindResource("MahApps.Brushes.Gray5") is System.Windows.Media.SolidColorBrush gray5
-            ? new SKColor(gray5.Color.R, gray5.Color.G, gray5.Color.B, gray5.Color.A)
-            : new SKColor(0x68, 0x68, 0x68);
-
-        var separatorColor = Application.Current?.TryFindResource("MahApps.Brushes.Gray8") is System.Windows.Media.SolidColorBrush gray8
-            ? new SKColor(gray8.Color.R, gray8.Color.G, gray8.Color.B, gray8.Color.A)
-            : new SKColor(0x80, 0x80, 0x80);
+        var downloadColor = ChartColors.Primary;
+        var uploadColor = ChartColors.Secondary;
 
         Series =
         [
@@ -581,8 +614,8 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
                 GeometrySize = 0,
                 LineSmoothness = 0.3,
                 DataPadding = new LvcPoint(0, 0),
-                Stroke = new SolidColorPaint(downloadColor) { StrokeThickness = 1.5f },
-                Fill = new SolidColorPaint(downloadColor.WithAlpha(0x33))
+                Stroke = ChartColors.LineStroke(downloadColor),
+                Fill = ChartColors.AreaFill(downloadColor)
             },
             new LineSeries<LvlChartsDefaultInfo>
             {
@@ -594,8 +627,8 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
                 GeometrySize = 0,
                 LineSmoothness = 0.3,
                 DataPadding = new LvcPoint(0, 0),
-                Stroke = new SolidColorPaint(uploadColor) { StrokeThickness = 1.5f },
-                Fill = new SolidColorPaint(uploadColor.WithAlpha(0x33))
+                Stroke = ChartColors.LineStroke(uploadColor),
+                Fill = ChartColors.AreaFill(uploadColor)
             }
         ];
 
@@ -607,12 +640,8 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
                     _bandwidthSessionStartTime.AddSeconds(value)),
                 TextSize = 10,
                 Padding = new Padding(0, 4, 0, 0),
-                LabelsPaint = new SolidColorPaint(labelColor),
-                SeparatorsPaint = new SolidColorPaint(separatorColor)
-                {
-                    StrokeThickness = 1,
-                    PathEffect = new DashEffect([10f, 10f])
-                },
+                LabelsPaint = ChartColors.LabelPaint(),
+                SeparatorsPaint = ChartColors.SeparatorPaint(),
                 MinStep = BandwidthChartWindowSeconds / 4.0,
                 ForceStepToMin = true
             }
@@ -626,16 +655,12 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
                 Labeler = value => $"{FileSizeConverter.GetBytesReadable((long)value * 8)}it/s",
                 TextSize = 11,
                 Padding = new Padding(4, 0),
-                LabelsPaint = new SolidColorPaint(labelColor),
-                SeparatorsPaint = new SolidColorPaint(separatorColor)
-                {
-                    StrokeThickness = 1,
-                    PathEffect = new DashEffect([10f, 10f])
-                }
+                LabelsPaint = ChartColors.LabelPaint(),
+                SeparatorsPaint = ChartColors.SeparatorPaint()
             }
         ];
 
-        BandwidthLegendTextPaint = new SolidColorPaint(labelColor) { SKTypeface = SKTypeface.Default };
+        BandwidthLegendTextPaint = new SolidColorPaint(ChartColors.LabelColor) { SKTypeface = SKTypeface.Default };
 
         BandwidthXAxes[0].PropertyChanged += (_, args) =>
         {
@@ -677,7 +702,18 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
     /// <summary>
     /// Gets the themed paint used for the chart legend text.
     /// </summary>
-    public SolidColorPaint BandwidthLegendTextPaint { get; private set; }
+    public SolidColorPaint BandwidthLegendTextPaint
+    {
+        get;
+        private set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
 
     /// <summary>
     /// Gets a value indicating whether the bandwidth chart is in live (auto-scrolling) mode.
@@ -1142,11 +1178,13 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
             ReloadNetworkInterfaces();
 
             StatusMessage = Strings.NetworkInterfaceConfigurationAppliedSuccessfully;
+            StatusMessageLevel = StatusLevel.Success;
             IsStatusMessageDisplayed = true;
         }
         catch (Exception ex)
         {
             StatusMessage = ex.Message;
+            StatusMessageLevel = StatusLevel.Error;
             IsStatusMessageDisplayed = true;
         }
         finally
@@ -1202,11 +1240,13 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
             ReloadNetworkInterfaces();
 
             StatusMessage = Strings.NetworkInterfaceConfigurationAppliedSuccessfully;
+            StatusMessageLevel = StatusLevel.Success;
             IsStatusMessageDisplayed = true;
         }
         catch (Exception ex)
         {
             StatusMessage = ex.Message;
+            StatusMessageLevel = StatusLevel.Error;
             IsStatusMessageDisplayed = true;
         }
         finally
@@ -1238,11 +1278,13 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
             await NetworkInterface.FlushDnsAsync();
 
             StatusMessage = Strings.FlushDNSCacheSuccessfully;
+            StatusMessageLevel = StatusLevel.Success;
             IsStatusMessageDisplayed = true;
         }
         catch (Exception ex)
         {
             StatusMessage = ex.Message;
+            StatusMessageLevel = StatusLevel.Error;
             IsStatusMessageDisplayed = true;
         }
         finally
@@ -1272,11 +1314,13 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
                 IPConfigReleaseRenewMode.Renew6 => Strings.IPv6AddressRenewedSuccessfully,
                 _ => string.Empty
             };
+            StatusMessageLevel = StatusLevel.Success;
             IsStatusMessageDisplayed = true;
         }
         catch (Exception ex)
         {
             StatusMessage = ex.Message;
+            StatusMessageLevel = StatusLevel.Error;
             IsStatusMessageDisplayed = true;
         }
         finally
@@ -1311,11 +1355,13 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
             ReloadNetworkInterfaces();
 
             StatusMessage = Strings.IPv4AddressAddedSuccessfully;
+            StatusMessageLevel = StatusLevel.Success;
             IsStatusMessageDisplayed = true;
         }
         catch (Exception ex)
         {
             StatusMessage = ex.Message;
+            StatusMessageLevel = StatusLevel.Error;
             IsStatusMessageDisplayed = true;
         }
         finally
@@ -1342,11 +1388,13 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
             ReloadNetworkInterfaces();
 
             StatusMessage = Strings.IPv4AddressRemovedSuccessfully;
+            StatusMessageLevel = StatusLevel.Success;
             IsStatusMessageDisplayed = true;
         }
         catch (Exception ex)
         {
             StatusMessage = ex.Message;
+            StatusMessageLevel = StatusLevel.Error;
             IsStatusMessageDisplayed = true;
         }
         finally

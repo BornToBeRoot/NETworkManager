@@ -90,7 +90,7 @@
         <TextBlock Text="{x:Static localization:Strings.Port}" Style="{DynamicResource DefaultTextBlock}"
                    Margin="0,0,0,10" />
         <TextBox Width="250" HorizontalAlignment="Left"
-                 mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExamplePort3389}"
+                 mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExamplePort3389}" FontFamily="{StaticResource Fonts.Family.Mono}"
                  Style="{StaticResource DefaultTextBox}" Margin="0,0,0,20">
             <TextBox.Text>
                 <Binding Path="Port" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
@@ -126,7 +126,7 @@
             <TextBlock Text="{x:Static localization:Strings.ServerName}" Style="{DynamicResource DefaultTextBlock}"
                        Margin="0,0,0,10" />
             <TextBox Width="250" HorizontalAlignment="Left"
-                     mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleGatewayDomain}"
+                     mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleGatewayDomain}" FontFamily="{StaticResource Fonts.Family.Mono}"
                      Style="{StaticResource DefaultTextBox}" Margin="0,0,0,10">
                 <TextBox.Text>
                     <Binding Path="GatewayServerHostname" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">

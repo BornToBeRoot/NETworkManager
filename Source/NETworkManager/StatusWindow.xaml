@@ -7,10 +7,10 @@
                  xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
                  xmlns:networkManager="clr-namespace:NETworkManager"
                  xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
-                 xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+                 xmlns:icons="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls"
                  mc:Ignorable="d" d:DataContext="{d:DesignInstance networkManager:StatusWindow}"
                  TitleAlignment="Left"
-                 Style="{DynamicResource DefaultWindow}"
+                 Style="{DynamicResource ResourceKey=FrameWindow}"
                  Deactivated="MetroWindow_Deactivated"                 
                  Topmost="True"
                  ShowInTaskbar="False"
@@ -36,7 +36,7 @@
                     <Rectangle Width="16" Height="16"
                                Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
                         <Rectangle.OpacityMask>
-                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=OpenInNew}" />
+                            <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=ExternalLink}" />
                         </Rectangle.OpacityMask>
                     </Rectangle>
                 </StackPanel>
@@ -48,18 +48,18 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <ContentControl Grid.Column="0" Grid.Row="0" 
-                        x:Name="ContentControlNetworkConnection"
-                        Margin="10" />
-        <ProgressBar Grid.Column="0" Grid.Row="1"
-                     Height="3"
-                     MinHeight="3"
-                     Margin="0"
-                     Minimum="0"
-                     Maximum="{Binding TimeMax, Mode=OneWay}"
-                     Value="{Binding Time, Mode=OneWay}"
-                     Visibility="{Binding ShowTime, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}"
-                     BorderThickness="0"
-                     Padding="0" />
+        <!-- Content in a box on the frame of the window, like the main window (the countdown at the bottom edge) -->
+        <mah:ClipBorder Grid.Column="0" Grid.Row="0" Margin="6" Style="{StaticResource ViewBox}">
+            <ContentControl x:Name="ContentControlNetworkConnection"
+                            Margin="10" />
+        </mah:ClipBorder>
+        <mah:MetroProgressBar Grid.Column="0" Grid.Row="1"
+                              Margin="0"
+                              Minimum="0"
+                              Maximum="{Binding TimeMax, Mode=OneWay}"
+                              Value="{Binding Time, Mode=OneWay}"
+                              Visibility="{Binding ShowTime, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}"
+                              BorderThickness="0"
+                              Padding="0" />
     </Grid>
 </mah:MetroWindow>

@@ -4,7 +4,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
-             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:icons="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls"
              xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
              xmlns:wpfHelpers="clr-namespace:NETworkManager.Utilities.WPF;assembly=NETworkManager.Utilities.WPF"
              xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
@@ -56,24 +56,24 @@
                             <TextBlock Grid.Column="0" Grid.Row="2" Text="{Binding NativeName}"
                                        Style="{StaticResource DefaultTextBlock}" />
                         </Grid>
-                        <Border Grid.Column="3" Grid.Row="0" BorderThickness="1" BorderBrush="#badc58" Padding="10,5"
+                        <Border Grid.Column="3" Grid.Row="0" BorderThickness="1" BorderBrush="{DynamicResource Brushes.Status.Success}" Padding="10,5"
                                 VerticalAlignment="Center" HorizontalAlignment="Right"
                                 Visibility="{Binding IsOfficial, Converter={StaticResource BooleanToVisibilityHiddenConverter}}">
                             <StackPanel Orientation="Horizontal">
                                 <Rectangle Width="20" Height="20">
                                     <Rectangle.Resources>
                                         <VisualBrush x:Key="VisualClear" Stretch="Uniform"
-                                                     Visual="{iconPacks:Material Kind=CheckAll}" />
+                                                     Visual="{icons:Lucide Kind=CheckCheck}" />
                                     </Rectangle.Resources>
                                     <Rectangle.Style>
                                         <Style TargetType="{x:Type Rectangle}">
                                             <Setter Property="OpacityMask" Value="{StaticResource VisualClear}" />
-                                            <Setter Property="Fill" Value="#badc58" />
+                                            <Setter Property="Fill" Value="{DynamicResource Brushes.Status.Success}" />
                                         </Style>
                                     </Rectangle.Style>
                                 </Rectangle>
                                 <TextBlock Text="{x:Static localization:Strings.Official}" VerticalAlignment="Center"
-                                           Foreground="#badc58" Style="{StaticResource DefaultTextBlock}"
+                                           Foreground="{DynamicResource Brushes.Status.Success}" Style="{StaticResource DefaultTextBlock}"
                                            Margin="10,0,0,0" />
                             </StackPanel>
                         </Border>
@@ -85,7 +85,7 @@
                                 <Rectangle Width="20" Height="20">
                                     <Rectangle.Resources>
                                         <VisualBrush x:Key="VisualClear" Stretch="Uniform"
-                                                     Visual="{iconPacks:Modern Kind=PeopleMultiple}" />
+                                                     Visual="{icons:Lucide Kind=Users}" />
                                     </Rectangle.Resources>
                                     <Rectangle.Style>
                                         <Style TargetType="{x:Type Rectangle}">
@@ -120,7 +120,7 @@
                     <Rectangle Width="24" Height="24">
                         <Rectangle.Resources>
                             <VisualBrush x:Key="VisualClear" Stretch="Uniform"
-                                         Visual="{iconPacks:Material Kind=FilterRemoveOutline}" />
+                                         Visual="{icons:Lucide Kind=FunnelX}" />
                         </Rectangle.Resources>
                         <Rectangle.Style>
                             <Style TargetType="{x:Type Rectangle}">

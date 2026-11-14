@@ -72,6 +72,38 @@ public class SettingsWindowViewModel : ViewModelBase
         }
     }
 
+    public bool DynamicTabWidth
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            if (!_isLoading)
+                SettingsManager.Current.Window_DynamicTabWidth = value;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public int MaxTabWidth
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            if (!_isLoading)
+                SettingsManager.Current.Window_MaxTabWidth = value;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
     public bool AlwaysShowIconInTray
     {
         get;
@@ -124,6 +156,8 @@ public class SettingsWindowViewModel : ViewModelBase
         ConfirmClose = SettingsManager.Current.Window_ConfirmClose;
         MultipleInstances = SettingsManager.Current.Window_MultipleInstances;
         MinimizeToTrayInsteadOfTaskbar = SettingsManager.Current.Window_MinimizeToTrayInsteadOfTaskbar;
+        DynamicTabWidth = SettingsManager.Current.Window_DynamicTabWidth;
+        MaxTabWidth = SettingsManager.Current.Window_MaxTabWidth;
         AlwaysShowIconInTray = SettingsManager.Current.TrayIcon_AlwaysShowIcon;
         SplashScreenEnabled = SettingsManager.Current.SplashScreen_Enabled;
     }

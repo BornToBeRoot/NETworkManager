@@ -4,7 +4,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
-             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:icons="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls"
              xmlns:mahAppsControls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
              xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
              xmlns:network="clr-namespace:NETworkManager.Models.Network;assembly=NETworkManager.Models"
@@ -75,7 +75,7 @@
                             <Rectangle Grid.Column="0" Grid.Row="0">
                                 <Rectangle.Resources>
                                     <VisualBrush x:Key="VisualMagnify" Stretch="Uniform"
-                                                 Visual="{iconPacks:Material Kind=Magnify}" />
+                                                 Visual="{icons:Lucide Kind=Search}" />
                                 </Rectangle.Resources>
                                 <Rectangle.Style>
                                     <Style TargetType="{x:Type TypeName=Rectangle}"
@@ -93,10 +93,9 @@
             </Grid>
             <mahAppsControls:MetroProgressBar Grid.Column="0" Grid.Row="1"
                                               Margin="0,10,0,0"
-                                              Foreground="{DynamicResource ResourceKey=MahApps.Brushes.Accent}"
                                               IsIndeterminate="True">
                 <mahAppsControls:MetroProgressBar.Style>
-                    <Style TargetType="{x:Type  TypeName=mahAppsControls:MetroProgressBar}">
+                    <Style TargetType="{x:Type mahAppsControls:MetroProgressBar}" BasedOn="{StaticResource DefaultMetroProgressBar}">
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding Path=IsRunning}" Value="False">
                                 <Setter Property="Visibility" Value="Collapsed" />
@@ -105,11 +104,9 @@
                     </Style>
                 </mahAppsControls:MetroProgressBar.Style>
             </mahAppsControls:MetroProgressBar>
-            <TextBlock Grid.Column="0" Grid.Row="2"
-                       Foreground="{DynamicResource ResourceKey=MahApps.Brushes.Accent}"
+            <icons:StatusMessageText Level="{Binding StatusMessageLevel}" Grid.Column="0" Grid.Row="2"
                        Text="{Binding Path=StatusMessage}"
                        Visibility="{Binding Path=IsStatusMessageDisplayed, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
-                       Style="{DynamicResource ResourceKey=StatusMessageTextBlock}"
                        Margin="0,10,0,0" />
         </Grid>
         <TextBlock Grid.Column="0" Grid.Row="2"
@@ -161,7 +158,7 @@
                             <Rectangle Width="16" Height="16"
                                        Fill="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}">
                                 <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=FileMoveOutline}" />
+                                    <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=FileOutput}" />
                                 </Rectangle.OpacityMask>
                             </Rectangle>
                         </MenuItem.Icon>
@@ -174,7 +171,7 @@
                             <Rectangle Width="16" Height="16"
                                        Fill="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}">
                                 <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=FileMoveOutline}" />
+                                    <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=FileOutput}" />
                                 </Rectangle.OpacityMask>
                             </Rectangle>
                         </MenuItem.Icon>
@@ -195,11 +192,11 @@
                 </Style>
             </controls:MultiSelectDataGrid.RowStyle>
             <controls:MultiSelectDataGrid.Columns>
-                <DataGridTextColumn Header="{x:Static Member=localization:Strings.Server}"
+                <DataGridTextColumn Header="{x:Static Member=localization:Strings.Server}" FontFamily="{StaticResource Fonts.Family.Mono}"
                                     Binding="{Binding Path=(network:SNTPLookupInfo.Server)}"
                                     SortMemberPath="Server"
                                     MinWidth="150" />
-                <DataGridTextColumn Header="{x:Static Member=localization:Strings.IPEndPoint}"
+                <DataGridTextColumn Header="{x:Static Member=localization:Strings.IPEndPoint}" FontFamily="{StaticResource Fonts.Family.Mono}"
                                     Binding="{Binding Path=(network:SNTPLookupInfo.IPEndPoint)}"
                                     SortMemberPath="IPEndPoint"
                                     MinWidth="150" />

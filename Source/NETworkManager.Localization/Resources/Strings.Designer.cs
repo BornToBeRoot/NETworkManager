@@ -133,6 +133,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Coral.
+        /// </summary>
+        public static string Accent_Coral {
+            get {
+                return ResourceManager.GetString("Accent_Coral", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Crimson.
         /// </summary>
         public static string Accent_Crimson {
@@ -160,6 +169,24 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Gold.
+        /// </summary>
+        public static string Accent_Gold {
+            get {
+                return ResourceManager.GetString("Accent_Gold", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Graphite.
+        /// </summary>
+        public static string Accent_Graphite {
+            get {
+                return ResourceManager.GetString("Accent_Graphite", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Green.
         /// </summary>
         public static string Accent_Green {
@@ -174,6 +201,15 @@ namespace NETworkManager.Localization.Resources {
         public static string Accent_Indigo {
             get {
                 return ResourceManager.GetString("Accent_Indigo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lavender.
+        /// </summary>
+        public static string Accent_Lavender {
+            get {
+                return ResourceManager.GetString("Accent_Lavender", resourceCulture);
             }
         }
         
@@ -201,6 +237,24 @@ namespace NETworkManager.Localization.Resources {
         public static string Accent_Mauve {
             get {
                 return ResourceManager.GetString("Accent_Mauve", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mint.
+        /// </summary>
+        public static string Accent_Mint {
+            get {
+                return ResourceManager.GetString("Accent_Mint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ocean.
+        /// </summary>
+        public static string Accent_Ocean {
+            get {
+                return ResourceManager.GetString("Accent_Ocean", resourceCulture);
             }
         }
         
@@ -241,11 +295,38 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Rose.
+        /// </summary>
+        public static string Accent_Rose {
+            get {
+                return ResourceManager.GetString("Accent_Rose", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sienna.
         /// </summary>
         public static string Accent_Sienna {
             get {
                 return ResourceManager.GetString("Accent_Sienna", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sky.
+        /// </summary>
+        public static string Accent_Sky {
+            get {
+                return ResourceManager.GetString("Accent_Sky", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Slate.
+        /// </summary>
+        public static string Accent_Slate {
+            get {
+                return ResourceManager.GetString("Accent_Slate", resourceCulture);
             }
         }
         
@@ -295,11 +376,65 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Accent glow.
+        /// </summary>
+        public static string AccentGlow {
+            get {
+                return ResourceManager.GetString("AccentGlow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Medium.
+        /// </summary>
+        public static string AccentGlowIntensity_Medium {
+            get {
+                return ResourceManager.GetString("AccentGlowIntensity_Medium", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Off.
+        /// </summary>
+        public static string AccentGlowIntensity_Off {
+            get {
+                return ResourceManager.GetString("AccentGlowIntensity_Off", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Strong.
+        /// </summary>
+        public static string AccentGlowIntensity_Strong {
+            get {
+                return ResourceManager.GetString("AccentGlowIntensity_Strong", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Subtle.
+        /// </summary>
+        public static string AccentGlowIntensity_Subtle {
+            get {
+                return ResourceManager.GetString("AccentGlowIntensity_Subtle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Action.
         /// </summary>
         public static string Action {
             get {
                 return ResourceManager.GetString("Action", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Active connections.
+        /// </summary>
+        public static string ActiveConnections {
+            get {
+                return ResourceManager.GetString("ActiveConnections", resourceCulture);
             }
         }
         
@@ -894,6 +1029,42 @@ namespace NETworkManager.Localization.Resources {
         public static string AnErrorOccurredWhileExportingTheData {
             get {
                 return ResourceManager.GetString("AnErrorOccurredWhileExportingTheData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Off.
+        /// </summary>
+        public static string AnimationMode_Off {
+            get {
+                return ResourceManager.GetString("AnimationMode_Off", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to On.
+        /// </summary>
+        public static string AnimationMode_On {
+            get {
+                return ResourceManager.GetString("AnimationMode_On", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to System (Windows setting).
+        /// </summary>
+        public static string AnimationMode_System {
+            get {
+                return ResourceManager.GetString("AnimationMode_System", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Animations.
+        /// </summary>
+        public static string Animations {
+            get {
+                return ResourceManager.GetString("Animations", resourceCulture);
             }
         }
         
@@ -3966,6 +4137,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Dynamic tab width.
+        /// </summary>
+        public static string DynamicTabWidth {
+            get {
+                return ResourceManager.GetString("DynamicTabWidth", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Edit credentials.
         /// </summary>
         public static string EditCredentials {
@@ -5753,15 +5933,6 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 2.4 &amp; 5 GHz.
-        /// </summary>
-        public static string GHz2dot4And5 {
-            get {
-                return ResourceManager.GetString("GHz2dot4And5", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to 5 GHz.
         /// </summary>
         public static string GHz5 {
@@ -5906,11 +6077,29 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Glow of the accent color in the top left corner of the windows (window background, title bar and navigation), weaker while the window is inactive..
+        /// </summary>
+        public static string HelpMessage_AccentGlow {
+            get {
+                return ResourceManager.GetString("HelpMessage_AccentGlow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Adjusts the number of hosts and ports scanned at the same time to the scan: up to 512 connections at the same time, at most 128 hosts and 128 ports per host (e.g. 4 hosts with 1-1024, 128 hosts with one port). Disable it to set the threads yourself, e.g. to slow down a scan..
         /// </summary>
         public static string HelpMessage_AdjustThreadsAutomatically {
             get {
                 return ResourceManager.GetString("HelpMessage_AdjustThreadsAutomatically", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Animations of the application, e.g. when a dialog is opened or closed. &quot;System&quot; follows the Windows setting &quot;Animation effects&quot; (Settings &gt; Accessibility &gt; Visual effects), which is often turned off on terminal servers and in remote sessions..
+        /// </summary>
+        public static string HelpMessage_Animations {
+            get {
+                return ResourceManager.GetString("HelpMessage_Animations", resourceCulture);
             }
         }
         
@@ -6026,6 +6215,15 @@ namespace NETworkManager.Localization.Resources {
         public static string HelpMessage_CustomPublicIPv6AddressAPI {
             get {
                 return ResourceManager.GetString("HelpMessage_CustomPublicIPv6AddressAPI", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The tabs of the tools (e.g. IP Scanner, Remote Desktop, PuTTY) are as wide as their title, up to the maximum tab width. Longer titles are shortened, the tooltip of the tab shows the full title. When disabled, all tabs have the same width..
+        /// </summary>
+        public static string HelpMessage_DynamicTabWidth {
+            get {
+                return ResourceManager.GetString("HelpMessage_DynamicTabWidth", resourceCulture);
             }
         }
         
@@ -6551,6 +6749,15 @@ namespace NETworkManager.Localization.Resources {
         public static string HostsFileEditorAdminMessage {
             get {
                 return ResourceManager.GetString("HostsFileEditorAdminMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hosts file entries.
+        /// </summary>
+        public static string HostsFileEntries {
+            get {
+                return ResourceManager.GetString("HostsFileEntries", resourceCulture);
             }
         }
         
@@ -7447,15 +7654,6 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to A collection of loading indicators for WPF.
-        /// </summary>
-        public static string Library_LoadingIndicatorsWPF_Description {
-            get {
-                return ResourceManager.GetString("Library_LoadingIndicatorsWPF_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to log4net is a tool to help the programmer output log statements to a variety of output targets..
         /// </summary>
         public static string Library_log4net_Description {
@@ -7465,20 +7663,20 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Beautiful &amp; consistent icons.
+        /// </summary>
+        public static string Library_Lucide_Description {
+            get {
+                return ResourceManager.GetString("Library_Lucide_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to A toolkit for creating Metro / Modern UI styled WPF apps..
         /// </summary>
         public static string Library_MahAppsMetro_Description {
             get {
                 return ResourceManager.GetString("Library_MahAppsMetro_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Some awesome icons for WPF and UWP all together....
-        /// </summary>
-        public static string Library_MahAppsMetroIconPacks_Description {
-            get {
-                return ResourceManager.GetString("Library_MahAppsMetroIconPacks_Description", resourceCulture);
             }
         }
         
@@ -7591,6 +7789,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ISC License.
+        /// </summary>
+        public static string License_ISCLicense {
+            get {
+                return ResourceManager.GetString("License_ISCLicense", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Microsoft WebView2 License.
         /// </summary>
         public static string License_MicrosoftWebView2License {
@@ -7605,15 +7812,6 @@ namespace NETworkManager.Localization.Resources {
         public static string License_MITLicense {
             get {
                 return ResourceManager.GetString("License_MITLicense", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Unlicense.
-        /// </summary>
-        public static string License_Unlicense {
-            get {
-                return ResourceManager.GetString("License_Unlicense", resourceCulture);
             }
         }
         
@@ -7641,6 +7839,15 @@ namespace NETworkManager.Localization.Resources {
         public static string Listeners {
             get {
                 return ResourceManager.GetString("Listeners", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Listening ports.
+        /// </summary>
+        public static string ListeningPorts {
+            get {
+                return ResourceManager.GetString("ListeningPorts", resourceCulture);
             }
         }
         
@@ -8005,6 +8212,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Maximum tab width.
+        /// </summary>
+        public static string MaximumTabWidth {
+            get {
+                return ResourceManager.GetString("MaximumTabWidth", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Max. logon failures.
         /// </summary>
         public static string MaxLogonFailures {
@@ -8289,6 +8505,15 @@ namespace NETworkManager.Localization.Resources {
         public static string Nameservers {
             get {
                 return ResourceManager.GetString("Nameservers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Neighbor entries.
+        /// </summary>
+        public static string NeighborEntries {
+            get {
+                return ResourceManager.GetString("NeighborEntries", resourceCulture);
             }
         }
         
@@ -14159,6 +14384,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tabs.
+        /// </summary>
+        public static string Tabs {
+            get {
+                return ResourceManager.GetString("Tabs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tags.
         /// </summary>
         public static string Tags {
@@ -14429,6 +14663,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Black.
+        /// </summary>
+        public static string Theme_Black {
+            get {
+                return ResourceManager.GetString("Theme_Black", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Dark.
         /// </summary>
         public static string Theme_Dark {
@@ -14438,11 +14681,65 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Indigo.
+        /// </summary>
+        public static string Theme_Indigo {
+            get {
+                return ResourceManager.GetString("Theme_Indigo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Light.
         /// </summary>
         public static string Theme_Light {
             get {
                 return ResourceManager.GetString("Theme_Light", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Midnight.
+        /// </summary>
+        public static string Theme_Midnight {
+            get {
+                return ResourceManager.GetString("Theme_Midnight", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mist.
+        /// </summary>
+        public static string Theme_Mist {
+            get {
+                return ResourceManager.GetString("Theme_Mist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Paper.
+        /// </summary>
+        public static string Theme_Paper {
+            get {
+                return ResourceManager.GetString("Theme_Paper", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Soft.
+        /// </summary>
+        public static string Theme_Soft {
+            get {
+                return ResourceManager.GetString("Theme_Soft", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Steel.
+        /// </summary>
+        public static string Theme_Steel {
+            get {
+                return ResourceManager.GetString("Theme_Steel", resourceCulture);
             }
         }
         

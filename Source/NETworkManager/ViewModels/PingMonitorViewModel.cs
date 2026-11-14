@@ -2,8 +2,6 @@ using LiveChartsCore;
 using LiveChartsCore.Drawing;
 using LiveChartsCore.Kernel;
 using LiveChartsCore.SkiaSharpView;
-using LiveChartsCore.SkiaSharpView.Painting;
-using LiveChartsCore.SkiaSharpView.Painting.Effects;
 using log4net;
 using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Localization.Resources;
@@ -13,7 +11,6 @@ using NETworkManager.Models.Network;
 using NETworkManager.Settings;
 using NETworkManager.Utilities;
 using NETworkManager.Views;
-using SkiaSharp;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -60,6 +57,7 @@ public class PingMonitorViewModel : ViewModelBase, IPingMonitorHostStatus
         ExpandHostView = SettingsManager.Current.PingMonitor_ExpandHostView;
 
         SettingsManager.Current.PropertyChanged += SettingsManager_PropertyChanged;
+        AppearanceManager.ThemeResourcesChanged += AppearanceManager_ThemeResourcesChanged;
     }
 
     #endregion
@@ -305,15 +303,7 @@ public class PingMonitorViewModel : ViewModelBase, IPingMonitorHostStatus
     {
         _pingValues = [];
 
-        var chartColor = SKColor.Parse("#1ba1e2");
-
-        var labelColor = Application.Current?.TryFindResource("MahApps.Brushes.Gray5") is System.Windows.Media.SolidColorBrush gray5
-            ? new SKColor(gray5.Color.R, gray5.Color.G, gray5.Color.B, gray5.Color.A)
-            : new SKColor(0x68, 0x68, 0x68);
-
-        var separatorColor = Application.Current?.TryFindResource("MahApps.Brushes.Gray8") is System.Windows.Media.SolidColorBrush gray8
-            ? new SKColor(gray8.Color.R, gray8.Color.G, gray8.Color.B, gray8.Color.A)
-            : new SKColor(0x80, 0x80, 0x80);
+        var chartColor = ChartColors.Primary;
 
         Series =
         [
@@ -327,8 +317,8 @@ public class PingMonitorViewModel : ViewModelBase, IPingMonitorHostStatus
                 GeometrySize = 0,
                 LineSmoothness = 0.3,
                 DataPadding = new LvcPoint(0, 0),
-                Stroke = new SolidColorPaint(chartColor) { StrokeThickness = 1.5f },
-                Fill = new SolidColorPaint(chartColor.WithAlpha(0x33))
+                Stroke = ChartColors.LineStroke(chartColor),
+                Fill = ChartColors.AreaFill(chartColor)
             }
         ];
 
@@ -340,12 +330,8 @@ public class PingMonitorViewModel : ViewModelBase, IPingMonitorHostStatus
                     _sessionStartTime.AddSeconds(value)),
                 TextSize = 10,
                 Padding = new Padding(0, 4, 0, 0),
-                LabelsPaint = new SolidColorPaint(labelColor),
-                SeparatorsPaint = new SolidColorPaint(separatorColor)
-                {
-                    StrokeThickness = 1,
-                    PathEffect = new DashEffect([10f, 10f])
-                },
+                LabelsPaint = ChartColors.LabelPaint(),
+                SeparatorsPaint = ChartColors.SeparatorPaint(),
                 MinStep = SettingsManager.Current.PingMonitor_ChartTime / 4.0,
                 ForceStepToMin = true
             }
@@ -361,12 +347,8 @@ public class PingMonitorViewModel : ViewModelBase, IPingMonitorHostStatus
                 Labeler = value => $"{value} ms",
                 TextSize = 11,
                 Padding = new Padding(4, 0),
-                LabelsPaint = new SolidColorPaint(labelColor),
-                SeparatorsPaint = new SolidColorPaint(separatorColor)
-                {
-                    StrokeThickness = 1,
-                    PathEffect = new DashEffect([10f, 10f])
-                }
+                LabelsPaint = ChartColors.LabelPaint(),
+                SeparatorsPaint = ChartColors.SeparatorPaint()
             }
         ];
 
@@ -824,12 +806,30 @@ public class PingMonitorViewModel : ViewModelBase, IPingMonitorHostStatus
     }
 
     /// <summary>
-    /// Unsubscribes from global settings changes. Must be called when the host is removed,
+    /// Unsubscribes from global settings and theme changes. Must be called when the host is removed,
     /// so this transient view model is not kept alive by the long-lived settings singleton.
     /// </summary>
     public void Cleanup()
     {
         SettingsManager.Current.PropertyChanged -= SettingsManager_PropertyChanged;
+        AppearanceManager.ThemeResourcesChanged -= AppearanceManager_ThemeResourcesChanged;
+    }
+
+    /// <summary>
+    /// Colors of the chart for the new theme (the paints don't follow the theme).
+    /// </summary>
+    private void AppearanceManager_ThemeResourcesChanged(object sender, EventArgs e)
+    {
+        var chartColor = ChartColors.Primary;
+
+        if (Series[0] is LineSeries<LvlChartsDefaultInfo> series)
+        {
+            series.Stroke = ChartColors.LineStroke(chartColor);
+            series.Fill = ChartColors.AreaFill(chartColor);
+        }
+
+        ChartColors.ApplyAxisColors(PingXAxes[0]);
+        ChartColors.ApplyAxisColors(PingYAxes[0]);
     }
 
     private void SettingsManager_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)

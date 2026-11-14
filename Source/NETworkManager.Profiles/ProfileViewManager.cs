@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using MahApps.Metro.IconPacks;
+using NETworkManager.Controls;
 using NETworkManager.Models;
 
 namespace NETworkManager.Profiles;
@@ -22,7 +22,7 @@ public static class ProfileViewManager
     public static List<ProfileViewInfo> List =>
     [
         // General
-        new(ProfileName.General, new PackIconModern { Kind = PackIconModernKind.Box },
+        new(ProfileName.General, new LucideIcon { Kind = LucideIconKind.Box },
             ProfileGroup.General),
 
         // Applications

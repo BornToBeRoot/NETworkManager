@@ -180,6 +180,22 @@ public class TracerouteViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
+
+    /// <summary>
+    /// Gets the level of the status message (icon and color, the most severe of the appended messages).
+    /// </summary>
+    public StatusLevel StatusMessageLevel
+    {
+        get;
+        private set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
  
     public bool ExpandMapView
     {
@@ -386,6 +402,7 @@ public class TracerouteViewModel : ViewModelBase
     {
         _ipGeolocationRateLimitIsReached = false;
         StatusMessage = string.Empty;
+        StatusMessageLevel = StatusLevel.None;
         IsStatusMessageDisplayed = false;
         IsRunning = true;
 
@@ -537,7 +554,8 @@ public class TracerouteViewModel : ViewModelBase
                     $"ip-api.com rate limit reached. Try again in {e.Args.IPGeolocationResult.RateLimitRemainingTime} seconds.");
 
                 DisplayStatusMessage(
-                    $"ip-api.com {string.Format(Strings.RateLimitReachedTryAgainInXSeconds, e.Args.IPGeolocationResult.RateLimitRemainingTime)}");
+                    $"ip-api.com {string.Format(Strings.RateLimitReachedTryAgainInXSeconds, e.Args.IPGeolocationResult.RateLimitRemainingTime)}",
+                    StatusLevel.Warning);
             }
 
             Results.Add(e.Args);
@@ -546,13 +564,13 @@ public class TracerouteViewModel : ViewModelBase
 
     private void Traceroute_MaximumHopsReached(object sender, MaximumHopsReachedArgs e)
     {
-        DisplayStatusMessage(string.Format(Strings.MaximumNumberOfHopsReached, e.Hops));
+        DisplayStatusMessage(string.Format(Strings.MaximumNumberOfHopsReached, e.Hops), StatusLevel.Warning);
         IsRunning = false;
     }
 
     private void Traceroute_UserHasCanceled(object sender, EventArgs e)
     {
-        DisplayStatusMessage(Strings.CanceledByUserMessage);
+        DisplayStatusMessage(Strings.CanceledByUserMessage, StatusLevel.None);
         CancelTrace = false;
         IsRunning = false;
     }
@@ -568,12 +586,18 @@ public class TracerouteViewModel : ViewModelBase
         IsRunning = false;
     }
 
-    private void DisplayStatusMessage(string message)
+    /// <summary>
+    /// Appends a message to the status message; the level is the most severe of the appended messages.
+    /// </summary>
+    /// <param name="message">Message to append.</param>
+    /// <param name="level">Level of the message.</param>
+    private void DisplayStatusMessage(string message, StatusLevel level = StatusLevel.Error)
     {
         if (!string.IsNullOrEmpty(StatusMessage))
             StatusMessage += Environment.NewLine;
 
         StatusMessage += message;
+        StatusMessageLevel = StatusMessageLevel.MostSevere(level);
         IsStatusMessageDisplayed = true;
     }
 

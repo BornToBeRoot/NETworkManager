@@ -1,6 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+                    xmlns:icons="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls"
                     xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization">
     <ContextMenu x:Key="CutCopyPasteContextMenu" MinWidth="150">
         <MenuItem Header="{x:Static localization:Strings.Cut}" Command="Cut">
@@ -12,7 +12,7 @@
                         </Style>
                     </Rectangle.Style>
                     <Rectangle.OpacityMask>
-                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentCut}" />
+                        <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=Scissors}" />
                     </Rectangle.OpacityMask>
                 </Rectangle>
             </MenuItem.Icon>
@@ -26,7 +26,7 @@
                         </Style>
                     </Rectangle.Style>
                     <Rectangle.OpacityMask>
-                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentCopy}" />
+                        <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=Copy}" />
                     </Rectangle.OpacityMask>
                 </Rectangle>
             </MenuItem.Icon>
@@ -40,7 +40,7 @@
                         </Style>
                     </Rectangle.Style>
                     <Rectangle.OpacityMask>
-                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentPaste}" />
+                        <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=ClipboardPaste}" />
                     </Rectangle.OpacityMask>
                 </Rectangle>
             </MenuItem.Icon>
@@ -57,7 +57,7 @@
                         </Style>
                     </Rectangle.Style>
                     <Rectangle.OpacityMask>
-                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentCopy}" />
+                        <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=Copy}" />
                     </Rectangle.OpacityMask>
                 </Rectangle>
             </MenuItem.Icon>
@@ -74,7 +74,7 @@
                         </Style>
                     </Rectangle.Style>
                     <Rectangle.OpacityMask>
-                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentCopy}" />
+                        <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=Copy}" />
                     </Rectangle.OpacityMask>
                 </Rectangle>
             </MenuItem.Icon>
@@ -88,7 +88,7 @@
                         </Style>
                     </Rectangle.Style>
                     <Rectangle.OpacityMask>
-                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=FileMoveOutline}" />
+                        <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=FileOutput}" />
                     </Rectangle.OpacityMask>
                 </Rectangle>
             </MenuItem.Icon>

@@ -22,7 +22,6 @@ public static class PuTTY
     /// </summary>
     private static readonly List<Tuple<string, string>> DefaultProfileRegkeysSzBase =
     [
-        new("Colour1", "255,255,255"),
         new("Colour3", "85,85,85"),
         new("Colour4", "0,0,0"),
         new("Colour5", "0,255,0"),
@@ -58,39 +57,15 @@ public static class PuTTY
     ];
 
     /// <summary>
-    ///     SZ registry keys for PuTTY profile NETworkManager if app theme is dark.
-    /// </summary>
-    /// <returns>List with SZ registry keys.</returns>
-    private static List<Tuple<string, string>> GetProfileRegkeysSzDark()
-    {
-        return DefaultProfileRegkeysSzBase.Concat(
-        [
-            // new Tuple<string, string>("Colour0", "255,255,255"),
-                new Tuple<string, string>("Colour0", "187,187,187"), // Foreground
-                new Tuple<string, string>("Colour2", "37,37,37") // Background
-        ]).ToList();
-    }
-
-    /// <summary>
-    ///     SZ registry keys for PuTTY profile NETworkManager if app theme is white.
-    /// </summary>
-    /// <returns>List with DWORD registry keys.</returns>
-    private static List<Tuple<string, string>> GetProfileRegkeysSzWhite()
-    {
-        return DefaultProfileRegkeysSzBase.Concat(
-        [
-            // new Tuple<string, string>("Colour0", "68,68,68"),
-                new Tuple<string, string>("Colour0", "0,0,0"), // Foreground
-                new Tuple<string, string>("Colour2", "255,255,255") // Background
-        ]).ToList();
-    }
-
-    /// <summary>
-    ///     Write the default PuTTY profile NETworkManager to the registry.
+    ///     Write the default PuTTY profile NETworkManager to the registry, with the colors of the application theme so
+    ///     the terminal blends into the application (background of the box around it).
     ///     HKCU\Software\SimonTatham\PuTTY\Sessions\NETworkManager
     /// </summary>
-    /// <param name="theme">Current application theme to adjust the PuTTY colors</param>
-    public static void WriteDefaultProfileToRegistry(string theme)
+    /// <param name="background">Background (Colour2).</param>
+    /// <param name="foreground">Text (Colour0).</param>
+    /// <param name="boldForeground">Bold text (Colour1).</param>
+    public static void WriteDefaultProfileToRegistry((byte R, byte G, byte B) background,
+        (byte R, byte G, byte B) foreground, (byte R, byte G, byte B) boldForeground)
     {
         var profilePath = @"Software\SimonTatham\PuTTY\Sessions\NETworkManager";
 
@@ -100,15 +75,21 @@ public static class PuTTY
 
         if (registryKey != null)
         {
-            foreach (var item in theme == "Dark" ? GetProfileRegkeysSzDark() : GetProfileRegkeysSzWhite())
+            foreach (var item in DefaultProfileRegkeysSzBase)
                 registryKey.SetValue(item.Item1, item.Item2);
+
+            registryKey.SetValue("Colour0", ToPuTTYColor(foreground));
+            registryKey.SetValue("Colour1", ToPuTTYColor(boldForeground));
+            registryKey.SetValue("Colour2", ToPuTTYColor(background));
 
             foreach (var item in DefaultProfileRegkeysDwordBase)
                 registryKey.SetValue(item.Item1, item.Item2);
         }
 
-        registryKey.Close();
+        registryKey?.Close();
     }
+
+    private static string ToPuTTYColor((byte R, byte G, byte B) color) => $"{color.R},{color.G},{color.B}";
 
     /// <summary>
     ///     Build command line arguments based on a <see cref="PuTTYSessionInfo" />.

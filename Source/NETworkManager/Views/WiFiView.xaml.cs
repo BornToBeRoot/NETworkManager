@@ -2,6 +2,7 @@
 using System.Collections.Specialized;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Threading;
 using NETworkManager.ViewModels;
 
@@ -10,8 +11,6 @@ namespace NETworkManager.Views;
 public partial class WiFiView
 {
     private readonly WiFiViewModel _viewModel;
-
-    private int _channelTabControlSelectedIndex = 0;
 
     public WiFiView()
     {
@@ -56,24 +55,15 @@ public partial class WiFiView
     }
 
     /// <summary>
-    ///     Restores the previously selected channel chart tab. The content is rebuilt when switching
-    ///     between the outer tabs, so the selection is restored from the view when the control loads.
+    ///     Scrolls the list of the channel charts with the mouse wheel, also over a chart or the legend of a chart (an
+    ///     own horizontal ScrollViewer, it would handle the mouse wheel).
     /// </summary>
-    private void ChannelsTabControl_Loaded(object sender, RoutedEventArgs e)
+    private void ScrollViewerChannels_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
     {
-        if (sender is TabControl tabControl)
-            tabControl.SelectedIndex = _channelTabControlSelectedIndex;
-    }
+        var scrollViewer = (ScrollViewer)sender;
 
-    /// <summary>
-    ///     Persists the selected channel chart tab. Ignores selection changes that occur while the
-    ///     control is not yet loaded (e.g. during the initial template apply) so the saved value is
-    ///     not overwritten with the default, and ignores bubbled events from nested selectors.
-    /// </summary>
-    private void ChannelsTabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
-    {
-        if (sender is TabControl { IsLoaded: true } tabControl &&
-            ReferenceEquals(e.OriginalSource, tabControl))
-            _channelTabControlSelectedIndex = tabControl.SelectedIndex;
+        scrollViewer.ScrollToVerticalOffset(scrollViewer.VerticalOffset - e.Delta);
+
+        e.Handled = true;
     }
 }

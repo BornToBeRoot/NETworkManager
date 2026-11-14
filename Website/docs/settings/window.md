@@ -44,6 +44,22 @@ Enabling this setting is not recommended. Multiple instances of the application 
 
 :::
 
+### Dynamic tab width
+
+The tabs of the tools (e.g. **IP Scanner**, **Remote Desktop**, **PuTTY**) are as wide as their title, up to the [maximum tab width](#maximum-tab-width). Longer titles are shortened, the tooltip of the tab shows the full title. When disabled, all tabs have the same width.
+
+**Type:** `Boolean`
+
+**Default:** `Disabled`
+
+### Maximum tab width
+
+Maximum width of a tab if [Dynamic tab width](#dynamic-tab-width) is enabled.
+
+**Type:** `Integer` [Min `150`, Max `1000`]
+
+**Default:** `300`
+
 ### Always show tray icon
 
 Always show the tray icon, even if the main window is visible.
