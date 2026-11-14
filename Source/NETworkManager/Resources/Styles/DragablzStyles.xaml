@@ -153,33 +153,28 @@
         <Setter Property="EmptyHeaderSizingHint" Value="PreviousTab" />
         <!-- A tab dragged out (as a window) can be dropped anywhere on the tab bar of another window of the same tool,
              not only over the tabs. While it is dragged, the tab bars it can be dropped into show a slot after the last
-             tab (stronger when the cursor is near), like the drop zones of the layout. No icon: the "+" next to it
-             opens a new tab. -->
+             tab (stronger when the cursor is near), like the drop zones of the layout (same color and opacity, see the
+             DropZone style). No icon: the "+" next to it opens a new tab. -->
         <Setter Property="MergeTargetArea" Value="HeaderPanel" />
         <Setter Property="ShowMergeHint" Value="True" />
         <Setter Property="MergeHintTemplate">
             <Setter.Value>
                 <DataTemplate>
-                    <Grid Width="120" HorizontalAlignment="Left" Margin="4,4,0,4">
-                        <Rectangle RadiusX="{Binding Source={StaticResource CornerRadius.Control}, Path=TopLeft}"
-                                   RadiusY="{Binding Source={StaticResource CornerRadius.Control}, Path=TopLeft}"
-                                   Fill="{DynamicResource MahApps.Brushes.Accent}">
-                            <Rectangle.Style>
-                                <Style TargetType="{x:Type Rectangle}">
-                                    <Setter Property="Opacity" Value="0.15" />
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding Path=IsMergeTargetOffered, RelativeSource={RelativeSource AncestorType={x:Type dragablz:TabablzControl}}}" Value="True">
-                                            <Setter Property="Opacity" Value="0.3" />
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Rectangle.Style>
-                        </Rectangle>
-                        <Rectangle RadiusX="{Binding Source={StaticResource CornerRadius.Control}, Path=TopLeft}"
-                                   RadiusY="{Binding Source={StaticResource CornerRadius.Control}, Path=TopLeft}"
-                                   Stroke="{DynamicResource MahApps.Brushes.Accent}" StrokeThickness="1"
-                                   StrokeDashArray="4 3" SnapsToDevicePixels="True" />
-                    </Grid>
+                    <Rectangle Width="120" HorizontalAlignment="Left" Margin="4,4,0,4"
+                               RadiusX="{Binding Source={StaticResource CornerRadius.Control}, Path=TopLeft}"
+                               RadiusY="{Binding Source={StaticResource CornerRadius.Control}, Path=TopLeft}"
+                               Fill="{DynamicResource MahApps.Brushes.Accent}">
+                        <Rectangle.Style>
+                            <Style TargetType="{x:Type Rectangle}">
+                                <Setter Property="Opacity" Value="0.25" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Path=IsMergeTargetOffered, RelativeSource={RelativeSource AncestorType={x:Type dragablz:TabablzControl}}}" Value="True">
+                                        <Setter Property="Opacity" Value="0.5" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Rectangle.Style>
+                    </Rectangle>
                 </DataTemplate>
             </Setter.Value>
         </Setter>
@@ -233,5 +228,14 @@
     -->
     <Style TargetType="{x:Type dockablz:Layout}">
         <Setter Property="Background" Value="{DynamicResource Brushes.Surface.Frame}" />
+    </Style>
+
+    <!--
+        Drop zones of the layout (split the tabs: top / right / bottom / left) in the accent color like the merge hint
+        in the tab bar (see DefaultTabablzControl), instead of the text color. The template of Dragablz draws the shapes
+        in the Foreground (opacity 0.25, 0.5 while offered).
+    -->
+    <Style TargetType="{x:Type dockablz:DropZone}">
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Accent}" />
     </Style>
 </ResourceDictionary>
