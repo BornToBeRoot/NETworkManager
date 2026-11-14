@@ -430,6 +430,22 @@ public class SNMPViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    ///     Level of the status message (icon and color, see <see cref="StatusMessageText" />).
+    /// </summary>
+    public StatusLevel StatusMessageLevel
+    {
+        get;
+        private set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
     #endregion
 
     #region ICommands & Actions
@@ -492,6 +508,7 @@ public class SNMPViewModel : ViewModelBase
             if (dnsResult.HasError)
             {
                 StatusMessage = DNSClientHelper.FormatDNSClientResultError(Host, dnsResult);
+                StatusMessageLevel = StatusLevel.Error;
                 IsStatusMessageDisplayed = true;
                 IsRunning = false;
                 return;
@@ -693,6 +710,7 @@ public class SNMPViewModel : ViewModelBase
     private void SNMPClient_DataUpdated(object sender, EventArgs e)
     {
         StatusMessage = Strings.DataHasBeenUpdated;
+        StatusMessageLevel = StatusLevel.Success;
         IsStatusMessageDisplayed = true;
     }
 
@@ -705,6 +723,8 @@ public class SNMPViewModel : ViewModelBase
         else
             StatusMessage = e.ErrorMessage;
 
+        StatusMessageLevel = StatusLevel.Error;
+
         IsStatusMessageDisplayed = true;
     }
 
@@ -713,6 +733,7 @@ public class SNMPViewModel : ViewModelBase
         StatusMessage = CancelScan
             ? Strings.CanceledByUserMessage
             : Strings.TimeoutOnSNMPQuery;
+        StatusMessageLevel = CancelScan ? StatusLevel.None : StatusLevel.Error;
         IsStatusMessageDisplayed = true;
     }
 

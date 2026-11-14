@@ -6,7 +6,7 @@
                  xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
                  xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
                  xmlns:dd="clr-namespace:GongSolutions.Wpf.DragDrop;assembly=GongSolutions.Wpf.DragDrop"
-                 xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+                 xmlns:icons="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls"
                  xmlns:shell="clr-namespace:ControlzEx.Windows.Shell;assembly=ControlzEx"
                  xmlns:controls="clr-namespace:NETworkManager.Controls"
                  xmlns:interactivity="http://schemas.microsoft.com/xaml/behaviors"
@@ -18,7 +18,7 @@
                  xmlns:networkManager="clr-namespace:NETworkManager"
                  xmlns:models="clr-namespace:NETworkManager.Models;assembly=NETworkManager.Models"
                  mc:Ignorable="d"
-                 Style="{DynamicResource ResourceKey=DefaultWindow}"                 
+                 Style="{DynamicResource ResourceKey=FrameWindow}"
                  MinWidth="800" MinHeight="600"
                  Width="1024" Height="768" 
                  SaveWindowPosition="True" TitleAlignment="Stretch"
@@ -39,7 +39,7 @@
                 <MenuItem.Icon>
                     <Rectangle Width="16" Height="16" Fill="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}">
                         <Rectangle.OpacityMask>
-                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=OpenInNew}" />
+                            <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=ExternalLink}" />
                         </Rectangle.OpacityMask>
                     </Rectangle>
                 </MenuItem.Icon>
@@ -48,7 +48,7 @@
                 <MenuItem.Icon>
                     <Rectangle Width="16" Height="16" Fill="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}">
                         <Rectangle.OpacityMask>
-                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Pulse}" />
+                            <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=Activity}" />
                         </Rectangle.OpacityMask>
                     </Rectangle>
                 </MenuItem.Icon>
@@ -57,16 +57,16 @@
                 <MenuItem.Icon>
                     <Rectangle Width="16" Height="16" Fill="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}">
                         <Rectangle.OpacityMask>
-                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:MaterialLight Kind=Cog}" />
+                            <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=Settings}" />
                         </Rectangle.OpacityMask>
                     </Rectangle>
                 </MenuItem.Icon>
             </MenuItem>
             <MenuItem Header="{x:Static Member=localization:Strings.Close}" Command="{Binding Path=CloseApplicationCommand}">
                 <MenuItem.Icon>
-                    <Rectangle Width="16" Height="16" Fill="Red">
+                    <Rectangle Width="16" Height="16" Fill="{DynamicResource Brushes.Status.Error}">
                         <Rectangle.OpacityMask>
-                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=WindowClose}" />
+                            <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=X}" />
                         </Rectangle.OpacityMask>
                     </Rectangle>
                 </MenuItem.Icon>
@@ -82,7 +82,7 @@
     <mah:MetroWindow.LeftWindowCommands>
         <mah:WindowCommands ShowSeparators="False">
             <!-- Fix some design issues with margin -2 and -1 -->
-            <Grid Background="{DynamicResource ResourceKey=MahApps.Brushes.Gray10}"
+            <Grid Background="Transparent"
                   Visibility="{Binding Source={x:Static Member=settings:ConfigurationManager.Current}, Path=IsAdmin, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
                   Margin="-2,-1,0,0">
                 <TextBlock Text="Administrator" Foreground="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}"
@@ -101,7 +101,7 @@
                     <Rectangle Width="20" Height="20"
                            Fill="{DynamicResource ResourceKey=MahApps.Brushes.Accent}">
                         <Rectangle.OpacityMask>
-                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ProgressCheck}" />
+                            <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=CircleCheck}" />
                         </Rectangle.OpacityMask>
                     </Rectangle>
                     <TextBlock Text="{x:Static Member=localization:Strings.RestartRequired}"
@@ -119,7 +119,7 @@
                 <Rectangle Width="20" Height="20"
                            Fill="{DynamicResource ResourceKey=MahApps.Brushes.Accent}">
                     <Rectangle.OpacityMask>
-                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=RocketLaunchOutline}" />
+                        <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=Rocket}" />
                     </Rectangle.OpacityMask>
                 </Rectangle>
             </Button>
@@ -133,40 +133,47 @@
                 <Rectangle Width="20" Height="20"
                            Fill="{DynamicResource ResourceKey=MahApps.Brushes.Accent}">
                     <Rectangle.OpacityMask>
-                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=InterfacePassword}" />
+                        <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=Lock}" />
                     </Rectangle.OpacityMask>
                 </Rectangle>
             </Button>
             <ComboBox ItemsSource="{Binding Path=ProfileFiles}"
                       SelectedItem="{Binding Path=SelectedProfileFile, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                       IsDropDownOpen="{Binding Path=IsProfileFileDropDownOpened}"
-                      Background="{DynamicResource ResourceKey=MahApps.Brushes.Gray10}"
                       BorderThickness="0"
                       MinWidth="180"
                       HorizontalAlignment="Left"
                       Focusable="False"
                       VerticalAlignment="Center"
-                      Height="30">
-                <ComboBox.Resources>
-                    <!-- ReSharper disable once Xaml.RedundantResource - Override MahApps default style -->
-                    <SolidColorBrush x:Key="MahApps.Brushes.Control.Disabled" Color="{DynamicResource ResourceKey=MahApps.Colors.Gray8}" />
-                </ComboBox.Resources>
+                      Height="26"
+                      FontSize="13">
+                <!-- In the title bar: subtle tint like the secondary buttons (Brushes.Button.*), integrated in the frame -->
+                <ComboBox.Style>
+                    <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource DefaultComboBox}">
+                        <Setter Property="Background" Value="{DynamicResource Brushes.Button.Background}" />
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="{DynamicResource Brushes.Button.MouseOver}" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </ComboBox.Style>
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="10" />
+                                <ColumnDefinition Width="8" />
                                 <ColumnDefinition MinWidth="70" />
                             </Grid.ColumnDefinitions>
-                            <Rectangle Grid.Column="0" Grid.Row="0" Width="20" Height="20"
+                            <Rectangle Grid.Column="0" Grid.Row="0" Width="16" Height="16"
                                        Fill="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}">
                                 <Rectangle.Style>
                                     <Style TargetType="Rectangle">
                                         <Setter Property="OpacityMask">
                                             <Setter.Value>
                                                 <VisualBrush Stretch="Uniform"
-                                                             Visual="{iconPacks:FontAwesome Kind=UserSolid}" />
+                                                             Visual="{icons:Lucide Kind=User}" />
                                             </Setter.Value>
                                         </Setter>
                                         <Style.Triggers>
@@ -174,7 +181,7 @@
                                                 <Setter Property="OpacityMask">
                                                     <Setter.Value>
                                                         <VisualBrush Stretch="Uniform"
-                                                                     Visual="{iconPacks:FontAwesome Kind=UserLockSolid}" />
+                                                                     Visual="{icons:Lucide Kind=UserLock}" />
                                                     </Setter.Value>
                                                 </Setter>
                                             </DataTrigger>
@@ -196,7 +203,7 @@
                     <Rectangle Width="20" Height="20"
                                Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
                         <Rectangle.OpacityMask>
-                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Github}" />
+                            <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=Github}" />
                         </Rectangle.OpacityMask>
                     </Rectangle>
                 </StackPanel>
@@ -211,7 +218,7 @@
                     <Rectangle Width="20" Height="20"
                                Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
                         <Rectangle.OpacityMask>
-                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Bug}" />
+                            <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=Bug}" />
                         </Rectangle.OpacityMask>
                     </Rectangle>
                 </StackPanel>
@@ -224,7 +231,7 @@
                     <Rectangle Width="20" Height="20"
                                Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
                         <Rectangle.OpacityMask>
-                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Book}" />
+                            <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=BookOpen}" />
                         </Rectangle.OpacityMask>
                     </Rectangle>
                 </StackPanel>
@@ -237,14 +244,14 @@
                 <StackPanel Orientation="Horizontal">
                     <Rectangle Width="20" Height="20">
                         <Rectangle.OpacityMask>
-                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Heart}" />
+                            <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=Heart}" />
                         </Rectangle.OpacityMask>
                         <Rectangle.Style>
                             <Style TargetType="Rectangle">
                                 <Setter Property="Fill" Value="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}" />
                                 <Style.Triggers>
                                     <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
-                                        <Setter Property="Fill" Value="#b95353" />
+                                        <Setter Property="Fill" Value="{DynamicResource Brushes.Status.Error}" />
                                     </DataTrigger>
                                 </Style.Triggers>
                             </Style>
@@ -266,9 +273,10 @@
                            FontSize="{DynamicResource MahApps.Font.Size.Window.Title}"
                            FontFamily="{DynamicResource MahApps.Fonts.Family.Window.Title}" />
                 <!-- Opens the run command; like the profile file selector (height, background, icon and font size),
-                     shrinks with the window (text first, then the shortcut) -->
+                     shrinks with the window (text first, then the shortcut). 26 high: part of the title bar, not an
+                     input of the page -->
                 <Button MaxWidth="300"
-                        Height="30"
+                        Height="26"
                         VerticalAlignment="Center"
                         Command="{Binding DataContext.OpenRunCommand, RelativeSource={RelativeSource AncestorType={x:Type mah:MetroWindow}}}"
                         IsEnabled="{Binding Source={x:Static Member=settings:ConfigurationManager.Current}, Path=IsChildWindowOpen, Converter={StaticResource ResourceKey=BooleanReverseConverter}}"
@@ -278,9 +286,11 @@
                         shell:WindowChrome.IsHitTestVisibleInChrome="True">
                     <Button.Template>
                         <ControlTemplate TargetType="{x:Type Button}">
+                            <!-- Subtle tint like the secondary buttons (Brushes.Button.*), integrated in the frame -->
                             <Border x:Name="Border"
-                                    Background="{DynamicResource MahApps.Brushes.Gray10}"
-                                    Padding="10,0">
+                                    Background="{DynamicResource Brushes.Button.Background}"
+                                    CornerRadius="{StaticResource CornerRadius.Control}"
+                                    Padding="8,0,4,0">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto" />
@@ -288,32 +298,37 @@
                                         <ColumnDefinition Width="Auto" />
                                     </Grid.ColumnDefinitions>
                                     <Rectangle Grid.Column="0"
-                                               Width="20" Height="20"
-                                               Margin="0,0,10,0"
+                                               Width="16" Height="16"
+                                               Margin="0,0,8,0"
                                                Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                         <Rectangle.OpacityMask>
                                             <VisualBrush Stretch="Uniform"
-                                                         Visual="{iconPacks:FontAwesome Kind=TerminalSolid}" />
+                                                         Visual="{icons:Lucide Kind=Terminal}" />
                                         </Rectangle.OpacityMask>
                                     </Rectangle>
                                     <TextBlock Grid.Column="1"
                                                Text="{x:Static Member=localization:Strings.RunCommandDots}"
-                                               FontSize="14"
+                                               FontSize="13"
                                                Foreground="{DynamicResource MahApps.Brushes.Gray3}"
                                                VerticalAlignment="Center"
                                                TextTrimming="CharacterEllipsis" />
-                                    <TextBlock Grid.Column="2"
-                                               Text="{x:Static Member=localization:Strings.CtrlShiftP}"
-                                               FontSize="14"
-                                               Margin="10,0,0,0"
-                                               Foreground="{DynamicResource MahApps.Brushes.Gray5}"
-                                               VerticalAlignment="Center" />
+                                    <!-- Shortcut as a small key chip -->
+                                    <Border Grid.Column="2"
+                                            Margin="10,0,0,0"
+                                            Padding="5,1"
+                                            VerticalAlignment="Center"
+                                            CornerRadius="{StaticResource CornerRadius.Control.Inner}"
+                                            Background="{DynamicResource Brushes.Control.MouseOver}">
+                                        <TextBlock Text="{x:Static Member=localization:Strings.CtrlShiftP}"
+                                                   FontSize="11"
+                                                   Foreground="{DynamicResource MahApps.Brushes.Gray3}" />
+                                    </Border>
                                 </Grid>
                             </Border>
                             <ControlTemplate.Triggers>
                                 <Trigger Property="IsMouseOver" Value="True">
                                     <Setter TargetName="Border" Property="Background"
-                                            Value="{DynamicResource MahApps.Brushes.Gray9}" />
+                                            Value="{DynamicResource Brushes.Button.MouseOver}" />
                                 </Trigger>
                                 <Trigger Property="IsEnabled" Value="False">
                                     <Setter TargetName="Border" Property="Opacity" Value="0.5" />
@@ -342,8 +357,13 @@
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <Border Grid.Column="0" Grid.Row="0" BorderBrush="{DynamicResource MahApps.Brushes.Gray8}"
-                    BorderThickness="0,0,1,0">
+            <!-- Navigation: part of the window (transparent: the background of the window incl. the optional accent glow
+                 shows through - the glow brush is mapped to the window, not repainted here; no border, like the side
+                 bar of VS Code), the main view and the profiles are the boxes. Same margins as the boxes
+                 (aligned header / tab lines). -->
+            <mah:ClipBorder Grid.Column="0" Grid.Row="0" Margin="6,6,0,6" Style="{StaticResource ViewBox}"
+                            Background="Transparent"
+                            BorderThickness="0">
                 <Grid x:Name="ApplicationViewGrid">
                     <Grid.RowDefinitions>
                         <!-- 1 = Search, 2 = ApplicationList, 3 = Settings-->
@@ -378,44 +398,48 @@
                             </Style.Triggers>
                         </Style>
                     </Grid.Style>
-                    <Border Grid.Row="0" BorderBrush="{DynamicResource MahApps.Brushes.Gray8}"
+                    <Border Grid.Row="0" BorderBrush="{DynamicResource Brushes.Surface.Border}"
                             BorderThickness="0,0,0,1" Background="Transparent">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
+                            <!-- 36, aligned with the tab headers (36) of the tools -->
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="31" />
+                                <RowDefinition Height="36" />
                             </Grid.RowDefinitions>
                             <Button Grid.Column="0" Grid.Row="0"
                                     Command="{Binding OpenApplicationListCommand}"
                                     ToolTip="{x:Static localization:Strings.ExpandAndOpenSearchDots}"
                                     Focusable="False">
                                 <Button.Style>
+                                    <!-- Hidden while the search box is shown (same conditions as the search box below).
+                                         The search box was opaque and covered it, it is transparent now. -->
                                     <Style TargetType="{x:Type Button}" BasedOn="{StaticResource CleanButton}">
+                                        <Setter Property="Visibility" Value="Visible" />
                                         <Style.Triggers>
-                                            <DataTrigger Binding="{Binding ApplicationViewIsExpanded}" Value="False">
-                                                <Setter Property="Visibility" Value="Visible" />
+                                            <DataTrigger Binding="{Binding ApplicationViewIsExpanded}" Value="True">
+                                                <Setter Property="Visibility" Value="Collapsed" />
                                             </DataTrigger>
                                             <MultiDataTrigger>
                                                 <MultiDataTrigger.Conditions>
-                                                    <Condition Binding="{Binding ApplicationViewIsOpen}" Value="False" />
+                                                    <Condition Binding="{Binding ApplicationViewIsOpen}" Value="True" />
                                                     <Condition Binding="{Binding TextBoxApplicationSearchIsFocused}"
-                                                               Value="False" />
+                                                               Value="True" />
                                                 </MultiDataTrigger.Conditions>
                                                 <MultiDataTrigger.Setters>
-                                                    <Setter Property="Visibility" Value="Visible" />
+                                                    <Setter Property="Visibility" Value="Collapsed" />
                                                 </MultiDataTrigger.Setters>
                                             </MultiDataTrigger>
                                             <MultiDataTrigger>
                                                 <MultiDataTrigger.Conditions>
-                                                    <Condition Binding="{Binding ApplicationViewIsOpen}" Value="False" />
+                                                    <Condition Binding="{Binding ApplicationViewIsOpen}" Value="True" />
                                                     <Condition Binding="{Binding ApplicationViewIsMouseOver}"
-                                                               Value="False" />
+                                                               Value="True" />
                                                 </MultiDataTrigger.Conditions>
                                                 <MultiDataTrigger.Setters>
-                                                    <Setter Property="Visibility" Value="Visible" />
+                                                    <Setter Property="Visibility" Value="Collapsed" />
                                                 </MultiDataTrigger.Setters>
                                             </MultiDataTrigger>
                                         </Style.Triggers>
@@ -424,7 +448,7 @@
                                 <Rectangle Grid.Column="0" Width="16" Height="16" Margin="0,0,-2,0">
                                     <Rectangle.OpacityMask>
                                         <VisualBrush Stretch="Uniform"
-                                                     Visual="{iconPacks:Material Kind=ChevronDoubleRight}" />
+                                                     Visual="{icons:Lucide Kind=ChevronsRight}" />
                                     </Rectangle.OpacityMask>
                                     <Rectangle.Style>
                                         <Style TargetType="{x:Type Rectangle}">
@@ -549,7 +573,7 @@
                                 </ToggleButton.Style>
                                 <Rectangle Width="16" Height="16">
                                     <Rectangle.Resources>
-                                        <VisualBrush x:Key="VisualPin" Visual="{iconPacks:Modern Kind=Pin}" />
+                                        <VisualBrush x:Key="VisualPin" Visual="{icons:Lucide Kind=Pin}" />
                                     </Rectangle.Resources>
                                     <Rectangle.Style>
                                         <Style TargetType="{x:Type Rectangle}">
@@ -597,6 +621,8 @@
                                   SelectedItem="{Binding SelectedApplication, Mode=TwoWay}"
                                   SelectionChanged="ListViewApplication_OnSelectionChanged"
                                   SelectionMode="Single"
+                                  Background="Transparent"
+                                  ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                                   BorderThickness="0"
                                   dd:DragDrop.IsDragSource="True"
                                   dd:DragDrop.IsDropTarget="True">
@@ -607,7 +633,8 @@
                                           ToolTipService.IsEnabled="True">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="48" />
-                                            <ColumnDefinition Width="Auto" />
+                                            <!-- * (not Auto): the pill spans both columns and covers the whole row -->
+                                            <ColumnDefinition Width="*" />
                                         </Grid.ColumnDefinitions>
                                         <Grid.Resources>
                                             <Style TargetType="{x:Type ToolTip}">
@@ -621,9 +648,9 @@
                                                         <ControlTemplate TargetType="{x:Type ToolTip}">
                                                             <Grid Height="36" Margin="0,6">
                                                                 <Border x:Name="border"
-                                                                        CornerRadius="3"
+                                                                        CornerRadius="{StaticResource CornerRadius.Control}"
                                                                         BorderThickness="1"
-                                                                        BorderBrush="{DynamicResource ResourceKey=MahApps.Brushes.Gray8}"
+                                                                        BorderBrush="{DynamicResource Brushes.Surface.Border}"
                                                                         Background="{DynamicResource  ResourceKey=MahApps.Brushes.Window.Background}">
                                                                     <TextBlock Text="{TemplateBinding Content}"
                                                                                VerticalAlignment="Center"
@@ -673,16 +700,59 @@
                                                             <Setter Property="ToolTip" Value="{x:Null}" />
                                                         </MultiDataTrigger.Setters>
                                                     </MultiDataTrigger>
-                                                    <DataTrigger
-                                                        Binding="{Binding Path=IsSelected, RelativeSource={RelativeSource AncestorType={x:Type ListViewItem}}}"
-                                                        Value="True">
-                                                        <Setter Property="Background"
-                                                                Value="{DynamicResource MahApps.Brushes.Gray8}" />
-                                                    </DataTrigger>
                                                 </Style.Triggers>
                                             </Style>
                                         </Grid.Style>
-                                        <Rectangle Grid.Column="0" Width="4" Height="48" HorizontalAlignment="Left">
+                                        <!-- Pill behind the item (selected; mouse over: layer below that fades in), inset so the
+                                             icon stays centered in the collapsed navigation -->
+                                        <Border Grid.Column="0" Grid.ColumnSpan="2" Margin="4,2" Opacity="0"
+                                                IsHitTestVisible="False"
+                                                Background="{DynamicResource Brushes.Control.MouseOver}"
+                                                CornerRadius="{StaticResource CornerRadius.Control}">
+                                            <Border.Style>
+                                                <Style TargetType="{x:Type Border}">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding Path=IsMouseOver, RelativeSource={RelativeSource AncestorType={x:Type ListViewItem}}}" Value="True">
+                                                        <DataTrigger.EnterActions>
+                                                            <BeginStoryboard>
+                                                                <Storyboard>
+                                                                    <DoubleAnimation Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.1" />
+                                                                </Storyboard>
+                                                            </BeginStoryboard>
+                                                        </DataTrigger.EnterActions>
+                                                        <DataTrigger.ExitActions>
+                                                            <BeginStoryboard>
+                                                                <Storyboard>
+                                                                    <DoubleAnimation Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.15" />
+                                                                </Storyboard>
+                                                            </BeginStoryboard>
+                                                        </DataTrigger.ExitActions>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                                </Style>
+                                            </Border.Style>
+                                        </Border>
+                                        <Border Grid.Column="0" Grid.ColumnSpan="2" Margin="4,2"
+                                                CornerRadius="{StaticResource CornerRadius.Control}">
+                                            <Border.Style>
+                                                <Style TargetType="{x:Type Border}">
+                                                    <Setter Property="Background" Value="Transparent" />
+                                                    <Style.Triggers>
+                                                        <DataTrigger
+                                                            Binding="{Binding Path=IsSelected, RelativeSource={RelativeSource AncestorType={x:Type ListViewItem}}}"
+                                                            Value="True">
+                                                            <Setter Property="Background"
+                                                                    Value="{DynamicResource Brushes.Navigation.Selected}" />
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Border.Style>
+                                        </Border>
+                                        <!-- Accent indicator of the selected item, inside the pill (grows in when selected) -->
+                                        <Rectangle Grid.Column="0" Width="3" Height="18" Margin="4,0,0,0"
+                                                   RadiusX="1.5" RadiusY="1.5"
+                                                   HorizontalAlignment="Left" VerticalAlignment="Center"
+                                                   networkManager:SelectionIndicatorAnimation.IsSelected="{Binding Path=IsSelected, RelativeSource={RelativeSource AncestorType={x:Type ListViewItem}}}">
                                             <Rectangle.Style>
                                                 <Style TargetType="{x:Type Rectangle}">
                                                     <Style.Triggers>
@@ -723,8 +793,9 @@
                                                    Text="{Binding Name, Converter={StaticResource ApplicationNameToTranslatedStringConverter}}"
                                                    Margin="2,0,0,0">
                                             <TextBlock.Style>
+                                                <!-- 14 regular like the tabs (was the 18 header font) -->
                                                 <Style TargetType="{x:Type TextBlock}"
-                                                       BasedOn="{StaticResource HeaderTextBlock}">
+                                                       BasedOn="{StaticResource DefaultTextBlock}">
                                                     <Setter Property="Foreground"
                                                             Value="{DynamicResource MahApps.Brushes.Gray3}" />
                                                     <Setter Property="Margin" Value="0" />
@@ -741,7 +812,7 @@
                                                             Binding="{Binding Path=IsSelected,RelativeSource={RelativeSource AncestorType={x:Type ListViewItem}}}"
                                                             Value="True">
                                                             <Setter Property="Foreground"
-                                                                    Value="{DynamicResource MahApps.Brushes.Accent}" />
+                                                                    Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
                                                         </DataTrigger>
                                                         <DataTrigger
                                                             Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.ApplicationViewIsExpanded}"
@@ -787,12 +858,15 @@
                             <ListView.ItemContainerStyle>
                                 <Style TargetType="{x:Type ListViewItem}">
                                     <Setter Property="SnapsToDevicePixels" Value="True" />
+                                    <!-- Full width (expanded navigation): the pill covers the whole row, not only the text -->
+                                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
                                     <Setter Property="Template">
                                         <Setter.Value>
                                             <ControlTemplate TargetType="{x:Type ListViewItem}">
                                                 <Border Background="Transparent" BorderThickness="0">
                                                     <Grid>
-                                                        <ContentPresenter x:Name="contentPresenter" />
+                                                        <ContentPresenter x:Name="contentPresenter"
+                                                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" />
                                                     </Grid>
                                                 </Border>
                                             </ControlTemplate>
@@ -827,7 +901,7 @@
                             <Rectangle Width="24" Height="24">
                                 <Rectangle.OpacityMask>
                                     <VisualBrush Stretch="Uniform"
-                                                 Visual="{iconPacks:Material Kind=FilterRemoveOutline}" />
+                                                 Visual="{icons:Lucide Kind=FunnelX}" />
                                 </Rectangle.OpacityMask>
                                 <Rectangle.Style>
                                     <Style TargetType="{x:Type Rectangle}">
@@ -843,12 +917,10 @@
                                 </Rectangle.Style>
                             </Rectangle>
                         </Button>
-                        <TextBlock Grid.Row="1" Style="{StaticResource HeaderTextBlock}"
-                                   Foreground="{DynamicResource MahApps.Brushes.Gray3}"
-                                   Text="{x:Static localization:Strings.SearchedApplicationNotFound}" Margin="10,0"
-                                   TextWrapping="Wrap" TextAlignment="Center" />
+                        <TextBlock Grid.Row="1" Style="{StaticResource MessageTextBlock}"
+                                   Text="{x:Static localization:Strings.SearchedApplicationNotFound}" />
                     </Grid>
-                    <Border Grid.Row="2" BorderBrush="{DynamicResource MahApps.Brushes.Gray8}"
+                    <Border Grid.Row="2" BorderBrush="{DynamicResource Brushes.Surface.Border}"
                             BorderThickness="0,1,0,0" Background="Transparent">
                         <Button Height="48" HorizontalContentAlignment="Stretch"
                                 Command="{Binding OpenSettingsCommand}">
@@ -897,7 +969,7 @@
                                 </Grid.ColumnDefinitions>
                                 <Rectangle Grid.Column="0" Width="24" Height="24" Margin="0,0,-2,0">
                                     <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:MaterialLight Kind=Cog}" />
+                                        <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=Settings}" />
                                     </Rectangle.OpacityMask>
                                     <Rectangle.Style>
                                         <Style TargetType="{x:Type Rectangle}">
@@ -915,8 +987,9 @@
                                 </Rectangle>
                                 <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.Settings}">
                                     <TextBlock.Style>
+                                        <!-- 14 regular like the tabs and the applications -->
                                         <Style TargetType="{x:Type TextBlock}"
-                                               BasedOn="{StaticResource HeaderTextBlock}">
+                                               BasedOn="{StaticResource DefaultTextBlock}">
                                             <Setter Property="Foreground"
                                                     Value="{DynamicResource MahApps.Brushes.Gray3}" />
                                             <Setter Property="Margin" Value="0" />
@@ -972,11 +1045,26 @@
                         </interactivity:EventTrigger>
                     </interactivity:Interaction.Triggers>
                 </Grid>
-            </Border>
-            <networkManagerControls:AirspacePanel Grid.Column="1" Grid.Row="0"
-                                                  FixAirspace="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=FixAirspace}">
-                <ContentControl x:Name="ContentControlApplication" />
-            </networkManagerControls:AirspacePanel>
+            </mah:ClipBorder>
+            <!-- Main view: box on the frame, unless the view has its own boxes (tool area + profile panel) -->
+            <mah:ClipBorder Grid.Column="1" Grid.Row="0" Margin="6,6,6,6">
+                <mah:ClipBorder.Style>
+                    <Style TargetType="{x:Type mah:ClipBorder}" BasedOn="{StaticResource ViewBox}">
+                        <Style.Triggers>
+                            <DataTrigger
+                                Binding="{Binding ElementName=ContentControlApplication, Path=Content.(networkManagerControls:ViewLayoutHelper.HasOwnBoxes)}"
+                                Value="True">
+                                <Setter Property="Background" Value="Transparent" />
+                                <Setter Property="BorderThickness" Value="0" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </mah:ClipBorder.Style>
+                <networkManagerControls:AirspacePanel
+                    FixAirspace="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=FixAirspace}">
+                    <ContentControl x:Name="ContentControlApplication" />
+                </networkManagerControls:AirspacePanel>
+            </mah:ClipBorder>
         </Grid>
         <Grid>
             <Grid.Style>
@@ -989,73 +1077,76 @@
                     </Style.Triggers>
                 </Style>
             </Grid.Style>
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="49" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
-                <Border Grid.Row="0" BorderBrush="{DynamicResource MahApps.Brushes.Gray8}" BorderThickness="0,0,0,1">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <Button Grid.Column="0" Grid.Row="0"
-                                Command="{Binding CloseSettingsCommand}"
-                                Style="{StaticResource CleanButton}"
-                                Focusable="False"
-                                HorizontalAlignment="Right"
-                                VerticalAlignment="Center"
-                                Margin="10,0">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="*" />
-                                </Grid.ColumnDefinitions>
-                                <Rectangle Grid.Column="0" Width="16" Height="16">
-                                    <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform"
-                                                     Visual="{iconPacks:MaterialLight Kind=ArrowLeft}" />
-                                    </Rectangle.OpacityMask>
-                                    <Rectangle.Style>
-                                        <Style TargetType="{x:Type Rectangle}">
-                                            <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
-                                            <Style.Triggers>
-                                                <DataTrigger
-                                                    Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}"
-                                                    Value="True">
-                                                    <Setter Property="Fill"
-                                                            Value="{DynamicResource MahApps.Brushes.Gray5}" />
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </Rectangle.Style>
-                                </Rectangle>
-                                <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.Back}"
-                                           VerticalAlignment="Center" Margin="10,0,0,0">
-                                    <TextBlock.Style>
-                                        <Style TargetType="{x:Type TextBlock}"
-                                               BasedOn="{StaticResource DefaultTextBlock}">
-                                            <Setter Property="Foreground"
-                                                    Value="{DynamicResource MahApps.Brushes.Gray3}" />
-                                            <Style.Triggers>
-                                                <DataTrigger
-                                                    Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}"
-                                                    Value="True">
-                                                    <Setter Property="Foreground"
-                                                            Value="{DynamicResource MahApps.Brushes.Gray5}" />
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </TextBlock.Style>
-                                </TextBlock>
-                            </Grid>
-                        </Button>
-                        <!--<TextBlock Grid.Column="1" VerticalAlignment="Center" TextAlignment="Center" Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Settings}" Foreground="{DynamicResource MahApps.Brushes.Gray3}" Margin="10,0" /> -->
-                    </Grid>
-                </Border>
-                <ContentControl Grid.Row="1" x:Name="ContentControlSettings" />
-            </Grid>
+            <!-- Settings: box on the frame of the window -->
+            <mah:ClipBorder Margin="6,6,6,6" Style="{StaticResource ViewBox}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="49" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Border Grid.Row="0" BorderBrush="{DynamicResource Brushes.Surface.Border}" BorderThickness="0,0,0,1">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Button Grid.Column="0" Grid.Row="0"
+                                    Command="{Binding CloseSettingsCommand}"
+                                    Style="{StaticResource CleanButton}"
+                                    Focusable="False"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Center"
+                                    Margin="10,0">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Rectangle Grid.Column="0" Width="16" Height="16">
+                                        <Rectangle.OpacityMask>
+                                            <VisualBrush Stretch="Uniform"
+                                                         Visual="{icons:Lucide Kind=ArrowLeft}" />
+                                        </Rectangle.OpacityMask>
+                                        <Rectangle.Style>
+                                            <Style TargetType="{x:Type Rectangle}">
+                                                <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
+                                                <Style.Triggers>
+                                                    <DataTrigger
+                                                        Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}"
+                                                        Value="True">
+                                                        <Setter Property="Fill"
+                                                                Value="{DynamicResource MahApps.Brushes.Gray5}" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Rectangle.Style>
+                                    </Rectangle>
+                                    <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.Back}"
+                                               VerticalAlignment="Center" Margin="10,0,0,0">
+                                        <TextBlock.Style>
+                                            <Style TargetType="{x:Type TextBlock}"
+                                                   BasedOn="{StaticResource DefaultTextBlock}">
+                                                <Setter Property="Foreground"
+                                                        Value="{DynamicResource MahApps.Brushes.Gray3}" />
+                                                <Style.Triggers>
+                                                    <DataTrigger
+                                                        Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}"
+                                                        Value="True">
+                                                        <Setter Property="Foreground"
+                                                                Value="{DynamicResource MahApps.Brushes.Gray5}" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                </Grid>
+                            </Button>
+                            <!--<TextBlock Grid.Column="1" VerticalAlignment="Center" TextAlignment="Center" Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Settings}" Foreground="{DynamicResource MahApps.Brushes.Gray3}" Margin="10,0" /> -->
+                        </Grid>
+                    </Border>
+                    <ContentControl Grid.Row="1" x:Name="ContentControlSettings" />
+                </Grid>
+            </mah:ClipBorder>
         </Grid>
     </Grid>
 </mah:MetroWindow>

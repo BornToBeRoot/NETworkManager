@@ -3,8 +3,12 @@
     <Style x:Key="DefaultTabItem" TargetType="{x:Type TabItem}">
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray3}" />
         <Setter Property="Background" Value="Transparent" />
-        <Setter Property="BorderThickness" Value="0" />
-        <Setter Property="Height" Value="34" />
+        <!-- Separator on the right, like the tabs of the tools -->
+        <Setter Property="BorderBrush" Value="{DynamicResource Brushes.Surface.Border}" />
+        <Setter Property="BorderThickness" Value="0,0,1,0" />
+        <!-- 35: the line below is at the same height as the one of the tabs of the tools (Dragablz: header 36, the
+             content border overlaps it by 1) and of the header of the navigation (36 + line, no box border) -->
+        <Setter Property="Height" Value="35" />
         <Setter Property="Margin" Value="0" />
         <Setter Property="Padding" Value="10,0" />
         <Setter Property="MinWidth" Value="150" />
@@ -13,25 +17,42 @@
                 <ControlTemplate TargetType="{x:Type TabItem}">
                     <Grid x:Name="PART_Grid" Background="{TemplateBinding Background}" SnapsToDevicePixels="True"
                           Margin="0">
+                        <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" />
                         <ContentPresenter x:Name="PART_HeaderContent" Margin="{TemplateBinding Padding}"
                                           ContentSource="Header" VerticalAlignment="Center"
-                                          HorizontalAlignment="Center" TextBlock.FontSize="18"
-                                          TextBlock.FontFamily="{StaticResource MahApps.Fonts.Family.Header}"
+                                          HorizontalAlignment="Center" TextBlock.FontSize="14"
+                                          TextBlock.FontFamily="{DynamicResource MahApps.Fonts.Family.Control}"
                                           SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                        <!--<Rectangle x:Name="PART_Selector" VerticalAlignment="Bottom" Height="2" Visibility="Collapsed" Fill="{DynamicResource MahApps.Brushes.Accent}" />-->
+                        <!-- Accent line on top of the selected tab, like the tabs of the tools (VS Code) -->
+                        <Rectangle x:Name="PART_Selector" VerticalAlignment="Top" Height="2" Visibility="Collapsed"
+                                   IsHitTestVisible="False" Fill="{DynamicResource MahApps.Brushes.Accent}" />
+                        <!-- Covers the line below the tab bar under the selected tab: the tab is part of the page -->
+                        <Rectangle x:Name="PART_LineCover" VerticalAlignment="Bottom" Height="1" Margin="0,0,0,-1"
+                                   Visibility="Collapsed" IsHitTestVisible="False"
+                                   Fill="{DynamicResource MahApps.Brushes.ThemeBackground}" />
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger SourceName="PART_Grid" Property="IsMouseOver" Value="True">
                             <Trigger.Setters>
                                 <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray5}" />
+                                <Setter TargetName="PART_Grid" Property="Background" Value="{DynamicResource Brushes.Control.MouseOver}" />
                             </Trigger.Setters>
                         </Trigger>
                         <Trigger Property="IsSelected" Value="True">
                             <Trigger.Setters>
-                                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Accent}" />
-                                <!-- <Setter TargetName="PART_Selector" Property="Visibility" Value="Visible" /> -->
+                                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
+                                <Setter TargetName="PART_Grid" Property="Background" Value="{DynamicResource MahApps.Brushes.ThemeBackground}" />
+                                <Setter TargetName="PART_Selector" Property="Visibility" Value="Visible" />
+                                <Setter TargetName="PART_LineCover" Property="Visibility" Value="Visible" />
                             </Trigger.Setters>
                         </Trigger>
+                        <!-- Only one tab (e.g. Dashboard, Firewall): shown as the selected tab over the whole width (like
+                             VS Code with one open file), nothing to switch - not clickable / focusable, no mouse over -->
+                        <DataTrigger Binding="{Binding Path=Items.Count, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="1">
+                            <Setter Property="IsHitTestVisible" Value="False" />
+                            <Setter Property="Focusable" Value="False" />
+                            <Setter Property="BorderThickness" Value="0" />
+                        </DataTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
@@ -41,13 +62,16 @@
     <Style x:Key="DefaultTabControl" TargetType="{x:Type TabControl}">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderThickness" Value="0,1,0,0" />
-        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Gray8}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource Brushes.Surface.Border}" />
         <Setter Property="ItemContainerStyle" Value="{StaticResource DefaultTabItem}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TabControl}">
                     <DockPanel LastChildFill="True">
-                        <Grid x:Name="HeaderGrid" DockPanel.Dock="Left" Margin="0,-3,0,0">
+                        <!-- Tab bar in the frame color (like VS Code), above the content (the selected tab covers its
+                             top line) -->
+                        <Grid x:Name="HeaderGrid" DockPanel.Dock="Left" Panel.ZIndex="1"
+                              Background="{DynamicResource Brushes.Surface.Frame}">
                             <UniformGrid x:Name="HeaderPanel" HorizontalAlignment="Stretch"
                                          Columns="{Binding Items.Count, RelativeSource={RelativeSource FindAncestor,AncestorType=TabControl}}"
                                          Panel.ZIndex="1" IsItemsHost="True" KeyboardNavigation.TabIndex="1" />

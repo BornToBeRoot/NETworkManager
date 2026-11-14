@@ -1,5 +1,7 @@
 using NETworkManager.Models.Appearance;
 using NETworkManager.Settings;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows.Data;
@@ -95,6 +97,50 @@ public class SettingsAppearanceViewModel : ViewModelBase
         }
     }
 
+    public IEnumerable<AccentGlowIntensity> AccentGlowIntensities => Enum.GetValues<AccentGlowIntensity>();
+
+    public AccentGlowIntensity AccentGlowIntensity
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            if (!_isLoading)
+            {
+                SettingsManager.Current.Appearance_AccentGlowIntensity = value;
+                AppearanceManager.ApplyWindowBrush();
+            }
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public IEnumerable<AnimationMode> AnimationModes => Enum.GetValues<AnimationMode>();
+
+    public AnimationMode AnimationMode
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            if (!_isLoading)
+                SettingsManager.Current.Appearance_Animations = value;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
+    ///     Gets whether the animations are managed by system-wide policy (on / off).
+    /// </summary>
+    public bool IsAnimationsManagedByPolicy => PolicyManager.Current?.Appearance_Animations.HasValue == true;
+
     public bool PowerShellModifyGlobalProfile
     {
         get;
@@ -139,6 +185,11 @@ public class SettingsAppearanceViewModel : ViewModelBase
             CustomThemes.Cast<ThemeInfo>()
                 .FirstOrDefault(x => x.Name == SettingsManager.Current.Appearance_CustomThemeName) ??
             CustomThemes.Cast<ThemeInfo>().FirstOrDefault();
+        AccentGlowIntensity = SettingsManager.Current.Appearance_AccentGlowIntensity;
+        // If policy is set, show the policy value (on / off); otherwise show the user's setting
+        AnimationMode = PolicyManager.Current?.Appearance_Animations is { } animationsPolicy
+            ? animationsPolicy ? AnimationMode.On : AnimationMode.Off
+            : SettingsManager.Current.Appearance_Animations;
         PowerShellModifyGlobalProfile = SettingsManager.Current.Appearance_PowerShellModifyGlobalProfile;
     }
 

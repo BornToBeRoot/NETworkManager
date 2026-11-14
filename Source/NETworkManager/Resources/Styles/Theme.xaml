@@ -1,0 +1,54 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <!--
+        Theme-independent design resources used by the styles and views. Theme-dependent brushes (status colors,
+        mouse over / pressed) are set by AppearanceManager on every theme change.
+    -->
+
+    <!-- Monospace font (console output, run command, MAC addresses). Cascadia Mono ships with Windows 11,
+         Windows 10 falls back to Consolas. -->
+    <FontFamily x:Key="Fonts.Family.Mono">Cascadia Mono, Consolas</FontFamily>
+
+    <!-- Converter for the templates in the style dictionaries (merged after this one, StaticResource) -->
+    <BooleanToVisibilityConverter x:Key="Converters.BooleanToVisibility" />
+
+    <!-- Font of the controls and texts: Segoe UI Variable (Windows 11, named instance "Text" for small sizes),
+         Segoe UI on Windows 10. Overrides the fonts of MahApps (Fonts.xaml, 2.4.11), the window title and the header
+         font (Segoe UI Light, no longer used by the text styles) stay. -->
+    <FontFamily x:Key="MahApps.Fonts.Family.Control">Segoe UI Variable Text, Segoe UI, Lucida Sans Unicode, Verdana</FontFamily>
+    <FontFamily x:Key="MahApps.Fonts.Family.Button">Segoe UI Variable Text, Segoe UI, Lucida Sans Unicode, Verdana</FontFamily>
+    <FontFamily x:Key="MahApps.Fonts.Family.ToggleSwitch">Segoe UI Variable Text, Segoe UI, Lucida Sans Unicode, Verdana</FontFamily>
+    <FontFamily x:Key="MahApps.Fonts.Family.ToggleSwitch.Header">Segoe UI Variable Text, Segoe UI, Lucida Sans Unicode, Verdana</FontFamily>
+
+    <!-- Corner radius of controls (buttons, inputs, tooltips) and of overlays (menus) -->
+    <CornerRadius x:Key="CornerRadius.Control">4</CornerRadius>
+    <!-- Element inside a control with a 1 px border, e.g. the button of a drop-down button -->
+    <CornerRadius x:Key="CornerRadius.Control.Inner">3</CornerRadius>
+    <CornerRadius x:Key="CornerRadius.Overlay">8</CornerRadius>
+    <!-- Cards, e.g. Dashboard widgets, Ping Monitor hosts -->
+    <CornerRadius x:Key="CornerRadius.Card">8</CornerRadius>
+
+    <!-- Overlay behind a dialog: dims the window (light and dark theme) -->
+    <SolidColorBrush x:Key="Brushes.Overlay" Color="Black" Opacity="0.4" />
+
+    <!--
+        Keyboard focus (Tab): gray ring with a gap of 1 px around the control, rounded like the controls. Replaces
+        the dotted rectangle of MahApps (buttons) and the system default (e.g. CheckBox, RadioButton, list items).
+        Only shown for keyboard navigation, not when clicking.
+    -->
+    <Style x:Key="FocusVisual.Ring">
+        <Setter Property="Control.Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Border Margin="-3"
+                            BorderThickness="2"
+                            CornerRadius="6"
+                            BorderBrush="{DynamicResource MahApps.Brushes.Gray5}"
+                            SnapsToDevicePixels="True" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="{x:Static SystemParameters.FocusVisualStyleKey}" BasedOn="{StaticResource FocusVisual.Ring}" />
+</ResourceDictionary>

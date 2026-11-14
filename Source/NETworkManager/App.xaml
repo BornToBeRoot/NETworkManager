@@ -19,12 +19,15 @@
                     Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.FlatSlider.xaml" />
                 <!-- Dragablz -->
                 <ResourceDictionary Source="pack://application:,,,/Dragablz;component/Themes/MahApps.xaml" />
+                <!-- Design resources: fonts (import before styles) -->
+                <ResourceDictionary Source="/Resources/Styles/Theme.xaml" />
                 <!-- Context menu (import berfore styles)-->
                 <ResourceDictionary Source="/Resources/ContextMenu/ContextMenu.xaml" />
                 <!-- Control templates (import before styles) -->
                 <ResourceDictionary Source="/Resources/Templates/ValidationErrorTemplates.xaml" />
                 <!-- Styles -->
                 <ResourceDictionary Source="/Resources/Styles/AirspacePanelStyles.xaml" />
+                <ResourceDictionary Source="/Resources/Styles/BorderStyles.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/ButtonStyles.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/CheckBoxStyles.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/ChildWindowStyles.xaml" />
@@ -33,10 +36,9 @@
                 <ResourceDictionary Source="/Resources/Styles/DropDownButtonStyles.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/GridSplitterStyles.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/GroupBoxStyles.xaml" />
-                <ResourceDictionary Source="/Resources/Styles/LoadingIndicatorArcsStyle.xaml" />
-                <ResourceDictionary Source="/Resources/Styles/LoadingIndicatorPulseStyle.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/MenuItemStyles.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/NumericUpDownStyles.xaml" />
+                <ResourceDictionary Source="/Resources/Styles/ProgressBarStyles.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/RadioButtonStyles.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/ScrollBarStyles.xaml" />
                 <ResourceDictionary Source="/Resources/Styles/ScrollViewerStyles.xaml" />
@@ -51,6 +53,7 @@
                 <ResourceDictionary Source="/Resources/Styles/ComboBoxStyles.xaml" />
                 <!-- Requires scrollbar styles -->
                 <ResourceDictionary Source="/Resources/Styles/DragablzStyles.xaml" />
+                <ResourceDictionary Source="/Resources/Styles/EmbeddedWindowDragPresenterStyles.xaml" />
                 <!-- Requires button and TextBox styles -->
                 <ResourceDictionary Source="/Resources/Styles/ExpanderStyles.xaml" />
                 <!-- Requires button styles -->

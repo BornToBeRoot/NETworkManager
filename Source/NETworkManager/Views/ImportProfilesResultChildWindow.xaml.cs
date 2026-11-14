@@ -16,14 +16,7 @@ public partial class ImportProfilesResultChildWindow
 
         ChildWindowMaxWidth = 1050;
         ChildWindowMaxHeight = 650;
-        ChildWindowWidth = parentWindow.ActualWidth * 0.85;
-        //ChildWindowHeight = parentWindow.ActualHeight * 0.85;
-
-        parentWindow.SizeChanged += (_, _) =>
-        {
-            ChildWindowWidth = parentWindow.ActualWidth * 0.85;
-            //ChildWindowHeight = parentWindow.ActualHeight * 0.85;
-        };
+        ChildWindowSizeHelper.FollowParentSize(this, parentWindow, height: false);
     }
 
     private void ChildWindow_OnLoaded(object sender, RoutedEventArgs e)

@@ -37,6 +37,7 @@ The `config.json` file uses a simple JSON structure to define policy values. An 
 
 ```json
 {
+  "Appearance_Animations": false,
   "Profiles_FolderLocation": "\\\\Server\\Shared\\NETworkManager\\Profiles",
   "Settings_FolderLocation": "%UserProfile%\\NETworkManager\\Settings",
   "Update_CheckForUpdatesAtStartup": false,

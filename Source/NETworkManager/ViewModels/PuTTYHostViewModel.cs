@@ -127,6 +127,9 @@ public class PuTTYHostViewModel : ProfileHostViewModelBase
         InitializeProfileHost();
 
         SettingsManager.Current.PropertyChanged += SettingsManager_PropertyChanged;
+
+        // Colors of the theme (also custom themes): the terminal blends into the application
+        AppearanceManager.ConsoleColorsChanged += (_, _) => WriteDefaultProfileToRegistry();
     }
 
     #endregion
@@ -458,7 +461,16 @@ public class PuTTYHostViewModel : ProfileHostViewModelBase
 
         Log.Debug("Write PuTTY profile to registry...");
 
-        PuTTY.WriteDefaultProfileToRegistry(SettingsManager.Current.Appearance_Theme);
+        // Also called on a theme change: an error (e.g. access denied) must not break it
+        try
+        {
+            PuTTY.WriteDefaultProfileToRegistry(AppearanceManager.ConsoleBackground,
+                AppearanceManager.ConsoleForeground, AppearanceManager.ConsoleBoldForeground);
+        }
+        catch (Exception ex)
+        {
+            Log.Error("Could not write the PuTTY profile to the registry.", ex);
+        }
     }
 
     #endregion
@@ -471,9 +483,6 @@ public class PuTTYHostViewModel : ProfileHostViewModelBase
         {
             case nameof(SettingsInfo.PuTTY_ApplicationFilePath):
                 CheckExecutable();
-                break;
-            case nameof(SettingsInfo.Appearance_Theme):
-                WriteDefaultProfileToRegistry();
                 break;
         }
     }

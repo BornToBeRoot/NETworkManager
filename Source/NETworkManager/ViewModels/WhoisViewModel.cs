@@ -106,6 +106,22 @@ public class WhoisViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    ///     Level of the status message (icon and color, see <see cref="StatusMessageText" />).
+    /// </summary>
+    public StatusLevel StatusMessageLevel
+    {
+        get;
+        private set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
     #endregion
 
     #region Contructor, load settings
@@ -184,6 +200,7 @@ public class WhoisViewModel : ViewModelBase
             if (string.IsNullOrEmpty(whoisServer))
             {
                 StatusMessage = string.Format(Strings.WhoisServerNotFoundForTheDomain, Domain);
+                StatusMessageLevel = StatusLevel.Error;
                 IsStatusMessageDisplayed = true;
             }
             else
@@ -198,6 +215,7 @@ public class WhoisViewModel : ViewModelBase
         catch (Exception ex)
         {
             StatusMessage = ex.Message;
+            StatusMessageLevel = StatusLevel.Error;
             IsStatusMessageDisplayed = true;
         }
 

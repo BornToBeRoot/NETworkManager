@@ -1,3 +1,4 @@
+using NETworkManager.Controls;
 using NETworkManager.Converters;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models;
@@ -106,6 +107,22 @@ public class PingMonitorHostViewModel : ProfileHostViewModelBase
     ///     Gets the status message.
     /// </summary>
     public string StatusMessage
+    {
+        get;
+        private set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
+    ///     Gets the level of the status message (icon and color, the most severe of the added messages).
+    /// </summary>
+    public StatusLevel StatusMessageLevel
     {
         get;
         private set
@@ -309,9 +326,11 @@ public class PingMonitorHostViewModel : ProfileHostViewModelBase
     /// resolved). The messages are cleared when a scan starts.
     /// </summary>
     /// <param name="message">Message to show.</param>
-    private void AddStatusMessage(string message)
+    /// <param name="level">Level of the message; the most severe of the shown messages is used.</param>
+    private void AddStatusMessage(string message, StatusLevel level)
     {
         StatusMessage = IsStatusMessageDisplayed ? StatusMessage + Environment.NewLine + message : message;
+        StatusMessageLevel = IsStatusMessageDisplayed ? StatusMessageLevel.MostSevere(level) : level;
         IsStatusMessageDisplayed = true;
     }
 
@@ -345,11 +364,12 @@ public class PingMonitorHostViewModel : ProfileHostViewModelBase
         // Show error message if (some) hostnames could not be resolved
         if (hosts.hostnamesNotResolved.Count > 0)
             AddStatusMessage(
-                $"{Strings.TheFollowingHostnamesCouldNotBeResolved} {string.Join(", ", hosts.hostnamesNotResolved)}");
+                $"{Strings.TheFollowingHostnamesCouldNotBeResolved} {string.Join(", ", hosts.hostnamesNotResolved)}",
+                StatusLevel.Error);
 
         // The exclusions removed every host (also if hostnames could not be resolved, keep their message)
         if (hosts.hosts.Count == 0 && hosts.excludedCount > 0)
-            AddStatusMessage(Strings.AllIPAddressesAreExcludedMessage);
+            AddStatusMessage(Strings.AllIPAddressesAreExcludedMessage, StatusLevel.Warning);
 
         // No host left (hostnames that could not be resolved, everything excluded): nothing to add, the input is kept
         // to correct it
@@ -436,6 +456,7 @@ public class PingMonitorHostViewModel : ProfileHostViewModelBase
     private void UserHasCanceled()
     {
         StatusMessage = Strings.CanceledByUserMessage;
+        StatusMessageLevel = StatusLevel.None;
         IsStatusMessageDisplayed = true;
 
         IsCanceling = false;

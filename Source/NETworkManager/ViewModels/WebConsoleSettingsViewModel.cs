@@ -1,6 +1,7 @@
 ﻿using log4net;
 using MahApps.Metro.SimpleChildWindow;
 using Microsoft.Web.WebView2.Core;
+using NETworkManager.Controls;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Settings;
 using NETworkManager.Utilities;
@@ -41,6 +42,22 @@ public class WebConsoleSettingsViewModel : ViewModelBase
     /// Gets the result of deleting the browsing data.
     /// </summary>
     public string DeleteBrowsingDataStatusMessage
+    {
+        get;
+        private set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
+    /// Gets the level of the result of deleting the browsing data (icon and color).
+    /// </summary>
+    public StatusLevel DeleteBrowsingDataStatusMessageLevel
     {
         get;
         private set
@@ -164,6 +181,7 @@ public class WebConsoleSettingsViewModel : ViewModelBase
             await webView2Controller.CoreWebView2.Profile.ClearBrowsingDataAsync();
 
             DeleteBrowsingDataStatusMessage = Strings.BrowsingDataSuccessfullyDeletedMessage;
+            DeleteBrowsingDataStatusMessageLevel = StatusLevel.Success;
         }
         catch (Exception ex)
         {
@@ -171,6 +189,7 @@ public class WebConsoleSettingsViewModel : ViewModelBase
             Log.Error("Error while deleting the browsing data of the WebView2 profile.", ex);
 
             DeleteBrowsingDataStatusMessage = Strings.BrowsingDataErrorMessage;
+            DeleteBrowsingDataStatusMessageLevel = StatusLevel.Error;
         }
         finally
         {

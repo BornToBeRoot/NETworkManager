@@ -73,4 +73,5 @@ public class WiFiChannelChart(Axis[] xAxes, Axis[] yAxes, RectangularSection[] s
 /// <param name="Color">Color of the series of the network.</param>
 /// <param name="Ssid">Shown SSID ("Hidden Network" for a hidden network).</param>
 /// <param name="Bssid">BSSID of the network.</param>
-public record WiFiChannelLegendEntry(SolidColorBrush Color, string Ssid, string Bssid);
+/// <param name="ColorIndex">Index of the color in the palette (to set the color again after a theme change).</param>
+public record WiFiChannelLegendEntry(SolidColorBrush Color, string Ssid, string Bssid, int ColorIndex);
