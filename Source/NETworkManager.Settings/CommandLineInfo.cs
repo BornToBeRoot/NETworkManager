@@ -39,16 +39,6 @@ public class CommandLineInfo
     public bool Screenshot { get; set; }
 
     /// <summary>
-    ///     Width of the window in screenshot mode (device-independent pixels, scaled with the Windows display scaling)
-    /// </summary>
-    public int ScreenshotWidth { get; set; } = CommandLineManager.ScreenshotDefaultWidth;
-
-    /// <summary>
-    ///     Height of the window in screenshot mode (device-independent pixels, scaled with the Windows display scaling)
-    /// </summary>
-    public int ScreenshotHeight { get; set; } = CommandLineManager.ScreenshotDefaultHeight;
-
-    /// <summary>
     ///     Wrong parameter(s) detected in the command line to display in the help dialog
     /// </summary>
     public string WrongParameter { get; set; }

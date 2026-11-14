@@ -77,19 +77,17 @@ NETworkManager.exe --application:PingMonitor
 
 Starts the application in screenshot mode to take consistent screenshots, e.g. for the documentation:
 
-- The window has a fixed size (default `1280x800`) and is centered on the primary screen. It can't be resized or maximized.
+- The window has a fixed size of `1280x800` and is centered on the primary screen. It can't be resized or maximized.
 - The size is in device-independent pixels and is scaled with the Windows display scaling. For example, `1280x800` is `1920x1200` pixels with `150 %` scaling, which looks sharp on high-resolution screens.
 - The saved window position and size are not loaded and not overwritten.
 - The window always looks like an active window (accent glow), even if the screenshot tool takes the focus.
 - The **Dashboard** shows sample data instead of your own IP addresses, hostnames, provider and location (network connection, IP geolocation, DNS resolver, speed test). It uses the address ranges and domains reserved for documentation (e.g. `203.0.113.0/24`, `2001:db8::/32`, `example.net`). The speed test shows a sample result without running a test.
-
-Optionally, the size can be set with `--screenshot:WIDTHxHEIGHT` (minimum `800x600`).
+- The input of the [Run command](run-command.md) always shows the same placeholder text (`Ready when your network isn't...`) instead of a random one.
 
 **Example:**
 
 ```powershell
 NETworkManager.exe --screenshot
-NETworkManager.exe --screenshot:1200x800
 NETworkManager.exe --screenshot --application:IPScanner
 ```
 

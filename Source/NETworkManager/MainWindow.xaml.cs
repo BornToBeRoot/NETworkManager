@@ -444,12 +444,16 @@ public sealed partial class MainWindow : INotifyPropertyChanged
     /// </summary>
     private void ConfigureScreenshotMode()
     {
+        // 16:10, readable when scaled to the width of the documentation
+        const int screenshotWidth = 1280;
+        const int screenshotHeight = 800;
+
         SaveWindowPosition = false;
         WindowStartupLocation = WindowStartupLocation.CenterScreen;
         WindowState = WindowState.Normal;
 
-        Width = MinWidth = MaxWidth = CommandLineManager.Current.ScreenshotWidth;
-        Height = MinHeight = MaxHeight = CommandLineManager.Current.ScreenshotHeight;
+        Width = MinWidth = MaxWidth = screenshotWidth;
+        Height = MinHeight = MaxHeight = screenshotHeight;
 
         SetResourceReference(BackgroundProperty, AppearanceManager.SurfaceWindowBrushKey);
         SetResourceReference(NonActiveWindowTitleBrushProperty, AppearanceManager.SurfaceWindowBrushKey);
@@ -1704,8 +1708,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
         if (!CommandLineManager.Current.Screenshot)
             return string.Empty;
 
-        return
-            $" {CommandLineManager.GetParameterWithSplitIdentifier(CommandLineManager.ParameterScreenshot)}{CommandLineManager.Current.ScreenshotWidth}x{CommandLineManager.Current.ScreenshotHeight}";
+        return $" {CommandLineManager.ParameterScreenshot}";
     }
 
     public ICommand ApplicationListMouseEnterCommand => new RelayCommand(_ => ApplicationListMouseEnterAction());

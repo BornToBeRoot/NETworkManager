@@ -576,6 +576,10 @@ public class RunCommandViewModel : ViewModelBase
 
     private static string GetRandomWatermark()
     {
+        // Always the same line in screenshot mode, so the screenshots of the documentation don't change
+        if (ScreenshotData.IsEnabled)
+            return Strings.RunCommandWatermark9;
+
         // Created on each call, since the lines are translated.
         string[] watermarks =
         [
