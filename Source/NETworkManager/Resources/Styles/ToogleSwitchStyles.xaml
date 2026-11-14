@@ -9,10 +9,6 @@
         <!--<Setter Property="ThumbIndicatorBrush" Value="{DynamicResource MahApps.Brushes.Gray3}" />-->
         <Setter Property="OffContent" Value="{x:Static localization:Strings.Off}" />
         <Setter Property="OnContent" Value="{x:Static localization:Strings.On}" />
-        <Style.Resources>
-            <SolidColorBrush x:Key="MahApps.Metro.Brushes.ToggleSwitchButton.OffBorderBrush.Win10"
-                             Color="{DynamicResource Gray8}" />
-        </Style.Resources>
         <!-- Disabled: the normal colors (see AppearanceManager.ApplyToggleSwitchDisabledBrushes), dimmed like the inputs
              and buttons -->
         <Style.Triggers>
