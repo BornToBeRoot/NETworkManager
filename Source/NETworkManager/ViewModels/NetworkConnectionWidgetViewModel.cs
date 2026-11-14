@@ -215,6 +215,15 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
     {
         ResetAllItems();
 
+        if (ScreenshotData.IsEnabled)
+        {
+            // Wait like a real check, so the loading animation is visible
+            await Task.Delay(GlobalStaticConfiguration.ApplicationUIRefreshInterval, ct);
+
+            SetScreenshotData(generation);
+            return;
+        }
+
         // Detect the local IPv4/IPv6 address once and share it between the Computer and Router
         // checks below, instead of each of them redetecting it independently (both used to
         // trigger their own, potentially PowerShell-backed, network interface lookup).
@@ -260,6 +269,31 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
         InternetIPv4.Reset();
         InternetIPv6.Reset();
         InternetDNS.Reset();
+    }
+
+    /// <summary>
+    /// Sets the sample data of <see cref="ScreenshotData" /> instead of the real (personal) addresses, unless a newer
+    /// check has started in the meantime.
+    /// </summary>
+    private void SetScreenshotData(long generation)
+    {
+        if (generation != _generation)
+            return;
+
+        ComputerIPv4.Complete(ScreenshotData.ComputerIPv4, ConnectionState.OK);
+        ComputerIPv6.Complete(ScreenshotData.ComputerIPv6, ConnectionState.OK);
+        ComputerDNS.Complete(ScreenshotData.ComputerDNS, ConnectionState.OK);
+
+        RouterIPv4.Complete(ScreenshotData.RouterIPv4, ConnectionState.OK);
+        RouterIPv6.Complete(ScreenshotData.RouterIPv6, ConnectionState.OK);
+        RouterDNS.Complete(ScreenshotData.RouterDNS, ConnectionState.OK);
+
+        if (!CheckPublicIPAddressEnabled)
+            return;
+
+        InternetIPv4.Complete(ScreenshotData.InternetIPv4, ConnectionState.OK);
+        InternetIPv6.Complete(ScreenshotData.InternetIPv6, ConnectionState.OK);
+        InternetDNS.Complete(ScreenshotData.InternetDNS, ConnectionState.OK);
     }
 
     /// <summary>

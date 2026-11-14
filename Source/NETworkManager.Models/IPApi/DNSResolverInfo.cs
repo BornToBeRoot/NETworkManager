@@ -12,7 +12,7 @@ public class DNSResolverInfo
     /// <param name="dnsGeo">Geographic location of the DNS server.</param>
     /// <param name="ednsIp">IP address of the EDNS server.</param>
     /// <param name="ednsGeo">Geographic location of the EDNS server.</param>
-    private DNSResolverInfo(string dnsIp, string dnsGeo, string ednsIp, string ednsGeo)
+    public DNSResolverInfo(string dnsIp, string dnsGeo, string ednsIp, string ednsGeo)
     {
         DnsIp = dnsIp;
         DnsGeo = dnsGeo;

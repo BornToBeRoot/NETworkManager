@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading;
 using System.Threading.Tasks;
@@ -235,6 +236,35 @@ public class SpeedTestWidgetViewModel : ViewModelBase
         _ = RunAsync();
     }
 
+    /// <summary>
+    /// Shows the sample result of <see cref="ScreenshotData" /> instead of running a real speed test.
+    /// </summary>
+    private void SetScreenshotData()
+    {
+        var result = ScreenshotData.CreateSpeedTestResult();
+
+        // Seed the first point twice, like a real test (see RunAsync)
+        AddScreenshotSamples(DownloadSamples, ScreenshotData.CreateSpeedTestDownloadSamples());
+        AddScreenshotSamples(UploadSamples, ScreenshotData.CreateSpeedTestUploadSamples());
+
+        Result = result;
+        CurrentDownloadMbps = result.DownloadMbps;
+        CurrentUploadMbps = result.UploadMbps;
+        CurrentLatencyMs = result.LatencyMs;
+        CurrentJitterMs = result.JitterMs;
+    }
+
+    private static void AddScreenshotSamples(ObservableCollection<double> samples, IEnumerable<double> values)
+    {
+        foreach (var value in values)
+        {
+            if (samples.Count == 0)
+                samples.Add(value);
+
+            samples.Add(value);
+        }
+    }
+
     private void AcceptDisclaimerAction()
     {
         ShowDisclaimer = false;
@@ -255,6 +285,13 @@ public class SpeedTestWidgetViewModel : ViewModelBase
         DownloadSamples.Clear();
         UploadSamples.Clear();
         StatusMessage = Strings.FetchingMetadataDots;
+
+        if (ScreenshotData.IsEnabled)
+        {
+            SetScreenshotData();
+            IsRunning = false;
+            return;
+        }
 
         _cts?.Dispose();
         _cts = new CancellationTokenSource();
