@@ -47,6 +47,7 @@ REPOSITORY_ROOT/
 │   ├── Create-ReleaseTable.ps1       # Create the SHA256 sums / file table for release notes
 │   ├── Create-WhoisServerListFromWebAndWhois.ps1  # Update WHOIS servers
 │   ├── Create-WorldMapFromWeb.ps1    # Create the world map (Traceroute map)
+│   ├── Optimize-PngImages.ps1        # Reduce the size of the PNG images (website / docs) with ImageMagick
 │   └── PreBuildEventCommandLine.ps1  # Pre-build automation
 ├── Tests/Environments/               # Test environments for manual testing (e.g. SNMP, Active Directory)
 ├── .claude/skills/                   # Skills for AI agents (e.g. feature-review with the app's UI/code conventions)
