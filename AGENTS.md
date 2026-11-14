@@ -550,7 +550,9 @@ SemiBold (section headers), `MessageTextBlock` 16 gray (messages in empty areas)
   header, no box in box).
 - Headers 36 high (navigation header, Dragablz tabs, `DefaultTabItem`). Tabs: VS Code-like (shared styles
   `DragablzTabHeaderBorder` / `Title` / `CloseIcon` / `AccentLine` in `DragablzStyles.xaml` - change the tab look only
-  there); a single tab is shown as the view title.
+  there); a single tab is shown as the view title. Dragged-out tabs merge on the whole tab bar
+  (`MergeTargetArea="HeaderPanel"`) and the target tab bars show a slot (`ShowMergeHint`, `MergeHintTemplate` in
+  `DefaultTabablzControl`) - features of our Dragablz fork (BornToBeRoot/Dragablz, submodule).
 - Data grids: row height 30, semibold headers, accent-tinted selection.
 - Windows have rounded corners on Windows 11 (`WindowCornerHelper.RoundCorners`, DWM).
 
