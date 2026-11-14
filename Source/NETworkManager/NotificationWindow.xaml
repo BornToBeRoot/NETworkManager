@@ -24,7 +24,7 @@
                  Closing="MetroWindow_Closing">
     <!-- Clicking anywhere on the popup (except the close button) opens the main window.
          Background="Transparent" makes the empty areas hit-test visible. -->
-    <Grid Background="Transparent" Cursor="Hand"
+    <Grid x:Name="Root" Background="Transparent" Cursor="Hand"
           ToolTip="{x:Static localization:Strings.Show}"
           MouseLeftButtonUp="Root_MouseLeftButtonUp">
         <Grid.RowDefinitions>

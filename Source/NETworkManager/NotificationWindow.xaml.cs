@@ -222,28 +222,27 @@ public partial class NotificationWindow : INotifyPropertyChanged
     }
 
     /// <summary>
-    /// Slides the popup in from the right edge of the screen (40 px, 200 ms, quadratic ease-out). Only the position:
-    /// the window is not transparent (rounded corners, shadow), so it can't fade. The animation is removed when it
-    /// ends, so <see cref="ApplyPosition"/> (stack changes) keeps working. Not without animations
-    /// (<see cref="AppearanceManager.AnimationsEnabled"/>).
+    /// Slides the content of the popup in from the right (40 px) and fades it in (200 ms, quadratic ease-out). The
+    /// content, not the window: the window would start outside the work area and could show up on a monitor to the
+    /// right, and it can't fade (not transparent: rounded corners, shadow). The window stays where
+    /// <see cref="ApplyPosition"/> puts it. Not without animations (<see cref="AppearanceManager.AnimationsEnabled"/>).
     /// </summary>
     private void SlideIn()
     {
         if (!AppearanceManager.AnimationsEnabled)
             return;
 
-        var animation = new System.Windows.Media.Animation.DoubleAnimation(Left + SlideInOffset, Left,
-            new Duration(TimeSpan.FromMilliseconds(200)))
-        {
-            EasingFunction = new System.Windows.Media.Animation.QuadraticEase
-                { EasingMode = System.Windows.Media.Animation.EasingMode.EaseOut },
-            FillBehavior = System.Windows.Media.Animation.FillBehavior.Stop
-        };
+        var duration = new Duration(TimeSpan.FromMilliseconds(200));
+        var easing = new System.Windows.Media.Animation.QuadraticEase
+            { EasingMode = System.Windows.Media.Animation.EasingMode.EaseOut };
 
-        // The local value (set by ApplyPosition, also if the stack changed during the animation) applies again
-        animation.Completed += (_, _) => BeginAnimation(LeftProperty, null);
+        var translate = new TranslateTransform(SlideInOffset, 0);
+        Root.RenderTransform = translate;
 
-        BeginAnimation(LeftProperty, animation);
+        translate.BeginAnimation(TranslateTransform.XProperty,
+            new System.Windows.Media.Animation.DoubleAnimation(SlideInOffset, 0, duration) { EasingFunction = easing });
+        Root.BeginAnimation(OpacityProperty,
+            new System.Windows.Media.Animation.DoubleAnimation(0, 1, duration) { EasingFunction = easing });
     }
 
     private const double SlideInOffset = 40;
