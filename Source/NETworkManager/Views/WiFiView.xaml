@@ -178,11 +178,9 @@
                                                                 </Grid>
                                                                 <ControlTemplate.Triggers>
                                                                     <Trigger Property="IsSelected" Value="True">
-                                                                        <Setter Property="Foreground"
-                                                                            Value="{DynamicResource ResourceKey=AccentSelectedColorBrush}" />
                                                                         <Setter TargetName="Border"
                                                                             Property="Background"
-                                                                            Value="{DynamicResource ResourceKey=MahApps.Brushes.Gray9}" />
+                                                                            Value="{DynamicResource ResourceKey=Brushes.Control.Pressed}" />
                                                                     </Trigger>
                                                                     <MultiTrigger>
                                                                         <MultiTrigger.Conditions>
@@ -193,7 +191,7 @@
                                                                         </MultiTrigger.Conditions>
                                                                         <Setter TargetName="Border"
                                                                             Property="Background"
-                                                                            Value="{DynamicResource ResourceKey=MahApps.Brushes.Gray10}" />
+                                                                            Value="{DynamicResource ResourceKey=Brushes.Control.MouseOver}" />
                                                                     </MultiTrigger>
                                                                     <Trigger Property="IsEnabled" Value="False">
                                                                         <Setter TargetName="contentPresenter"

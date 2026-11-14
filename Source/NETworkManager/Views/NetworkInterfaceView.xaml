@@ -171,10 +171,8 @@
                                                                 </Grid>
                                                                 <ControlTemplate.Triggers>
                                                                     <Trigger Property="IsSelected" Value="True">
-                                                                        <Setter Property="Foreground"
-                                                                                Value="{DynamicResource AccentSelectedColorBrush}" />
                                                                         <Setter TargetName="Border" Property="Background"
-                                                                                Value="{DynamicResource MahApps.Brushes.Gray9}" />
+                                                                                Value="{DynamicResource Brushes.Control.Pressed}" />
                                                                     </Trigger>
                                                                     <MultiTrigger>
                                                                         <MultiTrigger.Conditions>
@@ -182,7 +180,7 @@
                                                                             <Condition Property="IsMouseOver" Value="True" />
                                                                         </MultiTrigger.Conditions>
                                                                         <Setter TargetName="Border" Property="Background"
-                                                                                Value="{DynamicResource MahApps.Brushes.Gray10}" />
+                                                                                Value="{DynamicResource Brushes.Control.MouseOver}" />
                                                                     </MultiTrigger>
                                                                     <Trigger Property="IsEnabled" Value="False">
                                                                         <Setter TargetName="contentPresenter"
@@ -749,10 +747,8 @@
                                                                 </Grid>
                                                                 <ControlTemplate.Triggers>
                                                                     <Trigger Property="IsSelected" Value="True">
-                                                                        <Setter Property="Foreground"
-                                                                                Value="{DynamicResource AccentSelectedColorBrush}" />
                                                                         <Setter TargetName="Border" Property="Background"
-                                                                                Value="{DynamicResource MahApps.Brushes.Gray9}" />
+                                                                                Value="{DynamicResource Brushes.Control.Pressed}" />
                                                                     </Trigger>
                                                                     <MultiTrigger>
                                                                         <MultiTrigger.Conditions>
@@ -760,7 +756,7 @@
                                                                             <Condition Property="IsMouseOver" Value="True" />
                                                                         </MultiTrigger.Conditions>
                                                                         <Setter TargetName="Border" Property="Background"
-                                                                                Value="{DynamicResource MahApps.Brushes.Gray10}" />
+                                                                                Value="{DynamicResource Brushes.Control.MouseOver}" />
                                                                     </MultiTrigger>
                                                                     <Trigger Property="IsEnabled" Value="False">
                                                                         <Setter TargetName="contentPresenter"
@@ -1030,10 +1026,8 @@
                                                                     </Grid>
                                                                     <ControlTemplate.Triggers>
                                                                         <Trigger Property="IsSelected" Value="True">
-                                                                            <Setter Property="Foreground"
-                                                                                    Value="{DynamicResource AccentSelectedColorBrush}" />
                                                                             <Setter TargetName="Border" Property="Background"
-                                                                                    Value="{DynamicResource MahApps.Brushes.Gray9}" />
+                                                                                    Value="{DynamicResource Brushes.Control.Pressed}" />
                                                                         </Trigger>
                                                                         <MultiTrigger>
                                                                             <MultiTrigger.Conditions>
@@ -1041,7 +1035,7 @@
                                                                                 <Condition Property="IsMouseOver" Value="True" />
                                                                             </MultiTrigger.Conditions>
                                                                             <Setter TargetName="Border" Property="Background"
-                                                                                    Value="{DynamicResource MahApps.Brushes.Gray10}" />
+                                                                                    Value="{DynamicResource Brushes.Control.MouseOver}" />
                                                                         </MultiTrigger>
                                                                         <Trigger Property="IsEnabled" Value="False">
                                                                             <Setter TargetName="contentPresenter"
