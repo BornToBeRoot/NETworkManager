@@ -3,7 +3,6 @@ using LiveChartsCore.Drawing;
 using LiveChartsCore.Kernel;
 using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore.SkiaSharpView.Painting;
-using LiveChartsCore.SkiaSharpView.Painting.Effects;
 using log4net;
 using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Controls;
@@ -537,7 +536,32 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
         // React to settings changes (e.g. the configurable bandwidth chart time window)
         SettingsManager.Current.PropertyChanged += SettingsManager_PropertyChanged;
 
+        // Colors of the bandwidth chart for the new theme (the paints don't follow the theme)
+        AppearanceManager.ThemeResourcesChanged += (_, _) => ApplyBandwidthChartColors();
+
         _isLoading = false;
+    }
+
+    /// <summary>
+    /// Sets the colors of the bandwidth chart (series, axes, legend) for the current theme.
+    /// </summary>
+    private void ApplyBandwidthChartColors()
+    {
+        var colors = new[] { ChartColors.Primary, ChartColors.Secondary };
+
+        for (var i = 0; i < Series.Length && i < colors.Length; i++)
+        {
+            if (Series[i] is not LineSeries<LvlChartsDefaultInfo> series)
+                continue;
+
+            series.Stroke = ChartColors.LineStroke(colors[i]);
+            series.Fill = ChartColors.AreaFill(colors[i]);
+        }
+
+        ChartColors.ApplyAxisColors(BandwidthXAxes[0]);
+        ChartColors.ApplyAxisColors(BandwidthYAxes[0]);
+
+        BandwidthLegendTextPaint = new SolidColorPaint(ChartColors.LabelColor) { SKTypeface = SKTypeface.Default };
     }
 
     /// <summary>
@@ -578,11 +602,6 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
         var downloadColor = ChartColors.Primary;
         var uploadColor = ChartColors.Secondary;
 
-        var labelColor = ChartColors.FromResource("MahApps.Brushes.Gray5", new SKColor(0x68, 0x68, 0x68));
-
-        // Incl. the opacity of the brush (10 %)
-        var separatorColor = ChartColors.FromResource("Brushes.Surface.Border", new SKColor(0x80, 0x80, 0x80, 0x40));
-
         Series =
         [
             new LineSeries<LvlChartsDefaultInfo>
@@ -595,7 +614,7 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
                 GeometrySize = 0,
                 LineSmoothness = 0.3,
                 DataPadding = new LvcPoint(0, 0),
-                Stroke = new SolidColorPaint(downloadColor) { StrokeThickness = 1.5f },
+                Stroke = ChartColors.LineStroke(downloadColor),
                 Fill = ChartColors.AreaFill(downloadColor)
             },
             new LineSeries<LvlChartsDefaultInfo>
@@ -608,7 +627,7 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
                 GeometrySize = 0,
                 LineSmoothness = 0.3,
                 DataPadding = new LvcPoint(0, 0),
-                Stroke = new SolidColorPaint(uploadColor) { StrokeThickness = 1.5f },
+                Stroke = ChartColors.LineStroke(uploadColor),
                 Fill = ChartColors.AreaFill(uploadColor)
             }
         ];
@@ -621,12 +640,8 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
                     _bandwidthSessionStartTime.AddSeconds(value)),
                 TextSize = 10,
                 Padding = new Padding(0, 4, 0, 0),
-                LabelsPaint = new SolidColorPaint(labelColor),
-                SeparatorsPaint = new SolidColorPaint(separatorColor)
-                {
-                    StrokeThickness = 1,
-                    PathEffect = new DashEffect([10f, 10f])
-                },
+                LabelsPaint = ChartColors.LabelPaint(),
+                SeparatorsPaint = ChartColors.SeparatorPaint(),
                 MinStep = BandwidthChartWindowSeconds / 4.0,
                 ForceStepToMin = true
             }
@@ -640,16 +655,12 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
                 Labeler = value => $"{FileSizeConverter.GetBytesReadable((long)value * 8)}it/s",
                 TextSize = 11,
                 Padding = new Padding(4, 0),
-                LabelsPaint = new SolidColorPaint(labelColor),
-                SeparatorsPaint = new SolidColorPaint(separatorColor)
-                {
-                    StrokeThickness = 1,
-                    PathEffect = new DashEffect([10f, 10f])
-                }
+                LabelsPaint = ChartColors.LabelPaint(),
+                SeparatorsPaint = ChartColors.SeparatorPaint()
             }
         ];
 
-        BandwidthLegendTextPaint = new SolidColorPaint(labelColor) { SKTypeface = SKTypeface.Default };
+        BandwidthLegendTextPaint = new SolidColorPaint(ChartColors.LabelColor) { SKTypeface = SKTypeface.Default };
 
         BandwidthXAxes[0].PropertyChanged += (_, args) =>
         {
@@ -691,7 +702,18 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
     /// <summary>
     /// Gets the themed paint used for the chart legend text.
     /// </summary>
-    public SolidColorPaint BandwidthLegendTextPaint { get; private set; }
+    public SolidColorPaint BandwidthLegendTextPaint
+    {
+        get;
+        private set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
 
     /// <summary>
     /// Gets a value indicating whether the bandwidth chart is in live (auto-scrolling) mode.

@@ -2,6 +2,7 @@ using log4net;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models.IPApi;
 using NETworkManager.Models.Network;
+using NETworkManager.Settings;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -81,8 +82,9 @@ public partial class TracerouteMapControl
     // Cities deliberately don't follow the accent: they use the main chart color (ChartColors.Primary,
     // like the speedtest download series, darker in the light theme) so they stay a consistent
     // "reference point" color that doesn't compete with the accent-colored traceroute path.
-    // Created with the map (theme of that moment).
-    private readonly Brush _cityBrush = FreezeBrush(ChartColors.PrimaryWpf);
+    // Not frozen: shared by all dots / labels, its color is set again after a theme change (see
+    // AppearanceManager_ThemeResourcesChanged).
+    private readonly SolidColorBrush _cityBrush = new(ChartColors.PrimaryWpf);
 
     // Shared by every label/dot so a single assignment (in ApplyTransform) keeps their on-screen
     // size constant while the map itself is scaled by the parent Canvas' zoom transform. Elements
@@ -141,6 +143,7 @@ public partial class TracerouteMapControl
         InitializeComponent();
 
         Loaded += TracerouteMapControl_Loaded;
+        Unloaded += TracerouteMapControl_Unloaded;
     }
 
     #region Dependency properties
@@ -231,6 +234,12 @@ public partial class TracerouteMapControl
 
     private void TracerouteMapControl_Loaded(object sender, RoutedEventArgs e)
     {
+        // Color of the cities: also if the theme was changed while the control was unloaded (e.g. tab dragged out)
+        _cityBrush.Color = ChartColors.PrimaryWpf;
+
+        AppearanceManager.ThemeResourcesChanged -= AppearanceManager_ThemeResourcesChanged;
+        AppearanceManager.ThemeResourcesChanged += AppearanceManager_ThemeResourcesChanged;
+
         // TracerouteView binds this control's Visibility to ShowMap, which is false whenever IP
         // geolocation checking is disabled - the map can then never show anything (no hop has a
         // location to plot), so building ~900 city/country WPF elements for it here would be pure
@@ -239,6 +248,17 @@ public partial class TracerouteMapControl
             EnsureMapDataInitialized();
         else
             IsVisibleChanged += TracerouteMapControl_IsVisibleChanged;
+    }
+
+    private void TracerouteMapControl_Unloaded(object sender, RoutedEventArgs e)
+    {
+        // The static event would keep the control (and the map) alive
+        AppearanceManager.ThemeResourcesChanged -= AppearanceManager_ThemeResourcesChanged;
+    }
+
+    private void AppearanceManager_ThemeResourcesChanged(object sender, EventArgs e)
+    {
+        _cityBrush.Color = ChartColors.PrimaryWpf;
     }
 
     private void TracerouteMapControl_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
@@ -1562,14 +1582,6 @@ public partial class TracerouteMapControl
     #endregion
 
     #region Country data
-
-    private static Brush FreezeBrush(Color color)
-    {
-        var brush = new SolidColorBrush(color);
-        brush.Freeze();
-
-        return brush;
-    }
 
     private static StreamGeometry BuildCountriesGeometry()
     {

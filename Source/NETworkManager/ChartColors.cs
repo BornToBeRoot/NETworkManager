@@ -1,7 +1,9 @@
 ﻿using System.Windows;
 using System.Windows.Media;
 using LiveChartsCore.Painting;
+using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore.SkiaSharpView.Painting;
+using LiveChartsCore.SkiaSharpView.Painting.Effects;
 using NETworkManager.Settings;
 using SkiaSharp;
 
@@ -10,7 +12,8 @@ namespace NETworkManager;
 /// <summary>
 /// Colors of the charts and maps (Ping Monitor, bandwidth of the Network Interface, speed test, WiFi channels,
 /// cities of the traceroute map) for the current theme: the same hues in both themes, a bit brighter on the dark and
-/// darker on the light background for contrast. Read when a chart is created.
+/// darker on the light background for contrast. Read when a chart is created and set again on
+/// <see cref="AppearanceManager.ThemeResourcesChanged"/> (the paints of an open chart don't follow the theme).
 /// </summary>
 public static class ChartColors
 {
@@ -77,6 +80,46 @@ public static class ChartColors
             ? new SKColor(brush.Color.R, brush.Color.G, brush.Color.B,
                 (byte)System.Math.Round(brush.Color.A * brush.Opacity))
             : fallback;
+
+    /// <summary>
+    /// Labels and names of the axes, text of a legend (<c>MahApps.Brushes.Gray5</c>).
+    /// </summary>
+    public static SKColor LabelColor => FromResource("MahApps.Brushes.Gray5", new SKColor(0x68, 0x68, 0x68));
+
+    /// <summary>
+    /// Labels and names of the axes.
+    /// </summary>
+    public static SolidColorPaint LabelPaint() => new(LabelColor);
+
+    /// <summary>
+    /// Dashed grid lines (<c>Brushes.Surface.Border</c>, incl. the opacity of the brush).
+    /// </summary>
+    public static SolidColorPaint SeparatorPaint() =>
+        new(FromResource("Brushes.Surface.Border", new SKColor(0x80, 0x80, 0x80, 0x40)))
+        {
+            StrokeThickness = 1,
+            PathEffect = new DashEffect([10f, 10f])
+        };
+
+    /// <summary>
+    /// Line of a series.
+    /// </summary>
+    public static SolidColorPaint LineStroke(SKColor color) => new(color) { StrokeThickness = 1.5f };
+
+    /// <summary>
+    /// Sets the paints of an axis for the current theme: labels, name (if shown) and dashed grid lines (if shown).
+    /// </summary>
+    /// <param name="axis">Axis of a chart.</param>
+    public static void ApplyAxisColors(Axis axis)
+    {
+        axis.LabelsPaint = LabelPaint();
+
+        if (axis.NamePaint != null)
+            axis.NamePaint = LabelPaint();
+
+        if (axis.SeparatorsPaint != null)
+            axis.SeparatorsPaint = SeparatorPaint();
+    }
 
     /// <summary>
     /// <see cref="Primary"/> as WPF color (e.g. the traceroute map).

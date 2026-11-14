@@ -119,6 +119,12 @@ public static class AppearanceManager
     /// </summary>
     public static event EventHandler ConsoleColorsChanged;
 
+    /// <summary>
+    ///     Raised after the resources of a new theme are applied (see <see cref="ApplyThemeResources" />), e.g. to
+    ///     update colors that are not taken from a <c>DynamicResource</c> (charts).
+    /// </summary>
+    public static event EventHandler ThemeResourcesChanged;
+
     private static (byte R, byte G, byte B) ToRgb(Color color) => (color.R, color.G, color.B);
 
     private static Color _frameColor = Colors.White;
@@ -253,6 +259,8 @@ public static class AppearanceManager
         ApplyControlStateBrushes(theme);
         ApplyStatusBrushes(theme);
         ApplyCustomThemeFixes(theme);
+
+        ThemeResourcesChanged?.Invoke(null, EventArgs.Empty);
     }
 
     /// <summary>
