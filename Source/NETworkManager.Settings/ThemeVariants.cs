@@ -264,7 +264,13 @@ public static class ThemeVariants
     /// </summary>
     public static double Luminance(Color color) => 0.2126 * color.R + 0.7152 * color.G + 0.0722 * color.B;
 
-    private static Color Blend(Color color, Color target, double amount) => Color.FromRgb(
+    /// <summary>
+    ///     Mixes a color with a target color.
+    /// </summary>
+    /// <param name="color">Color to start from.</param>
+    /// <param name="target">Color to mix in.</param>
+    /// <param name="amount">Share of the target color (0 - 1).</param>
+    internal static Color Blend(Color color, Color target, double amount) => Color.FromRgb(
         (byte)Math.Round(color.R + (target.R - color.R) * amount),
         (byte)Math.Round(color.G + (target.G - color.G) * amount),
         (byte)Math.Round(color.B + (target.B - color.B) * amount));

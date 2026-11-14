@@ -338,7 +338,7 @@ public static class AppearanceManager
             RadiusY = 500
         };
 
-        gradient.GradientStops.Add(new GradientStop(Blend(_frameColor, _accentColor, amount), 0));
+        gradient.GradientStops.Add(new GradientStop(ThemeVariants.Blend(_frameColor, _accentColor, amount), 0));
         gradient.GradientStops.Add(new GradientStop(_frameColor, 1));
         gradient.Freeze();
 
@@ -408,8 +408,8 @@ public static class AppearanceManager
 
         // Additional themes can have an own frame (e.g. the light blue-gray of Mist)
         var frame = ThemeVariants.GetFrame(theme) ?? (ThemeVariants.IsDark(theme)
-            ? Blend(background, Colors.Black, 0.25)
-            : Blend(background, foreground, 0.04));
+            ? ThemeVariants.Blend(background, Colors.Black, 0.25)
+            : ThemeVariants.Blend(background, foreground, 0.04));
 
         appResources[SurfaceFrameBrushKey] = CreateFrozenBrush(frame, 1);
 
@@ -431,7 +431,8 @@ public static class AppearanceManager
         // Consoles (PuTTY, PowerShell): background of the box around them, the text a bit muted (like before:
         // #BBBBBB on #252525), bold text in the foreground of the theme
         ConsoleBackground = ToRgb(background);
-        ConsoleForeground = ToRgb(Blend(background, foreground, ThemeVariants.IsDark(theme) ? 0.75 : 0.88));
+        ConsoleForeground =
+            ToRgb(ThemeVariants.Blend(background, foreground, ThemeVariants.IsDark(theme) ? 0.75 : 0.88));
         ConsoleBoldForeground = ToRgb(foreground);
 
         ApplyDataGridBrushes(theme, foreground);
@@ -512,21 +513,6 @@ public static class AppearanceManager
         appResources[StatusSuccessBrushKey] = CreateFrozenBrush(isDark ? "#badc58" : "#558b16");
         appResources[StatusWarningBrushKey] = CreateFrozenBrush(isDark ? "#f1b856" : "#b06d00");
         appResources[StatusErrorBrushKey] = CreateFrozenBrush(isDark ? "#e5605a" : "#b95353");
-    }
-
-    /// <summary>
-    ///     Blend two colors (opaque result), e.g. a tint of the foreground on the background.
-    /// </summary>
-    /// <param name="background">Background color.</param>
-    /// <param name="foreground">Foreground color.</param>
-    /// <param name="amount">Amount of the foreground (0 - 1).</param>
-    /// <returns>Blended color.</returns>
-    private static Color Blend(Color background, Color foreground, double amount)
-    {
-        return Color.FromRgb(
-            (byte)Math.Round(background.R + (foreground.R - background.R) * amount),
-            (byte)Math.Round(background.G + (foreground.G - background.G) * amount),
-            (byte)Math.Round(background.B + (foreground.B - background.B) * amount));
     }
 
     /// <summary>
