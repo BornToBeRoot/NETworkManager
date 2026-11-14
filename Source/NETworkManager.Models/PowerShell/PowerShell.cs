@@ -85,9 +85,18 @@ public static class PowerShell
     ///     the background); a failed resolve is tried again with the next call.
     /// </summary>
     /// <param name="aliasPath">Path of the App Execution Alias.</param>
-    /// <returns>Real path, or <see langword="null" /> if it could not be resolved or is the alias itself.</returns>
+    /// <returns>
+    ///     Real path, or <see langword="null" /> if it could not be resolved, is the alias itself or the alias is not
+    ///     PowerShell (only pwsh.exe / powershell.exe understand the arguments used to resolve it).
+    /// </returns>
     public static string ResolveAppExecutionAlias(string aliasPath)
     {
+        var fileName = Path.GetFileName(aliasPath);
+
+        if (!string.Equals(fileName, PwshFileName, StringComparison.OrdinalIgnoreCase) &&
+            !string.Equals(fileName, WindowsPowerShellFileName, StringComparison.OrdinalIgnoreCase))
+            return null;
+
         var resolved = ResolvedAliases.GetOrAdd(aliasPath,
             x => new Lazy<string>(() => StartAndResolveAppExecutionAlias(x)));
         var realPath = resolved.Value;
