@@ -115,8 +115,8 @@ public static class AppearanceManager
     public static (byte R, byte G, byte B) ConsoleBoldForeground { get; private set; } = (0xFF, 0xFF, 0xFF);
 
     /// <summary>
-    ///     Raised after a theme change, when all resources and the console colors are set (to update the profiles of
-    ///     PuTTY / PowerShell).
+    ///     Raised after a theme change that changed the console colors, when all resources are set (to update the
+    ///     profiles of PuTTY / PowerShell).
     /// </summary>
     public static event EventHandler ConsoleColorsChanged;
 
@@ -257,13 +257,18 @@ public static class AppearanceManager
 
         _appliedTheme = theme;
 
+        var consoleColors = (ConsoleBackground, ConsoleForeground, ConsoleBoldForeground);
+
         ApplyControlStateBrushes(theme);
         ApplyStatusBrushes(theme);
         ApplyCustomThemeFixes(theme);
 
         // After all resources are applied: a handler that fails can't leave the theme half applied
         ThemeResourcesChanged?.Invoke(null, EventArgs.Empty);
-        ConsoleColorsChanged?.Invoke(null, EventArgs.Empty);
+
+        // Only if they changed (not e.g. with another accent): the profiles are written to the registry
+        if (consoleColors != (ConsoleBackground, ConsoleForeground, ConsoleBoldForeground))
+            ConsoleColorsChanged?.Invoke(null, EventArgs.Empty);
     }
 
     /// <summary>
