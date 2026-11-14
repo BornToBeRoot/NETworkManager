@@ -22,7 +22,7 @@ Theme of the application which is based on [`MahApps.Metro themes`](https://maha
 - `Midnight` - dark blue
 - `Steel` - blue-gray
 - `Indigo` - dark violet-blue
-- `Mist` - light blue-gray, like the Blue theme of Visual Studio
+- `Mist` - light blue-gray
 - `Soft` - light gray, less bright than `Light`
 - `Paper` - warm, paper-like
 
