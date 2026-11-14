@@ -17,7 +17,7 @@ function HomepageHeader() {
   return (
     <div className={styles.hero} data-theme="dark">
       <div className={styles.heroInner}>
-        <Heading as="h1">
+        <div className={styles.heroHeading}>
           <img
             alt="NETworkManager Logo"
             className={styles.heroLogo}
@@ -25,16 +25,16 @@ function HomepageHeader() {
             width="200"
             height="200"
           />
-          <span className={styles.heroTextHtml}>
-            <p className={styles.heroProjectTitle}>
+          <div className={styles.heroTextHtml}>
+            <Heading as="h1" className={styles.heroProjectTitle}>
               <b>NETworkManager</b>
-            </p>
+            </Heading>
             <p className={styles.heroProjectTagline}>
               A powerful open-source tool for <b>managing</b> networks and{" "}
               <b>troubleshooting</b> network problems!
             </p>
-          </span>
-        </Heading>
+          </div>
+        </div>
         <div className={styles.indexCtas}>
           <Link className="button button--primary" to="/download">
             Download
@@ -85,6 +85,9 @@ function HomepageHeader() {
             src={ImageGalleryDashboard}
             alt="NETworkManager Dashboard"
             className={styles.heroScreenshot}
+            width={1920}
+            height={1200}
+            fetchPriority="high"
           />
         </div>
       </div>
@@ -122,18 +125,13 @@ export default function Home() {
             <img
               src="./img/preview-run-command.gif"
               alt="Run command preview"
+              width={1280}
+              height={800}
+              loading="lazy"
+              decoding="async"
             />
             <p className={styles.previewCaption}>
               Run command: start any tool from the keyboard with Ctrl+Shift+P.
-            </p>
-          </div>
-          <div className={styles.previewSingle}>
-            <img
-              src="./img/preview-tabs-drag-drop.gif"
-              alt="Tabs and drag & drop preview"
-            />
-            <p className={styles.previewCaption}>
-              Tabs and drag &amp; drop functionality.
             </p>
           </div>
           <div className={styles.previewCtas}>
@@ -144,7 +142,7 @@ export default function Home() {
               className="button button--outline button--primary"
               to="/docs/introduction"
             >
-              More screenshots in the docs →
+              Explore the documentation →
             </Link>
           </div>
         </div>

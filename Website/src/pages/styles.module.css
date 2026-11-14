@@ -34,15 +34,23 @@ table {
   padding: 0 20px;
 }
 
+.heroHeading {
+  margin-bottom: var(--ifm-heading-margin-bottom);
+}
+
 .heroProjectTitle {
   color: #fff;
   font-size: 60px;
   margin: 0;
 }
 
+/* Looks like part of the heading (was inside the h1 before), but is a normal paragraph */
 .heroProjectTagline {
   color: #fff;
+  font-family: var(--ifm-heading-font-family);
   font-size: 32px;
+  font-weight: var(--ifm-heading-font-weight);
+  line-height: var(--ifm-heading-line-height);
   margin: 0;
 }
 
@@ -153,6 +161,17 @@ table {
 
 .thankYouCard h3 {
   margin-top: 0;
+}
+
+.thankYouActions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.thankYouActions .additionalButton {
+  margin: 0;
+  text-decoration: none;
 }
 
 .shieldsContainer {

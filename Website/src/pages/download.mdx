@@ -25,6 +25,7 @@ import LatestPrerelease from "@site/src/components/LatestPrerelease";
   >
     <img
       alt="All releases"
+      height={28}
       src="https://img.shields.io/github/downloads/BornToBeRoot/NETworkManager/total?style=for-the-badge&logo=github&logoColor=white&label=Downloads&labelColor=2b3137&color=00d4aa"
     />
   </a>
@@ -36,31 +37,22 @@ import LatestPrerelease from "@site/src/components/LatestPrerelease";
   >
     <img
       alt="Latest release"
+      height={28}
       src="https://img.shields.io/github/downloads/BornToBeRoot/NETworkManager/latest/total?style=for-the-badge&logo=github&logoColor=white&label=Latest%20release&labelColor=2b3137&color=00d4aa"
     />
   </a>
 </div>
 
+{/* Text as Markdown: MDX wraps multi-line text inside a JSX <p> in another <p> (invalid HTML) */}
 <div className={styles.thankYouCard}>
   <h3>🙏 Thank you for using NETworkManager!</h3>
-  <p>
-    NETworkManager is open source, free and without ads — developed in my spare time for you.<br />
-    If you enjoy it, please consider supporting its development — whether by 
-    <strong>leaving a star on <a href="https://github.com/BornToBeRoot/NETworkManager" target="_blank" rel="noopener noreferrer">GitHub</a></strong>, 
-    making a <strong>donation</strong>, or simply <strong>sharing it with others</strong>.
-    Your support helps keep the project going and growing.<br />
-    <strong>Thank you for being part of the journey!</strong>
-  </p>
 
-  <div style={{ display: "flex", gap: "1rem", marginTop: "1rem" }}>
-    <Link
-      className={`button button--info button--outline ${styles.additionalButton}`}
-      style={{ margin: "0", textDecoration: "none" }}
-      to="https://github.com/BornToBeRoot/NETworkManager#-donate"
-      target="_blank"
-    >
-      💖 Donate
-    </Link>
+NETworkManager is open source, free and without ads — developed in my spare time for you.<br />
+If you enjoy it, please consider supporting its development — whether by **leaving a star on [GitHub](https://github.com/BornToBeRoot/NETworkManager)**, making a **donation**, or simply **sharing it with others**. Your support helps keep the project going and growing.<br />
+**Thank you for being part of the journey!**
+
+  <div className={styles.thankYouActions}>
+    <Link className={`button button--info button--outline ${styles.additionalButton}`} to="https://github.com/BornToBeRoot/NETworkManager#-donate">💖 Donate</Link>
   </div>
 </div>
 
@@ -123,7 +115,7 @@ The computed hash must match the copied checksum. The full list of checksums is 
 
 Install the Setup (MSI) silently using the following command:
 
-```
+```powershell
 .\NETworkManager_{VERSION}_Setup_win-x64.msi /quiet /norestart
 ```
 
@@ -155,7 +147,7 @@ The binaries and installers are built on [AppVeyor](https://ci.appveyor.com/proj
 
 Your privacy matters. NETworkManager will not transfer any information to other networked systems unless specifically requested by the user or the person installing or operating it.
 
-NETworManager has integrated some optional third-party services to enhance functionality. You can choose to enable or disable these services at the first startup or later in the settings:
+NETworkManager has integrated some optional third-party services to enhance functionality. You can choose to enable or disable these services at the first startup or later in the settings:
 
 - [api.github.com](https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement) - Check for application updates.
 - [ipify.org](https://www.ipify.org/) - Retrieve the public IP address used by the client.

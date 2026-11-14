@@ -1,7 +1,6 @@
-import { useState } from "react";
 import prerelease from "@site/src/data/prerelease.json";
 import ReleaseHero from "@site/src/components/ReleaseHero";
-import ArchSwitcher from "@site/src/components/ArchSwitcher";
+import ArchSwitcher, { useArchitecture } from "@site/src/components/ArchSwitcher";
 import DownloadCard, { DownloadGrid } from "@site/src/components/DownloadCard";
 
 // Pre-release data is prefetched at build time (see scripts/fetch-release-data.mjs)
@@ -20,7 +19,7 @@ export default function LatestPrerelease() {
   const architectures = prerelease.available
     ? Object.keys(prerelease.downloads ?? {})
     : [];
-  const [arch, setArch] = useState(architectures[0]);
+  const [arch, setArch] = useArchitecture(architectures);
 
   if (!prerelease.available) {
     return (

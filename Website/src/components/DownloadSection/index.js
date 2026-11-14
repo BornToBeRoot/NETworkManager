@@ -1,7 +1,6 @@
-import { useState } from "react";
 import release from "@site/src/data/release.json";
 import ReleaseHero from "@site/src/components/ReleaseHero";
-import ArchSwitcher from "@site/src/components/ArchSwitcher";
+import ArchSwitcher, { useArchitecture } from "@site/src/components/ArchSwitcher";
 import DownloadCard, { DownloadGrid } from "@site/src/components/DownloadCard";
 import styles from "./styles.module.css";
 
@@ -44,7 +43,7 @@ export default function DownloadSection() {
   // Only architectures that actually shipped assets for this release (older
   // releases predate ARM64 and will only have "x64").
   const architectures = Object.keys(downloads);
-  const [arch, setArch] = useState(architectures[0]);
+  const [arch, setArch] = useArchitecture(architectures);
 
   const archDownloads = downloads[arch] ?? {};
   const archChecksums = checksums?.[arch];
