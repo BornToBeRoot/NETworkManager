@@ -150,7 +150,10 @@
         <!-- Page (content) in the background of the box, the tab bar above it shows the frame color of the
              dockablz:Layout -->
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ThemeBackground}" />
-        <Setter Property="EmptyHeaderSizingHint" Value="PreviousTab" />
+        <!-- Collapse (not PreviousTab, which keeps the width of the last tab): an empty tab bar (all tabs dragged out,
+             only in the main window - other windows close) would keep an empty tab and the merge hint would start after
+             it. The height of the bar stays: the "+" (HeaderSuffixContent of the host views) is 36 high. -->
+        <Setter Property="EmptyHeaderSizingHint" Value="Collapse" />
         <!-- A tab dragged out (as a window) can be dropped anywhere on the tab bar of another window of the same tool,
              not only over the tabs. While it is dragged, the tab bars it can be dropped into show a slot after the last
              tab (stronger when the cursor is near), like the drop zones of the layout (same color and opacity, see the
