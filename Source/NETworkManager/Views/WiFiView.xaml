@@ -953,25 +953,28 @@
                     <WrapPanel Orientation="Horizontal"
                                VerticalAlignment="Center"
                                HorizontalAlignment="Left">
-                        <TextBlock Style="{StaticResource ResourceKey=AccentTextBlock}"
-                                   Visibility="{Binding Path=IsStatusMessageDisplayed, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
-                                   Text="{Binding Path=StatusMessage}"
-                                   VerticalAlignment="Center" />
+                        <!-- Error of the scan -->
+                        <icons:StatusMessageText Level="Error"
+                                                 Text="{Binding Path=StatusMessage}"
+                                                 Visibility="{Binding Path=IsStatusMessageDisplayed, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
+                                                 VerticalAlignment="Center"
+                                                 Margin="0,0,20,0" />
+                        <!-- Connect / disconnect: progress ring while connecting, then the result with its level -->
                         <WrapPanel Orientation="Horizontal"
                                    VerticalAlignment="Center"
-                                   HorizontalAlignment="Center"
-                                   Margin="10,0,0,0"
                                    Visibility="{Binding Path=IsConnectionStatusMessageDisplayed,Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}">
-                            <Rectangle Width="1"
-                                       Stroke="{DynamicResource ResourceKey=MahApps.Brushes.Accent}"
-                                       VerticalAlignment="Stretch" />
-                            <mah:ProgressRing IsActive="True" Style="{StaticResource ProgressRingMedium}"
-                                                             Visibility="{Binding IsConnecting, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
-                                                             Margin="10,0,0,0" />
-                            <TextBlock Style="{StaticResource ResourceKey=AccentTextBlock}"
-                                       Text="{Binding Path=ConnectionStatusMessage}"
-                                       VerticalAlignment="Center"
-                                       Margin="10,0,0,0" />
+                            <StackPanel Orientation="Horizontal"
+                                        Visibility="{Binding IsConnecting, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}">
+                                <mah:ProgressRing IsActive="{Binding IsConnecting}" Style="{StaticResource ProgressRingSmall}"
+                                                  Margin="0,0,8,0" />
+                                <TextBlock Text="{Binding Path=ConnectionStatusMessage}"
+                                           Foreground="{DynamicResource MahApps.Brushes.Gray3}"
+                                           VerticalAlignment="Center" />
+                            </StackPanel>
+                            <icons:StatusMessageText Level="{Binding Path=ConnectionStatusMessageLevel}"
+                                                     Text="{Binding Path=ConnectionStatusMessage}"
+                                                     Visibility="{Binding IsConnecting, Converter={StaticResource ResourceKey=BooleanReverseToVisibilityCollapsedConverter}}"
+                                                     VerticalAlignment="Center" />
                         </WrapPanel>
                     </WrapPanel>
                 </Grid>

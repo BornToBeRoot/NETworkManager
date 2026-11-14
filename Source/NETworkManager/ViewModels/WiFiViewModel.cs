@@ -497,6 +497,22 @@ public class WiFiViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Level (icon and color) of the <see cref="ConnectionStatusMessage"/>, e.g. success after connecting.
+    /// </summary>
+    public StatusLevel ConnectionStatusMessageLevel
+    {
+        get;
+        private set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
     #endregion
 
     #region Constructor, load settings
@@ -1421,6 +1437,7 @@ public class WiFiViewModel : ViewModelBase
         _hideConnectionStatusMessageTimer.Stop();
         IsConnecting = true;
         ConnectionStatusMessage = string.Format(Strings.ConnectingToXXX, ssid);
+        ConnectionStatusMessageLevel = StatusLevel.None;
         IsConnectionStatusMessageDisplayed = true;
 
         try
@@ -1429,10 +1446,13 @@ public class WiFiViewModel : ViewModelBase
             var connectionResult = await connect();
 
             // Get result
-            ConnectionStatusMessage = connectionResult == WiFiConnectionStatus.Success
+            var success = connectionResult == WiFiConnectionStatus.Success;
+
+            ConnectionStatusMessage = success
                 ? string.Format(Strings.SuccessfullyConnectedToXXX, ssid)
                 : string.Format(Strings.CouldNotConnectToXXXReasonXXX, ssid,
                     ResourceTranslator.Translate(ResourceIdentifier.WiFiConnectionStatus, connectionResult));
+            ConnectionStatusMessageLevel = success ? StatusLevel.Success : StatusLevel.Error;
         }
         catch (Exception ex)
         {
@@ -1440,6 +1460,7 @@ public class WiFiViewModel : ViewModelBase
             Log.Error($"Error while connecting to the WiFi network \"{ssid}\".", ex);
 
             ConnectionStatusMessage = string.Format(Strings.CouldNotConnectToXXXReasonXXX, ssid, ex.Message);
+            ConnectionStatusMessageLevel = StatusLevel.Error;
         }
         finally
         {
@@ -1468,6 +1489,7 @@ public class WiFiViewModel : ViewModelBase
             if (connectedNetwork != null)
             {
                 ConnectionStatusMessage = string.Format(Strings.XXXDisconnected, WiFiNetworkToSsidStringConverter.GetSsid(connectedNetwork));
+                ConnectionStatusMessageLevel = StatusLevel.None;
                 IsConnectionStatusMessageDisplayed = true;
             }
         }
@@ -1477,6 +1499,7 @@ public class WiFiViewModel : ViewModelBase
 
             ConnectionStatusMessage = string.Format(Strings.CouldNotDisconnectFromXXXReasonXXX,
                 WiFiNetworkToSsidStringConverter.GetSsid(connectedNetwork), ex.Message);
+            ConnectionStatusMessageLevel = StatusLevel.Error;
             IsConnectionStatusMessageDisplayed = true;
         }
 
