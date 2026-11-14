@@ -352,15 +352,32 @@ public static class AppearanceManager
     }
 
     /// <summary>
+    ///     Theme of MahApps (always available) if neither the theme nor the default theme can be applied.
+    /// </summary>
+    private const string FallbackTheme = "Dark.Teal";
+
+    /// <summary>
+    ///     <see langword="true" /> if the theme exists or could be created (additional themes / accents).
+    /// </summary>
+    private static bool IsAvailable(string name) =>
+        ThemeVariants.EnsureTheme(name) && ThemeManager.Current.GetTheme(name) != null;
+
+    /// <summary>
     ///     Method to change the application theme (and accent).
     /// </summary>
     /// <param name="name">Theme name as "theme.accent" to apply.</param>
     public static void ChangeTheme(string name)
     {
         // Additional themes / accents are created when they are used; if that fails (or the theme is unknown), fall back
-        // to the default theme instead of an exception
-        if (!ThemeVariants.EnsureTheme(name) || ThemeManager.Current.GetTheme(name) == null)
+        // to the default theme instead of an exception - and if the default (an additional accent) can't be created
+        // either, to a theme of MahApps
+        if (!IsAvailable(name))
+        {
             name = $"{GlobalStaticConfiguration.Appearance_Theme}.{GlobalStaticConfiguration.Appearance_Accent}";
+
+            if (!IsAvailable(name))
+                name = FallbackTheme;
+        }
 
         var theme = ThemeManager.Current.ChangeTheme(System.Windows.Application.Current, name);
 

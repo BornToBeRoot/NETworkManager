@@ -506,7 +506,7 @@ of local colors, sizes or templates; theme-dependent brushes always with `Dynami
   Graphite (copies of `<theme>.Blue` with the accent replaced). They are created on demand in
   `AppearanceManager.ChangeTheme` (`LibraryTheme` + `ThemeManager.AddLibraryTheme`); on failure the default theme is used.
   A theme counts as dark by the brightness of its background (`ThemeVariants.IsDark`), not by its name.
-- Default accent for new installations: Teal. Custom themes (`Appearance_UseCustomTheme`) keep working.
+- Default accent for new installations: Mint (if a theme can't be created: the default, then `Dark.Teal`). Custom themes (`Appearance_UseCustomTheme`) keep working.
 - Settings: `Appearance_Theme`, `Appearance_Accent`, `Appearance_AccentGlowIntensity` (Off / Subtle 6 % / Medium 10 %
   (default) / Strong 15 %), `Appearance_Animations` (System / On / Off; policy `Appearance_Animations` in `config.json`
   is a bool).

@@ -87,9 +87,9 @@ public static class GlobalStaticConfiguration
 
     // Settings: Appearance
     public static string Appearance_Theme => "Dark";
-    // Teal: calmer than Lime, better contrast on light backgrounds, not confused with the green status color.
-    // Only for new installations, the accent is saved in the settings.
-    public static string Appearance_Accent => "Teal";
+    // Mint (additional accent, see ThemeVariants): calmer than Lime, better contrast on light backgrounds. Only for new
+    // installations, the accent is saved in the settings.
+    public static string Appearance_Accent => "Mint";
     public static bool Appearance_UseCustomTheme => false;
     public static AnimationMode Appearance_Animations => AnimationMode.System;
     // Medium for new installations (subtle, static); saved in the settings
