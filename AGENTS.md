@@ -33,7 +33,8 @@ REPOSITORY_ROOT/
 │   ├── NETworkManager.Update/        # Update functionality
 │   ├── NETworkManager.Documentation/ # Documentation resources
 │   ├── NETworkManager.Setup/         # WiX installer project
-│   └── 3rdparty/                     # Third-party dependencies (e.g., Dragablz)
+│   ├── NETworkManager.Tests/         # xUnit unit tests (run by AppVeyor)
+│   └── 3rdparty/                     # Third-party dependencies (Dragablz: submodule of the fork BornToBeRoot/Dragablz)
 │       └── (managed-manually)        # NOTE: Maintained manually — AI agents MUST NOT modify this directory
 ├── Website/                          # Docusaurus documentation website
 ├── Scripts/                          # Build and automation scripts
@@ -56,10 +57,10 @@ REPOSITORY_ROOT/
 
 ### Key Statistics
 
-- **750+ C# source files** across multiple projects
-- **160+ XAML files** for UI definitions
-- **13 projects** in the solution (12 C# projects + the WiX installer)
-- **70 documentation pages** in Docusaurus format
+- **900+ C# source files** across multiple projects
+- **170+ XAML files** for UI definitions
+- **15 projects** in the solution (12 application projects, the unit tests, Dragablz and the WiX installer)
+- **70+ documentation pages** in Docusaurus format
 - **18 languages** (English + 17 translations)
 
 ## Technology Stack
