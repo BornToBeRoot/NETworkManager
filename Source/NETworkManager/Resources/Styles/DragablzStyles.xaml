@@ -156,7 +156,7 @@
         <Setter Property="EmptyHeaderSizingHint" Value="Collapse" />
         <!-- A tab dragged out (as a window) can be dropped anywhere on the tab bar of another window of the same tool,
              not only over the tabs. While it is dragged, the tab bars it can be dropped into show a slot after the last
-             tab (stronger when the cursor is near), like the drop zones of the layout (same color and opacity, see the
+             tab (stronger when the cursor is near), like the drop zones of the layout (same gray and opacity, see the
              DropZone style). No icon: the "+" next to it opens a new tab. -->
         <Setter Property="MergeTargetArea" Value="HeaderPanel" />
         <Setter Property="ShowMergeHint" Value="True" />
@@ -166,7 +166,7 @@
                     <Rectangle Width="120" HorizontalAlignment="Left" Margin="4,4,0,4"
                                RadiusX="{Binding Source={StaticResource CornerRadius.Control}, Path=TopLeft}"
                                RadiusY="{Binding Source={StaticResource CornerRadius.Control}, Path=TopLeft}"
-                               Fill="{DynamicResource MahApps.Brushes.Accent}">
+                               Fill="{DynamicResource MahApps.Brushes.ThemeForeground}">
                         <Rectangle.Style>
                             <Style TargetType="{x:Type Rectangle}">
                                 <Setter Property="Opacity" Value="0.25" />
@@ -234,11 +234,11 @@
     </Style>
 
     <!--
-        Drop zones of the layout (split the tabs: top / right / bottom / left) in the accent color like the merge hint
-        in the tab bar (see DefaultTabablzControl), instead of the text color. The template of Dragablz draws the shapes
-        in the Foreground (opacity 0.25, 0.5 while offered).
+        Drop zones of the layout (split the tabs: top / right / bottom / left) in the same neutral gray as the merge hint
+        in the tab bar (see DefaultTabablzControl): the template of Dragablz draws the shapes in the Foreground (opacity
+        0.25, 0.5 while offered) - the foreground of the theme, set explicitly so both always match. No accent (user).
     -->
     <Style TargetType="{x:Type dockablz:DropZone}">
-        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Accent}" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
     </Style>
 </ResourceDictionary>
