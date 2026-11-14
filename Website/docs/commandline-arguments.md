@@ -73,6 +73,31 @@ Start a specific application on startup.
 NETworkManager.exe --application:PingMonitor
 ```
 
+### `--screenshot`
+
+Starts the application in screenshot mode to take consistent screenshots, e.g. for the documentation:
+
+- The window has a fixed size (default `1280x800`) and is centered on the primary screen. It can't be resized or maximized.
+- The size is in device-independent pixels and is scaled with the Windows display scaling. For example, `1280x800` is `1920x1200` pixels with `150 %` scaling, which looks sharp on high-resolution screens.
+- The saved window position and size are not loaded and not overwritten.
+- The window always looks like an active window (accent glow), even if the screenshot tool takes the focus.
+
+Optionally, the size can be set with `--screenshot:WIDTHxHEIGHT` (minimum `800x600`).
+
+**Example:**
+
+```powershell
+NETworkManager.exe --screenshot
+NETworkManager.exe --screenshot:1200x800
+NETworkManager.exe --screenshot --application:IPScanner
+```
+
+:::note
+
+If NETworkManager is already running (and multiple instances are not allowed), the running instance is shown instead. Close it first.
+
+:::
+
 ## Internal
 
 Internally used command line arguments.

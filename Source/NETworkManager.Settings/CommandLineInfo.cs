@@ -33,6 +33,22 @@ public class CommandLineInfo
     public ApplicationName Application { get; set; } = ApplicationName.None;
 
     /// <summary>
+    ///     Indicates if the application should start in screenshot mode (fixed window size, centered, not resizable,
+    ///     window position not loaded or saved) to take consistent screenshots for the documentation
+    /// </summary>
+    public bool Screenshot { get; set; }
+
+    /// <summary>
+    ///     Width of the window in screenshot mode (device-independent pixels, scaled with the Windows display scaling)
+    /// </summary>
+    public int ScreenshotWidth { get; set; } = CommandLineManager.ScreenshotDefaultWidth;
+
+    /// <summary>
+    ///     Height of the window in screenshot mode (device-independent pixels, scaled with the Windows display scaling)
+    /// </summary>
+    public int ScreenshotHeight { get; set; } = CommandLineManager.ScreenshotDefaultHeight;
+
+    /// <summary>
     ///     Wrong parameter(s) detected in the command line to display in the help dialog
     /// </summary>
     public string WrongParameter { get; set; }

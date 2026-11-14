@@ -406,6 +406,9 @@ public sealed partial class MainWindow : INotifyPropertyChanged
         InitializeComponent();
         DataContext = this;
 
+        if (CommandLineManager.Current.Screenshot)
+            ConfigureScreenshotMode();
+
         // Language metadata
         LanguageProperty.OverrideMetadata(typeof(FrameworkElement),
             new FrameworkPropertyMetadata(
@@ -431,6 +434,27 @@ public sealed partial class MainWindow : INotifyPropertyChanged
         NavigationManager.SettingsRequested += NavigationManager_SettingsRequested;
 
         _isLoading = false;
+    }
+
+    /// <summary>
+    ///     Screenshot mode (<c>--screenshot</c>): fixed window size (device-independent pixels, e.g. 1280 x 800 is
+    ///     1920 x 1200 pixels with 150 % display scaling), centered on the screen, not resizable and not maximizable.
+    ///     The saved window position is neither loaded nor overwritten. The window always shows the glow of an active
+    ///     window, so a screenshot tool that takes the focus doesn't change the look.
+    /// </summary>
+    private void ConfigureScreenshotMode()
+    {
+        SaveWindowPosition = false;
+        WindowStartupLocation = WindowStartupLocation.CenterScreen;
+        WindowState = WindowState.Normal;
+
+        Width = MinWidth = MaxWidth = CommandLineManager.Current.ScreenshotWidth;
+        Height = MinHeight = MaxHeight = CommandLineManager.Current.ScreenshotHeight;
+
+        SetResourceReference(BackgroundProperty, AppearanceManager.SurfaceWindowBrushKey);
+        SetResourceReference(NonActiveWindowTitleBrushProperty, AppearanceManager.SurfaceWindowBrushKey);
+
+        Log.Info($"Screenshot mode: {Width} x {Height}");
     }
 
     private void MetroMainWindow_ContentRendered(object sender, EventArgs e)
@@ -1548,6 +1572,13 @@ public sealed partial class MainWindow : INotifyPropertyChanged
 
     private void MetroWindowMain_StateChanged(object sender, EventArgs e)
     {
+        // Keep the fixed size in screenshot mode (e.g. double-click on the title bar)
+        if (CommandLineManager.Current.Screenshot && WindowState == WindowState.Maximized)
+        {
+            WindowState = WindowState.Normal;
+            return;
+        }
+
         if (WindowState != WindowState.Minimized)
             return;
 
@@ -1659,10 +1690,22 @@ public sealed partial class MainWindow : INotifyPropertyChanged
     public void RestartApplication(bool asAdmin = false)
     {
         ExternalProcessStarter.RunProcess(ConfigurationManager.Current.ApplicationFullName,
-            $"{CommandLineManager.GetParameterWithSplitIdentifier(CommandLineManager.ParameterRestartPid)}{Environment.ProcessId} {CommandLineManager.GetParameterWithSplitIdentifier(CommandLineManager.ParameterApplication)}{SelectedApplication.Name}",
+            $"{CommandLineManager.GetParameterWithSplitIdentifier(CommandLineManager.ParameterRestartPid)}{Environment.ProcessId} {CommandLineManager.GetParameterWithSplitIdentifier(CommandLineManager.ParameterApplication)}{SelectedApplication.Name}{GetScreenshotParameter()}",
             asAdmin);
 
         CloseApplication();
+    }
+
+    /// <summary>
+    ///     Keeps the screenshot mode after a restart (e.g. language changed, restart as administrator).
+    /// </summary>
+    private static string GetScreenshotParameter()
+    {
+        if (!CommandLineManager.Current.Screenshot)
+            return string.Empty;
+
+        return
+            $" {CommandLineManager.GetParameterWithSplitIdentifier(CommandLineManager.ParameterScreenshot)}{CommandLineManager.Current.ScreenshotWidth}x{CommandLineManager.Current.ScreenshotHeight}";
     }
 
     public ICommand ApplicationListMouseEnterCommand => new RelayCommand(_ => ApplicationListMouseEnterAction());
