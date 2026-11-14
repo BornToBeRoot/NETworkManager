@@ -21,16 +21,15 @@
 <table><thead><tr><th></th><th>Whois</th><th>RDAP</th></tr></thead><tbody><tr><td><strong>Transport</strong></td><td>Plain text over TCP port 43</td><td>HTTPS over TCP port 443 (a few registries still only offer HTTP)</td></tr><tr><td><strong>Response format</strong></td><td>Free text, different for every registry</td><td>Standardized JSON</td></tr><tr><td><strong>Finding the server</strong></td><td>Hard-coded list of servers per TLD</td><td>Official IANA bootstrap files</td></tr><tr><td><strong>Lookups</strong></td><td>Mainly domains</td><td>Domains, IP addresses/networks, AS numbers, entities</td></tr><tr><td><strong>Internationalized domain names</strong></td><td>Inconsistent</td><td>Supported</td></tr></tbody></table>
 <p>RDAP is mandatory for all generic top-level domains (e.g. <code>.com</code>, <code>.net</code>, <code>.org</code>) and is provided by all five Regional Internet Registries (ARIN, RIPE NCC, APNIC, LACNIC, AFRINIC). Since January 2025, gTLD registries and registrars are no longer required to operate Whois at all - RDAP is the way forward.</p>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="what-you-can-do-with-it">What you can do with it<a href="https://borntoberoot.net/NETworkManager/blog/introducing-rdap#what-you-can-do-with-it" class="hash-link" aria-label="Direct link to What you can do with it" title="Direct link to What you can do with it" translate="no">​</a></h2>
-<p>Enter a query and press <strong>Query</strong> - the type is detected automatically (<strong>Auto</strong>), or you select it, e.g. to query a nameserver:</p>
-<table><thead><tr><th>Type</th><th>Example</th><th>Description</th></tr></thead><tbody><tr><td><strong>Domain</strong></td><td><code>borntoberoot.net</code></td><td>Registration data of a domain from its registry</td></tr><tr><td><strong>Nameserver</strong></td><td><code>a.iana-servers.net</code></td><td>A nameserver, from the registry of its top-level domain</td></tr><tr><td><strong>TLD</strong></td><td><code>de</code></td><td>Delegation of a top-level domain from the IANA root zone</td></tr><tr><td><strong>IP address</strong></td><td><code>1.1.1.1</code> or <code>2001:db8::/32</code></td><td>Network an IP address or CIDR prefix belongs to</td></tr><tr><td><strong>ASN</strong></td><td><code>AS13335</code></td><td>Autonomous system - <code>13335</code>, <code>AS13335</code> and asdot (<code>1.10</code>) work</td></tr><tr><td><strong>Entity</strong></td><td><code>ORG-RIEN1-RIPE</code></td><td>An organization or contact, by its handle</td></tr></tbody></table>
-<p>The input is validated while you type, depending on the selected type. For a hostname like <code>www.borntoberoot.net</code> or <code>www.bbc.co.uk</code>, the registered domain (<code>borntoberoot.net</code>, <code>bbc.co.uk</code>) is queried - registries don't know subdomains. NETworkManager determines it with the included <a href="https://publicsuffix.org/" target="_blank" rel="noopener noreferrer" class="">Public Suffix List</a>. A running query can be canceled with <strong>Cancel</strong> or <code>Esc</code>.</p>
+<p>Pick a type, enter a query and press <strong>Query</strong>:</p>
+<table><thead><tr><th>Type</th><th>Example</th><th>Description</th></tr></thead><tbody><tr><td><strong>Domain</strong></td><td><code>borntoberoot.net</code></td><td>Registration data of a domain from its registry</td></tr><tr><td><strong>TLD</strong></td><td><code>de</code></td><td>Delegation of a top-level domain from the IANA root zone</td></tr><tr><td><strong>IP address</strong></td><td><code>1.1.1.1</code> or <code>2001:db8::/32</code></td><td>Network an IP address or CIDR prefix belongs to</td></tr><tr><td><strong>ASN</strong></td><td><code>AS13335</code></td><td>Autonomous system - <code>13335</code>, <code>AS13335</code> and asdot (<code>1.10</code>) work</td></tr><tr><td><strong>Entity</strong></td><td><code>ORG-RIEN1-RIPE</code></td><td>An organization or contact, by its handle</td></tr></tbody></table>
+<p>The input is validated while you type, depending on the selected type.</p>
 <p>The result is shown in a structured view:</p>
 <ul>
 <li class=""><strong>Details</strong> like handle, name, address range, country, status and DNSSEC</li>
 <li class=""><strong>Events</strong> such as registration, expiration and last change</li>
 <li class=""><strong>Nameservers</strong> including their IP addresses</li>
 <li class=""><strong>Contacts</strong> with roles, name, organization, email, phone and address</li>
-<li class=""><strong>Networks</strong> and <strong>AS numbers</strong> of an organization (e.g. at RIPE NCC)</li>
 <li class=""><strong>Notices</strong> with links to the terms of service, privacy policy or the form to report inaccurate data</li>
 </ul>
 <p>If you need everything the server sent, switch to <strong>Raw JSON</strong>. Results can be exported as <strong>JSON</strong> (exactly as returned by the server) or as <strong>text</strong>, via the <strong>Export...</strong> button or the context menu.</p>
@@ -48,12 +47,6 @@
 <li class="">If <code>data.iana.org</code> cannot be reached (e.g. in a restricted network), the cached files are used and the update is retried later.</li>
 </ul>
 <p>Like the other tools, RDAP supports <strong>profiles</strong>: store a query and its type in a profile and run it from the profile panel with a double-click.</p>
-<p>RDAP is also built into the other tools:</p>
-<ul>
-<li class=""><strong>IP Scanner</strong>: query the IP address or the domain of a host from the context menu (<strong>RDAP...</strong>).</li>
-<li class=""><strong>Traceroute</strong>: query the IP address, hostname or AS number of a hop from the context menu - e.g. to find out who operates a hop on the route.</li>
-<li class=""><strong>Run command</strong>: press <code>Ctrl+Shift+P</code> and type e.g. <code>rdap borntoberoot.net</code> or <code>rdap 1.10 asn</code>.</li>
-</ul>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="rdap-and-whois">RDAP and Whois<a href="https://borntoberoot.net/NETworkManager/blog/introducing-rdap#rdap-and-whois" class="hash-link" aria-label="Direct link to RDAP and Whois" title="Direct link to RDAP and Whois" translate="no">​</a></h2>
 <p>Not every registry offers RDAP yet. Many country code top-level domains (e.g. <code>.ru</code>, <code>.jp</code> or <code>.it</code>) still only provide Whois. If no RDAP server is known for a domain, NETworkManager tells you so and offers to open the domain in the <strong>Whois</strong> tool with a single click.</p>
 <p>Keep in mind that RDAP does not unlock any data that Whois hides: registration data of personal contacts is usually redacted for privacy reasons (GDPR), with both protocols.</p>
@@ -66,7 +59,7 @@
 <li class=""><strong>Structured and exportable</strong>: copy single values or export the full JSON for documentation and further processing.</li>
 </ul>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="try-it-now">Try it now<a href="https://borntoberoot.net/NETworkManager/blog/introducing-rdap#try-it-now" class="hash-link" aria-label="Direct link to Try it now" title="Direct link to Try it now" translate="no">​</a></h2>
-<p>RDAP is available in the <a href="https://borntoberoot.net/NETworkManager/download" target="_blank" rel="noopener noreferrer" class="">latest version of NETworkManager</a>.</p>
+<p>RDAP is available in the <a href="https://borntoberoot.net/NETworkManager/download#pre-release" target="_blank" rel="noopener noreferrer" class="">next pre-release of NETworkManager</a>.</p>
 <p>More details are available in the <a href="https://borntoberoot.net/NETworkManager/docs/application/rdap" target="_blank" rel="noopener noreferrer" class="">official documentation</a>.</p>
 <p>If you find any issues or have suggestions, please open an <a href="https://github.com/BornToBeRoot/NETworkManager/issues" target="_blank" rel="noopener noreferrer" class="">issue on GitHub</a>.</p>]]></content:encoded>
             <category>rdap</category>
@@ -104,7 +97,7 @@
 <p>You also pick a <strong>target group</strong> — either an existing one or a new name you type in on the spot.</p>
 <p>Click <strong>Import</strong> and a summary shows how many profiles were created, skipped as duplicates, and skipped due to missing host addresses.</p>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="try-it-now">Try it now<a href="https://borntoberoot.net/NETworkManager/blog/import-profiles-from-active-directory#try-it-now" class="hash-link" aria-label="Direct link to Try it now" title="Direct link to Try it now" translate="no">​</a></h2>
-<p>The Active Directory import is available in the <a href="https://borntoberoot.net/NETworkManager/download" target="_blank" rel="noopener noreferrer" class="">latest version of NETworkManager</a>.</p>
+<p>You can test this feature in the <a href="https://borntoberoot.net/NETworkManager/download#pre-release" target="_blank" rel="noopener noreferrer" class="">latest pre-release of NETworkManager</a>.</p>
 <p>More information is available in the <a href="https://borntoberoot.net/NETworkManager/docs/groups-and-profiles#import" target="_blank" rel="noopener noreferrer" class="">official documentation</a>.</p>
 <p>If you find any issues or have suggestions for improvement, please open an <a href="https://github.com/BornToBeRoot/NETworkManager/issues" target="_blank" rel="noopener noreferrer" class="">issue on GitHub</a>.</p>]]></content:encoded>
             <category>profiles</category>
@@ -130,14 +123,14 @@
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="what-the-neighbor-table-shows">What the Neighbor Table shows<a href="https://borntoberoot.net/NETworkManager/blog/introducing-neighbor-table#what-the-neighbor-table-shows" class="hash-link" aria-label="Direct link to What the Neighbor Table shows" title="Direct link to What the Neighbor Table shows" translate="no">​</a></h2>
 <p>Each row in the table represents one cached neighbor entry and includes:</p>
 <table><thead><tr><th>Column</th><th>Description</th></tr></thead><tbody><tr><td><strong>IP Address</strong></td><td>IPv4 or IPv6 address of the cached neighbor.</td></tr><tr><td><strong>Interface</strong></td><td>Human-readable name of the network interface (e.g. <code>Ethernet</code>, <code>Wi-Fi</code>).</td></tr><tr><td><strong>MAC Address</strong></td><td>Link-layer (MAC) address associated with the IP address.</td></tr><tr><td><strong>State</strong></td><td>Current reachability state (Reachable, Stale, Permanent, …).</td></tr><tr><td><strong>Multicast</strong></td><td>Indicates whether the IP address is a multicast address.</td></tr></tbody></table>
-<p>You can refresh the table at any time with <code>F5</code> or let it update automatically (<strong>Automatically update every</strong>), and right-click any row to copy or export individual values, or to delete the selected entry. <strong>Delete table</strong> removes all dynamic entries at once (permanent entries are kept).</p>
+<p>You can refresh the table at any time with <code>F5</code>, and right-click any row to copy or export individual values, or to delete the selected entry.</p>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="adding-static-entries">Adding static entries<a href="https://borntoberoot.net/NETworkManager/blog/introducing-neighbor-table#adding-static-entries" class="hash-link" aria-label="Direct link to Adding static entries" title="Direct link to Adding static entries" translate="no">​</a></h2>
 <p>You can also add permanent static neighbor entries — useful for pinning a critical device's MAC address so that ARP/NDP spoofing cannot redirect its traffic.</p>
 <p><img decoding="async" loading="lazy" alt="Add entry" src="https://borntoberoot.net/NETworkManager/assets/images/neighbor-table-entry-190ad866baa8d9d25691bfcaaeee499f.png" width="1200" height="800" class="img_ev3q"></p>
 <p>Click <strong>Add entry...</strong> below the table, supply an IPv4 or IPv6 address, the target MAC address, and the interface — NETworkManager takes care of the rest using <code>New-NetNeighbor</code> under the hood.</p>
 <div class="theme-admonition theme-admonition-note admonition_xJq3 alert alert--secondary"><div class="admonitionHeading_Gvgb"><span class="admonitionIcon_Rf37"><svg viewBox="0 0 14 16"><path fill-rule="evenodd" d="M6.3 5.69a.942.942 0 0 1-.28-.7c0-.28.09-.52.28-.7.19-.18.42-.28.7-.28.28 0 .52.09.7.28.18.19.28.42.28.7 0 .28-.09.52-.28.7a1 1 0 0 1-.7.3c-.28 0-.52-.11-.7-.3zM8 7.99c-.02-.25-.11-.48-.31-.69-.2-.19-.42-.3-.69-.31H6c-.27.02-.48.13-.69.31-.2.2-.3.44-.31.69h1v3c.02.27.11.5.31.69.2.2.42.31.69.31h1c.27 0 .48-.11.69-.31.2-.19.3-.42.31-.69H8V7.98v.01zM7 2.3c-3.14 0-5.7 2.54-5.7 5.68 0 3.14 2.56 5.7 5.7 5.7s5.7-2.55 5.7-5.7c0-3.15-2.56-5.69-5.7-5.69v.01zM7 .98c3.86 0 7 3.14 7 7s-3.14 7-7 7-7-3.12-7-7 3.14-7 7-7z"></path></svg></span>note</div><div class="admonitionContent_BuS1"><p>Adding and deleting neighbor entries requires administrator privileges. If NETworkManager is not running as administrator, the view is in read-only mode. Use the <strong>Restart as administrator</strong> button to relaunch with elevated rights.</p></div></div>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="try-it-now">Try it now<a href="https://borntoberoot.net/NETworkManager/blog/introducing-neighbor-table#try-it-now" class="hash-link" aria-label="Direct link to Try it now" title="Direct link to Try it now" translate="no">​</a></h2>
-<p>The Neighbor Table is available in the <a href="https://borntoberoot.net/NETworkManager/download" target="_blank" rel="noopener noreferrer" class="">latest version of NETworkManager</a>.</p>
+<p>You can test this feature in the <a href="https://borntoberoot.net/NETworkManager/download#pre-release" target="_blank" rel="noopener noreferrer" class="">latest pre-release of NETworkManager</a>.</p>
 <p>More details are available in the <a href="https://borntoberoot.net/NETworkManager/docs/application/neighbor-table" target="_blank" rel="noopener noreferrer" class="">official documentation</a>.</p>
 <p>If you find any issues or have suggestions, please open an <a href="https://github.com/BornToBeRoot/NETworkManager/issues" target="_blank" rel="noopener noreferrer" class="">issue on GitHub</a>.</p>]]></content:encoded>
             <category>neighbor table</category>
@@ -156,17 +149,15 @@
 <p>This is especially useful if you frequently spin up local services (lab environments, dev boxes, game servers, small internal tools) and need a quick and repeatable way to open or block ports, restrict traffic to specific IP ranges, or scope rules to profiles like <strong>Domain</strong>, <strong>Private</strong>, or <strong>Public</strong>.</p>
 <p><img decoding="async" loading="lazy" alt="Firewall" src="https://borntoberoot.net/NETworkManager/assets/images/firewall-2a1385544d4bbc7cca17102777e39c56.png" width="1200" height="800" class="img_ev3q"></p>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="manage-rules-safely-and-without-touching-your-system-rules">Manage rules safely (and without touching your system rules)<a href="https://borntoberoot.net/NETworkManager/blog/introducing-firewall#manage-rules-safely-and-without-touching-your-system-rules" class="hash-link" aria-label="Direct link to Manage rules safely (and without touching your system rules)" title="Direct link to Manage rules safely (and without touching your system rules)" translate="no">​</a></h2>
-<p>By default, the Firewall view focuses on rules managed by NETworkManager.</p>
+<p>The Firewall view intentionally focuses on rules managed by NETworkManager only.</p>
 <p>Every rule created via NETworkManager is stored with a <code>NETworkManager_</code> prefix in the Windows Firewall rule display name. This makes it easy to distinguish "your" rules from system-managed or third-party rules — and it allows NETworkManager to filter the list so you only see what it owns.</p>
-<p>If you need the full picture, enable <strong>Show all rules</strong> in <strong>Settings &gt; Firewall</strong>: all active Windows Firewall rules are shown, with an icon that tells whether a rule is managed by NETworkManager, by another application or by a policy (Group Policy / MDM). Rules of other applications can be enabled, disabled or deleted, rules from a policy can't be changed locally - and every rule can be used as a template for a new one.</p>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="what-you-can-do-with-the-new-firewall-feature">What you can do with the new Firewall feature<a href="https://borntoberoot.net/NETworkManager/blog/introducing-firewall#what-you-can-do-with-the-new-firewall-feature" class="hash-link" aria-label="Direct link to What you can do with the new Firewall feature" title="Direct link to What you can do with the new Firewall feature" translate="no">​</a></h2>
 <ul>
-<li class="">View firewall rules created by NETworkManager (or all rules, see above)</li>
+<li class="">View firewall rules created by NETworkManager</li>
 <li class="">Add new inbound or outbound rules</li>
-<li class="">Edit existing rules (also with a double-click)</li>
-<li class="">Create a new rule based on an existing one with <strong>Copy as...</strong></li>
-<li class="">Enable, disable or delete one or several rules at once</li>
-<li class="">Search by name, program, ports, addresses and more</li>
+<li class="">Edit existing rules</li>
+<li class="">Enable or disable rules quickly</li>
+<li class="">Delete rules you no longer need</li>
 <li class="">Copy or export rule information</li>
 <li class="">Refresh the list with <code>F5</code></li>
 <li class="">Open the native Windows Firewall console (<code>WF.msc</code>) via the <strong>Windows Firewall Settings</strong> button</li>
@@ -182,8 +173,8 @@
 <li class=""><strong>Action</strong>: Allow / Block</li>
 <li class=""><strong>Protocol</strong>: Any, TCP, UDP, ICMPv4, ICMPv6, GRE, L2TP</li>
 <li class=""><strong>Local / Remote ports</strong>: Available for TCP and UDP; multiple ports and ranges separated by <code>;</code></li>
-<li class=""><strong>Local / Remote addresses</strong>: Supports single IPs, ranges and subnets (CIDR and subnet masks); remote addresses also keywords such as <code>LocalSubnet</code> or <code>Internet</code></li>
-<li class=""><strong>Program</strong>: Limit the rule to a specific executable (optional, select it with a file dialog)</li>
+<li class=""><strong>Local / Remote addresses</strong>: Supports single IPs, ranges, subnets (CIDR and subnet masks), and keywords such as <code>LocalSubnet</code> or <code>Internet</code></li>
+<li class=""><strong>Program</strong>: Limit the rule to a specific executable (optional)</li>
 <li class=""><strong>Interface type</strong>: Any, Wired, Wireless, RemoteAccess</li>
 <li class=""><strong>Network profiles</strong>: Domain / Private / Public (at least one must be selected)</li>
 </ul>
@@ -191,7 +182,7 @@
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="administrator-privileges">Administrator privileges<a href="https://borntoberoot.net/NETworkManager/blog/introducing-firewall#administrator-privileges" class="hash-link" aria-label="Direct link to Administrator privileges" title="Direct link to Administrator privileges" translate="no">​</a></h2>
 <p>Managing firewall rules requires elevated rights. If NETworkManager is not running as administrator, the Firewall view is <strong>read-only</strong>. Use the <strong>Restart as administrator</strong> button to relaunch NETworkManager with the required privileges.</p>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="try-it-now">Try it now<a href="https://borntoberoot.net/NETworkManager/blog/introducing-firewall#try-it-now" class="hash-link" aria-label="Direct link to Try it now" title="Direct link to Try it now" translate="no">​</a></h2>
-<p>The Firewall is available in the <a href="https://borntoberoot.net/NETworkManager/download" target="_blank" rel="noopener noreferrer" class="">latest version of NETworkManager</a>.</p>
+<p>You can test this feature in the <a href="https://borntoberoot.net/NETworkManager/download#pre-release" target="_blank" rel="noopener noreferrer" class="">latest pre-release of NETworkManager</a>.</p>
 <p>If you find any issues or have suggestions for improvement, please open an <a href="https://github.com/BornToBeRoot/NETworkManager/issues" target="_blank" rel="noopener noreferrer" class="">issue on GitHub</a>.</p>]]></content:encoded>
             <category>firewall</category>
             <category>windows firewall</category>
