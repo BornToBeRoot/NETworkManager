@@ -2,6 +2,15 @@ version: 2
 updates:
 - package-ecosystem: "nuget"
   directory: "/Source"
+  # Stay on the .NET LTS releases (.NET 10 now, .NET 12 next) and skip the STS release .NET 11. Remove these rules when
+  # updating to .NET 12.
+  ignore:
+  # PowerShell 7.7 targets .NET 11 (7.6 LTS = .NET 10, 7.8 LTS = .NET 12)
+  - dependency-name: "Microsoft.PowerShell.SDK"
+    versions: ["7.7.x"]
+  # .NET 11 packages (pinned to fix vulnerabilities of the versions pulled in by Microsoft.PowerShell.SDK)
+  - dependency-name: "System.Security.Cryptography.*"
+    versions: ["11.x"]
   schedule:
     interval: weekly
   target-branch: main
