@@ -9,6 +9,9 @@
          Windows 10 falls back to Consolas. -->
     <FontFamily x:Key="Fonts.Family.Mono">Cascadia Mono, Consolas</FontFamily>
 
+    <!-- Converter for the templates in the style dictionaries (merged after this one, StaticResource) -->
+    <BooleanToVisibilityConverter x:Key="Converters.BooleanToVisibility" />
+
     <!-- Font of the controls and texts: Segoe UI Variable (Windows 11, named instance "Text" for small sizes),
          Segoe UI on Windows 10. Overrides the fonts of MahApps (Fonts.xaml, 2.4.11), the window title and the header
          font (Segoe UI Light, no longer used by the text styles) stay. -->

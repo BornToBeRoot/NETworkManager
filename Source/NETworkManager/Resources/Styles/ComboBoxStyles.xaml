@@ -3,7 +3,6 @@
                     xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
                     xmlns:controls="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls"
                     xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters">
-    <BooleanToVisibilityConverter x:Key="ComboBoxBooleanToVisibilityConverter" />
 
     <Style x:Key="DefaultComboBox" TargetType="{x:Type ComboBox}" BasedOn="{StaticResource MahApps.Styles.ComboBox}">
         <Style.Resources>
@@ -37,7 +36,7 @@
                                         Foreground="{TemplateBinding Foreground}"
                                         IsTabStop="False"
                                         Style="{DynamicResource MahApps.Styles.Button.Chromeless}"
-                                        Visibility="{Binding RelativeSource={RelativeSource AncestorType={x:Type ComboBox}}, Path=(mah:TextBoxHelper.ClearTextButton), Converter={StaticResource ComboBoxBooleanToVisibilityConverter}}" />
+                                        Visibility="{Binding RelativeSource={RelativeSource AncestorType={x:Type ComboBox}}, Path=(mah:TextBoxHelper.ClearTextButton), Converter={StaticResource Converters.BooleanToVisibility}}" />
                                 <!-- Border instead of Grid (MahApps): the mouse over background follows the rounded
                                      corners of the ComboBox on the right -->
                                 <Border x:Name="BtnArrowBackground"
