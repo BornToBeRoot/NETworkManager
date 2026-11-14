@@ -29,17 +29,18 @@ RDAP is mandatory for all generic top-level domains (e.g. `.com`, `.net`, `.org`
 
 ## What you can do with it
 
-Pick a type, enter a query and press **Query**:
+Enter a query and press **Query** - the type is detected automatically (**Auto**), or you select it, e.g. to query a nameserver:
 
 | Type | Example | Description |
 | --- | --- | --- |
 | **Domain** | `borntoberoot.net` | Registration data of a domain from its registry |
+| **Nameserver** | `a.iana-servers.net` | A nameserver, from the registry of its top-level domain |
 | **TLD** | `de` | Delegation of a top-level domain from the IANA root zone |
 | **IP address** | `1.1.1.1` or `2001:db8::/32` | Network an IP address or CIDR prefix belongs to |
 | **ASN** | `AS13335` | Autonomous system - `13335`, `AS13335` and asdot (`1.10`) work |
 | **Entity** | `ORG-RIEN1-RIPE` | An organization or contact, by its handle |
 
-The input is validated while you type, depending on the selected type.
+The input is validated while you type, depending on the selected type. For a hostname like `www.borntoberoot.net` or `www.bbc.co.uk`, the registered domain (`borntoberoot.net`, `bbc.co.uk`) is queried - registries don't know subdomains. NETworkManager determines it with the included [Public Suffix List](https://publicsuffix.org/). A running query can be canceled with **Cancel** or `Esc`.
 
 The result is shown in a structured view:
 
@@ -47,6 +48,7 @@ The result is shown in a structured view:
 - **Events** such as registration, expiration and last change
 - **Nameservers** including their IP addresses
 - **Contacts** with roles, name, organization, email, phone and address
+- **Networks** and **AS numbers** of an organization (e.g. at RIPE NCC)
 - **Notices** with links to the terms of service, privacy policy or the form to report inaccurate data
 
 If you need everything the server sent, switch to **Raw JSON**. Results can be exported as **JSON** (exactly as returned by the server) or as **text**, via the **Export...** button or the context menu.
@@ -67,6 +69,12 @@ A few details make the tool work in places where a plain bootstrap lookup would 
 
 Like the other tools, RDAP supports **profiles**: store a query and its type in a profile and run it from the profile panel with a double-click.
 
+RDAP is also built into the other tools:
+
+- **IP Scanner**: query the IP address or the domain of a host from the context menu (**RDAP...**).
+- **Traceroute**: query the IP address, hostname or AS number of a hop from the context menu - e.g. to find out who operates a hop on the route.
+- **Run command**: press `Ctrl+Shift+P` and type e.g. `rdap borntoberoot.net` or `rdap 1.10 asn`.
+
 ## RDAP and Whois
 
 Not every registry offers RDAP yet. Many country code top-level domains (e.g. `.ru`, `.jp` or `.it`) still only provide Whois. If no RDAP server is known for a domain, NETworkManager tells you so and offers to open the domain in the **Whois** tool with a single click.
@@ -83,7 +91,7 @@ Keep in mind that RDAP does not unlock any data that Whois hides: registration d
 
 ## Try it now
 
-RDAP is available in the [next pre-release of NETworkManager](https://borntoberoot.net/NETworkManager/download#pre-release).
+RDAP is available in the [latest version of NETworkManager](https://borntoberoot.net/NETworkManager/download).
 
 More details are available in the [official documentation](https://borntoberoot.net/NETworkManager/docs/application/rdap).
 
