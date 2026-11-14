@@ -66,9 +66,9 @@ public static class PowerShell
     ///
     ///     PowerShell from the Microsoft Store is started via an App Execution Alias (e.g.
     ///     %LocalAppData%\Microsoft\WindowsApps\Microsoft.PowerShell_8wekyb3d8bbwe\pwsh.exe), which starts the real
-    ///     executable in C:\Program Files\WindowsApps\Microsoft.PowerShell_7.x.x.0_x64__8wekyb3d8bbwe\pwsh.exe - the
-    ///     profile is written for the alias and for the real path, so it applies whichever the console uses as title.
-    ///     Resolving the alias starts it once (can take a moment, call it in the background).
+    ///     executable in C:\Program Files\WindowsApps\Microsoft.PowerShell_7.x.x.0_x64__8wekyb3d8bbwe\pwsh.exe - write
+    ///     the profile for the real path too (<see cref="ResolveAppExecutionAlias" />), so it applies whichever the
+    ///     console uses as title.
     /// </summary>
     /// <param name="background">Background of the console (DefaultBackground, ColorTable00).</param>
     /// <param name="foreground">Text of the console (ColorTable07).</param>
@@ -77,19 +77,30 @@ public static class PowerShell
         (byte R, byte G, byte B) foreground, string powerShellPath)
     {
         WriteProfile(background, foreground, powerShellPath);
+    }
 
-        if (!IsAppExecutionAlias(powerShellPath))
-            return;
-
-        var resolved = ResolvedAliases.GetOrAdd(powerShellPath, x => new Lazy<string>(() => ResolveAppExecutionAlias(x)));
+    /// <summary>
+    ///     Real path of an App Execution Alias, resolved once per start of the application (the real path contains
+    ///     the version and changes with every update). Starts the alias the first time (can take a moment, call it in
+    ///     the background); a failed resolve is tried again with the next call.
+    /// </summary>
+    /// <param name="aliasPath">Path of the App Execution Alias.</param>
+    /// <returns>Real path, or <see langword="null" /> if it could not be resolved or is the alias itself.</returns>
+    public static string ResolveAppExecutionAlias(string aliasPath)
+    {
+        var resolved = ResolvedAliases.GetOrAdd(aliasPath,
+            x => new Lazy<string>(() => StartAndResolveAppExecutionAlias(x)));
         var realPath = resolved.Value;
 
-        // Not resolved (e.g. timeout): try again with the next write
+        // Not resolved (e.g. timeout): try again with the next call
         if (string.IsNullOrEmpty(realPath))
-            ResolvedAliases.TryRemove(new KeyValuePair<string, Lazy<string>>(powerShellPath, resolved));
+        {
+            ResolvedAliases.TryRemove(new KeyValuePair<string, Lazy<string>>(aliasPath, resolved));
 
-        if (!string.IsNullOrEmpty(realPath) && !string.Equals(realPath, powerShellPath, StringComparison.OrdinalIgnoreCase))
-            WriteProfile(background, foreground, realPath);
+            return null;
+        }
+
+        return string.Equals(realPath, aliasPath, StringComparison.OrdinalIgnoreCase) ? null : realPath;
     }
 
     /// <summary>
@@ -109,7 +120,7 @@ public static class PowerShell
     ///     (works with Windows PowerShell and PowerShell 7).
     /// </summary>
     /// <returns>Real path or <see langword="null" /> if it could not be resolved.</returns>
-    private static string ResolveAppExecutionAlias(string aliasPath)
+    private static string StartAndResolveAppExecutionAlias(string aliasPath)
     {
         try
         {

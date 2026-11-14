@@ -507,9 +507,10 @@ public class PowerShellHostViewModel : ProfileHostViewModelBase
     }
 
     /// <summary>
-    ///     Serializes the writes of the PowerShell profile (see <see cref="WriteDefaultProfileToRegistry" />).
+    ///     Serializes the background writes of the profile for the real path of an App Execution Alias (see
+    ///     <see cref="WriteDefaultProfileToRegistry" />).
     /// </summary>
-    private static readonly object RegistryWriteLock = new();
+    private static readonly object AliasProfileWriteLock = new();
 
     private void WriteDefaultProfileToRegistry()
     {
@@ -521,22 +522,41 @@ public class PowerShellHostViewModel : ProfileHostViewModelBase
 
         Log.Debug("Write PowerShell profile to registry...");
 
-        // In the background: an App Execution Alias (Microsoft Store) is started once to resolve the real path. One
-        // write at a time with the current colors and path, so the last write always has the latest values (e.g. after
+        var powerShellPath = SettingsManager.Current.PowerShell_ApplicationFilePath;
+
+        // Synchronously (only a few registry values), so a session started right after has the current colors
+        try
+        {
+            PowerShell.WriteDefaultProfileToRegistry(AppearanceManager.ConsoleBackground,
+                AppearanceManager.ConsoleForeground, powerShellPath);
+        }
+        catch (Exception ex)
+        {
+            Log.Error("Could not write the PowerShell profile to the registry.", ex);
+        }
+
+        if (!PowerShell.IsAppExecutionAlias(powerShellPath))
+            return;
+
+        // App Execution Alias (Microsoft Store): the alias is started once to resolve the real path, in the background.
+        // One write at a time with the current colors, so the last write always has the latest values (e.g. after
         // several theme changes) - not the values of a task that was started earlier
         Task.Run(() =>
         {
             try
             {
-                lock (RegistryWriteLock)
+                lock (AliasProfileWriteLock)
                 {
-                    PowerShell.WriteDefaultProfileToRegistry(AppearanceManager.ConsoleBackground,
-                        AppearanceManager.ConsoleForeground, SettingsManager.Current.PowerShell_ApplicationFilePath);
+                    var realPath = PowerShell.ResolveAppExecutionAlias(powerShellPath);
+
+                    if (realPath != null)
+                        PowerShell.WriteDefaultProfileToRegistry(AppearanceManager.ConsoleBackground,
+                            AppearanceManager.ConsoleForeground, realPath);
                 }
             }
             catch (Exception ex)
             {
-                Log.Error("Could not write the PowerShell profile to the registry.", ex);
+                Log.Error("Could not write the PowerShell profile of the App Execution Alias to the registry.", ex);
             }
         });
     }
