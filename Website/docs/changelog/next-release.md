@@ -39,6 +39,7 @@ Release date: **xx.xx.2026**
 - A dragged-out tab (e.g. **Remote Desktop**, **PuTTY**) can be dropped anywhere on the tab bar of another window of the same tool, not only over the existing tabs. While dragging, a highlighted slot shows where it can be dropped. [#3702](https://github.com/BornToBeRoot/NETworkManager/pull/3702)
 - New setting **Accent glow** in [Settings > Appearance](../settings/appearance.md#accent-glow): a subtle glow of the accent color in the top left corner of the windows (`Off`, `Subtle`, `Medium` (default), `Strong`). [#3702](https://github.com/BornToBeRoot/NETworkManager/pull/3702)
 - New themes **Black**, **Midnight**, **Steel**, **Indigo**, **Mist**, **Soft** and **Paper** and new accent colors **Sky**, **Ocean**, **Mint**, **Rose**, **Coral**, **Gold**, **Lavender**, **Slate** and **Graphite** in [Settings > Appearance](../settings/appearance.md#theme). All accents work with every theme. [#3702](https://github.com/BornToBeRoot/NETworkManager/pull/3702)
+- New [command line argument](../commandline-arguments.md#--screenshot) `--screenshot` to start the application with a fixed window size (default `1280x800`, centered, not resizable) for consistent screenshots, e.g. `NETworkManager.exe --screenshot:1200x800`.
 - ARM64 builds are now available. [#3538](https://github.com/BornToBeRoot/NETworkManager/issues/3538)
 
 **Run command**
