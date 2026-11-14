@@ -35,6 +35,10 @@ Release date: **xx.xx.2026**
 
 ## What's new?
 
+- New setting **Dynamic tab width** in [Settings > Window](../settings/window.md#dynamic-tab-width): the tabs of the tools (e.g. **IP Scanner**, **Remote Desktop**, **PuTTY**) are as wide as their title, up to a configurable maximum width (default `300`), instead of a fixed width of `150`. Long titles (e.g. hostnames) are shortened with `...`, the tooltip shows the full title. [#3055](https://github.com/BornToBeRoot/NETworkManager/issues/3055)
+- A dragged-out tab (e.g. **Remote Desktop**, **PuTTY**) can be dropped anywhere on the tab bar of another window of the same tool, not only over the existing tabs. While dragging, a highlighted slot shows where it can be dropped. [#3702](https://github.com/BornToBeRoot/NETworkManager/pull/3702)
+- New setting **Accent glow** in [Settings > Appearance](../settings/appearance.md#accent-glow): a subtle glow of the accent color in the top left corner of the windows (`Off`, `Subtle`, `Medium` (default), `Strong`). [#3702](https://github.com/BornToBeRoot/NETworkManager/pull/3702)
+- New themes **Black**, **Midnight**, **Steel**, **Indigo**, **Mist**, **Soft** and **Paper** and new accent colors **Sky**, **Ocean**, **Mint**, **Rose**, **Coral**, **Gold**, **Lavender**, **Slate** and **Graphite** in [Settings > Appearance](../settings/appearance.md#theme). All accents work with every theme. [#3702](https://github.com/BornToBeRoot/NETworkManager/pull/3702)
 - ARM64 builds are now available. [#3538](https://github.com/BornToBeRoot/NETworkManager/issues/3538)
 
 **Run command**
@@ -43,7 +47,7 @@ Release date: **xx.xx.2026**
 - New run command targets for the **Subnet Calculator** (`subnet 10.0.0.0/24`, `subnet 10.0.0.0/16 /24` for subnetting, `subnet 10.0.0.0/24 10.0.1.0/24` for the wide subnet) and the **Lookup** (`lookup oui 00:11:22`, `lookup port 22; ssh`). [#3646](https://github.com/BornToBeRoot/NETworkManager/pull/3646)
 - New global hotkey to bring the window to the foreground and open the run command (default `Ctrl+Alt+P`, disabled by default), see [Settings > HotKeys](../settings/hotkeys.md). [#3646](https://github.com/BornToBeRoot/NETworkManager/pull/3646)
 - Run command: the **Port Scanner** needs ports, which can also be names of port profiles, also several and together with ports (e.g. `portscan 10.0.0.1 webserver` or `portscan 10.0.0.1 "DNS (via TCP)";webserver;22`, suggested after the host and after a `;`). Own history size for the run command (default 20, [Settings > General](../settings/general.md#number-of-stored-entries-run-command)). `Tab` also completes profiles and port profiles, `PageUp`/`PageDown` move the selection by 5 suggestions. [#3646](https://github.com/BornToBeRoot/NETworkManager/pull/3646)
-- Run command dialog redesigned: the icon of the recognized feature, the syntax with the part being typed highlighted, the values as they were understood (e.g. `Hosts: borntoberoot.net`, `Type: AAAA`), validation while typing, grouped suggestions with the typed text highlighted, examples and key hints (can be hidden in the settings). The dialog uses more space in a large window. The title bar shows a **Run command...** box in the center (like the command center of VS Code) instead of the icon. Type only a target (e.g. `10.0.0.1`, `server-01`, `00:11:22:33:44:55`, `10.0.0.0/24`) to get the commands that accept it, recent commands are also suggested while typing (e.g. a host); optionally, a target in the clipboard is suggested ([Settings > General](../settings/general.md#suggest-the-clipboard-content-as-target)). `Ctrl+Enter` runs and keeps the dialog open, `Shift+Enter` fills in the input without starting, `Shift+Del` or the remove button removes a recent command. [#3646](https://github.com/BornToBeRoot/NETworkManager/pull/3646)
+- Run command dialog redesigned: the icon of the recognized feature, the syntax with the part being typed highlighted, the values as they were understood (e.g. `Hosts: borntoberoot.net`, `Type: AAAA`), validation while typing, grouped suggestions with the typed text highlighted, examples and key hints (can be hidden in the settings). The dialog uses more space in a large window. The title bar shows a **Run command...** box in the center instead of the icon. Type only a target (e.g. `10.0.0.1`, `server-01`, `00:11:22:33:44:55`, `10.0.0.0/24`) to get the commands that accept it, recent commands are also suggested while typing (e.g. a host); optionally, a target in the clipboard is suggested ([Settings > General](../settings/general.md#suggest-the-clipboard-content-as-target)). `Ctrl+Enter` runs and keeps the dialog open, `Shift+Enter` fills in the input without starting, `Shift+Del` or the remove button removes a recent command. [#3646](https://github.com/BornToBeRoot/NETworkManager/pull/3646)
 
 **Settings**
 
@@ -69,10 +73,23 @@ Release date: **xx.xx.2026**
 - Actions that require elevated rights now show a tooltip with the reason when they are disabled because the application is not running as administrator (e.g. **Apply**, **Flush DNS cache** and **Release & Renew** in **Network Interface**, the context menu and **Add entry...** in **Hosts File Editor**, **Firewall** and **Neighbor Table**, and **Capture** in **Discovery Protocol**). [#3626](https://github.com/BornToBeRoot/NETworkManager/pull/3626)
 - The collapsed/expanded state of profile groups (e.g. **linux-server**) is now remembered per profile file and shared across all tools, instead of resetting every time you switch tools or restart the application. [#3539](https://github.com/BornToBeRoot/NETworkManager/pull/3539)
 - The **Experimental features** setting in **Settings > Update** is removed: features in testing are marked with a **Beta** label at their own setting instead (e.g. **Read Windows host information** of the **IP Scanner**). [#3691](https://github.com/BornToBeRoot/NETworkManager/pull/3691)
+- Disabled controls (e.g. while a scan is running) are dimmed instead of covered by a light gray overlay. Mouse over and pressed use a subtle background instead of light gray. [#3702](https://github.com/BornToBeRoot/NETworkManager/pull/3702)
+- Status colors (e.g. up / down, open / closed, warnings and errors) are easier to read in the light theme. Technical values (e.g. IP / MAC addresses, hostnames, ports, console output) use **Cascadia Mono** on Windows 11 (Consolas on Windows 10). [#3702](https://github.com/BornToBeRoot/NETworkManager/pull/3702)
+- Rounded buttons, inputs, drop-downs, tooltips and context menus. Buttons have a subtle background instead of a border, icon buttons are transparent until the mouse is over them, the main action (e.g. **Scan**) keeps the accent color. Keyboard focus shows a gray ring instead of a dotted rectangle. [#3702](https://github.com/BornToBeRoot/NETworkManager/pull/3702)
+- New layout: navigation, tool and profiles as rounded boxes on a tinted window frame, new tabs with an accent line on the selected tab, rounded dialogs and cards (**Dashboard**, **Ping Monitor**), lists with taller rows and a light accent-colored selection. Rounded window corners on Windows 11. [#3702](https://github.com/BornToBeRoot/NETworkManager/pull/3702)
+- Subtle animations: dialogs, navigation, expanders, tooltips, notifications and a smooth progress of the **IP Scanner** and **Port Scanner**. New setting **Animations** in [Settings > Appearance](../settings/appearance.md#animations): `System` (default, follows Windows), `On` or `Off`; also as system-wide policy `Appearance_Animations`. [#3702](https://github.com/BornToBeRoot/NETworkManager/pull/3702)
+- Progress bars and loading indicators look the same in all tools. [#3702](https://github.com/BornToBeRoot/NETworkManager/pull/3702)
+- Clearer text: semibold section headers, larger messages in empty areas and **Segoe UI Variable** on Windows 11. [#3702](https://github.com/BornToBeRoot/NETworkManager/pull/3702)
+- In the dark theme, the boxes are raised on a darker window frame. The charts (e.g. **Ping Monitor**, **WiFi**, **Traceroute** map) use colors with a good contrast in the light and dark theme. New installations use the accent color **Mint**. [#3702](https://github.com/BornToBeRoot/NETworkManager/pull/3702)
+- While a tab is dragged, **Remote Desktop**, **PowerShell**, **PuTTY**, **TigerVNC** and **Web Console** show the icon of the tool and the title of the tab instead of an empty area. [#3702](https://github.com/BornToBeRoot/NETworkManager/pull/3702)
+- New icons: one icon family ([Lucide](https://lucide.dev)) with thin lines instead of five different icon packs. [#3702](https://github.com/BornToBeRoot/NETworkManager/pull/3702)
+- Empty areas (e.g. no firewall rules found) show a large gray icon above the message. The notices to restart as administrator take only one row. [#3702](https://github.com/BornToBeRoot/NETworkManager/pull/3702)
+- Status messages below the input (e.g. **IP Scanner**, **DNS Lookup**, **Wake on LAN**) show an icon and the color of their type (error, warning, success, info) instead of the accent color. [#3702](https://github.com/BornToBeRoot/NETworkManager/pull/3702)
 
 **Profiles**
 
 - **Settings > Profiles**: `Enter` in the search box filters the profiles right away instead of after the delay while typing. [#3660](https://github.com/BornToBeRoot/NETworkManager/pull/3660)
+- The profile and group dialogs open faster. [#3702](https://github.com/BornToBeRoot/NETworkManager/pull/3702)
 
 **Dashboard**
 
@@ -85,6 +102,7 @@ Release date: **xx.xx.2026**
 
 **WiFi**
 
+- The **Channels** tab shows the charts of all bands (2.4, 5 and 6 GHz) one below the other in a scrollable list instead of two sub-tabs (**2.4 & 5 GHz**, **6 GHz**). [#3702](https://github.com/BornToBeRoot/NETworkManager/pull/3702)
 - The search filters after a short delay while typing instead of on every key press, `Enter` filters right away. [#3660](https://github.com/BornToBeRoot/NETworkManager/pull/3660)
 - The time of the last scan of the networks (`Last scan at 14:32`, the date in the tooltip) is shown in their header, with **Automatically update every** a countdown to the next scan; the line below only shows errors and the connection status. Reloading the network adapters is faster (the minimum of 2.5 seconds runs while loading) and the reload icon spins until it is finished. [#3685](https://github.com/BornToBeRoot/NETworkManager/pull/3685)
 - A channel width that could not be read from the beacon of the access point and is estimated is shown as `~80 MHz` (grid, copy and the tooltip of the **Channels** tab), the tooltip of the cell explains it. Estimated widths on 2.4 GHz are 20 MHz (40 MHz is rarely used there). [#3695](https://github.com/BornToBeRoot/NETworkManager/pull/3695)
@@ -202,6 +220,14 @@ Release date: **xx.xx.2026**
 - IP addresses opened from another feature (e.g. **IP Scanner** > **DNS lookup** > **IP address**), from a profile or with the run command are looked up with `PTR` instead of the selected record type. [#3644](https://github.com/BornToBeRoot/NETworkManager/pull/3644)
 - **Export...** exports the results in the order shown (sorting), the selected results in the order shown instead of the order they were selected. The file is written in the background, so the window stays responsive. [#3696](https://github.com/BornToBeRoot/NETworkManager/pull/3696)
 
+**PowerShell**
+
+- The console uses the colors of the application theme (with **Apply theme to PowerShell console**). [#3702](https://github.com/BornToBeRoot/NETworkManager/pull/3702)
+
+**PuTTY**
+
+- The terminal uses the colors of the application theme, updated when the theme is changed. [#3702](https://github.com/BornToBeRoot/NETworkManager/pull/3702)
+
 **SNMP**
 
 - **Export...** exports the results in the order shown (sorting), the selected results in the order shown instead of the order they were selected. The file is written in the background, so the window stays responsive. [#3696](https://github.com/BornToBeRoot/NETworkManager/pull/3696)
@@ -212,6 +238,7 @@ Release date: **xx.xx.2026**
 
 **Hosts File Editor**
 
+- The list has its own heading **Hosts file entries** instead of repeating the name of the tool. [#3702](https://github.com/BornToBeRoot/NETworkManager/pull/3702)
 - Added **Copy as...** to the context menu to create a new entry based on an existing one. The copy is added directly below the original entry. [0544698](https://github.com/BornToBeRoot/NETworkManager/commit/0544698aefc325ab36ca4c8e80250e1fe0b62d4a)
 - Multiple entries can now be selected to enable, disable or delete them at once, or to change their comment via **Edit entries...** (`F2`). The edit dialog switches to a bulk mode in which only the comment can be changed. [#3624](https://github.com/BornToBeRoot/NETworkManager/pull/3624)
 - Entries that don't change (e.g. enabling an already enabled entry, or confirming the edit dialog without changes) are no longer rewritten in the `hosts` file, so custom formatting such as tabs or alignment is kept. [#3624](https://github.com/BornToBeRoot/NETworkManager/pull/3624)
@@ -239,6 +266,7 @@ Release date: **xx.xx.2026**
 - `Enter` in the search box filters the rules right away instead of after the delay while typing. [#3660](https://github.com/BornToBeRoot/NETworkManager/pull/3660)
 - The time of the last refresh (`Reloaded at 14:32`, the date in the tooltip) is shown in the header instead of a status line below the list; the line below the list only shows errors (e.g. rules loaded with errors, a failed action). A manual refresh is faster (the minimum of 2.5 seconds runs while loading, not before) and the refresh icon spins until the rules are loaded (also with **Show all rules**). [#3685](https://github.com/BornToBeRoot/NETworkManager/pull/3685)
 - **Export** exports the rules shown (search) in the order shown (sorting), the selected rules in the order shown instead of the order they were selected. The file is written in the background, so the window stays responsive. [#3696](https://github.com/BornToBeRoot/NETworkManager/pull/3696)
+- The **Action** column shows a colored dot (allow green, block red) in front of the text instead of colored text. [#3702](https://github.com/BornToBeRoot/NETworkManager/pull/3702)
 
 **Discovery Protocol**
 
@@ -258,24 +286,30 @@ Release date: **xx.xx.2026**
 
 **Connections**
 
+- The list has its own heading **Active connections** instead of repeating the name of the tool. [#3702](https://github.com/BornToBeRoot/NETworkManager/pull/3702)
 - The search filters after a short delay while typing instead of on every key press (smoother with many connections), `Enter` filters right away. [#3660](https://github.com/BornToBeRoot/NETworkManager/pull/3660)
 - The time of the last refresh (`Reloaded at 14:32`, the date in the tooltip) is shown in the header instead of a status line below the list; with **Automatically update every**, a countdown to the next refresh (`Next refresh in 00:04`). A manual refresh is faster (the minimum of 2.5 seconds runs while loading, not before) and the refresh icon spins until it is finished. [#3685](https://github.com/BornToBeRoot/NETworkManager/pull/3685)
 - **Export...** exports the entries shown (search) in the order shown (sorting), the selected entries in the order shown instead of the order they were selected. The file is written in the background, so the window stays responsive. [#3696](https://github.com/BornToBeRoot/NETworkManager/pull/3696)
+- The **State** column shows a colored dot in front of the state: established green, connecting yellow, other states gray. [#3702](https://github.com/BornToBeRoot/NETworkManager/pull/3702)
 
 **Listeners**
 
+- The list has its own heading **Listening ports** instead of repeating the name of the tool. [#3702](https://github.com/BornToBeRoot/NETworkManager/pull/3702)
 - The search filters after a short delay while typing instead of on every key press (smoother with many listeners), `Enter` filters right away. [#3660](https://github.com/BornToBeRoot/NETworkManager/pull/3660)
 - The time of the last refresh (`Reloaded at 14:32`, the date in the tooltip) is shown in the header instead of a status line below the list; with **Automatically update every**, a countdown to the next refresh (`Next refresh in 00:04`). A manual refresh is faster (the minimum of 2.5 seconds runs while loading, not before) and the refresh icon spins until it is finished. [#3685](https://github.com/BornToBeRoot/NETworkManager/pull/3685)
 - **Export...** exports the entries shown (search) in the order shown (sorting), the selected entries in the order shown instead of the order they were selected. The file is written in the background, so the window stays responsive. [#3696](https://github.com/BornToBeRoot/NETworkManager/pull/3696)
 
 **Neighbor Table**
 
+- The list has its own heading **Neighbor entries** instead of repeating the name of the tool. [#3702](https://github.com/BornToBeRoot/NETworkManager/pull/3702)
 - The search filters after a short delay while typing instead of on every key press (smoother with many entries), `Enter` filters right away. [#3660](https://github.com/BornToBeRoot/NETworkManager/pull/3660)
 - The time of the last refresh (`Reloaded at 14:32`, the date in the tooltip) is shown in the header instead of a status line below the list; with **Automatically update every**, a countdown to the next refresh (`Next refresh in 00:04`). The line below the list only shows errors. A manual refresh is faster (the minimum of 2.5 seconds runs while loading, not before) and the refresh icon spins until it is finished. [#3685](https://github.com/BornToBeRoot/NETworkManager/pull/3685)
 - **Export...** exports the entries shown (search) in the order shown (sorting), the selected entries in the order shown instead of the order they were selected. The file is written in the background, so the window stays responsive. [#3696](https://github.com/BornToBeRoot/NETworkManager/pull/3696)
+- The **State** column shows a colored dot in front of the state: reachable green, stale / delay / probe yellow, incomplete / unreachable red, permanent gray. [#3702](https://github.com/BornToBeRoot/NETworkManager/pull/3702)
 
 ## Bug Fixes
 
+- Fixed that the input of a running tool (e.g. **IP Scanner**, **Port Scanner**, **DNS Lookup**) could still be changed via the history (drop-down, `Up`/`Down`, `F4`). [#3702](https://github.com/BornToBeRoot/NETworkManager/pull/3702)
 - Fixed changes to lists in the settings (e.g. query histories, port profiles, custom commands) not being saved if no other setting was changed in the same session. This happened since the settings are stored as JSON. [#3607](https://github.com/BornToBeRoot/NETworkManager/pull/3607)
 - Fixed the profile search (profile list in the tools, **Profiles** settings and import result) filtering the profiles while still typing. The profiles are now filtered once after the user stopped typing, instead of every 750 ms after the first key press. [#3638](https://github.com/BornToBeRoot/NETworkManager/pull/3638)
 - Fixed the application list not scrolling to the selected application if it was opened from somewhere else (e.g. from the **Dashboard**, another application or the run command). [#3644](https://github.com/BornToBeRoot/NETworkManager/pull/3644)
@@ -303,6 +337,7 @@ Release date: **xx.xx.2026**
 - Fixed `Enter` in the search box of the import result importing the profiles (default button). It filters the found profiles right away now, instead of after the delay while typing. [#3660](https://github.com/BornToBeRoot/NETworkManager/pull/3660)
 - Fixed columns that couldn't be made wider than the window (by dragging or double-clicking the gripper) in the groups (Settings > Profiles) and the import result. The grid scrolls horizontally now, the last (or main) column still fills the remaining width. [#3557](https://github.com/BornToBeRoot/NETworkManager/issues/3557)
 - Fixed the names of the features in the group dialog shown without spaces (e.g. `RemoteDesktop` instead of **Remote Desktop**). [#3667](https://github.com/BornToBeRoot/NETworkManager/pull/3667)
+- Fixed closed dialogs (e.g. profile, group) being kept in memory until the application was closed. [#3702](https://github.com/BornToBeRoot/NETworkManager/pull/3702)
 - Fixed the profiles of a group renamed only by case (e.g. `servers` → `Servers`) keeping the old group name. Opening them in a feature with group settings (e.g. **Remote Desktop**, **PuTTY**) failed, and editing one could create a second group with the old name. Profile files with such profiles are repaired when they are loaded. [#3667](https://github.com/BornToBeRoot/NETworkManager/pull/3667)
 
 **Dashboard**
@@ -433,6 +468,10 @@ Release date: **xx.xx.2026**
 
 - Fixed no message being shown after **Delete browsing data** in the settings (whether the browsing data was deleted or an error occurred), and an error (e.g. the WebView2 runtime is not installed) not being handled.
 
+**PowerShell**
+
+- Fixed **Apply theme to PowerShell console** not working for PowerShell from the Microsoft Store. [#3702](https://github.com/BornToBeRoot/NETworkManager/pull/3702)
+
 **SNMP**
 
 - Fixed `Enter` in the search box of the OID profiles dialog closing the dialog with **OK**. It only filters the OID profiles now. [#3660](https://github.com/BornToBeRoot/NETworkManager/pull/3660)
@@ -528,5 +567,6 @@ Release date: **xx.xx.2026**
 - Reworked the GitHub issue templates as forms (bug report, feature request, question) that ask for the relevant information (e.g. affected feature, version, installation, Windows version, log), with links to the documentation, discussions, translations and security advisories. Simplified the pull request template and removed the Copilot summary section. [#3660](https://github.com/BornToBeRoot/NETworkManager/pull/3660)
 - Faster CI: AppVeyor no longer builds a branch a second time when a PR is open, skips changes that only affect the documentation / website, builds ARM64 only for releases and now runs the unit tests. The website is only built for PRs that change it and builds about 3x faster (Docusaurus Faster). Dependabot also updates the GitHub Actions, and CodeQL also scans the workflows. Website changes are only merged automatically if the website builds. Dependabot major updates are no longer merged automatically. Removed the stale bot. [#3675](https://github.com/BornToBeRoot/NETworkManager/pull/3675)
 - The exports (CSV, XML, JSON) of all tools define their columns once and are written by one shared writer, so the three formats can't drift apart and every tool formats the same kind of value the same way (not translated), see [Export format](../faq/export-format.md). Added unit tests for the exports. [#3696](https://github.com/BornToBeRoot/NETworkManager/pull/3696)
+- The icons are imported from the Lucide SVG files (`Scripts/Create-LucideIcons.ps1`), the MahApps.Metro.IconPacks packages are removed. [#3702](https://github.com/BornToBeRoot/NETworkManager/pull/3702)
 - Language files updated via [#transifex](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Ftransifex-integration)
 - Dependencies updated via [#dependabot](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Fdependabot)

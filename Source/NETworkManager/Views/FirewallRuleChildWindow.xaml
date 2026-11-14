@@ -140,7 +140,7 @@
                            Visibility="{Binding PortsVisible, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
                 <TextBox x:Name="TextBoxLocalPorts"
                          Grid.Column="2" Grid.Row="12"
-                         mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExamplePorts}"
+                         mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExamplePorts}" FontFamily="{StaticResource Fonts.Family.Mono}"
                          Visibility="{Binding PortsVisible, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
                     <TextBox.Text>
                         <Binding Path="LocalPorts" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
@@ -157,7 +157,7 @@
                            Visibility="{Binding PortsVisible, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
                 <TextBox x:Name="TextBoxRemotePorts"
                          Grid.Column="2" Grid.Row="14"
-                         mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExamplePorts}"
+                         mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExamplePorts}" FontFamily="{StaticResource Fonts.Family.Mono}"
                          Visibility="{Binding PortsVisible, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
                     <TextBox.Text>
                         <Binding Path="RemotePorts" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
@@ -173,7 +173,7 @@
                            Text="{x:Static localization:Strings.LocalAddresses}" />
                 <TextBox x:Name="TextBoxLocalAddresses"
                          Grid.Column="2" Grid.Row="16"
-                         mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleFirewallLocalAddresses}">
+                         mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleFirewallLocalAddresses}" FontFamily="{StaticResource Fonts.Family.Mono}">
                     <TextBox.Text>
                         <Binding Path="LocalAddresses" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>
@@ -188,7 +188,7 @@
                            Text="{x:Static localization:Strings.RemoteAddresses}" />
                 <TextBox x:Name="TextBoxRemoteAddresses"
                          Grid.Column="2" Grid.Row="18"
-                         mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleFirewallAddresses}">
+                         mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleFirewallAddresses}" FontFamily="{StaticResource Fonts.Family.Mono}">
                     <TextBox.Text>
                         <Binding Path="RemoteAddresses" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>

@@ -1,7 +1,8 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:mahAppsControls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-                    xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks">
+                    xmlns:icons="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls"
+                    xmlns:networkManager="clr-namespace:NETworkManager">
     <Style x:Key="ExpanderDownHeader"
            BasedOn="{StaticResource ResourceKey=MahApps.Styles.ToggleButton.ExpanderHeader.Down}"
            TargetType="{x:Type TypeName=ToggleButton}">
@@ -21,9 +22,14 @@
                                        x:Name="Chevron"
                                        Width="16" Height="16"
                                        Fill="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}"
-                                       VerticalAlignment="Center">
+                                       VerticalAlignment="Center"
+                                       RenderTransformOrigin="0.5,0.5">
+                                <!-- Up (collapsed) / down (expanded), rotates when the expander is opened / closed (ExpanderAnimation) -->
+                                <Rectangle.RenderTransform>
+                                    <RotateTransform Angle="180" />
+                                </Rectangle.RenderTransform>
                                 <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ChevronUp}" />
+                                    <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=ChevronDown}" />
                                 </Rectangle.OpacityMask>
                             </Rectangle>
                             <mahAppsControls:ContentControlEx Grid.Column="1"
@@ -42,10 +48,11 @@
                         </Grid>
                     </Border>
                     <ControlTemplate.Triggers>
+                        <!-- Initial state (instant); opening / closing is animated by ExpanderAnimation -->
                         <Trigger Property="IsChecked" Value="True">
-                            <Setter TargetName="Chevron" Property="OpacityMask">
+                            <Setter TargetName="Chevron" Property="RenderTransform">
                                 <Setter.Value>
-                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ChevronDown}" />
+                                    <RotateTransform Angle="0" />
                                 </Setter.Value>
                             </Setter>
                         </Trigger>
@@ -73,6 +80,28 @@
                 Value="Normal" />
         <Setter Property="mahAppsControls:ExpanderHelper.HeaderDownStyle"
                 Value="{DynamicResource ResourceKey=ExpanderDownHeader}" />
+        <!-- Chevron rotates, content fades in when expanded -->
+        <Setter Property="networkManager:ExpanderAnimation.IsEnabled" Value="True" />
+    </Style>
+
+    <!--
+        Section of a list (e.g. a group of the Ping Monitor): no box around it, the header has a thin line below and
+        the content starts 10 below the line.
+    -->
+    <Style x:Key="SectionExpanderDownHeader"
+           BasedOn="{StaticResource ResourceKey=ExpanderDownHeader}"
+           TargetType="{x:Type TypeName=ToggleButton}">
+        <Setter Property="BorderThickness" Value="0,0,0,1" />
+        <Setter Property="BorderBrush" Value="{DynamicResource Brushes.Surface.Border}" />
+        <Setter Property="Padding" Value="0,0,0,6" />
+    </Style>
+
+    <Style x:Key="SectionExpander"
+           TargetType="{x:Type TypeName=Expander}"
+           BasedOn="{StaticResource ResourceKey=DefaultExpander}">
+        <Setter Property="Padding" Value="0,10,0,0" />
+        <Setter Property="mahAppsControls:ExpanderHelper.HeaderDownStyle"
+                Value="{DynamicResource ResourceKey=SectionExpanderDownHeader}" />
     </Style>
 
     <!-- Header style for bordered expanders (e.g. the ping monitor host): adds a small
@@ -97,9 +126,14 @@
                                        Width="16" Height="16"
                                        Margin="10,0,0,0"
                                        Fill="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}"
-                                       VerticalAlignment="Center">
+                                       VerticalAlignment="Center"
+                                       RenderTransformOrigin="0.5,0.5">
+                                <!-- Up (collapsed) / down (expanded), rotates when the expander is opened / closed (ExpanderAnimation) -->
+                                <Rectangle.RenderTransform>
+                                    <RotateTransform Angle="180" />
+                                </Rectangle.RenderTransform>
                                 <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ChevronUp}" />
+                                    <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=ChevronDown}" />
                                 </Rectangle.OpacityMask>
                             </Rectangle>
                             <mahAppsControls:ContentControlEx Grid.Column="1"
@@ -118,10 +152,11 @@
                         </Grid>
                     </Border>
                     <ControlTemplate.Triggers>
+                        <!-- Initial state (instant); opening / closing is animated by ExpanderAnimation -->
                         <Trigger Property="IsChecked" Value="True">
-                            <Setter TargetName="Chevron" Property="OpacityMask">
+                            <Setter TargetName="Chevron" Property="RenderTransform">
                                 <Setter.Value>
-                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ChevronDown}" />
+                                    <RotateTransform Angle="0" />
                                 </Setter.Value>
                             </Setter>
                         </Trigger>
@@ -139,6 +174,9 @@
     <Style x:Key="PingMonitorExpander"
            TargetType="{x:Type TypeName=Expander}"
            BasedOn="{StaticResource ResourceKey=DefaultExpander}">
+        <!-- Card like the Dashboard widgets (CardBorder): rounded border, background of the box it is in -->
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="mahAppsControls:ControlsHelper.CornerRadius" Value="{StaticResource CornerRadius.Card}" />
         <Setter Property="mahAppsControls:ExpanderHelper.HeaderDownStyle"
                 Value="{DynamicResource ResourceKey=PingMonitorExpanderDownHeader}" />
     </Style>
@@ -170,7 +208,7 @@
                                        VerticalAlignment="Center"
                                        HorizontalAlignment="Center">
                                 <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ChevronLeft}" />
+                                    <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=ChevronLeft}" />
                                 </Rectangle.OpacityMask>
                             </Rectangle>
                             <TextBlock Grid.Row="1"
@@ -178,7 +216,6 @@
                                        TextOptions.TextFormattingMode="Display"
                                        Foreground="{TemplateBinding Property=Foreground}"
                                        Style="{StaticResource ResourceKey=DefaultTextBlock}"
-                                       FontSize="18"
                                        Margin="0"
                                        VerticalAlignment="Center"
                                        HorizontalAlignment="Center">
@@ -202,9 +239,12 @@
     <Style x:Key="ProfileExpander"
            TargetType="{x:Type TypeName=Expander}"
            BasedOn="{StaticResource ResourceKey=MahApps.Styles.Expander}">
+        <!-- The box (ViewBox) is around the expander in ProfileExpanderPanel: the header is hidden when expanded, the
+             MahApps template would round only the bottom of the content -->
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="ExpandDirection" Value="Right" />
         <Setter Property="Padding" Value="10" />
+        <Setter Property="Background" Value="Transparent" />
         <Setter Property="mahAppsControls:HeaderedControlHelper.HeaderBackground"
                 Value="Transparent" />
         <Setter Property="mahAppsControls:HeaderedControlHelper.HeaderForeground"
@@ -213,6 +253,10 @@
                 Value="Normal" />
         <Setter Property="mahAppsControls:ExpanderHelper.HeaderRightStyle"
                 Value="{DynamicResource ResourceKey=ProfileExpanderClosed}" />
+        <!-- ‹ (collapsed header) and › (button in the panel) are different elements: the new one turns into its
+             direction; the profiles fade in -->
+        <Setter Property="networkManager:ExpanderAnimation.IsEnabled" Value="True" />
+        <Setter Property="networkManager:ExpanderAnimation.SwapChevron" Value="True" />
         <Style.Triggers>
             <Trigger Property="IsExpanded" Value="True">
                 <Setter Property="ExpandDirection" Value="Down" />

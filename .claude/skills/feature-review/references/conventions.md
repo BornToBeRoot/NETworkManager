@@ -74,8 +74,8 @@ Reference: `HostsFileEditorView.xaml`, `FirewallView.xaml`, `NetworkInterfaceVie
   feature-specific permission like `HasPermissionToConfigure`).
 - Disabled actions get `wpfHelpers:PermissionToolTipHelper.Text` (the tool's `*AdminMessage`) and
   `PermissionToolTipHelper.HasPermission` — on buttons, context menu items and profile menu items.
-- A banner at the bottom (`MahApps.Brushes.Gray10` background, `MessageTextBlock` with the `*AdminMessage`,
-  **Restart as administrator** button with the `Shield` icon) is shown when not elevated.
+- A notice at the bottom (`icons:AdminNotice`: one row with shield + the `*AdminMessage`, **Restart as
+  Administrator** button on the right) is shown when not elevated.
 
 ## Data grids, selection and context menus
 
@@ -95,14 +95,14 @@ Reference: `HostsFileEditorView.xaml`, `FirewallView.xaml`.
 - No bindings that have no element to resolve against: no `VisualBrush` / `BitmapImage` with a binding in a style
   setter or as a freezable resource. Bind the property of the element with a converter instead
   (`VisualToVisualBrushConverter`, `ApplicationNameToIconBrushConverter`, `Image Source="{Binding Uri}"`). A static
-  `VisualBrush` (`Visual="{iconPacks:Material Kind=...}"`) is fine. `MenuItem`s created outside a menu (e.g. extra
+  `VisualBrush` (`Visual="{icons:Lucide Kind=...}"`) is fine. `MenuItem`s created outside a menu (e.g. extra
   items in an `x:Array`) are fine: the implicit `DefaultMenuItem` style sets the content alignment directly instead
   of the MahApps binding to the parent. New `MenuItem` styles are `BasedOn="{StaticResource DefaultMenuItem}"`.
 - Order: Enable / Disable (only the applicable one) → Edit... → Copy as... → Delete → separator → Copy
   (submenu, `CopyMenuItem` style) → Export...
-- Icons (16×16 `Rectangle`, `MahApps.Brushes.Gray3`, `VisualBrush`): Enable `Material ToggleSwitchOutline`,
-  Disable `Material ToggleSwitchOffOutline`, Edit `Modern Edit`, Copy as `Material ContentDuplicate`,
-  Delete `Material Close`, Export `Material FileMoveOutline`, Refresh `Material Refresh`, Add `Material Plus`.
+- Icons (16×16 `Rectangle`, `MahApps.Brushes.Gray3`, `VisualBrush` with `{icons:Lucide Kind=...}`): Enable
+  `ToggleRight`, Disable `ToggleLeft`, Edit `Pencil`, Copy as `CopyPlus`, Delete `X`, Export `FileOutput`, Refresh
+  `RefreshCw`, Add `Plus`.
 - Edit and Copy as work on a single item; Enable/Disable/Delete work on the selection (`GetTargetEntries()`).
   Exception: the Hosts File Editor has a bulk edit for the comment of several entries.
 - Shortcuts: `F5` refresh, `F2` edit, `Del` delete; double-click a row = edit.
@@ -150,7 +150,9 @@ Reference: `HostsFileEditorView.xaml`, `FirewallView.xaml`.
 
 - Long tooltip text uses `WrapToolTip` (max. 400px, wrapping); help/warn/error icons use `HelpToolTip`,
   `WarnToolTip`, `ErrorToolTip` (`ToolTipStyles.xaml`, `RectangleStyles.xaml`).
-- Status text: `AccentTextBlock` / `StatusMessageTextBlock`, shown via `IsStatusMessageDisplayed`.
+- Status messages: `StatusMessageText` (`Text`, `Level` = `StatusLevel`: icon + color), shown via
+  `IsStatusMessageDisplayed`; the view model sets `StatusMessageLevel` with every message (appended messages:
+  `StatusLevel.MostSevere`). Never the accent color for messages.
 
 ## Layout
 

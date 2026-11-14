@@ -1,6 +1,7 @@
-using MahApps.Metro.IconPacks;
+using NETworkManager.Controls;
 using NETworkManager.Localization;
 using NETworkManager.Models;
+using NETworkManager.Settings;
 using NETworkManager.Utilities;
 using System;
 using System.Collections.Generic;
@@ -50,7 +51,7 @@ public partial class NotificationWindow : INotifyPropertyChanged
     public Brush ApplicationIconBrush { get; }
     public string ApplicationTitle { get; }
 
-    public PackIconMaterialKind IconKind { get; }
+    public LucideIconKind IconKind { get; }
     public Brush IconBrush { get; }
     public string NotificationTitle { get; }
     public IReadOnlyList<NotificationLineItem> Lines { get; }
@@ -133,10 +134,18 @@ public partial class NotificationWindow : INotifyPropertyChanged
 
     #region Methods
 
-    // Colors of the application (status icons, "Since last scan" of the scanners)
-    private static readonly Color UpColor = (Color)ColorConverter.ConvertFromString("#badc58");
-    private static readonly Color DownColor = (Color)ColorConverter.ConvertFromString("#b95353");
-    private static readonly Color ChangedColor = (Color)ColorConverter.ConvertFromString("#f1b856");
+    /// <summary>
+    /// Gets a status color of the current theme (status icons, "Since last scan" of the scanners), see
+    /// <see cref="AppearanceManager"/>.
+    /// </summary>
+    /// <param name="key">Resource key of the status brush.</param>
+    /// <returns>Color of the brush, gray if it is not found.</returns>
+    private static Color GetStatusColor(string key)
+    {
+        return System.Windows.Application.Current.TryFindResource(key) is SolidColorBrush brush
+            ? brush.Color
+            : Colors.Gray;
+    }
 
     /// <summary>
     /// Gets the icon and its brush of a status: up green, down red, up and down half green / half red (split along the
@@ -144,16 +153,16 @@ public partial class NotificationWindow : INotifyPropertyChanged
     /// </summary>
     /// <param name="status">Status of the notification.</param>
     /// <returns>Icon and brush.</returns>
-    private static (PackIconMaterialKind kind, Brush brush) GetStatusIcon(NotificationStatus status)
+    private static (LucideIconKind kind, Brush brush) GetStatusIcon(NotificationStatus status)
     {
         var brush = GetStatusBrush(status);
 
         var kind = status switch
         {
-            NotificationStatus.Up => PackIconMaterialKind.LanConnect,
-            NotificationStatus.Down => PackIconMaterialKind.LanDisconnect,
-            NotificationStatus.UpAndDown => PackIconMaterialKind.Lan,
-            _ => PackIconMaterialKind.LanPending
+            NotificationStatus.Up => LucideIconKind.MonitorCheck,
+            NotificationStatus.Down => LucideIconKind.MonitorX,
+            NotificationStatus.UpAndDown => LucideIconKind.Network,
+            _ => LucideIconKind.MonitorDot
         };
 
         return (kind, brush);
@@ -167,16 +176,19 @@ public partial class NotificationWindow : INotifyPropertyChanged
     /// <returns>Frozen brush.</returns>
     private static Brush GetStatusBrush(NotificationStatus status)
     {
+        var upColor = GetStatusColor(AppearanceManager.StatusSuccessBrushKey);
+        var downColor = GetStatusColor(AppearanceManager.StatusErrorBrushKey);
+
         Brush brush = status switch
         {
-            NotificationStatus.Up => new SolidColorBrush(UpColor),
-            NotificationStatus.Down => new SolidColorBrush(DownColor),
+            NotificationStatus.Up => new SolidColorBrush(upColor),
+            NotificationStatus.Down => new SolidColorBrush(downColor),
             NotificationStatus.UpAndDown => new LinearGradientBrush(new GradientStopCollection
             {
                 // Two stops at the same offset: a sharp diagonal edge instead of a gradient
-                new(UpColor, 0), new(UpColor, 0.5), new(DownColor, 0.5), new(DownColor, 1)
+                new(upColor, 0), new(upColor, 0.5), new(downColor, 0.5), new(downColor, 1)
             }, new Point(0, 0), new Point(1, 1)),
-            _ => new SolidColorBrush(ChangedColor)
+            _ => new SolidColorBrush(GetStatusColor(AppearanceManager.StatusWarningBrushKey))
         };
 
         brush.Freeze();
@@ -209,6 +221,32 @@ public partial class NotificationWindow : INotifyPropertyChanged
         Top = area.Bottom / scale - ActualHeight - NotificationManager.WindowMargin - offset;
     }
 
+    /// <summary>
+    /// Slides the content of the popup in from the right (40 px) and fades it in (200 ms, quadratic ease-out). The
+    /// content, not the window: the window would start outside the work area and could show up on a monitor to the
+    /// right, and it can't fade (not transparent: rounded corners, shadow). The window stays where
+    /// <see cref="ApplyPosition"/> puts it. Not without animations (<see cref="AppearanceManager.AnimationsEnabled"/>).
+    /// </summary>
+    private void SlideIn()
+    {
+        if (!AppearanceManager.AnimationsEnabled)
+            return;
+
+        var duration = new Duration(TimeSpan.FromMilliseconds(200));
+        var easing = new System.Windows.Media.Animation.QuadraticEase
+            { EasingMode = System.Windows.Media.Animation.EasingMode.EaseOut };
+
+        var translate = new TranslateTransform(SlideInOffset, 0);
+        Root.RenderTransform = translate;
+
+        translate.BeginAnimation(TranslateTransform.XProperty,
+            new System.Windows.Media.Animation.DoubleAnimation(SlideInOffset, 0, duration) { EasingFunction = easing });
+        Root.BeginAnimation(OpacityProperty,
+            new System.Windows.Media.Animation.DoubleAnimation(0, 1, duration) { EasingFunction = easing });
+    }
+
+    private const double SlideInOffset = 40;
+
     private void CloseWindow()
     {
         _timer.Stop();
@@ -228,6 +266,7 @@ public partial class NotificationWindow : INotifyPropertyChanged
         base.OnSourceInitialized(e);
 
         ApplyPosition();
+        SlideIn();
 
         _stopwatch.Restart();
         _timer.Start();

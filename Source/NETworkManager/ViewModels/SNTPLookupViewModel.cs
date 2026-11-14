@@ -128,6 +128,22 @@ public class SNTPLookupViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Gets the level of the status message (icon and color).
+    /// </summary>
+    public StatusLevel StatusMessageLevel
+    {
+        get;
+        private set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
     #endregion
 
     #region Contructor, load settings
@@ -194,6 +210,7 @@ public class SNTPLookupViewModel : ViewModelBase
     {
         IsStatusMessageDisplayed = false;
         StatusMessage = string.Empty;
+        StatusMessageLevel = StatusLevel.None;
 
         IsRunning = true;
 
@@ -289,6 +306,7 @@ public class SNTPLookupViewModel : ViewModelBase
             StatusMessage += Environment.NewLine;
 
         StatusMessage += e.IsDNSError ? e.ErrorMessage : $"{e.Server} ({e.IPEndPoint}) ==> {e.ErrorMessage}";
+        StatusMessageLevel = StatusLevel.Error;
         IsStatusMessageDisplayed = true;
     }
 

@@ -161,8 +161,8 @@
                             <TextBlock Text="{x:Static localization:Strings.HelpMessage_ProfileHostPlaceholder}"
                                        Style="{StaticResource DefaultTextBlock}"
                                        TextWrapping="Wrap" Margin="0,0,0,8" />
-                            <Border BorderBrush="{DynamicResource MahApps.Brushes.Gray8}"
-                                    BorderThickness="1" CornerRadius="2">
+                            <Border BorderBrush="{DynamicResource Brushes.Surface.Border}"
+                                    BorderThickness="1" CornerRadius="{StaticResource CornerRadius.Control}">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto" />
@@ -186,7 +186,7 @@
                                     <TextBlock Grid.Row="0" Grid.Column="1"
                                                Text="{x:Static localization:Strings.Description}" FontWeight="Bold" />
                                     <Rectangle Grid.Row="1" Grid.ColumnSpan="2" Grid.Column="0" Height="1"
-                                               Fill="{DynamicResource MahApps.Brushes.Gray8}" />
+                                               Fill="{DynamicResource Brushes.Surface.Border}" />
 
                                     <!-- Placeholder -->
                                     <TextBlock Grid.Row="2" Grid.Column="0" Text="{}{{Host}}" />
@@ -202,7 +202,7 @@
         <TextBlock Text="{x:Static localization:Strings.SSHPort}" Style="{DynamicResource DefaultTextBlock}"
                    Margin="0,0,0,10" />
         <TextBox Width="250" HorizontalAlignment="Left"
-                 mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExamplePort22}"
+                 mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExamplePort22}" FontFamily="{StaticResource Fonts.Family.Mono}"
                  Style="{StaticResource DefaultTextBox}" Margin="0,0,0,10">
             <TextBox.Text>
                 <Binding Path="SSHPort" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
@@ -216,7 +216,7 @@
         <TextBlock Text="{x:Static localization:Strings.TelnetPort}" Style="{DynamicResource DefaultTextBlock}"
                    Margin="0,0,0,10" />
         <TextBox Width="250" HorizontalAlignment="Left"
-                 mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExamplePort23}"
+                 mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExamplePort23}" FontFamily="{StaticResource Fonts.Family.Mono}"
                  Style="{StaticResource DefaultTextBox}" Margin="0,0,0,10">
             <TextBox.Text>
                 <Binding Path="TelnetPort" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
@@ -230,7 +230,7 @@
         <TextBlock Text="{x:Static localization:Strings.RloginPort}" Style="{DynamicResource DefaultTextBlock}"
                    Margin="0,0,0,10" />
         <TextBox Width="250" HorizontalAlignment="Left"
-                 mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExamplePort513}"
+                 mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExamplePort513}" FontFamily="{StaticResource Fonts.Family.Mono}"
                  Style="{StaticResource DefaultTextBox}" Margin="0,0,0,10">
             <TextBox.Text>
                 <Binding Path="RloginPort" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">

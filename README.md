@@ -8,7 +8,7 @@
     Streamline and simplify your network administration and troubleshooting with <strong>NETworkManager</strong>. Connect, monitor, and troubleshoot your network and server infrastructure using built-in tools like Remote Desktop (RDP), PuTTY (SSH, Serial, etc.), PowerShell (WSL, K9s, etc.) and TigerVNC (VNC). Perform in-depth network diagnostics with features including WiFi Analyzer, IP Scanner, Port Scanner, Ping Monitor, Traceroute, DNS Lookup, LLDP/CDP Capture, and <a href="https://borntoberoot.net/NETworkManager/docs/introduction">many more</a> — all in a clean, unified interface.
   </p>
   <p>
-    Organize hosts and networks in profiles with seamless access across all features. Profile files can be encrypted to protect your sensitive data and used to separate different customers or environments. NETworkManager is enterprise-ready with an MSI installer, signed binaries, system-wide policies for centralized configuration, and support for package managers like Chocolatey, Evergreen, and WinGet. Available in over 16 languages with customizable light/dark themes and accent colors.
+    Organize hosts and networks in profiles with seamless access across all features. Profile files can be encrypted to protect your sensitive data and used to separate different customers or environments. NETworkManager is enterprise-ready with an MSI installer, signed binaries, system-wide policies for centralized configuration, and support for package managers like Chocolatey, Evergreen, and WinGet. Available in 18 languages, with light and dark themes and accent colors.
   </p>
   <p>
     <a href="https://borntoberoot.net/NETworkManager/download" target="_blank">
@@ -70,11 +70,12 @@ Here's why you'll love it:
 
 - 🧰 **Unified Experience** - All your essential network tools together in a clean, unified interface.
 - 🖥️ **Remote System Management** - Seamlessly connect via Remote Desktop (RDP), PuTTY (SSH, Serial, etc.), PowerShell (WSL, K9s, etc.) or TigerVNC (VNC).
-- 🔍 **Analyze & Troubleshoot** - Deep network diagnostics with WiFi Analyzer, IP Scanner, Port Scanners, Ping Monitor, Traceroute, DNS Lookup, LLDP/CDP Capture, and <a href="https://borntoberoot.net/NETworkManager/docs/introduction">many more</a>.
+- 🔍 **Analyze & Troubleshoot** - Deep network diagnostics with WiFi Analyzer, IP Scanner, Port Scanner, Ping Monitor, Traceroute, DNS Lookup, LLDP/CDP Capture, and <a href="https://borntoberoot.net/NETworkManager/docs/introduction">many more</a>.
+- ⌨️ **Run Command** - Start any tool from the keyboard with `Ctrl+Shift+P`, e.g. `ping 10.0.0.1` or `rdp @server-01` ([run command](https://borntoberoot.net/NETworkManager/docs/run-command)).
 - 🔐 **Secure Profiles** - Organize hosts and networks in profiles with seamless access across all features. Encrypt profile files and separate them by customer or environment.
 - 💎 **Open Source & Free** - No ads, no subscriptions, no selling your data, fully community-driven.
 - 🏢 **Enterprise-Ready** - MSI installer, signed binaries, [system-wide policies](https://borntoberoot.net/NETworkManager/docs/system-wide-policies) for centralized configuration, and package manager support (Chocolatey, Evergreen, and WinGet).
-- 🎨 **Personalized Experience** - Available in 16+ languages, with customizable light/dark themes and accent colors.
+- 🎨 **Personalized Experience** - Available in 18 languages, with light and dark themes and accent colors.
 
 📖 Explore all features in detail in our [documentation](https://borntoberoot.net/NETworkManager/docs/introduction).
 
@@ -125,7 +126,7 @@ If you find it useful, here are ways to support the project:
 - 🌟 **Star the Repo** – Show your appreciation and stay updated with new features.
 - 📢 **Share It** – Spread the word with friends, colleagues, or on social media.
 - 🎥 **Create Content** – Write blog posts, make tutorials, or produce videos about NETworkManager.
-- ☕🍺 **Donate** – Support the project with a coffe or beer!
+- ☕🍺 **Donate** – Support the project with a coffee or beer!
 
   | Crypto          | Address                                        |
   | --------------- | ---------------------------------------------- |
@@ -228,9 +229,8 @@ A huge thank you to our supporters and contributors who make NETworkManager poss
   - [GongSolutions.Wpf.DragDrop](https://github.com/punker76/gong-wpf-dragdrop) - An easy to use drag'n'drop framework for WPF.
   - [IPNetwork](https://github.com/lduchosal/ipnetwork) - .NET library for complex network, IP, and subnet calculations.
   - [LiveCharts2](https://github.com/Live-Charts/LiveCharts2) - Beautiful, interactive charts, maps, and gauges.
-  - [LoadingIndicators.WPF](https://github.com/zeluisping/LoadingIndicators.WPF) - A collection of loading indicators for WPF.
+  - [Lucide](https://lucide.dev/) - Beautiful & consistent icons.
   - [MahApps.Metro](https://mahapps.com/) - UI toolkit for WPF applications.
-  - [MahApps.Metro.IconPacks](https://github.com/MahApps/MahApps.Metro.IconPacks) - Awesome icon packs for WPF and UWP in one library.
   - [NetBeauty2](https://github.com/nulastudio/NetBeauty2) - Move .NET app runtime components and dependencies into a sub-directory.
   - [PSDiscoveryProtocol](https://github.com/lahell/PSDiscoveryProtocol) - PowerShell module for LLDP/CDP discovery.
 
@@ -246,7 +246,7 @@ The binaries and installers are built on [AppVeyor](https://ci.appveyor.com/proj
 
 Your privacy matters. NETworkManager will not transfer any information to other networked systems unless specifically requested by the user or the person installing or operating it.
 
-NETworManager has integrated some **optional** third-party services to enhance functionality. You can choose to enable or disable these services at the first startup or later in the settings:
+NETworkManager has integrated some **optional** third-party services to enhance functionality. You can choose to enable or disable these services at the first startup or later in the settings:
 
 - [api.github.com](https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement) - Check for application updates.
 - [ipify.org](https://www.ipify.org/) - Retrieve the public IP address used by the client.

@@ -9,7 +9,7 @@
              xmlns:simpleChildWindow="clr-namespace:MahApps.Metro.SimpleChildWindow;assembly=MahApps.Metro.SimpleChildWindow"
              xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:validators="clr-namespace:NETworkManager.Validators;assembly=NETworkManager.Validators"
-             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:icons="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls"
              CloseButtonCommand="{Binding Path=CancelCommand}"
              Style="{StaticResource DefaultChildWindow}"
              mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:DropDownViewModel}">

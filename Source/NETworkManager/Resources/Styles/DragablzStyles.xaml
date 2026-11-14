@@ -1,9 +1,95 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+                    xmlns:icons="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls"
                     xmlns:dragablz="clr-namespace:Dragablz;assembly=Dragablz"
+                    xmlns:dockablz="clr-namespace:Dragablz.Dockablz;assembly=Dragablz"
                     xmlns:networkManagerControls="clr-namespace:NETworkManager.Controls"
-                    xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization">
+                    xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
+                    xmlns:settings="clr-namespace:NETworkManager.Settings;assembly=NETworkManager.Settings">
+    <!--
+        Title of a tab (tools with tabs, also the own tab headers of Remote Desktop, PuTTY, ...): 150 wide, or as wide as
+        the title up to the maximum tab width (Settings > Window > Dynamic tab width). Longer titles are shortened, the
+        tooltip of the tab shows the full title. 14 in the font of the controls (not the 18 of the header font), like
+        DefaultTabItem.
+    -->
+    <Style x:Key="DragablzTabHeaderTextBlock" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource HeaderTextBlock}">
+        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Control}" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="FontWeight" Value="Normal" />
+        <Setter Property="Width" Value="150" />
+        <Setter Property="TextTrimming" Value="CharacterEllipsis" />
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding Source={x:Static settings:SettingsManager.Current}, Path=Window_DynamicTabWidth}"
+                         Value="True">
+                <Setter Property="Width" Value="Auto" />
+                <Setter Property="MaxWidth"
+                        Value="{Binding Source={x:Static settings:SettingsManager.Current}, Path=Window_MaxTabWidth}" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <!--
+        Parts of a tab header, used by the HeaderItemTemplate of DefaultTabablzControl and by the own tab headers of
+        Remote Desktop, PowerShell, PuTTY, TigerVNC and Web Console (host views and DragablzTabHostWindow, which only
+        differ in their context menu). Change the look of the tabs here.
+    -->
+    <!--
+        Tab (like VS Code): on the tab bar (frame color, see the dockablz:Layout style), separator on the right, subtle
+        background on mouse over. The selected tab has the background of the page and covers the line below the tab bar
+        (the header is drawn above the content of the TabablzControl and overlaps its top border by 1), so it is part of
+        the page.
+    -->
+    <Style x:Key="DragablzTabHeaderBorder" TargetType="{x:Type Border}">
+        <Setter Property="BorderBrush" Value="{DynamicResource Brushes.Surface.Border}" />
+        <Setter Property="BorderThickness" Value="0,0,1,0" />
+        <Setter Property="Background" Value="Transparent" />
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type dragablz:DragablzItem}}, Path=IsMouseOver}" Value="True">
+                <Setter Property="Background" Value="{DynamicResource Brushes.Control.MouseOver}" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type dragablz:DragablzItem}}, Path=IsSelected}" Value="True">
+                <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ThemeBackground}" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <!-- Title: gray, lighter on mouse over, theme foreground when selected -->
+    <Style x:Key="DragablzTabHeaderTitle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DragablzTabHeaderTextBlock}">
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray3}" />
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type dragablz:DragablzItem}}, Path=IsMouseOver}" Value="True">
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray5}" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type dragablz:DragablzItem}}, Path=IsSelected}" Value="True">
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <!-- Close button icon: error color on mouse over -->
+    <Style x:Key="DragablzTabHeaderCloseIcon" TargetType="{x:Type Rectangle}">
+        <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
+                <Setter Property="Fill" Value="{DynamicResource Brushes.Status.Error}" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <!-- Accent line on top of the selected tab (like VS Code) -->
+    <Style x:Key="DragablzTabHeaderAccentLine" TargetType="{x:Type Rectangle}">
+        <Setter Property="Height" Value="2" />
+        <Setter Property="VerticalAlignment" Value="Top" />
+        <Setter Property="IsHitTestVisible" Value="False" />
+        <Setter Property="Fill" Value="Transparent" />
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type dragablz:DragablzItem}}, Path=IsSelected}" Value="True">
+                <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Accent}" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
     <Style TargetType="{x:Type Thumb}" x:Key="InvisibleThumbStyle">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Template">
@@ -57,73 +143,71 @@
     <Style x:Key="DefaultTabablzControl" TargetType="{x:Type dragablz:TabablzControl}"
            BasedOn="{StaticResource MahAppsTabablzControlStyle}">
         <Setter Property="BorderThickness" Value="0,1,0,0" />
-        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Gray8}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource Brushes.Surface.Border}" />
         <Setter Property="ItemContainerStyle" Value="{StaticResource CustomHeaderItemTemplate}" />
         <Setter Property="AdjacentHeaderItemOffset" Value="0" />
         <Setter Property="Margin" Value="0,-2,0,0" />
-        <Setter Property="Background" Value="Transparent" />
-        <Setter Property="EmptyHeaderSizingHint" Value="PreviousTab" />
+        <!-- Page (content) in the background of the box, the tab bar above it shows the frame color of the
+             dockablz:Layout -->
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ThemeBackground}" />
+        <!-- Collapse (not PreviousTab, which keeps the width of the last tab): an empty tab bar (all tabs dragged out,
+             only in the main window - other windows close) would keep an empty tab and the merge hint would start after
+             it. The height of the bar stays: the "+" (HeaderSuffixContent of the host views) is 36 high. -->
+        <Setter Property="EmptyHeaderSizingHint" Value="Collapse" />
+        <!-- A tab dragged out (as a window) can be dropped anywhere on the tab bar of another window of the same tool,
+             not only over the tabs. While it is dragged, the tab bars it can be dropped into show a slot after the last
+             tab (stronger when the cursor is near), like the drop zones of the layout (same gray and opacity, see the
+             DropZone style). No icon: the "+" next to it opens a new tab. -->
+        <Setter Property="MergeTargetArea" Value="HeaderPanel" />
+        <Setter Property="ShowMergeHint" Value="True" />
+        <Setter Property="MergeHintTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <Rectangle Width="120" HorizontalAlignment="Left" Margin="4,4,0,4"
+                               RadiusX="{Binding Source={StaticResource CornerRadius.Control}, Path=TopLeft}"
+                               RadiusY="{Binding Source={StaticResource CornerRadius.Control}, Path=TopLeft}"
+                               Fill="{DynamicResource MahApps.Brushes.ThemeForeground}">
+                        <Rectangle.Style>
+                            <Style TargetType="{x:Type Rectangle}">
+                                <Setter Property="Opacity" Value="0.25" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Path=IsMergeTargetOffered, RelativeSource={RelativeSource AncestorType={x:Type dragablz:TabablzControl}}}" Value="True">
+                                        <Setter Property="Opacity" Value="0.5" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Rectangle.Style>
+                    </Rectangle>
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
         <Setter Property="ContentTemplateSelector" Value="{x:Null}" />
         <Setter Property="HeaderItemTemplate">
             <Setter.Value>
                 <DataTemplate DataType="networkManagerControls:DragablzTabItem">
-                    <Border BorderBrush="{DynamicResource MahApps.Brushes.Gray8}" BorderThickness="0,0,1,0">
-                        <Grid Height="32">
+                    <Border Style="{StaticResource DragablzTabHeaderBorder}">
+                        <Grid Height="36">
                             <Grid.InputBindings>
                                 <MouseBinding Command="dragablz:TabablzControl.CloseItemCommand" Gesture="MiddleClick" />
                             </Grid.InputBindings>
                             <StackPanel Orientation="Horizontal">
                                 <Grid ToolTip="{Binding Header}">
-                                    <TextBlock Text="{Binding Header}" Width="150" Margin="10,0"
-                                               VerticalAlignment="Center">
-                                        <TextBlock.Style>
-                                            <Style TargetType="{x:Type TextBlock}"
-                                                   BasedOn="{StaticResource HeaderTextBlock}">
-                                                <Setter Property="Foreground"
-                                                        Value="{DynamicResource MahApps.Brushes.Gray3}" />
-                                                <Style.Triggers>
-                                                    <DataTrigger
-                                                        Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type dragablz:DragablzItem}}, Path=IsMouseOver}"
-                                                        Value="True">
-                                                        <Setter Property="Foreground"
-                                                                Value="{DynamicResource MahApps.Brushes.Gray5}" />
-                                                    </DataTrigger>
-                                                    <DataTrigger
-                                                        Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type dragablz:DragablzItem}}, Path=IsSelected}"
-                                                        Value="True">
-                                                        <Setter Property="Foreground"
-                                                                Value="{DynamicResource MahApps.Brushes.Accent}" />
-                                                    </DataTrigger>
-                                                </Style.Triggers>
-                                            </Style>
-                                        </TextBlock.Style>
-                                    </TextBlock>
+                                    <TextBlock Text="{Binding Header}" Margin="10,0" Style="{StaticResource DragablzTabHeaderTitle}" />
                                     <Thumb Style="{DynamicResource InvisibleThumbStyle}"
                                            dragablz:DragablzItem.IsCustomThumb="True" />
                                 </Grid>
                                 <Button Style="{StaticResource CleanButton}"
                                         Command="dragablz:TabablzControl.CloseItemCommand"
                                         ToolTip="{x:Static localization:Strings.Close}" Margin="0,0,10,0">
-                                    <Rectangle Width="16" Height="16">
+                                    <Rectangle Width="16" Height="16" Style="{StaticResource DragablzTabHeaderCloseIcon}">
                                         <Rectangle.OpacityMask>
                                             <VisualBrush Stretch="Uniform"
-                                                         Visual="{iconPacks:Material Kind=WindowClose}" />
+                                                         Visual="{icons:Lucide Kind=X}" />
                                         </Rectangle.OpacityMask>
-                                        <Rectangle.Style>
-                                            <Style TargetType="{x:Type Rectangle}">
-                                                <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
-                                                <Style.Triggers>
-                                                    <DataTrigger
-                                                        Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}"
-                                                        Value="True">
-                                                        <Setter Property="Fill" Value="Red" />
-                                                    </DataTrigger>
-                                                </Style.Triggers>
-                                            </Style>
-                                        </Rectangle.Style>
                                     </Rectangle>
                                 </Button>
                             </StackPanel>
+                            <Rectangle Style="{StaticResource DragablzTabHeaderAccentLine}" />
                         </Grid>
                     </Border>
                 </DataTemplate>
@@ -139,4 +223,22 @@
     </Style>
 
     <Style TargetType="{x:Type dragablz:TabablzControl}" BasedOn="{StaticResource DefaultTabablzControl}" />
+
+    <!--
+        Tab bar in the frame color (like VS Code): the layout around the tab controls (tool area of the host views,
+        DragablzTabHostWindow) has the frame color, the content of the tab controls covers it except for the header
+        row - also for split tabs.
+    -->
+    <Style TargetType="{x:Type dockablz:Layout}">
+        <Setter Property="Background" Value="{DynamicResource Brushes.Surface.Frame}" />
+    </Style>
+
+    <!--
+        Drop zones of the layout (split the tabs: top / right / bottom / left) in the same neutral gray as the merge hint
+        in the tab bar (see DefaultTabablzControl): the template of Dragablz draws the shapes in the Foreground (opacity
+        0.25, 0.5 while offered) - the foreground of the theme, set explicitly so both always match. No accent (user).
+    -->
+    <Style TargetType="{x:Type dockablz:DropZone}">
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
+    </Style>
 </ResourceDictionary>

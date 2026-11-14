@@ -1,6 +1,7 @@
 ﻿using DnsClient;
 using Lextm.SharpSnmpLib.Messaging;
 using NETworkManager.Models;
+using NETworkManager.Models.Appearance;
 using NETworkManager.Models.Export;
 using NETworkManager.Models.Network;
 using NETworkManager.Models.PowerShell;
@@ -63,6 +64,9 @@ public static class GlobalStaticConfiguration
     public static int Profile_EncryptionKeySize => 256;
     public static int Profile_EncryptionIterations => 1000000;
 
+    // Window
+    public static int Window_MaxTabWidth => 300;
+
     // Filter for file dialog
     public static string ApplicationFileExtensionFilter => "Application (*.exe)|*.exe";
     public static string PuTTYPrivateKeyFileExtensionFilter => "PuTTY Private Key Files (*.ppk)|*.ppk";
@@ -83,8 +87,13 @@ public static class GlobalStaticConfiguration
 
     // Settings: Appearance
     public static string Appearance_Theme => "Dark";
-    public static string Appearance_Accent => "Lime";
+    // Mint (additional accent, see ThemeVariants): calmer than Lime, better contrast on light backgrounds. Only for new
+    // installations, the accent is saved in the settings.
+    public static string Appearance_Accent => "Mint";
     public static bool Appearance_UseCustomTheme => false;
+    public static AnimationMode Appearance_Animations => AnimationMode.System;
+    // Medium for new installations (subtle, static); saved in the settings
+    public static AccentGlowIntensity Appearance_AccentGlowIntensity => AccentGlowIntensity.Medium;
 
     // Settings: Network
     public static bool Network_AddDNSSuffix => true;

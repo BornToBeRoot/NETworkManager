@@ -3,7 +3,6 @@ using LiveChartsCore.Drawing;
 using LiveChartsCore.Kernel;
 using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore.SkiaSharpView.Painting;
-using LiveChartsCore.SkiaSharpView.Painting.Effects;
 using log4net;
 using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Controls;
@@ -512,6 +511,9 @@ public class WiFiViewModel : ViewModelBase
         // bindings are never null - also if the WiFi API is not available or the access is denied (yet)
         InitializeCharts();
 
+        // Colors of the charts for the new theme (the paints don't follow the theme)
+        AppearanceManager.ThemeResourcesChanged += (_, _) => ApplyChartColors();
+
         // Result view + search
         NetworksView = CollectionViewSource.GetDefaultView(Networks);
         NetworksView.SortDescriptions.Add(new SortDescription(
@@ -972,19 +974,6 @@ public class WiFiViewModel : ViewModelBase
         }
     }
 
-    /// <summary>
-    ///     Color palette used to assign a distinct, deterministic color to each network series.
-    ///     Assigning the stroke explicitly (instead of relying on the LiveCharts2 theme) keeps the
-    ///     legend, the chart and the tooltip in sync.
-    /// </summary>
-    private static readonly SKColor[] ChartPalette =
-    [
-        SKColor.Parse("#1ba1e2"), SKColor.Parse("#a4c400"), SKColor.Parse("#f0a30a"),
-        SKColor.Parse("#e51400"), SKColor.Parse("#6a00ff"), SKColor.Parse("#00aba9"),
-        SKColor.Parse("#d80073"), SKColor.Parse("#60a917"), SKColor.Parse("#fa6800"),
-        SKColor.Parse("#0050ef"), SKColor.Parse("#aa00ff"), SKColor.Parse("#825a2c")
-    ];
-
     // The Y axis is plotted in 0..100 space (signal strength + 100) so the area fill drops to the
     // bottom baseline; the axis labeler converts back to real dBm for display.
     private const double SignalOffset = 100;
@@ -1021,25 +1010,17 @@ public class WiFiViewModel : ViewModelBase
     /// </summary>
     private void InitializeCharts()
     {
-        var labelColor = Application.Current?.TryFindResource("MahApps.Brushes.Gray5") is SolidColorBrush gray5
-            ? new SKColor(gray5.Color.R, gray5.Color.G, gray5.Color.B, gray5.Color.A)
-            : new SKColor(0x68, 0x68, 0x68);
-
-        var separatorColor = Application.Current?.TryFindResource("MahApps.Brushes.Gray8") is SolidColorBrush gray8
-            ? new SKColor(gray8.Color.R, gray8.Color.G, gray8.Color.B, gray8.Color.A)
-            : new SKColor(0x80, 0x80, 0x80);
-
         // (min, max) in display space. The lower bound is extended below the first channel so the
         // left flank of its trapezoid reaches the baseline instead of being clipped. The 5 GHz
         // upper bound is reduced because the 64..100 dead zone is compressed.
-        Chart2Dot4GHz = new WiFiChannelChart(BuildXAxes(-2, 16, ValidChannels2Dot4GHz, WiFiRadio.GHz2dot4, labelColor),
-            BuildYAxes(labelColor, separatorColor), BuildSections());
-        Chart5GHz = new WiFiChannelChart(BuildXAxes(30, 160, ValidChannels5GHz, WiFiRadio.GHz5, labelColor),
-            BuildYAxes(labelColor, separatorColor), BuildSections());
-        Chart6GHzLower = new WiFiChannelChart(BuildXAxes(-6, 128, ValidChannels6GHz, WiFiRadio.GHz6, labelColor),
-            BuildYAxes(labelColor, separatorColor), BuildSections());
-        Chart6GHzUpper = new WiFiChannelChart(BuildXAxes(126, 236, ValidChannels6GHz, WiFiRadio.GHz6, labelColor),
-            BuildYAxes(labelColor, separatorColor), BuildSections());
+        Chart2Dot4GHz = new WiFiChannelChart(BuildXAxes(-2, 16, ValidChannels2Dot4GHz, WiFiRadio.GHz2dot4),
+            BuildYAxes(), BuildSections());
+        Chart5GHz = new WiFiChannelChart(BuildXAxes(30, 160, ValidChannels5GHz, WiFiRadio.GHz5),
+            BuildYAxes(), BuildSections());
+        Chart6GHzLower = new WiFiChannelChart(BuildXAxes(-6, 128, ValidChannels6GHz, WiFiRadio.GHz6),
+            BuildYAxes(), BuildSections());
+        Chart6GHzUpper = new WiFiChannelChart(BuildXAxes(126, 236, ValidChannels6GHz, WiFiRadio.GHz6),
+            BuildYAxes(), BuildSections());
     }
 
     /// <summary>
@@ -1047,15 +1028,14 @@ public class WiFiViewModel : ViewModelBase
     ///     Only channels contained in <paramref name="validChannels" /> are labeled; all other tick
     ///     positions stay blank (see <see cref="WiFiChannelAxis" />).
     /// </summary>
-    private static Axis[] BuildXAxes(double min, double max, HashSet<int> validChannels, WiFiRadio radio,
-        SKColor labelColor)
+    private static Axis[] BuildXAxes(double min, double max, HashSet<int> validChannels, WiFiRadio radio)
     {
         return
         [
             new Axis
             {
                 Name = Strings.Channel,
-                NamePaint = new SolidColorPaint(labelColor),
+                NamePaint = ChartColors.LabelPaint(),
                 NameTextSize = 11,
                 MinLimit = min,
                 MaxLimit = max,
@@ -1069,7 +1049,7 @@ public class WiFiViewModel : ViewModelBase
                 },
                 TextSize = 10,
                 Padding = new Padding(0, 4, 0, 0),
-                LabelsPaint = new SolidColorPaint(labelColor),
+                LabelsPaint = ChartColors.LabelPaint(),
                 // No vertical grid lines (matches the legacy chart).
                 SeparatorsPaint = null
             }
@@ -1079,14 +1059,14 @@ public class WiFiViewModel : ViewModelBase
     /// <summary>
     ///     Builds the Y-axis (signal strength in dBm, -100..0) shared by all three channel charts.
     /// </summary>
-    private static Axis[] BuildYAxes(SKColor labelColor, SKColor separatorColor)
+    private static Axis[] BuildYAxes()
     {
         return
         [
             new Axis
             {
                 Name = Strings.SignalStrength,
-                NamePaint = new SolidColorPaint(labelColor),
+                NamePaint = ChartColors.LabelPaint(),
                 NameTextSize = 11,
                 MinLimit = 0,
                 MaxLimit = 100,
@@ -1096,12 +1076,8 @@ public class WiFiViewModel : ViewModelBase
                 Labeler = value => $"{(int)Math.Round(value) - (int)SignalOffset} dBm",
                 TextSize = 11,
                 Padding = new Padding(4, 0),
-                LabelsPaint = new SolidColorPaint(labelColor),
-                SeparatorsPaint = new SolidColorPaint(separatorColor)
-                {
-                    StrokeThickness = 1,
-                    PathEffect = new DashEffect([10f, 10f])
-                }
+                LabelsPaint = ChartColors.LabelPaint(),
+                SeparatorsPaint = ChartColors.SeparatorPaint()
             }
         ];
     }
@@ -1139,7 +1115,9 @@ public class WiFiViewModel : ViewModelBase
     /// </summary>
     private static (LineSeries<WiFiChannelPoint> Series, WiFiChannelLegendEntry Legend) BuildNetworkSeries(WiFiNetworkInfo network, int colorIndex)
     {
-        var color = ChartPalette[colorIndex % ChartPalette.Length];
+        // Distinct, deterministic color per network (theme-aware, see ChartColors); assigned explicitly instead of the
+        // LiveCharts2 theme so the legend, the chart and the tooltip are in sync
+        var color = ChartColors.GetPaletteColor(colorIndex);
 
         double dbm = network.AvailableNetwork.NetworkRssiInDecibelMilliwatts;
         var center = WiFiChannelAxis.ChannelToPosition(
@@ -1187,14 +1165,54 @@ public class WiFiViewModel : ViewModelBase
             Mapping = (point, _) => new Coordinate(point.ChannelAxis, point.Dbm + SignalOffset),
             GeometrySize = 0,
             LineSmoothness = 0,
-            Stroke = new SolidColorPaint(color) { StrokeThickness = 1.5f },
-            Fill = new SolidColorPaint(color.WithAlpha(0x33))
+            Stroke = ChartColors.LineStroke(color),
+            Fill = NetworkFill(color)
         };
 
-        var wpfColor = Color.FromArgb(color.Alpha, color.Red, color.Green, color.Blue);
-        var legend = new WiFiChannelLegendEntry(new SolidColorBrush(wpfColor), ssid, network.Bssid);
+        var legend = new WiFiChannelLegendEntry(ToBrush(color), ssid, network.Bssid, colorIndex);
 
         return (series, legend);
+    }
+
+    /// <summary>
+    ///     Area of a network (trapezoid).
+    /// </summary>
+    private static SolidColorPaint NetworkFill(SKColor color) => new(color.WithAlpha(0x33));
+
+    /// <summary>
+    ///     Color of a network in the legend.
+    /// </summary>
+    private static SolidColorBrush ToBrush(SKColor color) =>
+        new(Color.FromArgb(color.Alpha, color.Red, color.Green, color.Blue));
+
+    /// <summary>
+    ///     Sets the colors of the channel charts (axes, networks, legend) for the current theme.
+    /// </summary>
+    private void ApplyChartColors()
+    {
+        foreach (var chart in new[] { Chart2Dot4GHz, Chart5GHz, Chart6GHzLower, Chart6GHzUpper })
+        {
+            foreach (var axis in chart.XAxes.Concat(chart.YAxes))
+                ChartColors.ApplyAxisColors(axis);
+
+            var legend = new List<WiFiChannelLegendEntry>();
+
+            for (var i = 0; i < chart.Legend.Length; i++)
+            {
+                var entry = chart.Legend[i];
+                var color = ChartColors.GetPaletteColor(entry.ColorIndex);
+
+                if (i < chart.Series.Length && chart.Series[i] is LineSeries<WiFiChannelPoint> series)
+                {
+                    series.Stroke = ChartColors.LineStroke(color);
+                    series.Fill = NetworkFill(color);
+                }
+
+                legend.Add(entry with { Color = ToBrush(color) });
+            }
+
+            chart.Update(chart.Series, legend);
+        }
     }
 
     /// <summary>

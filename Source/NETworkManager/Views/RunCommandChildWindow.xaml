@@ -12,8 +12,9 @@
                                xmlns:wpfHelpers="clr-namespace:NETworkManager.Utilities.WPF;assembly=NETworkManager.Utilities.WPF"
                                xmlns:simpleChildWindow="clr-namespace:MahApps.Metro.SimpleChildWindow;assembly=MahApps.Metro.SimpleChildWindow"
                                xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
-                               xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+                               xmlns:icons="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls"
                                Style="{StaticResource DefaultChildWindow}"
+                               networkManager:ChildWindowAnimation.Kind="SlideDown"
                                Title="{x:Static localization:Strings.RunCommand}"
                                CloseButtonCommand="{Binding CancelCommand}"
                                AllowMove="False"
@@ -28,30 +29,30 @@
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
         <!-- Like the run command in the title bar -->
         <VisualBrush x:Key="RunCommandInputIcon" Stretch="Uniform"
-                     Visual="{iconPacks:FontAwesome Kind=TerminalSolid}" />
+                     Visual="{icons:Lucide Kind=Terminal}" />
         <VisualBrush x:Key="RunCommandSettingsIcon" Stretch="Uniform"
-                     Visual="{iconPacks:MaterialLight Kind=Cog}" />
+                     Visual="{icons:Lucide Kind=Settings}" />
         <VisualBrush x:Key="RunCommandProfileIcon" Stretch="Uniform"
-                     Visual="{iconPacks:FontAwesome Kind=ServerSolid}" />
+                     Visual="{icons:Lucide Kind=Server}" />
         <VisualBrush x:Key="RunCommandHistoryIcon" Stretch="Uniform"
-                     Visual="{iconPacks:Material Kind=History}" />
+                     Visual="{icons:Lucide Kind=History}" />
         <VisualBrush x:Key="RunCommandTypeIcon" Stretch="Uniform"
-                     Visual="{iconPacks:Material Kind=TagOutline}" />
+                     Visual="{icons:Lucide Kind=Tag}" />
         <VisualBrush x:Key="RunCommandDNSServerIcon" Stretch="Uniform"
-                     Visual="{iconPacks:Material Kind=Dns}" />
+                     Visual="{icons:Lucide Kind=Server}" />
         <VisualBrush x:Key="RunCommandPortProfileIcon" Stretch="Uniform"
-                     Visual="{iconPacks:Material Kind=FormatListBulleted}" />
+                     Visual="{icons:Lucide Kind=List}" />
         <!-- Key of the key hints (e.g. "Enter") -->
         <Style x:Key="RunCommandKeyBorder" TargetType="{x:Type Border}">
-            <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Gray8}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource Brushes.Surface.Border}" />
             <Setter Property="BorderThickness" Value="1" />
-            <Setter Property="CornerRadius" Value="3" />
+            <Setter Property="CornerRadius" Value="{StaticResource CornerRadius.Control}" />
             <Setter Property="Padding" Value="4,0" />
             <Setter Property="Margin" Value="0,0,5,5" />
         </Style>
         <Style x:Key="RunCommandKeyTextBlock" TargetType="{x:Type TextBlock}"
                BasedOn="{StaticResource DefaultTextBlock}">
-            <Setter Property="FontFamily" Value="Consolas" />
+            <Setter Property="FontFamily" Value="{StaticResource Fonts.Family.Mono}" />
             <Setter Property="FontSize" Value="11" />
             <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray5}" />
         </Style>
@@ -75,7 +76,7 @@
         <!-- Input: icon of the recognized command, input and validation -->
         <!-- Bottom border like the search (gray, also with the focus) -->
         <Border Grid.Row="0" BorderThickness="0,0,0,1" Padding="0,0,0,2"
-                BorderBrush="{DynamicResource MahApps.Brushes.Gray8}">
+                BorderBrush="{DynamicResource Brushes.Surface.Border}">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
@@ -104,7 +105,7 @@
                 </Rectangle>
                 <TextBox x:Name="TextBoxInput" Grid.Column="1"
                          FontSize="18"
-                         FontFamily="Consolas"
+                         FontFamily="{StaticResource Fonts.Family.Mono}"
                          Text="{Binding Input, UpdateSourceTrigger=PropertyChanged}"
                          mah:TextBoxHelper.Watermark="{Binding Watermark}"
                          PreviewKeyDown="TextBoxInput_OnPreviewKeyDown">
@@ -127,10 +128,10 @@
                 <Rectangle Grid.Column="2"
                            Margin="5,0"
                            Width="16" Height="16"
-                           Fill="#badc58"
+                           Fill="{DynamicResource Brushes.Status.Success}"
                            Visibility="{Binding IsValid, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
                     <Rectangle.OpacityMask>
-                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=CheckCircleOutline}" />
+                        <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=CircleCheck}" />
                     </Rectangle.OpacityMask>
                 </Rectangle>
                 <Rectangle x:Name="RectangleInvalid" Grid.Column="2"
@@ -141,7 +142,7 @@
                            Visibility="{Binding IsInvalid, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
                     <!-- Circle like the check (the style has an octagon) -->
                     <Rectangle.OpacityMask>
-                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=AlertCircleOutline}" />
+                        <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=CircleAlert}" />
                     </Rectangle.OpacityMask>
                     <Rectangle.ToolTip>
                         <ToolTip x:Name="ToolTipInvalid" Content="{Binding ValidationMessage}"
@@ -164,7 +165,7 @@
             <ItemsControl.ItemTemplate>
                 <DataTemplate DataType="{x:Type networkManager:RunCommandHintPart}">
                     <TextBlock Text="{Binding Text}"
-                               FontFamily="Consolas"
+                               FontFamily="{StaticResource Fonts.Family.Mono}"
                                Margin="0,0,7,0">
                         <TextBlock.Style>
                             <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DefaultTextBlock}">
@@ -196,7 +197,7 @@
             <ItemsControl.ItemTemplate>
                 <DataTemplate DataType="{x:Type networkManager:RunCommandChip}">
                     <Border Background="{DynamicResource MahApps.Brushes.Gray10}"
-                            CornerRadius="3"
+                            CornerRadius="{StaticResource CornerRadius.Control}"
                             Padding="6,2"
                             Margin="0,0,5,5">
                         <StackPanel Orientation="Horizontal">
@@ -305,19 +306,19 @@
                                             <!-- Commands are shown in the font of the input -->
                                             <DataTrigger Binding="{Binding Kind}"
                                                          Value="{x:Static networkManager:RunCommandSuggestionKind.History}">
-                                                <Setter Property="FontFamily" Value="Consolas" />
+                                                <Setter Property="FontFamily" Value="{StaticResource Fonts.Family.Mono}" />
                                             </DataTrigger>
                                             <DataTrigger Binding="{Binding Kind}"
                                                          Value="{x:Static networkManager:RunCommandSuggestionKind.Target}">
-                                                <Setter Property="FontFamily" Value="Consolas" />
+                                                <Setter Property="FontFamily" Value="{StaticResource Fonts.Family.Mono}" />
                                             </DataTrigger>
                                             <DataTrigger Binding="{Binding Kind}"
                                                          Value="{x:Static networkManager:RunCommandSuggestionKind.Clipboard}">
-                                                <Setter Property="FontFamily" Value="Consolas" />
+                                                <Setter Property="FontFamily" Value="{StaticResource Fonts.Family.Mono}" />
                                             </DataTrigger>
                                             <DataTrigger Binding="{Binding Kind}"
                                                          Value="{x:Static networkManager:RunCommandSuggestionKind.Example}">
-                                                <Setter Property="FontFamily" Value="Consolas" />
+                                                <Setter Property="FontFamily" Value="{StaticResource Fonts.Family.Mono}" />
                                             </DataTrigger>
                                         </Style.Triggers>
                                     </Style>
@@ -332,7 +333,7 @@
                         </StackPanel>
                         <TextBlock Grid.Column="4"
                                    Text="{Binding Info}"
-                                   FontFamily="Consolas"
+                                   FontFamily="{StaticResource Fonts.Family.Mono}"
                                    Foreground="{DynamicResource MahApps.Brushes.Gray5}"
                                    VerticalAlignment="Center"
                                    MaxWidth="{Binding InfoMaxWidth, RelativeSource={RelativeSource AncestorType={x:Type views:RunCommandChildWindow}}}"
@@ -377,7 +378,7 @@
                             <!-- Like the close button of the Ping Monitor (red on hover) -->
                             <Rectangle Width="16" Height="16">
                                 <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Fill" Visual="{iconPacks:Material Kind=WindowClose}" />
+                                    <VisualBrush Stretch="Fill" Visual="{icons:Lucide Kind=X}" />
                                 </Rectangle.OpacityMask>
                                 <Rectangle.Style>
                                     <Style TargetType="{x:Type Rectangle}">
@@ -386,7 +387,7 @@
                                             <DataTrigger
                                                 Binding="{Binding IsMouseOver, RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
                                                 Value="True">
-                                                <Setter Property="Fill" Value="Red" />
+                                                <Setter Property="Fill" Value="{DynamicResource Brushes.Status.Error}" />
                                             </DataTrigger>
                                         </Style.Triggers>
                                     </Style>

@@ -131,6 +131,22 @@ public class IPGeolocationViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    ///     Level of the status message (icon and color, see <see cref="StatusMessageText" />).
+    /// </summary>
+    public StatusLevel StatusMessageLevel
+    {
+        get;
+        private set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
     #endregion
 
     #region Contructor, load settings
@@ -243,6 +259,7 @@ public class IPGeolocationViewModel : ViewModelBase
                 Log.Error($"ip-api.com error: {result.ErrorMessage}, error code: {result.ErrorCode}");
 
                 StatusMessage = $"ip-api.com: {result.ErrorMessage}";
+                StatusMessageLevel = StatusLevel.Error;
                 IsStatusMessageDisplayed = true;
 
                 return;
@@ -254,6 +271,7 @@ public class IPGeolocationViewModel : ViewModelBase
 
                 StatusMessage =
                     $"ip-api.com {string.Format(Strings.RateLimitReachedTryAgainInXSeconds, result.RateLimitRemainingTime)}";
+                StatusMessageLevel = StatusLevel.Warning;
                 IsStatusMessageDisplayed = true;
 
                 return;
@@ -268,6 +286,7 @@ public class IPGeolocationViewModel : ViewModelBase
         catch (Exception ex)
         {
             StatusMessage = ex.Message;
+            StatusMessageLevel = StatusLevel.Error;
             IsStatusMessageDisplayed = true;
         }
 

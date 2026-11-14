@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using MahApps.Metro.IconPacks;
+using NETworkManager.Controls;
 using NETworkManager.Models;
 
 namespace NETworkManager.Profiles;
@@ -10,7 +10,7 @@ public static class GroupViewManager
     public static List<GroupViewInfo> List =>
     [
         // General
-        new GroupViewInfo(GroupViewName.General, new PackIconModern { Kind = PackIconModernKind.Box }),
+        new GroupViewInfo(GroupViewName.General, new LucideIcon { Kind = LucideIconKind.Box }),
 
         // Applications
         new GroupViewInfo(GroupViewName.IPScanner, ApplicationManager.GetIcon(ApplicationName.IPScanner)),
