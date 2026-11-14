@@ -465,6 +465,13 @@
                                     <ContentControl Grid.Column="3" Grid.Row="0" Width="24" Height="24" Content="{Binding}" Focusable="False" IsTabStop="False">
                                         <ContentControl.Style>
                                             <Style TargetType="{x:Type ContentControl}">
+                                                <!-- Default for pages without validation (e.g. PowerShell in the group dialog): no marker -
+                                                     without a template, the type name of the item would be shown -->
+                                                <Setter Property="ContentTemplate">
+                                                    <Setter.Value>
+                                                        <DataTemplate />
+                                                    </Setter.Value>
+                                                </Setter>
                                                 <Style.Triggers>
                                                     <DataTrigger Binding="{Binding (profiles:GroupViewInfo.Name)}" Value="{x:Static profiles:GroupViewName.General}">
                                                         <Setter Property="ContentTemplate" Value="{StaticResource PageErrorTemplate.General}" />
