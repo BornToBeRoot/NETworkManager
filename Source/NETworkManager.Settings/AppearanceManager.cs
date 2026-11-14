@@ -29,12 +29,138 @@ public static class AppearanceManager
     };
 
     /// <summary>
+    ///     Overrides of the applied theme (copy of <see cref="LightThemeOverrideDictionary" /> /
+    ///     <see cref="DarkThemeOverrideDictionary" />, tinted for an additional theme).
+    /// </summary>
+    private static ResourceDictionary _themeOverrideDictionary;
+
+    /// <summary>
     ///     Dictionary to override some brushes for the dark theme.
     /// </summary>
     private static readonly ResourceDictionary DarkThemeOverrideDictionary = new()
     {
 
     };
+
+    /// <summary>
+    ///     Resource key of the background of a control (e.g. button, ComboBox) when the mouse is over it.
+    /// </summary>
+    public const string ControlMouseOverBrushKey = "Brushes.Control.MouseOver";
+
+    /// <summary>
+    ///     Resource key of the background of a control (e.g. button, ComboBox) while it is pressed.
+    /// </summary>
+    public const string ControlPressedBrushKey = "Brushes.Control.Pressed";
+
+    /// <summary>
+    ///     Resource key of the background of a (secondary) button, e.g. "Export...", "Cancel".
+    /// </summary>
+    public const string ButtonBackgroundBrushKey = "Brushes.Button.Background";
+
+    /// <summary>
+    ///     Resource key of the background of a (secondary) button when the mouse is over it.
+    /// </summary>
+    public const string ButtonMouseOverBrushKey = "Brushes.Button.MouseOver";
+
+    /// <summary>
+    ///     Resource key of the background of a (secondary) button while it is pressed.
+    /// </summary>
+    public const string ButtonPressedBrushKey = "Brushes.Button.Pressed";
+
+    /// <summary>
+    ///     Key of the layer that fades in on mouse over above the background of a (secondary) button.
+    /// </summary>
+    public const string ButtonMouseOverOverlayBrushKey = "Brushes.Button.MouseOverOverlay";
+
+    /// <summary>
+    ///     Key of the layer that fades in while a button / control is pressed (above the mouse over layer).
+    /// </summary>
+    public const string ControlPressedOverlayBrushKey = "Brushes.Control.PressedOverlay";
+
+    /// <summary>
+    ///     Resource key of the background of the main window frame around and between the boxes (navigation, main view,
+    ///     profiles).
+    /// </summary>
+    public const string SurfaceFrameBrushKey = "Brushes.Surface.Frame";
+
+    /// <summary>
+    ///     Resource key of the border of the boxes (main view, profiles, ...) and cards (e.g. Dashboard widgets).
+    /// </summary>
+    public const string SurfaceBorderBrushKey = "Brushes.Surface.Border";
+
+    /// <summary>
+    ///     Resource key of the background of the selected item of the navigation (tint of the accent).
+    /// </summary>
+    public const string NavigationSelectedBrushKey = "Brushes.Navigation.Selected";
+
+    /// <summary>
+    ///     Resource key of the background of the windows with a frame (FrameWindow: main window, tab window, status
+    ///     window; window, title bar, navigation): the frame color, with
+    ///     <see cref="SettingsInfo.Appearance_AccentGlowIntensity" /> a subtle glow of the accent in the top left corner.
+    /// </summary>
+    public const string SurfaceWindowBrushKey = "Brushes.Surface.Window";
+
+    /// <summary>
+    ///     Resource key of the background of an inactive window (half of the glow), see <see cref="SurfaceWindowBrushKey" />.
+    /// </summary>
+    public const string SurfaceWindowInactiveBrushKey = "Brushes.Surface.Window.Inactive";
+
+    /// <summary>
+    ///     Background of the consoles (PuTTY, PowerShell): the background of the boxes of the current theme.
+    /// </summary>
+    public static (byte R, byte G, byte B) ConsoleBackground { get; private set; } = (0x25, 0x25, 0x25);
+
+    /// <summary>
+    ///     Text of the consoles (slightly muted foreground of the current theme).
+    /// </summary>
+    public static (byte R, byte G, byte B) ConsoleForeground { get; private set; } = (0xBB, 0xBB, 0xBB);
+
+    /// <summary>
+    ///     Bold text of the consoles (foreground of the current theme).
+    /// </summary>
+    public static (byte R, byte G, byte B) ConsoleBoldForeground { get; private set; } = (0xFF, 0xFF, 0xFF);
+
+    /// <summary>
+    ///     Raised after a theme change that changed the console colors, when all resources are set (to update the
+    ///     profiles of PuTTY / PowerShell).
+    /// </summary>
+    public static event EventHandler ConsoleColorsChanged;
+
+    /// <summary>
+    ///     Raised after the resources of a new theme are applied (see <see cref="ApplyThemeResources" />), e.g. to
+    ///     update colors that are not taken from a <c>DynamicResource</c> (charts).
+    /// </summary>
+    public static event EventHandler ThemeResourcesChanged;
+
+    private static (byte R, byte G, byte B) ToRgb(Color color) => (color.R, color.G, color.B);
+
+    private static Color _frameColor = Colors.White;
+    private static Color _accentColor = Colors.Gray;
+
+    /// <summary>
+    ///     Resource key of the background of a selected row (data grid) when the mouse is over it.
+    /// </summary>
+    public const string DataGridSelectionMouseOverBrushKey = "Brushes.DataGrid.Selection.MouseOver";
+
+    /// <summary>
+    ///     Resource key of the border of an input (e.g. TextBox, ComboBox) when the mouse is over it.
+    /// </summary>
+    public const string ControlBorderMouseOverBrushKey = "Brushes.Control.Border.MouseOver";
+
+    /// <summary>
+    ///     Resource key of the status color "success" (e.g. host up, port open, firewall rule allows).
+    /// </summary>
+    public const string StatusSuccessBrushKey = "Brushes.Status.Success";
+
+    /// <summary>
+    ///     Resource key of the status color "warning" (e.g. changed since the last scan, warning icon).
+    /// </summary>
+    public const string StatusWarningBrushKey = "Brushes.Status.Warning";
+
+    /// <summary>
+    ///     Resource key of the status color "error" (e.g. host down, port closed, error icon, validation error).
+    /// </summary>
+    public const string StatusErrorBrushKey = "Brushes.Status.Error";
 
     /// <summary>
     ///     Name of the folder inside the application directory where the custom themes are stored.
@@ -55,6 +181,20 @@ public static class AppearanceManager
     ///     List who contains all MahApps.Metro accents.
     /// </summary>
     public static List<AccentColorInfo> Accents { get; set; }
+
+    /// <summary>
+    ///     Whether animations are shown (e.g. when a dialog is opened or closed): the system-wide policy
+    ///     (<see cref="PolicyInfo.Appearance_Animations" />), otherwise the setting; <see cref="AnimationMode.System" />
+    ///     follows the Windows setting "Animation effects". Read each time an animation starts, changes apply
+    ///     immediately.
+    /// </summary>
+    public static bool AnimationsEnabled =>
+        PolicyManager.Current?.Appearance_Animations ?? SettingsManager.Current.Appearance_Animations switch
+        {
+            AnimationMode.On => true,
+            AnimationMode.Off => false,
+            _ => SystemParameters.ClientAreaAnimation
+        };
     #endregion
 
     #region Constructor
@@ -63,16 +203,22 @@ public static class AppearanceManager
     /// </summary>
     static AppearanceManager()
     {
+        // Themes of MahApps (Light, Dark) and the additional themes (Black, Midnight, ...), created when used; sorted
+        // from light to dark (by the brightness of the background), so the light and dark themes are next to each other
         Themes = [.. ThemeManager.Current.Themes
             .GroupBy(x => x.BaseColorScheme)
             .Select(x => x.First())
             .Select(x => new ThemeColorInfo
-            { Name = x.BaseColorScheme, Color = x.Resources["MahApps.Brushes.ThemeBackground"] as Brush })];
+            { Name = x.BaseColorScheme, Color = x.Resources["MahApps.Brushes.ThemeBackground"] as Brush })
+            .Concat(ThemeVariants.Themes.Select(x => new ThemeColorInfo { Name = x.Name, Color = CreateFrozenBrush(x.Background, 1) }))
+            .OrderByDescending(x => x.Color is SolidColorBrush { Color: var color } ? ThemeVariants.Luminance(color) : 0)];
 
+        // Accents of MahApps and the additional accents (Sky, Ocean, ...), sorted by name
         Accents = [.. ThemeManager.Current.Themes
             .GroupBy(x => x.ColorScheme)
-            .OrderBy(x => x.Key)
-            .Select(x => new AccentColorInfo { Name = x.Key, Color = x.First().ShowcaseBrush })];
+            .Select(x => new AccentColorInfo { Name = x.Key, Color = x.First().ShowcaseBrush })
+            .Concat(ThemeVariants.Accents.Select(x => new AccentColorInfo { Name = x.Name, Color = CreateFrozenBrush(x.Color, 1) }))
+            .OrderBy(x => x.Name)];
 
         ThemeManager.Current.ThemeChanged += Current_ThemeChanged;
 
@@ -99,6 +245,39 @@ public static class AppearanceManager
     }
 
     /// <summary>
+    ///     Theme whose resources were applied last (see <see cref="ApplyThemeResources" />).
+    /// </summary>
+    private static Theme _appliedTheme;
+
+    /// <summary>
+    ///     Apply the resources computed from the theme (brushes of controls, surfaces, status colors, light / dark
+    ///     overrides). Called on every theme change and after changing the theme: ControlzEx doesn't raise
+    ///     <see cref="ThemeManager.ThemeChanged" /> if the theme is already applied (e.g. at startup with the theme merged
+    ///     in App.xaml), so the resources are applied directly; the same theme is applied only once.
+    /// </summary>
+    /// <param name="theme">Theme that was applied.</param>
+    private static void ApplyThemeResources(Theme theme)
+    {
+        if (theme == null || ReferenceEquals(theme, _appliedTheme))
+            return;
+
+        _appliedTheme = theme;
+
+        var consoleColors = (ConsoleBackground, ConsoleForeground, ConsoleBoldForeground);
+
+        ApplyControlStateBrushes(theme);
+        ApplyStatusBrushes(theme);
+        ApplyCustomThemeFixes(theme);
+
+        // After all resources are applied: a handler that fails can't leave the theme half applied
+        ThemeResourcesChanged?.Invoke(null, EventArgs.Empty);
+
+        // Only if they changed (not e.g. with another accent): the profiles are written to the registry
+        if (consoleColors != (ConsoleBackground, ConsoleForeground, ConsoleBoldForeground))
+            ConsoleColorsChanged?.Invoke(null, EventArgs.Empty);
+    }
+
+    /// <summary>
     ///     Method to load the custom themes from a folder into the <see cref="ThemeManager" />.
     /// </summary>
     private static void LoadCustomThemes()
@@ -119,12 +298,91 @@ public static class AppearanceManager
     }
 
     /// <summary>
+    ///     Amount of the accent in the glow (0 = off).
+    /// </summary>
+    private static double GetAccentGlowAmount() => SettingsManager.Current?.Appearance_AccentGlowIntensity switch
+    {
+        AccentGlowIntensity.Subtle => 0.06,
+        AccentGlowIntensity.Medium => 0.10,
+        AccentGlowIntensity.Strong => 0.15,
+        _ => 0
+    };
+
+    /// <summary>
+    ///     Sets the background of the main window (<see cref="SurfaceWindowBrushKey" />): the frame color, or with the
+    ///     accent glow (Settings > Appearance) a radial gradient from 6 / 10 / 15 % of the accent (intensity) in the top
+    ///     left corner to the frame color (about 700 x 500 px). Absolute coordinates: the window, the title bar and the navigation (all
+    ///     starting near the top left corner of the window) show one continuous gradient. Called on every theme change
+    ///     and when the setting is changed.
+    /// </summary>
+    public static void ApplyWindowBrush()
+    {
+        var amount = GetAccentGlowAmount();
+
+        var resources = System.Windows.Application.Current.Resources;
+
+        resources[SurfaceWindowBrushKey] = CreateWindowBrush(amount);
+
+        // Inactive window: half of the glow (like the title bar of an inactive window in Windows)
+        resources[SurfaceWindowInactiveBrushKey] = CreateWindowBrush(amount / 2);
+    }
+
+    /// <summary>
+    ///     The frame color, with a glow of the accent (amount > 0) in the top left corner.
+    /// </summary>
+    private static Brush CreateWindowBrush(double amount)
+    {
+        if (amount <= 0)
+            return CreateFrozenBrush(_frameColor, 1);
+
+        var gradient = new RadialGradientBrush
+        {
+            MappingMode = BrushMappingMode.Absolute,
+            Center = new System.Windows.Point(0, 0),
+            GradientOrigin = new System.Windows.Point(0, 0),
+            RadiusX = 700,
+            RadiusY = 500
+        };
+
+        gradient.GradientStops.Add(new GradientStop(ThemeVariants.Blend(_frameColor, _accentColor, amount), 0));
+        gradient.GradientStops.Add(new GradientStop(_frameColor, 1));
+        gradient.Freeze();
+
+        return gradient;
+    }
+
+    /// <summary>
+    ///     Theme of MahApps (always available) if neither the theme nor the default theme can be applied.
+    /// </summary>
+    private const string FallbackTheme = "Dark.Teal";
+
+    /// <summary>
+    ///     <see langword="true" /> if the theme exists or could be created (additional themes / accents).
+    /// </summary>
+    private static bool IsAvailable(string name) =>
+        ThemeVariants.EnsureTheme(name) && ThemeManager.Current.GetTheme(name) != null;
+
+    /// <summary>
     ///     Method to change the application theme (and accent).
     /// </summary>
     /// <param name="name">Theme name as "theme.accent" to apply.</param>
     public static void ChangeTheme(string name)
     {
-        ThemeManager.Current.ChangeTheme(System.Windows.Application.Current, name);
+        // Additional themes / accents are created when they are used; if that fails (or the theme is unknown), fall back
+        // to the default theme instead of an exception - and if the default (an additional accent) can't be created
+        // either, to a theme of MahApps
+        if (!IsAvailable(name))
+        {
+            name = $"{GlobalStaticConfiguration.Appearance_Theme}.{GlobalStaticConfiguration.Appearance_Accent}";
+
+            if (!IsAvailable(name))
+                name = FallbackTheme;
+        }
+
+        var theme = ThemeManager.Current.ChangeTheme(System.Windows.Application.Current, name);
+
+        // Also if ThemeChanged wasn't raised (theme already applied)
+        ApplyThemeResources(theme);
     }
 
     /// <summary>
@@ -138,34 +396,202 @@ public static class AppearanceManager
     }
 
     /// <summary>
-    /// 
+    ///     Set the backgrounds of controls (e.g. icon buttons, ComboBox) for mouse over and pressed, the backgrounds of
+    ///     (secondary) buttons, the frame of the window and the border of inputs for mouse over: the foreground color of
+    ///     the theme with a low opacity, a subtle tint in every theme (also custom themes) instead of the light gray of
+    ///     MahApps (Gray9, Gray7, Gray5), which stands out in the dark theme.
     /// </summary>
-    /// <param name="theme"></param>
-    private static void ApplyCustomThemeFixes(string theme)
+    /// <param name="theme">Theme that was applied.</param>
+    private static void ApplyControlStateBrushes(Theme theme)
     {
-        // Don't apply on custom themes (only built-in light/dark themes)
-        if (CustomThemes.Any(x => x.Name.Equals(theme, StringComparison.OrdinalIgnoreCase)))
+        var foreground = theme.Resources["MahApps.Colors.ThemeForeground"] is Color color ? color : Colors.Gray;
+
+        var appResources = System.Windows.Application.Current.Resources;
+
+        appResources[ControlMouseOverBrushKey] = CreateFrozenBrush(foreground, 0.08);
+        appResources[ControlPressedBrushKey] = CreateFrozenBrush(foreground, 0.12);
+        appResources[ControlBorderMouseOverBrushKey] = CreateFrozenBrush(foreground, 0.35);
+
+        appResources[ButtonBackgroundBrushKey] = CreateFrozenBrush(foreground, 0.06);
+        appResources[ButtonMouseOverBrushKey] = CreateFrozenBrush(foreground, 0.10);
+        appResources[ButtonPressedBrushKey] = CreateFrozenBrush(foreground, 0.14);
+
+        // Layers above the background of the buttons that fade in (DefaultButton): on the button background (6 %) the
+        // mouse over layer gives 10 %, with the pressed layer 14 % (on a transparent icon button with the 8 % mouse
+        // over layer about 12 %) - the same colors as the backgrounds above
+        appResources[ButtonMouseOverOverlayBrushKey] = CreateFrozenBrush(foreground, 1 - 0.90 / 0.94);
+        appResources[ControlPressedOverlayBrushKey] = CreateFrozenBrush(foreground, 1 - 0.86 / 0.90);
+
+        // Opaque (window background) around the boxes (theme background): the boxes look raised on the frame like in
+        // Visual Studio / Windows 11. Dark: the background 25 % darker (MahApps dark: #1C1C1C frame, #252525 box);
+        // light: 4 % of the foreground on the background (light gray frame, white boxes).
+        var background = theme.Resources["MahApps.Colors.ThemeBackground"] is Color backgroundColor
+            ? backgroundColor
+            : Colors.White;
+
+        // Additional themes can have an own frame (e.g. the light blue-gray of Mist)
+        var frame = ThemeVariants.GetFrame(theme) ?? (ThemeVariants.IsDark(theme)
+            ? ThemeVariants.Blend(background, Colors.Black, 0.25)
+            : ThemeVariants.Blend(background, foreground, 0.04));
+
+        appResources[SurfaceFrameBrushKey] = CreateFrozenBrush(frame, 1);
+
+        // Border of the boxes and cards: a low opacity of the foreground (softer than Gray8 in the light theme, the
+        // contrast comes from the frame)
+        appResources[SurfaceBorderBrushKey] = CreateFrozenBrush(foreground, 0.10);
+
+        // Border of submenus (MahApps), like the context menus and the other surfaces
+        appResources["MahApps.Brushes.SubMenu.Border"] = appResources[SurfaceBorderBrushKey];
+
+        // Selected item of the navigation: a light tint of the accent (mouse over stays the neutral tint)
+        var accent = theme.Resources["MahApps.Colors.Accent"] is Color accentColor ? accentColor : Colors.Gray;
+        appResources[NavigationSelectedBrushKey] = CreateFrozenBrush(accent, 0.15);
+
+        _frameColor = frame;
+        _accentColor = accent;
+        ApplyWindowBrush();
+
+        // Consoles (PuTTY, PowerShell): background of the box around them, the text a bit muted (like before:
+        // #BBBBBB on #252525), bold text in the foreground of the theme
+        ConsoleBackground = ToRgb(background);
+        ConsoleForeground =
+            ToRgb(ThemeVariants.Blend(background, foreground, ThemeVariants.IsDark(theme) ? 0.75 : 0.88));
+        ConsoleBoldForeground = ToRgb(foreground);
+
+        ApplyDataGridBrushes(theme, foreground);
+        ApplyToggleSwitchDisabledBrushes(theme);
+    }
+
+    /// <summary>
+    ///     Disabled toggle switches keep their normal colors (MahApps: gray) and are dimmed by the style
+    ///     (<c>DefaultToggleSwitch</c>), like the inputs and buttons. The template of MahApps uses the disabled brushes
+    ///     via DynamicResource, so they are replaced by the normal brushes of the theme.
+    /// </summary>
+    /// <param name="theme">Theme that was applied.</param>
+    private static void ApplyToggleSwitchDisabledBrushes(Theme theme)
+    {
+        var appResources = System.Windows.Application.Current.Resources;
+
+        foreach (var name in ToggleSwitchBrushNames)
+        {
+            var key = $"MahApps.Brushes.ToggleSwitch.{name}";
+
+            if (theme.Resources[key] is Brush brush)
+                appResources[$"{key}Disabled"] = brush;
+        }
+    }
+
+    /// <summary>
+    ///     Brushes of the toggle switch (MahApps) that have a disabled variant (<c>...Disabled</c>).
+    /// </summary>
+    private static readonly string[] ToggleSwitchBrushNames =
+    [
+        "ContainerBackground", "ContentForeground", "HeaderForeground", "FillOff", "FillOn", "StrokeOff", "StrokeOn",
+        "KnobFillOff", "KnobFillOn"
+    ];
+
+    /// <summary>
+    ///     Override the selection brushes of the data grids (MahApps uses them via DynamicResource): a tint of the accent
+    ///     color with the normal text instead of the accent color with white text, a neutral tint on mouse over instead
+    ///     of the accent color and no accent border around the selected row.
+    /// </summary>
+    /// <param name="theme">Theme that was applied.</param>
+    /// <param name="foreground">Foreground color of the theme.</param>
+    private static void ApplyDataGridBrushes(Theme theme, Color foreground)
+    {
+        var accent = theme.Resources["MahApps.Colors.Accent"] is Color color ? color : Colors.Gray;
+
+        var appResources = System.Windows.Application.Current.Resources;
+
+        var foregroundBrush = CreateFrozenBrush(foreground, 1);
+        var transparentBrush = CreateFrozenBrush(Colors.Transparent, 1);
+
+        appResources["MahApps.Brushes.DataGrid.Selection.Background"] = CreateFrozenBrush(accent, 0.30);
+        appResources["MahApps.Brushes.DataGrid.Selection.Background.Inactive"] = CreateFrozenBrush(accent, 0.20);
+        appResources["MahApps.Brushes.DataGrid.Selection.Background.MouseOver"] = CreateFrozenBrush(foreground, 0.08);
+        appResources[DataGridSelectionMouseOverBrushKey] = CreateFrozenBrush(accent, 0.38);
+
+        appResources["MahApps.Brushes.DataGrid.Selection.BorderBrush"] = transparentBrush;
+        appResources["MahApps.Brushes.DataGrid.Selection.BorderBrush.Inactive"] = transparentBrush;
+        appResources["MahApps.Brushes.DataGrid.Selection.BorderBrush.MouseOver"] = transparentBrush;
+
+        appResources["MahApps.Brushes.DataGrid.Selection.Text"] = foregroundBrush;
+        appResources["MahApps.Brushes.DataGrid.Selection.Text.Inactive"] = foregroundBrush;
+        appResources["MahApps.Brushes.DataGrid.Selection.Text.MouseOver"] = foregroundBrush;
+    }
+
+    /// <summary>
+    ///     Set the status colors (success, warning, error) for a dark or light theme (also custom themes, based on their
+    ///     base color scheme). The dark colors are the original colors of the application (error brighter, the dark red
+    ///     was hard to read as thin icon lines on dark backgrounds), the light ones are darker to be readable on a white
+    ///     background (contrast ≥ 4:1).
+    /// </summary>
+    /// <param name="theme">Theme that was applied.</param>
+    private static void ApplyStatusBrushes(Theme theme)
+    {
+        var isDark = ThemeVariants.IsDark(theme);
+
+        var appResources = System.Windows.Application.Current.Resources;
+
+        appResources[StatusSuccessBrushKey] = CreateFrozenBrush(isDark ? "#badc58" : "#558b16");
+        appResources[StatusWarningBrushKey] = CreateFrozenBrush(isDark ? "#f1b856" : "#b06d00");
+        appResources[StatusErrorBrushKey] = CreateFrozenBrush(isDark ? "#e5605a" : "#b95353");
+    }
+
+    /// <summary>
+    ///     Create a frozen brush from a color string (e.g. "#badc58").
+    /// </summary>
+    /// <param name="color">Color as string.</param>
+    /// <returns>Frozen brush.</returns>
+    private static SolidColorBrush CreateFrozenBrush(string color)
+    {
+        return CreateFrozenBrush((Color)ColorConverter.ConvertFromString(color), 1);
+    }
+
+    /// <summary>
+    ///     Create a frozen brush with the given color and opacity.
+    /// </summary>
+    /// <param name="color">Color of the brush.</param>
+    /// <param name="opacity">Opacity of the brush (0 - 1).</param>
+    /// <returns>Frozen brush.</returns>
+    private static SolidColorBrush CreateFrozenBrush(Color color, double opacity)
+    {
+        var brush = new SolidColorBrush(color) { Opacity = opacity };
+        brush.Freeze();
+
+        return brush;
+    }
+
+    /// <summary>
+    ///     Apply the brush overrides of the built-in light / dark theme (not for custom themes).
+    /// </summary>
+    /// <param name="theme">Theme that was applied.</param>
+    private static void ApplyCustomThemeFixes(Theme theme)
+    {
+        // Don't apply on custom themes (only built-in and additional themes)
+        if (CustomThemes.Any(x => x.Name.Equals(theme.Name, StringComparison.OrdinalIgnoreCase)))
             return;
 
         // Get application resources
         var appResources = System.Windows.Application.Current.Resources;
 
-        // Remove any existing theme overrides
-        appResources.MergedDictionaries.Remove(LightThemeOverrideDictionary);
-        appResources.MergedDictionaries.Remove(DarkThemeOverrideDictionary);
+        // Remove the overrides of the previous theme
+        if (_themeOverrideDictionary != null)
+            appResources.MergedDictionaries.Remove(_themeOverrideDictionary);
 
+        // Light or dark by the background (also the additional themes, e.g. Mist, Midnight), not by the name. The grays
+        // are tinted like the other grays of an additional theme (e.g. the blue-gray of Mist)
+        var source = ThemeVariants.IsDark(theme) ? DarkThemeOverrideDictionary : LightThemeOverrideDictionary;
 
-        // Theme name is in format "theme.accent"
-        switch (theme.ToLowerInvariant().Split('.')[0])
+        _themeOverrideDictionary = new ResourceDictionary();
+
+        foreach (var key in source.Keys)
         {
-            case "light":
-                appResources.MergedDictionaries.Add(LightThemeOverrideDictionary);
-                break;
-
-            case "dark":
-                appResources.MergedDictionaries.Add(DarkThemeOverrideDictionary);
-                break;
+            if (source[key] is SolidColorBrush brush)
+                _themeOverrideDictionary[key] = CreateFrozenBrush(ThemeVariants.TintGray(brush.Color, theme), 1);
         }
+
+        appResources.MergedDictionaries.Add(_themeOverrideDictionary);
 
         // Refresh UI
         foreach (Window window in System.Windows.Application.Current.Windows)
@@ -180,7 +606,7 @@ public static class AppearanceManager
     #region Events
     private static void Current_ThemeChanged(object sender, ThemeChangedEventArgs e)
     {
-        ApplyCustomThemeFixes(e.NewTheme.Name);
+        ApplyThemeResources(e.NewTheme);
     }
     #endregion
 }

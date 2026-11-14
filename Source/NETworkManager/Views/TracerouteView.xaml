@@ -6,7 +6,7 @@
              xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
              xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:validators="clr-namespace:NETworkManager.Validators;assembly=NETworkManager.Validators"
-             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:icons="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls"
              xmlns:mahAppsControls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
              xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
              xmlns:network="clr-namespace:NETworkManager.Models.Network;assembly=NETworkManager.Models"
@@ -67,7 +67,7 @@
                 <ComboBox Grid.Column="2" Grid.Row="0"
                           x:Name="TextBoxHost"
                           ItemsSource="{Binding Path=HostHistoryView}"
-                          mah:TextBoxHelper.Watermark="{x:Static Member=localization:StaticStrings.ExampleHostnameOrIPAddress}"
+                          mah:TextBoxHelper.Watermark="{x:Static Member=localization:StaticStrings.ExampleHostnameOrIPAddress}" FontFamily="{StaticResource Fonts.Family.Mono}"
                           IsReadOnly="{Binding IsRunning}"
                           Style="{StaticResource HistoryComboBox}">
                     <ComboBox.Text>
@@ -106,9 +106,9 @@
                             <Rectangle Grid.Column="0" Grid.Row="0">
                                 <Rectangle.Resources>
                                     <VisualBrush x:Key="VisualControlPlay" Stretch="Uniform"
-                                                 Visual="{iconPacks:Material Kind=Play}" />
+                                                 Visual="{icons:Lucide Kind=Play}" />
                                     <VisualBrush x:Key="VisualClose" Stretch="Uniform"
-                                                 Visual="{iconPacks:Material Kind=Close}" />
+                                                 Visual="{icons:Lucide Kind=X}" />
                                 </Rectangle.Resources>
                                 <Rectangle.Style>
                                     <Style TargetType="{x:Type TypeName=Rectangle}"
@@ -143,13 +143,12 @@
                 </Button>
             </Grid>
             <mahAppsControls:MetroProgressBar Grid.Row="1" Margin="0,10,0,0"
-                                              Foreground="{DynamicResource ResourceKey=MahApps.Brushes.Accent}"
                                               Visibility="{Binding IsRunning, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
                                               IsIndeterminate="True" />
-            <TextBlock Grid.Row="2" Foreground="{DynamicResource ResourceKey=MahApps.Brushes.Accent}"
+            <icons:StatusMessageText Level="{Binding StatusMessageLevel}" Grid.Row="2"
                        Text="{Binding Path=StatusMessage}"
                        Visibility="{Binding IsStatusMessageDisplayed, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
-                       Style="{DynamicResource ResourceKey=StatusMessageTextBlock}" Margin="0,10,0,0" />
+                       Margin="0,10,0,0" />
         </Grid>
         <TextBlock Grid.Row="2" Margin="10,0,10,0" Text="{x:Static Member=localization:Strings.Route}"
                    Style="{StaticResource ResourceKey=HeaderTextBlock}" />
@@ -180,7 +179,7 @@
                             <Rectangle Width="16" Height="16"
                                        Fill="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}">
                                 <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Sitemap}" />
+                                    <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=Network}" />
                                 </Rectangle.OpacityMask>
                             </Rectangle>
                         </MenuItem.Icon>
@@ -192,7 +191,7 @@
                             <Rectangle Width="16" Height="16"
                                        Fill="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}">
                                 <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=NetworkPort}" />
+                                    <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=ScanLine}" />
                                 </Rectangle.OpacityMask>
                             </Rectangle>
                         </MenuItem.Icon>
@@ -204,7 +203,7 @@
                             <Rectangle Width="16" Height="16"
                                        Fill="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}">
                                 <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=RadarScreen}" />
+                                    <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=Radar}" />
                                 </Rectangle.OpacityMask>
                             </Rectangle>
                         </MenuItem.Icon>
@@ -214,7 +213,7 @@
                             <Rectangle Width="16" Height="16"
                                        Fill="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}">
                                 <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=SearchWeb}" />
+                                    <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=Globe}" />
                                 </Rectangle.OpacityMask>
                             </Rectangle>
                         </MenuItem.Icon>
@@ -225,7 +224,7 @@
                                 <Rectangle Width="16" Height="16"
                                            Fill="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}">
                                     <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=SearchWeb}" />
+                                        <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=Globe}" />
                                     </Rectangle.OpacityMask>
                                 </Rectangle>
                             </MenuItem.Icon>
@@ -238,7 +237,7 @@
                                 <Rectangle Width="16" Height="16"
                                            Fill="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}">
                                     <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=SearchWeb}" />
+                                        <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=Globe}" />
                                     </Rectangle.OpacityMask>
                                 </Rectangle>
                             </MenuItem.Icon>
@@ -248,7 +247,7 @@
                         <MenuItem.Icon>
                             <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                 <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=CardAccountDetailsOutline}" />
+                                    <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=IdCard}" />
                                 </Rectangle.OpacityMask>
                             </Rectangle>
                         </MenuItem.Icon>
@@ -268,7 +267,7 @@
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                     <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=CardAccountDetailsOutline}" />
+                                        <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=IdCard}" />
                                     </Rectangle.OpacityMask>
                                 </Rectangle>
                             </MenuItem.Icon>
@@ -280,7 +279,7 @@
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                     <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=CardAccountDetailsOutline}" />
+                                        <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=IdCard}" />
                                     </Rectangle.OpacityMask>
                                 </Rectangle>
                             </MenuItem.Icon>
@@ -292,7 +291,7 @@
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                     <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=CardAccountDetailsOutline}" />
+                                        <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=IdCard}" />
                                     </Rectangle.OpacityMask>
                                 </Rectangle>
                             </MenuItem.Icon>
@@ -305,7 +304,7 @@
                             <Rectangle Width="16" Height="16"
                                        Fill="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}">
                                 <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=RemoteDesktop}" />
+                                    <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=Monitor}" />
                                 </Rectangle.OpacityMask>
                             </Rectangle>
                         </MenuItem.Icon>
@@ -317,7 +316,7 @@
                             <Rectangle Width="16" Height="16"
                                        Fill="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}">
                                 <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Powershell}" />
+                                    <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=SquareChevronRight}" />
                                 </Rectangle.OpacityMask>
                             </Rectangle>
                         </MenuItem.Icon>
@@ -329,7 +328,7 @@
                             <Rectangle Width="16" Height="16"
                                        Fill="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}">
                                 <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:FontAwesome Kind=TerminalSolid}" />
+                                    <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=Terminal}" />
                                 </Rectangle.OpacityMask>
                             </Rectangle>
                         </MenuItem.Icon>
@@ -341,7 +340,7 @@
                             <Rectangle Width="16" Height="16"
                                        Fill="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}">
                                 <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=EyeOutline}" />
+                                    <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=Eye}" />
                                 </Rectangle.OpacityMask>
                             </Rectangle>
                         </MenuItem.Icon>
@@ -353,7 +352,7 @@
                             <Rectangle Width="16" Height="16"
                                        Fill="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}">
                                 <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Switch}" />
+                                    <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=Server}" />
                                 </Rectangle.OpacityMask>
                             </Rectangle>
                         </MenuItem.Icon>
@@ -453,7 +452,7 @@
                             <Rectangle Width="16" Height="16"
                                        Fill="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}">
                                 <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=FileMoveOutline}" />
+                                    <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=FileOutput}" />
                                 </Rectangle.OpacityMask>
                             </Rectangle>
                         </MenuItem.Icon>
@@ -465,7 +464,7 @@
                             <Rectangle Width="16" Height="16"
                                        Fill="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}">
                                 <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=FileMoveOutline}" />
+                                    <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=FileOutput}" />
                                 </Rectangle.OpacityMask>
                             </Rectangle>
                         </MenuItem.Icon>
@@ -512,10 +511,10 @@
                         </MultiBinding>
                     </DataGridTextColumn.Binding>
                 </DataGridTextColumn>
-                <DataGridTextColumn Header="{x:Static Member=localization:Strings.IPAddress}"
+                <DataGridTextColumn Header="{x:Static Member=localization:Strings.IPAddress}" FontFamily="{StaticResource Fonts.Family.Mono}"
                                     Binding="{Binding (network:TracerouteHopInfo.IPAddress), Converter={StaticResource ResourceKey=IPAddressToStringConverter}}"
                                     MinWidth="150" />
-                <DataGridTextColumn Header="{x:Static Member=localization:Strings.Hostname}"
+                <DataGridTextColumn Header="{x:Static Member=localization:Strings.Hostname}" FontFamily="{StaticResource Fonts.Family.Mono}"
                                     Binding="{Binding (network:TracerouteHopInfo.Hostname), Converter={StaticResource ResourceKey=StringNullOrEmptyToStringConverter}}"
                                     Visibility="{Binding Source={x:Static Member=settings:SettingsManager.Current}, Path=Traceroute_ResolveHostname, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
                                     MinWidth="150"

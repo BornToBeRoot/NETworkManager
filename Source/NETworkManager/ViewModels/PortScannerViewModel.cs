@@ -189,6 +189,7 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
                 {
                     IsStatusMessageDisplayed = false;
                     StatusMessage = string.Empty;
+                    StatusMessageLevel = StatusLevel.None;
                 }
 
                 _message = null;
@@ -546,6 +547,22 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
     }
 
     /// <summary>
+    ///     Level of the status message (icon and color, see <see cref="StatusMessageText" />).
+    /// </summary>
+    public StatusLevel StatusMessageLevel
+    {
+        get;
+        private set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
     /// Gets the options of the scan whose results are shown. Columns and context menu follow them instead of
     /// the current settings, which may have been changed since. While no results are shown, they follow the
     /// current settings.
@@ -598,6 +615,7 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
             _message = message;
 
             StatusMessage = message;
+            StatusMessageLevel = StatusLevel.None;
             IsStatusMessageDisplayed = true;
         }
 
@@ -917,8 +935,10 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
     /// hostnames that could not be resolved). The messages are cleared when a scan starts.
     /// </summary>
     /// <param name="message">Message to show.</param>
-    private void AddStatusMessage(string message)
+    private void AddStatusMessage(string message, StatusLevel level)
     {
+        // Appended: the most severe message determines the level, otherwise the level of the new message
+        StatusMessageLevel = IsStatusMessageDisplayed ? StatusMessageLevel.MostSevere(level) : level;
         StatusMessage = IsStatusMessageDisplayed ? StatusMessage + Environment.NewLine + message : message;
         IsStatusMessageDisplayed = true;
     }
@@ -931,6 +951,7 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
                 out var resolvedPorts))
         {
             StatusMessage = Strings.EnterValidPortsOrPortProfiles;
+            StatusMessageLevel = StatusLevel.Error;
             IsStatusMessageDisplayed = true;
 
             return;
@@ -951,6 +972,7 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
             Log.Error("Error while counting the hosts and ports", ex);
 
             StatusMessage = ex.Message;
+            StatusMessageLevel = StatusLevel.Error;
             IsStatusMessageDisplayed = true;
 
             return;
@@ -960,6 +982,7 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
         if (portCount > GlobalStaticConfiguration.PortScanner_MaxPortCount)
         {
+            StatusMessageLevel = StatusLevel.Error;
             StatusMessage = string.Format(Strings.ScanTooManyPortsMessage, portCount.ToString("N0"),
                 hostCount.ToString("N0"), portsPerHost.ToString("N0"),
                 GlobalStaticConfiguration.PortScanner_MaxPortCount.ToString("N0"));
@@ -1000,11 +1023,13 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
         IsStatusMessageDisplayed = false;
         StatusMessage = string.Empty;
+        StatusMessageLevel = StatusLevel.None;
 
         // Message of the tab (see constructor): still shown with the first scan
         if (_message != null)
         {
             StatusMessage = _message;
+            StatusMessageLevel = StatusLevel.None;
             IsStatusMessageDisplayed = true;
 
             _message = null;
@@ -1104,11 +1129,12 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
         // Show error message if (some) hostnames could not be resolved
         if (hosts.hostnamesNotResolved.Count > 0)
             AddStatusMessage(
-                $"{Strings.TheFollowingHostnamesCouldNotBeResolved} {string.Join(", ", hosts.hostnamesNotResolved)}");
+                $"{Strings.TheFollowingHostnamesCouldNotBeResolved} {string.Join(", ", hosts.hostnamesNotResolved)}",
+                StatusLevel.Error);
 
         // The exclusions removed every host (also if hostnames could not be resolved)
         if (hosts.hosts.Count == 0 && hosts.excludedCount > 0)
-            AddStatusMessage(Strings.AllIPAddressesAreExcludedMessage);
+            AddStatusMessage(Strings.AllIPAddressesAreExcludedMessage, StatusLevel.Warning);
 
         PortsToScan = ports.Length * hosts.hosts.Count;
 
@@ -1863,23 +1889,23 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
             // Keep a message from the preparation (e.g. the message of the tab or hostnames that could not be resolved)
             if (e.IsCanceled)
             {
-                AddStatusMessage(Strings.CanceledByUserMessage);
+                AddStatusMessage(Strings.CanceledByUserMessage, StatusLevel.None);
             }
             else if (e.Exception != null)
             {
                 Log.Error("Error while scanning", e.Exception);
 
-                AddStatusMessage(e.Exception.Message);
+                AddStatusMessage(e.Exception.Message, StatusLevel.Error);
             }
             else if (Results.Count == 0 && !isNothingScanned)
             {
-                AddStatusMessage(Strings.NoOpenPortsFound);
+                AddStatusMessage(Strings.NoOpenPortsFound, StatusLevel.None);
             }
 
             // Hosts that were not scanned because they didn't answer the ping before the scan (option)
             if (!e.IsCanceled && e.Exception == null && sender is PortScanner { HostsSkipped: > 0 } pingScanner)
                 AddStatusMessage(string.Format(Strings.XHostsDidNotAnswerThePingAndWereNotScanned,
-                    pingScanner.HostsSkipped));
+                    pingScanner.HostsSkipped), StatusLevel.Warning);
 
             // A completed rescan: the changes against the same previous scan (e.g. a port that is open again)
             if (isRescan && !e.IsCanceled && e.Exception == null && _comparisonBaseline != null)

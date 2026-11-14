@@ -59,8 +59,8 @@
                             <TextBlock Text="{x:Static localization:Strings.HelpMessage_ProfileHostPlaceholder}"
                                        Style="{StaticResource DefaultTextBlock}"
                                        TextWrapping="Wrap" Margin="0,0,0,8" />
-                            <Border BorderBrush="{DynamicResource MahApps.Brushes.Gray8}"
-                                    BorderThickness="1" CornerRadius="2">
+                            <Border BorderBrush="{DynamicResource Brushes.Surface.Border}"
+                                    BorderThickness="1" CornerRadius="{StaticResource CornerRadius.Control}">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto" />
@@ -84,7 +84,7 @@
                                     <TextBlock Grid.Row="0" Grid.Column="1"
                                                Text="{x:Static localization:Strings.Description}" FontWeight="Bold" />
                                     <Rectangle Grid.Row="1" Grid.ColumnSpan="2" Grid.Column="0" Height="1"
-                                               Fill="{DynamicResource MahApps.Brushes.Gray8}" />
+                                               Fill="{DynamicResource Brushes.Surface.Border}" />
 
                                     <!-- Placeholder -->
                                     <TextBlock Grid.Row="2" Grid.Column="0" Text="{}{{Host}}" />

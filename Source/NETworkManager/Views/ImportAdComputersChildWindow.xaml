@@ -73,7 +73,7 @@
             <!-- Server -->
             <TextBlock Grid.Column="0" Grid.Row="2"
                        Text="{x:Static localization:Strings.LdapServer}" />
-            <TextBox x:Name="TextBoxLdapServer"
+            <TextBox FontFamily="{StaticResource Fonts.Family.Mono}" x:Name="TextBoxLdapServer"
                      Grid.Column="2" Grid.Row="2"
                      mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleDomain}"
                      Style="{StaticResource DefaultTextBox}">
@@ -99,7 +99,7 @@
             <TextBlock Grid.Column="0" Grid.Row="4" Text="{x:Static localization:Strings.LdapPort}" />
             <TextBox x:Name="TextBoxLdapPort" Grid.Column="2" Grid.Row="4"
                      HorizontalAlignment="Left" Width="120"
-                     mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleActiveDirectoryPort}"
+                     mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleActiveDirectoryPort}" FontFamily="{StaticResource Fonts.Family.Mono}"
                      Style="{StaticResource DefaultTextBox}">
                 <TextBox.Text>
                     <Binding Path="LdapPort" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
@@ -196,11 +196,8 @@
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                <networkManager:LoadingIndicator Grid.Column="0" IsActive="True"
-                                                 Style="{DynamicResource ResourceKey=LoadingIndicatorPulseStyle}"
-                                                 Visibility="{Binding IsSearching, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}"
-                                                 Width="24" Height="24"
-                                                 SpeedRatio="1" Margin="0,0,10,0" />
+                <mah:ProgressRing Grid.Column="0" IsActive="True" Style="{StaticResource ProgressRingMedium}"
+                                                 Visibility="{Binding IsSearching, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Margin="0,0,10,0" />
                 <TextBlock Grid.Column="1"
                            Style="{StaticResource AccentTextBlock}"
                            Visibility="{Binding IsStatusMessageDisplayed, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}"

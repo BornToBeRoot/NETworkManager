@@ -7,12 +7,11 @@ using LiveChartsCore;
 using LiveChartsCore.Drawing;
 using LiveChartsCore.Kernel.Sketches;
 using LiveChartsCore.SkiaSharpView;
-using LiveChartsCore.SkiaSharpView.Painting;
 using log4net;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models.Cloudflare;
+using NETworkManager.Settings;
 using NETworkManager.Utilities;
-using SkiaSharp;
 
 namespace NETworkManager.ViewModels;
 
@@ -170,7 +169,7 @@ public class SpeedTestWidgetViewModel : ViewModelBase
 
     public SpeedTestWidgetViewModel()
     {
-        var downloadColor = SKColor.Parse("#1ba1e2");
+        var downloadColor = ChartColors.Primary;
         DownloadSeries =
         [
             new LineSeries<double>
@@ -180,12 +179,12 @@ public class SpeedTestWidgetViewModel : ViewModelBase
                 GeometrySize = 1.5f,
                 LineSmoothness = 0.3,
                 DataPadding = new LvcPoint(0, 0),
-                Stroke = new SolidColorPaint(downloadColor) { StrokeThickness = 1.5f },
-                Fill = new SolidColorPaint(downloadColor.WithAlpha(0x33))
+                Stroke = ChartColors.LineStroke(downloadColor),
+                Fill = ChartColors.AreaFill(downloadColor)
             }
         ];
 
-        var uploadColor = SKColor.Parse("#7fba00");
+        var uploadColor = ChartColors.Secondary;
         UploadSeries =
         [
             new LineSeries<double>
@@ -195,10 +194,31 @@ public class SpeedTestWidgetViewModel : ViewModelBase
                 GeometrySize = 1.5f,
                 LineSmoothness = 0.3,
                 DataPadding = new LvcPoint(0, 0),
-                Stroke = new SolidColorPaint(uploadColor) { StrokeThickness = 1.5f },
-                Fill = new SolidColorPaint(uploadColor.WithAlpha(0x33))
+                Stroke = ChartColors.LineStroke(uploadColor),
+                Fill = ChartColors.AreaFill(uploadColor)
             }
         ];
+
+        // Colors of the sparklines for the new theme (the paints don't follow the theme)
+        AppearanceManager.ThemeResourcesChanged += (_, _) => ApplyChartColors();
+    }
+
+    /// <summary>
+    /// Sets the colors of the download / upload sparklines for the current theme.
+    /// </summary>
+    private void ApplyChartColors()
+    {
+        if (DownloadSeries[0] is LineSeries<double> download)
+        {
+            download.Stroke = ChartColors.LineStroke(ChartColors.Primary);
+            download.Fill = ChartColors.AreaFill(ChartColors.Primary);
+        }
+
+        if (UploadSeries[0] is LineSeries<double> upload)
+        {
+            upload.Stroke = ChartColors.LineStroke(ChartColors.Secondary);
+            upload.Fill = ChartColors.AreaFill(ChartColors.Secondary);
+        }
     }
 
     private void RunAction()

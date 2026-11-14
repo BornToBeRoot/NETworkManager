@@ -6,7 +6,7 @@
              xmlns:validators="clr-namespace:NETworkManager.Validators;assembly=NETworkManager.Validators"
              xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
              xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
-             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:icons="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls"
              xmlns:mahAppsControls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
              xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
              xmlns:lookup="clr-namespace:NETworkManager.Models.Lookup;assembly=NETworkManager.Models"
@@ -48,7 +48,7 @@
                            VerticalAlignment="Center" />
                 <ComboBox Grid.Column="2" Grid.Row="0"
                           x:Name="TextBoxSearch" ItemsSource="{Binding SearchHistoryView}"
-                          mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleMACAddressesOrVendor}"
+                          mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleMACAddressesOrVendor}" FontFamily="{StaticResource Fonts.Family.Mono}"
                           IsReadOnly="{Binding IsRunning}"
                           Style="{StaticResource HistoryComboBox}">
                     <ComboBox.Text>
@@ -86,7 +86,7 @@
                             </Grid.ColumnDefinitions>
                             <Rectangle Style="{StaticResource ButtonWithImageRectangle}">
                                 <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Magnify}" />
+                                    <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=Search}" />
                                 </Rectangle.OpacityMask>
                             </Rectangle>
                             <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.Query}"
@@ -95,14 +95,13 @@
                     </Button.Content>
                 </Button>
             </Grid>
-            <mahAppsControls:MetroProgressBar Grid.Row="1" Foreground="{DynamicResource MahApps.Brushes.Accent}"
+            <mahAppsControls:MetroProgressBar Grid.Row="1"
                                               IsIndeterminate="True"
                                               Visibility="{Binding IsRunning, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}"
                                               Margin="0,10,0,0" />
-            <TextBlock Grid.Row="2" Foreground="{DynamicResource MahApps.Brushes.Accent}"
+            <icons:StatusMessageText Grid.Row="2"
                        Text="{x:Static localization:Strings.NoVendorFoundCheckYourInput}"
-                       Visibility="{Binding NothingFound, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}"
-                       Style="{DynamicResource DefaultTextBlock}" Margin="0,10,0,0" />
+                       Visibility="{Binding NothingFound, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" Margin="0,10,0,0" />
         </Grid>
         <TextBlock Grid.Row="2" Text="{x:Static localization:Strings.Result}" Style="{StaticResource HeaderTextBlock}" />
         <controls:MultiSelectDataGrid x:Name="DataGridResults"
@@ -127,7 +126,7 @@
                         <MenuItem.Icon>
                             <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                 <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=FileMoveOutline}" />
+                                    <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=FileOutput}" />
                                 </Rectangle.OpacityMask>
                             </Rectangle>
                         </MenuItem.Icon>
@@ -138,7 +137,7 @@
                         <MenuItem.Icon>
                             <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                 <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=FileMoveOutline}" />
+                                    <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=FileOutput}" />
                                 </Rectangle.OpacityMask>
                             </Rectangle>
                         </MenuItem.Icon>
@@ -158,7 +157,7 @@
                 </Style>
             </controls:MultiSelectDataGrid.RowStyle>
             <controls:MultiSelectDataGrid.Columns>
-                <DataGridTextColumn Header="{x:Static localization:Strings.MACAddress}"
+                <DataGridTextColumn Header="{x:Static localization:Strings.MACAddress}" FontFamily="{StaticResource Fonts.Family.Mono}"
                                     Binding="{Binding (lookup:OUIInfo.MACAddress)}"
                                     SortMemberPath="MACAddress"
                                     MinWidth="150" />

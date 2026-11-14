@@ -25,6 +25,22 @@
                 </Rectangle.Resources>
             </Rectangle>
         </StackPanel>
+        <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Tabs}" />
+        <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+            <controls:ToggleSwitch Header="{x:Static localization:Strings.DynamicTabWidth}"
+                                   IsOn="{Binding DynamicTabWidth}" />
+            <Rectangle Width="24" Height="24" ToolTip="{x:Static localization:Strings.HelpMessage_DynamicTabWidth}"
+                       Style="{StaticResource HelpImageRectangle}" VerticalAlignment="Top" Margin="10,0,0,0">
+                <Rectangle.Resources>
+                    <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource HelpToolTip}" />
+                </Rectangle.Resources>
+            </Rectangle>
+        </StackPanel>
+        <TextBlock Text="{x:Static localization:Strings.MaximumTabWidth}"
+                   Style="{StaticResource DisabledTextBlock}" Margin="0,0,0,10"
+                   IsEnabled="{Binding DynamicTabWidth}" />
+        <controls:NumericUpDown Value="{Binding MaxTabWidth}" Minimum="150" Maximum="1000" Interval="10"
+                                IsEnabled="{Binding DynamicTabWidth}" Margin="0,0,0,20" />
         <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Tray}" />
         <controls:ToggleSwitch Header="{x:Static localization:Strings.AlwaysShowIconInTray}"
                                IsOn="{Binding AlwaysShowIconInTray}" Margin="0,0,0,20" />

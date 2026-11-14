@@ -536,6 +536,22 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     }
 
     /// <summary>
+    ///     Level of the status message (icon and color, see <see cref="StatusMessageText" />).
+    /// </summary>
+    public StatusLevel StatusMessageLevel
+    {
+        get;
+        private set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
     /// Gets the options of the scan whose results are shown. Columns, context menu and row details follow them
     /// instead of the current settings, which may have been changed since. While no results are shown, they
     /// follow the current settings.
@@ -896,7 +912,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
         _isWindowsLogonRejectedShown = true;
 
-        AddStatusMessage(string.Format(Strings.WindowsLogonFailedMessage, _windowsCredentials));
+        AddStatusMessage(string.Format(Strings.WindowsLogonFailedMessage, _windowsCredentials), StatusLevel.Warning);
     }
 
     /// <summary>
@@ -1107,6 +1123,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
             !SettingsManager.Current.IPScanner_NetBIOSEnabled && !SettingsManager.Current.IPScanner_SNMPEnabled)
         {
             StatusMessage = Strings.EnableAtLeastOneProbeToFindHostsMessage;
+            StatusMessageLevel = StatusLevel.Warning;
             IsStatusMessageDisplayed = true;
 
             return;
@@ -1125,6 +1142,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
             Log.Error("Error while counting the hosts", ex);
 
             StatusMessage = ex.Message;
+            StatusMessageLevel = StatusLevel.Error;
             IsStatusMessageDisplayed = true;
 
             return;
@@ -1132,6 +1150,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
         if (hostCount > GlobalStaticConfiguration.IPScanner_MaxHostCount)
         {
+            StatusMessageLevel = StatusLevel.Error;
             StatusMessage = string.Format(Strings.ScanTooManyIPAddressesMessage, hostCount.ToString("N0"),
                 GlobalStaticConfiguration.IPScanner_MaxHostCount.ToString("N0"));
             IsStatusMessageDisplayed = true;
@@ -1258,11 +1277,12 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         // Show error message if (some) hostnames could not be resolved
         if (hosts.hostnamesNotResolved.Count > 0)
             AddStatusMessage(
-                $"{Strings.TheFollowingHostnamesCouldNotBeResolved} {string.Join(", ", hosts.hostnamesNotResolved)}");
+                $"{Strings.TheFollowingHostnamesCouldNotBeResolved} {string.Join(", ", hosts.hostnamesNotResolved)}",
+                StatusLevel.Error);
 
         // The exclusions removed every host (also if hostnames could not be resolved, keep their message)
         if (hosts.hosts.Count == 0 && hosts.excludedCount > 0)
-            AddStatusMessage(Strings.AllIPAddressesAreExcludedMessage);
+            AddStatusMessage(Strings.AllIPAddressesAreExcludedMessage, StatusLevel.Warning);
 
         HostsToScan = hosts.hosts.Count;
 
@@ -1494,8 +1514,10 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     /// resolved). The messages are cleared when a scan starts.
     /// </summary>
     /// <param name="message">Message to show.</param>
-    private void AddStatusMessage(string message)
+    private void AddStatusMessage(string message, StatusLevel level)
     {
+        // Appended: the most severe message determines the level, otherwise the level of the new message
+        StatusMessageLevel = IsStatusMessageDisplayed ? StatusMessageLevel.MostSevere(level) : level;
         StatusMessage = IsStatusMessageDisplayed ? StatusMessage + Environment.NewLine + message : message;
         IsStatusMessageDisplayed = true;
     }
@@ -2090,6 +2112,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
             if (e.IsCanceled)
             {
                 StatusMessage = Strings.CanceledByUserMessage;
+                StatusMessageLevel = StatusLevel.None;
                 IsStatusMessageDisplayed = true;
             }
             else if (e.Exception != null)
@@ -2097,12 +2120,13 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
                 Log.Error("Error while scanning", e.Exception);
 
                 StatusMessage = e.Exception.Message;
+                StatusMessageLevel = StatusLevel.Error;
                 IsStatusMessageDisplayed = true;
             }
             else if (Results.Count == 0 && !isNothingScanned)
             {
                 // Keep a message from the preparation (e.g. hostnames that could not be resolved)
-                AddStatusMessage(Strings.NoReachableHostsFound);
+                AddStatusMessage(Strings.NoReachableHostsFound, StatusLevel.None);
             }
 
             // Windows credentials rejected (wrong username or password, also in a canceled scan): one message after

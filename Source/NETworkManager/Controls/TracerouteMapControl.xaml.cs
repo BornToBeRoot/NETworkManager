@@ -2,6 +2,7 @@ using log4net;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models.IPApi;
 using NETworkManager.Models.Network;
+using NETworkManager.Settings;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -78,10 +79,12 @@ public partial class TracerouteMapControl
 
     // Hops/arrows and country labels follow the theme (accent / muted gray, via
     // SetResourceReference per element so they track theme switches a frozen brush couldn't).
-    // Cities deliberately don't: they keep a fixed brand blue (the speedtest download series'
-    // "#1ba1e2") so they stay a consistent "reference point" color that doesn't compete with the
-    // accent-colored traceroute path in either theme.
-    private static readonly Brush CityBrush = FreezeBrush(Color.FromRgb(0x1B, 0xA1, 0xE2));
+    // Cities deliberately don't follow the accent: they use the main chart color (ChartColors.Primary,
+    // like the speedtest download series, darker in the light theme) so they stay a consistent
+    // "reference point" color that doesn't compete with the accent-colored traceroute path.
+    // Frozen (shared by ~900 dots and ~900 labels), replaced on the dots / labels after a theme
+    // change (see ApplyCityBrush).
+    private Brush _cityBrush = FreezeBrush(ChartColors.PrimaryWpf);
 
     // Shared by every label/dot so a single assignment (in ApplyTransform) keeps their on-screen
     // size constant while the map itself is scaled by the parent Canvas' zoom transform. Elements
@@ -140,6 +143,7 @@ public partial class TracerouteMapControl
         InitializeComponent();
 
         Loaded += TracerouteMapControl_Loaded;
+        Unloaded += TracerouteMapControl_Unloaded;
     }
 
     #region Dependency properties
@@ -230,6 +234,12 @@ public partial class TracerouteMapControl
 
     private void TracerouteMapControl_Loaded(object sender, RoutedEventArgs e)
     {
+        // Color of the cities: also if the theme was changed while the control was unloaded (e.g. tab dragged out)
+        ApplyCityBrush();
+
+        AppearanceManager.ThemeResourcesChanged -= AppearanceManager_ThemeResourcesChanged;
+        AppearanceManager.ThemeResourcesChanged += AppearanceManager_ThemeResourcesChanged;
+
         // TracerouteView binds this control's Visibility to ShowMap, which is false whenever IP
         // geolocation checking is disabled - the map can then never show anything (no hop has a
         // location to plot), so building ~900 city/country WPF elements for it here would be pure
@@ -238,6 +248,36 @@ public partial class TracerouteMapControl
             EnsureMapDataInitialized();
         else
             IsVisibleChanged += TracerouteMapControl_IsVisibleChanged;
+    }
+
+    private void TracerouteMapControl_Unloaded(object sender, RoutedEventArgs e)
+    {
+        // The static event would keep the control (and the map) alive
+        AppearanceManager.ThemeResourcesChanged -= AppearanceManager_ThemeResourcesChanged;
+    }
+
+    private void AppearanceManager_ThemeResourcesChanged(object sender, EventArgs e)
+    {
+        ApplyCityBrush();
+    }
+
+    /// <summary>
+    /// Sets the color of the cities for the current theme (a new frozen brush on all dots and labels), if it changed.
+    /// </summary>
+    private void ApplyCityBrush()
+    {
+        var color = ChartColors.PrimaryWpf;
+
+        if (_cityBrush is SolidColorBrush current && current.Color == color)
+            return;
+
+        _cityBrush = FreezeBrush(color);
+
+        foreach (var dot in CitiesCanvas.Children.OfType<Ellipse>())
+            dot.Fill = _cityBrush;
+
+        foreach (var label in _cityLabels)
+            label.Foreground = _cityBrush;
     }
 
     private void TracerouteMapControl_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
@@ -353,7 +393,7 @@ public partial class TracerouteMapControl
             {
                 Width = CityDotSize,
                 Height = CityDotSize,
-                Fill = CityBrush,
+                Fill = _cityBrush,
                 RenderTransform = _inverseScaleTransform,
                 RenderTransformOrigin = new Point(0.5, 0.5)
             };
@@ -370,7 +410,7 @@ public partial class TracerouteMapControl
             {
                 Text = city.N,
                 FontSize = 11,
-                Foreground = CityBrush,
+                Foreground = _cityBrush,
                 IsHitTestVisible = false,
                 RenderTransform = _inverseScaleTransform,
                 RenderTransformOrigin = new Point(0.5, 0.5)

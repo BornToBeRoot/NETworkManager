@@ -6,7 +6,7 @@
              xmlns:resources="clr-namespace:NETworkManager.Properties"
              xmlns:mahAppsControls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
              xmlns:documentation="clr-namespace:NETworkManager.Documentation;assembly=NETworkManager.Documentation"
-             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:icons="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls"
              xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
              xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
              xmlns:wpfHelpers="clr-namespace:NETworkManager.Utilities.WPF;assembly=NETworkManager.Utilities.WPF"
@@ -76,7 +76,7 @@
                                     </Grid.ColumnDefinitions>
                                     <Rectangle Style="{StaticResource ButtonWithImageRectangle}">
                                         <Rectangle.OpacityMask>
-                                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Heart}" />
+                                            <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=Heart}" />
                                         </Rectangle.OpacityMask>
                                     </Rectangle>
                                     <TextBlock Grid.Column="1" Grid.Row="0"                                           
@@ -106,7 +106,7 @@
                                                       CommandParameter="{Binding UpdateReleaseUrl, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
                                     </Rectangle.InputBindings>
                                     <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=RocketLaunchOutline}" />
+                                        <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=Rocket}" />
                                     </Rectangle.OpacityMask>
                                 </Rectangle>
                                 <TextBlock Style="{StaticResource DefaultTextBlock}"
@@ -119,10 +119,8 @@
                                     </Hyperlink>
                                 </TextBlock>
                             </StackPanel>
-                            <mahAppsControls:ProgressRing Grid.Column="2" Grid.Row="0"
+                            <mahAppsControls:ProgressRing Style="{StaticResource ProgressRingMedium}" Grid.Column="2" Grid.Row="0"
                                                           Visibility="{Binding IsUpdateCheckRunning, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}"
-                                                          Height="{Binding ElementName=ButtonCheckForUpdates, Path=ActualHeight}"
-                                                          Width="{Binding ElementName=ButtonCheckForUpdates, Path=ActualHeight}"
                                                           HorizontalAlignment="Left"
                                                           IsActive="True" />
                             <TextBlock Grid.Column="2" Grid.Row="0"
@@ -144,7 +142,7 @@
                                 CommandParameter="{x:Static resources:Resources.NETworkManager_GitHubRepoUrl}">
                             <Rectangle Width="24" Height="24">
                                 <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Github}" />
+                                    <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=Github}" />
                                 </Rectangle.OpacityMask>
                                 <Rectangle.Style>
                                     <Style TargetType="{x:Type Rectangle}">
@@ -165,7 +163,7 @@
                                 Margin="10,0,0,0">
                             <Rectangle Width="24" Height="24">
                                 <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Bug}" />
+                                    <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=Bug}" />
                                 </Rectangle.OpacityMask>
                                 <Rectangle.Style>
                                     <Style TargetType="{x:Type Rectangle}">
@@ -185,7 +183,7 @@
                                 Margin="10,0,0,0">
                             <Rectangle Width="24" Height="24">
                                 <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Book}" />
+                                    <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=BookOpen}" />
                                 </Rectangle.OpacityMask>
                                 <Rectangle.Style>
                                     <Style TargetType="{x:Type Rectangle}">
@@ -206,7 +204,7 @@
                                 Margin="10,0,0,0">
                             <Rectangle Width="24" Height="24">
                                 <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Translate}" />
+                                    <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=Languages}" />
                                 </Rectangle.OpacityMask>
                                 <Rectangle.Style>
                                     <Style TargetType="{x:Type Rectangle}">
@@ -227,7 +225,7 @@
                                 Margin="10,0,0,0">        
                             <Rectangle Width="24" Height="24">
                                 <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:FontAwesome Kind=XTwitterBrands}" />
+                                    <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=XLogo}" />
                                 </Rectangle.OpacityMask>
                                 <Rectangle.Style>
                                     <Style TargetType="{x:Type Rectangle}">
@@ -261,7 +259,7 @@
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                     <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=OpenInNew}" />
+                                        <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=ExternalLink}" />
                                     </Rectangle.OpacityMask>
                                 </Rectangle>
                             </MenuItem.Icon>
@@ -272,7 +270,7 @@
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                     <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=OpenInNew}" />
+                                        <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=ExternalLink}" />
                                     </Rectangle.OpacityMask>
                                 </Rectangle>
                             </MenuItem.Icon>
@@ -319,7 +317,7 @@
                         </Grid.ColumnDefinitions>
                         <Rectangle Style="{StaticResource ButtonWithImageRectangle}">
                             <Rectangle.OpacityMask>
-                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=FolderOpen}" />
+                                <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=FolderOpen}" />
                             </Rectangle.OpacityMask>
                         </Rectangle>
                         <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.ShowLocalLicenses}"
@@ -343,7 +341,7 @@
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                     <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=OpenInNew}" />
+                                        <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=ExternalLink}" />
                                     </Rectangle.OpacityMask>
                                 </Rectangle>
                             </MenuItem.Icon>
@@ -391,7 +389,7 @@
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                     <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=OpenInNew}" />
+                                        <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=ExternalLink}" />
                                     </Rectangle.OpacityMask>
                                 </Rectangle>
                             </MenuItem.Icon>

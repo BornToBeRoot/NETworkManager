@@ -1,6 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks">
+                    xmlns:icons="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls">
     <!--
     Drag-preview adorner shown while a GridSplitter with ShowsPreview="True" is being dragged.
     Without an explicit PreviewStyle, WPF falls back to its own built-in default (an opaque
@@ -10,7 +10,19 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate>
-                    <Rectangle Fill="{DynamicResource MahApps.Brushes.Gray8}" Opacity="0.5" Margin="3" />
+                    <Rectangle Fill="{DynamicResource Brushes.Control.Border.MouseOver}" Margin="3" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Drag preview of the gap splitter (6 wide, see VerticalGapGridSplitter): a 2 px line in the middle of the gap
+         (the margin of 3 of the default preview would leave nothing) -->
+    <Style x:Key="GridSplitterGapPreviewStyle" TargetType="{x:Type Control}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Rectangle Fill="{DynamicResource Brushes.Control.Border.MouseOver}" Margin="2,0" />
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -22,7 +34,7 @@
         <Setter Property="BorderThickness" Value="3" />
         <Setter Property="BorderBrush" Value="Transparent" />
         <Setter Property="Panel.ZIndex" Value="1" />
-        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Gray8}" />
+        <Setter Property="Background" Value="{DynamicResource Brushes.Surface.Border}" />
         <Setter Property="ShowsPreview" Value="True" />
         <Setter Property="PreviewStyle" Value="{StaticResource GridSplitterPreviewStyle}" />
         <Setter Property="HorizontalAlignment" Value="Stretch" />
@@ -39,13 +51,13 @@
                         <Border Background="{TemplateBinding Background}"
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}" />
-                        <iconPacks:PackIconMaterial Kind="DragVerticalVariant"
+                        <icons:LucideIcon Kind="GripVertical"
                                                      Width="16" Height="16"
                                                      HorizontalAlignment="Center"
                                                      VerticalAlignment="Center"
                                                      IsHitTestVisible="False">
-                            <iconPacks:PackIconMaterial.Style>
-                                <Style TargetType="{x:Type iconPacks:PackIconMaterial}">
+                            <icons:LucideIcon.Style>
+                                <Style TargetType="{x:Type icons:LucideIcon}">
                                     <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray3}" />
                                     <Setter Property="Visibility" Value="Hidden" />
                                     <Style.Triggers>
@@ -55,12 +67,21 @@
                                         </DataTrigger>
                                     </Style.Triggers>
                                 </Style>
-                            </iconPacks:PackIconMaterial.Style>
-                        </iconPacks:PackIconMaterial>
+                            </icons:LucideIcon.Style>
+                        </icons:LucideIcon>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+    </Style>
+
+    <!-- Between two boxes (tool area and profile panel): the gap of the frame, no line -->
+    <Style x:Key="VerticalGapGridSplitter" TargetType="{x:Type GridSplitter}" BasedOn="{StaticResource VerticalGridSplitter}">
+        <Setter Property="Width" Value="6" />
+        <Setter Property="Margin" Value="0" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="PreviewStyle" Value="{StaticResource GridSplitterGapPreviewStyle}" />
     </Style>
     
     <Style x:Key="HorizontalGridSplitter" TargetType="{x:Type GridSplitter}">
@@ -69,7 +90,7 @@
         <Setter Property="BorderThickness" Value="3" />
         <Setter Property="BorderBrush" Value="Transparent" />
         <Setter Property="Panel.ZIndex" Value="1" />
-        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Gray8}" />
+        <Setter Property="Background" Value="{DynamicResource Brushes.Surface.Border}" />
         <Setter Property="ShowsPreview" Value="True" />
         <Setter Property="PreviewStyle" Value="{StaticResource GridSplitterPreviewStyle}" />
         <Setter Property="HorizontalAlignment" Value="Stretch" />
@@ -87,13 +108,13 @@
                         <Border Background="{TemplateBinding Background}"
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}" />
-                        <iconPacks:PackIconMaterial Kind="DragHorizontalVariant"
+                        <icons:LucideIcon Kind="GripHorizontal"
                                                      Width="16" Height="16"
                                                      HorizontalAlignment="Center"
                                                      VerticalAlignment="Center"
                                                      IsHitTestVisible="False">
-                            <iconPacks:PackIconMaterial.Style>
-                                <Style TargetType="{x:Type iconPacks:PackIconMaterial}">
+                            <icons:LucideIcon.Style>
+                                <Style TargetType="{x:Type icons:LucideIcon}">
                                     <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray3}" />
                                     <Setter Property="Visibility" Value="Hidden" />
                                     <Style.Triggers>
@@ -103,8 +124,8 @@
                                         </DataTrigger>
                                     </Style.Triggers>
                                 </Style>
-                            </iconPacks:PackIconMaterial.Style>
-                        </iconPacks:PackIconMaterial>
+                            </icons:LucideIcon.Style>
+                        </icons:LucideIcon>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>

@@ -14,15 +14,7 @@ public partial class SNMPOIDProfilesChildWindow
         // Set the width and height of the child window based on the parent window size
         ChildWindowMaxWidth = 850;
         ChildWindowMaxHeight = 650;
-        ChildWindowWidth = parentWindow.ActualWidth * 0.85;
-        //ChildWindowHeight = parentWindow.ActualHeight * 0.85;
-
-        // Update the size of the child window when the parent window is resized
-        parentWindow.SizeChanged += (_, _) =>
-        {
-            ChildWindowWidth = parentWindow.ActualWidth * 0.85;
-            //ChildWindowHeight = parentWindow.ActualHeight * 0.85;
-        };
+        ChildWindowSizeHelper.FollowParentSize(this, parentWindow, height: false);
     }
 
     private void ChildWindow_OnLoaded(object sender, RoutedEventArgs e)

@@ -127,6 +127,9 @@ public class PowerShellHostViewModel : ProfileHostViewModelBase
         InitializeProfileHost();
 
         SettingsManager.Current.PropertyChanged += SettingsManager_PropertyChanged;
+
+        // Colors of the theme (also custom themes): the console blends into the application
+        AppearanceManager.ConsoleColorsChanged += (_, _) => WriteDefaultProfileToRegistry();
     }
 
     #endregion
@@ -503,6 +506,20 @@ public class PowerShellHostViewModel : ProfileHostViewModelBase
         FocusEmbeddedWindow();
     }
 
+    /// <summary>
+    ///     Serializes the background writes of the profile for the real path of an App Execution Alias (see
+    ///     <see cref="WriteDefaultProfileToRegistry" />).
+    /// </summary>
+    private static readonly object AliasProfileWriteLock = new();
+
+    /// <summary>
+    ///     Console colors for the background write (see <see cref="WriteDefaultProfileToRegistry" />): set on the UI
+    ///     thread, read by the task as one reference (the color tuples could be read half written otherwise).
+    /// </summary>
+    private sealed record AliasProfileColors((byte R, byte G, byte B) Background, (byte R, byte G, byte B) Foreground);
+
+    private static volatile AliasProfileColors _aliasProfileColors;
+
     private void WriteDefaultProfileToRegistry()
     {
         if (!SettingsManager.Current.Appearance_PowerShellModifyGlobalProfile)
@@ -513,9 +530,49 @@ public class PowerShellHostViewModel : ProfileHostViewModelBase
 
         Log.Debug("Write PowerShell profile to registry...");
 
-        PowerShell.WriteDefaultProfileToRegistry(
-            SettingsManager.Current.Appearance_Theme,
-            SettingsManager.Current.PowerShell_ApplicationFilePath);
+        var powerShellPath = SettingsManager.Current.PowerShell_ApplicationFilePath;
+
+        // Synchronously (only a few registry values), so a session started right after has the current colors
+        try
+        {
+            PowerShell.WriteDefaultProfileToRegistry(AppearanceManager.ConsoleBackground,
+                AppearanceManager.ConsoleForeground, powerShellPath);
+        }
+        catch (Exception ex)
+        {
+            Log.Error("Could not write the PowerShell profile to the registry.", ex);
+        }
+
+        if (!PowerShell.IsAppExecutionAlias(powerShellPath))
+            return;
+
+        // App Execution Alias (Microsoft Store): the alias is started once to resolve the real path, in the background.
+        // One write at a time with the current colors, so the last write always has the latest values (e.g. after
+        // several theme changes) - not the values of a task that was started earlier
+        _aliasProfileColors = new AliasProfileColors(AppearanceManager.ConsoleBackground,
+            AppearanceManager.ConsoleForeground);
+
+        Task.Run(() =>
+        {
+            try
+            {
+                lock (AliasProfileWriteLock)
+                {
+                    var realPath = PowerShell.ResolveAppExecutionAlias(powerShellPath);
+
+                    if (realPath == null)
+                        return;
+
+                    var colors = _aliasProfileColors;
+
+                    PowerShell.WriteDefaultProfileToRegistry(colors.Background, colors.Foreground, realPath);
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Error("Could not write the PowerShell profile of the App Execution Alias to the registry.", ex);
+            }
+        });
     }
 
     #endregion
@@ -531,7 +588,6 @@ public class PowerShellHostViewModel : ProfileHostViewModelBase
                 WriteDefaultProfileToRegistry();
                 break;
             case nameof(SettingsInfo.Appearance_PowerShellModifyGlobalProfile):
-            case nameof(SettingsInfo.Appearance_Theme):
                 WriteDefaultProfileToRegistry();
                 break;
         }

@@ -1,3 +1,4 @@
+using NETworkManager.Controls;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models;
 using NETworkManager.Models.Network;
@@ -101,6 +102,22 @@ public class WakeOnLANViewModel : ProfileHostViewModelBase
     /// Gets the status message to display.
     /// </summary>
     public string StatusMessage
+    {
+        get;
+        private set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
+    ///     Level of the status message (icon and color, see <see cref="StatusMessageText" />).
+    /// </summary>
+    public StatusLevel StatusMessageLevel
     {
         get;
         private set
@@ -251,11 +268,13 @@ public class WakeOnLANViewModel : ProfileHostViewModelBase
             await Task.Delay(GlobalStaticConfiguration.ApplicationUIRefreshInterval);
 
             StatusMessage = Strings.MagicPacketSentMessage;
+            StatusMessageLevel = StatusLevel.Success;
             IsStatusMessageDisplayed = true;
         }
         catch (Exception ex)
         {
             StatusMessage = ex.Message;
+            StatusMessageLevel = StatusLevel.Error;
             IsStatusMessageDisplayed = true;
         }
 

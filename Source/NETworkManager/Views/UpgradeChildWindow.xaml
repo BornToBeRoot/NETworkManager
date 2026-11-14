@@ -4,16 +4,17 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
-             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:icons="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls"
              xmlns:resources="clr-namespace:NETworkManager.Properties"
              xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
              xmlns:simpleChildWindow="clr-namespace:MahApps.Metro.SimpleChildWindow;assembly=MahApps.Metro.SimpleChildWindow"
-             ShowTitleBar="False" 
+             Style="{StaticResource DefaultChildWindow}"
+             ShowTitleBar="False"
+             ChildWindowWidth="650"
              ChildWindowMaxWidth="650"
              ChildWindowMaxHeight="800"
              CloseByEscape="False"               
              Padding="20"
-             OverlayBrush="{DynamicResource ResourceKey=MahApps.Brushes.Gray8}"
              Loaded="ChildWindow_OnLoaded"
              mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:UpgradeViewModel}">
     <Grid Margin="10">
@@ -41,7 +42,7 @@
                             </Grid.ColumnDefinitions>
                             <Rectangle Grid.Column="0" Grid.Row="0" Style="{StaticResource ResourceKey=ButtonWithImageRectangle}">
                                 <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Heart}" />
+                                    <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=Heart}" />
                                 </Rectangle.OpacityMask>
                             </Rectangle>
                             <TextBlock Grid.Column="1" Grid.Row="0"                                           
@@ -66,7 +67,7 @@
                             </Grid.ColumnDefinitions>
                             <Rectangle Grid.Column="0" Grid.Row="0" Style="{StaticResource ResourceKey=ButtonWithImageRectangle}">
                                 <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=FileDocumentMultipleOutline}" />
+                                    <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=Files}" />
                                 </Rectangle.OpacityMask>
                             </Rectangle>
                             <TextBlock Grid.Column="1" Grid.Row="0"                                     

@@ -9,7 +9,7 @@
              xmlns:wpfHelpers="clr-namespace:NETworkManager.Utilities.WPF;assembly=NETworkManager.Utilities.WPF"
              xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
              xmlns:simpleChildWindow="clr-namespace:MahApps.Metro.SimpleChildWindow;assembly=MahApps.Metro.SimpleChildWindow"
-             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:icons="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls"
              CloseButtonCommand="{Binding Path=CancelCommand}"
              Style="{StaticResource DefaultChildWindow}"
              Loaded="ChildWindow_OnLoaded"
@@ -39,7 +39,7 @@
             </Grid.RowDefinitions>
             <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.Name}" />
             <TextBox x:Name="TextBoxName" Grid.Column="2" Grid.Row="0"
-             mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleSNMPMIB}">
+             mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleSNMPMIB}" FontFamily="{StaticResource Fonts.Family.Mono}">
                 <TextBox.Style>
                     <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}">
                         <Style.Triggers>
@@ -70,7 +70,7 @@
                 </TextBox.Style>
             </TextBox>
             <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.OID}" />
-            <TextBox x:Name="TextBoxOID" Grid.Column="2" Grid.Row="2">
+            <TextBox FontFamily="{StaticResource Fonts.Family.Mono}" x:Name="TextBoxOID" Grid.Column="2" Grid.Row="2">
                 <TextBox.Resources>
                     <wpfHelpers:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
                 </TextBox.Resources>

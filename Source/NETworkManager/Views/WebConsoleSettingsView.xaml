@@ -6,6 +6,7 @@
              xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
              xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
+             xmlns:icons="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls"
              xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
              mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:WebConsoleSettingsViewModel}">
     <UserControl.Resources>
@@ -43,9 +44,9 @@
                    Margin="0,0,0,10" />
         <Button Content="{x:Static localization:Strings.DeleteBrowsingData}" Command="{Binding Path=DeleteBrowsingDataCommand}"
                 Style="{StaticResource DefaultButton}" HorizontalAlignment="Left" />
-        <TextBlock Text="{Binding DeleteBrowsingDataStatusMessage}"
+        <icons:StatusMessageText Level="{Binding DeleteBrowsingDataStatusMessageLevel}"
+                   Text="{Binding DeleteBrowsingDataStatusMessage}"
                    Visibility="{Binding IsDeleteBrowsingDataStatusMessageDisplayed, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}"
-                   Margin="0,10,0,0"
-                   Style="{StaticResource StatusMessageTextBlock}" />
+                   Margin="0,10,0,0" />
     </StackPanel>
 </UserControl>

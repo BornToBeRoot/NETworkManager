@@ -4,7 +4,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
-             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:icons="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls"
              xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
              xmlns:network="clr-namespace:NETworkManager.Models.Network;assembly=NETworkManager.Models"
              xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
@@ -18,6 +18,7 @@
     <UserControl.Resources>
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
         <converters:TcpStateToStringConverter x:Key="TcpStateToStringConverter" />
+        <converters:TcpStateToStatusLevelConverter x:Key="TcpStateToStatusLevelConverter" />
         <wpfHelpers:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
     </UserControl.Resources>
     <TabControl Style="{StaticResource DefaultTabControl}">
@@ -36,7 +37,7 @@
                     </Grid.ColumnDefinitions>
                     <TextBlock Grid.Column="0"
                                Style="{StaticResource HeaderTextBlock}"
-                               Text="{x:Static localization:Strings.Connections}"
+                               Text="{x:Static localization:Strings.ActiveConnections}"
                                VerticalAlignment="Center" />
                     <internalControls:RefreshStatusControl Grid.Column="1"
                                                            LastRefreshTime="{Binding LastRefreshTime}"
@@ -60,7 +61,7 @@
                                        wpfHelpers:ReloadAnimationHelper.IsReloading="{Binding IsRefreshing}">
                                 <Rectangle.OpacityMask>
                                     <VisualBrush Stretch="Uniform"
-                                                 Visual="{iconPacks:Material Kind=Refresh}" />
+                                                 Visual="{icons:Lucide Kind=RefreshCw}" />
                                 </Rectangle.OpacityMask>
                                 <Rectangle.Style>
                                     <Style TargetType="{x:Type TypeName=Rectangle}">
@@ -141,7 +142,7 @@
                                 <MenuItem.Icon>
                                     <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                         <Rectangle.OpacityMask>
-                                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=FileMoveOutline}" />
+                                            <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=FileOutput}" />
                                         </Rectangle.OpacityMask>
                                     </Rectangle>
                                 </MenuItem.Icon>
@@ -153,7 +154,7 @@
                                 <MenuItem.Icon>
                                     <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                         <Rectangle.OpacityMask>
-                                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=FileMoveOutline}" />
+                                            <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=FileOutput}" />
                                         </Rectangle.OpacityMask>
                                     </Rectangle>
                                 </MenuItem.Icon>
@@ -176,24 +177,35 @@
                         <DataGridTextColumn Header="{x:Static Member=localization:Strings.Protocol}"
                                             Binding="{Binding Path=(network:ConnectionInfo.Protocol)}"
                                             SortMemberPath="Protocol" MinWidth="100" />
-                        <DataGridTextColumn Header="{x:Static Member=localization:Strings.LocalIPAddress}"
+                        <DataGridTextColumn Header="{x:Static Member=localization:Strings.LocalIPAddress}" FontFamily="{StaticResource Fonts.Family.Mono}"
                                             Binding="{Binding Path=(network:ConnectionInfo.LocalIPAddress)}"
                                             SortMemberPath="LocalIPAddress" MinWidth="150" />
-                        <DataGridTextColumn Header="{x:Static Member=localization:Strings.LocalPort}"
+                        <DataGridTextColumn Header="{x:Static Member=localization:Strings.LocalPort}" FontFamily="{StaticResource Fonts.Family.Mono}"
                                             Binding="{Binding Path=(network:ConnectionInfo.LocalPort)}"
                                             SortMemberPath="LocalPort" MinWidth="100" />
-                        <DataGridTextColumn Header="{x:Static Member=localization:Strings.RemoteIPAddress}"
+                        <DataGridTextColumn Header="{x:Static Member=localization:Strings.RemoteIPAddress}" FontFamily="{StaticResource Fonts.Family.Mono}"
                                             Binding="{Binding Path=(network:ConnectionInfo.RemoteIPAddress)}"
                                             SortMemberPath="RemoteIPAddress" MinWidth="150" />
-                        <DataGridTextColumn Header="{x:Static Member=localization:Strings.RemotePort}"
+                        <DataGridTextColumn Header="{x:Static Member=localization:Strings.RemotePort}" FontFamily="{StaticResource Fonts.Family.Mono}"
                                             Binding="{Binding Path=(network:ConnectionInfo.RemotePort)}"
                                             SortMemberPath="RemotePort" MinWidth="100" />
-                        <DataGridTextColumn Header="{x:Static Member=localization:Strings.RemoteHostname}"
+                        <DataGridTextColumn Header="{x:Static Member=localization:Strings.RemoteHostname}" FontFamily="{StaticResource Fonts.Family.Mono}"
                                             Binding="{Binding Path=(network:ConnectionInfo.RemoteHostname)}"
                                             SortMemberPath="RemoteHostname" MinWidth="100" />
-                        <DataGridTextColumn Header="{x:Static Member=localization:Strings.State}"
-                                            Binding="{Binding Path=(network:ConnectionInfo.TcpState), Converter={StaticResource ResourceKey=TcpStateToStringConverter}}"
-                                            SortMemberPath="TcpState" MinWidth="150" />
+                        <DataGridTemplateColumn Header="{x:Static Member=localization:Strings.State}"
+                                                ClipboardContentBinding="{Binding Path=(network:ConnectionInfo.TcpState), Converter={StaticResource ResourceKey=TcpStateToStringConverter}}"
+                                                SortMemberPath="TcpState" MinWidth="150">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                        <Ellipse Style="{StaticResource StatusDot}"
+                                                 Tag="{Binding Path=(network:ConnectionInfo.TcpState), Converter={StaticResource ResourceKey=TcpStateToStatusLevelConverter}}" />
+                                        <TextBlock Text="{Binding Path=(network:ConnectionInfo.TcpState), Converter={StaticResource ResourceKey=TcpStateToStringConverter}}"
+                                                   VerticalAlignment="Center" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
                         <DataGridTextColumn Header="{x:Static Member=localization:Strings.ProcessID}"
                                             Binding="{Binding Path=(network:ConnectionInfo.ProcessId)}"
                                             SortMemberPath="ProcessId" MinWidth="150" />

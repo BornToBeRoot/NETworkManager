@@ -7,7 +7,7 @@
                        xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
                        xmlns:validators="clr-namespace:NETworkManager.Validators;assembly=NETworkManager.Validators"
                        xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
-                       xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+                       xmlns:icons="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls"
                        xmlns:settings="clr-namespace:NETworkManager.Settings;assembly=NETworkManager.Settings"
                        xmlns:webview="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
                        mc:Ignorable="d" Loaded="UserControl_Loaded"
@@ -41,7 +41,7 @@
             <Button Command="{Binding GoBackCommand}" Grid.Column="0" Style="{StaticResource CleanButton}">
                 <Rectangle Width="20" Height="20">
                     <Rectangle.OpacityMask>
-                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ArrowLeftCircleOutline}" />
+                        <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=CircleArrowLeft}" />
                     </Rectangle.OpacityMask>
                     <Rectangle.Style>
                         <Style TargetType="{x:Type Rectangle}">
@@ -60,7 +60,7 @@
             <Button Command="{Binding GoForwardCommand}" Grid.Column="2" Style="{StaticResource CleanButton}">
                 <Rectangle Width="20" Height="20">
                     <Rectangle.OpacityMask>
-                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ArrowRightCircleOutline}" />
+                        <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=CircleArrowRight}" />
                     </Rectangle.OpacityMask>
                     <Rectangle.Style>
                         <Style TargetType="{x:Type Rectangle}">
@@ -79,7 +79,7 @@
             <Button Command="{Binding ReloadCommand}" Grid.Column="4" Style="{StaticResource CleanButton}">
                 <Rectangle Width="20" Height="20">
                     <Rectangle.OpacityMask>
-                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Refresh}" />
+                        <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=RefreshCw}" />
                     </Rectangle.OpacityMask>
                     <Rectangle.Style>
                         <Style TargetType="{x:Type Rectangle}">
@@ -95,7 +95,7 @@
                     </Rectangle.Style>
                 </Rectangle>
             </Button>
-            <TextBox x:Name="TextBoxUrl" Grid.Column="6" Style="{StaticResource DefaultTextBox}"
+            <TextBox FontFamily="{StaticResource Fonts.Family.Mono}" x:Name="TextBoxUrl" Grid.Column="6" Style="{StaticResource DefaultTextBox}"
                      IsReadOnly="{Binding IsLoading}">
                 <TextBox.Text>
                     <Binding Path="Url" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
@@ -106,7 +106,7 @@
                     </Binding>
                 </TextBox.Text>
             </TextBox>
-            <mah:ProgressRing Grid.Column="6" Width="20" Height="20" HorizontalAlignment="Right"
+            <mah:ProgressRing Style="{StaticResource ProgressRingSmall}" Grid.Column="6" HorizontalAlignment="Right"
                               Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityHiddenConverter}}"
                               Margin="0,0,4,0" />
             <Button Command="{Binding NavigateCommand}"
@@ -126,7 +126,7 @@
                 </Button.Style>
                 <Rectangle Width="20" Height="20">
                     <Rectangle.OpacityMask>
-                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Play}" />
+                        <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=Play}" />
                     </Rectangle.OpacityMask>
                     <Rectangle.Style>
                         <Style TargetType="{x:Type Rectangle}">
@@ -148,7 +148,7 @@
                     Grid.Column="8">
                 <Rectangle Width="20" Height="20">
                     <Rectangle.OpacityMask>
-                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=WindowClose}" />
+                        <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=X}" />
                     </Rectangle.OpacityMask>
                     <Rectangle.Style>
                         <Style TargetType="{x:Type Rectangle}">
@@ -158,7 +158,7 @@
                                 <DataTrigger
                                     Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}"
                                     Value="True">
-                                    <Setter Property="Fill" Value="Red" />
+                                    <Setter Property="Fill" Value="{DynamicResource Brushes.Status.Error}" />
                                 </DataTrigger>
                             </Style.Triggers>
                         </Style>
@@ -166,21 +166,21 @@
                 </Rectangle>
             </Button>
         </Grid>
-        <webview:WebView2 Grid.Row="2" x:Name="Browser">
-            <webview:WebView2.Style>
-                <Style TargetType="{x:Type webview:WebView2}">
-                    <Style.Triggers>
-                        <DataTrigger
-                            Binding="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=IsWebConsoleWindowDragging}"
-                            Value="True">
-                            <Setter Property="Visibility" Value="Hidden" />
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding FirstLoad}" Value="True">
-                            <Setter Property="Visibility" Value="Collapsed" />
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </webview:WebView2.Style>
-        </webview:WebView2>
+        <!-- Placeholder instead of the embedded window while a tab is dragged (drop zones of Dragablz
+             visible above it) -->
+        <local:EmbeddedWindowDragPresenter Grid.Row="2" ApplicationName="WebConsole"
+                                           IsDragging="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=IsWebConsoleWindowDragging}">
+            <webview:WebView2 x:Name="Browser">
+                <webview:WebView2.Style>
+                    <Style TargetType="{x:Type webview:WebView2}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding FirstLoad}" Value="True">
+                                <Setter Property="Visibility" Value="Collapsed" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </webview:WebView2.Style>
+            </webview:WebView2>
+        </local:EmbeddedWindowDragPresenter>
     </Grid>
 </local:UserControlBase>

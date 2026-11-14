@@ -9,7 +9,7 @@
              xmlns:network="clr-namespace:NETworkManager.Models.Network;assembly=NETworkManager.Models"
              xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
-             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:icons="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls"
              xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"             
              xmlns:interactivity="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
@@ -48,7 +48,7 @@
             <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.Name}" />
             <TextBox x:Name="TextBoxName" Grid.Column="2" Grid.Row="0"
                    IsReadOnly="{Binding IsNameReadOnly}"
-                   mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleGroupServers}">
+                   mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleGroupServers}" FontFamily="{StaticResource Fonts.Family.Mono}">
                 <TextBox.Text>
                     <Binding Path="Name" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
@@ -76,7 +76,7 @@
                         <MenuItem.Icon>
                             <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                 <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Close}" />
+                                    <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=X}" />
                                 </Rectangle.OpacityMask>
                             </Rectangle>
                         </MenuItem.Icon>
@@ -84,11 +84,11 @@
                 </ContextMenu>
             </controls:MultiSelectDataGrid.Resources>
             <controls:MultiSelectDataGrid.Columns>
-                <DataGridTextColumn Header="{x:Static localization:Strings.Server}"
+                <DataGridTextColumn Header="{x:Static localization:Strings.Server}" FontFamily="{StaticResource Fonts.Family.Mono}"
                                   Binding="{Binding (network:ServerConnectionInfo.Server)}"
                                   SortMemberPath="Server"
                                   Width="250" />
-                <DataGridTextColumn Header="{x:Static localization:Strings.Port}"
+                <DataGridTextColumn Header="{x:Static localization:Strings.Port}" FontFamily="{StaticResource Fonts.Family.Mono}"
                                   SortMemberPath="Port"
                                   Binding="{Binding (network:ServerConnectionInfo.Port)}"
                                   MinWidth="150" />
@@ -110,7 +110,7 @@
                 <ColumnDefinition Width="10" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            <TextBox x:Name="TextBoxServer" Grid.Column="0" Grid.Row="0"
+            <TextBox FontFamily="{StaticResource Fonts.Family.Mono}" x:Name="TextBoxServer" Grid.Column="0" Grid.Row="0"
                    mah:TextBoxHelper.Watermark="{Binding ServerWatermark}"
                    PreviewKeyDown="TextBoxServerOrPort_PreviewKeyDown">
                 <TextBox.Text>
@@ -127,7 +127,7 @@
                     </Binding>
                 </TextBox.Text>
             </TextBox>
-            <TextBox x:Name="TextBoxPort" Grid.Column="2" Grid.Row="0"
+            <TextBox FontFamily="{StaticResource Fonts.Family.Mono}" x:Name="TextBoxPort" Grid.Column="2" Grid.Row="0"
                    mah:TextBoxHelper.Watermark="{Binding PortWatermark}"
                    PreviewKeyDown="TextBoxServerOrPort_PreviewKeyDown">
                 <TextBox.Text>
@@ -171,7 +171,7 @@
                 </Button.Resources>
                 <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                     <Rectangle.OpacityMask>
-                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Plus}" />
+                        <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=Plus}" />
                     </Rectangle.OpacityMask>
                 </Rectangle>
             </Button>

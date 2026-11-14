@@ -8,6 +8,9 @@ namespace NETworkManager.Settings;
 /// </summary>
 public class PolicyInfo
 {
+    [JsonPropertyName("Appearance_Animations")]
+    public bool? Appearance_Animations { get; set; }
+
     [JsonPropertyName("Update_CheckForUpdatesAtStartup")]
     public bool? Update_CheckForUpdatesAtStartup { get; set; }
 

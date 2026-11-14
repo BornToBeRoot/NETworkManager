@@ -232,6 +232,22 @@ public class DNSLookupViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    ///     Level of the status message (icon and color, see <see cref="StatusMessageText" />).
+    /// </summary>
+    public StatusLevel StatusMessageLevel
+    {
+        get;
+        private set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
     #endregion
 
     #region Contructor, load settings
@@ -256,7 +272,7 @@ public class DNSLookupViewModel : ViewModelBase
         {
             _message = message;
 
-            AppendStatusMessage(message);
+            AppendStatusMessage(message, StatusLevel.None);
         }
 
         _isLoading = true;
@@ -377,11 +393,12 @@ public class DNSLookupViewModel : ViewModelBase
     {
         IsStatusMessageDisplayed = false;
         StatusMessage = string.Empty;
+        StatusMessageLevel = StatusLevel.None;
 
         // Message of the tab (see constructor): still shown with the first lookup
         if (_message != null)
         {
-            AppendStatusMessage(_message);
+            AppendStatusMessage(_message, StatusLevel.None);
 
             _message = null;
         }
@@ -524,12 +541,14 @@ public class DNSLookupViewModel : ViewModelBase
     /// Appends the specified message to the current status message, adding a new line if a message already exists.
     /// </summary>
     /// <param name="message">The status message text to append. Cannot be null.</param>
-    private void AppendStatusMessage(string message)
+    private void AppendStatusMessage(string message, StatusLevel level = StatusLevel.Error)
     {
         if (!string.IsNullOrEmpty(StatusMessage))
             StatusMessage += Environment.NewLine;
 
         StatusMessage += message;
+
+        StatusMessageLevel = StatusMessageLevel.MostSevere(level);
         IsStatusMessageDisplayed = true;
     }
 
@@ -605,23 +624,8 @@ public class DNSLookupViewModel : ViewModelBase
     /// </summary>
     private void DNSLookup_LookupError(object sender, DNSLookupErrorArgs e)
     {
-        Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
-        {
-            // Build the message based on the information in the DNSLookupErrorArgs
-            var statusMessage = $"{e.Query} @ {e.IPEndPoint} ==> {e.ErrorMessage}";
-
-            // Show the message
-            if (!IsStatusMessageDisplayed)
-            {
-                StatusMessage = statusMessage;
-                IsStatusMessageDisplayed = true;
-
-                return;
-            }
-
-            // Append the message
-            StatusMessage += Environment.NewLine + statusMessage;
-        }));
+        Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal,
+            new Action(() => AppendStatusMessage($"{e.Query} @ {e.IPEndPoint} ==> {e.ErrorMessage}")));
     }
 
     /// <summary>

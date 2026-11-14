@@ -1,11 +1,65 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls">
     <Style x:Key="DefaultToolTip" TargetType="{x:Type TypeName=ToolTip}"
            BasedOn="{StaticResource  ResourceKey=MahApps.Styles.ToolTip}">
         <Setter Property="FontSize" Value="14" />
-        <Setter Property="BorderBrush" Value="{DynamicResource  ResourceKey=MahApps.Brushes.Gray8}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource Brushes.Surface.Border}" />
         <Setter Property="Foreground" Value="{DynamicResource  ResourceKey=MahApps.Brushes.Text}" />
         <Setter Property="Background" Value="{DynamicResource  ResourceKey=MahApps.Brushes.Window.Background}" />
+        <!-- Template of MahApps (MahApps.Styles.ToolTip, 2.4.11) with rounded corners and a shorter fade (open 120 ms,
+             close 100 ms instead of 300 / 400 ms) -->
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ToolTip}">
+                    <Border x:Name="Root"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="{StaticResource CornerRadius.Control}"
+                            Opacity="0"
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                        <Border.Resources>
+                            <Storyboard x:Key="Visible State" />
+                            <Storyboard x:Key="Normal State" />
+                        </Border.Resources>
+                        <mah:ContentControlEx x:Name="PART_ContentPresenter"
+                                              Margin="{TemplateBinding Padding}"
+                                              Content="{TemplateBinding Content}"
+                                              ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mah:ControlsHelper.ContentCharacterCasing)}"
+                                              ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                              ContentTemplate="{TemplateBinding ContentTemplate}"
+                                              ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                                              FontSize="{TemplateBinding FontSize}"
+                                              Foreground="{TemplateBinding Foreground}"
+                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="OpenStates">
+                                <VisualStateGroup.Transitions>
+                                    <VisualTransition GeneratedDuration="0:0:0.1" From="Open" To="Closed" />
+                                </VisualStateGroup.Transitions>
+                                <VisualState x:Name="Closed">
+                                    <Storyboard>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="Root"
+                                                                       Storyboard.TargetProperty="(UIElement.Opacity)">
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.1" Value="0" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Open">
+                                    <Storyboard>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="Root"
+                                                                       Storyboard.TargetProperty="(UIElement.Opacity)">
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.12" Value="1" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
 
     <Style TargetType="{x:Type TypeName=ToolTip}" BasedOn="{StaticResource ResourceKey=DefaultToolTip}" />
@@ -18,6 +72,7 @@
                     <Border x:Name="Root" Background="{TemplateBinding Property=Background}" MaxWidth="400"
                             BorderBrush="{TemplateBinding Property=BorderBrush}"
                             BorderThickness="{TemplateBinding Property=BorderThickness}" Opacity="0"
+                            CornerRadius="{StaticResource CornerRadius.Control}"
                             SnapsToDevicePixels="{TemplateBinding Property=SnapsToDevicePixels}" Padding="5">
                         <Border.Resources>
                             <Storyboard x:Key="Visible State" />
@@ -28,13 +83,13 @@
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="OpenStates">
                                 <VisualStateGroup.Transitions>
-                                    <VisualTransition GeneratedDuration="0:0:0.3" From="Open" To="Closed" />
+                                    <VisualTransition GeneratedDuration="0:0:0.1" From="Open" To="Closed" />
                                 </VisualStateGroup.Transitions>
                                 <VisualState x:Name="Closed">
                                     <Storyboard>
                                         <DoubleAnimationUsingKeyFrames Storyboard.TargetName="Root"
                                                                        Storyboard.TargetProperty="(UIElement.Opacity)">
-                                            <EasingDoubleKeyFrame KeyTime="0:0:0.4" Value="0" />
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.1" Value="0" />
                                         </DoubleAnimationUsingKeyFrames>
                                     </Storyboard>
                                 </VisualState>
@@ -42,7 +97,7 @@
                                     <Storyboard>
                                         <DoubleAnimationUsingKeyFrames Storyboard.TargetName="Root"
                                                                        Storyboard.TargetProperty="(UIElement.Opacity)">
-                                            <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="1" />
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.12" Value="1" />
                                         </DoubleAnimationUsingKeyFrames>
                                     </Storyboard>
                                 </VisualState>

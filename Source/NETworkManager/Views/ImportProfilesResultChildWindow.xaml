@@ -9,7 +9,7 @@
              xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
              xmlns:wpfHelpers="clr-namespace:NETworkManager.Utilities.WPF;assembly=NETworkManager.Utilities.WPF"
              xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
-             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:icons="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls"
              xmlns:simpleChildWindow="clr-namespace:MahApps.Metro.SimpleChildWindow;assembly=MahApps.Metro.SimpleChildWindow"
              CloseButtonCommand="{Binding Path=CancelCommand}"
              Style="{StaticResource ResourceKey=DefaultChildWindow}"
@@ -102,7 +102,7 @@
                                                wpfHelpers:DataGridHelper.IsFillColumn="True">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate DataType="{x:Type TypeName=viewModels:ImportCandidateItem}">
-                                    <TextBlock Text="{Binding Path=Host}" />
+                                    <TextBlock Text="{Binding Path=Host}" FontFamily="{StaticResource Fonts.Family.Mono}" />
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
@@ -114,7 +114,7 @@
                                                    Fill="{DynamicResource ResourceKey=MahApps.Brushes.Gray5}"
                                                    Margin="0,0,4,0">
                                             <Rectangle.OpacityMask>
-                                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Plus}" />
+                                                <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=Plus}" />
                                             </Rectangle.OpacityMask>
                                         </Rectangle>
                                         <TextBlock x:Name="StatusText"
@@ -124,24 +124,24 @@
                                     </StackPanel>
                                     <DataTemplate.Triggers>
                                         <DataTrigger Binding="{Binding Path=AlreadyExists}" Value="True">
-                                            <Setter TargetName="StatusIcon" Property="Fill" Value="#badc58" />
+                                            <Setter TargetName="StatusIcon" Property="Fill" Value="{DynamicResource Brushes.Status.Success}" />
                                             <Setter TargetName="StatusIcon" Property="OpacityMask">
                                                 <Setter.Value>
-                                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Check}" />
+                                                    <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=Check}" />
                                                 </Setter.Value>
                                             </Setter>
                                             <Setter TargetName="StatusText" Property="Text" Value="{x:Static Member=localization:Strings.ImportProfiles_StatusImported}" />
-                                            <Setter TargetName="StatusText" Property="Foreground" Value="#badc58" />
+                                            <Setter TargetName="StatusText" Property="Foreground" Value="{DynamicResource Brushes.Status.Success}" />
                                         </DataTrigger>
                                         <DataTrigger Binding="{Binding Path=CanImport}" Value="False">
-                                            <Setter TargetName="StatusIcon" Property="Fill" Value="#b95353" />
+                                            <Setter TargetName="StatusIcon" Property="Fill" Value="{DynamicResource Brushes.Status.Error}" />
                                             <Setter TargetName="StatusIcon" Property="OpacityMask">
                                                 <Setter.Value>
-                                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=AlertOutline}" />
+                                                    <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=TriangleAlert}" />
                                                 </Setter.Value>
                                             </Setter>
                                             <Setter TargetName="StatusText" Property="Text" Value="{x:Static Member=localization:Strings.ImportProfiles_StatusNoHost}" />
-                                            <Setter TargetName="StatusText" Property="Foreground" Value="#b95353" />
+                                            <Setter TargetName="StatusText" Property="Foreground" Value="{DynamicResource Brushes.Status.Error}" />
                                         </DataTrigger>
                                     </DataTemplate.Triggers>
                                 </DataTemplate>
@@ -150,8 +150,7 @@
                     </DataGrid.Columns>
                 </DataGrid>
 
-                <mah:ProgressRing Grid.Row="0"
-                                  Height="50" Width="50"
+                <mah:ProgressRing Style="{StaticResource ProgressRingLarge}" Grid.Row="0"
                                   IsActive="{Binding Path=IsSearching}" />
 
                 <StackPanel Grid.Row="2" Orientation="Horizontal">
@@ -167,7 +166,7 @@
 
             <!-- Vertical separator -->
             <Rectangle Grid.Row="0" Grid.Column="1" Grid.RowSpan="2"
-                       Fill="{DynamicResource ResourceKey=MahApps.Brushes.Gray8}"
+                       Fill="{DynamicResource Brushes.Surface.Border}"
                        Width="1" />
             
             <!-- Right header -->

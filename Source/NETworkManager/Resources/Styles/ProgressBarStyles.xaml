@@ -1,0 +1,38 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls">
+    <!--
+        Progress bars of the application (busy bar below the input of the tools, scan progress, countdowns): accent
+        color on a subtle track (theme foreground with a low opacity - the MahApps track is 12 % white, invisible in
+        the light theme), 4 high.
+    -->
+    <Style x:Key="DefaultMetroProgressBar" TargetType="{x:Type mah:MetroProgressBar}"
+           BasedOn="{StaticResource MahApps.Styles.MetroProgressBar}">
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Accent}" />
+        <Setter Property="Background" Value="{DynamicResource Brushes.Control.MouseOver}" />
+        <Setter Property="MinHeight" Value="4" />
+        <Setter Property="Height" Value="4" />
+    </Style>
+
+    <Style TargetType="{x:Type mah:MetroProgressBar}" BasedOn="{StaticResource DefaultMetroProgressBar}" />
+
+    <!--
+        Spinner (something is loading / connecting) of the application: the ProgressRing of MahApps in three sizes.
+        Small 16: inline (next to an input, widgets), Medium 24: dialogs / next to a button, Large 48: centered in an
+        empty area (connecting, loading).
+    -->
+    <Style x:Key="ProgressRingSmall" TargetType="{x:Type mah:ProgressRing}" BasedOn="{StaticResource {x:Type mah:ProgressRing}}">
+        <Setter Property="Width" Value="16" />
+        <Setter Property="Height" Value="16" />
+        <Setter Property="MinWidth" Value="16" />
+        <Setter Property="MinHeight" Value="16" />
+    </Style>
+    <Style x:Key="ProgressRingMedium" TargetType="{x:Type mah:ProgressRing}" BasedOn="{StaticResource {x:Type mah:ProgressRing}}">
+        <Setter Property="Width" Value="24" />
+        <Setter Property="Height" Value="24" />
+    </Style>
+    <Style x:Key="ProgressRingLarge" TargetType="{x:Type mah:ProgressRing}" BasedOn="{StaticResource {x:Type mah:ProgressRing}}">
+        <Setter Property="Width" Value="48" />
+        <Setter Property="Height" Value="48" />
+    </Style>
+</ResourceDictionary>

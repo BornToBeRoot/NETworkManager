@@ -7,7 +7,7 @@
                              xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
                              xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
                              xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
-                             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+                             xmlns:icons="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls"
                              xmlns:resources="clr-namespace:NETworkManager.Properties"
                              mc:Ignorable="d"
                              Title="{x:Static resources:Resources.NETworkManager_ProjectName}" Topmost="True"
@@ -28,7 +28,7 @@
                         <Rectangle Width="20" Height="20"
                                    Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
                             <Rectangle.OpacityMask>
-                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Book}" />
+                                <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=BookOpen}" />
                             </Rectangle.OpacityMask>
                         </Rectangle>
                     </StackPanel>

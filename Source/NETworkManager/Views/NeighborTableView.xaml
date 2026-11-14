@@ -4,7 +4,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
-    xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+    xmlns:icons="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls"
     xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
     xmlns:network="clr-namespace:NETworkManager.Models.Network;assembly=NETworkManager.Models"
     xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
@@ -21,6 +21,7 @@
         <converters:BooleanToStringConverter x:Key="BooleanToStringConverter" />
         <converters:PhysicalAddressToStringConverter x:Key="PhysicalAddressToStringConverter" />
         <converters:NeighborStateToStringConverter x:Key="NeighborStateToStringConverter" />
+        <converters:NeighborStateToStatusLevelConverter x:Key="NeighborStateToStatusLevelConverter" />
         <wpfHelpers:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
     </UserControl.Resources>
     <UserControl.InputBindings>
@@ -47,7 +48,7 @@
                     </Grid.ColumnDefinitions>
                     <TextBlock Grid.Column="0"
                                Style="{StaticResource HeaderTextBlock}"
-                               Text="{x:Static localization:Strings.NeighborTable}"
+                               Text="{x:Static localization:Strings.NeighborEntries}"
                                VerticalAlignment="Center" />
                     <internalControls:RefreshStatusControl Grid.Column="1"
                                                            LastRefreshTime="{Binding LastRefreshTime}"
@@ -71,7 +72,7 @@
                                        wpfHelpers:ReloadAnimationHelper.IsReloading="{Binding IsRefreshing}">
                                 <Rectangle.OpacityMask>
                                     <VisualBrush Stretch="Uniform"
-                                                 Visual="{iconPacks:Material Kind=Refresh}" />
+                                                 Visual="{icons:Lucide Kind=RefreshCw}" />
                                 </Rectangle.OpacityMask>
                                 <Rectangle.Style>
                                     <Style TargetType="{x:Type TypeName=Rectangle}">
@@ -111,7 +112,7 @@
                                 <MenuItem.Icon>
                                     <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                         <Rectangle.OpacityMask>
-                                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Close}" />
+                                            <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=X}" />
                                         </Rectangle.OpacityMask>
                                     </Rectangle>
                                 </MenuItem.Icon>
@@ -146,7 +147,7 @@
                                     <Rectangle Width="16" Height="16"
                                                Fill="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}">
                                         <Rectangle.OpacityMask>
-                                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=FileMoveOutline}" />
+                                            <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=FileOutput}" />
                                         </Rectangle.OpacityMask>
                                     </Rectangle>
                                 </MenuItem.Icon>
@@ -158,7 +159,7 @@
                                 <MenuItem.Icon>
                                     <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                         <Rectangle.OpacityMask>
-                                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=FileMoveOutline}" />
+                                            <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=FileOutput}" />
                                         </Rectangle.OpacityMask>
                                     </Rectangle>
                                 </MenuItem.Icon>
@@ -178,7 +179,7 @@
                         </Style>
                     </controls:MultiSelectDataGrid.RowStyle>
                     <controls:MultiSelectDataGrid.Columns>
-                        <DataGridTextColumn Header="{x:Static localization:Strings.IPAddress}"
+                        <DataGridTextColumn Header="{x:Static localization:Strings.IPAddress}" FontFamily="{StaticResource Fonts.Family.Mono}"
                                             Binding="{Binding (network:NeighborInfo.IPAddress)}"
                                             SortMemberPath="IPAddress"
                                             MinWidth="150" />
@@ -186,14 +187,25 @@
                                             Binding="{Binding (network:NeighborInfo.InterfaceAlias)}"
                                             SortMemberPath="InterfaceAlias"
                                             MinWidth="200" />
-                        <DataGridTextColumn Header="{x:Static localization:Strings.MACAddress}"
+                        <DataGridTextColumn Header="{x:Static localization:Strings.MACAddress}" FontFamily="{StaticResource Fonts.Family.Mono}"
                                             Binding="{Binding (network:NeighborInfo.MACAddress), Converter={StaticResource PhysicalAddressToStringConverter}}"
                                             SortMemberPath="MACAddress"
                                             MinWidth="180" />
-                        <DataGridTextColumn Header="{x:Static localization:Strings.State}"
-                                            Binding="{Binding (network:NeighborInfo.State), Converter={StaticResource NeighborStateToStringConverter}}"
-                                            SortMemberPath="State"
-                                            MinWidth="100" />
+                        <DataGridTemplateColumn Header="{x:Static localization:Strings.State}"
+                                                ClipboardContentBinding="{Binding (network:NeighborInfo.State), Converter={StaticResource NeighborStateToStringConverter}}"
+                                                SortMemberPath="State"
+                                                MinWidth="100">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                        <Ellipse Style="{StaticResource StatusDot}"
+                                                 Tag="{Binding (network:NeighborInfo.State), Converter={StaticResource NeighborStateToStatusLevelConverter}}" />
+                                        <TextBlock Text="{Binding (network:NeighborInfo.State), Converter={StaticResource NeighborStateToStringConverter}}"
+                                                   VerticalAlignment="Center" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
                         <DataGridTextColumn Header="{x:Static localization:Strings.Multicast}"
                                             Binding="{Binding (network:NeighborInfo.IsMulticast), Converter={StaticResource BooleanToStringConverter}}"
                                             SortMemberPath="IsMulticast"
@@ -234,7 +246,7 @@
                                 </Grid.ColumnDefinitions>
                                 <Rectangle Style="{StaticResource ButtonWithImageRectangle}">
                                     <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Close}" />
+                                        <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=X}" />
                                     </Rectangle.OpacityMask>
                                 </Rectangle>
                                 <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.DeleteTable}"
@@ -256,7 +268,7 @@
                                 </Grid.ColumnDefinitions>
                                 <Rectangle Style="{StaticResource ButtonWithImageRectangle}">
                                     <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Plus}" />
+                                        <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=Plus}" />
                                     </Rectangle.OpacityMask>
                                 </Rectangle>
                                 <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.AddEntryDots}"
@@ -266,14 +278,14 @@
                     </WrapPanel>
                 </Grid>
                 <!-- Row 7: Admin note -->
-                <Grid Grid.Column="0" Grid.Row="7"
+                <Border Grid.Column="0" Grid.Row="7"
                       Background="{DynamicResource MahApps.Brushes.Gray10}"
+                      CornerRadius="{StaticResource CornerRadius.Card}"
                       Visibility="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=IsAdmin, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}"
                       Margin="0,10,0,0">
                     <StackPanel VerticalAlignment="Center" HorizontalAlignment="Stretch"
                                 Margin="10">
-                        <TextBlock Text="{x:Static localization:Strings.NeighborTableAdminMessage}"
-                                   Style="{StaticResource MessageTextBlock}"
+                        <icons:EmptyStateMessage Icon="Shield" IconSize="24" Text="{x:Static localization:Strings.NeighborTableAdminMessage}"
                                    Margin="0,0,0,10" />
                         <Button Command="{Binding RestartAsAdminCommand}"
                                 HorizontalAlignment="Center"
@@ -288,7 +300,7 @@
                                                Margin="10,5,0,5"
                                                Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                         <Rectangle.OpacityMask>
-                                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Shield}" />
+                                            <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=Shield}" />
                                         </Rectangle.OpacityMask>
                                     </Rectangle>
                                     <TextBlock Grid.Column="1" Grid.Row="0"
@@ -300,7 +312,7 @@
                             </Button.Content>
                         </Button>
                     </StackPanel>
-                </Grid>
+                </Border>
             </Grid>
         </TabItem>
     </TabControl>

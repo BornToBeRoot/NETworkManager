@@ -2,6 +2,7 @@ using DnsClient;
 using Lextm.SharpSnmpLib.Messaging;
 using NETworkManager.Controls;
 using NETworkManager.Models;
+using NETworkManager.Models.Appearance;
 using NETworkManager.Models.Export;
 using NETworkManager.Models.Network;
 using NETworkManager.Models.PowerShell;
@@ -249,6 +250,32 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     }
 
+    public bool Window_DynamicTabWidth
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public int Window_MaxTabWidth
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.Window_MaxTabWidth;
+
     // TrayIcon
 
     public bool TrayIcon_AlwaysShowIcon
@@ -332,6 +359,32 @@ public class SettingsInfo : INotifyPropertyChanged
             OnPropertyChanged();
         }
     }
+
+    public AccentGlowIntensity Appearance_AccentGlowIntensity
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.Appearance_AccentGlowIntensity;
+
+    public AnimationMode Appearance_Animations
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.Appearance_Animations;
 
     public bool Appearance_PowerShellModifyGlobalProfile
     {

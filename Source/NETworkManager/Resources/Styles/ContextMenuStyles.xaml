@@ -3,12 +3,166 @@
     <Style x:Key="DefaultContextMenu" TargetType="{x:Type ContextMenu}"
            BasedOn="{StaticResource MahApps.Styles.ContextMenu}">
         <Setter Property="FontSize" Value="14" />
-        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Gray8}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource Brushes.Surface.Border}" />
+        <!-- Template of MahApps (MahApps.Styles.ContextMenu, 2.4.11) with rounded corners (also the shadow). Radius of
+             the controls: the items fill the menu, the square highlight of the first / last item would stick out of a
+             larger radius. -->
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ContextMenu}">
+                    <Grid>
+                        <Border x:Name="LayoutRoot"
+                                Background="{TemplateBinding Background}"
+                                CornerRadius="{StaticResource CornerRadius.Control}" />
+                        <Border x:Name="Border"
+                                Padding="{TemplateBinding Padding}"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="{StaticResource CornerRadius.Control}"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                            <ScrollViewer x:Name="SubMenuScrollViewer"
+                                          CanContentScroll="True"
+                                          Style="{DynamicResource {ComponentResourceKey ResourceId=MenuScrollViewer, TypeInTargetAssembly={x:Type FrameworkElement}}}">
+                                <ItemsPresenter x:Name="ItemsPresenter"
+                                                Margin="0"
+                                                Grid.IsSharedSizeScope="True"
+                                                KeyboardNavigation.DirectionalNavigation="Cycle"
+                                                KeyboardNavigation.TabNavigation="Cycle"
+                                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                            </ScrollViewer>
+                        </Border>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="HasDropShadow" Value="True">
+                            <Setter TargetName="Border" Property="Margin" Value="0 0 6 6" />
+                            <Setter TargetName="LayoutRoot" Property="Effect" Value="{DynamicResource MahApps.DropShadowEffect.Menu}" />
+                            <Setter TargetName="LayoutRoot" Property="Margin" Value="0 0 6 6" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
         <Style.Resources>
-            <SolidColorBrush x:Key="MahApps.Brushes.SubMenu.Border" Color="{DynamicResource MahApps.Colors.Gray8}" />
             <SolidColorBrush x:Key="MahApps.Brushes.RightArrowFill" Color="{DynamicResource MahApps.Colors.Gray3}" />
             <!-- Checkmark of a checkable menu item (accent color by default), like the icons of the menu items -->
             <SolidColorBrush x:Key="MahApps.Brushes.CheckmarkFill" Color="{DynamicResource MahApps.Colors.Gray3}" />
+            <!--
+                Submenus (e.g. "Copy >"): rounded like the context menu. The border is the SubmenuContent template, the
+                shadow is drawn by the SubmenuHeader template (copy of MahApps 2.4.11, Controls.MenuItem.xaml, only the
+                LayoutRoot Rectangle replaced by a rounded Border). Both are resolved via DynamicResource from the menu
+                items, which are children of the context menu.
+            -->
+            <ControlTemplate x:Key="{ComponentResourceKey ResourceId=SubmenuContent, TypeInTargetAssembly={x:Type FrameworkElement}}"
+                             TargetType="{x:Type ContentControl}">
+                <Border Background="{DynamicResource MahApps.Brushes.SubMenu.Background}"
+                        BorderBrush="{DynamicResource MahApps.Brushes.SubMenu.Border}"
+                        BorderThickness="1"
+                        CornerRadius="{StaticResource CornerRadius.Control}">
+                    <ContentPresenter />
+                </Border>
+            </ControlTemplate>
+            <ControlTemplate x:Key="{ComponentResourceKey ResourceId=SubmenuHeaderTemplateKey, TypeInTargetAssembly={x:Type MenuItem}}" TargetType="{x:Type MenuItem}">
+                <Grid SnapsToDevicePixels="True">
+                    <Rectangle x:Name="Bg"
+                               Fill="{TemplateBinding Background}"
+                               Stroke="{TemplateBinding BorderBrush}"
+                               StrokeThickness="1" />
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"
+                                              MinWidth="24"
+                                              SharedSizeGroup="MenuItemIconColumnGroup" />
+                            <ColumnDefinition Width="4" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="6" />
+                            <ColumnDefinition Width="Auto" SharedSizeGroup="MenuItemIGTColumnGroup" />
+                            <ColumnDefinition Width="17" />
+                        </Grid.ColumnDefinitions>
+                        <ContentPresenter x:Name="Icon"
+                                          Margin="1"
+                                          VerticalAlignment="Center"
+                                          ContentSource="Icon"
+                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        <Path x:Name="GlyphPanel"
+                              Margin="5 0 0 0"
+                              HorizontalAlignment="Center"
+                              VerticalAlignment="Center"
+                              Data="{DynamicResource Checkmark}"
+                              Fill="{DynamicResource MahApps.Brushes.CheckmarkFill}"
+                              FlowDirection="LeftToRight"
+                              Visibility="Collapsed" />
+                        <ContentPresenter Grid.Column="2"
+                                          Margin="{TemplateBinding Padding}"
+                                          ContentSource="Header"
+                                          RecognizesAccessKey="True"
+                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        <TextBlock Grid.Column="4"
+                                   Margin="{TemplateBinding Padding}"
+                                   Text="{TemplateBinding InputGestureText}"
+                                   Visibility="Collapsed" />
+                        <Path Grid.Column="5"
+                              Margin="4 0 0 0"
+                              VerticalAlignment="Center"
+                              Data="{DynamicResource RightArrow}"
+                              Fill="{DynamicResource MahApps.Brushes.RightArrowFill}" />
+                    </Grid>
+                    <Grid Margin="2 0 1 0">
+                        <Popup x:Name="PART_Popup"
+                               AllowsTransparency="True"
+                               Focusable="False"
+                               HorizontalOffset="-1"
+                               IsOpen="{Binding IsSubmenuOpen, RelativeSource={RelativeSource TemplatedParent}}"
+                               Placement="Right"
+                               PopupAnimation="{DynamicResource {x:Static SystemParameters.MenuPopupAnimationKey}}"
+                               VerticalOffset="-3">
+                            <Grid x:Name="SubMenuRoot">
+                                <Border x:Name="LayoutRoot"
+                                        Background="{TemplateBinding Background}"
+                                        CornerRadius="{StaticResource CornerRadius.Control}" />
+                                <ContentControl x:Name="SubMenuBorder"
+                                                IsTabStop="False"
+                                                Template="{DynamicResource {ComponentResourceKey ResourceId=SubmenuContent, TypeInTargetAssembly={x:Type FrameworkElement}}}">
+                                    <ScrollViewer x:Name="SubMenuScrollViewer"
+                                                  CanContentScroll="True"
+                                                  Style="{DynamicResource {ComponentResourceKey ResourceId=MenuScrollViewer, TypeInTargetAssembly={x:Type FrameworkElement}}}">
+                                        <ItemsPresenter x:Name="ItemsPresenter"
+                                                        Margin="0"
+                                                        Grid.IsSharedSizeScope="True"
+                                                        KeyboardNavigation.DirectionalNavigation="Cycle"
+                                                        KeyboardNavigation.TabNavigation="Cycle"
+                                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                    </ScrollViewer>
+                                </ContentControl>
+                            </Grid>
+                        </Popup>
+                    </Grid>
+                </Grid>
+                <ControlTemplate.Triggers>
+                    <Trigger Property="IsSuspendingPopupAnimation" Value="True">
+                        <Setter TargetName="PART_Popup" Property="PopupAnimation" Value="None" />
+                    </Trigger>
+                    <Trigger Property="Icon" Value="{x:Null}">
+                        <Setter TargetName="Icon" Property="Visibility" Value="Collapsed" />
+                    </Trigger>
+                    <Trigger Property="IsChecked" Value="True">
+                        <Setter TargetName="GlyphPanel" Property="Visibility" Value="Visible" />
+                        <Setter TargetName="Icon" Property="Visibility" Value="Collapsed" />
+                    </Trigger>
+                    <Trigger SourceName="PART_Popup" Property="HasDropShadow" Value="True">
+                        <Setter TargetName="LayoutRoot" Property="Effect" Value="{DynamicResource MahApps.DropShadowEffect.Menu}" />
+                        <Setter TargetName="SubMenuRoot" Property="Margin" Value="0 0 6 6" />
+                    </Trigger>
+                    <Trigger Property="IsHighlighted" Value="True">
+                        <Setter TargetName="Bg" Property="Fill" Value="{DynamicResource MahApps.Brushes.MenuItem.SelectionFill}" />
+                        <Setter TargetName="Bg" Property="Stroke" Value="{DynamicResource MahApps.Brushes.MenuItem.SelectionStroke}" />
+                    </Trigger>
+                    <Trigger Property="IsEnabled" Value="False">
+                        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.MenuItem.Foreground.Disabled}" />
+                        <Setter TargetName="GlyphPanel" Property="Fill" Value="{DynamicResource MahApps.Brushes.MenuItem.GlyphPanel.Disabled}" />
+                    </Trigger>
+                </ControlTemplate.Triggers>
+            </ControlTemplate>
         </Style.Resources>
     </Style>
 

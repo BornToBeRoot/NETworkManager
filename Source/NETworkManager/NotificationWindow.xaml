@@ -4,7 +4,7 @@
                  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                  xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-                 xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+                 xmlns:icons="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls"
                  xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
                  xmlns:networkManager="clr-namespace:NETworkManager"
                  mc:Ignorable="d"
@@ -24,7 +24,7 @@
                  Closing="MetroWindow_Closing">
     <!-- Clicking anywhere on the popup (except the close button) opens the main window.
          Background="Transparent" makes the empty areas hit-test visible. -->
-    <Grid Background="Transparent" Cursor="Hand"
+    <Grid x:Name="Root" Background="Transparent" Cursor="Hand"
           ToolTip="{x:Static localization:Strings.Show}"
           MouseLeftButtonUp="Root_MouseLeftButtonUp">
         <Grid.RowDefinitions>
@@ -75,7 +75,7 @@
                         Margin="0,0,0,0">
                     <Rectangle Width="16" Height="16">
                         <Rectangle.OpacityMask>
-                            <VisualBrush Stretch="Fill" Visual="{iconPacks:Material Kind=WindowClose}" />
+                            <VisualBrush Stretch="Fill" Visual="{icons:Lucide Kind=X}" />
                         </Rectangle.OpacityMask>
                         <Rectangle.Style>
                             <Style TargetType="{x:Type Rectangle}">
@@ -105,7 +105,7 @@
                     <Rectangle.OpacityMask>
                         <VisualBrush Stretch="Uniform">
                             <VisualBrush.Visual>
-                                <iconPacks:PackIconMaterial Kind="{Binding IconKind}" />
+                                <icons:LucideIcon Kind="{Binding IconKind}" />
                             </VisualBrush.Visual>
                         </VisualBrush>
                     </Rectangle.OpacityMask>
@@ -131,12 +131,12 @@
                 </StackPanel>
             </Grid>
         </Grid>
-        <!-- Countdown ProgressBar — 3 px, depletes left-to-right -->
-        <ProgressBar Grid.Row="1"
-                     Minimum="0"
-                     Maximum="{Binding TimeMax, Mode=OneWay}"
-                     Value="{Binding TimeRemaining, Mode=OneWay}"
-                     BorderThickness="0"
-                     Padding="0" />
+        <!-- Countdown (style of the progress bars, see ProgressBarStyles) -->
+        <mah:MetroProgressBar Grid.Row="1"
+                              Minimum="0"
+                              Maximum="{Binding TimeMax, Mode=OneWay}"
+                              Value="{Binding TimeRemaining, Mode=OneWay}"
+                              BorderThickness="0"
+                              Padding="0" />
     </Grid>
 </mah:MetroWindow>

@@ -30,7 +30,7 @@
             </Grid.RowDefinitions>
             <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.IPv4Address}" />
             <TextBox x:Name="TextBoxIPAddress" Grid.Column="2" Grid.Row="0"
-                     mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleIPv4Address}">
+                     mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleIPv4Address}" FontFamily="{StaticResource Fonts.Family.Mono}">
                 <TextBox.Text>
                     <Binding Path="IPAddress" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>

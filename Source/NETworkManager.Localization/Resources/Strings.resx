@@ -2419,9 +2419,6 @@ is disabled!</value>
   <data name="GHz5" xml:space="preserve">
     <value>5 GHz</value>
   </data>
-  <data name="GHz2dot4And5" xml:space="preserve">
-    <value>2.4 &amp; 5 GHz</value>
-  </data>
   <data name="SignalStrength" xml:space="preserve">
     <value>Signal strength</value>
   </data>
@@ -3022,12 +3019,6 @@ Error message:
   <data name="Library_LiveCharts_Description" xml:space="preserve">
     <value>Beautiful, interactive charts, maps, and gauges.</value>
   </data>
-  <data name="Library_LoadingIndicatorsWPF_Description" xml:space="preserve">
-    <value>A collection of loading indicators for WPF</value>
-  </data>
-  <data name="Library_MahAppsMetroIconPacks_Description" xml:space="preserve">
-    <value>Some awesome icons for WPF and UWP all together...</value>
-  </data>
   <data name="Library_MahAppsMetro_Description" xml:space="preserve">
     <value>A toolkit for creating Metro / Modern UI styled WPF apps.</value>
   </data>
@@ -3066,9 +3057,6 @@ Error message:
   </data>
   <data name="License_MITLicense" xml:space="preserve">
     <value>MIT License</value>
-  </data>
-  <data name="License_Unlicense" xml:space="preserve">
-    <value>Unlicense</value>
   </data>
   <data name="Library_CsWinRT_Description" xml:space="preserve">
     <value>C#/WinRT provides packaged WinRT projection support for the C# language.</value>
@@ -5467,5 +5455,116 @@ Do you want to start the scan?</value>
   </data>
   <data name="HelpMessage_WiFiChangesNotification" xml:space="preserve">
     <value>Only when the networks are scanned automatically ("Automatically update every") and WiFi is shown: one notification per scan with the changes since the previous scan of the adapter.</value>
+  </data>
+  <data name="Tabs" xml:space="preserve">
+    <value>Tabs</value>
+  </data>
+  <data name="DynamicTabWidth" xml:space="preserve">
+    <value>Dynamic tab width</value>
+  </data>
+  <data name="MaximumTabWidth" xml:space="preserve">
+    <value>Maximum tab width</value>
+  </data>
+  <data name="HelpMessage_DynamicTabWidth" xml:space="preserve">
+    <value>The tabs of the tools (e.g. IP Scanner, Remote Desktop, PuTTY) are as wide as their title, up to the maximum tab width. Longer titles are shortened, the tooltip of the tab shows the full title. When disabled, all tabs have the same width.</value>
+  </data>
+  <data name="Animations" xml:space="preserve">
+    <value>Animations</value>
+  </data>
+  <data name="AnimationMode_System" xml:space="preserve">
+    <value>System (Windows setting)</value>
+  </data>
+  <data name="AnimationMode_On" xml:space="preserve">
+    <value>On</value>
+  </data>
+  <data name="AnimationMode_Off" xml:space="preserve">
+    <value>Off</value>
+  </data>
+  <data name="HelpMessage_Animations" xml:space="preserve">
+    <value>Animations of the application, e.g. when a dialog is opened or closed. "System" follows the Windows setting "Animation effects" (Settings &gt; Accessibility &gt; Visual effects), which is often turned off on terminal servers and in remote sessions.</value>
+  </data>
+  <data name="ActiveConnections" xml:space="preserve">
+    <value>Active connections</value>
+  </data>
+  <data name="HostsFileEntries" xml:space="preserve">
+    <value>Hosts file entries</value>
+  </data>
+  <data name="ListeningPorts" xml:space="preserve">
+    <value>Listening ports</value>
+  </data>
+  <data name="NeighborEntries" xml:space="preserve">
+    <value>Neighbor entries</value>
+  </data>
+  <data name="AccentGlow" xml:space="preserve">
+    <value>Accent glow</value>
+  </data>
+  <data name="HelpMessage_AccentGlow" xml:space="preserve">
+    <value>Glow of the accent color in the top left corner of the windows (window background, title bar and navigation), weaker while the window is inactive.</value>
+  </data>
+  <data name="Theme_Black" xml:space="preserve">
+    <value>Black</value>
+  </data>
+  <data name="Theme_Midnight" xml:space="preserve">
+    <value>Midnight</value>
+  </data>
+  <data name="Theme_Steel" xml:space="preserve">
+    <value>Steel</value>
+  </data>
+  <data name="Theme_Indigo" xml:space="preserve">
+    <value>Indigo</value>
+  </data>
+  <data name="Accent_Sky" xml:space="preserve">
+    <value>Sky</value>
+  </data>
+  <data name="Accent_Ocean" xml:space="preserve">
+    <value>Ocean</value>
+  </data>
+  <data name="Accent_Mint" xml:space="preserve">
+    <value>Mint</value>
+  </data>
+  <data name="Accent_Rose" xml:space="preserve">
+    <value>Rose</value>
+  </data>
+  <data name="Accent_Coral" xml:space="preserve">
+    <value>Coral</value>
+  </data>
+  <data name="Accent_Gold" xml:space="preserve">
+    <value>Gold</value>
+  </data>
+  <data name="Accent_Lavender" xml:space="preserve">
+    <value>Lavender</value>
+  </data>
+  <data name="Accent_Slate" xml:space="preserve">
+    <value>Slate</value>
+  </data>
+  <data name="Theme_Mist" xml:space="preserve">
+    <value>Mist</value>
+  </data>
+  <data name="Theme_Soft" xml:space="preserve">
+    <value>Soft</value>
+  </data>
+  <data name="Theme_Paper" xml:space="preserve">
+    <value>Paper</value>
+  </data>
+  <data name="Accent_Graphite" xml:space="preserve">
+    <value>Graphite</value>
+  </data>
+  <data name="AccentGlowIntensity_Off" xml:space="preserve">
+    <value>Off</value>
+  </data>
+  <data name="AccentGlowIntensity_Subtle" xml:space="preserve">
+    <value>Subtle</value>
+  </data>
+  <data name="AccentGlowIntensity_Medium" xml:space="preserve">
+    <value>Medium</value>
+  </data>
+  <data name="AccentGlowIntensity_Strong" xml:space="preserve">
+    <value>Strong</value>
+  </data>
+  <data name="Library_Lucide_Description" xml:space="preserve">
+    <value>Beautiful &amp; consistent icons</value>
+  </data>
+  <data name="License_ISCLicense" xml:space="preserve">
+    <value>ISC License</value>
   </data>
 </root>
