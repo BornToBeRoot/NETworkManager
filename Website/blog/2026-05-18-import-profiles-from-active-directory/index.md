@@ -55,7 +55,7 @@ Click **Import** and a summary shows how many profiles were created, skipped as 
 
 ## Try it now
 
-You can test this feature in the [latest pre-release of NETworkManager](https://borntoberoot.net/NETworkManager/download#pre-release).
+The Active Directory import is available in the [latest version of NETworkManager](https://borntoberoot.net/NETworkManager/download).
 
 More information is available in the [official documentation](https://borntoberoot.net/NETworkManager/docs/groups-and-profiles#import).
 
