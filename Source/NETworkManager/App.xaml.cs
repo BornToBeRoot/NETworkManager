@@ -112,6 +112,10 @@ public partial class App
         // Show help window
         if (CommandLineManager.Current.Help)
         {
+            // Theme and the brushes computed from it (window background, buttons, borders), otherwise loaded by the
+            // main window
+            AppearanceManager.Load();
+
             Log.Info("Set StartupUri to CommandLineWindow.xaml...");
             StartupUri = new Uri("CommandLineWindow.xaml", UriKind.Relative);
 
