@@ -5,6 +5,9 @@ All changes compared to the original [ButchersBoy/Dragablz](https://github.com/B
 
 ## NETworkManager (`Source/3rdparty/Dragablz`)
 
+- Removed the unused tab styles of `Generic.xaml` (`TrapezoidDragableTabItemStyle`,
+  `SizableFromBottomRightDragablzItemStyle`, `CloseItemCommandButtonStyle`, `CloseCommandHighlightColor`), the
+  `Trapezoid` control and `ShowDefaultCloseButtonConverter`.
 - Fix: the splitter between branches stacked on top of each other reached 3 px into the neighbouring branches on the
   left and right (`Margin="-3,-3"` instead of `"0,-3"`, from the wider hit area of the fork).
 - `StackOrganiser.AnimationsEnabled` (static, set by NETworkManager from Settings > Appearance > Animations): without

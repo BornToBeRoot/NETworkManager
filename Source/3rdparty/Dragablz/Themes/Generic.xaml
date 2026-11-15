@@ -10,8 +10,6 @@
     <converters:EqualityToVisibilityConverter x:Key="EqualityToVisibilityConverter" />
     <converters:BooleanAndToVisibilityConverter x:Key="BooleanAndToVisibilityConverter" />
     <converters:EqualityToBooleanConverter x:Key="EqualityToBooleanConverter" />
-    <converters:ShowDefaultCloseButtonConverter x:Key="ShowDefaultCloseButtonConverter" />
-
     <Style x:Key="FocusVisual">
         <Setter Property="Control.Template">
             <Setter.Value>
@@ -21,8 +19,6 @@
             </Setter.Value>
         </Setter>
     </Style>
-
-    <Color x:Key="CloseCommandHighlightColor">#e04343</Color>
 
     <!-- these tab styles are as close as possible to the default .net styles, so the tab will fit straight in to an unstyled app -->
     <SolidColorBrush x:Key="TabItem.Selected.Background" Color="#FFFFFF"/>
@@ -140,48 +136,6 @@
                 <Setter Property="Foreground" Value="{x:Static SystemColors.HighlightTextBrush}" />
             </Trigger>
             <Trigger Property="IsPressed" Value="true">
-                <Setter Property="Opacity" Value="1"/>
-            </Trigger>
-        </Style.Triggers>
-    </Style>
-
-    <Style TargetType="{x:Type Button}" x:Key="CloseItemCommandButtonStyle" BasedOn="{StaticResource MenuCommandButtonStyle}">
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate>
-                    <Grid>
-                        <Ellipse Width="{TemplateBinding Width}"
-                                 Height="{TemplateBinding Height}"
-                                 Fill="{TemplateBinding Background}"/>
-                        <Path x:Name="Path"
-                              Data="M0.5,71 L70,0.5 M0.5,1 L70,70.5" 
-                              Width="6" Height="6"
-                              Stretch="Uniform"
-                              Stroke="{TemplateBinding Foreground}"
-                              StrokeThickness="1.5"
-                              StrokeStartLineCap="Square" 
-                              StrokeEndLineCap="Square"
-                              SnapsToDevicePixels="True" />
-                    </Grid>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-        <Setter Property="Background">
-            <Setter.Value>
-                <SolidColorBrush Color="{x:Static SystemColors.ActiveBorderColor}" />
-            </Setter.Value>
-        </Setter>
-        <Setter Property="Width" Value="12" />
-        <Setter Property="Height" Value="12" />
-        <Setter Property="Margin" Value="4 0 2 0" />
-        <Setter Property="Foreground" Value="{x:Static SystemColors.HighlightTextBrush}" />
-        <Style.Triggers>
-            <Trigger Property="IsMouseOver" Value="true">
-                <Setter Property="Background">
-                    <Setter.Value>
-                        <SolidColorBrush Color="{StaticResource CloseCommandHighlightColor}" />
-                    </Setter.Value>
-                </Setter>
                 <Setter Property="Opacity" Value="1"/>
             </Trigger>
         </Style.Triggers>
@@ -620,35 +574,6 @@
         </Style.Triggers>
     </Style>
 
-    <Style TargetType="{x:Type local:DragablzItem}" x:Key="SizableFromBottomRightDragablzItemStyle">
-        <Style.Setters>
-            <Setter Property="BorderBrush" Value="{StaticResource TabItem.Static.Border}" />
-            <Setter Property="BorderThickness" Value="4" />
-            <Setter Property="Canvas.Left" Value="{Binding X, RelativeSource={RelativeSource Self}}" />
-            <Setter Property="Canvas.Top" Value="{Binding Y, RelativeSource={RelativeSource Self}}" />
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type local:DragablzItem}">
-                        <Grid Margin="{TemplateBinding Margin}">
-                            <Border BorderThickness="{TemplateBinding Border.BorderThickness}" Padding="{TemplateBinding Control.Padding}" BorderBrush="{TemplateBinding Border.BorderBrush}" Background="{TemplateBinding Panel.Background}" SnapsToDevicePixels="True">
-                                <ContentPresenter Content="{TemplateBinding ContentControl.Content}" ContentTemplate="{TemplateBinding ContentControl.ContentTemplate}" ContentStringFormat="{TemplateBinding ContentControl.ContentStringFormat}" HorizontalAlignment="{TemplateBinding Control.HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding Control.VerticalContentAlignment}" SnapsToDevicePixels="{TemplateBinding UIElement.SnapsToDevicePixels}"
-                                                  Margin="{TemplateBinding Control.Padding }"/>
-                            </Border>
-                            <Thumb Style="{StaticResource InvisibleThumbStyle}"
-                                   Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness.Right}"
-                                   Height="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness.Bottom}"
-                                   local:DragablzItem.SizeGrip="BottomRight"
-                                   HorizontalAlignment="Right"
-                                   VerticalAlignment="Bottom"
-                                   Cursor="SizeNWSE"
-                                   />
-                        </Grid>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style.Setters>
-    </Style>
-
     <Style TargetType="{x:Type local:DragablzItem}" x:Key="FloatingDragablzItemStyle">
         <Style.Setters>
             <Setter Property="BorderBrush" Value="{StaticResource TabItem.Static.Border}" />
@@ -771,63 +696,6 @@
                             <Setter Property="Background" TargetName="border" Value="{StaticResource Button.Disabled.Background}"/>
                             <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.Disabled.Border}"/>
                             <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="{StaticResource Button.Disabled.Foreground}"/>
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
-    <Style x:Key="TrapezoidDragableTabItemStyle"  TargetType="{x:Type local:DragablzItem}">
-        <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}"/>
-        <Setter Property="Foreground" Value="Black"/>
-        <Setter Property="Background" Value="{StaticResource TabItem.Static.Background}"/>
-        <Setter Property="BorderBrush" Value="{StaticResource TabItem.Static.Border}"/>
-        <Setter Property="Margin" Value="0 0 0 0"/>
-        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-        <Setter Property="VerticalContentAlignment" Value="Stretch"/>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type local:DragablzItem}">
-                    <Grid x:Name="templateRoot" SnapsToDevicePixels="true" Margin="0 1 0 -1">
-                        <local:Trapezoid x:Name="Trapezoid" 
-                                         BorderBrush="{TemplateBinding BorderBrush}" 
-                                         Background="{TemplateBinding Background}"                                          
-                                         PenThickness="2"
-                                         Margin="0 0 0 0">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="Auto" />
-                                </Grid.ColumnDefinitions>
-                                <ContentPresenter Content="{TemplateBinding ContentControl.Content}" ContentTemplate="{TemplateBinding ContentControl.ContentTemplate}" ContentStringFormat="{TemplateBinding ContentControl.ContentStringFormat}" HorizontalAlignment="{TemplateBinding Control.HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding Control.VerticalContentAlignment}" SnapsToDevicePixels="{TemplateBinding UIElement.SnapsToDevicePixels}"
-                                                  Margin="{TemplateBinding Control.Padding}"
-                                                  x:Name="contentPresenter" />
-                                <Thumb Grid.Column="0" HorizontalAlignment="Stretch" VerticalContentAlignment="Stretch" 
-                                       x:Name="PART_Thumb"
-                                       Style="{StaticResource InvisibleThumbStyle}" />
-                                <Button Grid.Column="1"
-                                        Style="{StaticResource CloseItemCommandButtonStyle}"                                        
-                                        Command="{x:Static local:TabablzControl.CloseItemCommand}"
-                                        CommandParameter="{Binding RelativeSource={RelativeSource TemplatedParent}}">
-                                    <Button.Visibility>
-                                        <MultiBinding Converter="{StaticResource ShowDefaultCloseButtonConverter}">
-                                            <Binding RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type local:TabablzControl}}" Path="ShowDefaultCloseButton" />
-                                            <Binding RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type local:TabablzControl}}" Path="FixedHeaderCount" />
-                                            <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="LogicalIndex" />
-                                        </MultiBinding>
-                                    </Button.Visibility>
-                                </Button>
-                            </Grid>
-                        </local:Trapezoid>
-                    </Grid>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="local:TabablzControl.IsWrappingTabItem" Value="True">
-                            <Setter TargetName="contentPresenter" Property="Content" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=DataContext.Header}" />
-                        </Trigger>
-                        <Trigger Property="IsSelected" Value="True">
-                            <Setter Property="Background" Value="{StaticResource TabItem.Selected.Background}" TargetName="Trapezoid"/>
-                            <Setter Property="LongBasePenBrush" Value="{StaticResource TabItem.Selected.Background}" TargetName="Trapezoid"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -1516,22 +1384,6 @@
                 </Setter>
             </Trigger>
         </Style.Triggers>
-    </Style>
-
-    <Style TargetType="{x:Type local:Trapezoid}">
-        <Setter Property="HorizontalAlignment" Value="Left" />
-        <Setter Property="VerticalAlignment" Value="Top" />
-        <Setter Property="Padding" Value="2 2 2 2" />
-        <Setter Property="Background" Value="{StaticResource TabItem.Static.Background}" />
-        <Setter Property="PenBrush" Value="{StaticResource TabItem.Static.Border}" />
-        <Setter Property="PenThickness" Value=".5" />
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type local:Trapezoid}">
-                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
     </Style>
 
     <Style TargetType="{x:Type local:DragablzItemsControl}" x:Key="FloatingDragablzItemsControlStyle">
