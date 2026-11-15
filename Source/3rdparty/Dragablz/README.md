@@ -19,8 +19,8 @@ The project, assembly and namespaces are still called `Dragablz` / `Dragablz.Doc
 - This folder is the source of truth now; the fork is kept for history only.
 - Change the code only when a feature or fix of NETworkManager needs it, keep the changes small and add an entry to
   [CHANGELOG.md](CHANGELOG.md).
-- Don't reformat or restyle the code (`Source/.editorconfig` marks it as generated code, so analyzers and formatting
-  rules ignore it).
+- Don't reformat or restyle the code. `Source/.editorconfig` marks it as generated code, which only silences the
+  analyzers - "Format Document" / `dotnet format` would still reformat it, so don't run them on this folder.
 - The file version in `Properties/AssemblyInfo.cs` is set to the NETworkManager version by AppVeyor (`appveyor.yml`),
   otherwise the MSI doesn't replace `Dragablz.dll` on an upgrade - keep the `AssemblyFileVersion` attribute.
 - The license is also shipped with the application (`Source/NETworkManager.Documentation/Licenses/Dragablz.txt`, shown
