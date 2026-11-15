@@ -11,8 +11,9 @@ NETworkManager tools.
 | Changes | See [CHANGELOG.md](CHANGELOG.md) (all changes compared to the original) |
 
 Only the library is included (no demos, tests or NuGet package) and it's stripped to what NETworkManager uses.
-The project, assembly and namespaces are still called `Dragablz` / `Dragablz.Dockablz`, so the `xmlns` and pack URIs
-(`pack://application:,,,/Dragablz;component/Themes/MahApps.xaml`) in the application stay unchanged.
+The project, assembly and namespaces are still called `Dragablz` / `Dragablz.Dockablz`, so the `xmlns` in the
+application stay unchanged. The default styles come from `Themes/Generic.xaml`; the look of the tabs is defined in
+NETworkManager (`Resources/Styles/DragablzStyles.xaml`).
 
 ## Maintenance
 

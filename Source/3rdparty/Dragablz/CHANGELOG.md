@@ -5,6 +5,9 @@ All changes compared to the original [ButchersBoy/Dragablz](https://github.com/B
 
 ## NETworkManager (`Source/3rdparty/Dragablz`)
 
+- Removed the MahApps theme (`Themes/MahApps.xaml`): NETworkManager uses its own invisible thumb style and focus visual
+  (`FocusVisual.Ring` instead of the dotted MahApps one) and sets the `Foreground` of `MahAppsTabablzControlStyle` in
+  its own tab control style.
 - Removed more dead code: `Dockablz/FloatRequestedEvent.cs`, the window-only colors of `DragablzColors`
   (`WindowGlassBalancedBrush`, `WindowInactiveBrush`, `WindowBaseColor` and their helpers, incl. a second DWM call in
   the static initializer) and unused usings.
