@@ -5,6 +5,8 @@ All changes compared to the original [ButchersBoy/Dragablz](https://github.com/B
 
 ## NETworkManager (`Source/3rdparty/Dragablz`)
 
+- `DragablzItem.OnPreviewMouseRightButtonDown` (fix for the right click lock, see the fork): calls `base` before the
+  wait instead of after the routing, restores the thumb it disabled (local) and documents why it polls the button.
 - Removed the MahApps theme (`Themes/MahApps.xaml`): NETworkManager uses its own invisible thumb style and focus visual
   (`FocusVisual.Ring` instead of the dotted MahApps one) and sets the `Foreground` of `MahAppsTabablzControlStyle` in
   its own tab control style.

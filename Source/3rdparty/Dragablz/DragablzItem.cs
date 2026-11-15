@@ -481,21 +481,21 @@ namespace Dragablz
 
         protected override async void OnPreviewMouseRightButtonDown(MouseButtonEventArgs e)
         {
-            if (_thumb != null)
-            {
-                var currentThumbIsHitTestVisible = _thumb.IsHitTestVisible;
-                _thumb.SetCurrentValue(IsHitTestVisibleProperty, false);
-
-                while (Mouse.RightButton == MouseButtonState.Pressed)
-                {
-                    await Task.Delay(25);
-                }
-                ;
-
-                _thumb.SetCurrentValue(IsHitTestVisibleProperty, currentThumbIsHitTestVisible);
-            }
-
+            //NETworkManager: base before the await (afterwards the event is already routed), the thumb kept in a local
+            //(the template can change while the button is pressed). Polling instead of PreviewMouseRightButtonUp: a
+            //context menu opened by the right click gets the button up, the thumb would stay disabled (no drag).
             base.OnPreviewMouseRightButtonDown(e);
+
+            var thumb = _thumb;
+            if (thumb == null) return;
+
+            var currentThumbIsHitTestVisible = thumb.IsHitTestVisible;
+            thumb.SetCurrentValue(IsHitTestVisibleProperty, false);
+
+            while (Mouse.RightButton == MouseButtonState.Pressed)
+                await Task.Delay(25);
+
+            thumb.SetCurrentValue(IsHitTestVisibleProperty, currentThumbIsHitTestVisible);
         }
 
         private void LostMouseAfterSeizeHandler(object sender, MouseEventArgs mouseEventArgs)
