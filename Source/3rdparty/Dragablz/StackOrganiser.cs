@@ -291,6 +291,15 @@ namespace Dragablz
             var storyboard = new Storyboard { FillBehavior = FillBehavior.Stop };
             storyboard.WhenComplete(sb =>
             {
+                //NETworkManager: a storyboard replaced by a newer one (other target) must not set its old location or
+                //remove the newer target
+                double currentTarget;
+                if (!_activeStoryboardTargetLocations.TryGetValue(dragablzItem, out currentTarget) ||
+                    Math.Abs(currentTarget - location) >= 1.0)
+                {
+                    sb.Remove(dragablzItem);
+                    return;
+                }
                 _setLocation(dragablzItem, location);
                 sb.Remove(dragablzItem);
                 _activeStoryboardTargetLocations.Remove(dragablzItem);

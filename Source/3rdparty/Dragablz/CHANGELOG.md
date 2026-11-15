@@ -5,6 +5,8 @@ All changes compared to the original [ButchersBoy/Dragablz](https://github.com/B
 
 ## NETworkManager (`Source/3rdparty/Dragablz`)
 
+- Fix: when a tab's slide animation was replaced by a newer one (tab dragged back and forth), the completion of the old
+  one set the old location and removed the newer target (`StackOrganiser.SendToLocation`).
 - Fix: `StackOrganiser` kept the start locations of the last drag (items and their window alive) and threw a
   `KeyNotFoundException` for an item added during a drag. The state is now cleared after the drag, which also makes a
   shared organiser (e.g. the `VerticalOrganiser` of the vertical tab style) harmless.
