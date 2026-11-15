@@ -31,6 +31,7 @@ Release date: **xx.xx.2026**
 - The other tabs no longer slide to their new position while a tab is dragged if animations are disabled (Settings > Appearance > Animations). [#xxxx](https://github.com/BornToBeRoot/NETworkManager/pull/xxxx)
 - Fixed a tab (and its session, e.g. PuTTY or Remote Desktop) being lost when it was dragged out as a window after a previous drag had merged a tab into another window: the drop zone of the earlier drag was reused. [#xxxx](https://github.com/BornToBeRoot/NETworkManager/pull/xxxx)
 - Fixed a crash while dragging a tab as a window when another tab window closed at the same time (e.g. its session ended). [#xxxx](https://github.com/BornToBeRoot/NETworkManager/pull/xxxx)
+- Fixed a tab dragged back to its original position while the other tabs were still sliding ending up at the wrong position. [#xxxx](https://github.com/BornToBeRoot/NETworkManager/pull/xxxx)
 - Fixed a tab dropped into another tab bar being inserted at the wrong position with display scaling above 100 %. [#xxxx](https://github.com/BornToBeRoot/NETworkManager/pull/xxxx)
 - Fixed the splitter between tabs split on top of each other also reacting 3 px into the tabs on the left and right. [#xxxx](https://github.com/BornToBeRoot/NETworkManager/pull/xxxx)
 

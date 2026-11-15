@@ -14,8 +14,8 @@ All changes compared to the original [ButchersBoy/Dragablz](https://github.com/B
 - `DragablzItem.OnPreviewMouseRightButtonDown` (fix for the right click lock, see the fork): calls `base` before the
   wait instead of after the routing, restores the thumb it disabled (local) and documents why it polls the button.
 - Removed the MahApps theme (`Themes/MahApps.xaml`): NETworkManager uses its own invisible thumb style and focus visual
-  (`FocusVisual.Ring` instead of the dotted MahApps one) and sets the `Foreground` of `MahAppsTabablzControlStyle` in
-  its own tab control style.
+  (`FocusVisual.Ring` instead of the dotted MahApps one). The `Foreground` of `MahAppsTabablzControlStyle` (theme
+  background - the inverted color for the tab content) is dropped.
 - Removed more dead code: `Dockablz/FloatRequestedEvent.cs`, the window-only colors of `DragablzColors`
   (`WindowGlassBalancedBrush`, `WindowInactiveBrush`, `WindowBaseColor` and their helpers, incl. a second DWM call in
   the static initializer) and unused usings.

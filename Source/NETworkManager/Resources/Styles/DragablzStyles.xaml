@@ -140,8 +140,6 @@
     </Style>
 
     <Style x:Key="DefaultTabablzControl" TargetType="{x:Type dragablz:TabablzControl}">
-        <!-- Was set by MahAppsTabablzControlStyle (Dragablz MahApps theme, removed) - kept to not change the tab content -->
-        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ThemeBackground}" />
         <Setter Property="BorderThickness" Value="0,1,0,0" />
         <Setter Property="BorderBrush" Value="{DynamicResource Brushes.Surface.Border}" />
         <Setter Property="ItemContainerStyle" Value="{StaticResource CustomHeaderItemTemplate}" />
