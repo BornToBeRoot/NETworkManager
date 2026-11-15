@@ -486,17 +486,31 @@ namespace Dragablz
             //context menu opened by the right click gets the button up, the thumb would stay disabled (no drag).
             base.OnPreviewMouseRightButtonDown(e);
 
+            //a second right click while waiting would save the disabled state as the one to restore
             var thumb = _thumb;
-            if (thumb == null) return;
+            if (thumb == null || _isWaitingForRightButtonUp) return;
 
+            _isWaitingForRightButtonUp = true;
             var currentThumbIsHitTestVisible = thumb.IsHitTestVisible;
             thumb.SetCurrentValue(IsHitTestVisibleProperty, false);
 
-            while (Mouse.RightButton == MouseButtonState.Pressed)
-                await Task.Delay(25);
+            try
+            {
+                while (Mouse.RightButton == MouseButtonState.Pressed)
+                    await Task.Delay(25);
+            }
+            finally
+            {
+                _isWaitingForRightButtonUp = false;
+            }
 
-            thumb.SetCurrentValue(IsHitTestVisibleProperty, currentThumbIsHitTestVisible);
+            //only if the thumb is still the active one (the custom thumb can replace the template thumb meanwhile, which
+            //disables the template thumb on purpose)
+            if (ReferenceEquals(thumb, _thumb))
+                thumb.SetCurrentValue(IsHitTestVisibleProperty, currentThumbIsHitTestVisible);
         }
+
+        private bool _isWaitingForRightButtonUp;
 
         private void LostMouseAfterSeizeHandler(object sender, MouseEventArgs mouseEventArgs)
         {

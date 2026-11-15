@@ -5,6 +5,8 @@ All changes compared to the original [ButchersBoy/Dragablz](https://github.com/B
 
 ## NETworkManager (`Source/3rdparty/Dragablz`)
 
+- Fix (right click): a second right click while waiting for the button up saved the disabled thumb as the state to
+  restore (tab no longer draggable), and a thumb replaced meanwhile (custom thumb) was re-enabled.
 - Fix: `StackOrganiser.Organise` sorted by X / Y instead of the target of a running slide - an Organise during a slide
   restored the old order. `ForgetItem` is part of `IItemsOrganiser` (default no-op) instead of a `StackOrganiser` cast.
 - `DragablzItem.OnPreviewMouseRightButtonDown` (fix for the right click lock, see the fork): calls `base` before the
