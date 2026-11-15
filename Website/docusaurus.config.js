@@ -211,9 +211,15 @@ const config = {
           {
             // Redirect latest changelog to the newest version
             from: ["/docs/changelog/latest"],
-            to: "/docs/changelog/2026-7-7-0",
+            to: "/docs/changelog/2026-11-15-0",
           },
           // Redirect pre-versions to the corresponding new versions
+          // {
+          //   from: [
+          //     "/docs/changelog/2026-x-x-0",
+          //   ],
+          //   to: "/docs/changelog/next-release",
+          // },
           {
             from: [
               "/docs/changelog/2026-7-16-0",
@@ -221,8 +227,9 @@ const config = {
               "/docs/changelog/2026-9-7-0",
               "/docs/changelog/2026-10-24-0",
               "/docs/changelog/2026-11-9-0",
+              "/docs/changelog/2026-11-14-0",
             ],
-            to: "/docs/changelog/next-release",
+            to: "/docs/changelog/2026-11-15-0",
           },
           {
             from: [
