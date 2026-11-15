@@ -5,6 +5,9 @@ All changes compared to the original [ButchersBoy/Dragablz](https://github.com/B
 
 ## NETworkManager (`Source/3rdparty/Dragablz`)
 
+- Fix: the drop zone offered during a drag (`Layout`) was not reset when the drag ended with a merge into another tab
+  control or in a tab control with more than one item. The next drag of a single tab could branch into the stale
+  zone - also of a closed window (tab lost) - and the static reference kept that window alive.
 - `Themes/MahApps.xaml` reduced to the styles NETworkManager uses: `MahAppsFocusVisual`, `MahAppsInvisibleThumbStyle`
   and `MahAppsTabablzControlStyle` (without `ItemContainerStyle` and the trapezoid offset
   `AdjacentHeaderItemOffset=-12`, NETworkManager sets its own). Removed the converters,

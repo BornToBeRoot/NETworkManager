@@ -684,20 +684,25 @@ namespace Dragablz.Dockablz
             foreach (var loadedLayout in LoadedLayouts)
                 loadedLayout.IsParticipatingInDrag = false;
 
-            if (_currentlyOfferedDropZone == null || e.DragablzItem.IsDropTargetFound) return;
+            //NETworkManager: always reset the offered drop zone, also when the drag ended with a merge (IsDropTargetFound)
+            //or in a tab control with more items - a stale zone was used by the next drag (branch into a closed window)
+            var offeredDropZone = _currentlyOfferedDropZone;
+            _currentlyOfferedDropZone = null;
+            if (offeredDropZone == null) return;
+            offeredDropZone.Item2.IsOffered = false;
+
+            if (e.DragablzItem.IsDropTargetFound) return;
 
             TabablzControl tabablzControl;
             if (TryGetSourceTabControl(e.DragablzItem, out tabablzControl))
             {
                 if (tabablzControl.Items.Count > 1) return;
 
-                if (_currentlyOfferedDropZone.Item2.Location == DropZoneLocation.Floating)
-                    Float(_currentlyOfferedDropZone.Item1, e.DragablzItem);
+                if (offeredDropZone.Item2.Location == DropZoneLocation.Floating)
+                    Float(offeredDropZone.Item1, e.DragablzItem);
                 else
-                    _currentlyOfferedDropZone.Item1.Branch(_currentlyOfferedDropZone.Item2.Location, e.DragablzItem);
+                    offeredDropZone.Item1.Branch(offeredDropZone.Item2.Location, e.DragablzItem);
             }
-
-            _currentlyOfferedDropZone = null;
         }
 
         private static void Float(Layout layout, DragablzItem dragablzItem)
