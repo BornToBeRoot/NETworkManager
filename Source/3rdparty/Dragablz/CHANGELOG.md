@@ -12,7 +12,8 @@ All changes compared to the original [ButchersBoy/Dragablz](https://github.com/B
   `HorizontalPositionMonitor` / `VerticalPositionMonitor`, `Core/HitTest.cs` and the empty project template files
   `Properties/Resources.*` / `Properties/Settings.*`.
 - Removed the custom window `DragablzWindow` (NETworkManager uses MahApps windows) with `DragablzIcon`, the internal
-  `SystemCommand` / `WindowMessage` enums, the `SendMessage` / `PostMessage` imports (`Core/Native.cs`) and their
+  `SystemCommand` / `WindowMessage` enums, the window-only natives in `Core/Native.cs`
+  (`SendMessage`, `PostMessage`, `SetWindowPlacement`, `WINDOWPLACEMENT`, `RECT`, `GetRawCursorPos`) and their
   styles in `Generic.xaml` (`DragablzIcon`, `WindowTemplateKey`, `DragablzWindow`, `CloseMenuCommandButtonStyle`).
 - Removed the MaterialDesign theme (`Themes/MaterialDesign.xaml`, `MaterialDesignAssist`,
   `BrushToRadialGradientBrushConverter`), the `Ripple` control (`Ripple`, `RippleAssist`, its style in `Generic.xaml`)

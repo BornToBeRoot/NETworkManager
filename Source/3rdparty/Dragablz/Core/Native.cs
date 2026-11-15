@@ -21,24 +21,8 @@ namespace Dragablz.Core
             }
         }
 
-        [StructLayout(LayoutKind.Sequential)]
-        public struct RECT
-        {
-            public int left;
-            public int top;
-            public int right;
-            public int bottom;
-        }
-
         [DllImport("user32.dll")]
         private static extern bool GetCursorPos(out POINT lpPoint);
-
-        public static POINT GetRawCursorPos()
-        {
-            POINT lpPoint;
-            GetCursorPos(out lpPoint);
-            return lpPoint;
-        }
 
         public static Point GetCursorPos()
         {
@@ -83,28 +67,12 @@ namespace Dragablz.Core
                     yield return windowsByHandle[hWnd];
         }
 
-        public const int SW_SHOWNORMAL = 1;
-        [DllImport("user32.dll")]
-        public static extern bool SetWindowPlacement(IntPtr hWnd, [In] ref WINDOWPLACEMENT lpwndpl);
-
         private const uint GW_HWNDNEXT = 2;
         [DllImport("User32")]
         public static extern IntPtr GetTopWindow(IntPtr hWnd);
 
         [DllImport("User32")]
         public static extern IntPtr GetWindow(IntPtr hWnd, uint wCmd);
-
-        [Serializable]
-        [StructLayout(LayoutKind.Sequential)]
-        public struct WINDOWPLACEMENT
-        {
-            public int length;
-            public int flags;
-            public int showCmd;
-            public POINT minPosition;
-            public POINT maxPosition;
-            public RECT normalPosition;
-        }
 
 
         [DllImport("dwmapi.dll", EntryPoint = "#127")]
