@@ -26,7 +26,6 @@ namespace Dragablz
         public DragablzItemsControl()
         {
             ItemContainerGenerator.StatusChanged += ItemContainerGeneratorOnStatusChanged;
-            ItemContainerGenerator.ItemsChanged += ItemContainerGeneratorOnItemsChanged;
             AddHandler(DragablzItem.XChangedEvent, new RoutedPropertyChangedEventHandler<double>(ItemXChanged));
             AddHandler(DragablzItem.YChangedEvent, new RoutedPropertyChangedEventHandler<double>(ItemYChanged));
             AddHandler(DragablzItem.DragDelta, new DragablzDragDeltaEventHandler(ItemDragDelta));
@@ -42,11 +41,6 @@ namespace Dragablz
         {
             get { return (int)GetValue(FixedItemCountProperty); }
             set { SetValue(FixedItemCountProperty, value); }
-        }
-
-        private void ItemContainerGeneratorOnItemsChanged(object sender, ItemsChangedEventArgs itemsChangedEventArgs)
-        {
-            //throw new NotImplementedException();
         }
 
         protected override void ClearContainerForItemOverride(DependencyObject element, object item)

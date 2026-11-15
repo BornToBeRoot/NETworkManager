@@ -30,7 +30,6 @@ namespace Dragablz
         public const string ThumbPartName = "PART_Thumb";
 
         private readonly SerialDisposable _templateSubscriptions = new SerialDisposable();
-        private readonly SerialDisposable _rightMouseUpCleanUpDisposable = new SerialDisposable();
 
         private Thumb _customThumb;
         private Thumb _thumb;
@@ -497,12 +496,6 @@ namespace Dragablz
             }
 
             base.OnPreviewMouseRightButtonDown(e);
-        }
-
-        protected override void OnPreviewMouseRightButtonUp(MouseButtonEventArgs e)
-        {
-            _rightMouseUpCleanUpDisposable.Disposable = Disposable.Empty;
-            base.OnPreviewMouseRightButtonUp(e);
         }
 
         private void LostMouseAfterSeizeHandler(object sender, MouseEventArgs mouseEventArgs)

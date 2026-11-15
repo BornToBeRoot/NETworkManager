@@ -5,6 +5,9 @@ All changes compared to the original [ButchersBoy/Dragablz](https://github.com/B
 
 ## NETworkManager (`Source/3rdparty/Dragablz`)
 
+- Removed dead code: the unused static `ContinuationIndex` (`StoryboardCompletionListener`), the right mouse up
+  disposable of `DragablzItem` (only ever set to empty), a `Debug.WriteLine` in `MonitorBreach` and the empty
+  `ItemsChanged` handler of `DragablzItemsControl`.
 - Removed the unused tab styles of `Generic.xaml` (`TrapezoidDragableTabItemStyle`,
   `SizableFromBottomRightDragablzItemStyle`, `CloseItemCommandButtonStyle`, `CloseCommandHighlightColor`), the
   `Trapezoid` control and `ShowDefaultCloseButtonConverter`.
