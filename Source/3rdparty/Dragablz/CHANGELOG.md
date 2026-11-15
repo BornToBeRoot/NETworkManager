@@ -5,6 +5,9 @@ All changes compared to the original [ButchersBoy/Dragablz](https://github.com/B
 
 ## NETworkManager (`Source/3rdparty/Dragablz`)
 
+- Removed the MaterialDesign theme (`Themes/MaterialDesign.xaml`, `MaterialDesignAssist`,
+  `BrushToRadialGradientBrushConverter`), the `Ripple` control (`Ripple`, `RippleAssist`, its style in `Generic.xaml`)
+  used only by that theme, and the empty `Themes/Dockablz.xaml`.
 - Copied the library from the fork (`5415e71`) into the repository (replaces the git submodule). Not included: demos
   (`DragablzDemo`, `DragablzModernUIDemo`), tests (`Dragablz.Test`), solution, NuGet package (`Dragablz.nuspec`),
   `Resources/` (logos). The project is flattened (`Dragablz.csproj` in this folder), the NuGet metadata, the output path
