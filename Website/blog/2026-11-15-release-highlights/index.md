@@ -1,16 +1,13 @@
 ---
 slug: release-highlights
 title: "What's New: Run Command, Visual Traceroute, a Smarter IP Scanner, RDAP and a Fresh Look"
-description: "The next NETworkManager release brings a run command to start any tool from the keyboard, a world map for Traceroute, an IP Scanner that finds and identifies far more devices, RDAP as the modern successor of Whois, and a redesigned interface with new themes - plus hundreds of improvements and bug fixes."
+description: "NETworkManager 2026.11.15.0 brings a run command to start any tool from the keyboard, a world map for Traceroute, an IP Scanner that finds and identifies far more devices, RDAP as the modern successor of Whois, and a redesigned interface with new themes - plus hundreds of improvements and bug fixes."
 authors: [borntoberoot]
 tags: [release, run command, traceroute, ip scanner, rdap, theme, ui, new feature]
 keywords: [NETworkManager, release, what's new, run command, command palette, visual traceroute, traceroute map, IP Scanner, network discovery, device detection, RDAP, Whois, theme, dark theme, redesign, UI]
-draft: true
 ---
 
-{/* TODO before publishing: rename the folder to the release date, set the version below, remove `draft: true`, replace the placeholders. */}
-
-The next release of NETworkManager (version **2026.x.x.0**) is one of the biggest so far: a **run command** to start any tool from the keyboard, a **world map** for Traceroute, an **IP Scanner** that finds and identifies far more devices, the new **RDAP** tool, and a **redesigned interface** with new themes and accent colors. On top of that, it contains more than 150 improvements and more than 150 bug fixes across all tools.
+The new release of NETworkManager (version **2026.11.15.0**) is one of the biggest so far: a **run command** to start any tool from the keyboard, a **world map** for Traceroute, an **IP Scanner** that finds and identifies far more devices, the new **RDAP** tool, and a **redesigned interface** with new themes and accent colors. On top of that, it contains more than 150 improvements and more than 150 bug fixes across all tools.
 
 :::note[Placeholder]
 
@@ -74,11 +71,7 @@ The IP Scanner received the largest update in this release. It finds more device
 
 **Faster and easier to use** - an empty `/24` network is scanned in about 8 seconds instead of about 50, hosts appear as soon as they answer, and results can be searched while the scan is running. Exclude addresses with `!` (e.g. `10.0.0.0/24; !10.0.0.1`), scan all local subnets with one click, and rescan single hosts from the context menu.
 
-:::note[Placeholder]
-
-Screenshot of the IP Scanner with the new columns (OS, open ports, web, since last scan) and the row details.
-
-:::
+![IP Scanner - Windows host information of a domain controller](../../docs/img/ip-scanner-windows-host-infos.png)
 
 Reading the Windows host information with credentials needs care in a domain - learn how NETworkManager prevents account lockouts in the [FAQ](https://borntoberoot.net/NETworkManager/docs/faq/windows-account-lockout-protection). All probes and settings are explained in the [IP Scanner documentation](https://borntoberoot.net/NETworkManager/docs/application/ip-scanner#how-hosts-are-found).
 
@@ -102,11 +95,7 @@ The whole interface was redesigned for a calmer, more modern look - without chan
 - **Easier to read**: Segoe UI Variable on Windows 11, technical values (IP / MAC addresses, ports, hostnames) in Cascadia Mono, clearer status colors in light and dark themes.
 - **Subtle animations** for dialogs, navigation and expanders - following the Windows setting, or turned off in the settings or for all users with a [system-wide policy](https://borntoberoot.net/NETworkManager/blog/system-wide-policies-for-enterprise-deployments).
 
-:::note[Placeholder]
-
-Screenshots of the themes (e.g. Dark, Light, Midnight, Mist) side by side.
-
-:::
+![Dashboard in the new design](../../docs/img/dashboard.png)
 
 Choose your theme and accent in [Settings > Appearance](https://borntoberoot.net/NETworkManager/docs/settings/appearance).
 
@@ -119,7 +108,7 @@ Choose your theme and accent in [Settings > Appearance](https://borntoberoot.net
 
 ## Hundreds of improvements and bug fixes
 
-Besides the highlights, this release contains more than 150 improvements and more than 150 bug fixes - from faster scans and consistent exports to many small details in every tool. The complete list is in the [changelog](https://borntoberoot.net/NETworkManager/docs/changelog/next-release).
+Besides the highlights, this release contains more than 150 improvements and more than 150 bug fixes - from faster scans and consistent exports to many small details in every tool. The complete list is in the [changelog](https://borntoberoot.net/NETworkManager/docs/changelog/2026-11-15-0).
 
 :::warning[Breaking changes]
 
