@@ -35,7 +35,7 @@ public static class LibraryManager
         new("ControlzEx", "https://github.com/ControlzEx/ControlzEx",
             Strings.Library_ControlzEx_Description,
             Strings.License_MITLicense,
-            "https://github.com/ButchersBoy/Dragablz/blob/master/LICENSE"),
+            "https://github.com/ControlzEx/ControlzEx/blob/develop/LICENSE"),
         new("DnsClient.NET", "https://github.com/MichaCo/DnsClient.NET",
             Strings.Library_DnsClientNET_Description,
             Strings.License_ApacheLicense2dot0,

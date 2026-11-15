@@ -25,6 +25,10 @@ Release date: **xx.xx.2026**
 
 ## Bug Fixes
 
+**About**
+
+- Fixed the license of ControlzEx in the library list: it showed the license text and link of Dragablz. [#xxxx](https://github.com/BornToBeRoot/NETworkManager/pull/xxxx)
+
 ## Dependencies, Refactoring & Documentation
 
 - Code cleanup & refactoring
