@@ -27,6 +27,7 @@ Release date: **xx.xx.2026**
 
 **Tabs**
 
+- Fixed the tab title (e.g. the host of a scan) not being updated when the tab is in a dragged out window that is not the active window. [#xxxx](https://github.com/BornToBeRoot/NETworkManager/pull/xxxx)
 - The tab headers show the focus ring of the application (keyboard navigation) instead of a dotted rectangle. [#xxxx](https://github.com/BornToBeRoot/NETworkManager/pull/xxxx)
 - The other tabs no longer slide to their new position while a tab is dragged if animations are disabled (Settings > Appearance > Animations). [#xxxx](https://github.com/BornToBeRoot/NETworkManager/pull/xxxx)
 - Fixed a tab (and its session, e.g. PuTTY or Remote Desktop) being lost when it was dragged out as a window after a previous drag had merged a tab into another window: the drop zone of the earlier drag was reused. [#xxxx](https://github.com/BornToBeRoot/NETworkManager/pull/xxxx)
