@@ -5555,114 +5555,114 @@ Vuoi avviare la scansione?</value>
     <value>Solo quando le reti vengono scansionate automaticamente ("Aggiorna automaticamente ogni") e viene visualizzato il WiFi: una notifica per scansione con le modifiche rispetto alla scansione precedente della scheda di rete.</value>
   </data>
   <data name="Tabs" xml:space="preserve">
-    <value>Tabs</value>
+    <value>Schede</value>
   </data>
   <data name="DynamicTabWidth" xml:space="preserve">
-    <value>Dynamic tab width</value>
+    <value>Larghezza scheda dinamica</value>
   </data>
   <data name="MaximumTabWidth" xml:space="preserve">
-    <value>Maximum tab width</value>
+    <value>Larghezza massima tabulazione</value>
   </data>
   <data name="HelpMessage_DynamicTabWidth" xml:space="preserve">
-    <value>The tabs of the tools (e.g. IP Scanner, Remote Desktop, PuTTY) are as wide as their title, up to the maximum tab width. Longer titles are shortened, the tooltip of the tab shows the full title. When disabled, all tabs have the same width.</value>
+    <value>Le schede degli strumenti (ad esempio Scansione IP, Desktop remoto, PuTTY) sono larghe quanto il loro titolo, fino alla larghezza massima della scheda. I titoli più lunghi vengono abbreviati, il suggerimento della scheda visualizza il titolo completo. Se disabilitati questa opzione, tutte le schede avranno la stessa larghezza.</value>
   </data>
   <data name="Animations" xml:space="preserve">
-    <value>Animations</value>
+    <value>Animazioni</value>
   </data>
   <data name="AnimationMode_System" xml:space="preserve">
-    <value>System (Windows setting)</value>
+    <value>Sistema (impostazione di Windows)</value>
   </data>
   <data name="AnimationMode_On" xml:space="preserve">
-    <value>On</value>
+    <value>ON</value>
   </data>
   <data name="AnimationMode_Off" xml:space="preserve">
-    <value>Off</value>
+    <value>OFF</value>
   </data>
   <data name="HelpMessage_Animations" xml:space="preserve">
-    <value>Animations of the application, e.g. when a dialog is opened or closed. "System" follows the Windows setting "Animation effects" (Settings &gt; Accessibility &gt; Visual effects), which is often turned off on terminal servers and in remote sessions.</value>
+    <value>Animazioni dell'applicazione, ad esempio quando una finestra di dialogo viene aperta o chiusa. 'Sistema' segue l'impostazione di Windows 'Effetti animazione' ('Impostazioni' &gt; 'Accessibilità' &gt; 'Effetti visivi'), che viene spesso disattivata nei server terminal e nelle sessioni remote.</value>
   </data>
   <data name="ActiveConnections" xml:space="preserve">
-    <value>Active connections</value>
+    <value>Connessioni attive</value>
   </data>
   <data name="HostsFileEntries" xml:space="preserve">
-    <value>Hosts file entries</value>
+    <value>Voci file hosts</value>
   </data>
   <data name="ListeningPorts" xml:space="preserve">
-    <value>Listening ports</value>
+    <value>Porte in ascolto</value>
   </data>
   <data name="NeighborEntries" xml:space="preserve">
-    <value>Neighbor entries</value>
+    <value>Voci vicine</value>
   </data>
   <data name="AccentGlow" xml:space="preserve">
-    <value>Accent glow</value>
+    <value>Bagliore accento</value>
   </data>
   <data name="HelpMessage_AccentGlow" xml:space="preserve">
-    <value>Glow of the accent color in the top left corner of the windows (window background, title bar and navigation), weaker while the window is inactive.</value>
+    <value>Bagliore colore accento nell'angolo in alto a sinistra delle finestre (sfondo della finestra, barra titolo e navigazione), più debole mentre la finestra non è  attiva.</value>
   </data>
   <data name="Theme_Black" xml:space="preserve">
-    <value>Black</value>
+    <value>Nero</value>
   </data>
   <data name="Theme_Midnight" xml:space="preserve">
-    <value>Midnight</value>
+    <value>Mezzanotte</value>
   </data>
   <data name="Theme_Steel" xml:space="preserve">
-    <value>Steel</value>
+    <value>Acciaio</value>
   </data>
   <data name="Theme_Indigo" xml:space="preserve">
-    <value>Indigo</value>
+    <value>Indaco</value>
   </data>
   <data name="Accent_Sky" xml:space="preserve">
-    <value>Sky</value>
+    <value>Cielo</value>
   </data>
   <data name="Accent_Ocean" xml:space="preserve">
-    <value>Ocean</value>
+    <value>Oceano</value>
   </data>
   <data name="Accent_Mint" xml:space="preserve">
-    <value>Mint</value>
+    <value>Menta</value>
   </data>
   <data name="Accent_Rose" xml:space="preserve">
-    <value>Rose</value>
+    <value>Rosa</value>
   </data>
   <data name="Accent_Coral" xml:space="preserve">
-    <value>Coral</value>
+    <value>Corallo</value>
   </data>
   <data name="Accent_Gold" xml:space="preserve">
-    <value>Gold</value>
+    <value>Oro</value>
   </data>
   <data name="Accent_Lavender" xml:space="preserve">
-    <value>Lavender</value>
+    <value>Lavanda</value>
   </data>
   <data name="Accent_Slate" xml:space="preserve">
-    <value>Slate</value>
+    <value>Ardesia</value>
   </data>
   <data name="Theme_Mist" xml:space="preserve">
-    <value>Mist</value>
+    <value>Nebbia</value>
   </data>
   <data name="Theme_Soft" xml:space="preserve">
-    <value>Soft</value>
+    <value>Morbido</value>
   </data>
   <data name="Theme_Paper" xml:space="preserve">
-    <value>Paper</value>
+    <value>Carta</value>
   </data>
   <data name="Accent_Graphite" xml:space="preserve">
-    <value>Graphite</value>
+    <value>Grafite</value>
   </data>
   <data name="AccentGlowIntensity_Off" xml:space="preserve">
-    <value>Off</value>
+    <value>OFF</value>
   </data>
   <data name="AccentGlowIntensity_Subtle" xml:space="preserve">
-    <value>Subtle</value>
+    <value>Sottile</value>
   </data>
   <data name="AccentGlowIntensity_Medium" xml:space="preserve">
-    <value>Medium</value>
+    <value>Medio</value>
   </data>
   <data name="AccentGlowIntensity_Strong" xml:space="preserve">
-    <value>Strong</value>
+    <value>Spesso</value>
   </data>
   <data name="Library_Lucide_Description" xml:space="preserve">
-    <value>Beautiful &amp; consistent icons</value>
+    <value>Icone belle e coerenti</value>
   </data>
   <data name="License_ISCLicense" xml:space="preserve">
-    <value>ISC License</value>
+    <value>Licenza ISC</value>
   </data>
 </root>
