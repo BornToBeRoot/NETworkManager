@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <!--Whois servers by domain from IANA
-Generated 07/06/2026 22:48:19-->
+Generated 11/15/2026 03:30:52-->
 <WhoisServers>
   <WhoisServer>
     <TLD>AAA</TLD>
@@ -547,7 +547,7 @@ Generated 07/06/2026 22:48:19-->
   </WhoisServer>
   <WhoisServer>
     <TLD>BH</TLD>
-    <Server>whois.nic.bh</Server>
+    <Server>whois.bhregistry.bh</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>BHARTI</TLD>
@@ -2333,10 +2333,6 @@ Generated 07/06/2026 22:48:19-->
     <Server>whois.nic.help</Server>
   </WhoisServer>
   <WhoisServer>
-    <TLD>HELSINKI</TLD>
-    <Server>whois.nic.helsinki</Server>
-  </WhoisServer>
-  <WhoisServer>
     <TLD>HERE</TLD>
     <Server>
     </Server>
@@ -2719,8 +2715,7 @@ Generated 07/06/2026 22:48:19-->
   </WhoisServer>
   <WhoisServer>
     <TLD>JO</TLD>
-    <Server>
-    </Server>
+    <Server>whois.nic.net.jo</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>JOBS</TLD>
@@ -2758,10 +2753,6 @@ Generated 07/06/2026 22:48:19-->
     <TLD>JUEGOS</TLD>
     <Server>
     </Server>
-  </WhoisServer>
-  <WhoisServer>
-    <TLD>JUNIPER</TLD>
-    <Server>whois.nic.juniper</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>KAUFEN</TLD>
@@ -4364,7 +4355,8 @@ Generated 07/06/2026 22:48:19-->
   </WhoisServer>
   <WhoisServer>
     <TLD>SAFETY</TLD>
-    <Server>whois.nic.safety</Server>
+    <Server>
+    </Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>SAKURA</TLD>
@@ -5223,7 +5215,8 @@ Generated 07/06/2026 22:48:19-->
   </WhoisServer>
   <WhoisServer>
     <TLD>UK</TLD>
-    <Server>whois.nic.uk</Server>
+    <Server>
+    </Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>UNICOM</TLD>
@@ -5300,7 +5293,8 @@ Generated 07/06/2026 22:48:19-->
   </WhoisServer>
   <WhoisServer>
     <TLD>VERSICHERUNG</TLD>
-    <Server>whois.nic.versicherung</Server>
+    <Server>
+    </Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>VET</TLD>
@@ -5450,6 +5444,11 @@ Generated 07/06/2026 22:48:19-->
   </WhoisServer>
   <WhoisServer>
     <TLD>WEATHERCHANNEL</TLD>
+    <Server>
+    </Server>
+  </WhoisServer>
+  <WhoisServer>
+    <TLD>WEB</TLD>
     <Server>
     </Server>
   </WhoisServer>
@@ -5662,7 +5661,8 @@ Generated 07/06/2026 22:48:19-->
   </WhoisServer>
   <WhoisServer>
     <TLD>XN--5TZM5G</TLD>
-    <Server>whois.nic.xn--5tzm5g</Server>
+    <Server>
+    </Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>XN--6FRZ82G</TLD>
@@ -5983,8 +5983,7 @@ Generated 07/06/2026 22:48:19-->
   </WhoisServer>
   <WhoisServer>
     <TLD>XN--MGBCPQ6GPA1A</TLD>
-    <Server>
-    </Server>
+    <Server>whois.bhregistry.bh</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>XN--MGBERP4A5D4AR</TLD>
@@ -6283,7 +6282,8 @@ Generated 07/06/2026 22:48:19-->
   </WhoisServer>
   <WhoisServer>
     <TLD>ZARA</TLD>
-    <Server>whois.nic.zara</Server>
+    <Server>
+    </Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>ZERO</TLD>
