@@ -5,6 +5,8 @@ All changes compared to the original [ButchersBoy/Dragablz](https://github.com/B
 
 ## NETworkManager (`Source/3rdparty/Dragablz`)
 
+- Fix: the static `CloseItem(object)` threw for tab controls without an applied template or tabs without content, and
+  closed the tabs while enumerating them (collection modified).
 - Fix: `NullReferenceException` in `RemoveItem` when the `InterTabClient` of the controller is `null` (binding without
   value) or the template has no items holder.
 - Fix: all tab controls shared one `HorizontalOrganiser` (default value of `HeaderItemsOrganiser`, used unless
