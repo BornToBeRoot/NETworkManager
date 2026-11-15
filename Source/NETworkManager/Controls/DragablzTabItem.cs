@@ -71,13 +71,14 @@ public class DragablzTabItem : ViewModelBase
     ///     All tab items of a window (main window or tab window): the items of all <see cref="TabablzControl" />s in
     ///     it, incl. split layout branches. Uses the visual tree, not <see cref="TabablzControl.GetLoadedInstances" />:
     ///     a branch that was just created is not loaded yet, but its tabs must be found (e.g. closed with the window).
+    ///     Lazy (stops at the first match of e.g. <see cref="SetTabHeader" />) - call <c>ToList()</c> before closing tabs
+    ///     while iterating.
     /// </summary>
     /// <param name="window">Window to search.</param>
     public static IEnumerable<DragablzTabItem> GetTabItems(DependencyObject window)
     {
         return VisualTreeHelper.FindVisualChildren<TabablzControl>(window)
-            .SelectMany(tabablzControl => tabablzControl.Items.OfType<DragablzTabItem>())
-            .ToList();
+            .SelectMany(tabablzControl => tabablzControl.Items.OfType<DragablzTabItem>());
     }
 
     /// <summary>
