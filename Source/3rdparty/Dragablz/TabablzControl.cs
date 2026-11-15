@@ -85,6 +85,11 @@ namespace Dragablz
             AddHandler(DragablzItem.DragCompleted, new DragablzDragCompletedEventHandler(ItemDragCompleted), true);
             CommandBindings.Add(new CommandBinding(AddItemCommand, AddItemHandler));
 
+            //NETworkManager: own organiser per control - the default value of HeaderItemsOrganiser is one instance shared
+            //by all controls (it keeps the items of the last drag, and their window, alive and mixes the drag state of
+            //different controls). SetCurrentValue keeps styles / triggers (e.g. VerticalOrganiser) working.
+            SetCurrentValue(HeaderItemsOrganiserProperty, new HorizontalOrganiser());
+
             Loaded += OnLoaded;
             Unloaded += OnUnloaded;
             IsVisibleChanged += OnIsVisibleChanged;
