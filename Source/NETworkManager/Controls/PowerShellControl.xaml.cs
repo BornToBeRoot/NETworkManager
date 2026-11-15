@@ -226,6 +226,10 @@ public partial class PowerShellControl : UserControlBase, IDragablzTabItem, IEmb
 
     public void FocusEmbeddedWindow()
     {
+        // Screenshot mode: don't take the focus (foreground) from the screenshot tool
+        if (ScreenshotData.IsEnabled)
+            return;
+
         if (IsConnected)
             NativeMethods.SetForegroundWindow(_process.MainWindowHandle);
     }
