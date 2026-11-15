@@ -691,7 +691,9 @@ namespace Dragablz.Dockablz
             if (offeredDropZone == null) return;
             offeredDropZone.Item2.IsOffered = false;
 
-            if (e.DragablzItem.IsDropTargetFound) return;
+            //NETworkManager: the layout of the offered zone can be unloaded during the drag (its window closed) - a branch
+            //into it would move the item into the closed window
+            if (e.DragablzItem.IsDropTargetFound || !LoadedLayouts.Contains(offeredDropZone.Item1)) return;
 
             TabablzControl tabablzControl;
             if (TryGetSourceTabControl(e.DragablzItem, out tabablzControl))
