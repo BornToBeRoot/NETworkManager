@@ -9,7 +9,6 @@
                        xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
                        xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
                        xmlns:local="clr-namespace:NETworkManager.Controls"
-                       xmlns:settings="clr-namespace:NETworkManager.Settings;assembly=NETworkManager.Settings"
                        mc:Ignorable="d" Loaded="UserControl_Loaded"                       
                        d:DataContext="{d:DesignInstance local:RemoteDesktopControl}">
     <local:UserControlBase.Resources>
@@ -21,8 +20,7 @@
     <Grid x:Name="RdpGrid">
         <!-- Placeholder instead of the embedded window while a tab is dragged (drop zones of Dragablz
              visible above it) -->
-        <local:EmbeddedWindowDragPresenter ApplicationName="RemoteDesktop"
-                                           IsDragging="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=IsRemoteDesktopWindowDragging}">
+        <local:EmbeddedWindowDragPresenter ApplicationName="RemoteDesktop">
             <WindowsFormsHost MaxWidth="{Binding WindowsFormsHostMaxWidth, Mode=OneWay}"
                               MaxHeight="{Binding WindowsFormsHostMaxHeight, Mode=OneWay}"
                               Background="{DynamicResource ResourceKey=MahApps.Brushes.Window.Background}"                          
