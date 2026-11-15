@@ -41,9 +41,8 @@ public class EmbeddedWindowDragPresenter : ContentControl
     private FrameworkElement _placeholder;
 
     /// <summary>
-    ///     A window with tabs of the application is dragged: set by the style from Dragablz - the window of this tab is
-    ///     dragged (<see cref="TabablzControl.IsDraggingWindow" />) or the dragged window can be dropped into the layout
-    ///     of this tab (<see cref="Dragablz.Dockablz.Layout.IsParticipatingInDrag" />).
+    ///     A window with tabs of the application is dragged (e.g.
+    ///     <see cref="Settings.ConfigurationInfo.IsPuTTYWindowDragging" />).
     /// </summary>
     public bool IsDragging
     {

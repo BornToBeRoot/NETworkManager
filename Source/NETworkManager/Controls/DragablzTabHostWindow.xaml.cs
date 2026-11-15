@@ -358,6 +358,49 @@ public sealed partial class DragablzTabHostWindow : INotifyPropertyChanged
     {
         foreach (var tabItem in DragablzTabItem.GetTabItems(this))
             ((IDragablzTabItem)tabItem.View).CloseTab();
+
+        // Reset the dragging state
+        switch (ApplicationName)
+        {
+            case ApplicationName.RemoteDesktop:
+                ConfigurationManager.Current.IsRemoteDesktopWindowDragging = false;
+                break;
+            case ApplicationName.PowerShell:
+                ConfigurationManager.Current.IsPowerShellWindowDragging = false;
+                break;
+            case ApplicationName.PuTTY:
+                ConfigurationManager.Current.IsPuTTYWindowDragging = false;
+                break;
+            case ApplicationName.TigerVNC:
+                ConfigurationManager.Current.IsTigerVNCWindowDragging = false;
+                break;
+            case ApplicationName.WebConsole:
+                ConfigurationManager.Current.IsWebConsoleWindowDragging = false;
+                break;
+        }
+    }
+
+    private void TabablzControl_OnIsDraggingWindowChanged(object sender, RoutedPropertyChangedEventArgs<bool> e)
+    {
+        // Set the dragging state
+        switch (ApplicationName)
+        {
+            case ApplicationName.RemoteDesktop:
+                ConfigurationManager.Current.IsRemoteDesktopWindowDragging = e.NewValue;
+                break;
+            case ApplicationName.PowerShell:
+                ConfigurationManager.Current.IsPowerShellWindowDragging = e.NewValue;
+                break;
+            case ApplicationName.PuTTY:
+                ConfigurationManager.Current.IsPuTTYWindowDragging = e.NewValue;
+                break;
+            case ApplicationName.TigerVNC:
+                ConfigurationManager.Current.IsTigerVNCWindowDragging = e.NewValue;
+                break;
+            case ApplicationName.WebConsole:
+                ConfigurationManager.Current.IsWebConsoleWindowDragging = e.NewValue;
+                break;
+        }
     }
 
     #endregion

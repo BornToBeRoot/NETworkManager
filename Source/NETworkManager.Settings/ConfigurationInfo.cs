@@ -132,6 +132,18 @@ public class ConfigurationInfo : PropertyChangedBase
         }
     }
 
+    public bool IsRemoteDesktopWindowDragging
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
 
     public int PowerShellTabCount
     {
@@ -146,6 +158,18 @@ public class ConfigurationInfo : PropertyChangedBase
         }
     }
 
+    public bool IsPowerShellWindowDragging
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
 
     public int PuTTYTabCount
     {
@@ -160,6 +184,18 @@ public class ConfigurationInfo : PropertyChangedBase
         }
     }
 
+    public bool IsPuTTYWindowDragging
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
 
     public int TigerVNCTabCount
     {
@@ -174,6 +210,18 @@ public class ConfigurationInfo : PropertyChangedBase
         }
     }
 
+    public bool IsTigerVNCWindowDragging
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
 
     public int WebConsoleTabCount
     {
@@ -188,6 +236,18 @@ public class ConfigurationInfo : PropertyChangedBase
         }
     }
 
+    public bool IsWebConsoleWindowDragging
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
 
     public int SNMPTabCount
     {

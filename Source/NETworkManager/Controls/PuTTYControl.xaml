@@ -9,6 +9,7 @@
                        xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
                        xmlns:local="clr-namespace:NETworkManager.Controls"
                        xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+                       xmlns:settings="clr-namespace:NETworkManager.Settings;assembly=NETworkManager.Settings"
                        mc:Ignorable="d" Loaded="UserControl_Loaded"
                        d:DataContext="{d:DesignInstance local:PuTTYControl}">
     <local:UserControlBase.Resources>
@@ -21,7 +22,8 @@
         <!-- Background color will prevent flickering when app inside the panel is closed -->
         <!-- Placeholder instead of the embedded window while a tab is dragged (drop zones of Dragablz
              visible above it) -->
-        <local:EmbeddedWindowDragPresenter ApplicationName="PuTTY">
+        <local:EmbeddedWindowDragPresenter ApplicationName="PuTTY"
+                                           IsDragging="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=IsPuTTYWindowDragging}">
             <WindowsFormsHost Background="{DynamicResource MahApps.Brushes.Window.Background}" Margin="10"
                               DpiChanged="WindowsFormsHost_DpiChanged">
                 <WindowsFormsHost.Style>
