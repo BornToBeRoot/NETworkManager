@@ -44,7 +44,6 @@ install:
           $BuildRelevantFiles | ForEach-Object { Write-Host "  $_" }
         }
       }
-  - git submodule update --init
   - ps: |
       # Read the required SDK version from global.json instead of hardcoding it, so Dependabot's
       # weekly SDK bumps there don't silently drift out of sync with what CI installs.

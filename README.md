@@ -179,12 +179,9 @@ Build NETworkManager yourself with these steps:
 
 2. **Clone the Repository**:
 
-   - Clone with submodules:
-     ```powershell
-     git clone https://github.com/BornToBeRoot/NETworkManager.git
-     cd NETworkManager
-     git submodule update --init --recursive
-     ```
+   ```powershell
+   git clone https://github.com/BornToBeRoot/NETworkManager.git
+   ```
 
 3. **Build**:
    - Open `.\Source\NETworkManager.sln` in Visual Studio or JetBrains Rider.
@@ -213,7 +210,7 @@ A huge thank you to our supporters and contributors who make NETworkManager poss
   - [ControlzEx](https://github.com/ControlzEx/ControlzEx) - Shared Controlz for WPF and more.
   - [DnsClient.NET](https://github.com/MichaCo/DnsClient.NET) - Powerful, high-performance open-source library for DNS lookups.
   - [Docusaurus](https://docusaurus.io/) - Easy to maintain open source documentation websites.
-  - [Dragablz](https://dragablz.net/) - Tearable TabControl for WPF.
+  - [Dragablz](https://github.com/ButchersBoy/Dragablz) - Tearable TabControl for WPF (modified, included in `Source/3rdparty/Dragablz`).
   - [GongSolutions.Wpf.DragDrop](https://github.com/punker76/gong-wpf-dragdrop) - An easy to use drag'n'drop framework for WPF.
   - [IPNetwork](https://github.com/lduchosal/ipnetwork) - .NET library for complex network, IP, and subnet calculations.
   - [LiveCharts2](https://github.com/Live-Charts/LiveCharts2) - Beautiful, interactive charts, maps, and gauges.

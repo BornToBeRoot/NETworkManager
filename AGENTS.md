@@ -34,8 +34,8 @@ REPOSITORY_ROOT/
 │   ├── NETworkManager.Documentation/ # Documentation resources
 │   ├── NETworkManager.Setup/         # WiX installer project
 │   ├── NETworkManager.Tests/         # xUnit unit tests (run by AppVeyor)
-│   └── 3rdparty/                     # Third-party dependencies (Dragablz: submodule of the fork BornToBeRoot/Dragablz)
-│       └── (managed-manually)        # NOTE: Maintained manually — AI agents MUST NOT modify this directory
+│   └── 3rdparty/                     # Third-party source code maintained in this repository
+│       └── Dragablz/                 # Dragablz (MIT), stripped to what we use - see its README.md / CHANGELOG.md
 ├── Website/                          # Docusaurus documentation website
 ├── Scripts/                          # Build and automation scripts
 │   ├── Create-FlagFromSVG.ps1        # Create flag images
@@ -82,7 +82,7 @@ REPOSITORY_ROOT/
   `Source/NETworkManager.Controls/LucideIcons.cs` (only the used icons, see `$Icons` in the script) and drawn as lines by
   `LucideIcon` (stroke 1.75); license in `Source/NETworkManager.Documentation/Licenses/Lucide.txt`
 - **MahApps.Metro.SimpleChildWindow** - Dialog windows
-- **Dragablz** - Tearable/draggable tab control
+- **Dragablz** - Tearable/draggable tab control (source in `Source/3rdparty/Dragablz`, modified)
 - **GongSolutions.Wpf.DragDrop** (`gong-wpf-dragdrop`) - Drag and drop framework
 - **Progress / loading** - MahApps `MetroProgressBar` (style `DefaultMetroProgressBar`) and `ProgressRing` in three sizes
   (`ProgressRingSmall` 16 inline, `ProgressRingMedium` 24 dialogs, `ProgressRingLarge` 48 centered), see
@@ -160,11 +160,9 @@ Website/
 
 ### Building the Application
 
-**Clone with Submodules**:
+**Clone**:
 ```powershell
 git clone https://github.com/BornToBeRoot/NETworkManager.git
-cd NETworkManager
-git submodule update --init --recursive
 ```
 
 **Build via Visual Studio/Rider**:
@@ -378,7 +376,7 @@ The website is deployed to GitHub Pages at: https://borntoberoot.net/NETworkMana
 - **`.github/dependabot.yml`**: Dependabot configuration
 - **`.github/mergify.yml`**: Mergify auto-merge configuration
 - **`.github/transifex.yml`**: Transifex translation sync configuration
-- **`.gitmodules`**: Git submodule configuration (Dragablz)
+- **`Source/3rdparty/Dragablz/`**: Dragablz source (`LICENSE`, origin in `README.md`, changes in `CHANGELOG.md`)
 - **`Website/docusaurus.config.js`**: Documentation site configuration
 - **`Website/docs/changelog/next-release.md`**: Changelog of the upcoming release
 - **`.claude/skills/feature-review/`**: Feature review skill incl. the app's conventions (`references/conventions.md`)
@@ -426,9 +424,6 @@ npm run clear  # or yarn clear
 ### Git Operations
 
 ```powershell
-# Update submodules
-git submodule update --init --recursive
-
 # Check status
 git status
 
@@ -554,7 +549,7 @@ SemiBold (section headers), `MessageTextBlock` 16 gray (messages in empty areas)
   `DragablzTabHeaderBorder` / `Title` / `CloseIcon` / `AccentLine` in `DragablzStyles.xaml` - change the tab look only
   there); a single tab is shown as the view title. Dragged-out tabs merge on the whole tab bar
   (`MergeTargetArea="HeaderPanel"`) and the target tab bars show a slot (`ShowMergeHint`, `MergeHintTemplate` in
-  `DefaultTabablzControl`) - features of our Dragablz fork (BornToBeRoot/Dragablz, submodule).
+  `DefaultTabablzControl`) - features of our modified Dragablz (`Source/3rdparty/Dragablz`).
 - Data grids: row height 30, semibold headers, accent-tinted selection.
 - Windows have rounded corners on Windows 11 (`WindowCornerHelper.RoundCorners`, DWM).
 
@@ -639,8 +634,12 @@ WebView2) can't be animated, clipped or put in transparent windows.
 5. **Update Documentation**: Changes to features should include doc updates and a changelog entry in `Website/docs/changelog/next-release.md`
 6. **Test on Real Networks**: Network tools require real network testing
 7. **Version Management**: Assembly version is auto-generated in CI/CD
-8. **Submodules**: Remember to init/update submodules (Dragablz in `Source/3rdparty/`)
-9. **DO NOT Modify 3rdparty**: The `Source/3rdparty/` directory contains the Dragablz submodule and is maintained manually — AI agents MUST NOT modify this directory
+8. **3rdparty (Dragablz)**: `Source/3rdparty/Dragablz` is the Dragablz library (MIT), maintained in this repository.
+   Change it only when a feature or fix needs it, keep the changes small, don't reformat / restyle the code, add an
+   entry to its `CHANGELOG.md` and keep its `LICENSE`
+9. **Third-party licenses**: Code or libraries from other projects need their license in
+   `Source/NETworkManager.Documentation/Licenses/` (+ `Content` entry in the csproj), an entry in `LibraryManager` and in
+   the README; embedded single files also keep the license header (e.g. `AirspacePanel.cs`)
 10. **Automation Scripts**: Use scripts in `Scripts/` directory for updating lists (OUI, ports, WHOIS servers)
 11. **Check CI Status**: Both AppVeyor (main build) and GitHub Actions (CodeQL, website) must pass
 12. **Dependency Updates**: Dependabot automatically creates PRs for dependency updates
