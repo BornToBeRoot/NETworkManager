@@ -28,6 +28,7 @@ Release date: **xx.xx.2026**
 **About**
 
 - Fixed the license of ControlzEx in the library list: it showed the license text and link of Dragablz. [#xxxx](https://github.com/BornToBeRoot/NETworkManager/pull/xxxx)
+- Updated the license of MahApps.Metro in the library list (copyright: .NET Foundation and Contributors). [#xxxx](https://github.com/BornToBeRoot/NETworkManager/pull/xxxx)
 
 ## Dependencies, Refactoring & Documentation
 
