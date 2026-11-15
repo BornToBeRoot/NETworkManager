@@ -5,6 +5,9 @@ All changes compared to the original [ButchersBoy/Dragablz](https://github.com/B
 
 ## NETworkManager (`Source/3rdparty/Dragablz`)
 
+- `Themes/MahApps.xaml` reduced to the styles NETworkManager uses: `MahAppsFocusVisual`, `MahAppsInvisibleThumbStyle`
+  and `MahAppsTabablzControlStyle` (without `ItemContainerStyle`, NETworkManager sets its own). Removed the converters,
+  button, trapezoid tab and tool window styles.
 - Removed unused code: `HeaderedItemViewModel`, `TabablzItemStyleSelector`,
   `HorizontalPositionMonitor` / `VerticalPositionMonitor`, `Core/HitTest.cs` and the empty project template files
   `Properties/Resources.*` / `Properties/Settings.*`.
