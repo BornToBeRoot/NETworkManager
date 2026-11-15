@@ -162,6 +162,10 @@ namespace Dragablz
             if (siblingItems == null) throw new ArgumentNullException("siblingItems");
             if (dragItem == null) throw new ArgumentNullException("dragItem");
 
+            //NETworkManager: a tab grabbed while it still slides (e.g. right after the previous drag) must follow the
+            //cursor - the slide would hold Canvas.Left and set its old target on completion
+            StopSlide(dragItem);
+
             _siblingItemLocationOnDragStart = siblingItems.Select(GetLocationInfo).ToDictionary(loc => loc.Item);
         }
 
