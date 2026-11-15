@@ -1363,7 +1363,7 @@ namespace Dragablz
 
             var contentPresenter = FindChildContentPresenter(item);
             RemoveFromSource(item);
-            _itemsHolder.Children.Remove(contentPresenter);
+            _itemsHolder?.Children.Remove(contentPresenter);
 
             // Return if it is not the last item
             if (Items.Count != 0)
@@ -1380,7 +1380,8 @@ namespace Dragablz
             // Find window
             var window = Window.GetWindow(this);
 
-            if (window == null || InterTabController == null)
+            //NETworkManager: InterTabClient can be null (binding to a view model property without a value)
+            if (window == null || InterTabController?.InterTabClient == null)
                 return item;
 
             // Get tab emptied response
@@ -1500,7 +1501,7 @@ namespace Dragablz
             System.Diagnostics.Debug.WriteLine("B " + minSize);
 
             RemoveFromSource(item);
-            _itemsHolder.Children.Remove(contentPresenter);
+            _itemsHolder?.Children.Remove(contentPresenter);
             if (Items.Count == 0)
             {
                 _dragablzItemsControl.MinHeight = minSize.Height;
