@@ -1456,14 +1456,16 @@ namespace Dragablz
                                           _headerPanel.IsVisible
                 ? _headerPanel
                 : _dragablzItemsControl;
-            var mousePositionOnHeaderItemsControl = Mouse.GetPosition(breachArea);
+            var mousePositionOnBreachArea = Mouse.GetPosition(breachArea);
+            //the header panel can reach the screen edge (maximized window) - no grace beyond it, the cursor can't get there
+            var horizontalGrace = ReferenceEquals(breachArea, _headerPanel) ? 0 : InterTabController.HorizontalPopoutGrace;
 
             Orientation? breachOrientation = null;
-            if (mousePositionOnHeaderItemsControl.X < -InterTabController.HorizontalPopoutGrace
-                || (mousePositionOnHeaderItemsControl.X - breachArea.ActualWidth) > InterTabController.HorizontalPopoutGrace)
+            if (mousePositionOnBreachArea.X < -horizontalGrace
+                || (mousePositionOnBreachArea.X - breachArea.ActualWidth) > horizontalGrace)
                 breachOrientation = Orientation.Horizontal;
-            else if (mousePositionOnHeaderItemsControl.Y < -InterTabController.VerticalPopoutGrace
-                     || (mousePositionOnHeaderItemsControl.Y - breachArea.ActualHeight) > InterTabController.VerticalPopoutGrace)
+            else if (mousePositionOnBreachArea.Y < -InterTabController.VerticalPopoutGrace
+                     || (mousePositionOnBreachArea.Y - breachArea.ActualHeight) > InterTabController.VerticalPopoutGrace)
                 breachOrientation = Orientation.Vertical;
 
             if (!breachOrientation.HasValue) return;

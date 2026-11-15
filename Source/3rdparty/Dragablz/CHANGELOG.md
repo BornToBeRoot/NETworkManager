@@ -5,6 +5,8 @@ All changes compared to the original [ButchersBoy/Dragablz](https://github.com/B
 
 ## NETworkManager (`Source/3rdparty/Dragablz`)
 
+- Fix (tear out, `HeaderPanel`): no grace beyond the header panel horizontally - in a maximized window it reaches the
+  screen edge, the cursor couldn't get past it and a tab could only be torn out vertically.
 - Fix: a tab grabbed while it still slid (right after the previous drag) didn't follow the cursor and snapped back to
   the old slide target - `OrganiseOnDragStarted` stops the slide of the dragged item.
 - Fix: the content of a removed tab could stay visible without a tab (e.g. merged and torn out again right away): while
