@@ -60,18 +60,7 @@ public sealed partial class DragablzTabHostWindow : INotifyPropertyChanged
         if (!_embeddedWindowApplicationNames.Contains(ApplicationName))
             return;
 
-        // Find all TabablzControl in the active window
-        foreach (var tabablzControl in VisualTreeHelper.FindVisualChildren<TabablzControl>(this))
-        {
-            // Skip if no items
-            if (tabablzControl.Items.Count == 0)
-                continue;
-
-            // Focus embedded window in the selected tab
-            (((DragablzTabItem)tabablzControl.SelectedItem)?.View as IEmbeddedWindow)?.FocusEmbeddedWindow();
-
-            break;
-        }
+        DragablzTabItem.FocusSelectedEmbeddedWindow(this);
     }
 
     #endregion
@@ -367,12 +356,15 @@ public sealed partial class DragablzTabHostWindow : INotifyPropertyChanged
 
     private void DragablzTabHostWindow_OnClosing(object sender, CancelEventArgs e)
     {
-        // Find all TabablzControl in the active window
-        foreach (var tabablzControl in VisualTreeHelper.FindVisualChildren<TabablzControl>(this))
-            foreach (var tabItem in tabablzControl.Items.OfType<DragablzTabItem>())
-                ((IDragablzTabItem)tabItem.View).CloseTab();
+        foreach (var tabItem in DragablzTabItem.GetTabItems(this).ToList())
+            ((IDragablzTabItem)tabItem.View).CloseTab();
 
-        // Reset the dragging state
+        // Reset the dragging state - only if this window is dragged (e.g. closed while merged into another window,
+        // IsDraggingWindowChanged doesn't change back then). Another window of the application can be dragged while
+        // this one closes (e.g. its last session ended): its placeholders must stay.
+        if (!VisualTreeHelper.FindVisualChildren<TabablzControl>(this).Any(x => x.IsDraggingWindow))
+            return;
+
         switch (ApplicationName)
         {
             case ApplicationName.RemoteDesktop:
@@ -469,18 +461,10 @@ public sealed partial class DragablzTabHostWindow : INotifyPropertyChanged
 
     private void UpdateOnWindowResize()
     {
-        // Find all TabablzControl
-        foreach (var tabablzControl in VisualTreeHelper.FindVisualChildren<TabablzControl>(this))
+        foreach (var item in DragablzTabItem.GetTabItems(this))
         {
-            // Skip if no items
-            if (tabablzControl.Items.Count == 0)
-                continue;
-
-            foreach (var item in tabablzControl.Items.OfType<DragablzTabItem>())
-            {
-                if (item.View is RemoteDesktopControl control)
-                    control.UpdateOnWindowResize();
-            }
+            if (item.View is RemoteDesktopControl control)
+                control.UpdateOnWindowResize();
         }
     }
 

@@ -112,7 +112,8 @@ Custom themes override the [`Accent`](#accent) and [`Theme`](#theme) settings.
 
 Animations of the application: dialogs zoom and fade in when they are opened (the run command slides down), the
 indicator of the selected tool in the navigation grows in, expanders rotate their arrow and fade in their content,
-notifications slide in and the progress of the scanners moves smoothly.
+notifications slide in, the progress of the scanners moves smoothly and the other tabs slide to their new position
+while a tab is dragged.
 
 Short fades of colors (e.g. the mouse over background of buttons and the navigation, tooltips, the darkened background
 behind a dialog) are always shown - they don't move anything.

@@ -237,4 +237,5 @@ When fixing:
   the manual Windows tests of the handover file.
 - Add strings to `Strings.resx` and, in alphabetical order, to `Strings.Designer.cs`.
 - Update the feature documentation and add a changelog entry in `Website/docs/changelog/next-release.md`.
-- Never modify `Source/3rdparty/`.
+- Change `Source/3rdparty/Dragablz` only when the fix needs it: keep it small, don't reformat, add an entry to its
+  `CHANGELOG.md` (see AGENTS.md).

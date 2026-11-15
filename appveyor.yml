@@ -44,7 +44,6 @@ install:
           $BuildRelevantFiles | ForEach-Object { Write-Host "  $_" }
         }
       }
-  - git submodule update --init
   - ps: |
       # Read the required SDK version from global.json instead of hardcoding it, so Dependabot's
       # weekly SDK bumps there don't silently drift out of sync with what CI installs.
@@ -80,10 +79,10 @@ before_build:
       $AssemlbyContent = $AssemlbyContent -replace $AssemblyFileVersionPattern, "[assembly: AssemblyFileVersion(""$($VersionString)"")]"
       $AssemlbyContent | Set-Content -Path $AssemblyFile -Encoding utf8
 
-      # Update the file version of Dragablz (submodule, own AssemblyInfo.cs). The MSI only replaces versioned files on
+      # Update the file version of Dragablz (Source/3rdparty, own AssemblyInfo.cs). The MSI only replaces versioned files on
       # an upgrade if their file version changed - with a fixed version the old Dragablz.dll stays installed.
       # The assembly version stays unchanged (only patched in the CI checkout, not committed).
-      $DragablzAssemblyFile = "$($env:APPVEYOR_BUILD_FOLDER)\Source\3rdparty\Dragablz\Dragablz\Properties\AssemblyInfo.cs"
+      $DragablzAssemblyFile = "$($env:APPVEYOR_BUILD_FOLDER)\Source\3rdparty\Dragablz\Properties\AssemblyInfo.cs"
 
       $DragablzContent = Get-Content -Path $DragablzAssemblyFile -Encoding utf8
       $DragablzContent = $DragablzContent -replace $AssemblyFileVersionPattern, "[assembly: AssemblyFileVersion(""$($VersionString)"")]"

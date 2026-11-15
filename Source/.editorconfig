@@ -2,3 +2,7 @@
 
 # CA1416: Plattformkompatibilität überprüfen
 dotnet_diagnostic.CA1416.severity = silent
+
+# Vendored third-party code (Dragablz): keep its original style, no analyzer / format findings
+[3rdparty/**.cs]
+generated_code = true

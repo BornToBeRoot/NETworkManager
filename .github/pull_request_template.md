@@ -40,7 +40,7 @@ Closes #
 - [ ] The [documentation](https://github.com/BornToBeRoot/NETworkManager/tree/main/Website/docs) is updated (if needed).
 - [ ] An entry is added to the [changelog](https://github.com/BornToBeRoot/NETworkManager/blob/main/Website/docs/changelog/next-release.md).
 - [ ] New texts are only added to `Strings.resx` (translations are done on [Transifex](https://app.transifex.com/BornToBeRoot/NETworkManager/dashboard/)).
-- [ ] No files in `Source/3rdparty/` are changed.
+- [ ] Changes in `Source/3rdparty/` (if any) are needed and listed in the `CHANGELOG.md` of that library.
 
 ## Contributing
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -50,29 +51,46 @@ public class DragablzTabItem : ViewModelBase
     public Guid Id { get; }
 
     /// <summary>
-    ///     Method to set the <see cref="Header" /> of a <see cref="DragablzTabItem" /> based on the <see cref="Id" />
-    ///     in the current <see cref="Window" /> by finding the tab item in all <see cref="TabablzControl" />`s
-    ///     via the <see cref="VisualTreeHelper" />.
+    ///     Method to set the <see cref="Header" /> of a <see cref="DragablzTabItem" /> based on the <see cref="Id" />.
+    ///     Searches all windows (main window and dragged out tab windows), not only the active one - the tab can be in
+    ///     a window that is not active.
     /// </summary>
     /// <param name="tabId">Id of the tab to set the header.</param>
     /// <param name="header">New header to set.</param>
     public static void SetTabHeader(Guid tabId, string header)
     {
-        var window = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
+        var tabItem = Application.Current.Windows.OfType<Window>()
+            .SelectMany(GetTabItems)
+            .FirstOrDefault(x => x.Id == tabId);
 
-        if (window == null)
-            return;
-
-        // Find all TabablzControl in the active window
-        foreach (var tabablzControl in VisualTreeHelper.FindVisualChildren<TabablzControl>(window))
-        {
-            var tabItem = tabablzControl.Items.OfType<DragablzTabItem>().FirstOrDefault(x => x.Id == tabId);
-
-            if (tabItem == null)
-                continue;
-
+        if (tabItem != null)
             tabItem.Header = header;
-            break;
-        }
+    }
+
+    /// <summary>
+    ///     All tab items of a window (main window or tab window): the items of all <see cref="TabablzControl" />s in
+    ///     it, incl. split layout branches. Uses the visual tree, not <see cref="TabablzControl.GetLoadedInstances" />:
+    ///     a branch that was just created is not loaded yet, but its tabs must be found (e.g. closed with the window).
+    ///     Lazy (stops at the first match of e.g. <see cref="SetTabHeader" />) - call <c>ToList()</c> before closing tabs
+    ///     while iterating.
+    /// </summary>
+    /// <param name="window">Window to search.</param>
+    public static IEnumerable<DragablzTabItem> GetTabItems(DependencyObject window)
+    {
+        return VisualTreeHelper.FindVisualChildren<TabablzControl>(window)
+            .SelectMany(tabablzControl => tabablzControl.Items.OfType<DragablzTabItem>());
+    }
+
+    /// <summary>
+    ///     Focuses the embedded window (e.g. PuTTY, PowerShell) of the selected tab in the first
+    ///     <see cref="TabablzControl" /> of the window that has tabs.
+    /// </summary>
+    /// <param name="window">Window to search.</param>
+    public static void FocusSelectedEmbeddedWindow(DependencyObject window)
+    {
+        var tabablzControl = VisualTreeHelper.FindVisualChildren<TabablzControl>(window)
+            .FirstOrDefault(x => x.Items.Count > 0);
+
+        ((tabablzControl?.SelectedItem as DragablzTabItem)?.View as IEmbeddedWindow)?.FocusEmbeddedWindow();
     }
 }

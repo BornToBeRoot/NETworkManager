@@ -102,7 +102,6 @@
     </Style>
 
     <Style x:Key="CustomHeaderItemTemplate" TargetType="{x:Type dragablz:DragablzItem}">
-        <Setter Property="FocusVisualStyle" Value="{StaticResource MahAppsFocusVisual}" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
@@ -126,22 +125,16 @@
                                                   SnapsToDevicePixels="{TemplateBinding UIElement.SnapsToDevicePixels}"
                                                   Margin="{TemplateBinding Control.Padding}" x:Name="contentPresenter" />
                                 <Thumb Grid.Column="0" HorizontalAlignment="Stretch" VerticalContentAlignment="Stretch"
-                                       x:Name="PART_Thumb" Style="{StaticResource MahAppsInvisibleThumbStyle}" />
+                                       x:Name="PART_Thumb" Style="{StaticResource InvisibleThumbStyle}" />
                             </Grid>
                         </Border>
                     </Grid>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="dragablz:TabablzControl.IsWrappingTabItem" Value="True">
-                            <!--<Setter TargetName="contentPresenter" Property="Content" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=DataContext.(networkManagerControls:DragablzTabItem.Header)}" />-->
-                        </Trigger>
-                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
 
-    <Style x:Key="DefaultTabablzControl" TargetType="{x:Type dragablz:TabablzControl}"
-           BasedOn="{StaticResource MahAppsTabablzControlStyle}">
+    <Style x:Key="DefaultTabablzControl" TargetType="{x:Type dragablz:TabablzControl}">
         <Setter Property="BorderThickness" Value="0,1,0,0" />
         <Setter Property="BorderBrush" Value="{DynamicResource Brushes.Surface.Border}" />
         <Setter Property="ItemContainerStyle" Value="{StaticResource CustomHeaderItemTemplate}" />
