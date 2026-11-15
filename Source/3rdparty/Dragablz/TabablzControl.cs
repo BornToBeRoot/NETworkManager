@@ -1202,6 +1202,10 @@ namespace Dragablz
         {
             if (_dragablzItemsControl == null) return null;
 
+            //NETworkManager: a target can be hidden or its window closed during the drag (the targets are collected at
+            //the start) - PointToScreen throws without a PresentationSource
+            if (!IsVisible || PresentationSource.FromVisual(_dragablzItemsControl) == null) return null;
+
             var itemsBounds = GetScreenBounds(_dragablzItemsControl);
             Rect? panelBounds = null;
             if (MergeTargetArea == MergeTargetArea.HeaderPanel && _headerPanel != null && _headerPanel.IsVisible)
