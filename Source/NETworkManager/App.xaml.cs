@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading;
 using System.Windows;
 using System.Windows.Threading;
+using Dragablz;
 using log4net;
 using NETworkManager.Localization;
 using NETworkManager.Localization.Resources;
@@ -45,6 +46,9 @@ public partial class App
 
     private void Application_Startup(object sender, StartupEventArgs e)
     {
+        // Tabs (Dragablz) slide to their new location while a tab is dragged - only with animations enabled
+        StackOrganiser.AnimationsEnabled = () => AppearanceManager.AnimationsEnabled;
+
         var startLog = $@"
   _   _ _____ _____                    _    __  __                                   
  | \ | | ____|_   _|_      _____  _ __| | _|  \/  | __ _ _ __   __ _  __ _  ___ _ __ 

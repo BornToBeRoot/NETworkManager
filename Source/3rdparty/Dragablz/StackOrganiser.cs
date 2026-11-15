@@ -275,8 +275,21 @@ namespace Dragablz
             _setLocation(dragablzItem, location);
         }
 
+        /// <summary>
+        /// NETworkManager: whether the items slide to their new location while a tab is dragged (checked each time an item
+        /// moves). <c>null</c> = always. Set by the application (Appearance > Animations).
+        /// </summary>
+        public static Func<bool> AnimationsEnabled { get; set; }
+
         private void SendToLocation(DragablzItem dragablzItem, double location)
         {
+            if (AnimationsEnabled != null && !AnimationsEnabled())
+            {
+                _activeStoryboardTargetLocations.Remove(dragablzItem);
+                _setLocation(dragablzItem, location);
+                return;
+            }
+
             double activeTarget;
             if (Math.Abs(_getLocation(dragablzItem) - location) < 1.0
                 ||
@@ -310,7 +323,8 @@ namespace Dragablz
             timeline.KeyFrames.Add(
                 new EasingDoubleKeyFrame(location, KeyTime.FromTimeSpan(TimeSpan.FromMilliseconds(200)))
                 {
-                    EasingFunction = new CubicEase() { EasingMode = EasingMode.EaseOut }
+                    //NETworkManager: quadratic ease-out like the other animations of the application
+                    EasingFunction = new QuadraticEase() { EasingMode = EasingMode.EaseOut }
                 });
             storyboard.Children.Add(timeline);
             storyboard.Begin(dragablzItem, true);
