@@ -356,10 +356,15 @@ public sealed partial class DragablzTabHostWindow : INotifyPropertyChanged
 
     private void DragablzTabHostWindow_OnClosing(object sender, CancelEventArgs e)
     {
-        foreach (var tabItem in DragablzTabItem.GetTabItems(this))
+        foreach (var tabItem in DragablzTabItem.GetTabItems(this).ToList())
             ((IDragablzTabItem)tabItem.View).CloseTab();
 
-        // Reset the dragging state
+        // Reset the dragging state - only if this window is dragged (e.g. closed while merged into another window,
+        // IsDraggingWindowChanged doesn't change back then). Another window of the application can be dragged while
+        // this one closes (e.g. its last session ended): its placeholders must stay.
+        if (!VisualTreeHelper.FindVisualChildren<TabablzControl>(this).Any(x => x.IsDraggingWindow))
+            return;
+
         switch (ApplicationName)
         {
             case ApplicationName.RemoteDesktop:
