@@ -73,22 +73,5 @@ namespace Dragablz.Core
 
         [DllImport("User32")]
         public static extern IntPtr GetWindow(IntPtr hWnd, uint wCmd);
-
-
-        [DllImport("dwmapi.dll", EntryPoint = "#127")]
-        internal static extern void DwmGetColorizationParameters(ref DWMCOLORIZATIONPARAMS dp);
-
-        [StructLayout(LayoutKind.Sequential)]
-        internal struct DWMCOLORIZATIONPARAMS
-        {
-            public UInt32 ColorizationColor;
-            public UInt32 ColorizationAfterglow;
-            public UInt32 ColorizationColorBalance;
-            public UInt32 ColorizationAfterglowBalance;
-            public UInt32 ColorizationBlurBalance;
-            public UInt32 ColorizationGlassReflectionIntensity;
-            public UInt32 ColorizationOpaqueBlend;
-        }
-
     }
 }

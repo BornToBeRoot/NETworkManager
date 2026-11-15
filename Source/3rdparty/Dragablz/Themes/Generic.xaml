@@ -132,7 +132,7 @@
         </Setter>
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="true">
-                <Setter Property="Background" Value="{x:Static local:DragablzColors.WindowGlassBrush}"/>
+                <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.ActiveCaptionBrushKey}}"/>
                 <Setter Property="Foreground" Value="{x:Static SystemColors.HighlightTextBrush}" />
             </Trigger>
             <Trigger Property="IsPressed" Value="true">
@@ -173,7 +173,7 @@
         <Setter Property="Foreground" Value="{x:Static SystemColors.HighlightTextBrush}" />
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="true">
-                <Setter Property="Background" Value="{x:Static local:DragablzColors.WindowGlassBrush}"/>
+                <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.ActiveCaptionBrushKey}}"/>
                 <Setter Property="Foreground" Value="{x:Static SystemColors.HighlightTextBrush}" />
             </Trigger>
             <Trigger Property="IsPressed" Value="true">

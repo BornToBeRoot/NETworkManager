@@ -5,6 +5,8 @@ All changes compared to the original [ButchersBoy/Dragablz](https://github.com/B
 
 ## NETworkManager (`Source/3rdparty/Dragablz`)
 
+- Removed `DragablzColors` and the undocumented DWM call (`DwmGetColorizationParameters`, `Core/Native.cs`): the hover
+  background of the default add / menu buttons (not shown by NETworkManager) uses `SystemColors.ActiveCaptionBrush`.
 - Fix (right click): a second right click while waiting for the button up saved the disabled thumb as the state to
   restore (tab no longer draggable), and a thumb replaced meanwhile (custom thumb) was re-enabled.
 - Fix: `StackOrganiser.Organise` sorted by X / Y instead of the target of a running slide - an Organise during a slide
