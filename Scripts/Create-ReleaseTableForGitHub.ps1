@@ -21,7 +21,7 @@ $Version = "$($Now.Year).$($Now.Month).$($Now.Day).0"
 $SumFile = Join-Path $Path "NETworkManager_$($Version)_SHA256SUMS"
 
 if (-not (Test-Path $SumFile)) {
-    Write-Error "SHA256SUMS file not found: $SumFile (run Create-FileHash.ps1 first)"
+    Write-Error "SHA256SUMS file not found: $SumFile (run Create-SHA256SUMS.ps1 first)"
     return
 }
 
@@ -33,6 +33,9 @@ Get-Content -Path $SumFile | ForEach-Object {
     $Hash, $FileName = $_ -split "  ", 2
     $DownloadUrl = "$RepoUrl/releases/download/$Version/$FileName"
 
-    # Format: |[`<filename>`](<download url>)| `<hash>` |
-    Write-Output "|[``$FileName``]($DownloadUrl)| ``$Hash`` |"
+    # Short name for the table (without "NETworkManager_<version>_"), e.g. Setup_win-x64.msi
+    $Name = $FileName -replace "^NETworkManager_$([regex]::Escape($Version))_", ""
+
+    # Format: |[`<name>`](<download url>)| `<hash>` |
+    Write-Output "|[``$Name``]($DownloadUrl)| ``$Hash`` |"
 }
