@@ -5,6 +5,10 @@ All changes compared to the original [ButchersBoy/Dragablz](https://github.com/B
 
 ## NETworkManager (`Source/3rdparty/Dragablz`)
 
+- Fix: the content of a removed tab could stay visible without a tab (e.g. merged and torn out again right away): while
+  the item was removed, a stale `SelectedItem` created a new `ContentPresenter` for it, which was never removed.
+  `CreateChildContentPresenter` skips items that are no longer in the control, `RemoveItem` / `MonitorBreach` remove
+  every presenter of the item.
 - Fix (merge area, `MergeTargetArea.HeaderPanel`): a tab merged into the empty part of the tab bar (e.g. an empty bar,
   where it is placed at the start) was torn out again at once - `MonitorBreach` measured against the area of the tabs.
   With `HeaderPanel`, a tab is now only torn out when it leaves the whole tab bar (the area that accepts it).

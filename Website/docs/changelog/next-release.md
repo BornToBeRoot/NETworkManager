@@ -27,6 +27,7 @@ Release date: **xx.xx.2026**
 
 **Tabs**
 
+- Fixed the content of a tab staying visible without its tab after the tab was dragged into another window and out again quickly. [#xxxx](https://github.com/BornToBeRoot/NETworkManager/pull/xxxx)
 - Fixed a tab dropped into an empty tab bar (or far behind the last tab) being dragged out again right away. A tab now leaves the tab bar only when it is dragged out of the whole tab bar. [#xxxx](https://github.com/BornToBeRoot/NETworkManager/pull/xxxx)
 - Fixed the tab title (e.g. the host of a scan) not being updated when the tab is in a dragged out window that is not the active window. [#xxxx](https://github.com/BornToBeRoot/NETworkManager/pull/xxxx)
 - The tab headers show the focus ring of the application (keyboard navigation) instead of a dotted rectangle. [#xxxx](https://github.com/BornToBeRoot/NETworkManager/pull/xxxx)

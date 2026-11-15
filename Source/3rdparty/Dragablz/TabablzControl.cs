@@ -1365,6 +1365,7 @@ namespace Dragablz
             var contentPresenter = FindChildContentPresenter(item);
             RemoveFromSource(item);
             _itemsHolder?.Children.Remove(contentPresenter);
+            RemoveChildContentPresenters(item);
 
             // Return if it is not the last item
             if (Items.Count != 0)
@@ -1509,6 +1510,7 @@ namespace Dragablz
 
             RemoveFromSource(item);
             _itemsHolder?.Children.Remove(contentPresenter);
+            RemoveChildContentPresenters(item);
             if (Items.Count == 0)
             {
                 _dragablzItemsControl.MinHeight = minSize.Height;
@@ -1712,7 +1714,9 @@ namespace Dragablz
         /// <returns></returns>
         private void CreateChildContentPresenter(object item)
         {
-            if (item == null) return;
+            //NETworkManager: not for an item that is no longer in the control (a stale SelectedItem while the item is
+            //removed, e.g. merged and torn out again) - its content would stay visible without a tab
+            if (item == null || !Items.Contains(item)) return;
 
             var cp = FindChildContentPresenter(item);
             if (cp != null) return;
@@ -1727,6 +1731,21 @@ namespace Dragablz
                 Visibility = Visibility.Collapsed,
             };
             _itemsHolder.Children.Add(cp);
+        }
+
+        /// <summary>
+        /// NETworkManager: removes every ContentPresenter of the item (one can be created again while the item is removed
+        /// from the source, see <see cref="CreateChildContentPresenter"/>).
+        /// </summary>
+        private void RemoveChildContentPresenters(object item)
+        {
+            if (_itemsHolder == null) return;
+
+            var content = GetContent(item);
+            if (content == null) return;
+
+            foreach (var cp in _itemsHolder.Children.OfType<ContentPresenter>().Where(cp => cp.Content == content).ToList())
+                _itemsHolder.Children.Remove(cp);
         }
 
         /// <summary>
