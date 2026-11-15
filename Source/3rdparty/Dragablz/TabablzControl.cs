@@ -1448,14 +1448,21 @@ namespace Dragablz
 
         private void MonitorBreach(DragablzDragDeltaEventArgs e)
         {
-            var mousePositionOnHeaderItemsControl = Mouse.GetPosition(_dragablzItemsControl);
+            //NETworkManager: with MergeTargetArea.HeaderPanel the whole tab bar accepts a tab, so only leaving the tab bar
+            //tears it out - with the area of the tabs, a tab merged into the empty part of the bar (e.g. an empty bar,
+            //where it is placed at the start) was torn out again at once
+            FrameworkElement breachArea = MergeTargetArea == MergeTargetArea.HeaderPanel && _headerPanel != null &&
+                                          _headerPanel.IsVisible
+                ? _headerPanel
+                : _dragablzItemsControl;
+            var mousePositionOnHeaderItemsControl = Mouse.GetPosition(breachArea);
 
             Orientation? breachOrientation = null;
             if (mousePositionOnHeaderItemsControl.X < -InterTabController.HorizontalPopoutGrace
-                || (mousePositionOnHeaderItemsControl.X - _dragablzItemsControl.ActualWidth) > InterTabController.HorizontalPopoutGrace)
+                || (mousePositionOnHeaderItemsControl.X - breachArea.ActualWidth) > InterTabController.HorizontalPopoutGrace)
                 breachOrientation = Orientation.Horizontal;
             else if (mousePositionOnHeaderItemsControl.Y < -InterTabController.VerticalPopoutGrace
-                     || (mousePositionOnHeaderItemsControl.Y - _dragablzItemsControl.ActualHeight) > InterTabController.VerticalPopoutGrace)
+                     || (mousePositionOnHeaderItemsControl.Y - breachArea.ActualHeight) > InterTabController.VerticalPopoutGrace)
                 breachOrientation = Orientation.Vertical;
 
             if (!breachOrientation.HasValue) return;

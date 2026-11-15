@@ -5,6 +5,9 @@ All changes compared to the original [ButchersBoy/Dragablz](https://github.com/B
 
 ## NETworkManager (`Source/3rdparty/Dragablz`)
 
+- Fix (merge area, `MergeTargetArea.HeaderPanel`): a tab merged into the empty part of the tab bar (e.g. an empty bar,
+  where it is placed at the start) was torn out again at once - `MonitorBreach` measured against the area of the tabs.
+  With `HeaderPanel`, a tab is now only torn out when it leaves the whole tab bar (the area that accepts it).
 - Removed `DragablzColors` and the undocumented DWM call (`DwmGetColorizationParameters`, `Core/Native.cs`): the hover
   background of the default add / menu buttons (not shown by NETworkManager) uses `SystemColors.ActiveCaptionBrush`.
 - Fix (right click): a second right click while waiting for the button up saved the disabled thumb as the state to
