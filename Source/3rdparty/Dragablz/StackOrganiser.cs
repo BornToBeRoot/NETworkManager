@@ -140,6 +140,16 @@ namespace Dragablz
 
         private IDictionary<DragablzItem, LocationInfo> _siblingItemLocationOnDragStart;
 
+        //NETworkManager: an item added during the drag has no start location (KeyNotFoundException) - use its current one
+        private double GetStartOnDragStart(LocationInfo location)
+        {
+            LocationInfo locationOnDragStart;
+            return _siblingItemLocationOnDragStart != null &&
+                   _siblingItemLocationOnDragStart.TryGetValue(location.Item, out locationOnDragStart)
+                ? locationOnDragStart.Start
+                : location.Start;
+        }
+
         public virtual void OrganiseOnDragStarted(DragablzItemsControl requestor, Size measureBounds,
             IEnumerable<DragablzItem> siblingItems, DragablzItem dragItem)
         {
@@ -158,7 +168,7 @@ namespace Dragablz
             var currentLocations = siblingItems
                 .Select(GetLocationInfo)
                 .Union(new[] { GetLocationInfo(dragItem) })
-                .OrderBy(loc => loc.Item == dragItem ? loc.Start : _siblingItemLocationOnDragStart[loc.Item].Start);
+                .OrderBy(loc => loc.Item == dragItem ? loc.Start : GetStartOnDragStart(loc));
 
             var currentCoord = 0.0;
             var zIndex = int.MaxValue;
@@ -181,7 +191,7 @@ namespace Dragablz
             var currentLocations = siblingItems
                 .Select(GetLocationInfo)
                 .Union(new[] { GetLocationInfo(dragItem) })
-                .OrderBy(loc => loc.Item == dragItem ? loc.Start : _siblingItemLocationOnDragStart[loc.Item].Start);
+                .OrderBy(loc => loc.Item == dragItem ? loc.Start : GetStartOnDragStart(loc));
 
             var currentCoord = 0.0;
             var z = int.MaxValue;
@@ -194,6 +204,9 @@ namespace Dragablz
                 location.Item.LogicalIndex = logicalIndex++;
             }
             Panel.SetZIndex(dragItem, int.MaxValue);
+
+            //NETworkManager: don't keep the items (and their window) of the last drag alive
+            _siblingItemLocationOnDragStart = null;
         }
 
         public virtual Point ConstrainLocation(DragablzItemsControl requestor, Size measureBounds, Point itemCurrentLocation,

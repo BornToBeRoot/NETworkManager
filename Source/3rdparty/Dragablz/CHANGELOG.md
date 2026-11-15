@@ -5,6 +5,9 @@ All changes compared to the original [ButchersBoy/Dragablz](https://github.com/B
 
 ## NETworkManager (`Source/3rdparty/Dragablz`)
 
+- Fix: `StackOrganiser` kept the start locations of the last drag (items and their window alive) and threw a
+  `KeyNotFoundException` for an item added during a drag. The state is now cleared after the drag, which also makes a
+  shared organiser (e.g. the `VerticalOrganiser` of the vertical tab style) harmless.
 - Fix: a tab dropped on a drop zone whose window closed during the drag was moved into the closed window (lost).
 - Fix: the static `CloseItem(object)` threw for tab controls without an applied template or tabs without content, and
   closed the tabs while enumerating them (collection modified).
