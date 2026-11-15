@@ -1,6 +1,6 @@
 ---
 slug: release-highlights
-title: "What's New: Run Command, Visual Traceroute, a Smarter IP Scanner, RDAP and a Fresh Look"
+title: "Run Command, Visual Traceroute, a Smarter IP Scanner, RDAP and a Fresh Look"
 description: "NETworkManager 2026.11.15.0 brings a run command to start any tool from the keyboard, a world map for Traceroute, an IP Scanner that finds and identifies far more devices, RDAP as the modern successor of Whois, and a redesigned interface with new themes - plus hundreds of improvements and bug fixes."
 authors: [borntoberoot]
 tags: [release, run command, traceroute, ip scanner, rdap, theme, ui, new feature]
@@ -45,11 +45,7 @@ Traceroute now shows the route on a **world map** below the hop list. Each hop w
 
 The map works offline and is shown when **Check IP geolocation** and **Show map** are enabled.
 
-:::note[Placeholder]
-
-Screenshot of the Traceroute map (e.g. a trace to a server on another continent).
-
-:::
+![Traceroute with the route on the world map](../../docs/img/traceroute.png)
 
 More details in the [Traceroute documentation](https://borntoberoot.net/NETworkManager/docs/application/traceroute#map).
 
