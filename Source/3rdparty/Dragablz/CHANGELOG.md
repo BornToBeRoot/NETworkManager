@@ -5,6 +5,8 @@ All changes compared to the original [ButchersBoy/Dragablz](https://github.com/B
 
 ## NETworkManager (`Source/3rdparty/Dragablz`)
 
+- Fix: the splitter between branches stacked on top of each other reached 3 px into the neighbouring branches on the
+  left and right (`Margin="-3,-3"` instead of `"0,-3"`, from the wider hit area of the fork).
 - `StackOrganiser.AnimationsEnabled` (static, set by NETworkManager from Settings > Appearance > Animations): without
   animations the items are moved directly instead of sliding; the slide uses a quadratic instead of a cubic ease-out.
 - Fix: when a tab's slide animation was replaced by a newer one (tab dragged back and forth), the completion of the old

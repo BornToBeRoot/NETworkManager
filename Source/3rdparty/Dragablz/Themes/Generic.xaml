@@ -1666,7 +1666,7 @@
                                                   ResizeDirection="Rows"
                                                   ResizeBehavior="PreviousAndNext" 
                                                   Height="7" 
-                                                  Margin="-3,-3"
+                                                  Margin="0,-3"
                                                   BorderThickness="3"
                                                   BorderBrush="Transparent"
                                                   HorizontalAlignment="Stretch" />
