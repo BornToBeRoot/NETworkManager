@@ -25,3 +25,13 @@ The project, assembly and namespaces are still called `Dragablz` / `Dragablz.Doc
   otherwise the MSI doesn't replace `Dragablz.dll` on an upgrade - keep the `AssemblyFileVersion` attribute.
 - The license is also shipped with the application (`Source/NETworkManager.Documentation/Licenses/Dragablz.txt`, shown
   in the about / license view via `LibraryManager`).
+
+## Existing clones (with the old submodule)
+
+Switching to a commit with this folder fails with "untracked working tree files would be overwritten" while the old
+submodule is still checked out. Remove it once, then pull / switch again:
+
+```powershell
+git submodule deinit -f Source/3rdparty/Dragablz
+Remove-Item -Recurse -Force .git/modules/Source/3rdparty/Dragablz, Source/3rdparty/Dragablz
+```
