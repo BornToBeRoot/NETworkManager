@@ -25,6 +25,10 @@ Release date: **xx.xx.2026**
 
 ## Bug Fixes
 
+**Setup**
+
+- Fixed the tabs of the tools not being shown (only the type name and an empty white area) after an upgrade with the setup (MSI). The file version of `Dragablz.dll` never changed, so the installer kept the old file. It now gets the version of NETworkManager with every build. A repair of the installation fixes affected systems. [aed51a5](https://github.com/BornToBeRoot/NETworkManager/commit/aed51a5a0)
+
 ## Dependencies, Refactoring & Documentation
 
 - Code cleanup & refactoring
