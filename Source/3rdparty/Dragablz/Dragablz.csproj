@@ -1,0 +1,10 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<!-- Dragablz (MIT, see LICENSE), maintained in this repository - see README.md and CHANGELOG.md -->
+	<PropertyGroup>
+		<TargetFramework>net10.0-windows</TargetFramework>
+		<UseWPF>true</UseWPF>
+		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+	</PropertyGroup>
+
+</Project>
