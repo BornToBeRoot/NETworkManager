@@ -102,7 +102,9 @@ namespace Dragablz
                 measureBounds,
                 items.Select((di, idx) => new Tuple<int, DragablzItem>(idx, di))
                         .OrderBy(tuple => tuple,
-                            MultiComparer<Tuple<int, DragablzItem>>.Ascending(tuple => _getLocation(tuple.Item2))
+                            //NETworkManager: the target of a running slide, not X / Y (still the old location) - otherwise
+                            //an Organise during a slide restores the old order (SetLocation stops the slide)
+                            MultiComparer<Tuple<int, DragablzItem>>.Ascending(tuple => GetLocationInfo(tuple.Item2).Start)
                                 .ThenAscending(tuple => tuple.Item1))
                         .Select(tuple => tuple.Item2));
         }
@@ -297,7 +299,7 @@ namespace Dragablz
         /// NETworkManager: called when the container of an item is removed (tab closed, dragged out or merged) - stops its
         /// slide and forgets the item, so the organiser doesn't keep it (and its window) alive.
         /// </summary>
-        public void ForgetItem(DragablzItem dragablzItem)
+        public virtual void ForgetItem(DragablzItem dragablzItem)
         {
             StopSlide(dragablzItem);
             if (_siblingItemLocationOnDragStart != null)

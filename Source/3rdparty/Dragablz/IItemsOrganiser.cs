@@ -17,5 +17,11 @@ namespace Dragablz
         Point ConstrainLocation(DragablzItemsControl requestor, Size measureBounds, Point itemCurrentLocation, Size itemCurrentSize, Point itemDesiredLocation, Size itemDesiredSize);
         Size Measure(DragablzItemsControl requestor, Size availableSize, IEnumerable<DragablzItem> items);
         IEnumerable<DragablzItem> Sort(IEnumerable<DragablzItem> items);
+
+        /// <summary>
+        /// NETworkManager: the container of the item was removed (tab closed, dragged out or merged) - release all state
+        /// kept for it, so the organiser doesn't keep it (and its window) alive.
+        /// </summary>
+        void ForgetItem(DragablzItem dragablzItem) { }
     }
 }

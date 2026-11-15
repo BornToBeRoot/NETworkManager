@@ -5,6 +5,8 @@ All changes compared to the original [ButchersBoy/Dragablz](https://github.com/B
 
 ## NETworkManager (`Source/3rdparty/Dragablz`)
 
+- Fix: `StackOrganiser.Organise` sorted by X / Y instead of the target of a running slide - an Organise during a slide
+  restored the old order. `ForgetItem` is part of `IItemsOrganiser` (default no-op) instead of a `StackOrganiser` cast.
 - `DragablzItem.OnPreviewMouseRightButtonDown` (fix for the right click lock, see the fork): calls `base` before the
   wait instead of after the routing, restores the thumb it disabled (local) and documents why it polls the button.
 - Removed the MahApps theme (`Themes/MahApps.xaml`): NETworkManager uses its own invisible thumb style and focus visual
@@ -17,7 +19,8 @@ All changes compared to the original [ButchersBoy/Dragablz](https://github.com/B
   with X / Y instead of the slide target); a direct placement (e.g. after a tab was dragged out) or "animations off"
   didn't stop a running slide to another location (gap, motion); a removed item stayed in the organiser until the
   next drag (now `ForgetItem`, called by `DragablzItemsControl.ClearContainerForItemOverride`). The running slide is
-  tracked per item, so a shared organiser (default value / style) no longer mixes state.
+  tracked per item; the start locations of a drag are still one field per organiser, so an organiser shared by several
+  controls (e.g. the `VerticalOrganiser` of the vertical tab style) can still mix them.
 - Removed dead code: the unused static `ContinuationIndex` (`StoryboardCompletionListener`), the right mouse up
   disposable of `DragablzItem` (only ever set to empty), a `Debug.WriteLine` in `MonitorBreach` and the empty
   `ItemsChanged` handler of `DragablzItemsControl`.

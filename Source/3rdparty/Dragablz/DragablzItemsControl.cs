@@ -52,7 +52,7 @@ namespace Dragablz
 
             ((DragablzItem)element).SizeChanged -= ItemSizeChangedEventHandler;
             //NETworkManager: the organiser must not keep the removed item (slide, drag state)
-            (ItemsOrganiser as StackOrganiser)?.ForgetItem((DragablzItem)element);
+            ItemsOrganiser?.ForgetItem((DragablzItem)element);
 
             Dispatcher.BeginInvoke(new Action(() =>
             {
