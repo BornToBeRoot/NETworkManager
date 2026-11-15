@@ -1,5 +1,4 @@
-﻿using Dragablz;
-using log4net;
+﻿using log4net;
 using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Controls;
 using NETworkManager.Documentation;
@@ -1462,17 +1461,10 @@ public sealed partial class MainWindow : INotifyPropertyChanged
 
     private void UpdateOnWindowResize()
     {
-        foreach (var tabablzControl in VisualTreeHelper.FindVisualChildren<TabablzControl>(this))
+        foreach (var item in DragablzTabItem.GetTabItems(this))
         {
-            // Skip if no items
-            if (tabablzControl.Items.Count == 0)
-                continue;
-
-            foreach (var item in tabablzControl.Items.OfType<DragablzTabItem>())
-            {
-                if (item.View is RemoteDesktopControl control)
-                    control.UpdateOnWindowResize();
-            }
+            if (item.View is RemoteDesktopControl control)
+                control.UpdateOnWindowResize();
         }
     }
 

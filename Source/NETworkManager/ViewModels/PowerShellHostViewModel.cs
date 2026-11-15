@@ -485,18 +485,7 @@ public class PowerShellHostViewModel : ProfileHostViewModelBase
         if (window == null)
             return;
 
-        // Find all TabablzControl in the active window
-        foreach (var tabablzControl in VisualTreeHelper.FindVisualChildren<TabablzControl>(window))
-        {
-            // Skip if no items
-            if (tabablzControl.Items.Count == 0)
-                continue;
-
-            // Focus embedded window in the selected tab
-            (((DragablzTabItem)tabablzControl.SelectedItem)?.View as IEmbeddedWindow)?.FocusEmbeddedWindow();
-
-            break;
-        }
+        DragablzTabItem.FocusSelectedEmbeddedWindow(window);
     }
 
     public override void OnViewVisible()
