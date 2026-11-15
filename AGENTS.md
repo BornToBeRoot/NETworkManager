@@ -38,13 +38,13 @@ REPOSITORY_ROOT/
 │       └── (managed-manually)        # NOTE: Maintained manually — AI agents MUST NOT modify this directory
 ├── Website/                          # Docusaurus documentation website
 ├── Scripts/                          # Build and automation scripts
-│   ├── Create-FileHash.ps1           # Generate file hashes
 │   ├── Create-FlagFromSVG.ps1        # Create flag images
 │   ├── Create-LucideIcons.ps1        # Import the used Lucide icons (LucideIcons.cs) and their license
 │   ├── Create-OUIListFromWeb.ps1     # Update OUI (MAC vendor) list
 │   ├── Create-PortListFromWeb.ps1    # Update port list database
 │   ├── Create-PublicSuffixListFromWeb.ps1  # Update public suffix list (RDAP: registered domain of a hostname)
-│   ├── Create-ReleaseTable.ps1       # Create the SHA256 sums / file table for release notes
+│   ├── Create-ReleaseTableForGitHub.ps1  # Create the file / checksum table for the release notes (from the SHA256SUMS file)
+│   ├── Create-SHA256SUMS.ps1         # Create the SHA256SUMS file of the release files
 │   ├── Create-WhoisServerListFromWebAndWhois.ps1  # Update WHOIS servers
 │   ├── Create-WorldMapFromWeb.ps1    # Create the world map (Traceroute map)
 │   ├── Optimize-PngImages.ps1        # Reduce the size of the PNG images (website / docs) with ImageMagick
