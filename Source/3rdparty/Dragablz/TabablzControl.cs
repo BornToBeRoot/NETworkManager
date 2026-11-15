@@ -922,12 +922,9 @@ namespace Dragablz
                     break;
 
                 case NotifyCollectionChangedAction.Remove:
+                    //NETworkManager: all presenters of the item (see RemoveChildContentPresenters)
                     foreach (var item in e.OldItems)
-                    {
-                        var cp = FindChildContentPresenter(item);
-                        if (cp != null)
-                            _itemsHolder.Children.Remove(cp);
-                    }
+                        RemoveChildContentPresenters(item);
 
                     if (SelectedItem == null)
                         RestorePreviousSelection();
@@ -1365,7 +1362,6 @@ namespace Dragablz
             var contentPresenter = FindChildContentPresenter(item);
             RemoveFromSource(item);
             _itemsHolder?.Children.Remove(contentPresenter);
-            RemoveChildContentPresenters(item);
 
             // Return if it is not the last item
             if (Items.Count != 0)
@@ -1512,7 +1508,6 @@ namespace Dragablz
 
             RemoveFromSource(item);
             _itemsHolder?.Children.Remove(contentPresenter);
-            RemoveChildContentPresenters(item);
             if (Items.Count == 0)
             {
                 _dragablzItemsControl.MinHeight = minSize.Height;
@@ -1718,7 +1713,9 @@ namespace Dragablz
         {
             //NETworkManager: not for an item that is no longer in the control (a stale SelectedItem while the item is
             //removed, e.g. merged and torn out again) - its content would stay visible without a tab
-            if (item == null || !Items.Contains(item)) return;
+            //no presenter for an item without content either: FindChildContentPresenter can't find it, a new one would
+            //be added on every selection change
+            if (item == null || !Items.Contains(item) || GetContent(item) == null) return;
 
             var cp = FindChildContentPresenter(item);
             if (cp != null) return;
@@ -1736,8 +1733,8 @@ namespace Dragablz
         }
 
         /// <summary>
-        /// NETworkManager: removes every ContentPresenter of the item (one can be created again while the item is removed
-        /// from the source, see <see cref="CreateChildContentPresenter"/>).
+        /// NETworkManager: removes every ContentPresenter of the item - called for every removed item
+        /// (<see cref="OnItemsChanged"/>), whichever way it was removed (closed, dragged out, merged, consolidated).
         /// </summary>
         private void RemoveChildContentPresenters(object item)
         {

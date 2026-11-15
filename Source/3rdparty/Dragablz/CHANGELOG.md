@@ -5,6 +5,9 @@ All changes compared to the original [ButchersBoy/Dragablz](https://github.com/B
 
 ## NETworkManager (`Source/3rdparty/Dragablz`)
 
+- Every removed item (closed, dragged out, merged, consolidated) gets all its `ContentPresenter`s removed in
+  `OnItemsChanged` (instead of only in `RemoveItem` / `MonitorBreach`); no presenter for an item without content (a new
+  one was added on every selection change).
 - Fix (tear out, `HeaderPanel`): no grace beyond the header panel horizontally - in a maximized window it reaches the
   screen edge, the cursor couldn't get past it and a tab could only be torn out vertically.
 - Fix: a tab grabbed while it still slid (right after the previous drag) didn't follow the cursor and snapped back to
