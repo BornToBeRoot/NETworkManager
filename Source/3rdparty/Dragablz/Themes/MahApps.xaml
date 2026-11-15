@@ -29,7 +29,6 @@
         <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.ThemeForeground}"/>
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Accent}"/>
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ThemeBackground}"/>
-        <Setter Property="AdjacentHeaderItemOffset" Value="-12" />
     </Style>
 
 </ResourceDictionary>
