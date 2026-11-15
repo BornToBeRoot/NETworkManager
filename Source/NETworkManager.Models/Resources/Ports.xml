@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <!--Service Name and Transport Protocol Port Number Registry
-Generated 07/06/2026 22:48:00-->
+Generated 11/15/2026 03:06:23-->
 <Ports>
   <Port>
     <Number>0</Number>
@@ -7791,7 +7791,7 @@ Generated 07/06/2026 22:48:00-->
     <Number>700</Number>
     <Protocol>udp</Protocol>
     <Name>epp</Name>
-    <Description>Extensible Provisioning Protocol</Description>
+    <Description>EPP running over QUIC</Description>
   </Port>
   <Port>
     <Number>701</Number>
@@ -48877,14 +48877,14 @@ Generated 07/06/2026 22:48:00-->
   <Port>
     <Number>4416</Number>
     <Protocol>tcp</Protocol>
-    <Name>pjj-player</Name>
-    <Description>PJJ Media Player</Description>
+    <Name>newmood-player</Name>
+    <Description>Newmood Media Player</Description>
   </Port>
   <Port>
     <Number>4416</Number>
     <Protocol>udp</Protocol>
-    <Name>pjj-player-disc</Name>
-    <Description>PJJ Media Player discovery</Description>
+    <Name>newmood-player</Name>
+    <Description>Newmood Media Player discovery</Description>
   </Port>
   <Port>
     <Number>4417</Number>
@@ -51540,6 +51540,18 @@ Generated 07/06/2026 22:48:00-->
   </Port>
   <Port>
     <Number>4915</Number>
+    <Protocol>udp</Protocol>
+    <Name>record</Name>
+    <Description>Reserved</Description>
+  </Port>
+  <Port>
+    <Number>4930</Number>
+    <Protocol>tcp</Protocol>
+    <Name>fmsg</Name>
+    <Description>Host-to-host messaging</Description>
+  </Port>
+  <Port>
+    <Number>4930</Number>
     <Protocol>udp</Protocol>
     <Name>record</Name>
     <Description>Reserved</Description>
@@ -55285,8 +55297,8 @@ Generated 07/06/2026 22:48:00-->
   <Port>
     <Number>5543</Number>
     <Protocol>tcp</Protocol>
-    <Name>qftest-licserve</Name>
-    <Description>QF-Test License Server</Description>
+    <Name>qftest-lic-mcp</Name>
+    <Description>QF-Test License Server / QF-Test MCP Server</Description>
   </Port>
   <Port>
     <Number>5543</Number>
@@ -61732,13 +61744,13 @@ Generated 07/06/2026 22:48:00-->
     <Number>7123</Number>
     <Protocol>tcp</Protocol>
     <Name>snif</Name>
-    <Description>End-to-end TLS Relay Control Connection</Description>
+    <Description>SNIF End-to-End TLS Relay Control Connection</Description>
   </Port>
   <Port>
     <Number>7123</Number>
     <Protocol>udp</Protocol>
-    <Name>record</Name>
-    <Description>Reserved</Description>
+    <Name>snif</Name>
+    <Description>SNIF End-to-End TLS Relay over QUIC</Description>
   </Port>
   <Port>
     <Number>7128</Number>
@@ -64015,6 +64027,18 @@ Generated 07/06/2026 22:48:00-->
     <Description>Reserved</Description>
   </Port>
   <Port>
+    <Number>8011</Number>
+    <Protocol>udp</Protocol>
+    <Name>bier-echo</Name>
+    <Description>The UDP destination port number for the IP/UDP encapsulated BIER Echo Reply message.</Description>
+  </Port>
+  <Port>
+    <Number>8011</Number>
+    <Protocol>tcp</Protocol>
+    <Name>record</Name>
+    <Description>Reserved</Description>
+  </Port>
+  <Port>
     <Number>8015</Number>
     <Protocol>tcp</Protocol>
     <Name>cfg-cloud</Name>
@@ -64109,6 +64133,18 @@ Generated 07/06/2026 22:48:00-->
     <Protocol>udp</Protocol>
     <Name>arca-api</Name>
     <Description>ARCATrust vault API</Description>
+  </Port>
+  <Port>
+    <Number>8024</Number>
+    <Protocol>udp</Protocol>
+    <Name>gaap</Name>
+    <Description>GAAP Control Packets</Description>
+  </Port>
+  <Port>
+    <Number>8024</Number>
+    <Protocol>tcp</Protocol>
+    <Name>record</Name>
+    <Description>Reserved</Description>
   </Port>
   <Port>
     <Number>8025</Number>
