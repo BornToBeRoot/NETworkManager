@@ -1,11 +1,8 @@
 ﻿using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Media;
 using Dragablz;
-using Dragablz.Dockablz;
-using NETworkManager.Converters;
 using NETworkManager.Models;
 
 namespace NETworkManager.Controls;
@@ -43,18 +40,10 @@ public class EmbeddedWindowDragPresenter : ContentControl
     private ContentPresenter _content;
     private FrameworkElement _placeholder;
 
-    public EmbeddedWindowDragPresenter()
-    {
-        // The view of a tab moves to another window / branch (dragged out, merged, split): bind to the ancestors of
-        // the new place each time - a RelativeSource FindAncestor binding is only resolved once
-        Loaded += (_, _) => BindIsDragging();
-        Unloaded += (_, _) => BindingOperations.ClearBinding(this, IsDraggingProperty);
-    }
-
     /// <summary>
-    ///     A window with tabs of the application is dragged (drag state of Dragablz, see <see cref="BindIsDragging" />):
-    ///     the window of this tab is dragged (<see cref="TabablzControl.IsDraggingWindow" />) or the dragged window can
-    ///     be dropped into the layout of this tab (<see cref="Layout.IsParticipatingInDrag" />).
+    ///     A window with tabs of the application is dragged: set by the style from Dragablz - the window of this tab is
+    ///     dragged (<see cref="TabablzControl.IsDraggingWindow" />) or the dragged window can be dropped into the layout
+    ///     of this tab (<see cref="Dragablz.Dockablz.Layout.IsParticipatingInDrag" />).
     /// </summary>
     public bool IsDragging
     {
@@ -88,36 +77,6 @@ public class EmbeddedWindowDragPresenter : ContentControl
         _placeholder = GetTemplateChild(PartPlaceholder) as FrameworkElement;
 
         Update(IsDragging);
-    }
-
-    /// <summary>
-    ///     Binds <see cref="IsDragging" /> to the <see cref="TabablzControl" /> and the <see cref="Layout" /> around
-    ///     this presenter (called when it is loaded, also after the tab moved to another window or branch).
-    /// </summary>
-    private void BindIsDragging()
-    {
-        var binding = new MultiBinding { Converter = new BooleansOrConverter() };
-
-        var tabablzControl = FindAncestor<TabablzControl>();
-        if (tabablzControl != null)
-            binding.Bindings.Add(new Binding(nameof(TabablzControl.IsDraggingWindow)) { Source = tabablzControl });
-
-        var layout = FindAncestor<Layout>();
-        if (layout != null)
-            binding.Bindings.Add(new Binding(nameof(Layout.IsParticipatingInDrag)) { Source = layout });
-
-        BindingOperations.SetBinding(this, IsDraggingProperty, binding);
-    }
-
-    private T FindAncestor<T>() where T : DependencyObject
-    {
-        DependencyObject element = this;
-
-        while ((element = VisualTreeHelper.GetParent(element)) != null)
-            if (element is T ancestor)
-                return ancestor;
-
-        return null;
     }
 
     private static void OnIsDraggingChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
