@@ -57,7 +57,7 @@ Create a separate profile for each Kubernetes cluster by passing a specific cont
 
 :::
 
-![PowerShell with WSL and K9s](../img/powershell-wsl-k9s.png)
+![PowerShell with K9s](../img/powershell.png)
 
 #### WSL (Windows Subsystem for Linux)
 
