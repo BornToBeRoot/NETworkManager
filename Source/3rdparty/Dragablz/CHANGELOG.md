@@ -5,6 +5,11 @@ All changes compared to the original [ButchersBoy/Dragablz](https://github.com/B
 
 ## NETworkManager (`Source/3rdparty/Dragablz`)
 
+- Fix (`StackOrganiser` slides): a drag back to the original location during a running slide was ignored (compared
+  with X / Y instead of the slide target); a direct placement (e.g. after a tab was dragged out) or "animations off"
+  didn't stop a running slide to another location (gap, motion); a removed item stayed in the organiser until the
+  next drag (now `ForgetItem`, called by `DragablzItemsControl.ClearContainerForItemOverride`). The running slide is
+  tracked per item, so a shared organiser (default value / style) no longer mixes state.
 - Removed dead code: the unused static `ContinuationIndex` (`StoryboardCompletionListener`), the right mouse up
   disposable of `DragablzItem` (only ever set to empty), a `Debug.WriteLine` in `MonitorBreach` and the empty
   `ItemsChanged` handler of `DragablzItemsControl`.

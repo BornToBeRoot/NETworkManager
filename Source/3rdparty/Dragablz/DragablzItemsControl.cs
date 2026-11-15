@@ -51,6 +51,8 @@ namespace Dragablz
             base.ClearContainerForItemOverride(element, item);
 
             ((DragablzItem)element).SizeChanged -= ItemSizeChangedEventHandler;
+            //NETworkManager: the organiser must not keep the removed item (slide, drag state)
+            (ItemsOrganiser as StackOrganiser)?.ForgetItem((DragablzItem)element);
 
             Dispatcher.BeginInvoke(new Action(() =>
             {

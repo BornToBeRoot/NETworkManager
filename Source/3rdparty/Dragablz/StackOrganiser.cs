@@ -20,6 +20,10 @@ namespace Dragablz
         private readonly Dictionary<DragablzItem, double> _activeStoryboardTargetLocations =
             new Dictionary<DragablzItem, double>();
 
+        //NETworkManager: the running slide per item, to stop it when the item is placed directly or removed
+        private readonly Dictionary<DragablzItem, Storyboard> _activeStoryboards =
+            new Dictionary<DragablzItem, Storyboard>();
+
         protected StackOrganiser(Orientation orientation, double itemOffset = 0)
         {
             _orientation = orientation;
@@ -272,7 +276,32 @@ namespace Dragablz
 
         private void SetLocation(DragablzItem dragablzItem, double location)
         {
+            //NETworkManager: a slide to another location would end there later (e.g. a gap after a tab was dragged out)
+            double activeTarget;
+            if (_activeStoryboardTargetLocations.TryGetValue(dragablzItem, out activeTarget) &&
+                Math.Abs(activeTarget - location) >= 1.0)
+                StopSlide(dragablzItem);
             _setLocation(dragablzItem, location);
+        }
+
+        private void StopSlide(DragablzItem dragablzItem)
+        {
+            Storyboard storyboard;
+            if (_activeStoryboards.TryGetValue(dragablzItem, out storyboard))
+                storyboard.Remove(dragablzItem);
+            _activeStoryboards.Remove(dragablzItem);
+            _activeStoryboardTargetLocations.Remove(dragablzItem);
+        }
+
+        /// <summary>
+        /// NETworkManager: called when the container of an item is removed (tab closed, dragged out or merged) - stops its
+        /// slide and forgets the item, so the organiser doesn't keep it (and its window) alive.
+        /// </summary>
+        public void ForgetItem(DragablzItem dragablzItem)
+        {
+            StopSlide(dragablzItem);
+            if (_siblingItemLocationOnDragStart != null)
+                _siblingItemLocationOnDragStart.Remove(dragablzItem);
         }
 
         /// <summary>
@@ -285,36 +314,36 @@ namespace Dragablz
         {
             if (AnimationsEnabled != null && !AnimationsEnabled())
             {
-                _activeStoryboardTargetLocations.Remove(dragablzItem);
+                StopSlide(dragablzItem);
                 _setLocation(dragablzItem, location);
                 return;
             }
 
+            //NETworkManager: compare with the target of a running slide (X / Y only change when it completes), otherwise
+            //a drag back to the original location during the slide was ignored
             double activeTarget;
-            if (Math.Abs(_getLocation(dragablzItem) - location) < 1.0
-                ||
-                _activeStoryboardTargetLocations.TryGetValue(dragablzItem, out activeTarget)
-                && Math.Abs(activeTarget - location) < 1.0)
-            {
+            var hasActiveTarget = _activeStoryboardTargetLocations.TryGetValue(dragablzItem, out activeTarget);
+            if (Math.Abs((hasActiveTarget ? activeTarget : _getLocation(dragablzItem)) - location) < 1.0)
                 return;
-            }
 
             _activeStoryboardTargetLocations[dragablzItem] = location;
 
             var storyboard = new Storyboard { FillBehavior = FillBehavior.Stop };
+            _activeStoryboards[dragablzItem] = storyboard;
             storyboard.WhenComplete(sb =>
             {
-                //NETworkManager: a storyboard replaced by a newer one (other target) must not set its old location or
-                //remove the newer target
-                double currentTarget;
-                if (!_activeStoryboardTargetLocations.TryGetValue(dragablzItem, out currentTarget) ||
-                    Math.Abs(currentTarget - location) >= 1.0)
+                //NETworkManager: a storyboard replaced by a newer one (or stopped) must not set its location or remove
+                //the newer target
+                Storyboard activeStoryboard;
+                if (!_activeStoryboards.TryGetValue(dragablzItem, out activeStoryboard) ||
+                    !ReferenceEquals(activeStoryboard, sb))
                 {
                     sb.Remove(dragablzItem);
                     return;
                 }
                 _setLocation(dragablzItem, location);
                 sb.Remove(dragablzItem);
+                _activeStoryboards.Remove(dragablzItem);
                 _activeStoryboardTargetLocations.Remove(dragablzItem);
             });
 
