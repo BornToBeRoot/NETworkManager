@@ -39,7 +39,8 @@ All changes compared to the original [ButchersBoy/Dragablz](https://github.com/B
 - Fix `NullReferenceException` when dragging a maximized `DragablzWindow` (`WindowInteropHelper` instead of reading a
   private `Window` property via reflection).
 - Fix MahApps theme (`MahApps.xaml`): `MahApps.Brushes.*` / `MahApps.Colors.*` resource keys of MahApps.Metro 2.x
-  (`MahApps.Colors.Accent2`, `MahApps.Brushes.IdealForeground` instead of `WhiteBrush`).
+  (`MahApps.Colors.Accent2`, `MahApps.Brushes.IdealForeground` instead of `WhiteBrush`). Most of these styles were
+  removed later (see the `MahApps.xaml` reduction above).
 - Wider hit area for the grid splitters between layout branches (`Generic.xaml`).
 - `DisableBranchConsolidation` (`TabablzControl`): don't consolidate a branch when its tab control is emptied (e.g. to
   keep the main tab control that creates new tabs).
