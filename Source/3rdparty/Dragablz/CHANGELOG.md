@@ -5,6 +5,8 @@ All changes compared to the original [ButchersBoy/Dragablz](https://github.com/B
 
 ## NETworkManager (`Source/3rdparty/Dragablz`)
 
+- Fix: a tab merged into another tab control was inserted at the wrong position above 100 % display scaling
+  (`ReceiveDrag` mixed screen pixels and DIPs).
 - Fix: crash (`InvalidOperationException` in `PointToScreen`) while a tab is dragged as a window and another window
   with a merge target closes; hidden tab controls are no longer merge targets (`GetMergeTargetScreenBounds`).
 - Fix: the drop zone offered during a drag (`Layout`) was not reset when the drag ended with a merge into another tab

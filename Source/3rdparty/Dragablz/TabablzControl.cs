@@ -1631,8 +1631,9 @@ namespace Dragablz
                 {
                     if (TabStripPlacement == Dock.Top || TabStripPlacement == Dock.Bottom)
                     {
-                        var mouseXOnItemsControl = Native.GetCursorPos().X -
-                                                   _dragablzItemsControl.PointToScreen(new Point()).X;
+                        //NETworkManager: PointFromScreen converts the screen pixels to DIPs (the difference of two screen
+                        //positions is in pixels, but X / Y of the items are DIPs - wrong position above 100 % scaling)
+                        var mouseXOnItemsControl = _dragablzItemsControl.PointFromScreen(Native.GetCursorPos()).X;
                         var newX = mouseXOnItemsControl - interTabTransfer.DragStartItemOffset.X;
                         if (lastFixedItem != null)
                         {
@@ -1646,8 +1647,9 @@ namespace Dragablz
                     }
                     else
                     {
-                        var mouseYOnItemsControl = Native.GetCursorPos().Y -
-                                                   _dragablzItemsControl.PointToScreen(new Point()).Y;
+                        //NETworkManager: PointFromScreen converts the screen pixels to DIPs (the difference of two screen
+                        //positions is in pixels, but X / Y of the items are DIPs - wrong position above 100 % scaling)
+                        var mouseYOnItemsControl = _dragablzItemsControl.PointFromScreen(Native.GetCursorPos()).Y;
                         var newY = mouseYOnItemsControl - interTabTransfer.DragStartItemOffset.Y;
                         if (lastFixedItem != null)
                         {
