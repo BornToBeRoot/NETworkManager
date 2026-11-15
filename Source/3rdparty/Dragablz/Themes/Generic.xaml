@@ -22,27 +22,6 @@
         </Setter>
     </Style>
 
-    <Style TargetType="{x:Type local:DragablzIcon}">
-        <Setter Property="Width" Value="16" />
-        <Setter Property="Height" Value="16" />
-        <Setter Property="ToolTip" Value="Dragablz" />
-        <Setter Property="Background" Value="Transparent" />
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type local:DragablzIcon}">
-                    <Border Background="{TemplateBinding Background}"
-                            BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}">
-                        <Path Data="M7.5937495,21.279167 L52.96875,21.279167 C60.812496,21.279167 67.34375,22.935417 72.5625,26.247917 C78.71875,30.154171 81.796875,35.794796 81.796875,43.169792 C81.796875,48.888542 79.8125,54.935417 75.84375,61.310417 C70.59375,69.716667 62.968746,76.232292 52.96875,80.857292 C43.75,85.107292 33.84375,87.232292 23.25,87.232292 L7.78125,87.232292 L24.75,39.138542 L41.671875,39.138542 L27.28125,79.732292 C33.4375,79.732292 39.539063,77.841667 45.585938,74.060417 C51.632809,70.279167 56.046871,65.607292 58.828125,60.044792 C61.328121,55.138542 62.578121,51.044792 62.578125,47.763542 C62.578121,42.388542 61.078121,38.529167 58.078125,36.185417 C55.390621,34.122921 51.265621,33.091671 45.703125,33.091667 L0.375,33.091667 z" 
-                              Fill="{TemplateBinding Foreground}" 
-                              Stretch="Uniform" 
-                              />
-                    </Border>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
     <Color x:Key="CloseCommandHighlightColor">#e04343</Color>
 
     <!-- these tab styles are as close as possible to the default .net styles, so the tab will fit straight in to an unstyled app -->
@@ -166,27 +145,6 @@
         </Style.Triggers>
     </Style>
 
-    <Style TargetType="{x:Type Button}" x:Key="CloseMenuCommandButtonStyle" BasedOn="{StaticResource MenuCommandButtonStyle}">
-        <Setter Property="Background">
-            <Setter.Value>
-                <SolidColorBrush Color="{x:Static SystemColors.ActiveBorderColor}" />
-            </Setter.Value>
-        </Setter>
-        <Setter Property="Width" Value="46" />
-        <Setter Property="Margin" Value="0 0 4 0" />
-        <Setter Property="Foreground" Value="{x:Static SystemColors.HighlightTextBrush}" />
-        <Style.Triggers>
-            <Trigger Property="IsMouseOver" Value="true">
-                <Setter Property="Background">
-                    <Setter.Value>
-                        <SolidColorBrush Color="{StaticResource CloseCommandHighlightColor}" />
-                    </Setter.Value>
-                </Setter>
-                <Setter Property="Opacity" Value="1"/>
-            </Trigger>
-        </Style.Triggers>
-    </Style>
-
     <Style TargetType="{x:Type Button}" x:Key="CloseItemCommandButtonStyle" BasedOn="{StaticResource MenuCommandButtonStyle}">
         <Setter Property="Template">
             <Setter.Value>
@@ -275,116 +233,6 @@
         <Style.Triggers>
             <Trigger Property="IsEnabled" Value="False">
                 <Setter Property="Visibility" Value="Collapsed" />
-            </Trigger>
-        </Style.Triggers>
-    </Style>
-
-    <ControlTemplate x:Key="WindowTemplateKey" TargetType="{x:Type local:DragablzWindow}">
-        <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}">
-            <Grid>
-                <AdornerDecorator>
-                    <Grid>
-                        <Thumb Style="{StaticResource InvisibleThumbStyle}"
-                                       x:Name="PART_WindowRestoreThumb"/>
-                        <ContentPresenter/>
-                    </Grid>
-                </AdornerDecorator>
-                <ResizeGrip x:Name="WindowResizeGrip" HorizontalAlignment="Right" IsTabStop="false" Visibility="Collapsed" VerticalAlignment="Bottom"/>
-            </Grid>
-        </Border>
-        <ControlTemplate.Triggers>
-            <Trigger Property="WindowState" Value="Maximized">
-                <Setter TargetName="PART_WindowRestoreThumb" Property="IsHitTestVisible" Value="True" />
-            </Trigger>
-            <MultiTrigger>
-                <MultiTrigger.Conditions>
-                    <Condition Property="ResizeMode" Value="CanResizeWithGrip"/>
-                    <Condition Property="WindowState" Value="Normal"/>
-                </MultiTrigger.Conditions>
-                <Setter Property="Visibility" TargetName="WindowResizeGrip" Value="Visible"/>
-            </MultiTrigger>
-        </ControlTemplate.Triggers>
-    </ControlTemplate>
-
-    <Style TargetType="{x:Type local:DragablzWindow}">
-        <Setter Property="WindowStyle" Value="None" />
-        <Setter Property="AllowsTransparency" Value="True" />
-        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.WindowTextBrushKey}}"/>
-        <Setter Property="Background" Value="{x:Static local:DragablzColors.WindowInactiveBrush}"/>
-        <Setter Property="BorderBrush" Value="{x:Static SystemColors.ActiveBorderBrush}" />
-        <Setter Property="BorderThickness" Value="1" />
-        <Setter Property="ResizeMode" Value="CanResize" />
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type local:DragablzWindow}">
-                    <Grid>
-                        <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}">
-                            <AdornerDecorator>
-                                <Grid>
-                                    <Grid x:Name="PART_WindowSurface" Background="Transparent" />
-                                    <Thumb Style="{StaticResource InvisibleThumbStyle}"
-                                           IsHitTestVisible="False"
-                                           x:Name="PART_WindowRestoreThumb"/>
-                                    <StackPanel x:Name="SystemCommandsPanel" 
-                                                HorizontalAlignment="Right"
-                                                VerticalAlignment="Top"
-                                                Orientation="Horizontal">
-                                        <Button Command="{x:Static local:DragablzWindow.MinimizeWindowCommand}"
-                                                Style="{StaticResource MenuCommandButtonStyle}">
-                                            <themes:SystemCommandIcon SystemCommandType="MinimzeWindow" />
-                                        </Button>
-                                        <Button Command="{x:Static local:DragablzWindow.RestoreWindowCommand}"
-                                                Visibility="{TemplateBinding WindowState, Converter={StaticResource EqualityToVisibilityConverter}, ConverterParameter={x:Static WindowState.Maximized}}"
-                                                Style="{StaticResource MenuCommandButtonStyle}">
-                                            <themes:SystemCommandIcon SystemCommandType="RestoreWindow" />
-                                        </Button>
-                                        <Button Command="{x:Static local:DragablzWindow.MaximizeWindowCommand}"
-                                                Visibility="{TemplateBinding WindowState, Converter={StaticResource EqualityToVisibilityConverter}, ConverterParameter={x:Static WindowState.Normal}}"
-                                                Style="{StaticResource MenuCommandButtonStyle}">
-                                            <themes:SystemCommandIcon SystemCommandType="MaximizeWindow" />
-                                        </Button>
-                                        <Button Command="{x:Static local:DragablzWindow.CloseWindowCommand}"
-                                                Style="{StaticResource CloseMenuCommandButtonStyle}"
-                                                x:Name="CloseWindowCommandButton"
-                                                >
-                                            <themes:SystemCommandIcon SystemCommandType="CloseWindow" />
-                                        </Button>
-                                    </StackPanel>
-                                    <ContentPresenter Margin="4"/>
-                                </Grid>
-                            </AdornerDecorator>
-                        </Border>
-                        <Thumb Style="{StaticResource InvisibleThumbStyle}"
-                               x:Name="PART_WindowResizeThumb"/>
-                    </Grid>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="WindowState" Value="Maximized">
-                            <Setter TargetName="PART_WindowRestoreThumb" Property="IsHitTestVisible" Value="True" />
-                        </Trigger>
-                        <Trigger Property="IsBeingDraggedByTab" Value="True">
-                            <Setter TargetName="SystemCommandsPanel" Property="Visibility" Value="Collapsed"></Setter>
-                        </Trigger>
-                        <Trigger Property="IsActive" Value="True">
-                            <Setter TargetName="CloseWindowCommandButton" Property="Background">
-                                <Setter.Value>
-                                    <SolidColorBrush Color="{StaticResource CloseCommandHighlightColor}" />
-                                </Setter.Value>
-                            </Setter>
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-        <Style.Triggers>
-            <Trigger Property="ResizeMode" Value="CanResizeWithGrip">
-                <Setter Property="Template" Value="{StaticResource WindowTemplateKey}"/>
-            </Trigger>
-            <Trigger Property="IsActive" Value="True">
-                <Setter Property="Background" Value="{x:Static local:DragablzColors.WindowGlassBalancedBrush}" />
-            </Trigger>
-            <Trigger Property="IsBeingDraggedByTab" Value="True">
-                <Setter Property="Background" Value="Transparent" />
-                <Setter Property="BorderBrush" Value="Transparent" />
             </Trigger>
         </Style.Triggers>
     </Style>

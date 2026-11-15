@@ -5,6 +5,9 @@ All changes compared to the original [ButchersBoy/Dragablz](https://github.com/B
 
 ## NETworkManager (`Source/3rdparty/Dragablz`)
 
+- Removed the custom window `DragablzWindow` (NETworkManager uses MahApps windows) with `DragablzIcon`, the internal
+  `SystemCommand` / `WindowMessage` enums, the `SendMessage` / `PostMessage` imports (`Core/Native.cs`) and their
+  styles in `Generic.xaml` (`DragablzIcon`, `WindowTemplateKey`, `DragablzWindow`, `CloseMenuCommandButtonStyle`).
 - Removed the MaterialDesign theme (`Themes/MaterialDesign.xaml`, `MaterialDesignAssist`,
   `BrushToRadialGradientBrushConverter`), the `Ripple` control (`Ripple`, `RippleAssist`, its style in `Generic.xaml`)
   used only by that theme, and the empty `Themes/Dockablz.xaml`.

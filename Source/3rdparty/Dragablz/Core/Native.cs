@@ -106,11 +106,6 @@ namespace Dragablz.Core
             public RECT normalPosition;
         }
 
-        [DllImport("user32.dll", CharSet = CharSet.Auto)]
-        internal static extern IntPtr SendMessage(IntPtr hWnd, WindowMessage msg, IntPtr wParam, IntPtr lParam);
-        [DllImport("user32.dll", CharSet = CharSet.Auto)]
-        internal static extern IntPtr PostMessage(IntPtr hWnd, WindowMessage msg, IntPtr wParam, IntPtr lParam);
-
 
         [DllImport("dwmapi.dll", EntryPoint = "#127")]
         internal static extern void DwmGetColorizationParameters(ref DWMCOLORIZATIONPARAMS dp);
