@@ -5457,114 +5457,114 @@ Cloudflareは、お客様のIPアドレスおよびネットワーク情報を�
     <value>Wi-Fi ネットワークの変更 (接続、切断、SSID や信号強度の変化など) が発生したときに通知します。</value>
   </data>
   <data name="Tabs" xml:space="preserve">
-    <value>Tabs</value>
+    <value>タブ</value>
   </data>
   <data name="DynamicTabWidth" xml:space="preserve">
-    <value>Dynamic tab width</value>
+    <value>動的タブ幅</value>
   </data>
   <data name="MaximumTabWidth" xml:space="preserve">
-    <value>Maximum tab width</value>
+    <value>最大タブ幅</value>
   </data>
   <data name="HelpMessage_DynamicTabWidth" xml:space="preserve">
-    <value>The tabs of the tools (e.g. IP Scanner, Remote Desktop, PuTTY) are as wide as their title, up to the maximum tab width. Longer titles are shortened, the tooltip of the tab shows the full title. When disabled, all tabs have the same width.</value>
+    <value>ツール (IPスキャナー、リモートデスクトップ、PuTTY など) のタブは、最大タブ幅までタイトルに合わせた幅になります。長いタイトルは短縮され、タブのツールチップに完全なタイトルが表示されます。無効にすると、すべてのタブが同じ幅になります。</value>
   </data>
   <data name="Animations" xml:space="preserve">
-    <value>Animations</value>
+    <value>アニメーション</value>
   </data>
   <data name="AnimationMode_System" xml:space="preserve">
-    <value>System (Windows setting)</value>
+    <value>システム（Windowsの設定）</value>
   </data>
   <data name="AnimationMode_On" xml:space="preserve">
-    <value>On</value>
+    <value>オン</value>
   </data>
   <data name="AnimationMode_Off" xml:space="preserve">
-    <value>Off</value>
+    <value>オフ</value>
   </data>
   <data name="HelpMessage_Animations" xml:space="preserve">
-    <value>Animations of the application, e.g. when a dialog is opened or closed. "System" follows the Windows setting "Animation effects" (Settings &gt; Accessibility &gt; Visual effects), which is often turned off on terminal servers and in remote sessions.</value>
+    <value>ダイアログの開閉時など、アプリケーションのアニメーションです。「システム」はWindowsの設定「アニメーション効果」（設定 &gt; アクセシビリティ &gt; 視覚効果）に従います。この設定は、ターミナルサーバーやリモートセッションではしばしばオフになっています。</value>
   </data>
   <data name="ActiveConnections" xml:space="preserve">
-    <value>Active connections</value>
+    <value>アクティブな接続</value>
   </data>
   <data name="HostsFileEntries" xml:space="preserve">
-    <value>Hosts file entries</value>
+    <value>Hosts ファイルのエントリ</value>
   </data>
   <data name="ListeningPorts" xml:space="preserve">
-    <value>Listening ports</value>
+    <value>待機ポート</value>
   </data>
   <data name="NeighborEntries" xml:space="preserve">
-    <value>Neighbor entries</value>
+    <value>近隣エントリ</value>
   </data>
   <data name="AccentGlow" xml:space="preserve">
-    <value>Accent glow</value>
+    <value>アクセントグロー</value>
   </data>
   <data name="HelpMessage_AccentGlow" xml:space="preserve">
-    <value>Glow of the accent color in the top left corner of the windows (window background, title bar and navigation), weaker while the window is inactive.</value>
+    <value>ウィンドウの左上隅 (ウィンドウ背景、タイトルバー、ナビゲーション) におけるアクセントカラーの光彩です。ウィンドウが非アクティブの間は弱くなります。</value>
   </data>
   <data name="Theme_Black" xml:space="preserve">
-    <value>Black</value>
+    <value>ブラック</value>
   </data>
   <data name="Theme_Midnight" xml:space="preserve">
-    <value>Midnight</value>
+    <value>ミッドナイト</value>
   </data>
   <data name="Theme_Steel" xml:space="preserve">
-    <value>Steel</value>
+    <value>スチール</value>
   </data>
   <data name="Theme_Indigo" xml:space="preserve">
-    <value>Indigo</value>
+    <value>インディゴ</value>
   </data>
   <data name="Accent_Sky" xml:space="preserve">
-    <value>Sky</value>
+    <value>スカイ</value>
   </data>
   <data name="Accent_Ocean" xml:space="preserve">
-    <value>Ocean</value>
+    <value>オーシャン</value>
   </data>
   <data name="Accent_Mint" xml:space="preserve">
-    <value>Mint</value>
+    <value>ミント</value>
   </data>
   <data name="Accent_Rose" xml:space="preserve">
-    <value>Rose</value>
+    <value>ローズ</value>
   </data>
   <data name="Accent_Coral" xml:space="preserve">
-    <value>Coral</value>
+    <value>コーラル</value>
   </data>
   <data name="Accent_Gold" xml:space="preserve">
-    <value>Gold</value>
+    <value>ゴールド</value>
   </data>
   <data name="Accent_Lavender" xml:space="preserve">
-    <value>Lavender</value>
+    <value>ラベンダー</value>
   </data>
   <data name="Accent_Slate" xml:space="preserve">
-    <value>Slate</value>
+    <value>スレート</value>
   </data>
   <data name="Theme_Mist" xml:space="preserve">
-    <value>Mist</value>
+    <value>ミスト</value>
   </data>
   <data name="Theme_Soft" xml:space="preserve">
-    <value>Soft</value>
+    <value>ソフト</value>
   </data>
   <data name="Theme_Paper" xml:space="preserve">
-    <value>Paper</value>
+    <value>ペーパー</value>
   </data>
   <data name="Accent_Graphite" xml:space="preserve">
-    <value>Graphite</value>
+    <value>グラファイト</value>
   </data>
   <data name="AccentGlowIntensity_Off" xml:space="preserve">
-    <value>Off</value>
+    <value>オフ</value>
   </data>
   <data name="AccentGlowIntensity_Subtle" xml:space="preserve">
-    <value>Subtle</value>
+    <value>控えめ</value>
   </data>
   <data name="AccentGlowIntensity_Medium" xml:space="preserve">
-    <value>Medium</value>
+    <value>中程度</value>
   </data>
   <data name="AccentGlowIntensity_Strong" xml:space="preserve">
-    <value>Strong</value>
+    <value>強</value>
   </data>
   <data name="Library_Lucide_Description" xml:space="preserve">
-    <value>Beautiful &amp; consistent icons</value>
+    <value>美しく一貫性のあるアイコン</value>
   </data>
   <data name="License_ISCLicense" xml:space="preserve">
-    <value>ISC License</value>
+    <value>ISC ライセンス</value>
   </data>
 </root>
