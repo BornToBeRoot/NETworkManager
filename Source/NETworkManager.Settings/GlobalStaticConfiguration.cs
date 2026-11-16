@@ -389,6 +389,13 @@ public static class GlobalStaticConfiguration
     public static AutoRefreshTimeInfo Connections_AutoRefreshTime =>
         AutoRefreshTime.GetDefaults.First(x => x.Value == 30 && x.TimeUnit == TimeUnit.Second);
 
+    // Application: mDNS / DNS-SD
+    public static string MDNSDiscovery_ServiceType => "*";
+    public static int MDNSDiscovery_Duration => 10;
+    public static string MDNSDiscovery_InterfaceId => string.Empty;
+    public static ExportFileType MDNSDiscovery_ExportFileType => ExportFileType.Csv;
+    public static string MDNSDiscovery_ExportFilePath => string.Empty;
+
     // Application: Listeners
     public static ExportFileType Listeners_ExportFileType => ExportFileType.Csv;
 

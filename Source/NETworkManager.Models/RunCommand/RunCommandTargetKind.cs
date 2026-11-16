@@ -59,5 +59,8 @@ public enum RunCommandTargetKind
     /// <summary>
     ///     HTTP or HTTPS URL.
     /// </summary>
-    URL
+    URL,
+
+    /// <summary>Local DNS-SD service type (e.g. _ipp._tcp) or * for all service types.</summary>
+    ServiceType
 }

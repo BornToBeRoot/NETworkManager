@@ -36,6 +36,9 @@ public static class RunCommandTarget
         if (string.IsNullOrEmpty(target) || target.Any(char.IsWhiteSpace))
             return RunCommandTargetKind.None;
 
+        if (MDNSServiceType.TryNormalize(target, out _))
+            return RunCommandTargetKind.ServiceType;
+
         if (RegexHelper.HttpOrHttpsSchemeRegex().IsMatch(target))
             return Uri.TryCreate(target, UriKind.Absolute, out _) ? RunCommandTargetKind.URL : RunCommandTargetKind.None;
 

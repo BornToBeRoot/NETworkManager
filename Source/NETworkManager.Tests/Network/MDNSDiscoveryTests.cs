@@ -1,0 +1,319 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Text;
+using NETworkManager.Models.Network;
+using NETworkManager.Utilities;
+using Xunit;
+
+namespace NETworkManager.Tests.Network;
+
+public class MDNSDiscoveryTests
+{
+    private const string Type = "_ipp._tcp.local.";
+    private const string Instance = "Office Printer._ipp._tcp.local.";
+    private const string Host = "printer.local.";
+    private static readonly DateTimeOffset Now = new(2026, 11, 16, 12, 0, 0, TimeSpan.Zero);
+
+    private sealed record Record(string Name, ushort Type, byte[] Data, uint TTL = 120, bool Flush = false);
+
+    private static byte[] Name(string name) => Labels(name.TrimEnd('.').Split('.'));
+    private static byte[] Labels(params string[] labels) =>
+        [.. labels.SelectMany(x => new[] { (byte)Encoding.UTF8.GetByteCount(x) }.Concat(Encoding.UTF8.GetBytes(x))), 0];
+
+    private static byte[] Packet(params Record[] records)
+    {
+        var bytes = new List<byte> { 0, 0, 0x84, 0, 0, 0, (byte)(records.Length >> 8), (byte)records.Length, 0, 0, 0, 0 };
+        foreach (var record in records)
+        {
+            bytes.AddRange(Name(record.Name));
+            bytes.AddRange([(byte)(record.Type >> 8), (byte)record.Type, record.Flush ? (byte)0x80 : (byte)0, 1,
+                (byte)(record.TTL >> 24), (byte)(record.TTL >> 16), (byte)(record.TTL >> 8), (byte)record.TTL,
+                (byte)(record.Data.Length >> 8), (byte)record.Data.Length]);
+            bytes.AddRange(record.Data);
+        }
+        return [.. bytes];
+    }
+
+    private static Record Ptr(uint ttl = 120) => new(Type, 12, Name(Instance), ttl);
+    private static Record Srv() => new(Instance, 33, [0, 10, 0, 20, 2, 119, .. Name(Host)], Flush: true);
+    private static Record Address(string address = "192.168.1.20", bool flush = false) =>
+        new(Host, (ushort)(address.Contains(':') ? 28 : 1), IPAddress.Parse(address).GetAddressBytes(), Flush: flush);
+
+    [Theory]
+    [InlineData("*", "*")]
+    [InlineData(" _IPP._TCP ", Type)]
+    [InlineData("_ipp._tcp.local.", Type)]
+    [InlineData("_pdl-datastream._tcp", "_pdl-datastream._tcp.local.")]
+    [InlineData("_foo1._udp.local", "_foo1._udp.local.")]
+    public void NormalizesLocalServiceTypes(string input, string expected)
+    {
+        Assert.True(MDNSServiceType.TryNormalize(input, out var type));
+        Assert.Equal(expected, type);
+    }
+
+    [Theory]
+    [InlineData(null)]
+    [InlineData("")]
+    [InlineData("_ipp._tcp.example.com")]
+    [InlineData("ipp._tcp")]
+    [InlineData("_ipp._sctp")]
+    [InlineData("_123._tcp")]
+    [InlineData("_-ipp._tcp")]
+    [InlineData("_ip--p._tcp")]
+    [InlineData("_1234567890123456._tcp")]
+    [InlineData("_http._tcp;_ipp._tcp")]
+    public void RejectsInvalidAndNonLocalServiceTypes(string input) =>
+        Assert.False(MDNSServiceType.TryNormalize(input, out _));
+
+    [Fact]
+    public void BrowsingQueriesHaveZeroIdAndMulticastINClass()
+    {
+        var query = MDNSMessage.CreateQuery(Type, 12);
+        Assert.Equal(new byte[] { 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0 }, query[..12]);
+        Assert.Equal(Name(Type), query[12..^4]);
+        Assert.Equal(new byte[] { 0, 12, 0, 1 }, query[^4..]);
+        Assert.Empty(MDNSMessage.ReadResponse(query));
+    }
+
+    [Fact]
+    public void ReadsCompressedPtrAndAdditionalRecords()
+    {
+        // The instance suffix points back to the PTR owner's service type at offset 12.
+        var packet = Packet(new Record(Type, 12, [14, .. Encoding.UTF8.GetBytes("Office Printer"), 0xC0, 12]), Srv(), Address());
+        // Move the SRV and address from the answer section into the additional section.
+        packet[7] = 1;
+        packet[11] = 2;
+        var records = MDNSMessage.ReadResponse(packet);
+        Assert.Equal(3, records.Count);
+        Assert.Equal(Instance, records[0].Target);
+        Assert.Equal((ushort)631, records[1].Port);
+        Assert.Equal((ushort)10, records[1].Priority);
+        Assert.Equal((ushort)20, records[1].Weight);
+        Assert.True(records[1].CacheFlush);
+        Assert.Equal(IPAddress.Parse("192.168.1.20"), records[2].Address);
+    }
+
+    [Fact]
+    public void InstanceLabelsWithDotsBackslashesAndUnicodeRoundTripIntoFollowupQuestion()
+    {
+        var instanceWire = Labels("Büro.Printer\\One", "_ipp", "_tcp", "local");
+        var record = Assert.Single(MDNSMessage.ReadResponse(Packet(new Record(Type, 12, instanceWire))));
+        var query = MDNSMessage.CreateQuery(record.Target, 33);
+        Assert.Equal(instanceWire, query[12..^4]);
+    }
+
+    [Fact]
+    public void PreservesBinaryTXTAndEscapesControlCharacters()
+    {
+        var txt = new Record(Instance, 16, [3, 97, 0, 98, 2, 0xFF, 0xFE, 0]);
+        var record = Assert.Single(MDNSMessage.ReadResponse(Packet(txt)));
+        Assert.Equal(new[] { "a\\u0000b", "\\xFF\\xFE", "" }, record.Text);
+    }
+
+    [Fact]
+    public void RejectsAllTruncatedPrefixesAndPointerLoops()
+    {
+        var packet = Packet(Ptr(), Srv(), Address());
+        for (var length = 0; length < packet.Length; length++)
+            Assert.Empty(MDNSMessage.ReadResponse(packet[..length]));
+        packet = Packet(new Record(Type, 12, [0xC0, 12]));
+        // Owner name points to itself.
+        packet[12] = 0xC0;
+        packet[13] = 12;
+        Assert.Empty(MDNSMessage.ReadResponse(packet));
+        Assert.Empty(MDNSMessage.ReadResponse(Packet(new Record(Type, 12, [0xFF, 0xFF]))));
+        Assert.Empty(MDNSMessage.ReadResponse(Packet(new Record(Instance, 16, [20, 1]))));
+        Assert.Empty(MDNSMessage.ReadResponse(Packet(new Record(Instance, 33, [0, 1]))));
+    }
+
+    [Fact]
+    public void MergesOutOfOrderResponsesAndReturnsUnresolvedInstances()
+    {
+        var cache = new MDNSServiceCache(Type, "Ethernet");
+        cache.ProcessResponse(Packet(Ptr()), Now);
+        var pending = Assert.Single(cache.GetServices(Now));
+        Assert.Null(pending.Port);
+        Assert.Empty(pending.Hostname);
+        Assert.Contains((Instance, (ushort)33), cache.GetQuestions(Now));
+        cache.ProcessResponse(Packet(Address("fe80::1234"), Address()), Now, 7);
+        cache.ProcessResponse(Packet(Srv()), Now);
+        var result = Assert.Single(cache.GetServices(Now));
+        Assert.Equal("Office Printer", result.Name);
+        Assert.Equal(Host, result.Hostname);
+        Assert.Equal((ushort)631, result.Port);
+        Assert.Contains("192.168.1.20", result.Addresses);
+        Assert.Contains("fe80::1234%7", result.Addresses);
+        Assert.Equal("Ethernet", result.NetworkInterface);
+        Assert.Single(cache.GetServices(Now));
+    }
+
+    [Fact]
+    public void EnumeratesUnknownTypesAndSeedsPrinters()
+    {
+        var cache = new MDNSServiceCache("*", "Ethernet");
+        var questions = cache.GetQuestions(Now);
+        Assert.Contains((MDNSServiceType.Enumeration, (ushort)12), questions);
+        Assert.Contains((Type, (ushort)12), questions);
+        cache.ProcessResponse(Packet(new Record(MDNSServiceType.Enumeration, 12, Name("_custom._udp.local."))), Now);
+        Assert.Contains(("_custom._udp.local.", (ushort)12), cache.GetQuestions(Now));
+        Assert.Empty(cache.GetQuestions(Now));
+        Assert.NotEmpty(cache.GetQuestions(Now.AddSeconds(1)));
+    }
+
+    [Fact]
+    public void FiltersServicesByRequestedTypeAndHonorsTTL()
+    {
+        var cache = new MDNSServiceCache("_http._tcp", "Ethernet");
+        cache.ProcessResponse(Packet(Ptr()), Now);
+        Assert.Empty(cache.GetServices(Now));
+        cache = new MDNSServiceCache(Type, "Ethernet");
+        cache.ProcessResponse(Packet(Ptr(2)), Now);
+        Assert.Single(cache.GetServices(Now));
+        Assert.Empty(cache.GetServices(Now.AddSeconds(2)));
+    }
+
+    [Fact]
+    public void GoodbyeRemovesServiceAfterOneSecondGrace()
+    {
+        var cache = new MDNSServiceCache(Type, "Ethernet");
+        cache.ProcessResponse(Packet(Ptr(), Srv(), Address()), Now);
+        cache.ProcessResponse(Packet(Ptr(0)), Now.AddSeconds(1));
+        Assert.Single(cache.GetServices(Now.AddSeconds(1.5)));
+        Assert.Empty(cache.GetServices(Now.AddSeconds(2)));
+    }
+
+    [Fact]
+    public void CacheFlushReplacesOldAddressAndPreservesRRSetAcrossPackets()
+    {
+        var cache = new MDNSServiceCache(Type, "Ethernet");
+        cache.ProcessResponse(Packet(Ptr(), Srv(), Address()), Now);
+        cache.ProcessResponse(Packet(Address("192.168.1.30", true)), Now.AddSeconds(2));
+        cache.ProcessResponse(Packet(Address("192.168.1.31", true)), Now.AddSeconds(2.1));
+        var result = Assert.Single(cache.GetServices(Now.AddSeconds(3.2)));
+        Assert.DoesNotContain("192.168.1.20", result.Addresses);
+        Assert.Contains("192.168.1.30", result.Addresses);
+        Assert.Contains("192.168.1.31", result.Addresses);
+    }
+
+    [Fact]
+    public void RepeatedAnnouncementsDeduplicateAndRefreshTTL()
+    {
+        var cache = new MDNSServiceCache(Type, "Ethernet");
+        cache.ProcessResponse(Packet(Ptr(2)), Now);
+        cache.ProcessResponse(Packet(Ptr(2)), Now.AddSeconds(1));
+        Assert.Single(cache.GetServices(Now.AddSeconds(2.5)));
+        Assert.Empty(cache.GetServices(Now.AddSeconds(3)));
+    }
+
+    [Fact]
+    public void RecordsViewHasOneLinePerResourceRecordWithTTLAndType()
+    {
+        var cache = new MDNSServiceCache(Type, "Ethernet");
+        cache.ProcessResponse(Packet(Ptr(), Srv(), Address(), Address("fe80::1234"),
+            new Record(Instance, 16, [4, 107, 61, 97, 10])), Now, 7);
+        var records = cache.GetRecords(Now.AddSeconds(1));
+        Assert.Equal(5, records.Count);
+        Assert.Equal(new[] { "A", "AAAA", "PTR", "SRV", "TXT" }, records.Select(x => x.Type).Order());
+        Assert.All(records, x =>
+        {
+            Assert.Equal("IN", x.Class);
+            Assert.Equal((uint)119, x.TTL);
+            Assert.DoesNotContain('\n', x.Value);
+            Assert.DoesNotContain('\r', x.Value);
+        });
+        Assert.Equal("10 20 631 printer.local.", Assert.Single(records, x => x.Type == "SRV").Value);
+        Assert.Equal("k=a\\u000A", Assert.Single(records, x => x.Type == "TXT").Value);
+    }
+
+    [Fact]
+    public void TXTValuesAreCaseSensitiveAndReplacedAfterCacheFlushGrace()
+    {
+        var cache = new MDNSServiceCache(Type, "Ethernet");
+        cache.ProcessResponse(Packet(new Record(Instance, 16, [3, 107, 61, 97], Flush: true)), Now);
+        cache.ProcessResponse(Packet(new Record(Instance, 16, [3, 107, 61, 65], Flush: true)), Now.AddSeconds(2));
+        Assert.Equal(2, cache.GetRecords(Now.AddSeconds(2)).Count);
+        Assert.Equal("k=A", Assert.Single(cache.GetRecords(Now.AddSeconds(3))).Value);
+    }
+
+    [Fact]
+    public void FollowupQuestionsPreserveInstanceNameCaseAndIgnoreUnrelatedSRVRecords()
+    {
+        var cache = new MDNSServiceCache(Type, "Ethernet");
+        cache.ProcessResponse(Packet(Ptr(), new Record("Unrelated._http._tcp.local.", 33, [0, 0, 0, 0, 0, 80, .. Name("other.local.")])), Now);
+        var questions = cache.GetQuestions(Now);
+        Assert.Contains((Instance, (ushort)33), questions);
+        Assert.DoesNotContain(questions, x => x.Name == "other.local.");
+    }
+
+    [Fact]
+    public void EachTXTEntryHasItsOwnStableRowAndSharedRecordTTL()
+    {
+        var cache = new MDNSServiceCache(Type, "Ethernet");
+        var txt = new Record(Instance, 16, [9, .. Encoding.UTF8.GetBytes("txtvers=1"),
+            10, .. Encoding.UTF8.GetBytes("ty=Printer"), 12, .. Encoding.UTF8.GetBytes("rp=ipp/print")]);
+        cache.ProcessResponse(Packet(txt), Now);
+        var rows = cache.GetRecords(Now);
+        Assert.Equal(new[] { "txtvers=1", "ty=Printer", "rp=ipp/print" }, rows.Select(x => x.Value));
+        Assert.Equal(3, rows.Select(x => x.Id).Distinct().Count());
+        Assert.All(rows, x => { Assert.Equal("TXT", x.Type); Assert.Equal((uint)120, x.TTL); });
+        cache.ProcessResponse(Packet(txt), Now.AddSeconds(1));
+        Assert.Equal(rows.Select(x => x.Id), cache.GetRecords(Now.AddSeconds(2)).Select(x => x.Id));
+        Assert.All(cache.GetRecords(Now.AddSeconds(2)), x => Assert.Equal((uint)119, x.TTL));
+    }
+
+    [Fact]
+    public void LargeTXTResponseHasBoundedRowsAndCompactUniqueIds()
+    {
+        var cache = new MDNSServiceCache(Type, "Ethernet");
+        cache.ProcessResponse(Packet(new Record(Instance, 16, new byte[8000])), Now);
+        var rows = cache.GetRecords(Now);
+        Assert.Equal(4096, rows.Count);
+        Assert.Equal(rows.Count, rows.Select(x => x.Id).Distinct().Count());
+        Assert.All(rows, x => Assert.True(x.Id.Length < 500));
+    }
+
+    [Fact]
+    public void UnknownRecordTypesArePreservedAndExpireLikeOtherRecords()
+    {
+        var cache = new MDNSServiceCache(Type, "Ethernet");
+        var packet = Packet(new Record(Host, 65400, [0x00, 0xFF, 0x42, 0x80], TTL: 2));
+        var parsed = Assert.Single(MDNSMessage.ReadResponse(packet));
+        Assert.Equal(new byte[] { 0x00, 0xFF, 0x42, 0x80 }, parsed.RawData);
+        cache.ProcessResponse(packet, Now);
+        var row = Assert.Single(cache.GetRecords(Now));
+        Assert.Equal("TYPE65400", row.Type);
+        Assert.Equal("\\# 4 00FF4280", row.Value);
+        Assert.Empty(cache.GetServices(Now));
+        Assert.Empty(cache.GetRecords(Now.AddSeconds(2)));
+    }
+
+    [Fact]
+    public void UnsupportedStandardRecordsAreVisibleAlongsideServiceRecords()
+    {
+        var cache = new MDNSServiceCache(Type, "Ethernet");
+        cache.ProcessResponse(Packet(Ptr(), Srv(), Address(), new Record(Host, 47, [0, 0, 1, 0x40])), Now);
+        var records = cache.GetRecords(Now);
+        Assert.Equal(4, records.Count);
+        Assert.Contains(records, x => x.Type == "NSEC" && x.Value == "\\# 4 00000140");
+        Assert.Single(cache.GetServices(Now));
+    }
+
+    [Fact]
+    public void UnknownZeroLengthRecordsRemainVisible()
+    {
+        var cache = new MDNSServiceCache(Type, "Ethernet");
+        cache.ProcessResponse(Packet(new Record(Host, 65401, [])), Now);
+        Assert.Equal("\\# 0", Assert.Single(cache.GetRecords(Now)).Value);
+    }
+
+    [Fact]
+    public void RecordsViewAlsoPreservesReverseOwnersWithoutStartingUnrelatedQueries()
+    {
+        var cache = new MDNSServiceCache(Type, "Ethernet");
+        cache.ProcessResponse(Packet(new Record("20.1.168.192.in-addr.arpa.", 65400, [0x42])), Now);
+        Assert.Equal("20.1.168.192.in-addr.arpa.", Assert.Single(cache.GetRecords(Now)).Name);
+        Assert.Equal(new[] { (Type, (ushort)12) }, cache.GetQuestions(Now));
+    }
+}

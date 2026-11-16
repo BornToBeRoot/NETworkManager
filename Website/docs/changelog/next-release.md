@@ -21,6 +21,10 @@ Release date: **xx.xx.2026**
 
 ## What's new?
 
+**mDNS / DNS-SD**
+
+- Added a dedicated browser for services advertised on the local network, including printers, scanners, web servers and media devices. Select an interface and service type (or discover all types), inspect hostnames, ports, IPv4 / IPv6 addresses and TXT records, filter, copy and export the results. A separate **Records** tab shows individual DNS records, with each TXT entry on its own row; other and unknown record types are preserved as raw data. Includes the `mdns` / `dnssd` run commands. [#3719](https://github.com/BornToBeRoot/NETworkManager/pull/3719)
+
 ## Improvements
 
 ## Bug Fixes

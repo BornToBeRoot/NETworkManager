@@ -75,6 +75,9 @@ public static class DocumentationManager
         new DocumentationInfo(DocumentationIdentifier.ApplicationDiscoveryProtocol,
             @"docs/application/discovery-protocol"),
 
+        new DocumentationInfo(DocumentationIdentifier.ApplicationMDNSDiscovery,
+            @"docs/application/mdns-discovery"),
+
         new DocumentationInfo(DocumentationIdentifier.ApplicationWakeOnLan,
             @"docs/application/wake-on-lan"),
 
@@ -222,6 +225,7 @@ public static class DocumentationManager
             ApplicationName.SNTPLookup => DocumentationIdentifier.ApplicationSntpLookup,
             ApplicationName.HostsFileEditor => DocumentationIdentifier.ApplicationHostsFileEditor,
             ApplicationName.DiscoveryProtocol => DocumentationIdentifier.ApplicationDiscoveryProtocol,
+            ApplicationName.MDNSDiscovery => DocumentationIdentifier.ApplicationMDNSDiscovery,
             ApplicationName.Firewall => DocumentationIdentifier.ApplicationFirewall,
             ApplicationName.WakeOnLAN => DocumentationIdentifier.ApplicationWakeOnLan,
             ApplicationName.RDAP => DocumentationIdentifier.ApplicationRdap,

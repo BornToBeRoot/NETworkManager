@@ -35,6 +35,7 @@ The input is validated like the input field of the feature (e.g. a valid host or
 | `pingmonitor`      | `ping`             | `<hosts>`                           | `ping 10.0.0.1; 10.0.0.2`                |
 | `traceroute`       | `trace`, `tracert` | `<host>`                            | `trace borntoberoot.net`                 |
 | `dnslookup`        | `dns`, `nslookup`  | `<hosts> [server] [type]`           | `dns borntoberoot.net 1.1.1.1 aaaa`      |
+| `mdnsdiscovery`    | `mdns`, `dnssd`    | `<service type or *>`              | `mdns _ipp._tcp`                        |
 | `remotedesktop`    | `rdp`, `mstsc`     | `<host[:port]>`                     | `rdp server-01`                          |
 | `powershell`       | `ps`, `pwsh`       | `<host>`                            | `ps server-01`                           |
 | `putty`            | `ssh`              | `<host>`                            | `ssh server-01`                          |
@@ -49,7 +50,7 @@ The input is validated like the input field of the feature (e.g. a valid host or
 | `lookup`           |                    | `<oui\|port> <query>`               | `lookup port 22; 443; ssh`               |
 | `settings`         |                    |                                     | `settings`                               |
 
-All features that accept a target also accept a profile (`@profile`), except the Subnet Calculator and the Lookup, which have no profiles. The other features (e.g. `firewall`, `listeners`) can be opened with their name. Features that are hidden in [Settings > General](./settings/general.md) are not available.
+All features that accept a target also accept a profile (`@profile`), except the Subnet Calculator, Lookup and mDNS / DNS-SD tools, which have no profiles. The other features (e.g. `firewall`, `listeners`) can be opened with their name. Features that are hidden in [Settings > General](./settings/general.md) are not available.
 
 :::note
 
@@ -79,6 +80,7 @@ Type only the target (e.g. `10.0.0.1`) to get the commands that accept it, e.g. 
 | Port(s) (`22`, `80-90/tcp`)                         | `lookup port`                                                                       |
 | AS number (`AS13335`)                               | RDAP                                                                                |
 | URL (`https://...`)                                 | Web Console                                                                         |
+| DNS-SD service type (`_ipp._tcp`, `_http._tcp.local.`) or `*` | mDNS / DNS-SD                                                                  |
 
 A command always has priority (e.g. `web` is the Web Console). A list (e.g. `10.0.0.1; server01`) is a target if at least one entry is an IP address, a host with a domain, a range or a subnet; with a range or subnet, it is handled like an IP range. A list with an exclusion (e.g. `10.0.0.0/24; !10.0.0.1`, see the IP Scanner) is an IP range as well. Ports are `1` to `65535`. A host without a domain (e.g. `server01`) can also be a mistyped command, so its commands are only suggested if no command starts with the word (e.g. not for `pi`), and none is selected: select one with the arrow keys.
 

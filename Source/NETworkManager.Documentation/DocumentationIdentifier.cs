@@ -99,6 +99,7 @@ public enum DocumentationIdentifier
     ///     Discovery Protocol documentation page.
     /// </summary>
     ApplicationDiscoveryProtocol,
+    ApplicationMDNSDiscovery,
 
     /// <summary>
     ///     Wake on LAN documentation page.

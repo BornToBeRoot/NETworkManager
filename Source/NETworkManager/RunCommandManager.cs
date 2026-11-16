@@ -77,7 +77,8 @@ public static class RunCommandManager
         [RunCommandTargetKind.OUI] = [ApplicationName.Lookup],
         [RunCommandTargetKind.Ports] = [ApplicationName.Lookup],
         [RunCommandTargetKind.ASN] = [ApplicationName.RDAP],
-        [RunCommandTargetKind.URL] = [ApplicationName.WebConsole]
+        [RunCommandTargetKind.URL] = [ApplicationName.WebConsole],
+        [RunCommandTargetKind.ServiceType] = [ApplicationName.MDNSDiscovery]
     };
 
     /// <summary>
@@ -313,6 +314,7 @@ public static class RunCommandManager
             ApplicationName.WakeOnLAN => new MACAddressValidator(),
             ApplicationName.SubnetCalculator => new IPv4IPv6SubnetValidator(),
             ApplicationName.Lookup => new NotEndWithSemicolonValidator(),
+            ApplicationName.MDNSDiscovery => new MDNSServiceTypeValidator(),
             _ => null
         };
 
@@ -468,6 +470,8 @@ public static class RunCommandManager
             ], RunCommandArgument.Ports),
             ApplicationName.PingMonitor => Create(name, ["ping"], [Target(Strings.Hosts)]),
             ApplicationName.Traceroute => Create(name, ["trace", "tracert"], [Target(Strings.Host)]),
+            ApplicationName.MDNSDiscovery => Create(name, ["mdns", "dnssd"], [Target(Strings.MDNSDiscovery_ServiceType)],
+                supportsProfile: false),
             ApplicationName.DNSLookup => Create(name, ["dns", "nslookup"],
                 [Target(Strings.Hosts), Argument(Strings.DNSServer), type], RunCommandArgument.DNSServer,
                 [.. DNSLookup.QueryTypes.Select(x => x.ToString().ToLowerInvariant()).Order()]),

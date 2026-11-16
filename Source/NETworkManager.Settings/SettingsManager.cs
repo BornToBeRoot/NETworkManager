@@ -745,6 +745,13 @@ public static class SettingsManager
     {
         Log.Info($"Apply upgrade to {version}...");
 
+        if (Current.General_ApplicationList.All(x => x.Name != ApplicationName.MDNSDiscovery))
+        {
+            Log.Info($"Add new app {nameof(ApplicationName.MDNSDiscovery)}.");
+            Current.General_ApplicationList.Add(ApplicationManager.GetDefaultList()
+                .First(x => x.Name == ApplicationName.MDNSDiscovery));
+        }
+
         // Add RDAP application
         if (Current.General_ApplicationList.All(x => x.Name != ApplicationName.RDAP))
         {

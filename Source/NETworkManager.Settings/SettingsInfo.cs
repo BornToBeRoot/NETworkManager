@@ -35,6 +35,40 @@ namespace NETworkManager.Settings;
 /// in applications that require user customization and state management across sessions.</remarks>
 public class SettingsInfo : INotifyPropertyChanged
 {
+    #region mDNS / DNS-SD
+
+    public string MDNSDiscovery_ServiceType
+    {
+        get;
+        set { if (value == field) return; field = value; OnPropertyChanged(); }
+    } = GlobalStaticConfiguration.MDNSDiscovery_ServiceType;
+
+    public int MDNSDiscovery_Duration
+    {
+        get;
+        set { if (value == field) return; field = value; OnPropertyChanged(); }
+    } = GlobalStaticConfiguration.MDNSDiscovery_Duration;
+
+    public string MDNSDiscovery_InterfaceId
+    {
+        get;
+        set { if (value == field) return; field = value; OnPropertyChanged(); }
+    } = GlobalStaticConfiguration.MDNSDiscovery_InterfaceId;
+
+    public ExportFileType MDNSDiscovery_ExportFileType
+    {
+        get;
+        set { if (value == field) return; field = value; OnPropertyChanged(); }
+    } = GlobalStaticConfiguration.MDNSDiscovery_ExportFileType;
+
+    public string MDNSDiscovery_ExportFilePath
+    {
+        get;
+        set { if (value == field) return; field = value; OnPropertyChanged(); }
+    } = GlobalStaticConfiguration.MDNSDiscovery_ExportFilePath;
+
+    #endregion
+
     /// <summary>
     /// Occurs when a property value changes.
     /// </summary>

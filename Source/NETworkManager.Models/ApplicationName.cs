@@ -162,5 +162,8 @@ public enum ApplicationName
     ///     with <c>"ARPTable"</c> can still be deserialized; migrated in <c>SettingsManager.Upgrade()</c>.
     /// </summary>
     [System.Obsolete("Use NeighborTable instead.")]
-    ARPTable
+    ARPTable,
+
+    /// <summary>Multicast DNS service discovery application.</summary>
+    MDNSDiscovery
 }
