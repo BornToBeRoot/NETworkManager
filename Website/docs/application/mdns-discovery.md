@@ -22,7 +22,7 @@ Discovery uses IPv4 (`224.0.0.251`) and IPv6 (`ff02::fb`) multicast on UDP port 
 
 | Field | Type | Default | Example |
 | --- | --- | --- | --- |
-| Interface | Selection | Last used interface if available; otherwise the first active interface with multicast support | Ethernet |
+| Interface | Selection | Last used interface if available; otherwise the first active interface with multicast support (with a warning that the last used one is not available, also for the run command) | Ethernet |
 | Service type | Editable selection (history, service type profiles) | `*` | `Printers`, `_ipp._tcp`, `Printers; Scanners; _ssh._tcp` |
 | Duration (s) | Selection: `10`, `30`, `60`, `120`, `300`, **Until stopped** | `10` | `30` |
 

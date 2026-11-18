@@ -8374,6 +8374,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The last used network interface is not available, &quot;{0}&quot; is used instead..
+        /// </summary>
+        public static string MDNSDiscovery_InterfaceNotAvailable {
+            get {
+                return ResourceManager.GetString("MDNSDiscovery_InterfaceNotAvailable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enter *, service types such as _ipp._tcp and/or service type profiles, separated by &quot;;&quot;..
         /// </summary>
         public static string MDNSDiscovery_InvalidServiceType {

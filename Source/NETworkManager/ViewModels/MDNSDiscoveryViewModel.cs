@@ -78,6 +78,14 @@ public sealed class MDNSDiscoveryViewModel : ViewModelBase
                 return;
 
             field = value;
+
+            // Another interface was selected: the message that the last used one is not available no longer applies
+            // (set again after the selection by SetInterfaces)
+            _showInterfaceNotAvailableOnBrowse = false;
+
+            if (IsStatusMessageDisplayed && StatusMessage == _interfaceNotAvailableMessage)
+                IsStatusMessageDisplayed = false;
+
             OnPropertyChanged();
         }
     }
@@ -671,16 +679,40 @@ public sealed class MDNSDiscoveryViewModel : ViewModelBase
         foreach (var networkInterface in interfaces)
             Interfaces.Add(networkInterface);
 
-        SelectedInterface = Interfaces.FirstOrDefault(x => x.Id == id) ?? Interfaces.FirstOrDefault();
+        var previousInterface = Interfaces.FirstOrDefault(x => x.Id == id);
+
+        SelectedInterface = previousInterface ?? Interfaces.FirstOrDefault();
 
         Log.Debug($"Found {Interfaces.Count} network interfaces with multicast support, selected: \"{SelectedInterface?.Name}\".");
 
         if (SelectedInterface == null)
+        {
             SetStatusMessage(Strings.MDNSDiscovery_NoInterface, StatusLevel.Warning);
+        }
+        // The last used interface is gone (e.g. a USB adapter or VPN): say which one is used instead, also a run
+        // command browses on it right away
+        else if (previousInterface == null && !string.IsNullOrEmpty(id))
+        {
+            Log.Info($"Network interface \"{id}\" is not available, \"{SelectedInterface.Name}\" is used.");
+
+            _interfaceNotAvailableMessage = string.Format(Strings.MDNSDiscovery_InterfaceNotAvailable, SelectedInterface.Name);
+            _showInterfaceNotAvailableOnBrowse = true;
+
+            SetStatusMessage(_interfaceNotAvailableMessage, StatusLevel.Warning);
+        }
+        // Messages of an earlier load that no longer apply
         else if (StatusMessage is not null &&
-                 (StatusMessage == Strings.MDNSDiscovery_NoInterface || StatusMessage.StartsWith(Strings.MDNSDiscovery_Failed)))
+                 (StatusMessage == Strings.MDNSDiscovery_NoInterface || StatusMessage == _interfaceNotAvailableMessage ||
+                  StatusMessage.StartsWith(Strings.MDNSDiscovery_Failed)))
+        {
             IsStatusMessageDisplayed = false;
+        }
     }
+
+    // Message of the last load if the last used interface was not available (removed when it applies no longer). Shown
+    // again by the next browse (which clears the messages), e.g. a run command right after the view was created.
+    private string _interfaceNotAvailableMessage;
+    private bool _showInterfaceNotAvailableOnBrowse;
 
     private void LoadInterfacesFailed(Exception ex)
     {
@@ -737,6 +769,14 @@ public sealed class MDNSDiscoveryViewModel : ViewModelBase
         IsStatusMessageDisplayed = false;
         StatusMessage = string.Empty;
         StatusMessageLevel = StatusLevel.None;
+
+        // Browses on another interface than the last used one (not available)
+        if (_showInterfaceNotAvailableOnBrowse)
+        {
+            _showInterfaceNotAvailableOnBrowse = false;
+
+            SetStatusMessage(_interfaceNotAvailableMessage, StatusLevel.Warning);
+        }
 
         Results.Clear();
         Records.Clear();

@@ -5651,4 +5651,7 @@ Do you want to start the scan?</value>
   <data name="MDNSDiscovery_EnterValidDuration" xml:space="preserve">
     <value>Enter a duration in seconds: {0} (0 = until stopped).</value>
   </data>
+  <data name="MDNSDiscovery_InterfaceNotAvailable" xml:space="preserve">
+    <value>The last used network interface is not available, "{0}" is used instead.</value>
+  </data>
 </root>
