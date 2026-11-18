@@ -129,6 +129,14 @@ public class MDNSDiscoveryTests
     }
 
     [Fact]
+    public void IgnoresTheTruncatedBitOfResponses()
+    {
+        var packet = Packet(Ptr());
+        packet[2] |= 0x02; // TC
+        Assert.Single(MDNSMessage.ReadResponse(packet));
+    }
+
+    [Fact]
     public void MergesOutOfOrderResponsesAndReturnsUnresolvedInstances()
     {
         var cache = new MDNSServiceCache(Type, "Ethernet");

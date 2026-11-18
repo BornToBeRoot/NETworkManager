@@ -66,7 +66,8 @@ public static class MDNSMessage
             var reader = new Reader(data);
             reader.U16();
             var flags = reader.U16();
-            if ((flags & 0x8000) == 0 || (flags & 0x7A0F) != 0)
+            // Response with opcode 0 and rcode 0. The TC bit is ignored in multicast responses (RFC 6762 18.5).
+            if ((flags & 0x8000) == 0 || (flags & 0x780F) != 0)
                 return [];
             var questions = reader.U16();
             var answers = reader.U16();
