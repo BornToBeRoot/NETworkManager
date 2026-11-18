@@ -1,5 +1,5 @@
 ---
-sidebar_position: 10
+sidebar_position: 19
 description: "Discover and inspect local network services advertised with mDNS and DNS-SD, including printers, scanners, web servers and media devices."
 keywords: [NETworkManager, mDNS, DNS-SD, Bonjour, Avahi, printers, service discovery]
 ---

@@ -35,7 +35,6 @@ The input is validated like the input field of the feature (e.g. a valid host or
 | `pingmonitor`      | `ping`             | `<hosts>`                           | `ping 10.0.0.1; 10.0.0.2`                |
 | `traceroute`       | `trace`, `tracert` | `<host>`                            | `trace borntoberoot.net`                 |
 | `dnslookup`        | `dns`, `nslookup`  | `<hosts> [server] [type]`           | `dns borntoberoot.net 1.1.1.1 aaaa`      |
-| `mdnsdiscovery`    | `mdns`, `dnssd`    | `<service type or *>`              | `mdns _ipp._tcp`                        |
 | `remotedesktop`    | `rdp`, `mstsc`     | `<host[:port]>`                     | `rdp server-01`                          |
 | `powershell`       | `ps`, `pwsh`       | `<host>`                            | `ps server-01`                           |
 | `putty`            | `ssh`              | `<host>`                            | `ssh server-01`                          |
@@ -45,6 +44,7 @@ The input is validated like the input field of the feature (e.g. a valid host or
 | `rdap`             |                    | `<query> [type]`                    | `rdap 1.10 asn`                          |
 | `whois`            |                    | `<domain>`                          | `whois borntoberoot.net`                 |
 | `ipgeolocation`    | `geo`              | `<host>`                            | `geo 1.1.1.1`                            |
+| `mdnsdiscovery`    | `mdns`, `dnssd`    | `<service type \| *>`               | `mdns _ipp._tcp`                         |
 | `wakeonlan`        | `wol`              | `<MAC address> [broadcast]`         | `wol 00:11:22:33:44:55 192.168.1.255`    |
 | `subnetcalculator` | `subnet`, `ipcalc` | `<subnet> [new mask \| subnet 2]`   | `subnet 10.0.0.0/16 /24`                 |
 | `lookup`           |                    | `<oui\|port> <query>`               | `lookup port 22; 443; ssh`               |

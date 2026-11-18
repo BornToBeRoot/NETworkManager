@@ -108,6 +108,11 @@ public enum ApplicationName
     DiscoveryProtocol,
 
     /// <summary>
+    ///     mDNS / DNS-SD (multicast DNS service discovery) application.
+    /// </summary>
+    MDNSDiscovery,
+
+    /// <summary>
     ///     Wake on LAN application.
     /// </summary>
     WakeOnLAN,
@@ -162,8 +167,5 @@ public enum ApplicationName
     ///     with <c>"ARPTable"</c> can still be deserialized; migrated in <c>SettingsManager.Upgrade()</c>.
     /// </summary>
     [System.Obsolete("Use NeighborTable instead.")]
-    ARPTable,
-
-    /// <summary>Multicast DNS service discovery application.</summary>
-    MDNSDiscovery
+    ARPTable
 }

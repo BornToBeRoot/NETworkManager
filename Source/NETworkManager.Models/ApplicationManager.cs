@@ -89,9 +89,6 @@ public static class ApplicationManager
             case ApplicationName.DNSLookup:
                 canvas.Children.Add(new LucideIcon { Kind = LucideIconKind.Globe });
                 break;
-            case ApplicationName.MDNSDiscovery:
-                canvas.Children.Add(new LucideIcon { Kind = LucideIconKind.SatelliteDish });
-                break;
             case ApplicationName.RemoteDesktop:
                 canvas.Children.Add(new LucideIcon { Kind = LucideIconKind.Monitor });
                 break;
@@ -118,6 +115,9 @@ public static class ApplicationManager
                 break;
             case ApplicationName.DiscoveryProtocol:
                 canvas.Children.Add(new LucideIcon { Kind = LucideIconKind.ArrowLeftRight });
+                break;
+            case ApplicationName.MDNSDiscovery:
+                canvas.Children.Add(new LucideIcon { Kind = LucideIconKind.SatelliteDish });
                 break;
             case ApplicationName.WakeOnLAN:
                 canvas.Children.Add(new LucideIcon { Kind = LucideIconKind.Power });
