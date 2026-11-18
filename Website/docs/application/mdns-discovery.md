@@ -47,7 +47,7 @@ The result shows one row per advertised service instance. One printer can advert
 | SRV priority / weight | Values used for service selection |
 | TXT records | Advertised metadata, one TXT string per line; printer records often include model, capabilities and queue path |
 
-Select a row to expand its full name, SRV priority/weight and TXT records. Empty hostname, port or address fields mean those records have not been resolved (or have expired). Details can arrive in separate responses and update while browsing. Goodbye messages and expired advertisements remove services while discovery is running. After discovery stops, TTL and other values remain at their last observed values.
+Expand a row with the arrow in the first column (like the IP Scanner) to see the details of the service (full name, hostname, IP addresses, port, SRV priority / weight, TTL) and its TXT records, one per line. Empty hostname, port or address fields mean those records have not been resolved (or have expired). Details can arrive in separate responses and update while browsing. Goodbye messages and expired advertisements remove services while discovery is running. After discovery stops, TTL and other values remain at their last observed values.
 
 The search box filters by name, type, hostname, port, addresses and TXT contents. `Enter` in the search box applies the filter without starting discovery. Standard grid sorting and multi-selection are supported.
 
