@@ -371,10 +371,10 @@ public sealed class MDNSDiscoveryViewModel : ViewModelBase
     } = new ArrayList();
 
     /// <summary>
-    ///     Gets or sets the selected tab of the results (0 = services, 1 = records), exported by
-    ///     <see cref="ExportCommand" />.
+    ///     Gets or sets a value indicating whether the raw DNS records are shown instead of the services (like the raw
+    ///     JSON of the RDAP). <see cref="ExportCommand" /> exports what is shown.
     /// </summary>
-    public int SelectedResultTabIndex
+    public bool ShowRecords
     {
         get;
         set
@@ -566,7 +566,7 @@ public sealed class MDNSDiscoveryViewModel : ViewModelBase
     }
 
     /// <summary>
-    ///     Gets the command to export the services or the records (the selected tab).
+    ///     Gets the command to export the services or the records (what is shown, see <see cref="ShowRecords" />).
     /// </summary>
     public ICommand ExportCommand => new RelayCommand(_ => ExportAction());
 
@@ -749,7 +749,7 @@ public sealed class MDNSDiscoveryViewModel : ViewModelBase
     {
         var window = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
 
-        var exportRecords = SelectedResultTabIndex == 1;
+        var exportRecords = ShowRecords;
 
         var childWindow = new ExportChildWindow();
 

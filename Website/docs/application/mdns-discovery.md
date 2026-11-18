@@ -32,9 +32,9 @@ Discovery stops when its duration expires or when **Stop** is pressed. It contin
 
 ## Results
 
-The header shows the time of the last browse (**Last scan at**) and the search box; below it the number of services and records. The results are updated live while browsing.
+The header shows the time of the last browse (**Last scan at**), **Raw DNS records** and the search box; below it the number of services and records. The results are updated live while browsing.
 
-The **Services** tab shows one row per advertised service instance. One printer can advertise several services and therefore appear in several rows.
+The result shows one row per advertised service instance. One printer can advertise several services and therefore appear in several rows.
 
 | Column / detail | Meaning |
 | --- | --- |
@@ -42,8 +42,8 @@ The **Services** tab shows one row per advertised service instance. One printer 
 | Service type | Advertised type, including protocol and `.local.` domain |
 | Hostname | SRV target, such as `printer.local.` |
 | Port | Advertised service port, such as `631` for IPP |
-| IP addresses | Resolved IPv4 and IPv6 addresses; link-local IPv6 addresses include the interface scope |
 | TTL | Remaining lifetime in seconds of the service instance's PTR record while browsing |
+| IP addresses | Resolved IPv4 and IPv6 addresses; link-local IPv6 addresses include the interface scope |
 | SRV priority / weight | Values used for service selection |
 | TXT records | Advertised metadata, one TXT string per line; printer records often include model, capabilities and queue path |
 
@@ -53,9 +53,9 @@ The search box filters by name, type, hostname, port, addresses and TXT contents
 
 The context menu provides **Copy...** with the name, service type, hostname, port, IP addresses, TXT records or all details of the selected services (one per line, in the order shown). **Export...** writes the filtered results (in their current sort order) or selected services to CSV, XML or JSON. It includes the interface, full service name, SRV fields, addresses, TXT records and remaining PTR TTL. Control characters and binary TXT values are escaped for display and export.
 
-### Records
+### Raw DNS records
 
-The **Records** tab shows the cached DNS records received on the selected interface, including records for services outside the selected type. Records occupy individual lines with **Name**, **Type**, **Class**, **TTL** and **Value** columns. Each character string within a TXT record is shown as a separate row, with the same owner name and TTL. Repeated announcements update the rows instead of adding duplicates.
+With **Raw DNS records** checked, the result shows the cached DNS records received on the selected interface instead of the services, including records for services outside the selected type. Records occupy individual lines with **Name**, **Type**, **Class**, **TTL** and **Value** columns. Each character string within a TXT record is shown as a separate row, with the same owner name and TTL. Repeated announcements update the rows instead of adding duplicates.
 
 - **PTR:** the service type or instance the record points to.
 - **SRV:** priority, weight, port and target hostname, in that order.
@@ -63,7 +63,7 @@ The **Records** tab shows the cached DNS records received on the selected interf
 - **A / AAAA:** the host address, with an interface scope for link-local IPv6 addresses.
 - **Other types:** recognized DNS types keep their standard name (for example `NSEC`); unknown or private types use `TYPE<number>` (for example `TYPE65400`). Their raw data is preserved as `\# <byte count> <hex data>` (RFC 3597), including zero-length values. They can be searched, copied and exported like the decoded records.
 
-Search filters the records by name, type and value. **Copy...** copies the name, value or the whole record (name, type, class, TTL and value) of the selected records, one per line. **Export...** exports records when this tab is selected (filtered or selected, in view order), including the cache-flush flag and interface. The TTL counts down during discovery; after stopping, records remain as a snapshot until the next browse.
+Search filters the records by name, type and value. **Copy...** copies the name, value or the whole record (name, type, class, TTL and value) of the selected records, one per line. **Export...** exports the records while they are shown (filtered or selected, in view order), including the cache-flush flag and interface. The TTL counts down during discovery; after stopping, records remain as a snapshot until the next browse.
 
 ## Run command
 

@@ -8329,20 +8329,11 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Records.
+        ///   Looks up a localized string similar to Raw DNS records.
         /// </summary>
-        public static string MDNSDiscovery_Records {
+        public static string MDNSDiscovery_RawRecords {
             get {
-                return ResourceManager.GetString("MDNSDiscovery_Records", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Services.
-        /// </summary>
-        public static string MDNSDiscovery_Services {
-            get {
-                return ResourceManager.GetString("MDNSDiscovery_Services", resourceCulture);
+                return ResourceManager.GetString("MDNSDiscovery_RawRecords", resourceCulture);
             }
         }
         
