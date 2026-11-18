@@ -8347,6 +8347,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enter a duration in seconds: {0} (0 = until stopped)..
+        /// </summary>
+        public static string MDNSDiscovery_EnterValidDuration {
+            get {
+                return ResourceManager.GetString("MDNSDiscovery_EnterValidDuration", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enter service types such as _ipp._tcp, separated by &quot;;&quot;..
         /// </summary>
         public static string MDNSDiscovery_EnterValidServiceTypes {

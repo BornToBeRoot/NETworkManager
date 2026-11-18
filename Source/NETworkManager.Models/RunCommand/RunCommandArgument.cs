@@ -2,7 +2,7 @@
 
 /// <summary>
 ///     Second argument of a run command after the target. <see cref="Subnet" /> is a new subnet mask or a second
-///     subnet (Subnet Calculator).
+///     subnet (Subnet Calculator), <see cref="Duration" /> the duration in seconds (mDNS / DNS-SD).
 /// </summary>
 public enum RunCommandArgument
 {
@@ -10,5 +10,6 @@ public enum RunCommandArgument
     Ports,
     DNSServer,
     Broadcast,
-    Subnet
+    Subnet,
+    Duration
 }

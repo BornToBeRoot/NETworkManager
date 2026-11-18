@@ -67,16 +67,17 @@ Search filters the records by name, type and value. **Copy...** copies the name,
 
 ## Run command
 
-Open the tool with `mdnsdiscovery`, `mdns` or `dnssd`. Add service types and / or service type profiles (validated like the input) to start browsing:
+Open the tool with `mdnsdiscovery`, `mdns` or `dnssd`. Add service types and / or service type profiles (validated like the input) to start browsing, optionally followed by the duration in seconds (`10`, `30`, `60`, `120`, `300` or `0` = until stopped). The service type profiles and the durations are suggested:
 
 ```text
 mdns *
 mdns _ipp._tcp
 mdns printers
-dnssd Printers;_http._tcp.local.
+mdns printers 30
+dnssd Printers;_http._tcp.local. 0
 ```
 
-The selected interface and duration are used. This tool has no profiles (`@profile`).
+The selected interface is used, and the selected duration if none is entered. This tool has no profiles (`@profile`).
 
 ## Settings
 

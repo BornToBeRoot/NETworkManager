@@ -42,6 +42,9 @@
                      Visual="{icons:Lucide Kind=Server}" />
         <VisualBrush x:Key="RunCommandPortProfileIcon" Stretch="Uniform"
                      Visual="{icons:Lucide Kind=List}" />
+        <!-- Like the duration of the Discovery Protocol capture -->
+        <VisualBrush x:Key="RunCommandDurationIcon" Stretch="Uniform"
+                     Visual="{icons:Lucide Kind=Timer}" />
         <!-- Key of the key hints (e.g. "Enter") -->
         <Style x:Key="RunCommandKeyBorder" TargetType="{x:Type Border}">
             <Setter Property="BorderBrush" Value="{DynamicResource Brushes.Surface.Border}" />
@@ -291,6 +294,11 @@
                                                      Value="{x:Static networkManager:RunCommandSuggestionKind.PortProfile}">
                                             <Setter Property="OpacityMask"
                                                     Value="{StaticResource RunCommandPortProfileIcon}" />
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding Kind}"
+                                                     Value="{x:Static networkManager:RunCommandSuggestionKind.Duration}">
+                                            <Setter Property="OpacityMask"
+                                                    Value="{StaticResource RunCommandDurationIcon}" />
                                         </DataTrigger>
                                         <!-- A list of service types, like a port profile -->
                                         <DataTrigger Binding="{Binding Kind}"

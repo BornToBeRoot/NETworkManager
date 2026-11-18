@@ -2,6 +2,7 @@
 using DnsClient;
 using NETworkManager.Models;
 using NETworkManager.Models.Lookup;
+using NETworkManager.Models.Network;
 using NETworkManager.Models.RDAP;
 using NETworkManager.Profiles;
 
@@ -69,6 +70,18 @@ public sealed record WakeOnLANRequest() : ApplicationRequest(ApplicationName.Wak
     ///     Broadcast address. If null, the broadcast address of the application is used.
     /// </summary>
     public string Broadcast { get; init; }
+}
+
+/// <summary>
+///     Request to open the mDNS / DNS-SD tool.
+/// </summary>
+public sealed record MDNSDiscoveryRequest() : ApplicationRequest(ApplicationName.MDNSDiscovery)
+{
+    /// <summary>
+    ///     Duration of the browse in seconds (one of <see cref="MDNSBrowser.Durations" />, 0 = until stopped). If null,
+    ///     the duration selected in the tool is used.
+    /// </summary>
+    public int? Duration { get; init; }
 }
 
 /// <summary>

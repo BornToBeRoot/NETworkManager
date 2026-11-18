@@ -23,6 +23,11 @@ public static class MDNSBrowser
     private static readonly ILog Log = LogManager.GetLogger(typeof(MDNSBrowser));
 
     /// <summary>
+    ///     Durations of a browse in seconds that can be selected (tool and run command), 0 = until stopped.
+    /// </summary>
+    public static IReadOnlyList<int> Durations { get; } = [10, 30, 60, 120, 300, 0];
+
+    /// <summary>
     ///     Windows reports an ICMP "port unreachable" of an earlier datagram as a connection reset on the next receive
     ///     of an UDP socket (SIO_UDP_CONNRESET). Disabled, it would only end the receiver.
     /// </summary>

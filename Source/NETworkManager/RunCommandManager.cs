@@ -132,6 +132,15 @@ public static class RunCommandManager
     }
 
     /// <summary>
+    ///     Gets the durations of the mDNS / DNS-SD tool in seconds (0 = until stopped).
+    /// </summary>
+    /// <returns>Durations.</returns>
+    public static IEnumerable<int> GetMDNSDurations()
+    {
+        return MDNSBrowser.Durations;
+    }
+
+    /// <summary>
     ///     Gets the translated name of the application (or settings) of a command.
     /// </summary>
     /// <param name="command">Command.</param>
@@ -350,6 +359,7 @@ public static class RunCommandManager
             {
                 RunCommandArgument.DNSServer => ValidateDNSServer(result.Argument),
                 RunCommandArgument.Subnet => ValidateSubnetArgument(result.Target, result.Argument),
+                RunCommandArgument.Duration => ValidateDuration(result.Argument),
                 _ => Validate(argumentValidator, result.Argument)
             };
 
@@ -381,6 +391,18 @@ public static class RunCommandManager
             hostnameNeedsDomain: true).FirstOrDefault();
 
         return invalidEntry == null ? null : string.Format(Strings.UnknownArgumentX, invalidEntry);
+    }
+
+    /// <summary>
+    ///     Validates the duration of the mDNS / DNS-SD tool: one of the durations that can be selected in the tool
+    ///     (seconds, 0 = until stopped).
+    /// </summary>
+    private static string ValidateDuration(string duration)
+    {
+        return int.TryParse(duration, NumberStyles.None, CultureInfo.InvariantCulture, out var seconds) &&
+               MDNSBrowser.Durations.Contains(seconds)
+            ? null
+            : string.Format(Strings.MDNSDiscovery_EnterValidDuration, string.Join(", ", MDNSBrowser.Durations));
     }
 
     /// <summary>
@@ -439,6 +461,11 @@ public static class RunCommandManager
                 Ports = result.Argument
             },
             ApplicationName.WakeOnLAN => new WakeOnLANRequest { Target = result.Target, Broadcast = result.Argument },
+            ApplicationName.MDNSDiscovery => new MDNSDiscoveryRequest
+            {
+                Target = result.Target,
+                Duration = result.Argument != null ? int.Parse(result.Argument, CultureInfo.InvariantCulture) : null
+            },
             ApplicationName.RDAP => new RDAPRequest { Target = result.Target, QueryType = GetRDAPQueryType(result.Type) },
             // The argument is a new subnet mask (Subnetting) or a second subnet (Wide Subnet).
             ApplicationName.SubnetCalculator => result.Argument != null && IsSubnetmaskOrCidr(result.Argument)
@@ -496,7 +523,8 @@ public static class RunCommandManager
             ApplicationName.RDAP => Create(name, [], [Target(Strings.Query), type], types: [.. RDAPTypes.Keys]),
             ApplicationName.Whois => Create(name, [], [Target(Strings.Domain)]),
             ApplicationName.IPGeolocation => Create(name, ["geo"], [Target(Strings.Host)]),
-            ApplicationName.MDNSDiscovery => Create(name, ["mdns", "dnssd"], [Target(Strings.MDNSDiscovery_ServiceType)],
+            ApplicationName.MDNSDiscovery => Create(name, ["mdns", "dnssd"],
+                [Target(Strings.MDNSDiscovery_ServiceType), Argument(Strings.DurationS)], RunCommandArgument.Duration,
                 supportsProfile: false),
             ApplicationName.WakeOnLAN => Create(name, ["wol"], [Target(Strings.MACAddress), Argument(Strings.Broadcast)],
                 RunCommandArgument.Broadcast),

@@ -117,7 +117,7 @@ public sealed class MDNSDiscoveryViewModel : ViewModelBase
     /// <summary>
     ///     Gets the durations of a browse in seconds (0 = until stopped).
     /// </summary>
-    public IReadOnlyList<int> Durations { get; } = [10, 30, 60, 120, 300, 0];
+    public IReadOnlyList<int> Durations => MDNSBrowser.Durations;
 
     /// <summary>
     ///     Gets or sets the duration of a browse in seconds (0 = until stopped).
@@ -837,6 +837,10 @@ public sealed class MDNSDiscoveryViewModel : ViewModelBase
         await _browseTask;
 
         ServiceType = request.Target;
+
+        // Duration of the run command (e.g. "mdns printers 30"), otherwise the selected one
+        if (request is MDNSDiscoveryRequest { Duration: { } duration } && Durations.Contains(duration))
+            SelectedDuration = duration;
 
         if (request.Start)
             await (_browseTask = Browse());

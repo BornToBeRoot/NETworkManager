@@ -7,6 +7,7 @@ using NETworkManager.Settings;
 using NETworkManager.Utilities;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
@@ -453,7 +454,8 @@ public class RunCommandViewModel : ViewModelBase
                 Suggestions.FirstOrDefault(x => x.Kind == RunCommandSuggestionKind.ServiceTypeProfile),
             RunCommandPosition.Argument when _result.CurrentWord.Length > 0 =>
                 Suggestions.FirstOrDefault(x => x.Kind is RunCommandSuggestionKind.DNSServer
-                    or RunCommandSuggestionKind.PortProfile or RunCommandSuggestionKind.Type),
+                    or RunCommandSuggestionKind.PortProfile or RunCommandSuggestionKind.Duration
+                    or RunCommandSuggestionKind.Type),
             _ => null
         });
 
@@ -667,6 +669,7 @@ public class RunCommandViewModel : ViewModelBase
             _ =>
             [
                 .. GetDNSServerSuggestions().Take(MaxSuggestions), .. GetPortProfileSuggestions().Take(MaxSuggestions),
+                .. GetDurationSuggestions().Take(MaxSuggestions),
                 .. GetTypeSuggestions().Take(MaxSuggestions), .. GetHistorySuggestions().Take(MaxSuggestions)
             ]
         };
@@ -1158,6 +1161,18 @@ public class RunCommandViewModel : ViewModelBase
         return GetArgumentValueSuggestions(RunCommandArgument.DNSServer,
             RunCommandManager.GetDNSServers().Select(x => (x, Strings.DNSServer)), RunCommandSuggestionKind.DNSServer,
             Strings.DNSServers, isList: true);
+    }
+
+    /// <summary>
+    ///     Durations of the mDNS / DNS-SD tool (seconds, 0 = until stopped) that contain the typed word, if no duration
+    ///     was entered yet.
+    /// </summary>
+    private IEnumerable<RunCommandSuggestion> GetDurationSuggestions()
+    {
+        return GetArgumentValueSuggestions(RunCommandArgument.Duration,
+            RunCommandManager.GetMDNSDurations().Select(x => (x.ToString(CultureInfo.InvariantCulture),
+                x == 0 ? Strings.MDNSDiscovery_UntilStopped : Strings.DurationS)),
+            RunCommandSuggestionKind.Duration, Strings.DurationS);
     }
 
     /// <summary>
