@@ -34,18 +34,18 @@ public sealed class MDNSServiceInfo : PropertyChangedBase
         TTL = ttl;
     }
 
+    /// <summary>
+    ///     Takes the values of a newer snapshot. Only changed properties are raised: live filtering re-filters a row
+    ///     only for its filtered properties (not every second for the TTL countdown).
+    /// </summary>
     public void UpdateFrom(MDNSServiceInfo value)
     {
-        if (Hostname == value.Hostname && Port == value.Port && Priority == value.Priority && Weight == value.Weight &&
-            Addresses == value.Addresses && TXTRecords == value.TXTRecords && TTL == value.TTL)
-            return;
-        Hostname = value.Hostname;
-        Port = value.Port;
-        Priority = value.Priority;
-        Weight = value.Weight;
-        Addresses = value.Addresses;
-        TXTRecords = value.TXTRecords;
-        TTL = value.TTL;
-        OnPropertyChanged(string.Empty);
+        if (Hostname != value.Hostname) { Hostname = value.Hostname; OnPropertyChanged(nameof(Hostname)); }
+        if (Port != value.Port) { Port = value.Port; OnPropertyChanged(nameof(Port)); }
+        if (Priority != value.Priority) { Priority = value.Priority; OnPropertyChanged(nameof(Priority)); }
+        if (Weight != value.Weight) { Weight = value.Weight; OnPropertyChanged(nameof(Weight)); }
+        if (Addresses != value.Addresses) { Addresses = value.Addresses; OnPropertyChanged(nameof(Addresses)); }
+        if (TXTRecords != value.TXTRecords) { TXTRecords = value.TXTRecords; OnPropertyChanged(nameof(TXTRecords)); }
+        if (TTL != value.TTL) { TTL = value.TTL; OnPropertyChanged(nameof(TTL)); }
     }
 }

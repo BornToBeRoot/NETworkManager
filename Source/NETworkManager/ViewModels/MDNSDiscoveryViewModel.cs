@@ -41,17 +41,20 @@ public sealed class MDNSDiscoveryViewModel : ViewModelBase
         if (!MDNSServiceType.TryNormalize(ServiceType, out _))
             ServiceType = GlobalStaticConfiguration.MDNSDiscovery_ServiceType;
         Duration = Math.Clamp(SettingsManager.Current.MDNSDiscovery_Duration, 0, 3600);
-        _searchDelay = new SearchDelay(GlobalStaticConfiguration.SearchDispatcherTimerTimeSpan, () =>
-        {
-            ResultsView.Refresh();
-            RecordsView.Refresh();
-        });
+        _searchDelay = new SearchDelay(GlobalStaticConfiguration.SearchDispatcherTimerTimeSpan, ApplySearch);
         ResultsView = CollectionViewSource.GetDefaultView(Results);
         ResultsView.SortDescriptions.Add(new SortDescription(nameof(MDNSServiceInfo.ServiceType), ListSortDirection.Ascending));
         ResultsView.SortDescriptions.Add(new SortDescription(nameof(MDNSServiceInfo.Name), ListSortDirection.Ascending));
         ResultsView.Filter = value => value is MDNSServiceInfo item && (string.IsNullOrWhiteSpace(Search) ||
             new[] { item.Name, item.ServiceType, item.Hostname, item.Addresses, item.Port?.ToString(), item.TXTRecords }
                 .Any(x => x?.Contains(Search, StringComparison.OrdinalIgnoreCase) == true));
+        // Hostname, port, addresses and TXT records can arrive after the service was added - filter it again when
+        // they change. Only enabled while searching, see ApplySearch.
+        var liveShaping = (ICollectionViewLiveShaping)ResultsView;
+        liveShaping.LiveFilteringProperties.Add(nameof(MDNSServiceInfo.Hostname));
+        liveShaping.LiveFilteringProperties.Add(nameof(MDNSServiceInfo.Port));
+        liveShaping.LiveFilteringProperties.Add(nameof(MDNSServiceInfo.Addresses));
+        liveShaping.LiveFilteringProperties.Add(nameof(MDNSServiceInfo.TXTRecords));
         RecordsView = CollectionViewSource.GetDefaultView(Records);
         RecordsView.SortDescriptions.Add(new SortDescription(nameof(MDNSRecordInfo.Name), ListSortDirection.Ascending));
         RecordsView.SortDescriptions.Add(new SortDescription(nameof(MDNSRecordInfo.Type), ListSortDirection.Ascending));
@@ -247,8 +250,19 @@ public sealed class MDNSDiscoveryViewModel : ViewModelBase
                 Records.Add(value);
             }
         OnPropertyChanged(nameof(DisplayedResultCount));
-        // A late TXT/address record can make an existing row match the current search.
-        if (!string.IsNullOrWhiteSpace(Search)) ResultsView.Refresh();
+    }
+
+    private void ApplySearch()
+    {
+        // Live filtering only while searching (see the constructor)
+        var liveShaping = (ICollectionViewLiveShaping)ResultsView;
+        var isSearching = !string.IsNullOrEmpty(Search);
+
+        if (liveShaping.IsLiveFiltering != isSearching)
+            liveShaping.IsLiveFiltering = isSearching;
+
+        ResultsView.Refresh();
+        RecordsView.Refresh();
     }
 
     private void SetStatus(string text, StatusLevel level)
