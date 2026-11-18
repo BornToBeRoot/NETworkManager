@@ -40,7 +40,10 @@ public static class MDNSBrowser
                 ipv6 ? properties.GetIPv6Properties().Index : 0);
         }).Where(x => x.IPv4Address != null || x.IPv6Index != 0).OrderBy(x => x.Name).ToArray();
 
-    /// <summary>Browses until cancellation; reports detached snapshots from a worker thread every 250 ms.</summary>
+    /// <summary>
+    ///     Browses until cancellation. Reports detached snapshots from a worker thread, at most every 250 ms (when the
+    ///     cache changed) and once per second (TTL countdown).
+    /// </summary>
     public static async Task BrowseAsync(MDNSInterfaceInfo networkInterface, string serviceType,
         Action<MDNSDiscoverySnapshot> update, CancellationToken cancellationToken)
     {
@@ -79,6 +82,8 @@ public static class MDNSBrowser
             });
             receivers.AddRange(sockets.Select(x => ReceiveAsync(x.Socket, x.Index, packets.Writer, lifetime.Token)));
             using var timer = new PeriodicTimer(TimeSpan.FromMilliseconds(250));
+            var lastVersion = -1L;
+            var lastUpdate = DateTimeOffset.MinValue;
             do
             {
                 cancellationToken.ThrowIfCancellationRequested();
@@ -107,7 +112,15 @@ public static class MDNSBrowser
                         }
                     }
                 }
-                update(new MDNSDiscoverySnapshot(cache.GetServices(now), cache.GetRecords(now)));
+                // Only if something changed, or once per second for the TTL countdown
+                cache.Expire(now);
+
+                if (cache.Version != lastVersion || now - lastUpdate >= TimeSpan.FromSeconds(1))
+                {
+                    lastVersion = cache.Version;
+                    lastUpdate = now;
+                    update(new MDNSDiscoverySnapshot(cache.GetServices(now), cache.GetRecords(now)));
+                }
             } while (await timer.WaitForNextTickAsync(cancellationToken).ConfigureAwait(false));
         }
         finally

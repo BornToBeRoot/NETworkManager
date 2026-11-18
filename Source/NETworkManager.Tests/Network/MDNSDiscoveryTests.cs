@@ -129,6 +129,21 @@ public class MDNSDiscoveryTests
     }
 
     [Fact]
+    public void VersionChangesOnlyWhenTheCacheChanges()
+    {
+        var cache = new MDNSServiceCache(Type, "Ethernet");
+        cache.ProcessResponse(Packet(Ptr(2)), Now);
+        var version = cache.Version;
+        cache.ProcessResponse(Packet(Ptr(2)), Now.AddSeconds(1)); // announced again
+        Assert.Equal(version, cache.Version);
+        cache.ProcessResponse(Packet(Srv()), Now.AddSeconds(1));
+        Assert.NotEqual(version, version = cache.Version);
+        cache.Expire(Now.AddSeconds(3)); // PTR expired
+        Assert.NotEqual(version, cache.Version);
+        Assert.Empty(cache.GetServices(Now.AddSeconds(3)));
+    }
+
+    [Fact]
     public void IgnoresTheTruncatedBitOfResponses()
     {
         var packet = Packet(Ptr());

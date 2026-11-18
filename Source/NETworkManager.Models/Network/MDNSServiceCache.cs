@@ -22,6 +22,9 @@ public sealed class MDNSServiceCache
     private sealed record Entry(MDNSRecord Record, DateTimeOffset Received, DateTimeOffset Expires);
     private sealed record Question(DateTimeOffset Next, int Interval);
     private readonly Dictionary<string, Entry> _records = new(StringComparer.Ordinal);
+
+    // Keys of the records per RRset (lowercase name, type), so a cache flush doesn't search the whole cache per packet
+    private readonly Dictionary<(string Name, ushort Type), HashSet<string>> _rrsets = new();
     private readonly Dictionary<(string Name, ushort Type), Question> _questions = new();
     private readonly string _serviceType;
     private readonly string _networkInterface;
@@ -33,24 +36,77 @@ public sealed class MDNSServiceCache
         _networkInterface = networkInterface;
     }
 
+    /// <summary>
+    ///     Incremented when a record is added, replaced by a different value or removed (not when a record is only
+    ///     announced again). The browser creates a new snapshot only if it changed (or for the TTL countdown).
+    /// </summary>
+    public long Version { get; private set; }
+
     private static string Key(MDNSRecord record) => $"{record.Name.ToLowerInvariant()}|{record.Type}|{record.Identity}";
 
+    private static (string Name, ushort Type) RRset(MDNSRecord record) => (record.Name.ToLowerInvariant(), record.Type);
+
+    private void Set(string key, Entry entry)
+    {
+        if (_records.TryAdd(key, entry))
+        {
+            var rrset = RRset(entry.Record);
+
+            if (!_rrsets.TryGetValue(rrset, out var keys))
+                _rrsets[rrset] = keys = new HashSet<string>(StringComparer.Ordinal);
+
+            keys.Add(key);
+            Version++;
+
+            return;
+        }
+
+        // Same key = same owner, type and value; the flag can change
+        if (_records[key].Record.CacheFlush != entry.Record.CacheFlush)
+            Version++;
+
+        _records[key] = entry;
+    }
+
+    private void Remove(string key)
+    {
+        if (!_records.Remove(key, out var entry))
+            return;
+
+        var rrset = RRset(entry.Record);
+
+        if (_rrsets.TryGetValue(rrset, out var keys) && keys.Remove(key) && keys.Count == 0)
+            _rrsets.Remove(rrset);
+
+        Version++;
+    }
+
+    /// <summary>
+    ///     Adds the records of a response. Expired records are removed by the Get methods (once per tick of the browser,
+    ///     not per packet).
+    /// </summary>
     public void ProcessResponse(byte[] message, DateTimeOffset now, long ipv6ScopeId = 0)
     {
-        Expire(now);
         // The Records view also keeps reverse names and other owners seen on the link. Service browsing and
         // follow-up questions remain restricted to the requested local DNS-SD service types.
         var records = MDNSMessage.ReadResponse(message, ipv6ScopeId);
 
         // A cache-flush RRset may span packets. Give older values one second's grace, and preserve values just
         // received in the same second (RFC 6762 section 10.2); a goodbye is also held for one second.
-        foreach (var group in records.Where(x => x.CacheFlush && x.TTL > 0).GroupBy(x => (x.Name.ToLowerInvariant(), x.Type)))
+        foreach (var group in records.Where(x => x.CacheFlush && x.TTL > 0).GroupBy(RRset))
         {
+            if (!_rrsets.TryGetValue(group.Key, out var cached))
+                continue;
+
             var keys = group.Select(Key).ToHashSet(StringComparer.Ordinal);
-            foreach (var old in _records.Where(x => x.Value.Record.Name.Equals(group.Key.Item1, StringComparison.OrdinalIgnoreCase) &&
-                         x.Value.Record.Type == group.Key.Type && !keys.Contains(x.Key) &&
-                         now - x.Value.Received >= TimeSpan.FromSeconds(1)).ToArray())
-                _records[old.Key] = old.Value with { Expires = Min(old.Value.Expires, now.AddSeconds(1)) };
+
+            foreach (var key in cached.Where(x => !keys.Contains(x)).ToArray())
+            {
+                var old = _records[key];
+
+                if (now - old.Received >= TimeSpan.FromSeconds(1))
+                    _records[key] = old with { Expires = Min(old.Expires, now.AddSeconds(1)) };
+            }
         }
 
         foreach (var record in records)
@@ -62,16 +118,17 @@ public sealed class MDNSServiceCache
                     _records[key] = entry with { Expires = Min(entry.Expires, now.AddSeconds(1)) };
             }
             else if (_records.ContainsKey(key) || _records.Count < 4096)
-                _records[key] = new Entry(record, now, now.AddSeconds(record.TTL));
+                Set(key, new Entry(record, now, now.AddSeconds(record.TTL)));
         }
     }
 
     private static DateTimeOffset Min(DateTimeOffset first, DateTimeOffset second) => first < second ? first : second;
 
-    private void Expire(DateTimeOffset now)
+    /// <summary>Removes the expired records (also done by the Get methods).</summary>
+    public void Expire(DateTimeOffset now)
     {
         foreach (var key in _records.Where(x => x.Value.Expires <= now).Select(x => x.Key).ToArray())
-            _records.Remove(key);
+            Remove(key);
     }
 
     private IEnumerable<Entry> Instances => _records.Values.Where(x => x.Record.Type == MDNSMessage.PTR &&
