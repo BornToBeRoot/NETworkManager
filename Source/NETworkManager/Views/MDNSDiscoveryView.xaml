@@ -1,54 +1,99 @@
 <UserControl x:Class="NETworkManager.Views.MDNSDiscoveryView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:networkManager="clr-namespace:NETworkManager"
+             xmlns:mahappsControls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+             xmlns:icons="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls"
              xmlns:controls="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls"
+             xmlns:internalControls="clr-namespace:NETworkManager.Controls"
+             xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
              xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
              xmlns:validators="clr-namespace:NETworkManager.Validators;assembly=NETworkManager.Validators"
-             xmlns:helpers="clr-namespace:NETworkManager.Utilities.WPF;assembly=NETworkManager.Utilities.WPF"
-             xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters">
+             xmlns:wpfHelpers="clr-namespace:NETworkManager.Utilities.WPF;assembly=NETworkManager.Utilities.WPF"
+             xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
+             mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:MDNSDiscoveryViewModel}">
     <UserControl.Resources>
         <converters:BooleanReverseConverter x:Key="BooleanReverseConverter" />
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
-        <helpers:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
-        <Style x:Key="MonoValue" TargetType="TextBlock" BasedOn="{StaticResource DefaultTextBlock}">
+        <wpfHelpers:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
+        <Style x:Key="MonoValue" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DefaultTextBlock}">
             <Setter Property="FontFamily" Value="{StaticResource Fonts.Family.Mono}" />
         </Style>
-        <Style x:Key="RecordValue" TargetType="TextBlock" BasedOn="{StaticResource MonoValue}">
+        <Style x:Key="RecordValue" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource MonoValue}">
             <Setter Property="TextWrapping" Value="NoWrap" />
             <Setter Property="TextTrimming" Value="CharacterEllipsis" />
             <Setter Property="ToolTip" Value="{Binding Value}" />
         </Style>
-        <ContextMenu x:Key="RowContextMenu" DataContext="{Binding Data, Source={StaticResource BindingProxy}}" MinWidth="150">
-            <MenuItem Header="{x:Static localization:Strings.CopyDots}" Style="{StaticResource CopyMenuItem}">
-                <MenuItem Header="{x:Static localization:Strings.Name}" Style="{StaticResource CopyMenuItem}"
-                          Command="{Binding CopyDataToClipboardCommand}" CommandParameter="{Binding SelectedResult.FullName}" />
-                <MenuItem Header="{x:Static localization:Strings.Hostname}" Style="{StaticResource CopyMenuItem}"
-                          Command="{Binding CopyDataToClipboardCommand}" CommandParameter="{Binding SelectedResult.Hostname}" />
-                <MenuItem Header="{x:Static localization:Strings.MDNSDiscovery_ServiceType}" Style="{StaticResource CopyMenuItem}"
-                          Command="{Binding CopyDataToClipboardCommand}" CommandParameter="{Binding SelectedResult.ServiceType}" />
-                <MenuItem Header="{x:Static localization:Strings.Port}" Style="{StaticResource CopyMenuItem}" Command="{Binding CopyPortCommand}" />
-                <MenuItem Header="{x:Static localization:Strings.IPAddresses}" Style="{StaticResource CopyMenuItem}"
-                          Command="{Binding CopyDataToClipboardCommand}" CommandParameter="{Binding SelectedResult.Addresses}" />
-                <MenuItem Header="{x:Static localization:Strings.MDNSDiscovery_TXTRecords}" Style="{StaticResource CopyMenuItem}"
-                          Command="{Binding CopyDataToClipboardCommand}" CommandParameter="{Binding SelectedResult.TXTRecords}" />
-                <MenuItem Header="{x:Static localization:Strings.Details}" Style="{StaticResource CopyMenuItem}"
-                          Command="{Binding CopySelectionCommand}" />
+        <ContextMenu x:Key="ServiceContextMenu" DataContext="{Binding Data, Source={StaticResource BindingProxy}}"
+                     MinWidth="150">
+            <MenuItem Header="{x:Static localization:Strings.CopyDots}">
+                <MenuItem.Icon>
+                    <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                        <Rectangle.OpacityMask>
+                            <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=Copy}" />
+                        </Rectangle.OpacityMask>
+                    </Rectangle>
+                </MenuItem.Icon>
+                <MenuItem Header="{x:Static localization:Strings.Name}"
+                          Command="{Binding CopySelectedResultsCommand}" CommandParameter="Name"
+                          Style="{StaticResource CopyMenuItem}" />
+                <MenuItem Header="{x:Static localization:Strings.MDNSDiscovery_ServiceType}"
+                          Command="{Binding CopySelectedResultsCommand}" CommandParameter="ServiceType"
+                          Style="{StaticResource CopyMenuItem}" />
+                <MenuItem Header="{x:Static localization:Strings.Hostname}"
+                          Command="{Binding CopySelectedResultsCommand}" CommandParameter="Hostname"
+                          Style="{StaticResource CopyMenuItem}" />
+                <MenuItem Header="{x:Static localization:Strings.Port}"
+                          Command="{Binding CopySelectedResultsCommand}" CommandParameter="Port"
+                          Style="{StaticResource CopyMenuItem}" />
+                <MenuItem Header="{x:Static localization:Strings.IPAddresses}"
+                          Command="{Binding CopySelectedResultsCommand}" CommandParameter="Addresses"
+                          Style="{StaticResource CopyMenuItem}" />
+                <MenuItem Header="{x:Static localization:Strings.MDNSDiscovery_TXTRecords}"
+                          Command="{Binding CopySelectedResultsCommand}" CommandParameter="TXTRecords"
+                          Style="{StaticResource CopyMenuItem}" />
+                <MenuItem Header="{x:Static localization:Strings.Details}"
+                          Command="{Binding CopySelectedResultsCommand}" CommandParameter="Details"
+                          Style="{StaticResource CopyMenuItem}" />
             </MenuItem>
             <MenuItem Header="{x:Static localization:Strings.ExportDots}" Command="{Binding ExportCommand}">
                 <MenuItem.Icon>
                     <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
-                        <Rectangle.OpacityMask><VisualBrush Stretch="Uniform" Visual="{controls:Lucide Kind=FileOutput}" /></Rectangle.OpacityMask>
+                        <Rectangle.OpacityMask>
+                            <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=FileOutput}" />
+                        </Rectangle.OpacityMask>
                     </Rectangle>
                 </MenuItem.Icon>
             </MenuItem>
         </ContextMenu>
-        <ContextMenu x:Key="MultiRowContextMenu" DataContext="{Binding Data, Source={StaticResource BindingProxy}}" MinWidth="150">
-            <MenuItem Header="{x:Static localization:Strings.Copy}" Style="{StaticResource CopyMenuItem}" Command="{Binding CopySelectionCommand}" />
+        <ContextMenu x:Key="RecordContextMenu" DataContext="{Binding Data, Source={StaticResource BindingProxy}}"
+                     MinWidth="150">
+            <MenuItem Header="{x:Static localization:Strings.CopyDots}">
+                <MenuItem.Icon>
+                    <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                        <Rectangle.OpacityMask>
+                            <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=Copy}" />
+                        </Rectangle.OpacityMask>
+                    </Rectangle>
+                </MenuItem.Icon>
+                <MenuItem Header="{x:Static localization:Strings.Name}"
+                          Command="{Binding CopySelectedRecordsCommand}" CommandParameter="Name"
+                          Style="{StaticResource CopyMenuItem}" />
+                <MenuItem Header="{x:Static localization:Strings.Value}"
+                          Command="{Binding CopySelectedRecordsCommand}" CommandParameter="Value"
+                          Style="{StaticResource CopyMenuItem}" />
+                <MenuItem Header="{x:Static localization:Strings.Details}"
+                          Command="{Binding CopySelectedRecordsCommand}" CommandParameter="Details"
+                          Style="{StaticResource CopyMenuItem}" />
+            </MenuItem>
             <MenuItem Header="{x:Static localization:Strings.ExportDots}" Command="{Binding ExportCommand}">
                 <MenuItem.Icon>
                     <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
-                        <Rectangle.OpacityMask><VisualBrush Stretch="Uniform" Visual="{controls:Lucide Kind=FileOutput}" /></Rectangle.OpacityMask>
+                        <Rectangle.OpacityMask>
+                            <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=FileOutput}" />
+                        </Rectangle.OpacityMask>
                     </Rectangle>
                 </MenuItem.Icon>
             </MenuItem>
@@ -59,169 +104,383 @@
             <Grid Margin="10">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
-                    <RowDefinition Height="10" />
                     <RowDefinition Height="Auto" />
-                    <RowDefinition Height="10" />
                     <RowDefinition Height="Auto" />
-                    <RowDefinition Height="10" />
+                    <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
-                    <RowDefinition Height="10" />
-                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" /><ColumnDefinition Width="10" />
-                        <ColumnDefinition Width="*" /><ColumnDefinition Width="10" /><ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
-                    <TextBlock Text="{x:Static localization:Strings.NetworkInterface}" Style="{StaticResource DefaultTextBlock}" VerticalAlignment="Center" />
-                    <ComboBox Grid.Column="2" ItemsSource="{Binding Interfaces}" SelectedItem="{Binding SelectedInterface}"
-                              DisplayMemberPath="Name" Style="{StaticResource DefaultComboBox}"
-                              IsReadOnly="{Binding IsRunning}" controls:ComboBoxReadOnlyBehavior.PreventSelectionWhenReadOnly="True" />
-                    <Button Grid.Column="4" Command="{Binding RefreshInterfacesCommand}" Style="{StaticResource CleanButton}" ToolTip="{x:Static localization:Strings.Refresh}">
-                        <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
-                            <Rectangle.OpacityMask><VisualBrush Stretch="Uniform" Visual="{controls:Lucide Kind=RefreshCw}" /></Rectangle.OpacityMask>
-                        </Rectangle>
-                    </Button>
-                </Grid>
-                <Grid Grid.Row="2">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" /><ColumnDefinition Width="10" /><ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="10" /><ColumnDefinition Width="Auto" /><ColumnDefinition Width="10" />
-                        <ColumnDefinition Width="100" /><ColumnDefinition Width="10" /><ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
-                    <TextBlock Text="{x:Static localization:Strings.MDNSDiscovery_ServiceType}" Style="{StaticResource DefaultTextBlock}" VerticalAlignment="Center" />
-                    <ComboBox x:Name="ServiceTypeInput" Grid.Column="2" IsEditable="True" ItemsSource="{Binding ServiceTypes}" FontFamily="{StaticResource Fonts.Family.Mono}"
-                              Style="{StaticResource DefaultComboBox}" IsReadOnly="{Binding IsRunning}" controls:ComboBoxReadOnlyBehavior.PreventSelectionWhenReadOnly="True"
-                              ToolTipService.ShowDuration="30000">
-                        <ComboBox.ToolTip><ToolTip Content="{x:Static localization:Strings.MDNSDiscovery_ServiceTypeHelp}" Style="{StaticResource WrapToolTip}" /></ComboBox.ToolTip>
-                        <ComboBox.Text>
-                            <Binding Path="ServiceType" UpdateSourceTrigger="PropertyChanged">
-                                <Binding.ValidationRules><validators:MDNSServiceTypeValidator /></Binding.ValidationRules>
-                            </Binding>
-                        </ComboBox.Text>
-                    </ComboBox>
-                    <TextBlock Grid.Column="4" Text="{x:Static localization:Strings.DurationS}" Style="{StaticResource DefaultTextBlock}" VerticalAlignment="Center" />
-                    <mah:NumericUpDown Grid.Column="6" Value="{Binding Duration}" Minimum="0" Maximum="3600" Interval="1"
-                                       NumericInputMode="Numbers" IsReadOnly="{Binding IsRunning}">
-                        <mah:NumericUpDown.ToolTip><ToolTip Content="{x:Static localization:Strings.MDNSDiscovery_DurationHelp}" Style="{StaticResource WrapToolTip}" /></mah:NumericUpDown.ToolTip>
-                    </mah:NumericUpDown>
-                    <Button Grid.Column="8" Command="{Binding BrowseCommand}" IsCancel="{Binding IsRunning}"
-                            IsDefault="{Binding IsRunning, Converter={StaticResource BooleanReverseConverter}}">
-                        <Button.Style>
-                            <Style TargetType="Button" BasedOn="{StaticResource HighlightedButton}">
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding ElementName=ServiceTypeInput, Path=(Validation.HasError)}" Value="True">
-                                        <Setter Property="IsEnabled" Value="False" />
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Button.Style>
-                        <StackPanel Orientation="Horizontal">
-                            <Rectangle Width="16" Height="16" Fill="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}" Margin="0,0,10,0">
-                                <Rectangle.Resources>
-                                    <VisualBrush x:Key="BrowseIcon" Stretch="Uniform" Visual="{controls:Lucide Kind=Radar}" />
-                                    <VisualBrush x:Key="StopIcon" Stretch="Uniform" Visual="{controls:Lucide Kind=X}" />
-                                </Rectangle.Resources>
+                <TextBlock Grid.Row="0" Style="{StaticResource HeaderTextBlock}"
+                           Text="{x:Static localization:Strings.MDNSDiscovery_Browse}" />
+                <Grid Grid.Row="1" Margin="0,0,0,20">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <!-- One row: interface (+ reload), service type, duration and Browse / Stop -->
+                    <Grid Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="10" />
+                            <ColumnDefinition Width="2*" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="10" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="10" />
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="10" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="10" />
+                            <ColumnDefinition Width="Auto" MinWidth="120" />
+                            <ColumnDefinition Width="10" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0"
+                                   Text="{x:Static localization:Strings.Interface}"
+                                   Style="{StaticResource DefaultTextBlock}"
+                                   VerticalAlignment="Center" />
+                        <ComboBox x:Name="ComboBoxInterface" Grid.Column="2"
+                                  ItemsSource="{Binding Interfaces}"
+                                  SelectedItem="{Binding SelectedInterface}"
+                                  DisplayMemberPath="Name"
+                                  IsReadOnly="{Binding IsRunning}"
+                                  controls:ComboBoxReadOnlyBehavior.PreventSelectionWhenReadOnly="True"
+                                  Style="{StaticResource DefaultComboBox}" />
+                        <Button Grid.Column="3"
+                                Width="{Binding RelativeSource={RelativeSource Mode=Self}, Path=ActualHeight}"
+                                Height="{Binding ElementName=ComboBoxInterface, Path=ActualHeight}"
+                                Command="{Binding RefreshInterfacesCommand}"
+                                Style="{StaticResource CleanButton}"
+                                ToolTip="{x:Static localization:Strings.Refresh}"
+                                Margin="10,0,0,0">
+                            <Rectangle Width="16" Height="16">
+                                <Rectangle.OpacityMask>
+                                    <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=RefreshCw}" />
+                                </Rectangle.OpacityMask>
                                 <Rectangle.Style>
-                                    <Style TargetType="Rectangle">
-                                        <Setter Property="OpacityMask" Value="{StaticResource BrowseIcon}" />
-                                        <Style.Triggers><DataTrigger Binding="{Binding IsRunning}" Value="True"><Setter Property="OpacityMask" Value="{StaticResource StopIcon}" /></DataTrigger></Style.Triggers>
+                                    <Style TargetType="{x:Type Rectangle}">
+                                        <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
+                                        <Style.Triggers>
+                                            <DataTrigger
+                                                Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}"
+                                                Value="True">
+                                                <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray5}" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
                                     </Style>
                                 </Rectangle.Style>
                             </Rectangle>
-                            <TextBlock Text="{Binding BrowseButtonText}" />
-                        </StackPanel>
-                    </Button>
-                </Grid>
-                <controls:StatusMessageText Grid.Row="4" Text="{Binding StatusMessage}" Level="{Binding StatusMessageLevel}" />
-                <Grid Grid.Row="6">
-                    <Grid.RowDefinitions><RowDefinition Height="Auto" /><RowDefinition Height="10" /><RowDefinition Height="*" /></Grid.RowDefinitions>
-                    <TextBlock Text="{x:Static localization:Strings.Result}" Style="{StaticResource HeaderTextBlock}" VerticalAlignment="Center" />
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                        <mah:ProgressRing IsActive="{Binding IsRunning}" Style="{StaticResource ProgressRingSmall}" Margin="0,0,10,0" />
-                        <TextBlock Text="{Binding DisplayedResultCount}" Style="{StaticResource DefaultTextBlock}" VerticalAlignment="Center" Margin="0,0,10,0" />
-                        <TextBox Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" Width="250" Style="{StaticResource SearchTextBox}"
-                                 helpers:SearchTextBoxHelper.EnterCommand="{Binding ApplySearchCommand}" />
-                    </StackPanel>
-                    <TabControl Grid.Row="2" SelectedIndex="{Binding SelectedTabIndex}" Style="{StaticResource DefaultTabControl}">
-                        <TabItem Header="{x:Static localization:Strings.MDNSDiscovery_Services}">
-                            <Grid>
-                    <controls:MultiSelectDataGrid x:Name="ResultsGrid" ItemsSource="{Binding ResultsView}"
-                                                  SelectedItem="{Binding SelectedResult}" SelectedItemsList="{Binding SelectedResults}"
-                                                  helpers:DataGridHelper.FillRemainingWidth="True" RowDetailsVisibilityMode="VisibleWhenSelected">
-                        <controls:MultiSelectDataGrid.Style>
-                            <Style TargetType="controls:MultiSelectDataGrid" BasedOn="{StaticResource DefaultDataGrid}">
-                                <Setter Property="ContextMenu" Value="{StaticResource MultiRowContextMenu}" />
+                        </Button>
+                        <TextBlock Grid.Column="5"
+                                   Text="{x:Static localization:Strings.MDNSDiscovery_ServiceType}"
+                                   Style="{StaticResource DefaultTextBlock}"
+                                   VerticalAlignment="Center" />
+                        <ComboBox x:Name="ComboBoxServiceType" Grid.Column="7"
+                                  IsEditable="True"
+                                  ItemsSource="{Binding ServiceTypes}"
+                                  FontFamily="{StaticResource Fonts.Family.Mono}"
+                                  IsReadOnly="{Binding IsRunning}"
+                                  controls:ComboBoxReadOnlyBehavior.PreventSelectionWhenReadOnly="True"
+                                  Style="{StaticResource DefaultComboBox}"
+                                  ToolTipService.ShowDuration="30000">
+                            <ComboBox.ToolTip>
+                                <ToolTip Content="{x:Static localization:Strings.MDNSDiscovery_ServiceTypeHelp}"
+                                         Style="{StaticResource WrapToolTip}" />
+                            </ComboBox.ToolTip>
+                            <ComboBox.Text>
+                                <Binding Path="ServiceType" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                    <Binding.ValidationRules>
+                                        <validators:MDNSServiceTypeValidator ValidatesOnTargetUpdated="True" />
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </ComboBox.Text>
+                        </ComboBox>
+                        <TextBlock Grid.Column="9"
+                                   Text="{x:Static localization:Strings.DurationS}"
+                                   Style="{StaticResource DefaultTextBlock}"
+                                   VerticalAlignment="Center" />
+                        <!-- Like the Discovery Protocol; 0 = until stopped -->
+                        <ComboBox Grid.Column="11"
+                                  ItemsSource="{Binding Durations}"
+                                  SelectedItem="{Binding SelectedDuration}"
+                                  IsReadOnly="{Binding IsRunning}"
+                                  controls:ComboBoxReadOnlyBehavior.PreventSelectionWhenReadOnly="True"
+                                  Style="{StaticResource DefaultComboBox}">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock>
+                                        <TextBlock.Style>
+                                            <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DefaultTextBlock}">
+                                                <Setter Property="Text" Value="{Binding}" />
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding}" Value="0">
+                                                        <Setter Property="Text"
+                                                                Value="{x:Static localization:Strings.MDNSDiscovery_UntilStopped}" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                        <Button Grid.Column="13" Command="{Binding BrowseCommand}"
+                                IsDefault="{Binding IsRunning, Converter={StaticResource BooleanReverseConverter}}"
+                                IsCancel="{Binding IsRunning}" HorizontalAlignment="Right">
+                            <Button.Resources>
+                                <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
+                                    <Setter Property="IsEnabled" Value="True" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding ElementName=ComboBoxServiceType, Path=(Validation.HasError)}"
+                                                     Value="True">
+                                            <Setter Property="IsEnabled" Value="False" />
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding IsCanceling}" Value="True">
+                                            <Setter Property="IsEnabled" Value="False" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Resources>
+                            <Button.Content>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Rectangle>
+                                        <Rectangle.Resources>
+                                            <VisualBrush x:Key="VisualControlPlay" Stretch="Uniform"
+                                                         Visual="{icons:Lucide Kind=Play}" />
+                                            <VisualBrush x:Key="VisualClose" Stretch="Uniform"
+                                                         Visual="{icons:Lucide Kind=X}" />
+                                        </Rectangle.Resources>
+                                        <Rectangle.Style>
+                                            <Style TargetType="{x:Type Rectangle}"
+                                                   BasedOn="{StaticResource ButtonWithImageRectangle}">
+                                                <Setter Property="OpacityMask" Value="{StaticResource VisualControlPlay}" />
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding IsRunning}" Value="True">
+                                                        <Setter Property="OpacityMask" Value="{StaticResource VisualClose}" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Rectangle.Style>
+                                    </Rectangle>
+                                    <TextBlock Grid.Column="1">
+                                        <TextBlock.Style>
+                                            <Style TargetType="{x:Type TextBlock}"
+                                                   BasedOn="{StaticResource ButtonWithImageTextBlock}">
+                                                <Setter Property="Text" Value="{x:Static localization:Strings.MDNSDiscovery_Browse}" />
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding IsRunning}" Value="True">
+                                                        <Setter Property="Text" Value="{x:Static localization:Strings.Stop}" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                </Grid>
+                            </Button.Content>
+                        </Button>
+                    </Grid>
+                    <!-- Progress of the duration (until stopped / stopping: indeterminate) -->
+                    <mahappsControls:MetroProgressBar Grid.Row="1" Margin="0,10,0,0"
+                                                      Maximum="{Binding BrowseDuration}"
+                                                      networkManager:SmoothProgress.Value="{Binding SecondsElapsed}"
+                                                      Visibility="{Binding IsRunning, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+                        <mahappsControls:MetroProgressBar.Style>
+                            <Style TargetType="{x:Type mahappsControls:MetroProgressBar}"
+                                   BasedOn="{StaticResource DefaultMetroProgressBar}">
+                                <Setter Property="IsIndeterminate" Value="False" />
                                 <Style.Triggers>
-                                    <DataTrigger Binding="{Binding SelectedItems.Count, RelativeSource={RelativeSource Self}}" Value="0">
-                                        <Setter Property="ContextMenu" Value="{x:Null}" />
+                                    <DataTrigger Binding="{Binding BrowseDuration}" Value="0">
+                                        <Setter Property="IsIndeterminate" Value="True" />
                                     </DataTrigger>
-                                    <DataTrigger Binding="{Binding SelectedItems.Count, RelativeSource={RelativeSource Self}}" Value="1">
-                                        <Setter Property="ContextMenu" Value="{StaticResource RowContextMenu}" />
+                                    <DataTrigger Binding="{Binding IsCanceling}" Value="True">
+                                        <Setter Property="IsIndeterminate" Value="True" />
                                     </DataTrigger>
                                 </Style.Triggers>
                             </Style>
-                        </controls:MultiSelectDataGrid.Style>
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Header="{x:Static localization:Strings.Name}" Binding="{Binding Name}" Width="220" />
-                            <DataGridTextColumn Header="{x:Static localization:Strings.MDNSDiscovery_ServiceType}" Binding="{Binding ServiceType}" Width="200" ElementStyle="{StaticResource MonoValue}" />
-                            <DataGridTextColumn Header="{x:Static localization:Strings.Hostname}" Binding="{Binding Hostname}" Width="200" ElementStyle="{StaticResource MonoValue}" />
-                            <DataGridTextColumn Header="{x:Static localization:Strings.Port}" Binding="{Binding Port}" Width="70" ElementStyle="{StaticResource MonoValue}" />
-                            <DataGridTextColumn Header="{x:Static localization:Strings.IPAddresses}" Binding="{Binding Addresses}" Width="220" ElementStyle="{StaticResource MonoValue}" />
-                            <DataGridTextColumn Header="{x:Static localization:Strings.TTL}" Binding="{Binding TTL}" Width="70" ElementStyle="{StaticResource MonoValue}" />
-                        </DataGrid.Columns>
-                        <DataGrid.RowDetailsTemplate>
-                            <DataTemplate>
-                                <StackPanel Margin="10">
-                                    <TextBlock Text="{Binding FullName}" Style="{StaticResource MonoValue}" TextWrapping="Wrap" Margin="0,0,0,10" />
-                                    <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
-                                        <TextBlock Text="{x:Static localization:Strings.MDNSDiscovery_Priority}" Style="{StaticResource DefaultTextBlock}" Margin="0,0,10,0" />
-                                        <TextBlock Text="{Binding Priority}" Style="{StaticResource MonoValue}" Margin="0,0,20,0" />
-                                        <TextBlock Text="{x:Static localization:Strings.MDNSDiscovery_Weight}" Style="{StaticResource DefaultTextBlock}" Margin="0,0,10,0" />
-                                        <TextBlock Text="{Binding Weight}" Style="{StaticResource MonoValue}" />
-                                    </StackPanel>
-                                    <TextBlock Text="{x:Static localization:Strings.MDNSDiscovery_TXTRecords}" Style="{StaticResource HeaderTextBlock}" Margin="0,0,0,10" />
-                                    <TextBox Text="{Binding TXTRecords, Mode=OneWay}" IsReadOnly="True" TextWrapping="Wrap" MaxHeight="250"
-                                             FontFamily="{StaticResource Fonts.Family.Mono}" VerticalScrollBarVisibility="Auto" />
-                                </StackPanel>
-                            </DataTemplate>
-                        </DataGrid.RowDetailsTemplate>
-                    </controls:MultiSelectDataGrid>
-                    <controls:EmptyStateMessage Icon="SatelliteDish" Text="{x:Static localization:Strings.MDNSDiscovery_Empty}">
-                        <controls:EmptyStateMessage.Style>
-                            <Style TargetType="controls:EmptyStateMessage" BasedOn="{StaticResource DefaultEmptyStateMessage}">
-                                <Setter Property="Visibility" Value="Collapsed" />
-                                <Style.Triggers><DataTrigger Binding="{Binding Results.Count}" Value="0"><Setter Property="Visibility" Value="Visible" /></DataTrigger></Style.Triggers>
-                            </Style>
-                        </controls:EmptyStateMessage.Style>
-                    </controls:EmptyStateMessage>
-                            </Grid>
-                        </TabItem>
-                        <TabItem Header="{x:Static localization:Strings.MDNSDiscovery_Records}">
-                            <Grid>
-                                <controls:MultiSelectDataGrid ItemsSource="{Binding RecordsView}" SelectedItemsList="{Binding SelectedRecords}"
-                                                              helpers:DataGridHelper.FillRemainingWidth="True" ContextMenu="{StaticResource MultiRowContextMenu}">
-                                    <DataGrid.Columns>
-                                        <DataGridTextColumn Header="{x:Static localization:Strings.Name}" Binding="{Binding Name}" Width="270" ElementStyle="{StaticResource MonoValue}" />
-                                        <DataGridTextColumn Header="{x:Static localization:Strings.Type}" Binding="{Binding Type}" Width="80" ElementStyle="{StaticResource MonoValue}" />
-                                        <DataGridTextColumn Header="{x:Static localization:Strings.Class}" Binding="{Binding Class}" Width="60" ElementStyle="{StaticResource MonoValue}" />
-                                        <DataGridTextColumn Header="{x:Static localization:Strings.TTL}" Binding="{Binding TTL}" Width="70" ElementStyle="{StaticResource MonoValue}" />
-                                        <DataGridTextColumn Header="{x:Static localization:Strings.Value}" Binding="{Binding Value}" Width="350" MinWidth="200" ElementStyle="{StaticResource RecordValue}" />
-                                    </DataGrid.Columns>
-                                </controls:MultiSelectDataGrid>
-                                <controls:EmptyStateMessage Icon="SatelliteDish" Text="{x:Static localization:Strings.MDNSDiscovery_NoRecords}">
-                                    <controls:EmptyStateMessage.Style>
-                                        <Style TargetType="controls:EmptyStateMessage" BasedOn="{StaticResource DefaultEmptyStateMessage}">
-                                            <Setter Property="Visibility" Value="Collapsed" />
-                                            <Style.Triggers><DataTrigger Binding="{Binding Records.Count}" Value="0"><Setter Property="Visibility" Value="Visible" /></DataTrigger></Style.Triggers>
-                                        </Style>
-                                    </controls:EmptyStateMessage.Style>
-                                </controls:EmptyStateMessage>
-                            </Grid>
-                        </TabItem>
-                    </TabControl>
+                        </mahappsControls:MetroProgressBar.Style>
+                    </mahappsControls:MetroProgressBar>
+                    <icons:StatusMessageText Grid.Row="2" Margin="0,10,0,0"
+                                             Level="{Binding StatusMessageLevel}"
+                                             Text="{Binding StatusMessage}"
+                                             Visibility="{Binding IsStatusMessageDisplayed, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
                 </Grid>
-                <Button Grid.Row="8" HorizontalAlignment="Left" Command="{Binding ExportCommand}" Content="{x:Static localization:Strings.ExportDots}" Style="{StaticResource DefaultButton}" />
+                <!-- Header of the result: "Last scan at" and search -->
+                <Grid Grid.Row="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0"
+                               Style="{StaticResource HeaderTextBlock}"
+                               Text="{x:Static localization:Strings.Result}" />
+                    <internalControls:RefreshStatusControl Grid.Column="1"
+                                                           LastRefreshTime="{Binding LastScanTime}"
+                                                           LastRefreshFormat="{x:Static localization:Strings.LastScanAtX}"
+                                                           IsRefreshing="{Binding IsRunning}"
+                                                           HorizontalAlignment="Right"
+                                                           Margin="20,0,0,0" />
+                    <TextBox Grid.Column="2"
+                             Width="250"
+                             Margin="20,0,0,0"
+                             VerticalAlignment="Center"
+                             Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}"
+                             wpfHelpers:SearchTextBoxHelper.EnterCommand="{Binding ApplySearchCommand}"
+                             Style="{StaticResource SearchTextBox}" />
+                </Grid>
+                <!-- Counters (once a browse was started) -->
+                <StackPanel Grid.Row="3"
+                            Orientation="Horizontal"
+                            Margin="0,0,0,10"
+                            Visibility="{Binding IsBrowsed, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+                    <TextBlock Style="{StaticResource DefaultTextBlock}"
+                               Foreground="{DynamicResource MahApps.Brushes.Gray5}">
+                        <TextBlock.Text>
+                            <Binding Path="Results.Count" StringFormat="{x:Static localization:Strings.MDNSDiscovery_XServices}" />
+                        </TextBlock.Text>
+                    </TextBlock>
+                    <TextBlock Text="·"
+                               Style="{StaticResource DefaultTextBlock}"
+                               Foreground="{DynamicResource MahApps.Brushes.Gray5}"
+                               Margin="6,0,6,0" />
+                    <TextBlock Style="{StaticResource DefaultTextBlock}"
+                               Foreground="{DynamicResource MahApps.Brushes.Gray5}">
+                        <TextBlock.Text>
+                            <Binding Path="Records.Count" StringFormat="{x:Static localization:Strings.MDNSDiscovery_XRecords}" />
+                        </TextBlock.Text>
+                    </TextBlock>
+                </StackPanel>
+                <TabControl Grid.Row="4" SelectedIndex="{Binding SelectedResultTabIndex}"
+                            Style="{StaticResource DefaultTabControl}">
+                    <TabItem Header="{x:Static localization:Strings.MDNSDiscovery_Services}">
+                        <Grid>
+                            <controls:MultiSelectDataGrid ItemsSource="{Binding ResultsView}"
+                                                          SelectedItem="{Binding SelectedResult}"
+                                                          SelectedItemsList="{Binding SelectedResults, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                          RowDetailsVisibilityMode="VisibleWhenSelected"
+                                                          wpfHelpers:DataGridHelper.FillRemainingWidth="True">
+                                <controls:MultiSelectDataGrid.RowStyle>
+                                    <Style TargetType="{x:Type DataGridRow}" BasedOn="{StaticResource MahApps.Styles.DataGridRow}">
+                                        <Setter Property="ContextMenu" Value="{StaticResource ServiceContextMenu}" />
+                                    </Style>
+                                </controls:MultiSelectDataGrid.RowStyle>
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="{x:Static localization:Strings.Name}"
+                                                        Binding="{Binding Name}" Width="220" />
+                                    <DataGridTextColumn Header="{x:Static localization:Strings.MDNSDiscovery_ServiceType}"
+                                                        Binding="{Binding ServiceType}" Width="200"
+                                                        ElementStyle="{StaticResource MonoValue}" />
+                                    <DataGridTextColumn Header="{x:Static localization:Strings.Hostname}"
+                                                        Binding="{Binding Hostname}" Width="200"
+                                                        ElementStyle="{StaticResource MonoValue}" />
+                                    <DataGridTextColumn Header="{x:Static localization:Strings.Port}"
+                                                        Binding="{Binding Port}" Width="70"
+                                                        ElementStyle="{StaticResource MonoValue}" />
+                                    <DataGridTextColumn Header="{x:Static localization:Strings.IPAddresses}"
+                                                        Binding="{Binding Addresses}" Width="220" MinWidth="150"
+                                                        ElementStyle="{StaticResource MonoValue}" />
+                                    <DataGridTextColumn Header="{x:Static localization:Strings.TTL}"
+                                                        Binding="{Binding TTL}" Width="70"
+                                                        ElementStyle="{StaticResource MonoValue}" />
+                                </DataGrid.Columns>
+                                <DataGrid.RowDetailsTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Margin="10">
+                                            <TextBlock Text="{Binding FullName}" Style="{StaticResource MonoValue}"
+                                                       TextWrapping="Wrap" Margin="0,0,0,10" />
+                                            <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                                                <TextBlock Text="{x:Static localization:Strings.MDNSDiscovery_Priority}"
+                                                           Style="{StaticResource DefaultTextBlock}" Margin="0,0,10,0" />
+                                                <TextBlock Text="{Binding Priority}" Style="{StaticResource MonoValue}"
+                                                           Margin="0,0,20,0" />
+                                                <TextBlock Text="{x:Static localization:Strings.MDNSDiscovery_Weight}"
+                                                           Style="{StaticResource DefaultTextBlock}" Margin="0,0,10,0" />
+                                                <TextBlock Text="{Binding Weight}" Style="{StaticResource MonoValue}" />
+                                            </StackPanel>
+                                            <TextBlock Text="{x:Static localization:Strings.MDNSDiscovery_TXTRecords}"
+                                                       Style="{StaticResource HeaderTextBlock}" Margin="0,0,0,10" />
+                                            <TextBox Text="{Binding TXTRecords, Mode=OneWay}" IsReadOnly="True"
+                                                     TextWrapping="Wrap" MaxHeight="250"
+                                                     FontFamily="{StaticResource Fonts.Family.Mono}"
+                                                     VerticalScrollBarVisibility="Auto" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </DataGrid.RowDetailsTemplate>
+                            </controls:MultiSelectDataGrid>
+                            <!-- After a browse without services -->
+                            <icons:EmptyStateMessage Icon="SatelliteDish" Text="{x:Static localization:Strings.MDNSDiscovery_Empty}">
+                                <icons:EmptyStateMessage.Style>
+                                    <Style TargetType="{x:Type icons:EmptyStateMessage}" BasedOn="{StaticResource DefaultEmptyStateMessage}">
+                                        <Setter Property="Visibility" Value="Collapsed" />
+                                        <Style.Triggers>
+                                            <MultiDataTrigger>
+                                                <MultiDataTrigger.Conditions>
+                                                    <Condition Binding="{Binding Results.Count}" Value="0" />
+                                                    <Condition Binding="{Binding IsBrowsed}" Value="True" />
+                                                    <Condition Binding="{Binding IsRunning}" Value="False" />
+                                                </MultiDataTrigger.Conditions>
+                                                <Setter Property="Visibility" Value="Visible" />
+                                            </MultiDataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </icons:EmptyStateMessage.Style>
+                            </icons:EmptyStateMessage>
+                        </Grid>
+                    </TabItem>
+                    <TabItem Header="{x:Static localization:Strings.MDNSDiscovery_Records}">
+                        <Grid>
+                            <controls:MultiSelectDataGrid ItemsSource="{Binding RecordsView}"
+                                                          SelectedItem="{Binding SelectedRecord}"
+                                                          SelectedItemsList="{Binding SelectedRecords, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                          wpfHelpers:DataGridHelper.FillRemainingWidth="True">
+                                <controls:MultiSelectDataGrid.RowStyle>
+                                    <Style TargetType="{x:Type DataGridRow}" BasedOn="{StaticResource MahApps.Styles.DataGridRow}">
+                                        <Setter Property="ContextMenu" Value="{StaticResource RecordContextMenu}" />
+                                    </Style>
+                                </controls:MultiSelectDataGrid.RowStyle>
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="{x:Static localization:Strings.Name}"
+                                                        Binding="{Binding Name}" Width="270"
+                                                        ElementStyle="{StaticResource MonoValue}" />
+                                    <DataGridTextColumn Header="{x:Static localization:Strings.Type}"
+                                                        Binding="{Binding Type}" Width="80"
+                                                        ElementStyle="{StaticResource MonoValue}" />
+                                    <DataGridTextColumn Header="{x:Static localization:Strings.Class}"
+                                                        Binding="{Binding Class}" Width="60"
+                                                        ElementStyle="{StaticResource MonoValue}" />
+                                    <DataGridTextColumn Header="{x:Static localization:Strings.TTL}"
+                                                        Binding="{Binding TTL}" Width="70"
+                                                        ElementStyle="{StaticResource MonoValue}" />
+                                    <DataGridTextColumn Header="{x:Static localization:Strings.Value}"
+                                                        Binding="{Binding Value}" Width="350" MinWidth="200"
+                                                        ElementStyle="{StaticResource RecordValue}" />
+                                </DataGrid.Columns>
+                            </controls:MultiSelectDataGrid>
+                            <!-- After a browse without records -->
+                            <icons:EmptyStateMessage Icon="SatelliteDish" Text="{x:Static localization:Strings.MDNSDiscovery_NoRecords}">
+                                <icons:EmptyStateMessage.Style>
+                                    <Style TargetType="{x:Type icons:EmptyStateMessage}" BasedOn="{StaticResource DefaultEmptyStateMessage}">
+                                        <Setter Property="Visibility" Value="Collapsed" />
+                                        <Style.Triggers>
+                                            <MultiDataTrigger>
+                                                <MultiDataTrigger.Conditions>
+                                                    <Condition Binding="{Binding Records.Count}" Value="0" />
+                                                    <Condition Binding="{Binding IsBrowsed}" Value="True" />
+                                                    <Condition Binding="{Binding IsRunning}" Value="False" />
+                                                </MultiDataTrigger.Conditions>
+                                                <Setter Property="Visibility" Value="Visible" />
+                                            </MultiDataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </icons:EmptyStateMessage.Style>
+                            </icons:EmptyStateMessage>
+                        </Grid>
+                    </TabItem>
+                </TabControl>
             </Grid>
         </TabItem>
     </TabControl>

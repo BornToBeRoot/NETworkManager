@@ -12,23 +12,27 @@ Unlike the [IP Scanner's mDNS hostname lookup](./ip-scanner.md#resolve-mdns-host
 
 ## Browse
 
-1. Select the **Network interface** connected to the devices. **Refresh** reloads the available interfaces.
+1. Select the **Interface** connected to the devices. The refresh button next to it reloads the available interfaces.
 2. Select or enter a **Service type**. Use `*` for automatic discovery, `_ipp._tcp` for IPP printers, or `_http._tcp` for web services. The `.local.` suffix is optional; other domains are not accepted.
-3. Set **Duration (s)** and press **Browse** (or `Enter`). Press **Stop** to end discovery early.
+3. Select the **Duration (s)** and press **Browse** (or `Enter`). Press **Stop** (or `Esc`) to end discovery early.
+
+A progress bar shows the elapsed duration while browsing (with **Until stopped** it runs until **Stop** is pressed). Errors (e.g. UDP port `5353` can't be used) and "canceled by user" (stopped before the duration expired) are shown below the input.
 
 Discovery uses IPv4 (`224.0.0.251`) and IPv6 (`ff02::fb`) multicast on UDP port `5353`, where available on the selected interface. Records from different interfaces are kept separate. No Bonjour installation or administrator rights are required.
 
 | Field | Type | Default | Example |
 | --- | --- | --- | --- |
-| Network interface | Selection | Last used interface if available; otherwise the first active interface with multicast support | Ethernet |
+| Interface | Selection | Last used interface if available; otherwise the first active interface with multicast support | Ethernet |
 | Service type | Editable selection | `*` | `_ipp._tcp`, `_ipps._tcp`, `_printer._tcp`, `_pdl-datastream._tcp`, `_http._tcp`, `_ssh._tcp`, `_smb._tcp` |
-| Duration (s) | Number, 0–3600 | `10` | `30`; `0` browses until stopped |
+| Duration (s) | Selection: `10`, `30`, `60`, `120`, `300`, **Until stopped** | `10` | `30` |
 
 With `*`, the tool queries `_services._dns-sd._udp.local.` and browses the returned types. It also probes common printer, scanner, web, file sharing and media types because some devices do not answer service type enumeration. A specific type can be entered even when it is not in the suggestions.
 
 Discovery stops when its duration expires or when **Stop** is pressed. It continues in the background when you switch to another tool. The last results remain available for inspection and export. Starting again clears the previous results. The interface, service type and duration are remembered.
 
 ## Results
+
+The header shows the time of the last browse (**Last scan at**) and the search box; below it the number of services and records. The results are updated live while browsing.
 
 The **Services** tab shows one row per advertised service instance. One printer can advertise several services and therefore appear in several rows.
 
@@ -47,7 +51,7 @@ Select a row to expand its full name, SRV priority/weight and TXT records. Empty
 
 The search box filters by name, type, hostname, port, addresses and TXT contents. `Enter` in the search box applies the filter without starting discovery. Standard grid sorting and multi-selection are supported.
 
-The context menu provides **Copy...** for individual values or all details. With several rows selected, **Copy** copies the selected services. **Export...** writes the filtered results (in their current sort order) or selected services to CSV, XML or JSON. It includes the interface, full service name, SRV fields, addresses, TXT records and remaining PTR TTL. Control characters and binary TXT values are escaped for display and export.
+The context menu provides **Copy...** with the name, service type, hostname, port, IP addresses, TXT records or all details of the selected services (one per line, in the order shown). **Export...** writes the filtered results (in their current sort order) or selected services to CSV, XML or JSON. It includes the interface, full service name, SRV fields, addresses, TXT records and remaining PTR TTL. Control characters and binary TXT values are escaped for display and export.
 
 ### Records
 
@@ -59,7 +63,7 @@ The **Records** tab shows the cached DNS records received on the selected interf
 - **A / AAAA:** the host address, with an interface scope for link-local IPv6 addresses.
 - **Other types:** recognized DNS types keep their standard name (for example `NSEC`); unknown or private types use `TYPE<number>` (for example `TYPE65400`). Their raw data is preserved as `\# <byte count> <hex data>` (RFC 3597), including zero-length values. They can be searched, copied and exported like the decoded records.
 
-Search filters the records by name, type and value. **Copy** copies the selected records, one per line. **Export...** exports records when this tab is selected (filtered or selected, in view order), including the cache-flush flag and interface. The TTL counts down during discovery; after stopping, records remain as a snapshot until the next browse.
+Search filters the records by name, type and value. **Copy...** copies the name, value or the whole record (name, type, class, TTL and value) of the selected records, one per line. **Export...** exports records when this tab is selected (filtered or selected, in view order), including the cache-flush flag and interface. The TTL counts down during discovery; after stopping, records remain as a snapshot until the next browse.
 
 ## Run command
 

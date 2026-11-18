@@ -8275,34 +8275,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Discovering services on the selected network interface....
-        /// </summary>
-        public static string MDNSDiscovery_Browsing {
-            get {
-                return ResourceManager.GetString("MDNSDiscovery_Browsing", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Discovery completed. The results show the last received service information..
-        /// </summary>
-        public static string MDNSDiscovery_Completed {
-            get {
-                return ResourceManager.GetString("MDNSDiscovery_Completed", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Discovery duration in seconds. Set to 0 to browse continuously until Stop is pressed. Discovery continues when you switch to another tool..
-        /// </summary>
-        public static string MDNSDiscovery_DurationHelp {
-            get {
-                return ResourceManager.GetString("MDNSDiscovery_DurationHelp", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to No services found. Select a network interface and browse. Devices must advertise services on this local network; firewalls, VPNs and Wi-Fi client isolation can block discovery..
+        ///   Looks up a localized string similar to No services found. Devices must advertise their services on the network of the selected interface; firewalls, VPNs and Wi-Fi client isolation can block discovery..
         /// </summary>
         public static string MDNSDiscovery_Empty {
             get {
@@ -8338,7 +8311,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to No DNS records received. Start browsing on the selected interface..
+        ///   Looks up a localized string similar to No DNS records received..
         /// </summary>
         public static string MDNSDiscovery_NoRecords {
             get {
@@ -8392,15 +8365,6 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Discovery stopped. The results show the last received service information..
-        /// </summary>
-        public static string MDNSDiscovery_Stopped {
-            get {
-                return ResourceManager.GetString("MDNSDiscovery_Stopped", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to TXT records.
         /// </summary>
         public static string MDNSDiscovery_TXTRecords {
@@ -8410,11 +8374,38 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Until stopped.
+        /// </summary>
+        public static string MDNSDiscovery_UntilStopped {
+            get {
+                return ResourceManager.GetString("MDNSDiscovery_UntilStopped", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to SRV weight.
         /// </summary>
         public static string MDNSDiscovery_Weight {
             get {
                 return ResourceManager.GetString("MDNSDiscovery_Weight", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} records.
+        /// </summary>
+        public static string MDNSDiscovery_XRecords {
+            get {
+                return ResourceManager.GetString("MDNSDiscovery_XRecords", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} services.
+        /// </summary>
+        public static string MDNSDiscovery_XServices {
+            get {
+                return ResourceManager.GetString("MDNSDiscovery_XServices", resourceCulture);
             }
         }
         
