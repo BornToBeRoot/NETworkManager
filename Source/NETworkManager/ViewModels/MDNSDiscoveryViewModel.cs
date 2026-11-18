@@ -141,6 +141,22 @@ public sealed class MDNSDiscoveryViewModel : ViewModelBase
     }
 
     /// <summary>
+    ///     Gets a value indicating whether the interfaces are reloaded (refresh button, reload animation).
+    /// </summary>
+    public bool IsInterfacesLoading
+    {
+        get;
+        private set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
     ///     Gets a value indicating whether a running browse is being stopped.
     /// </summary>
     public bool IsCanceling
@@ -486,7 +502,7 @@ public sealed class MDNSDiscoveryViewModel : ViewModelBase
 
     private bool Browse_CanExecute(object parameter)
     {
-        return !DialogHelper.IsAnyDialogOpen() && (IsRunning || SelectedInterface != null);
+        return !DialogHelper.IsAnyDialogOpen() && !IsInterfacesLoading && (IsRunning || SelectedInterface != null);
     }
 
     private void BrowseAction()
@@ -500,11 +516,16 @@ public sealed class MDNSDiscoveryViewModel : ViewModelBase
     /// <summary>
     ///     Gets the command to reload the network interfaces.
     /// </summary>
-    public ICommand RefreshInterfacesCommand => new RelayCommand(_ => LoadInterfaces(), RefreshInterfaces_CanExecute);
+    public ICommand RefreshInterfacesCommand => new RelayCommand(_ => RefreshInterfacesAction(), RefreshInterfaces_CanExecute);
 
     private bool RefreshInterfaces_CanExecute(object parameter)
     {
-        return !IsRunning && !DialogHelper.IsAnyDialogOpen();
+        return !IsRunning && !IsInterfacesLoading && !DialogHelper.IsAnyDialogOpen();
+    }
+
+    private void RefreshInterfacesAction()
+    {
+        _ = RefreshInterfaces();
     }
 
     /// <summary>
@@ -587,34 +608,73 @@ public sealed class MDNSDiscoveryViewModel : ViewModelBase
     #region Methods
 
     /// <summary>
-    ///     Loads the network interfaces and selects the previous (or last used) one.
+    ///     Loads the network interfaces right away (constructor, view shown: a run command may browse right after).
     /// </summary>
     private void LoadInterfaces()
     {
-        var id = SelectedInterface?.Id ?? SettingsManager.Current.MDNSDiscovery_InterfaceId;
-
         try
         {
-            var interfaces = MDNSBrowser.GetInterfaces();
-
-            Interfaces.Clear();
-
-            foreach (var networkInterface in interfaces)
-                Interfaces.Add(networkInterface);
-
-            SelectedInterface = Interfaces.FirstOrDefault(x => x.Id == id) ?? Interfaces.FirstOrDefault();
-
-            if (SelectedInterface == null)
-                SetStatusMessage(Strings.MDNSDiscovery_NoInterface, StatusLevel.Warning);
-            else if (StatusMessage == Strings.MDNSDiscovery_NoInterface)
-                IsStatusMessageDisplayed = false;
+            SetInterfaces(MDNSBrowser.GetInterfaces());
         }
         catch (Exception ex)
         {
-            Log.Error("Cannot load the network interfaces with multicast support.", ex);
-
-            SetStatusMessage(Strings.MDNSDiscovery_Failed + Environment.NewLine + ex.Message, StatusLevel.Error);
+            LoadInterfacesFailed(ex);
         }
+    }
+
+    /// <summary>
+    ///     Reloads the network interfaces with the refresh button: takes at least the refresh interval, so the reload
+    ///     animation is visible and the reload can't be spammed (like the other refresh buttons).
+    /// </summary>
+    private async Task RefreshInterfaces()
+    {
+        IsInterfacesLoading = true;
+
+        try
+        {
+            var interfaces = await TaskHelper.WithMinimumDurationAsync(() => Task.Run(MDNSBrowser.GetInterfaces),
+                GlobalStaticConfiguration.ApplicationUIRefreshInterval);
+
+            SetInterfaces(interfaces);
+        }
+        catch (Exception ex)
+        {
+            LoadInterfacesFailed(ex);
+        }
+        finally
+        {
+            IsInterfacesLoading = false;
+        }
+    }
+
+    /// <summary>
+    ///     Shows the interfaces and selects the previous (or last used) one.
+    /// </summary>
+    private void SetInterfaces(IReadOnlyList<MDNSInterfaceInfo> interfaces)
+    {
+        var id = SelectedInterface?.Id ?? SettingsManager.Current.MDNSDiscovery_InterfaceId;
+
+        Interfaces.Clear();
+
+        foreach (var networkInterface in interfaces)
+            Interfaces.Add(networkInterface);
+
+        SelectedInterface = Interfaces.FirstOrDefault(x => x.Id == id) ?? Interfaces.FirstOrDefault();
+
+        Log.Debug($"Found {Interfaces.Count} network interfaces with multicast support, selected: \"{SelectedInterface?.Name}\".");
+
+        if (SelectedInterface == null)
+            SetStatusMessage(Strings.MDNSDiscovery_NoInterface, StatusLevel.Warning);
+        else if (StatusMessage is not null &&
+                 (StatusMessage == Strings.MDNSDiscovery_NoInterface || StatusMessage.StartsWith(Strings.MDNSDiscovery_Failed)))
+            IsStatusMessageDisplayed = false;
+    }
+
+    private void LoadInterfacesFailed(Exception ex)
+    {
+        Log.Error("Cannot load the network interfaces with multicast support.", ex);
+
+        SetStatusMessage(Strings.MDNSDiscovery_Failed + Environment.NewLine + ex.Message, StatusLevel.Error);
     }
 
     /// <summary>
@@ -766,7 +826,7 @@ public sealed class MDNSDiscoveryViewModel : ViewModelBase
             return;
         }
 
-        if (!IsRunning)
+        if (!IsRunning && !IsInterfacesLoading)
             LoadInterfaces();
     }
 

@@ -154,7 +154,8 @@
                                 Style="{StaticResource CleanButton}"
                                 ToolTip="{x:Static localization:Strings.Refresh}"
                                 Margin="10,0,0,0">
-                            <Rectangle Width="16" Height="16">
+                            <Rectangle Width="16" Height="16"
+                                       wpfHelpers:ReloadAnimationHelper.IsReloading="{Binding IsInterfacesLoading}">
                                 <Rectangle.OpacityMask>
                                     <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=RefreshCw}" />
                                 </Rectangle.OpacityMask>
