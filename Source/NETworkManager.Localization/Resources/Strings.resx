@@ -5580,7 +5580,7 @@ Do you want to start the scan?</value>
     <value>Service discovery failed. Check the network interface and whether UDP port 5353 is available and allowed by the firewall.</value>
   </data>
   <data name="MDNSDiscovery_InvalidServiceType" xml:space="preserve">
-    <value>Enter * or a service type such as _ipp._tcp, _http._tcp.local. or _ssh._tcp.</value>
+    <value>Enter *, service types such as _ipp._tcp and/or service type profiles, separated by ";".</value>
   </data>
   <data name="MDNSDiscovery_NoInterface" xml:space="preserve">
     <value>No active network interface with multicast support was found.</value>
@@ -5592,7 +5592,7 @@ Do you want to start the scan?</value>
     <value>Service type</value>
   </data>
   <data name="MDNSDiscovery_ServiceTypeHelp" xml:space="preserve">
-    <value>Enter * to discover all advertised service types (also probes common printer, scanner, web and media service types), or select or enter a type such as _ipp._tcp. Discovery is limited to the local. domain.</value>
+    <value>Enter * to discover all advertised service types (also probes common printer, scanner, web and media service types), or service types such as _ipp._tcp and/or service type profiles (e.g. Printers), separated by ";". The profiles can be changed in the settings. Discovery is limited to the local. domain.</value>
   </data>
   <data name="MDNSDiscovery_TXTRecords" xml:space="preserve">
     <value>TXT records</value>

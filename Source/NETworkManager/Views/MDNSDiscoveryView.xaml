@@ -177,14 +177,22 @@
                                    Text="{x:Static localization:Strings.MDNSDiscovery_ServiceType}"
                                    Style="{StaticResource DefaultTextBlock}"
                                    VerticalAlignment="Center" />
+                        <!-- Service type profiles (name and service types) and history, like the ports of the Port Scanner -->
                         <ComboBox x:Name="ComboBoxServiceType" Grid.Column="7"
-                                  IsEditable="True"
-                                  ItemsSource="{Binding ServiceTypes}"
+                                  ItemsSource="{Binding ServiceTypeSuggestions}"
+                                  TextSearch.TextPath="Text"
+                                  ItemTemplate="{StaticResource InputSuggestionTemplate}"
+                                  controls:ComboBoxListCompletionBehavior.Items="{Binding ServiceTypeProfileNames}"
+                                  controls:ComboBoxPasteBehavior.ConvertMultilineToSemicolon="True"
+                                  mahappsControls:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleMDNSServiceTypeInput}"
                                   FontFamily="{StaticResource Fonts.Family.Mono}"
                                   IsReadOnly="{Binding IsRunning}"
                                   controls:ComboBoxReadOnlyBehavior.PreventSelectionWhenReadOnly="True"
-                                  Style="{StaticResource DefaultComboBox}"
+                                  Style="{StaticResource HistoryComboBox}"
                                   ToolTipService.ShowDuration="30000">
+                            <ComboBox.GroupStyle>
+                                <GroupStyle HeaderTemplate="{StaticResource ComboBoxGroupHeaderTemplate}" />
+                            </ComboBox.GroupStyle>
                             <ComboBox.ToolTip>
                                 <ToolTip Content="{x:Static localization:Strings.MDNSDiscovery_ServiceTypeHelp}"
                                          Style="{StaticResource WrapToolTip}" />

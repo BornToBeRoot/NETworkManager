@@ -83,12 +83,23 @@ public sealed class MDNSDiscoveryViewModel : ViewModelBase
     }
 
     /// <summary>
-    ///     Gets the suggested service types (* = all advertised service types).
+    ///     History and service type profiles of the service type input (like the ports of the Port Scanner).
     /// </summary>
-    public IReadOnlyList<string> ServiceTypes { get; } = ["*", .. MDNSServiceCache.CommonServiceTypes];
+    private readonly InputSuggestions _serviceTypeSuggestions = InputSuggestions.ForMDNSDiscoveryServiceTypes();
 
     /// <summary>
-    ///     Gets or sets the service type to browse (e.g. <c>_ipp._tcp</c> or <c>*</c>).
+    ///     Gets the history and the service type profiles (grouped) of the service type input.
+    /// </summary>
+    public ICollectionView ServiceTypeSuggestions => _serviceTypeSuggestions.View;
+
+    /// <summary>
+    ///     Gets the names of the service type profiles, for the Tab completion of the service type input.
+    /// </summary>
+    public IEnumerable<string> ServiceTypeProfileNames => _serviceTypeSuggestions.ProfileNames;
+
+    /// <summary>
+    ///     Gets or sets the service types to browse: <c>*</c>, service types (e.g. <c>_ipp._tcp</c>) and / or names
+    ///     of service type profiles, separated by ";" (e.g. <c>Printers; _ssh._tcp</c>).
     /// </summary>
     public string ServiceType
     {
@@ -482,7 +493,8 @@ public sealed class MDNSDiscoveryViewModel : ViewModelBase
 
     private void LoadSettings()
     {
-        ServiceType = MDNSServiceType.TryNormalize(SettingsManager.Current.MDNSDiscovery_ServiceType, out _)
+        ServiceType = MDNSServiceTypeProfile.TryResolve(SettingsManager.Current.MDNSDiscovery_ServiceType,
+            SettingsManager.Current.MDNSDiscovery_ServiceTypeProfiles, out _)
             ? SettingsManager.Current.MDNSDiscovery_ServiceType
             : GlobalStaticConfiguration.MDNSDiscovery_ServiceType;
 
@@ -693,14 +705,29 @@ public sealed class MDNSDiscoveryViewModel : ViewModelBase
     /// </summary>
     private async Task Browse()
     {
-        if (IsRunning || SelectedInterface == null || !MDNSServiceType.TryNormalize(ServiceType, out var serviceType))
+        if (IsRunning || SelectedInterface == null)
             return;
+
+        // Service type profiles in the input (e.g. "Printers; _ssh._tcp") are replaced by their service types. The
+        // input is validated, but a profile may have been renamed or deleted since.
+        if (!MDNSServiceTypeProfile.TryResolve(ServiceType, SettingsManager.Current.MDNSDiscovery_ServiceTypeProfiles,
+                out var serviceTypes))
+        {
+            SetStatusMessage(Strings.MDNSDiscovery_InvalidServiceType, StatusLevel.Error);
+
+            return;
+        }
 
         _isPaused = false;
 
         _browseInterface = SelectedInterface;
-        _browseServiceTypes = [serviceType];
+        _browseServiceTypes = serviceTypes;
         _browseCache = new MDNSServiceCache(_browseServiceTypes, _browseInterface.Name);
+
+        // A single profile name is already in the list, only other inputs are added to the history
+        if (MDNSServiceTypeProfile.FindByName(SettingsManager.Current.MDNSDiscovery_ServiceTypeProfiles, ServiceType) == null)
+            ListHelper.Modify(SettingsManager.Current.MDNSDiscovery_ServiceTypeHistory, ServiceType.Trim(),
+                SettingsManager.Current.General_HistoryListEntries);
 
         SettingsManager.Current.MDNSDiscovery_ServiceType = ServiceType;
         SettingsManager.Current.MDNSDiscovery_Duration = SelectedDuration;
@@ -794,13 +821,14 @@ public sealed class MDNSDiscoveryViewModel : ViewModelBase
     }
 
     /// <summary>
-    ///     Opens the tool with a service type (run command). <see cref="ApplicationRequest.Start" /> = false only
-    ///     fills in the service type.
+    ///     Opens the tool with service types / profiles (run command). <see cref="ApplicationRequest.Start" /> = false
+    ///     only fills in the input.
     /// </summary>
-    /// <param name="request">Request with the service type as target.</param>
+    /// <param name="request">Request with the service types / profiles as target.</param>
     public async Task OpenAsync(ApplicationRequest request)
     {
-        if (!MDNSServiceType.TryNormalize(request.Target, out _))
+        if (!MDNSServiceTypeProfile.TryResolve(request.Target, SettingsManager.Current.MDNSDiscovery_ServiceTypeProfiles,
+                out _))
             return;
 
         Stop();

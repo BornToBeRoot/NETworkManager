@@ -8356,7 +8356,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Enter * or a service type such as _ipp._tcp, _http._tcp.local. or _ssh._tcp..
+        ///   Looks up a localized string similar to Enter *, service types such as _ipp._tcp and/or service type profiles, separated by &quot;;&quot;..
         /// </summary>
         public static string MDNSDiscovery_InvalidServiceType {
             get {
@@ -8410,7 +8410,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Enter * to discover all advertised service types (also probes common printer, scanner, web and media service types), or select or enter a type such as _ipp._tcp. Discovery is limited to the local. domain..
+        ///   Looks up a localized string similar to Enter * to discover all advertised service types (also probes common printer, scanner, web and media service types), or service types such as _ipp._tcp and/or service type profiles (e.g. Printers), separated by &quot;;&quot;. The profiles can be changed in the settings. Discovery is limited to the local. domain..
         /// </summary>
         public static string MDNSDiscovery_ServiceTypeHelp {
             get {

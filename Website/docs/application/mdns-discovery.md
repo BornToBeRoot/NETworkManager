@@ -13,7 +13,7 @@ Unlike the [IP Scanner's mDNS hostname lookup](./ip-scanner.md#resolve-mdns-host
 ## Browse
 
 1. Select the **Interface** connected to the devices. The refresh button next to it reloads the available interfaces.
-2. Select or enter a **Service type**. Use `*` for automatic discovery, `_ipp._tcp` for IPP printers, or `_http._tcp` for web services. The `.local.` suffix is optional; other domains are not accepted.
+2. Select or enter the **Service type**: `*` for automatic discovery, service types such as `_ipp._tcp` (IPP printers) or `_http._tcp` (web services) and / or [service type profiles](#service-type-profiles) such as `Printers`, separated by `;` (e.g. `Printers; _ssh._tcp`). `Tab` completes the name of a profile. The `.local.` suffix is optional; other domains are not accepted.
 3. Select the **Duration (s)** and press **Browse** (or `Enter`). Press **Stop** (or `Esc`) to end discovery early.
 
 A progress bar shows the elapsed duration while browsing (with **Until stopped** it runs until **Stop** is pressed). Errors (e.g. UDP port `5353` can't be used) and "canceled by user" (stopped before the duration expired) are shown below the input.
@@ -23,10 +23,10 @@ Discovery uses IPv4 (`224.0.0.251`) and IPv6 (`ff02::fb`) multicast on UDP port 
 | Field | Type | Default | Example |
 | --- | --- | --- | --- |
 | Interface | Selection | Last used interface if available; otherwise the first active interface with multicast support | Ethernet |
-| Service type | Editable selection | `*` | `_ipp._tcp`, `_ipps._tcp`, `_printer._tcp`, `_pdl-datastream._tcp`, `_http._tcp`, `_ssh._tcp`, `_smb._tcp` |
+| Service type | Editable selection (history, service type profiles) | `*` | `Printers`, `_ipp._tcp`, `Printers; Scanners; _ssh._tcp` |
 | Duration (s) | Selection: `10`, `30`, `60`, `120`, `300`, **Until stopped** | `10` | `30` |
 
-With `*`, the tool queries `_services._dns-sd._udp.local.` and browses the returned types. It also probes common printer, scanner, web, file sharing and media types because some devices do not answer service type enumeration. A specific type can be entered even when it is not in the suggestions.
+With `*`, the tool queries `_services._dns-sd._udp.local.` and browses the returned types. It also probes common printer, scanner, web, file sharing and media types because some devices do not answer service type enumeration. The list of the input shows the history (inputs other than a single profile) and the service type profiles with their service types.
 
 Discovery stops when its duration expires or when **Stop** is pressed. With a duration it continues in the background when you switch to another tool. With **Until stopped** it is paused while another tool is shown and continues when you return; the results are kept (records that expired meanwhile are removed). The last results remain available for inspection and export. Starting again clears the previous results. The interface, service type and duration are remembered.
 
@@ -67,15 +67,16 @@ Search filters the records by name, type and value. **Copy...** copies the name,
 
 ## Run command
 
-Open the tool with `mdnsdiscovery`, `mdns` or `dnssd`. Add a service type to start browsing:
+Open the tool with `mdnsdiscovery`, `mdns` or `dnssd`. Add service types and / or service type profiles (validated like the input) to start browsing:
 
 ```text
 mdns *
 mdns _ipp._tcp
-dnssd _http._tcp.local.
+mdns printers
+dnssd Printers;_http._tcp.local.
 ```
 
-The selected interface and duration are used. This tool has no profiles.
+The selected interface and duration are used. This tool has no profiles (`@profile`).
 
 ## Settings
 

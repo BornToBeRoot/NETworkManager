@@ -387,4 +387,7 @@
   <data name="ExampleMDNSServiceTypes" xml:space="preserve">
     <value>_ipp._tcp; _ipps._tcp</value>
   </data>
+  <data name="ExampleMDNSServiceTypeInput" xml:space="preserve">
+    <value>Printers; _ssh._tcp</value>
+  </data>
 </root>

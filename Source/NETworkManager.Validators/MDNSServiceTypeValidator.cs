@@ -1,14 +1,21 @@
 using System.Globalization;
 using System.Windows.Controls;
 using NETworkManager.Localization.Resources;
-using NETworkManager.Utilities;
+using NETworkManager.Models.Network;
+using NETworkManager.Settings;
 
 namespace NETworkManager.Validators;
 
+/// <summary>
+///     Validates the service type input of the mDNS / DNS-SD tool (input field and run command): <c>*</c>, service
+///     types and / or names of service type profiles separated by ";" (e.g. "Printers; _ssh._tcp"), see
+///     <see cref="MDNSServiceTypeProfile.TryResolve" />.
+/// </summary>
 public sealed class MDNSServiceTypeValidator : ValidationRule
 {
     public override ValidationResult Validate(object value, CultureInfo cultureInfo) =>
-        MDNSServiceType.TryNormalize(value as string, out _)
+        MDNSServiceTypeProfile.TryResolve(value as string, SettingsManager.Current.MDNSDiscovery_ServiceTypeProfiles,
+            out _)
             ? ValidationResult.ValidResult
             : new ValidationResult(false, Strings.MDNSDiscovery_InvalidServiceType);
 }

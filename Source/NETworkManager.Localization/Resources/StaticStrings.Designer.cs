@@ -448,6 +448,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Printers; _ssh._tcp.
+        /// </summary>
+        public static string ExampleMDNSServiceTypeInput {
+            get {
+                return ResourceManager.GetString("ExampleMDNSServiceTypeInput", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Printers.
         /// </summary>
         public static string ExampleMDNSServiceTypeProfileName {
