@@ -90,7 +90,7 @@ public static class ApplicationManager
                 canvas.Children.Add(new LucideIcon { Kind = LucideIconKind.Globe });
                 break;
             case ApplicationName.MDNSDiscovery:
-                canvas.Children.Add(new LucideIcon { Kind = LucideIconKind.Radar });
+                canvas.Children.Add(new LucideIcon { Kind = LucideIconKind.SatelliteDish });
                 break;
             case ApplicationName.RemoteDesktop:
                 canvas.Children.Add(new LucideIcon { Kind = LucideIconKind.Monitor });

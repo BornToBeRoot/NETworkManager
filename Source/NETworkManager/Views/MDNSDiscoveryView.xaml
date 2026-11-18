@@ -187,7 +187,7 @@
                             </DataTemplate>
                         </DataGrid.RowDetailsTemplate>
                     </controls:MultiSelectDataGrid>
-                    <controls:EmptyStateMessage Icon="Radar" Text="{x:Static localization:Strings.MDNSDiscovery_Empty}">
+                    <controls:EmptyStateMessage Icon="SatelliteDish" Text="{x:Static localization:Strings.MDNSDiscovery_Empty}">
                         <controls:EmptyStateMessage.Style>
                             <Style TargetType="controls:EmptyStateMessage" BasedOn="{StaticResource DefaultEmptyStateMessage}">
                                 <Setter Property="Visibility" Value="Collapsed" />
@@ -209,7 +209,7 @@
                                         <DataGridTextColumn Header="{x:Static localization:Strings.Value}" Binding="{Binding Value}" Width="350" MinWidth="200" ElementStyle="{StaticResource RecordValue}" />
                                     </DataGrid.Columns>
                                 </controls:MultiSelectDataGrid>
-                                <controls:EmptyStateMessage Icon="Radar" Text="{x:Static localization:Strings.MDNSDiscovery_NoRecords}">
+                                <controls:EmptyStateMessage Icon="SatelliteDish" Text="{x:Static localization:Strings.MDNSDiscovery_NoRecords}">
                                     <controls:EmptyStateMessage.Style>
                                         <Style TargetType="controls:EmptyStateMessage" BasedOn="{StaticResource DefaultEmptyStateMessage}">
                                             <Setter Property="Visibility" Value="Collapsed" />
