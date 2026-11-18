@@ -26,7 +26,7 @@ Discovery uses IPv4 (`224.0.0.251`) and IPv6 (`ff02::fb`) multicast on UDP port 
 | Service type | Editable selection (history, service type profiles) | `*` | `Printers`, `_ipp._tcp`, `Printers; Scanners; _ssh._tcp` |
 | Duration (s) | Selection: `10`, `30`, `60`, `120`, `300`, **Until stopped** | `10` | `30` |
 
-With `*`, the tool queries `_services._dns-sd._udp.local.` and browses the returned types. It also probes common printer, scanner, web, file sharing and media types because some devices do not answer service type enumeration. The list of the input shows the history (inputs other than a single profile) and the service type profiles with their service types.
+With `*`, the tool queries `_services._dns-sd._udp.local.` and browses the returned types. It also probes common printer, scanner, web, file sharing and media types because some devices do not answer service type enumeration. The list of the input shows the history (inputs other than `*` or a single profile) and below it `*` (always first, like the Windows DNS server of the DNS Lookup) and the service type profiles with their service types.
 
 Discovery stops when its duration expires or when **Stop** is pressed. With a duration it continues in the background when you switch to another tool. With **Until stopped** it is paused while another tool is shown and continues when you return; the results are kept (records that expired meanwhile are removed). The last results remain available for inspection and export. Starting again clears the previous results. The interface, service type and duration are remembered.
 

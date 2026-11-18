@@ -5645,4 +5645,7 @@ Do you want to start the scan?</value>
   <data name="MDNSDiscovery_EnterValidServiceTypes" xml:space="preserve">
     <value>Enter service types such as _ipp._tcp, separated by ";".</value>
   </data>
+  <data name="MDNSDiscovery_AllServiceTypes" xml:space="preserve">
+    <value>All advertised service types</value>
+  </data>
 </root>

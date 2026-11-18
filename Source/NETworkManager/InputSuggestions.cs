@@ -82,15 +82,17 @@ public sealed class InputSuggestions
     }
 
     /// <summary>
-    ///     Creates the list for the service types of the mDNS / DNS-SD tool: the service type profiles (sorted by name,
-    ///     with their service types) and the service type history.
+    ///     Creates the list for the service types of the mDNS / DNS-SD tool: * (all service types, always first like the
+    ///     Windows DNS server of DNS Lookup, not a stored profile), the service type profiles (sorted by name, with their
+    ///     service types) and the service type history.
     /// </summary>
     public static InputSuggestions ForMDNSDiscoveryServiceTypes()
     {
         return new InputSuggestions(SettingsManager.Current.MDNSDiscovery_ServiceTypeProfiles,
             () => SettingsManager.Current.MDNSDiscovery_ServiceTypeProfiles
                 .OrderBy(x => x.Name, StringComparer.OrdinalIgnoreCase)
-                .Select(x => (x.Name, x.ServiceTypes)),
+                .Select(x => (x.Name, x.ServiceTypes))
+                .Prepend(("*", Strings.MDNSDiscovery_AllServiceTypes)),
             Strings.MDNSDiscovery_ServiceTypeProfiles, SettingsManager.Current.MDNSDiscovery_ServiceTypeHistory);
     }
 

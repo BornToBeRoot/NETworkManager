@@ -724,8 +724,9 @@ public sealed class MDNSDiscoveryViewModel : ViewModelBase
         _browseServiceTypes = serviceTypes;
         _browseCache = new MDNSServiceCache(_browseServiceTypes, _browseInterface.Name);
 
-        // A single profile name is already in the list, only other inputs are added to the history
-        if (MDNSServiceTypeProfile.FindByName(SettingsManager.Current.MDNSDiscovery_ServiceTypeProfiles, ServiceType) == null)
+        // * and a single profile name are already in the list, only other inputs are added to the history
+        if (ServiceType.Trim() != "*" &&
+            MDNSServiceTypeProfile.FindByName(SettingsManager.Current.MDNSDiscovery_ServiceTypeProfiles, ServiceType) == null)
             ListHelper.Modify(SettingsManager.Current.MDNSDiscovery_ServiceTypeHistory, ServiceType.Trim(),
                 SettingsManager.Current.General_HistoryListEntries);
 

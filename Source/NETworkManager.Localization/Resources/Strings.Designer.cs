@@ -8275,6 +8275,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to All advertised service types.
+        /// </summary>
+        public static string MDNSDiscovery_AllServiceTypes {
+            get {
+                return ResourceManager.GetString("MDNSDiscovery_AllServiceTypes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Browse.
         /// </summary>
         public static string MDNSDiscovery_Browse {
