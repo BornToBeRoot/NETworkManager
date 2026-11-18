@@ -122,6 +122,16 @@ public static class RunCommandManager
     }
 
     /// <summary>
+    ///     Gets the service type profiles of the mDNS / DNS-SD tool (e.g. "Printers"), which can be used instead of
+    ///     service types.
+    /// </summary>
+    /// <returns>Service type profiles.</returns>
+    public static IEnumerable<MDNSServiceTypeProfileInfo> GetMDNSServiceTypeProfiles()
+    {
+        return SettingsManager.Current.MDNSDiscovery_ServiceTypeProfiles;
+    }
+
+    /// <summary>
     ///     Gets the translated name of the application (or settings) of a command.
     /// </summary>
     /// <param name="command">Command.</param>

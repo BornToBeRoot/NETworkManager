@@ -449,6 +449,8 @@ public class RunCommandViewModel : ViewModelBase
         {
             RunCommandPosition.Target when _result.ProfileName is { Length: > 0 } =>
                 Suggestions.FirstOrDefault(x => x.Kind == RunCommandSuggestionKind.Profile),
+            RunCommandPosition.Target when _result.CurrentWord is { Length: > 0 } =>
+                Suggestions.FirstOrDefault(x => x.Kind == RunCommandSuggestionKind.ServiceTypeProfile),
             RunCommandPosition.Argument when _result.CurrentWord.Length > 0 =>
                 Suggestions.FirstOrDefault(x => x.Kind is RunCommandSuggestionKind.DNSServer
                     or RunCommandSuggestionKind.PortProfile or RunCommandSuggestionKind.Type),
@@ -657,6 +659,7 @@ public class RunCommandViewModel : ViewModelBase
             RunCommandPosition.Target when _result.ProfileName != null => GetProfileSuggestions().Take(MaxSuggestions),
             RunCommandPosition.Target =>
             [
+                .. GetServiceTypeProfileSuggestions().Take(MaxSuggestions),
                 .. GetHistorySuggestions().Take(MaxCommandHistorySuggestions),
                 .. GetProfileSuggestions().Take(MaxSuggestions)
             ],
@@ -1158,6 +1161,23 @@ public class RunCommandViewModel : ViewModelBase
     }
 
     /// <summary>
+    ///     Service type profiles of the mDNS / DNS-SD tool (e.g. "Printers") and * that contain the typed word, while
+    ///     the target is typed. The target can be a list of service types and profiles (e.g. "printers;_ssh._tcp"), the
+    ///     last entry is completed.
+    /// </summary>
+    private IEnumerable<RunCommandSuggestion> GetServiceTypeProfileSuggestions()
+    {
+        if (_result.Command?.Application != ApplicationName.MDNSDiscovery || _result.ProfileName != null)
+            return [];
+
+        return GetValueSuggestions(RunCommandManager.GetMDNSServiceTypeProfiles()
+                .OrderBy(x => x.Name, StringComparer.OrdinalIgnoreCase)
+                .Select(x => (x.Name, x.ServiceTypes))
+                .Prepend(("*", Strings.MDNSDiscovery_AllServiceTypes)),
+            RunCommandSuggestionKind.ServiceTypeProfile, Strings.MDNSDiscovery_ServiceTypeProfiles, isList: true);
+    }
+
+    /// <summary>
     ///     Named values of the second argument of the command (e.g. DNS servers, port profiles) that contain the typed
     ///     word, if the argument was not entered yet. Names with spaces are inserted in quotes.
     /// </summary>
@@ -1177,17 +1197,31 @@ public class RunCommandViewModel : ViewModelBase
             _result.Argument != null && !string.Equals(_result.Argument, _result.CurrentWord))
             return [];
 
+        return GetValueSuggestions(values, kind, group, isList);
+    }
+
+    /// <summary>
+    ///     Named values that contain the word that is being typed (the target or the second argument), see
+    ///     <see cref="GetArgumentValueSuggestions" />.
+    /// </summary>
+    private IEnumerable<RunCommandSuggestion> GetValueSuggestions(IEnumerable<(string Name, string Description)> values,
+        RunCommandSuggestionKind kind, string group, bool isList)
+    {
+        // Nothing typed yet (e.g. "mdns ")
+        var currentToken = _result.CurrentToken ?? string.Empty;
+        var currentWord = _result.CurrentWord ?? string.Empty;
+
         // Entries before the one that is being typed, as entered (e.g. "webserver;" of "webserver;dat")
-        var separator = isList ? _result.CurrentToken.LastIndexOf(';') : -1;
-        var previousEntries = _result.CurrentToken[..(separator + 1)];
+        var separator = isList ? currentToken.LastIndexOf(';') : -1;
+        var previousEntries = currentToken[..(separator + 1)];
 
         // Typed in the open quote of the previous entry (e.g. "DNS (via TCP); web) - close it before the ";"
         if (previousEntries.Count(x => x == '"') % 2 == 1)
             previousEntries = previousEntries[..^1].TrimEnd() + "\";";
 
         var entry = separator < 0
-            ? _result.CurrentWord
-            : _result.CurrentToken[(separator + 1)..].Replace("\"", string.Empty).Trim();
+            ? currentWord
+            : currentToken[(separator + 1)..].Replace("\"", string.Empty).Trim();
 
         return values
             .Where(x => x.Name.Contains(entry, StringComparison.OrdinalIgnoreCase))

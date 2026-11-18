@@ -292,6 +292,12 @@
                                             <Setter Property="OpacityMask"
                                                     Value="{StaticResource RunCommandPortProfileIcon}" />
                                         </DataTrigger>
+                                        <!-- A list of service types, like a port profile -->
+                                        <DataTrigger Binding="{Binding Kind}"
+                                                     Value="{x:Static networkManager:RunCommandSuggestionKind.ServiceTypeProfile}">
+                                            <Setter Property="OpacityMask"
+                                                    Value="{StaticResource RunCommandPortProfileIcon}" />
+                                        </DataTrigger>
                                     </Style.Triggers>
                                 </Style>
                             </Rectangle.Style>

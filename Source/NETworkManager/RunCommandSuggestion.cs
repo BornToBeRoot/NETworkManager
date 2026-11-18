@@ -39,6 +39,11 @@ public enum RunCommandSuggestionKind
     PortProfile,
 
     /// <summary>
+    ///     Service type profile of the mDNS / DNS-SD tool (e.g. "Printers") or * (all service types).
+    /// </summary>
+    ServiceTypeProfile,
+
+    /// <summary>
     ///     Command for a target typed without a command (e.g. "ping 10.0.0.1" for "10.0.0.1").
     /// </summary>
     Target,
