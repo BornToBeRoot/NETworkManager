@@ -52,6 +52,7 @@ public static class MDNSBrowser
         var sockets = new List<(Socket Socket, IPEndPoint Destination, int Index)>();
         using var lifetime = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
         var receivers = new List<Task>();
+        long droppedPackets = 0;
         try
         {
             // One address family may fail (e.g. joining the IPv6 group on some adapters), the other is still used
@@ -75,11 +76,16 @@ public static class MDNSBrowser
             if (sockets.Count == 0)
                 throw socketError ?? (Exception)new NetworkInformationException();
 
+            // A very busy link: the oldest packets are dropped (counted for the log)
             var packets = Channel.CreateBounded<byte[]>(new BoundedChannelOptions(512)
             {
                 SingleReader = true,
                 FullMode = BoundedChannelFullMode.DropOldest
-            });
+            }, _ => Interlocked.Increment(ref droppedPackets));
+
+            Log.Info($"mDNS browse on \"{networkInterface.Name}\" for {serviceType} started " +
+                     $"({string.Join(", ", sockets.Select(x => x.Socket.AddressFamily == AddressFamily.InterNetworkV6 ? "IPv6" : "IPv4"))}).");
+
             receivers.AddRange(sockets.Select(x => ReceiveAsync(x.Socket, x.Index, packets.Writer, lifetime.Token)));
             using var timer = new PeriodicTimer(TimeSpan.FromMilliseconds(250));
             var lastVersion = -1L;
@@ -128,6 +134,13 @@ public static class MDNSBrowser
             await lifetime.CancelAsync().ConfigureAwait(false);
             foreach (var socket in sockets)
                 socket.Socket.Dispose();
+
+            // Diagnostics for "no services found" on a network: were packets received at all, dropped or not cached?
+            if (sockets.Count > 0)
+                Log.Info($"mDNS browse on \"{networkInterface.Name}\" ended: {cache.Packets} packets processed " +
+                         $"({cache.PacketsWithoutRecords} without records, e.g. queries), " +
+                         $"{Interlocked.Read(ref droppedPackets)} dropped (busy), " +
+                         $"{cache.RecordsNotCached} records not cached (cache full).");
             try { await Task.WhenAll(receivers).ConfigureAwait(false); }
             catch (OperationCanceledException) { }
             catch (SocketException) when (lifetime.IsCancellationRequested) { }

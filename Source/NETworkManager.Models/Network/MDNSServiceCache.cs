@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using log4net;
 using NETworkManager.Utilities;
 
 namespace NETworkManager.Models.Network;
@@ -12,6 +13,11 @@ namespace NETworkManager.Models.Network;
 /// </summary>
 public sealed class MDNSServiceCache
 {
+    private static readonly ILog Log = LogManager.GetLogger(typeof(MDNSServiceCache));
+
+    /// <summary>Maximum number of cached records (busy or hostile networks).</summary>
+    public const int MaxRecords = 4096;
+
     public static IReadOnlyList<string> CommonServiceTypes { get; } = Array.AsReadOnly(new[]
     {
         "_ipp._tcp.local.", "_ipps._tcp.local.", "_printer._tcp.local.", "_pdl-datastream._tcp.local.",
@@ -41,6 +47,15 @@ public sealed class MDNSServiceCache
     ///     announced again). The browser creates a new snapshot only if it changed (or for the TTL countdown).
     /// </summary>
     public long Version { get; private set; }
+
+    /// <summary>Number of processed packets (diagnostics, see <see cref="MDNSBrowser" />).</summary>
+    public long Packets { get; private set; }
+
+    /// <summary>Number of packets without records: queries of other hosts, other opcodes or invalid packets.</summary>
+    public long PacketsWithoutRecords { get; private set; }
+
+    /// <summary>Number of new records that were not cached because the cache was full (<see cref="MaxRecords" />).</summary>
+    public long RecordsNotCached { get; private set; }
 
     private static string Key(MDNSRecord record) => $"{record.Name.ToLowerInvariant()}|{record.Type}|{record.Identity}";
 
@@ -91,6 +106,11 @@ public sealed class MDNSServiceCache
         // follow-up questions remain restricted to the requested local DNS-SD service types.
         var records = MDNSMessage.ReadResponse(message, ipv6ScopeId);
 
+        Packets++;
+
+        if (records.Count == 0)
+            PacketsWithoutRecords++;
+
         // A cache-flush RRset may span packets. Give older values one second's grace, and preserve values just
         // received in the same second (RFC 6762 section 10.2); a goodbye is also held for one second.
         foreach (var group in records.Where(x => x.CacheFlush && x.TTL > 0).GroupBy(RRset))
@@ -117,8 +137,10 @@ public sealed class MDNSServiceCache
                 if (_records.TryGetValue(key, out var entry))
                     _records[key] = entry with { Expires = Min(entry.Expires, now.AddSeconds(1)) };
             }
-            else if (_records.ContainsKey(key) || _records.Count < 4096)
+            else if (_records.ContainsKey(key) || _records.Count < MaxRecords)
                 Set(key, new Entry(record, now, now.AddSeconds(record.TTL)));
+            else if (RecordsNotCached++ == 0)
+                Log.Warn($"mDNS cache on \"{_networkInterface}\" is full ({MaxRecords} records), new records are ignored until others expire.");
         }
     }
 
@@ -238,6 +260,6 @@ public sealed class MDNSServiceCache
             var ttl = (uint)Math.Max(0, Math.Ceiling((pair.Value.Expires - now).TotalSeconds));
             return values.Select((value, index) => new MDNSRecordInfo($"{pair.Key}|{index}", record.Name, type, value,
                 _networkInterface, record.CacheFlush, ttl));
-        }).Take(4096).ToArray();
+        }).Take(MaxRecords).ToArray();
     }
 }
