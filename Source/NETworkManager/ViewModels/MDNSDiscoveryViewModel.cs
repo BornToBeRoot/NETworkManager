@@ -27,6 +27,12 @@ namespace NETworkManager.ViewModels;
 public sealed class MDNSDiscoveryViewModel : ViewModelBase
 {
     private static readonly ILog Log = LogManager.GetLogger(typeof(MDNSDiscoveryViewModel));
+
+    /// <summary>
+    ///     Maximum effort (changed rows x all rows) to add / remove rows one by one, like the Port Scanner: WPF inserts
+    ///     every row into the sorted view with a linear search. Above, the rows are replaced with one reset.
+    /// </summary>
+    private const long MaxRowChangesOneByOne = 10_000_000;
     private readonly DispatcherTimer _flushTimer;
     private readonly SearchDelay _searchDelay;
     private readonly Dictionary<string, MDNSServiceInfo> _rows = new(StringComparer.OrdinalIgnoreCase);
@@ -115,9 +121,9 @@ public sealed class MDNSDiscoveryViewModel : ViewModelBase
         get;
         set { if (value == field) return; field = value; OnPropertyChanged(); _searchDelay?.Restart(); }
     }
-    public ObservableCollection<MDNSServiceInfo> Results { get; } = new();
+    public ObservableRangeCollection<MDNSServiceInfo> Results { get; } = [];
     public ICollectionView ResultsView { get; }
-    public ObservableCollection<MDNSRecordInfo> Records { get; } = new();
+    public ObservableRangeCollection<MDNSRecordInfo> Records { get; } = [];
     public ICollectionView RecordsView { get; }
     public IList SelectedRecords { get; set; } = new ArrayList();
     public int SelectedTabIndex
@@ -221,35 +227,50 @@ public sealed class MDNSDiscoveryViewModel : ViewModelBase
     {
         var values = Interlocked.Exchange(ref _pending, null);
         if (values == null) return;
-        var names = values.Services.Select(x => x.FullName).ToHashSet(StringComparer.OrdinalIgnoreCase);
-        foreach (var name in _rows.Keys.Where(x => !names.Contains(x)).ToArray())
-        {
-            Results.Remove(_rows[name]);
-            _rows.Remove(name);
-        }
-        foreach (var value in values.Services)
-            if (_rows.TryGetValue(value.FullName, out var row))
-                row.UpdateFrom(value);
-            else
-            {
-                _rows.Add(value.FullName, value);
-                Results.Add(value);
-            }
-        var recordIds = values.Records.Select(x => x.Id).ToHashSet(StringComparer.Ordinal);
-        foreach (var id in _recordRows.Keys.Where(x => !recordIds.Contains(x)).ToArray())
-        {
-            Records.Remove(_recordRows[id]);
-            _recordRows.Remove(id);
-        }
-        foreach (var value in values.Records)
-            if (_recordRows.TryGetValue(value.Id, out var row))
-                row.UpdateFrom(value);
-            else
-            {
-                _recordRows.Add(value.Id, value);
-                Records.Add(value);
-            }
+        Merge(Results, _rows, values.Services, x => x.FullName, (row, value) => row.UpdateFrom(value));
+        Merge(Records, _recordRows, values.Records, x => x.Id, (row, value) => row.UpdateFrom(value));
         OnPropertyChanged(nameof(DisplayedResultCount));
+    }
+
+    /// <summary>
+    ///     Merges a snapshot into the rows: existing rows are updated (selection and expanded details are kept), rows
+    ///     that are no longer in the snapshot are removed and new ones added - one by one, or with one reset if there
+    ///     are many changes (see <see cref="MaxRowChangesOneByOne" />).
+    /// </summary>
+    private static void Merge<T>(ObservableRangeCollection<T> rows, Dictionary<string, T> index, IReadOnlyList<T> values,
+        Func<T, string> getKey, Action<T, T> update)
+    {
+        var keys = values.Select(getKey).ToHashSet(index.Comparer);
+        var removed = index.Where(x => !keys.Contains(x.Key)).ToArray();
+        var added = new List<T>();
+
+        foreach (var value in values)
+        {
+            if (index.TryGetValue(getKey(value), out var row))
+                update(row, value);
+            else if (index.TryAdd(getKey(value), value))
+                added.Add(value);
+        }
+
+        foreach (var row in removed)
+            index.Remove(row.Key);
+
+        if (removed.Length == 0 && added.Count == 0)
+            return;
+
+        if ((long)(removed.Length + added.Count) * (rows.Count + added.Count) > MaxRowChangesOneByOne)
+        {
+            var removedRows = removed.Select(x => x.Value).ToHashSet();
+            rows.ReplaceAll(rows.Where(x => !removedRows.Contains(x)).Concat(added));
+
+            return;
+        }
+
+        foreach (var row in removed)
+            rows.Remove(row.Value);
+
+        foreach (var row in added)
+            rows.Add(row);
     }
 
     private void ApplySearch()
