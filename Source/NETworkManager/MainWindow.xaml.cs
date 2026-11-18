@@ -499,6 +499,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
                 SettingsManager.Current.General_ApplicationList = [.. ApplicationManager.GetDefaultList()];
                 SettingsManager.Current.IPScanner_CustomCommands = [.. IPScannerCustomCommand.GetDefaultList()];
                 SettingsManager.Current.PortScanner_PortProfiles = [.. PortProfile.GetDefaultList()];
+                SettingsManager.Current.MDNSDiscovery_ServiceTypeProfiles = [.. MDNSServiceTypeProfile.GetDefaultList()];
                 SettingsManager.Current.DNSLookup_DNSServers = [.. DNSServer.GetDefaultList()];
                 SettingsManager.Current.SNMP_OidProfiles = [.. SNMPOIDProfile.GetDefaultList()];
                 SettingsManager.Current.SNTPLookup_SNTPServers = [.. SNTPServer.GetDefaultList()];

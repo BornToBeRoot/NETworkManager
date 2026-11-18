@@ -8266,6 +8266,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add service type profile.
+        /// </summary>
+        public static string MDNSDiscovery_AddServiceTypeProfile {
+            get {
+                return ResourceManager.GetString("MDNSDiscovery_AddServiceTypeProfile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Browse.
         /// </summary>
         public static string MDNSDiscovery_Browse {
@@ -8275,11 +8284,65 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Delete service type profile.
+        /// </summary>
+        public static string MDNSDiscovery_DeleteServiceTypeProfile {
+            get {
+                return ResourceManager.GetString("MDNSDiscovery_DeleteServiceTypeProfile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The selected service type profile will be deleted permanently..
+        /// </summary>
+        public static string MDNSDiscovery_DeleteServiceTypeProfileMessage {
+            get {
+                return ResourceManager.GetString("MDNSDiscovery_DeleteServiceTypeProfileMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete service type profiles.
+        /// </summary>
+        public static string MDNSDiscovery_DeleteServiceTypeProfiles {
+            get {
+                return ResourceManager.GetString("MDNSDiscovery_DeleteServiceTypeProfiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The selected service type profiles will be deleted permanently..
+        /// </summary>
+        public static string MDNSDiscovery_DeleteServiceTypeProfilesMessage {
+            get {
+                return ResourceManager.GetString("MDNSDiscovery_DeleteServiceTypeProfilesMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit service type profile.
+        /// </summary>
+        public static string MDNSDiscovery_EditServiceTypeProfile {
+            get {
+                return ResourceManager.GetString("MDNSDiscovery_EditServiceTypeProfile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No services found. Devices must advertise their services on the network of the selected interface; firewalls, VPNs and Wi-Fi client isolation can block discovery..
         /// </summary>
         public static string MDNSDiscovery_Empty {
             get {
                 return ResourceManager.GetString("MDNSDiscovery_Empty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter service types such as _ipp._tcp, separated by &quot;;&quot;..
+        /// </summary>
+        public static string MDNSDiscovery_EnterValidServiceTypes {
+            get {
+                return ResourceManager.GetString("MDNSDiscovery_EnterValidServiceTypes", resourceCulture);
             }
         }
         
@@ -8352,6 +8415,33 @@ namespace NETworkManager.Localization.Resources {
         public static string MDNSDiscovery_ServiceTypeHelp {
             get {
                 return ResourceManager.GetString("MDNSDiscovery_ServiceTypeHelp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The name must not contain &quot;;&quot; and must not be &quot;*&quot; or a service type..
+        /// </summary>
+        public static string MDNSDiscovery_ServiceTypeProfileNameInvalid {
+            get {
+                return ResourceManager.GetString("MDNSDiscovery_ServiceTypeProfileNameInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Service type profiles.
+        /// </summary>
+        public static string MDNSDiscovery_ServiceTypeProfiles {
+            get {
+                return ResourceManager.GetString("MDNSDiscovery_ServiceTypeProfiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Service types.
+        /// </summary>
+        public static string MDNSDiscovery_ServiceTypes {
+            get {
+                return ResourceManager.GetString("MDNSDiscovery_ServiceTypes", resourceCulture);
             }
         }
         

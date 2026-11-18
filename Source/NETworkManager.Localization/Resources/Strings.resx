@@ -5615,4 +5615,34 @@ Do you want to start the scan?</value>
   <data name="MDNSDiscovery_RawRecords" xml:space="preserve">
     <value>Raw DNS records</value>
   </data>
+  <data name="MDNSDiscovery_ServiceTypeProfiles" xml:space="preserve">
+    <value>Service type profiles</value>
+  </data>
+  <data name="MDNSDiscovery_AddServiceTypeProfile" xml:space="preserve">
+    <value>Add service type profile</value>
+  </data>
+  <data name="MDNSDiscovery_EditServiceTypeProfile" xml:space="preserve">
+    <value>Edit service type profile</value>
+  </data>
+  <data name="MDNSDiscovery_DeleteServiceTypeProfile" xml:space="preserve">
+    <value>Delete service type profile</value>
+  </data>
+  <data name="MDNSDiscovery_DeleteServiceTypeProfiles" xml:space="preserve">
+    <value>Delete service type profiles</value>
+  </data>
+  <data name="MDNSDiscovery_DeleteServiceTypeProfileMessage" xml:space="preserve">
+    <value>The selected service type profile will be deleted permanently.</value>
+  </data>
+  <data name="MDNSDiscovery_DeleteServiceTypeProfilesMessage" xml:space="preserve">
+    <value>The selected service type profiles will be deleted permanently.</value>
+  </data>
+  <data name="MDNSDiscovery_ServiceTypes" xml:space="preserve">
+    <value>Service types</value>
+  </data>
+  <data name="MDNSDiscovery_ServiceTypeProfileNameInvalid" xml:space="preserve">
+    <value>The name must not contain ";" and must not be "*" or a service type.</value>
+  </data>
+  <data name="MDNSDiscovery_EnterValidServiceTypes" xml:space="preserve">
+    <value>Enter service types such as _ipp._tcp, separated by ";".</value>
+  </data>
 </root>

@@ -940,6 +940,14 @@ public static class SettingsManager
                     Current.General_ApplicationList.Count),
                 defaultList.First(x => x.Name == ApplicationName.MDNSDiscovery));
         }
+
+        // mDNS / DNS-SD - Add the missing default service type profiles (like the port profiles of the Port Scanner)
+        foreach (var profile in MDNSServiceTypeProfile.GetDefaultList().Where(profile =>
+                     MDNSServiceTypeProfile.FindByName(Current.MDNSDiscovery_ServiceTypeProfiles, profile.Name) == null))
+        {
+            Log.Info($"Add \"{profile.Name}\" to \"MDNSDiscovery_ServiceTypeProfiles\"...");
+            Current.MDNSDiscovery_ServiceTypeProfiles.Add(profile);
+        }
     }
     #endregion
 }

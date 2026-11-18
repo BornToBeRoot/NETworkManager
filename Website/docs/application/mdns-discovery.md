@@ -77,6 +77,27 @@ dnssd _http._tcp.local.
 
 The selected interface and duration are used. This tool has no profiles.
 
+## Settings
+
+### Service type profiles
+
+Named lists of service types. A service type profile can be entered by its name in the service type input (case-insensitive, also several and together with service types, e.g. `Printers; Scanners; _ssh._tcp`), so the name must be unique, must not contain `;` and must not be `*` or a service type (e.g. `_ipp._tcp`). The service types of a profile are separated by `;` (`*` and other profiles are not allowed). Several profiles can be selected and deleted at once (context menu or `Del`). Missing default profiles are added again on an update.
+
+**Type:** `List<NETworkManager.Models.Network.MDNSServiceTypeProfileInfo>`
+
+**Default:**
+
+| Name          | Service types                                                                                     |
+| ------------- | ------------------------------------------------------------------------------------------------- |
+| Printers      | `_ipp._tcp; _ipps._tcp; _printer._tcp; _pdl-datastream._tcp`                                      |
+| Scanners      | `_uscan._tcp; _uscans._tcp; _scanner._tcp`                                                        |
+| Web           | `_http._tcp; _https._tcp`                                                                         |
+| File sharing  | `_smb._tcp; _afpovertcp._tcp; _nfs._tcp; _ftp._tcp; _webdav._tcp; _webdavs._tcp`                  |
+| Remote access | `_ssh._tcp; _sftp-ssh._tcp; _rfb._tcp; _rdp._tcp; _telnet._tcp`                                   |
+| Media         | `_airplay._tcp; _raop._tcp; _googlecast._tcp; _spotify-connect._tcp; _sonos._tcp`                 |
+| Smart home    | `_hap._tcp; _hap._udp; _matter._tcp; _matterc._udp; _home-assistant._tcp; _hue._tcp`              |
+| Apple devices | `_companion-link._tcp; _device-info._tcp; _airplay._tcp; _apple-mobdev2._tcp`                     |
+
 ## Troubleshooting and limits
 
 - Devices must advertise the services themselves. This tool does not probe arbitrary ports or configure printers.

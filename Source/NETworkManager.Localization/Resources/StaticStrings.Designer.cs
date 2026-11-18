@@ -79,6 +79,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to C:\Data\profiles.csv.
+        /// </summary>
+        public static string CsvImportFileLocationDots {
+            get {
+                return ResourceManager.GetString("CsvImportFileLocationDots", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 636.
         /// </summary>
         public static string ExampleActiveDirectoryPort {
@@ -133,7 +142,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to https://$$HOSTNAME$$/.
+        ///   Looks up a localized string similar to https://{{Hostname}}/.
         /// </summary>
         public static string ExampleCustomCommandVariableHostname {
             get {
@@ -435,6 +444,24 @@ namespace NETworkManager.Localization.Resources {
         public static string ExampleMACAddressesOrVendor {
             get {
                 return ResourceManager.GetString("ExampleMACAddressesOrVendor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Printers.
+        /// </summary>
+        public static string ExampleMDNSServiceTypeProfileName {
+            get {
+                return ResourceManager.GetString("ExampleMDNSServiceTypeProfileName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to _ipp._tcp; _ipps._tcp.
+        /// </summary>
+        public static string ExampleMDNSServiceTypes {
+            get {
+                return ResourceManager.GetString("ExampleMDNSServiceTypes", resourceCulture);
             }
         }
         
@@ -815,16 +842,7 @@ namespace NETworkManager.Localization.Resources {
                 return ResourceManager.GetString("PrivateKeyFileLocationDots", resourceCulture);
             }
         }
-
-        /// <summary>
-        ///   Looks up a localized string similar to C:\Data\profiles.csv.
-        /// </summary>
-        public static string CsvImportFileLocationDots {
-            get {
-                return ResourceManager.GetString("CsvImportFileLocationDots", resourceCulture);
-            }
-        }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to NETworkManager.
         /// </summary>
