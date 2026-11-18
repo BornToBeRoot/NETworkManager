@@ -47,6 +47,10 @@ Release date: **xx.xx.2026**
 
 - Fixed the last column of the DNS servers (settings) not filling the remaining width. [#3719](https://github.com/BornToBeRoot/NETworkManager/pull/3719)
 
+**SNTP Lookup**
+
+- Fixed the last column of the SNTP servers (settings) not filling the remaining width. [#3719](https://github.com/BornToBeRoot/NETworkManager/pull/3719)
+
 **About**
 
 - Fixed the license of ControlzEx in the library list: it showed the license text and link of Dragablz. [#3717](https://github.com/BornToBeRoot/NETworkManager/pull/3717)
