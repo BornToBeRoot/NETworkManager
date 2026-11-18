@@ -345,7 +345,8 @@
                                               VirtualizingPanel.IsVirtualizingWhenGrouping="True"
                                               VirtualizingPanel.IsContainerVirtualizable="True"
                                               VirtualizingPanel.VirtualizationMode="Recycling"
-                                              VirtualizingPanel.ScrollUnit="Pixel">
+                                              VirtualizingPanel.ScrollUnit="Pixel"
+                                              wpfHelpers:DataGridHelper.FillRemainingWidth="True">
                     <DataGrid.Resources>
                         <ContextMenu x:Key="MultiRowContextMenu" DataContext="{Binding Data, Source={StaticResource BindingProxy}}" MinWidth="150">
                             <MenuItem Header="{x:Static localization:Strings.Delete}"
@@ -418,7 +419,7 @@
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="{x:Static localization:Strings.Name}"
                                             Binding="{Binding (profiles:ProfileInfo.Name)}" SortMemberPath="Name"
-                                            MinWidth="150" Width="Auto" />
+                                            MinWidth="150" wpfHelpers:DataGridHelper.IsFillColumn="True" />
                         <DataGridTextColumn Header="{x:Static localization:Strings.Host}" FontFamily="{StaticResource Fonts.Family.Mono}"
                                             Binding="{Binding (profiles:ProfileInfo.Host)}" SortMemberPath="Host"
                                             MinWidth="150" Width="Auto" />
