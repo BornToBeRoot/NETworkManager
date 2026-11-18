@@ -30,7 +30,9 @@ public static class MDNSMessage
         var data = new List<byte> { 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0 };
         var label = new StringBuilder();
         var escaped = false;
-        foreach (var character in name.TrimEnd('.') + ".")
+        // Fully qualified: add the final dot if it is missing. Not TrimEnd: an escaped dot at the end of the last label
+        // (e.g. a\.. = label "a.") is part of the label.
+        foreach (var character in EndsWithUnescapedDot(name) ? name : name + ".")
         {
             if (escaped)
             {
@@ -52,10 +54,24 @@ public static class MDNSMessage
             }
         }
 
-        if (escaped || data.Count > 266)
+        // Open escape or a last label without a dot (e.g. name\ becomes name\. with an escaped dot)
+        if (escaped || label.Length > 0 || data.Count > 266)
             throw new ArgumentException("Invalid DNS name.", nameof(name));
         data.AddRange([0, (byte)(type >> 8), (byte)type, 0, 1]);
         return [.. data];
+    }
+
+    private static bool EndsWithUnescapedDot(string name)
+    {
+        if (!name.EndsWith('.'))
+            return false;
+
+        // An even number of backslashes before the dot escape each other, not the dot
+        var backslashes = 0;
+        for (var i = name.Length - 2; i >= 0 && name[i] == '\\'; i--)
+            backslashes++;
+
+        return backslashes % 2 == 0;
     }
 
     /// <summary>Rejects malformed/truncated packets atomically, including invalid compression and RDATA lengths.</summary>
