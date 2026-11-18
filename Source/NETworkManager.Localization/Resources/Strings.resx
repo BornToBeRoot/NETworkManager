@@ -5580,7 +5580,7 @@ Do you want to start the scan?</value>
     <value>Discovery completed. The results show the last received service information.</value>
   </data>
   <data name="MDNSDiscovery_DurationHelp" xml:space="preserve">
-    <value>Discovery duration in seconds. Set to 0 to browse continuously until Stop is pressed. Discovery also stops when you switch to another tool.</value>
+    <value>Discovery duration in seconds. Set to 0 to browse continuously until Stop is pressed. Discovery continues when you switch to another tool.</value>
   </data>
   <data name="MDNSDiscovery_Empty" xml:space="preserve">
     <value>No services found. Select a network interface and browse. Devices must advertise services on this local network; firewalls, VPNs and Wi-Fi client isolation can block discovery.</value>

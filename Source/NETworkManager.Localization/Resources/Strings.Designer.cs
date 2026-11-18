@@ -1220,7 +1220,7 @@ namespace NETworkManager.Localization.Resources {
                 return ResourceManager.GetString("ApplicationName_MDNSDiscovery", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Neighbor Table.
         /// </summary>
@@ -8113,159 +8113,6 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Browse.
-        /// </summary>
-        public static string MDNSDiscovery_Browse {
-            get {
-                return ResourceManager.GetString("MDNSDiscovery_Browse", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Discovering services on the selected network interface....
-        /// </summary>
-        public static string MDNSDiscovery_Browsing {
-            get {
-                return ResourceManager.GetString("MDNSDiscovery_Browsing", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Discovery completed. The results show the last received service information..
-        /// </summary>
-        public static string MDNSDiscovery_Completed {
-            get {
-                return ResourceManager.GetString("MDNSDiscovery_Completed", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Discovery duration in seconds. Set to 0 to browse continuously until Stop is pressed. Discovery also stops when you switch to another tool..
-        /// </summary>
-        public static string MDNSDiscovery_DurationHelp {
-            get {
-                return ResourceManager.GetString("MDNSDiscovery_DurationHelp", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to No services found. Select a network interface and browse. Devices must advertise services on this local network; firewalls, VPNs and Wi-Fi client isolation can block discovery..
-        /// </summary>
-        public static string MDNSDiscovery_Empty {
-            get {
-                return ResourceManager.GetString("MDNSDiscovery_Empty", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Service discovery failed. Check the network interface and whether UDP port 5353 is available and allowed by the firewall..
-        /// </summary>
-        public static string MDNSDiscovery_Failed {
-            get {
-                return ResourceManager.GetString("MDNSDiscovery_Failed", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Enter * or a service type such as _ipp._tcp, _http._tcp.local. or _ssh._tcp..
-        /// </summary>
-        public static string MDNSDiscovery_InvalidServiceType {
-            get {
-                return ResourceManager.GetString("MDNSDiscovery_InvalidServiceType", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to No active network interface with multicast support was found..
-        /// </summary>
-        public static string MDNSDiscovery_NoInterface {
-            get {
-                return ResourceManager.GetString("MDNSDiscovery_NoInterface", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to No DNS records received. Start browsing on the selected interface..
-        /// </summary>
-        public static string MDNSDiscovery_NoRecords {
-            get {
-                return ResourceManager.GetString("MDNSDiscovery_NoRecords", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to SRV priority.
-        /// </summary>
-        public static string MDNSDiscovery_Priority {
-            get {
-                return ResourceManager.GetString("MDNSDiscovery_Priority", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Records.
-        /// </summary>
-        public static string MDNSDiscovery_Records {
-            get {
-                return ResourceManager.GetString("MDNSDiscovery_Records", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Service type.
-        /// </summary>
-        public static string MDNSDiscovery_ServiceType {
-            get {
-                return ResourceManager.GetString("MDNSDiscovery_ServiceType", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Enter * to discover all advertised service types (also probes common printer, scanner, web and media service types), or select or enter a type such as _ipp._tcp. Discovery is limited to the local. domain..
-        /// </summary>
-        public static string MDNSDiscovery_ServiceTypeHelp {
-            get {
-                return ResourceManager.GetString("MDNSDiscovery_ServiceTypeHelp", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Services.
-        /// </summary>
-        public static string MDNSDiscovery_Services {
-            get {
-                return ResourceManager.GetString("MDNSDiscovery_Services", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Discovery stopped. The results show the last received service information..
-        /// </summary>
-        public static string MDNSDiscovery_Stopped {
-            get {
-                return ResourceManager.GetString("MDNSDiscovery_Stopped", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to TXT records.
-        /// </summary>
-        public static string MDNSDiscovery_TXTRecords {
-            get {
-                return ResourceManager.GetString("MDNSDiscovery_TXTRecords", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to SRV weight.
-        /// </summary>
-        public static string MDNSDiscovery_Weight {
-            get {
-                return ResourceManager.GetString("MDNSDiscovery_Weight", resourceCulture);
-            }
-        }
-
-        /// <summary>
         ///   Looks up a localized string similar to Magenta.
         /// </summary>
         public static string Magenta {
@@ -8273,7 +8120,7 @@ namespace NETworkManager.Localization.Resources {
                 return ResourceManager.GetString("Magenta", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Magic packet successfully sent!.
         /// </summary>
@@ -8282,7 +8129,7 @@ namespace NETworkManager.Localization.Resources {
                 return ResourceManager.GetString("MagicPacketSentMessage", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Management.
         /// </summary>
@@ -8291,7 +8138,7 @@ namespace NETworkManager.Localization.Resources {
                 return ResourceManager.GetString("Management", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Map.
         /// </summary>
@@ -8415,6 +8262,159 @@ namespace NETworkManager.Localization.Resources {
         public static string MDNS {
             get {
                 return ResourceManager.GetString("MDNS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Browse.
+        /// </summary>
+        public static string MDNSDiscovery_Browse {
+            get {
+                return ResourceManager.GetString("MDNSDiscovery_Browse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Discovering services on the selected network interface....
+        /// </summary>
+        public static string MDNSDiscovery_Browsing {
+            get {
+                return ResourceManager.GetString("MDNSDiscovery_Browsing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Discovery completed. The results show the last received service information..
+        /// </summary>
+        public static string MDNSDiscovery_Completed {
+            get {
+                return ResourceManager.GetString("MDNSDiscovery_Completed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Discovery duration in seconds. Set to 0 to browse continuously until Stop is pressed. Discovery continues when you switch to another tool..
+        /// </summary>
+        public static string MDNSDiscovery_DurationHelp {
+            get {
+                return ResourceManager.GetString("MDNSDiscovery_DurationHelp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No services found. Select a network interface and browse. Devices must advertise services on this local network; firewalls, VPNs and Wi-Fi client isolation can block discovery..
+        /// </summary>
+        public static string MDNSDiscovery_Empty {
+            get {
+                return ResourceManager.GetString("MDNSDiscovery_Empty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Service discovery failed. Check the network interface and whether UDP port 5353 is available and allowed by the firewall..
+        /// </summary>
+        public static string MDNSDiscovery_Failed {
+            get {
+                return ResourceManager.GetString("MDNSDiscovery_Failed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter * or a service type such as _ipp._tcp, _http._tcp.local. or _ssh._tcp..
+        /// </summary>
+        public static string MDNSDiscovery_InvalidServiceType {
+            get {
+                return ResourceManager.GetString("MDNSDiscovery_InvalidServiceType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No active network interface with multicast support was found..
+        /// </summary>
+        public static string MDNSDiscovery_NoInterface {
+            get {
+                return ResourceManager.GetString("MDNSDiscovery_NoInterface", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No DNS records received. Start browsing on the selected interface..
+        /// </summary>
+        public static string MDNSDiscovery_NoRecords {
+            get {
+                return ResourceManager.GetString("MDNSDiscovery_NoRecords", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SRV priority.
+        /// </summary>
+        public static string MDNSDiscovery_Priority {
+            get {
+                return ResourceManager.GetString("MDNSDiscovery_Priority", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Records.
+        /// </summary>
+        public static string MDNSDiscovery_Records {
+            get {
+                return ResourceManager.GetString("MDNSDiscovery_Records", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Services.
+        /// </summary>
+        public static string MDNSDiscovery_Services {
+            get {
+                return ResourceManager.GetString("MDNSDiscovery_Services", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Service type.
+        /// </summary>
+        public static string MDNSDiscovery_ServiceType {
+            get {
+                return ResourceManager.GetString("MDNSDiscovery_ServiceType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter * to discover all advertised service types (also probes common printer, scanner, web and media service types), or select or enter a type such as _ipp._tcp. Discovery is limited to the local. domain..
+        /// </summary>
+        public static string MDNSDiscovery_ServiceTypeHelp {
+            get {
+                return ResourceManager.GetString("MDNSDiscovery_ServiceTypeHelp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Discovery stopped. The results show the last received service information..
+        /// </summary>
+        public static string MDNSDiscovery_Stopped {
+            get {
+                return ResourceManager.GetString("MDNSDiscovery_Stopped", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TXT records.
+        /// </summary>
+        public static string MDNSDiscovery_TXTRecords {
+            get {
+                return ResourceManager.GetString("MDNSDiscovery_TXTRecords", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SRV weight.
+        /// </summary>
+        public static string MDNSDiscovery_Weight {
+            get {
+                return ResourceManager.GetString("MDNSDiscovery_Weight", resourceCulture);
             }
         }
         

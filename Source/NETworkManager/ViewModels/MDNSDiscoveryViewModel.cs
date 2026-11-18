@@ -299,7 +299,11 @@ public sealed class MDNSDiscoveryViewModel : ViewModelBase
         _cancellation?.Cancel();
     }
 
-    public void OnViewHide() => Stop();
+    /// <summary>Discovery continues in the background, like the scanners.</summary>
+    public void OnViewHide()
+    {
+    }
+
     public void OnViewVisible() { if (!IsRunning) RefreshInterfaces(); }
 
     public async Task OpenAsync(ApplicationRequest request)
