@@ -99,6 +99,10 @@ public enum DocumentationIdentifier
     ///     Discovery Protocol documentation page.
     /// </summary>
     ApplicationDiscoveryProtocol,
+
+    /// <summary>
+    ///     mDNS / DNS-SD documentation page.
+    /// </summary>
     ApplicationMDNSDiscovery,
 
     /// <summary>
