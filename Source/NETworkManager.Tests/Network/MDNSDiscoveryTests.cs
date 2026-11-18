@@ -186,6 +186,31 @@ public class MDNSDiscoveryTests
     }
 
     [Fact]
+    public void BrowsesSeveralServiceTypes()
+    {
+        var cache = new MDNSServiceCache(["_ipp._tcp", "_http._tcp.local."], "Ethernet");
+        Assert.Equal(new[] { ("_http._tcp.local.", (ushort)12), (Type, (ushort)12) },
+            cache.GetQuestions(Now).Order());
+        cache.ProcessResponse(Packet(Ptr(), new Record("_http._tcp.local.", 12, Name("Web._http._tcp.local.")),
+            new Record("_ssh._tcp.local.", 12, Name("Server._ssh._tcp.local."))), Now);
+        Assert.Equal(new[] { "_http._tcp.local.", Type }, cache.GetServices(Now).Select(x => x.ServiceType).Order());
+    }
+
+    [Fact]
+    public void AllServiceTypesIncludeTheOthers()
+    {
+        var cache = new MDNSServiceCache(["_ipp._tcp", "*"], "Ethernet");
+        Assert.Contains((MDNSServiceType.Enumeration, (ushort)12), cache.GetQuestions(Now));
+    }
+
+    [Fact]
+    public void RejectsNoOrInvalidServiceTypes()
+    {
+        Assert.Throws<ArgumentException>(() => new MDNSServiceCache(Array.Empty<string>(), "Ethernet"));
+        Assert.Throws<ArgumentException>(() => new MDNSServiceCache(["_ipp._tcp", "printers"], "Ethernet"));
+    }
+
+    [Fact]
     public void FiltersServicesByRequestedTypeAndHonorsTTL()
     {
         var cache = new MDNSServiceCache("_http._tcp", "Ethernet");

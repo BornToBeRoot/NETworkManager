@@ -32,15 +32,44 @@ public sealed class MDNSServiceCache
     // Keys of the records per RRset (lowercase name, type), so a cache flush doesn't search the whole cache per packet
     private readonly Dictionary<(string Name, ushort Type), HashSet<string>> _rrsets = new();
     private readonly Dictionary<(string Name, ushort Type), Question> _questions = new();
-    private readonly string _serviceType;
+    // Browsed service types (normalized), empty = all (*)
+    private readonly HashSet<string> _serviceTypes = new(StringComparer.Ordinal);
     private readonly string _networkInterface;
 
-    public MDNSServiceCache(string serviceType, string networkInterface)
+    /// <summary>
+    ///     Creates the cache of a browse of one service type (or <c>*</c> for all).
+    /// </summary>
+    public MDNSServiceCache(string serviceType, string networkInterface) : this([serviceType], networkInterface)
     {
-        if (!MDNSServiceType.TryNormalize(serviceType, out _serviceType))
-            throw new ArgumentException("Invalid service type.", nameof(serviceType));
+    }
+
+    /// <summary>
+    ///     Creates the cache of a browse of several service types (e.g. of a service type profile). <c>*</c> browses
+    ///     all advertised service types.
+    /// </summary>
+    public MDNSServiceCache(IEnumerable<string> serviceTypes, string networkInterface)
+    {
+        ArgumentNullException.ThrowIfNull(serviceTypes);
+
+        foreach (var serviceType in serviceTypes)
+        {
+            if (!MDNSServiceType.TryNormalize(serviceType, out var normalized))
+                throw new ArgumentException($"Invalid service type \"{serviceType}\".", nameof(serviceTypes));
+
+            _serviceTypes.Add(normalized);
+        }
+
+        if (_serviceTypes.Count == 0)
+            throw new ArgumentException("No service type.", nameof(serviceTypes));
+
+        // * includes all others
+        if (_serviceTypes.Contains("*"))
+            _serviceTypes.Clear();
+
         _networkInterface = networkInterface;
     }
+
+    private bool BrowsesAll => _serviceTypes.Count == 0;
 
     /// <summary>
     ///     Incremented when a record is added, replaced by a different value or removed (not when a record is only
@@ -155,7 +184,7 @@ public sealed class MDNSServiceCache
 
     private IEnumerable<Entry> Instances => _records.Values.Where(x => x.Record.Type == MDNSMessage.PTR &&
         MDNSServiceType.TryNormalize(x.Record.Name, out var type) && type != "*" &&
-        (_serviceType == "*" || type == _serviceType) &&
+        (BrowsesAll || _serviceTypes.Contains(type)) &&
         x.Record.Target.EndsWith("." + type, StringComparison.OrdinalIgnoreCase) &&
         x.Record.Target.Length > type.Length + 1);
 
@@ -165,7 +194,7 @@ public sealed class MDNSServiceCache
         Expire(now);
         var wanted = new Dictionary<(string Name, ushort Type), string>();
         void Add(string name, ushort type) => wanted.TryAdd((name.ToLowerInvariant(), type), name);
-        if (_serviceType == "*")
+        if (BrowsesAll)
         {
             Add(MDNSServiceType.Enumeration, MDNSMessage.PTR);
             foreach (var type in CommonServiceTypes)
@@ -176,7 +205,8 @@ public sealed class MDNSServiceCache
                     Add(type, MDNSMessage.PTR);
         }
         else
-            Add(_serviceType, MDNSMessage.PTR);
+            foreach (var type in _serviceTypes)
+                Add(type, MDNSMessage.PTR);
 
         var instances = Instances.ToArray();
         var instanceNames = instances.Select(x => x.Record.Target).ToHashSet(StringComparer.OrdinalIgnoreCase);

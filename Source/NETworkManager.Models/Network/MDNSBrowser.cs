@@ -45,18 +45,18 @@ public static class MDNSBrowser
     ///     cache changed) and once per second (TTL countdown).
     /// </summary>
     /// <param name="networkInterface">Interface to browse on.</param>
-    /// <param name="serviceType">Service type (e.g. <c>_ipp._tcp</c>) or <c>*</c>.</param>
+    /// <param name="serviceTypes">Service types (e.g. <c>_ipp._tcp</c>), <c>*</c> for all.</param>
     /// <param name="update">Receives the snapshots (worker thread).</param>
     /// <param name="cancellationToken">Ends the browse.</param>
     /// <param name="cache">
     ///     Cache of an earlier browse of the same interface and service type, to continue it (e.g. after a pause): the
     ///     cached records are kept (if not expired meanwhile) and the due questions are sent right away.
     /// </param>
-    public static async Task BrowseAsync(MDNSInterfaceInfo networkInterface, string serviceType,
+    public static async Task BrowseAsync(MDNSInterfaceInfo networkInterface, IReadOnlyCollection<string> serviceTypes,
         Action<MDNSDiscoverySnapshot> update, CancellationToken cancellationToken, MDNSServiceCache cache = null)
     {
         ArgumentNullException.ThrowIfNull(networkInterface);
-        cache ??= new MDNSServiceCache(serviceType, networkInterface.Name);
+        cache ??= new MDNSServiceCache(serviceTypes, networkInterface.Name);
         var sockets = new List<(Socket Socket, IPEndPoint Destination, int Index)>();
         using var lifetime = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
         var receivers = new List<Task>();
@@ -91,7 +91,7 @@ public static class MDNSBrowser
                 FullMode = BoundedChannelFullMode.DropOldest
             }, _ => Interlocked.Increment(ref droppedPackets));
 
-            Log.Info($"mDNS browse on \"{networkInterface.Name}\" for {serviceType} started " +
+            Log.Info($"mDNS browse on \"{networkInterface.Name}\" for {string.Join(", ", serviceTypes)} started " +
                      $"({string.Join(", ", sockets.Select(x => x.Socket.AddressFamily == AddressFamily.InterNetworkV6 ? "IPv6" : "IPv4"))}).");
 
             receivers.AddRange(sockets.Select(x => ReceiveAsync(x.Socket, x.Index, packets.Writer, lifetime.Token)));

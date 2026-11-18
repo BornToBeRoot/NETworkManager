@@ -47,7 +47,7 @@ public sealed class MDNSDiscoveryViewModel : ViewModelBase
     // A browse until stopped is paused while the view is hidden (like the auto refresh of other tools) and resumed
     // with the same interface, service type and cache when it is shown again
     private MDNSInterfaceInfo _browseInterface;
-    private string _browseServiceType;
+    private IReadOnlyList<string> _browseServiceTypes;
     private MDNSServiceCache _browseCache;
     private bool _isPaused;
 
@@ -699,8 +699,8 @@ public sealed class MDNSDiscoveryViewModel : ViewModelBase
         _isPaused = false;
 
         _browseInterface = SelectedInterface;
-        _browseServiceType = serviceType;
-        _browseCache = new MDNSServiceCache(serviceType, _browseInterface.Name);
+        _browseServiceTypes = [serviceType];
+        _browseCache = new MDNSServiceCache(_browseServiceTypes, _browseInterface.Name);
 
         SettingsManager.Current.MDNSDiscovery_ServiceType = ServiceType;
         SettingsManager.Current.MDNSDiscovery_Duration = SelectedDuration;
@@ -720,14 +720,14 @@ public sealed class MDNSDiscoveryViewModel : ViewModelBase
     }
 
     /// <summary>
-    ///     Runs the browse of <see cref="_browseInterface" /> / <see cref="_browseServiceType" /> with
+    ///     Runs the browse of <see cref="_browseInterface" /> / <see cref="_browseServiceTypes" /> with
     ///     <see cref="_browseCache" /> (new browse or resumed after a pause, the rows are kept).
     /// </summary>
     /// <param name="duration">Duration in seconds, 0 = until stopped.</param>
     private async Task Run(int duration)
     {
         var networkInterface = _browseInterface;
-        var serviceType = _browseServiceType;
+        var serviceTypes = _browseServiceTypes;
         var cache = _browseCache;
 
         _cancellationTokenSource?.Dispose();
@@ -752,7 +752,7 @@ public sealed class MDNSDiscoveryViewModel : ViewModelBase
 
         try
         {
-            await Task.Run(() => MDNSBrowser.BrowseAsync(networkInterface, serviceType,
+            await Task.Run(() => MDNSBrowser.BrowseAsync(networkInterface, serviceTypes,
                 snapshot => Interlocked.Exchange(ref _pendingSnapshot, snapshot), linked.Token, cache));
         }
         catch (OperationCanceledException) when (linked.IsCancellationRequested)
