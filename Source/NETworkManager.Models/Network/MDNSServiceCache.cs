@@ -215,11 +215,14 @@ public sealed class MDNSServiceCache
         return result;
     }
 
-    /// <summary>One row per resource record, with each character string of a TXT record on its own row.</summary>
+    /// <summary>
+    ///     One row per resource record, with each character string of a TXT record on its own row. At most 4096 rows,
+    ///     in the order of the keys, so the same rows are shown in every snapshot.
+    /// </summary>
     public IReadOnlyList<MDNSRecordInfo> GetRecords(DateTimeOffset now)
     {
         Expire(now);
-        return _records.SelectMany(pair =>
+        return _records.OrderBy(x => x.Key, StringComparer.Ordinal).SelectMany(pair =>
         {
             var record = pair.Value.Record;
             var type = Enum.IsDefined((DnsClient.QueryType)record.Type)

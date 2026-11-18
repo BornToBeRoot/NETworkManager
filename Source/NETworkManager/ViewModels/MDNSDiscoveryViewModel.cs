@@ -318,7 +318,7 @@ public sealed class MDNSDiscoveryViewModel : ViewModelBase
 
     public ICommand CopySelectionCommand => new RelayCommand(_ => ClipboardHelper.SetClipboard(SelectedTabIndex == 0
         ? string.Join(Environment.NewLine + Environment.NewLine, SelectedResults.Cast<MDNSServiceInfo>()
-            .Select(x => $"{x.FullName}\n{x.Hostname}\t{x.Port}\t{x.Addresses}\n{x.TXTRecords}"))
+            .Select(x => string.Join(Environment.NewLine, x.FullName, $"{x.Hostname}\t{x.Port}\t{x.Addresses}", x.TXTRecords)))
         : string.Join(Environment.NewLine, SelectedRecords.Cast<MDNSRecordInfo>()
             .Select(x => $"{x.Name}\t{x.Type}\t{x.Class}\t{x.TTL}\t{x.Value}"))),
         _ => (SelectedTabIndex == 0 ? SelectedResults.Count : SelectedRecords.Count) > 0);
