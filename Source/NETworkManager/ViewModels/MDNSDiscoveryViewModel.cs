@@ -44,6 +44,13 @@ public sealed class MDNSDiscoveryViewModel : ViewModelBase
     private CancellationTokenSource _cancellationTokenSource;
     private Task _browseTask = Task.CompletedTask;
 
+    // A browse until stopped is paused while the view is hidden (like the auto refresh of other tools) and resumed
+    // with the same interface, service type and cache when it is shown again
+    private MDNSInterfaceInfo _browseInterface;
+    private string _browseServiceType;
+    private MDNSServiceCache _browseCache;
+    private bool _isPaused;
+
     // The browser reports detached snapshots from a worker thread; the latest one is merged into the rows by the
     // flush timer (like the results buffer of the scanners), so the dispatcher isn't called per snapshot.
     private MDNSDiscoverySnapshot _pendingSnapshot;
@@ -629,12 +636,15 @@ public sealed class MDNSDiscoveryViewModel : ViewModelBase
         if (IsRunning || SelectedInterface == null || !MDNSServiceType.TryNormalize(ServiceType, out var serviceType))
             return;
 
-        var networkInterface = SelectedInterface;
-        var duration = SelectedDuration;
+        _isPaused = false;
+
+        _browseInterface = SelectedInterface;
+        _browseServiceType = serviceType;
+        _browseCache = new MDNSServiceCache(serviceType, _browseInterface.Name);
 
         SettingsManager.Current.MDNSDiscovery_ServiceType = ServiceType;
-        SettingsManager.Current.MDNSDiscovery_Duration = duration;
-        SettingsManager.Current.MDNSDiscovery_InterfaceId = networkInterface.Id;
+        SettingsManager.Current.MDNSDiscovery_Duration = SelectedDuration;
+        SettingsManager.Current.MDNSDiscovery_InterfaceId = _browseInterface.Id;
 
         IsStatusMessageDisplayed = false;
         StatusMessage = string.Empty;
@@ -645,6 +655,20 @@ public sealed class MDNSDiscoveryViewModel : ViewModelBase
         _serviceRows.Clear();
         _recordRows.Clear();
         Interlocked.Exchange(ref _pendingSnapshot, null);
+
+        await Run(SelectedDuration);
+    }
+
+    /// <summary>
+    ///     Runs the browse of <see cref="_browseInterface" /> / <see cref="_browseServiceType" /> with
+    ///     <see cref="_browseCache" /> (new browse or resumed after a pause, the rows are kept).
+    /// </summary>
+    /// <param name="duration">Duration in seconds, 0 = until stopped.</param>
+    private async Task Run(int duration)
+    {
+        var networkInterface = _browseInterface;
+        var serviceType = _browseServiceType;
+        var cache = _browseCache;
 
         _cancellationTokenSource?.Dispose();
         _cancellationTokenSource = new CancellationTokenSource();
@@ -669,11 +693,11 @@ public sealed class MDNSDiscoveryViewModel : ViewModelBase
         try
         {
             await Task.Run(() => MDNSBrowser.BrowseAsync(networkInterface, serviceType,
-                snapshot => Interlocked.Exchange(ref _pendingSnapshot, snapshot), linked.Token));
+                snapshot => Interlocked.Exchange(ref _pendingSnapshot, snapshot), linked.Token, cache));
         }
         catch (OperationCanceledException) when (linked.IsCancellationRequested)
         {
-            // Stopped before the duration expired (until stopped: the normal end)
+            // Stopped before the duration expired (until stopped / paused: the normal end)
             if (_cancellationTokenSource.IsCancellationRequested && duration > 0)
                 SetStatusMessage(Strings.CanceledByUserMessage, StatusLevel.None);
         }
@@ -730,19 +754,52 @@ public sealed class MDNSDiscoveryViewModel : ViewModelBase
     }
 
     /// <summary>
-    ///     Called when the view is shown: reloads the interfaces (not while browsing).
+    ///     Called when the view is shown: resumes a paused browse (see <see cref="OnViewHide" />), otherwise reloads
+    ///     the interfaces (not while browsing).
     /// </summary>
     public void OnViewVisible()
     {
+        if (_isPaused)
+        {
+            _ = Resume();
+
+            return;
+        }
+
         if (!IsRunning)
             LoadInterfaces();
     }
 
     /// <summary>
-    ///     Called when the view is hidden. The browse continues in the background, like the scanners.
+    ///     Called when the view is hidden. A browse with a duration continues in the background like the scanners, a
+    ///     browse until stopped is paused (like the auto refresh of other tools) and resumed when the view is shown.
     /// </summary>
     public void OnViewHide()
     {
+        if (!IsRunning || BrowseDuration != 0)
+            return;
+
+        _isPaused = true;
+
+        Stop();
+    }
+
+    /// <summary>
+    ///     Resumes a paused browse with the same cache: the rows are kept, expired records are removed and the due
+    ///     questions are sent right away.
+    /// </summary>
+    private async Task Resume()
+    {
+        // The pause may still be ending (shown again right away)
+        await _browseTask;
+
+        // Not if a new browse was started meanwhile (e.g. run command)
+        if (!_isPaused || IsRunning)
+            return;
+
+        _isPaused = false;
+
+        await (_browseTask = Run(0));
     }
 
     private Task Export()

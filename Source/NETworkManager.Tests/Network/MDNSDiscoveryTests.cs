@@ -480,6 +480,21 @@ public class MDNSDiscoveryTests
     }
 
     [Fact]
+    public void ResumedCacheKeepsValidRecordsAndAsksDueQuestionsRightAway()
+    {
+        // Paused browse (view hidden) continued 5 minutes later with the same cache
+        var cache = new MDNSServiceCache(Type, "Ethernet");
+        cache.GetQuestions(Now);
+        cache.ProcessResponse(Packet(Ptr(4500), Srv(), Address()), Now); // SRV / A: TTL 120
+        cache.GetQuestions(Now.AddSeconds(1));
+
+        var resumed = Now.AddMinutes(5);
+        var service = Assert.Single(cache.GetServices(resumed));
+        Assert.Empty(service.Hostname); // SRV expired during the pause
+        Assert.Contains((Instance, (ushort)33), cache.GetQuestions(resumed));
+    }
+
+    [Fact]
     public void RecordsAreReturnedInAStableOrder()
     {
         var cache = new MDNSServiceCache(Type, "Ethernet");

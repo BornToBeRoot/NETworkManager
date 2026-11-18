@@ -28,7 +28,7 @@ Discovery uses IPv4 (`224.0.0.251`) and IPv6 (`ff02::fb`) multicast on UDP port 
 
 With `*`, the tool queries `_services._dns-sd._udp.local.` and browses the returned types. It also probes common printer, scanner, web, file sharing and media types because some devices do not answer service type enumeration. A specific type can be entered even when it is not in the suggestions.
 
-Discovery stops when its duration expires or when **Stop** is pressed. It continues in the background when you switch to another tool. The last results remain available for inspection and export. Starting again clears the previous results. The interface, service type and duration are remembered.
+Discovery stops when its duration expires or when **Stop** is pressed. With a duration it continues in the background when you switch to another tool. With **Until stopped** it is paused while another tool is shown and continues when you return; the results are kept (records that expired meanwhile are removed). The last results remain available for inspection and export. Starting again clears the previous results. The interface, service type and duration are remembered.
 
 ## Results
 
