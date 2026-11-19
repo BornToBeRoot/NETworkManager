@@ -1185,10 +1185,8 @@ public class RunCommandViewModel : ViewModelBase
         if (_result.Command?.Application != ApplicationName.MDNSDiscovery || _result.ProfileName != null)
             return [];
 
-        return GetValueSuggestions(RunCommandManager.GetMDNSServiceTypeProfiles()
-                .OrderBy(x => x.Name, StringComparer.OrdinalIgnoreCase)
-                .Select(x => (x.Name, x.ServiceTypes))
-                .Prepend(("*", Strings.MDNSDiscovery_AllServiceTypes)),
+        // The same list as in the input of the tool
+        return GetValueSuggestions(InputSuggestions.GetMDNSDiscoveryServiceTypeProfiles(),
             RunCommandSuggestionKind.ServiceTypeProfile, Strings.MDNSDiscovery_ServiceTypeProfiles, isList: true);
     }
 

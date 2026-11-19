@@ -89,11 +89,20 @@ public sealed class InputSuggestions
     public static InputSuggestions ForMDNSDiscoveryServiceTypes()
     {
         return new InputSuggestions(SettingsManager.Current.MDNSDiscovery_ServiceTypeProfiles,
-            () => SettingsManager.Current.MDNSDiscovery_ServiceTypeProfiles
-                .OrderBy(x => x.Name, StringComparer.OrdinalIgnoreCase)
-                .Select(x => (x.Name, x.ServiceTypes))
-                .Prepend(("*", Strings.MDNSDiscovery_AllServiceTypes)),
-            Strings.MDNSDiscovery_ServiceTypeProfiles, SettingsManager.Current.MDNSDiscovery_ServiceTypeHistory);
+            GetMDNSDiscoveryServiceTypeProfiles, Strings.MDNSDiscovery_ServiceTypeProfiles,
+            SettingsManager.Current.MDNSDiscovery_ServiceTypeHistory);
+    }
+
+    /// <summary>
+    ///     Gets * (all service types, always first) and the service type profiles of the mDNS Discovery tool (sorted by
+    ///     name), with their description - the same list in the input of the tool and in the run command.
+    /// </summary>
+    public static IEnumerable<(string Name, string Description)> GetMDNSDiscoveryServiceTypeProfiles()
+    {
+        return SettingsManager.Current.MDNSDiscovery_ServiceTypeProfiles
+            .OrderBy(x => x.Name, StringComparer.OrdinalIgnoreCase)
+            .Select(x => (x.Name, x.ServiceTypes))
+            .Prepend(("*", Strings.MDNSDiscovery_AllServiceTypes));
     }
 
     /// <summary>

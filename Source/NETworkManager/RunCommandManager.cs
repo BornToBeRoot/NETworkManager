@@ -122,16 +122,6 @@ public static class RunCommandManager
     }
 
     /// <summary>
-    ///     Gets the service type profiles of the mDNS Discovery tool (e.g. "Printers"), which can be used instead of
-    ///     service types.
-    /// </summary>
-    /// <returns>Service type profiles.</returns>
-    public static IEnumerable<MDNSServiceTypeProfileInfo> GetMDNSServiceTypeProfiles()
-    {
-        return SettingsManager.Current.MDNSDiscovery_ServiceTypeProfiles;
-    }
-
-    /// <summary>
     ///     Gets the durations of the mDNS Discovery tool in seconds (0 = until stopped).
     /// </summary>
     /// <returns>Durations.</returns>
