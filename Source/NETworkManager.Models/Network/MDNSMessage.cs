@@ -26,12 +26,172 @@ public static class MDNSMessage
 {
     public const ushort A = 1, PTR = 12, TXT = 16, AAAA = 28, SRV = 33;
 
+    /// <summary>
+    ///     Maximum size of a query packet: fits the minimum IPv6 MTU (1280 bytes - 40 bytes IPv6 header - 8 bytes UDP
+    ///     header), so no packet is fragmented on any link.
+    /// </summary>
+    public const int MaxQuerySize = 1232;
+
     /// <summary>Builds a multicast question (ID zero, class IN, multicast response).</summary>
-    public static byte[] CreateQuery(string name, ushort type)
+    public static byte[] CreateQuery(string name, ushort type) => CreateQueries([(name, type)])[0];
+
+    /// <summary>
+    ///     Builds the packets of multicast questions (ID zero, class IN, multicast response): as many questions as fit
+    ///     in one packet (<see cref="MaxQuerySize" />, names compressed), each with its known answers (RFC 6762 7.1), so
+    ///     the responders don't send the records again that are cached. Known answers that don't fit with their
+    ///     question alone are left out (the responders send them, like without known answers).
+    /// </summary>
+    /// <param name="questions">Questions (escaped presentation format names).</param>
+    /// <param name="getKnownAnswers">
+    ///     Gets the known answers of a question (PTR records: the target and the remaining TTL), may be null.
+    /// </param>
+    /// <returns>Packets in the order of the questions.</returns>
+    public static IReadOnlyList<byte[]> CreateQueries(IReadOnlyList<(string Name, ushort Type)> questions,
+        Func<string, ushort, IReadOnlyList<(string Target, uint TTL)>> getKnownAnswers = null)
     {
-        var data = new List<byte> { 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0 };
+        var packets = new List<byte[]>();
+        var current = new List<QueryQuestion>();
+
+        foreach (var (name, type) in questions)
+        {
+            var question = new QueryQuestion(EncodeName(name), type,
+                (getKnownAnswers?.Invoke(name, type) ?? []).Select(x => (Target: TryEncodeName(x.Target), x.TTL))
+                .Where(x => x.Target != null).ToArray());
+
+            if (TryBuildQuery([.. current, question], out _))
+            {
+                current.Add(question);
+                continue;
+            }
+
+            if (current.Count > 0 && TryBuildQuery(current, out var packet))
+                packets.Add(packet);
+
+            current = [question];
+
+            // Alone with too many known answers: as many as fit
+            if (TryBuildQuery(current, out packet))
+                continue;
+
+            packets.Add(packet);
+            current.Clear();
+        }
+
+        if (current.Count > 0 && TryBuildQuery(current, out var last))
+            packets.Add(last);
+
+        return packets;
+    }
+
+    private sealed record QueryQuestion(List<byte[]> Name, ushort Type, (List<byte[]> Target, uint TTL)[] KnownAnswers);
+
+    /// <summary>
+    ///     Builds a query packet: the questions, then their known answers while they fit. Names are compressed against
+    ///     the names of the questions (their offsets don't change when an answer is added).
+    /// </summary>
+    /// <returns>True if the packet fits and contains all known answers.</returns>
+    private static bool TryBuildQuery(IReadOnlyList<QueryQuestion> questions, out byte[] packet)
+    {
+        var data = new List<byte>(MaxQuerySize) { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+        var offsets = new Dictionary<string, int>(StringComparer.Ordinal);
+
+        foreach (var question in questions)
+        {
+            WriteName(data, question.Name, offsets, true);
+            data.AddRange([(byte)(question.Type >> 8), (byte)question.Type, 0, 1]);
+        }
+
+        var answers = 0;
+        var complete = data.Count <= MaxQuerySize;
+
+        foreach (var question in questions)
+        {
+            foreach (var (target, ttl) in question.KnownAnswers)
+            {
+                var rdata = new List<byte>();
+                WriteName(rdata, target, offsets, false);
+
+                var record = new List<byte>();
+                WriteName(record, question.Name, offsets, false);
+                record.AddRange([(byte)(question.Type >> 8), (byte)question.Type, 0, 1,
+                    (byte)(ttl >> 24), (byte)(ttl >> 16), (byte)(ttl >> 8), (byte)ttl,
+                    (byte)(rdata.Count >> 8), (byte)rdata.Count]);
+                record.AddRange(rdata);
+
+                if (data.Count + record.Count > MaxQuerySize)
+                {
+                    complete = false;
+                    continue;
+                }
+
+                data.AddRange(record);
+                answers++;
+            }
+        }
+
+        data[4] = (byte)(questions.Count >> 8);
+        data[5] = (byte)questions.Count;
+        data[6] = (byte)(answers >> 8);
+        data[7] = (byte)answers;
+
+        packet = [.. data];
+
+        return complete;
+    }
+
+    /// <summary>
+    ///     Writes a name: its labels until a suffix that is already in the packet (a pointer to it, RFC 1035 4.1.4).
+    /// </summary>
+    /// <param name="data">Packet (questions) or a record that is added to the packet later (answers).</param>
+    /// <param name="labels">Labels of the name.</param>
+    /// <param name="offsets">Offsets of the suffixes in the packet (key: lowercase ASCII, DNS compares like that).</param>
+    /// <param name="register">Add the suffixes to the offsets (only if <paramref name="data" /> is the packet).</param>
+    private static void WriteName(List<byte> data, List<byte[]> labels, Dictionary<string, int> offsets, bool register)
+    {
+        for (var i = 0; i < labels.Count; i++)
+        {
+            var key = string.Join('.', labels.Skip(i).Select(x => Convert.ToHexString(x.Select(ToLowerAscii).ToArray())));
+
+            if (offsets.TryGetValue(key, out var offset))
+            {
+                data.AddRange([(byte)(0xC0 | offset >> 8), (byte)offset]);
+                return;
+            }
+
+            if (register && data.Count < 0x4000)
+                offsets[key] = data.Count;
+
+            data.Add((byte)labels[i].Length);
+            data.AddRange(labels[i]);
+        }
+
+        data.Add(0);
+
+        static byte ToLowerAscii(byte value) => value is >= (byte)'A' and <= (byte)'Z' ? (byte)(value | 0x20) : value;
+    }
+
+    private static List<byte[]> TryEncodeName(string name)
+    {
+        try
+        {
+            return EncodeName(name);
+        }
+        catch (ArgumentException)
+        {
+            return null;
+        }
+    }
+
+    /// <summary>
+    ///     Converts a name in the escaped presentation format (see <see cref="ReadResponse" />) to its labels.
+    /// </summary>
+    /// <exception cref="ArgumentException">The name is no valid DNS name.</exception>
+    private static List<byte[]> EncodeName(string name)
+    {
+        var labels = new List<byte[]>();
         var label = new List<byte>();
         var escaped = false;
+        var wireLength = 1;
         // Fully qualified: add the final dot if it is missing. Not TrimEnd: an escaped dot at the end of the last label
         // (e.g. a\.. = label "a.") is part of the label.
         var text = EndsWithUnescapedDot(name) ? name : name + ".";
@@ -74,8 +234,8 @@ public static class MDNSMessage
             {
                 if (label.Count is < 1 or > 63)
                     throw new ArgumentException("Invalid DNS label.", nameof(name));
-                data.Add((byte)label.Count);
-                data.AddRange(label);
+                wireLength += label.Count + 1;
+                labels.Add([.. label]);
                 label.Clear();
             }
 
@@ -83,10 +243,10 @@ public static class MDNSMessage
         }
 
         // Open escape or a last label without a dot (e.g. name\ becomes name\. with an escaped dot)
-        if (escaped || label.Count > 0 || data.Count > 266)
+        if (escaped || label.Count > 0 || wireLength > 255)
             throw new ArgumentException("Invalid DNS name.", nameof(name));
-        data.AddRange([0, (byte)(type >> 8), (byte)type, 0, 1]);
-        return [.. data];
+
+        return labels;
     }
 
     private static bool EndsWithUnescapedDot(string name)

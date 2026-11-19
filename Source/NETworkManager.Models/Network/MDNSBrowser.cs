@@ -157,9 +157,13 @@ public static class MDNSBrowser
                 // Bound work per tick, even if the link is very busy.
                 for (var i = 0; i < 512 && packets.Reader.TryRead(out var message); i++)
                     cache.ProcessResponse(message, now, networkInterface.IPv6Index);
-                foreach (var question in cache.GetQuestions(now))
+                // Several questions per packet, with their known answers (RFC 6762 7.1)
+                var questions = cache.GetQuestions(now);
+                var queries = questions.Count == 0
+                    ? []
+                    : MDNSMessage.CreateQueries(questions, (name, type) => cache.GetKnownAnswers(name, type, now));
+                foreach (var data in queries)
                 {
-                    var data = MDNSMessage.CreateQuery(question.Name, question.Type);
                     foreach (var socket in sockets)
                     {
                         try
@@ -169,8 +173,8 @@ public static class MDNSBrowser
                         }
                         catch (SocketException ex)
                         {
-                            // E.g. the network is (temporarily) unreachable: the question is asked again later
-                            Log.Debug($"Cannot send the mDNS question for \"{question.Name}\" ({ex.SocketErrorCode}).");
+                            // E.g. the network is (temporarily) unreachable: the questions are asked again later
+                            Log.Debug($"Cannot send the mDNS questions ({ex.SocketErrorCode}).");
                         }
                     }
                 }

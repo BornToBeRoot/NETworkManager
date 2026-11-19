@@ -392,6 +392,25 @@ public sealed class MDNSServiceCache
         return due;
     }
 
+    /// <summary>
+    ///     Gets the known answers of a question (RFC 6762 7.1): the cached PTR records of the name with more than half of
+    ///     their TTL remaining, so the responders don't send them again. Other questions are only asked when their
+    ///     records are about to expire (see <see cref="GetQuestions" />), so they have none.
+    /// </summary>
+    /// <param name="name">Name of the question.</param>
+    /// <param name="type">Type of the question.</param>
+    /// <param name="now">Current time.</param>
+    /// <returns>Targets and remaining TTLs (seconds).</returns>
+    public IReadOnlyList<(string Target, uint TTL)> GetKnownAnswers(string name, ushort type, DateTimeOffset now)
+    {
+        if (type != MDNSMessage.PTR || !_rrsets.TryGetValue((DNSNameComparer.ToLower(name), type), out var keys))
+            return [];
+
+        return keys.Select(x => _records[x])
+            .Where(x => (x.Expires - now).TotalSeconds > x.Record.TTL / 2.0)
+            .Select(x => (x.Record.Target, (uint)(x.Expires - now).TotalSeconds)).ToArray();
+    }
+
     /// <summary>Creates detached snapshots, including instances whose SRV/address resolution is still pending.</summary>
     public IReadOnlyList<MDNSServiceInfo> GetServices(DateTimeOffset now)
     {

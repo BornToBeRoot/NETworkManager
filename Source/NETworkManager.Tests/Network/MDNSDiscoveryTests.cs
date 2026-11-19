@@ -466,6 +466,80 @@ public class MDNSDiscoveryTests
         Assert.Throws<ArgumentException>(() =>
             MDNSMessage.CreateQuery(string.Join('.', Enumerable.Repeat(new string('a', 63), 5)) + ".", 12));
 
+    private static int Count(byte[] packet, int offset) => (packet[offset] << 8) | packet[offset + 1];
+
+    // The known answers of a query, read like a response (QR bit set)
+    private static IReadOnlyList<MDNSRecord> KnownAnswers(byte[] query)
+    {
+        var response = query.ToArray();
+        response[2] = 0x84;
+        return MDNSMessage.ReadResponse(response);
+    }
+
+    [Fact]
+    public void QueriesContainSeveralQuestionsWithCompressedNames()
+    {
+        var packet = Assert.Single(MDNSMessage.CreateQueries([(Type, 12), ("_IPPS._tcp.local.", 12), (Instance, 33)]));
+
+        Assert.Equal(3, Count(packet, 4));
+        Assert.Equal(0, Count(packet, 6));
+        // First name in full, "_tcp.local." of the second and the type of the instance as pointers
+        Assert.Equal(Name(Type), packet[12..(12 + Name(Type).Length)]);
+        Assert.Equal(12 + Name(Type).Length + 4 + 1 + 5 + 2 + 4 + 1 + 14 + 2 + 4, packet.Length);
+    }
+
+    [Fact]
+    public void QueriesContainTheKnownAnswersAfterTheQuestions()
+    {
+        var packet = Assert.Single(MDNSMessage.CreateQueries([(Type, 12), (Instance, 33)],
+            (name, type) => type == 12 ? [(Instance, 100), ("Other._ipp._tcp.local.", 4000)] : []));
+
+        Assert.Equal(2, Count(packet, 4));
+        Assert.Equal(2, Count(packet, 6));
+        var answers = KnownAnswers(packet);
+        Assert.Equal(new[] { Instance, "Other._ipp._tcp.local." }, answers.Select(x => x.Target));
+        Assert.All(answers, x => Assert.Equal((Type, (ushort)12, false), (x.Name, x.Type, x.CacheFlush)));
+        Assert.Equal(new uint[] { 100, 4000 }, answers.Select(x => x.TTL));
+    }
+
+    [Fact]
+    public void QueriesAreSplitIntoPacketsThatFitTheMinimumIPv6MTU()
+    {
+        var questions = Enumerable.Range(0, 100)
+            .Select(i => ($"Printer {i} on the second floor._ipp._tcp.local.", (ushort)33)).ToArray();
+        var packets = MDNSMessage.CreateQueries(questions);
+
+        Assert.True(packets.Count > 1);
+        Assert.All(packets, x => Assert.True(x.Length <= MDNSMessage.MaxQuerySize));
+        Assert.Equal(100, packets.Sum(x => Count(x, 4)));
+    }
+
+    [Fact]
+    public void KnownAnswersThatDoNotFitWithTheirQuestionAreLeftOut()
+    {
+        var known = Enumerable.Range(0, 200).Select(i => ($"Printer {i}._ipp._tcp.local.", 120u)).ToArray();
+        var packets = MDNSMessage.CreateQueries([(Type, 12), (Instance, 33)], (_, type) => type == 12 ? known : []);
+
+        // The question with as many known answers as fit, the next question in its own packet
+        Assert.Equal(2, packets.Count);
+        Assert.All(packets, x => Assert.True(x.Length <= MDNSMessage.MaxQuerySize));
+        var answers = KnownAnswers(packets[0]);
+        Assert.InRange(answers.Count, 20, 199);
+        Assert.Equal(known.Take(answers.Count).Select(x => x.Item1), answers.Select(x => x.Target));
+        Assert.Equal(0, Count(packets[1], 6));
+    }
+
+    [Fact]
+    public void KnownAnswersArePTRRecordsWithMoreThanHalfOfTheirTTL()
+    {
+        var cache = new MDNSServiceCache(Type, "Ethernet");
+        cache.ProcessResponse(Packet(Ptr(120), Srv()), Now);
+
+        Assert.Equal(new[] { (Instance, 61u) }, cache.GetKnownAnswers("_IPP._tcp.local.", 12, Now.AddSeconds(59)));
+        Assert.Empty(cache.GetKnownAnswers(Type, 12, Now.AddSeconds(61)));
+        Assert.Empty(cache.GetKnownAnswers(Instance, 33, Now));
+    }
+
     // Response parsing
 
     [Fact]
