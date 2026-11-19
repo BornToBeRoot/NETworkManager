@@ -521,19 +521,41 @@ public class MDNSDiscoveryTests
         Assert.Equal(100, packets.Sum(x => Count(x, 4)));
     }
 
+    private static bool IsTruncated(byte[] packet) => (packet[2] & 0x02) != 0;
+
     [Fact]
-    public void KnownAnswersThatDoNotFitWithTheirQuestionAreLeftOut()
+    public void KnownAnswersThatDoNotFitFollowInPacketsWithTheTCBit()
     {
         var known = Enumerable.Range(0, 200).Select(i => ($"Printer {i}._ipp._tcp.local.", 120u)).ToArray();
         var packets = MDNSMessage.CreateQueries([(Type, 12), (Instance, 33)], (_, type) => type == 12 ? known : []);
 
-        // The question with as many known answers as fit, the next question in its own packet
-        Assert.Equal(2, packets.Count);
+        // The PTR question with known answers, packets with only known answers, then the next question
+        Assert.True(packets.Count > 3);
         Assert.All(packets, x => Assert.True(x.Length <= MDNSMessage.MaxQuerySize));
-        var answers = KnownAnswers(packets[0]);
-        Assert.InRange(answers.Count, 20, 199);
-        Assert.Equal(known.Take(answers.Count).Select(x => x.Item1), answers.Select(x => x.Target));
-        Assert.Equal(0, Count(packets[1], 6));
+        var question = packets.Take(packets.Count - 1).ToArray();
+        Assert.Equal(1, Count(question[0], 4));
+        Assert.All(question.Skip(1), x => Assert.Equal(0, Count(x, 4)));
+
+        // TC bit on all but the last packet of the question, every known answer once
+        Assert.All(question[..^1], x => Assert.True(IsTruncated(x)));
+        Assert.False(IsTruncated(question[^1]));
+        Assert.Equal(known.Select(x => x.Item1).Order(), question.SelectMany(KnownAnswers).Select(x => x.Target).Order());
+        Assert.All(question.SelectMany(KnownAnswers), x => Assert.Equal((Type, (ushort)12, 120u), (x.Name, x.Type, x.TTL)));
+
+        Assert.Equal(1, Count(packets[^1], 4));
+        Assert.Equal(0, Count(packets[^1], 6));
+        Assert.False(IsTruncated(packets[^1]));
+    }
+
+    [Fact]
+    public void KnownAnswersOfAQuestionUseAtMostMaxKnownAnswerPackets()
+    {
+        var known = Enumerable.Range(0, 5000).Select(i => ($"Printer {i}._ipp._tcp.local.", 120u)).ToArray();
+        var packets = MDNSMessage.CreateQueries([(Type, 12)], (_, _) => known);
+
+        Assert.Equal(MDNSMessage.MaxKnownAnswerPackets, packets.Count);
+        Assert.False(IsTruncated(packets[^1])); // no more known answers follow
+        Assert.InRange(packets.Sum(x => Count(x, 6)), 100, 4999);
     }
 
     [Fact]

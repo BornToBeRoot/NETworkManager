@@ -36,10 +36,19 @@ public static class MDNSMessage
     public static byte[] CreateQuery(string name, ushort type) => CreateQueries([(name, type)])[0];
 
     /// <summary>
+    ///     Maximum number of packets of one question with its known answers (the question packet and the packets with
+    ///     only known answers, see <see cref="CreateQueries" />). Above, the known answers are left out: the responders
+    ///     send them, like without known answers - a very large cache doesn't flood the link with questions.
+    /// </summary>
+    public const int MaxKnownAnswerPackets = 10;
+
+    /// <summary>
     ///     Builds the packets of multicast questions (ID zero, class IN, multicast response): as many questions as fit
     ///     in one packet (<see cref="MaxQuerySize" />, names compressed), each with its known answers (RFC 6762 7.1), so
     ///     the responders don't send the records again that are cached. Known answers that don't fit with their
-    ///     question alone are left out (the responders send them, like without known answers).
+    ///     question alone follow in packets with only known answers; every packet but the last of the question has
+    ///     the TC bit set, so the responders wait for the rest (RFC 6762 7.2). At most
+    ///     <see cref="MaxKnownAnswerPackets" /> packets per question.
     /// </summary>
     /// <param name="questions">Questions (escaped presentation format names).</param>
     /// <param name="getKnownAnswers">
@@ -68,10 +77,23 @@ public static class MDNSMessage
             }
 
             // Alone (always added): with as many known answers as fit - then the packet is full
-            if (builder.TryAdd(question, requireAllKnownAnswers: false))
+            if (builder.TryAdd(question, requireAllKnownAnswers: false, out var omitted))
                 continue;
 
-            packets.Add(builder.Build());
+            // The other known answers in packets with only known answers (RFC 6762 7.2)
+            var questionPackets = new List<QueryBuilder> { builder };
+
+            while (omitted.Count > 0 && questionPackets.Count < MaxKnownAnswerPackets)
+            {
+                var knownAnswers = new QueryBuilder();
+                omitted = omitted.Where(x => !knownAnswers.TryAddKnownAnswer(question, x.Target, x.TTL)).ToList();
+                questionPackets.Add(knownAnswers);
+            }
+
+            // TC bit: more known answers follow in the next packet
+            for (var i = 0; i < questionPackets.Count; i++)
+                packets.Add(questionPackets[i].Build(truncated: i < questionPackets.Count - 1));
+
             builder = new QueryBuilder();
         }
 
@@ -106,8 +128,17 @@ public static class MDNSMessage
         ///     alone always fits).
         /// </param>
         /// <returns>True if the question was added with all its known answers.</returns>
-        public bool TryAdd(QueryQuestion question, bool requireAllKnownAnswers)
+        public bool TryAdd(QueryQuestion question, bool requireAllKnownAnswers) =>
+            TryAdd(question, requireAllKnownAnswers, out _);
+
+        /// <inheritdoc cref="TryAdd(QueryQuestion, bool)" />
+        /// <param name="question">Question.</param>
+        /// <param name="requireAllKnownAnswers">See <see cref="TryAdd(QueryQuestion, bool)" />.</param>
+        /// <param name="omitted">Known answers that were left out (they didn't fit).</param>
+        public bool TryAdd(QueryQuestion question, bool requireAllKnownAnswers,
+            out List<(List<byte[]> Target, uint TTL)> omitted)
         {
+            omitted = [];
             var length = _questions.Count;
             var registered = new List<string>();
 
@@ -134,6 +165,7 @@ public static class MDNSMessage
                 if (size + answers.Count + record.Count > MaxQuerySize)
                 {
                     complete = false;
+                    omitted.Add((target, ttl));
                     continue;
                 }
 
@@ -159,9 +191,51 @@ public static class MDNSMessage
             return complete;
         }
 
-        public byte[] Build()
+        /// <summary>
+        ///     Adds a known answer of a question to a packet without questions (more known answers of the question of
+        ///     the previous packet, RFC 6762 7.2) if it fits. The names are compressed against the earlier answers.
+        /// </summary>
+        /// <returns>True if the known answer was added.</returns>
+        public bool TryAddKnownAnswer(QueryQuestion question, List<byte[]> target, uint ttl)
+        {
+            // Without questions, the answers are written right after the header (offsets of the packet)
+            var length = _questions.Count;
+            var registered = new List<string>();
+
+            WriteName(_questions, question.Name, _offsets, registered);
+            _questions.AddRange([(byte)(question.Type >> 8), (byte)question.Type, 0, 1,
+                (byte)(ttl >> 24), (byte)(ttl >> 16), (byte)(ttl >> 8), (byte)ttl, 0, 0]);
+            var rdataStart = _questions.Count;
+            WriteName(_questions, target, _offsets, registered);
+            var rdataLength = _questions.Count - rdataStart;
+            _questions[rdataStart - 2] = (byte)(rdataLength >> 8);
+            _questions[rdataStart - 1] = (byte)rdataLength;
+
+            if (_questions.Count > MaxQuerySize)
+            {
+                _questions.RemoveRange(length, _questions.Count - length);
+
+                foreach (var key in registered)
+                    _offsets.Remove(key);
+
+                return false;
+            }
+
+            _answerCount++;
+
+            return true;
+        }
+
+        /// <summary>
+        ///     Builds the packet.
+        /// </summary>
+        /// <param name="truncated">Sets the TC bit: more known answers follow in the next packet.</param>
+        public byte[] Build(bool truncated = false)
         {
             byte[] packet = [.. _questions, .. _answers];
+
+            if (truncated)
+                packet[2] = 0x02;
 
             packet[4] = (byte)(QuestionCount >> 8);
             packet[5] = (byte)QuestionCount;
