@@ -405,6 +405,10 @@ public sealed class MDNSServiceCache
         var due = new List<(string Name, ushort Type)>();
         foreach (var (key, name) in _wanted)
         {
+            // Not due yet (most questions on most ticks): checked first, the records are only read for due ones
+            if (_questions.TryGetValue(key, out var question) && question.Next > now)
+                continue;
+
             // The key is the RRset of the question (lowercase name, type)
             var cached = _rrsets.TryGetValue(key, out var keys) ? keys.Select(x => _records[x]).ToArray() : [];
 
@@ -412,9 +416,6 @@ public sealed class MDNSServiceCache
             // scheduled earlier, before the answer arrived)
             if (key.Type != MDNSMessage.PTR && cached.Length > 0 &&
                 cached.Min(x => x.Received + (x.Expires - x.Received) * 0.8) > now)
-                continue;
-
-            if (_questions.TryGetValue(key, out var question) && question.Next > now)
                 continue;
             if (due.Count == 256)
                 break;
