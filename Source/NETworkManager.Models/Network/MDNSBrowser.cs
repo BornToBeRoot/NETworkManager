@@ -33,17 +33,36 @@ public static class MDNSBrowser
     /// </summary>
     private const int SIO_UDP_CONNRESET = -1744830452;
 
+    /// <summary>
+    ///     Gets the active interfaces with multicast support and an IPv4 or IPv6 address (sorted by name).
+    /// </summary>
     public static IReadOnlyList<MDNSInterfaceInfo> GetInterfaces() => System.Net.NetworkInformation.NetworkInterface.GetAllNetworkInterfaces()
         .Where(x => x.OperationalStatus == OperationalStatus.Up && x.SupportsMulticast &&
                     x.NetworkInterfaceType != NetworkInterfaceType.Loopback)
-        .Select(x =>
+        .Select(TryCreateInterfaceInfo)
+        .Where(x => x != null && (x.IPv4Address != null || x.IPv6Index != 0)).OrderBy(x => x.Name).ToArray();
+
+    /// <summary>
+    ///     Reads the addresses and indexes of an interface. An interface whose IP properties can't be read (e.g. some
+    ///     virtual adapters) is skipped instead of failing the whole list.
+    /// </summary>
+    private static MDNSInterfaceInfo TryCreateInterfaceInfo(System.Net.NetworkInformation.NetworkInterface networkInterface)
+    {
+        try
         {
-            var properties = x.GetIPProperties();
+            var properties = networkInterface.GetIPProperties();
             var ipv4 = properties.UnicastAddresses.FirstOrDefault(a => a.Address.AddressFamily == AddressFamily.InterNetwork)?.Address;
             var ipv6 = properties.UnicastAddresses.Any(a => a.Address.AddressFamily == AddressFamily.InterNetworkV6);
-            return new MDNSInterfaceInfo(x.Id, x.Name, ipv4, ipv4 == null ? 0 : properties.GetIPv4Properties().Index,
-                ipv6 ? properties.GetIPv6Properties().Index : 0);
-        }).Where(x => x.IPv4Address != null || x.IPv6Index != 0).OrderBy(x => x.Name).ToArray();
+            return new MDNSInterfaceInfo(networkInterface.Id, networkInterface.Name, ipv4,
+                ipv4 == null ? 0 : properties.GetIPv4Properties().Index, ipv6 ? properties.GetIPv6Properties().Index : 0);
+        }
+        catch (NetworkInformationException ex)
+        {
+            Log.Warn($"Cannot read the IP properties of the network interface \"{networkInterface.Name}\", it is skipped.", ex);
+
+            return null;
+        }
+    }
 
     /// <summary>
     ///     Browses until cancellation. Reports detached snapshots from a worker thread, at most every 250 ms (when the
