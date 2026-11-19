@@ -344,6 +344,9 @@ public static class MDNSMessage
                 var type = reader.U16();
                 var recordClass = reader.U16();
                 var ttl = reader.U32();
+                // The most significant bit set: treated as zero (RFC 2181 8), e.g. not kept for 136 years
+                if ((ttl & 0x80000000) != 0)
+                    ttl = 0;
                 var length = reader.U16();
                 var end = reader.Position + length;
                 reader.Require(length);

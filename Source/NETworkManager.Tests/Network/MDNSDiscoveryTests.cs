@@ -591,6 +591,18 @@ public class MDNSDiscoveryTests
     }
 
     [Fact]
+    public void TTLsWithTheMostSignificantBitSetAreZero()
+    {
+        Assert.Equal((uint)0, Assert.Single(MDNSMessage.ReadResponse(Packet(Ptr(0xFFFFFFFF)))).TTL);
+        Assert.Equal((uint)int.MaxValue, Assert.Single(MDNSMessage.ReadResponse(Packet(Ptr(int.MaxValue)))).TTL);
+
+        // Not cached (like a goodbye)
+        var cache = new MDNSServiceCache(Type, "Ethernet");
+        cache.ProcessResponse(Packet(Ptr(0x80000000)), Now);
+        Assert.Empty(cache.GetServices(Now));
+    }
+
+    [Fact]
     public void PacketsLargerThan9000BytesAreIgnored()
     {
         var packet = Packet(Ptr(), new Record(Instance, 16, new byte[9000]));
