@@ -494,35 +494,74 @@ public sealed class MDNSServiceCache
     public IReadOnlyList<MDNSRecordInfo> GetRecords(DateTimeOffset now)
     {
         Expire(now);
+        UpdateRecordRows();
 
-        var records = _records.OrderBy(x => x.Key, StringComparer.Ordinal).ToArray();
-        var rows = records.SelectMany(ToRows).ToArray();
+        // Only the TTL (and the current record of a key, e.g. its cache-flush flag) changes between snapshots
+        var rows = new List<MDNSRecordInfo>(_recordRowCount);
 
-        if (rows.Length <= MaxRecordRows)
-            return rows;
-
-        // Above the limit: the rows of the browsed services first, then the others - shown in the order of the keys
-        // (OrderBy is stable: the character strings of a TXT record keep their order)
-        var noPacketSrvTargets = new HashSet<string>();
-        var ordered = records.Select((pair, order) =>
-            (Pair: pair, Order: order, IsBrowsed: IsBrowsed(pair.Value.Record, () => noPacketSrvTargets))).ToArray();
-
-        return ordered.Where(x => x.IsBrowsed).Concat(ordered.Where(x => !x.IsBrowsed))
-            .SelectMany(x => ToRows(x.Pair).Select(row => (x.Order, Row: row)))
-            .Take(MaxRecordRows).OrderBy(x => x.Order).Select(x => x.Row).ToArray();
-
-        IEnumerable<MDNSRecordInfo> ToRows(KeyValuePair<string, Entry> pair)
+        foreach (var (key, count) in _recordRows)
         {
-            var record = pair.Value.Record;
+            var entry = _records[key];
+            var values = _rowValues[key];
+            var ttl = (uint)Math.Max(0, Math.Ceiling((entry.Expires - now).TotalSeconds));
 
-            // Formatted once per record, not for every snapshot (e.g. the hex of a large record of an unknown type)
-            if (!_rowValues.TryGetValue(pair.Key, out var row))
-                _rowValues[pair.Key] = row = CreateRowValues(pair.Key, record);
-
-            var ttl = (uint)Math.Max(0, Math.Ceiling((pair.Value.Expires - now).TotalSeconds));
-            return row.Values.Select((value, index) => new MDNSRecordInfo(row.Ids[index], record.Name, row.Type, value,
-                _networkInterface, record.CacheFlush, ttl));
+            for (var i = 0; i < count; i++)
+                rows.Add(new MDNSRecordInfo(values.Ids[i], entry.Record.Name, values.Type, values.Values[i],
+                    _networkInterface, entry.Record.CacheFlush, ttl));
         }
+
+        return rows;
+    }
+
+    // Records of GetRecords in their order with the number of rows shown (a TXT record above the limit partly): only
+    // rebuilt when the cache changed (Version), not for every snapshot
+    private long _recordRowsVersion = -1;
+    private (string Key, int Count)[] _recordRows = [];
+    private int _recordRowCount;
+
+    /// <summary>
+    ///     Rebuilds <see cref="_recordRows" /> if the cache changed: all rows in the order of the keys, or above
+    ///     <see cref="MaxRecordRows" /> the rows of the browsed services first, then the others as long as there is
+    ///     room - shown in the order of the keys too.
+    /// </summary>
+    private void UpdateRecordRows()
+    {
+        if (_recordRowsVersion == Version)
+            return;
+
+        _recordRowsVersion = Version;
+
+        var records = _records.OrderBy(x => x.Key, StringComparer.Ordinal)
+            .Select(x => (x.Key, x.Value.Record, Rows: GetRowValues(x.Key, x.Value.Record).Values.Length)).ToArray();
+        var counts = records.Select(x => x.Rows).ToArray();
+
+        if (counts.Sum() > MaxRecordRows)
+        {
+            var noPacketSrvTargets = new HashSet<string>();
+            var browsed = records.Select(x => IsBrowsed(x.Record, () => noPacketSrvTargets)).ToArray();
+            var room = MaxRecordRows;
+
+            foreach (var i in Enumerable.Range(0, records.Length).OrderBy(i => browsed[i] ? 0 : 1))
+            {
+                counts[i] = Math.Min(room, records[i].Rows);
+                room -= counts[i];
+            }
+        }
+
+        _recordRows = records.Select((x, i) => (x.Key, Count: counts[i])).Where(x => x.Count > 0).ToArray();
+        _recordRowCount = _recordRows.Sum(x => x.Count);
+    }
+
+    /// <summary>
+    ///     Gets the type, values and IDs of the rows of a record, formatted once per record (not for every snapshot,
+    ///     e.g. the hex of a large record of an unknown type).
+    /// </summary>
+    private RowValues GetRowValues(string key, MDNSRecord record)
+    {
+        if (!_rowValues.TryGetValue(key, out var values))
+            _rowValues[key] = values = CreateRowValues(key, record);
+
+        return values;
     }
 
     // Type, values and IDs of the rows of a record (see GetRecords), by key: the same key has the same values
