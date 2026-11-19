@@ -378,6 +378,12 @@
                                                   SelectedItem="{Binding SelectedResult}"
                                                   SelectedItemsList="{Binding SelectedResults, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                                   RowDetailsVisibilityMode="Collapsed"
+                                                  EnableRowVirtualization="True"
+                                                  ScrollViewer.CanContentScroll="True"
+                                                  VirtualizingPanel.IsVirtualizing="True"
+                                                  VirtualizingPanel.IsContainerVirtualizable="True"
+                                                  VirtualizingPanel.VirtualizationMode="Recycling"
+                                                  VirtualizingPanel.ScrollUnit="Pixel"
                                                   wpfHelpers:DataGridHelper.FillRemainingWidth="True">
                         <controls:MultiSelectDataGrid.RowStyle>
                             <Style TargetType="{x:Type DataGridRow}" BasedOn="{StaticResource MahApps.Styles.DataGridRow}">
@@ -563,6 +569,12 @@
                     <controls:MultiSelectDataGrid ItemsSource="{Binding RecordsView}"
                                                   SelectedItem="{Binding SelectedRecord}"
                                                   SelectedItemsList="{Binding SelectedRecords, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                  EnableRowVirtualization="True"
+                                                  ScrollViewer.CanContentScroll="True"
+                                                  VirtualizingPanel.IsVirtualizing="True"
+                                                  VirtualizingPanel.IsContainerVirtualizable="True"
+                                                  VirtualizingPanel.VirtualizationMode="Recycling"
+                                                  VirtualizingPanel.ScrollUnit="Pixel"
                                                   wpfHelpers:DataGridHelper.FillRemainingWidth="True">
                         <controls:MultiSelectDataGrid.RowStyle>
                             <Style TargetType="{x:Type DataGridRow}" BasedOn="{StaticResource MahApps.Styles.DataGridRow}">
