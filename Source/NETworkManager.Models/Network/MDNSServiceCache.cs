@@ -400,8 +400,8 @@ public sealed class MDNSServiceCache
                 .OrderByDescending(x => x.Received).FirstOrDefault();
             var addresses = srv == null ? [] : byName[srv.Record.Target].Where(x => x.Record.Address != null)
                 .Select(x => x.Record.Address.ToString()).Distinct().Order().ToArray();
-            // Without the type (its normalized length, matched by Instances), unescaped
-            var name = fullName[..^(type.Length + 1)].Replace("\\.", ".").Replace("\\\\", "\\");
+            // Without the type (its normalized length, matched by Instances), as text (escapes decoded)
+            var name = MDNSMessage.ToDisplayText(fullName[..^(type.Length + 1)]);
             result.Add(new MDNSServiceInfo(fullName, name, type, _networkInterface,
                 srv?.Record.Target ?? string.Empty, srv?.Record.Port, srv?.Record.Priority, srv?.Record.Weight,
                 string.Join("; ", addresses), string.Join(Environment.NewLine, txt?.Record.Text ?? []),

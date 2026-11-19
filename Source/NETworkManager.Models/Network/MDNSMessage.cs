@@ -196,6 +196,51 @@ public static class MDNSMessage
     }
 
     /// <summary>
+    ///     Converts a name in the escaped presentation format (e.g. the instance name "My\.Printer" or "B\252ro") to text
+    ///     for display: the escapes are read back to bytes and decoded as UTF-8, or as Latin-1 if they are no valid
+    ///     UTF-8 (e.g. "Büro" of an older device). If the text would contain control characters, the escaped name is
+    ///     returned (nothing invisible is shown).
+    /// </summary>
+    public static string ToDisplayText(string name)
+    {
+        var bytes = new List<byte>();
+
+        for (var i = 0; i < name.Length; i++)
+        {
+            if (name[i] == '\\' && i + 1 < name.Length)
+            {
+                // \DDD (byte) or an escaped character
+                if (i + 3 < name.Length && char.IsAsciiDigit(name[i + 1]) && char.IsAsciiDigit(name[i + 2]) &&
+                    char.IsAsciiDigit(name[i + 3]) && int.Parse(name.AsSpan(i + 1, 3)) <= 255)
+                {
+                    bytes.Add(byte.Parse(name.AsSpan(i + 1, 3)));
+                    i += 3;
+                    continue;
+                }
+
+                i++;
+            }
+
+            var length = char.IsSurrogatePair(name, i) ? 2 : 1;
+            bytes.AddRange(Encoding.UTF8.GetBytes(name, i, length));
+            i += length - 1;
+        }
+
+        string text;
+
+        try
+        {
+            text = new UTF8Encoding(false, true).GetString([.. bytes]);
+        }
+        catch (DecoderFallbackException)
+        {
+            text = Encoding.Latin1.GetString([.. bytes]);
+        }
+
+        return text.Any(char.IsControl) ? name : text;
+    }
+
+    /// <summary>
     ///     Formats a label in the escaped presentation format: "\" and "." escaped. A label that is not valid UTF-8 (e.g.
     ///     Latin-1 of an older device) or contains a control character is kept with its bytes: printable ASCII as is,
     ///     other bytes as \DDD (decimal, RFC 1035), so the other records of the packet are not lost and a question for

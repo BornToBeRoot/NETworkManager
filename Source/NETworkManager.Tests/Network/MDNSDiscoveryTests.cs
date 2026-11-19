@@ -121,6 +121,26 @@ public class MDNSDiscoveryTests
         Assert.Equal(instance, MDNSMessage.CreateQuery(records[0].Target, 33)[12..^4]);
     }
 
+    [Theory]
+    [InlineData(@"My\.Printer", "My.Printer")]
+    [InlineData(@"x\\", @"x\")]
+    [InlineData(@"B\252ro", "Büro")] // Latin-1 (no valid UTF-8)
+    [InlineData(@"B\195\188ro", "Büro")] // UTF-8 bytes
+    [InlineData(@"a\001b", @"a\001b")] // control character: kept escaped
+    [InlineData("Büro", "Büro")]
+    public void InstanceNamesAreShownAsText(string name, string expected) =>
+        Assert.Equal(expected, MDNSMessage.ToDisplayText(name));
+
+    [Fact]
+    public void ServiceNameOfALatin1InstanceIsShownAsText()
+    {
+        var cache = new MDNSServiceCache(Type, "Ethernet");
+        cache.ProcessResponse(Packet(new Record(Type, 12, [4, 0x42, 0xFC, 0x72, 0x6F, .. Name(Type)])), Now);
+        var service = Assert.Single(cache.GetServices(Now));
+        Assert.Equal("Büro", service.Name);
+        Assert.Equal(@"B\252ro." + Type, service.FullName); // technical name: escaped
+    }
+
     [Fact]
     public void PreservesBinaryTXTAndEscapesControlCharacters()
     {
