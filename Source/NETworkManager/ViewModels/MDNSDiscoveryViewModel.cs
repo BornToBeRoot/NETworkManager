@@ -51,6 +51,9 @@ public sealed class MDNSDiscoveryViewModel : ViewModelBase
     private MDNSServiceCache _browseCache;
     private bool _isPaused;
 
+    // The view is shown (OnViewVisible / OnViewHide): a pending resume is only done while it is shown
+    private bool _isViewVisible = true;
+
     // The browser reports detached snapshots from a worker thread; the latest one is merged into the rows by the
     // flush timer (like the results buffer of the scanners), so the dispatcher isn't called per snapshot.
     private MDNSDiscoverySnapshot _pendingSnapshot;
@@ -943,6 +946,8 @@ public sealed class MDNSDiscoveryViewModel : ViewModelBase
     /// </summary>
     public void OnViewVisible()
     {
+        _isViewVisible = true;
+
         if (_isPaused)
         {
             _ = Resume();
@@ -980,6 +985,8 @@ public sealed class MDNSDiscoveryViewModel : ViewModelBase
     /// </summary>
     public void OnViewHide()
     {
+        _isViewVisible = false;
+
         // Not a browse that is being stopped (Stop pressed, then another tool selected): it would be resumed
         if (!IsRunning || IsCanceling || BrowseDuration != 0)
             return;
@@ -998,8 +1005,9 @@ public sealed class MDNSDiscoveryViewModel : ViewModelBase
         // The pause may still be ending (shown again right away)
         await _browseTask;
 
-        // Not if a new browse was started meanwhile (e.g. run command)
-        if (!_isPaused || IsRunning)
+        // Not if a new browse was started meanwhile (e.g. run command), or the view was hidden again while the pause
+        // was ending (it stays paused and is resumed when the view is shown)
+        if (!_isPaused || IsRunning || !_isViewVisible)
             return;
 
         _isPaused = false;
