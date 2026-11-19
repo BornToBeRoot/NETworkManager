@@ -484,16 +484,33 @@ public class MDNSDiscoveryTests
     }
 
     [Fact]
-    public void QuestionsBackOffExponentiallyToSixtySeconds()
+    public void UnansweredQuestionsBackOffExponentially()
     {
         var cache = new MDNSServiceCache(Type, "Ethernet");
         var times = new List<double>();
-        for (var second = 0.0; second <= 200; second += 0.25)
+        for (var second = 0.0; second <= 300; second += 0.25)
             if (cache.GetQuestions(Now.AddSeconds(second)).Count > 0)
                 times.Add(second);
 
-        // 0, 1, 3, 7, 15, 31, 63, then every 60 seconds
-        Assert.Equal(new[] { 0.0, 1, 3, 7, 15, 31, 63, 123, 183 }, times);
+        // The interval doubles (1, 2, 4, ... s), not capped at 60 seconds (RFC 6762 5.2: up to 60 minutes)
+        Assert.Equal(new[] { 0.0, 1, 3, 7, 15, 31, 63, 127, 255 }, times);
+    }
+
+    [Fact]
+    public void AnsweredUniqueRecordsAreOnlyAskedAgainBeforeTheyExpire()
+    {
+        var cache = new MDNSServiceCache(Type, "Ethernet");
+        cache.ProcessResponse(Packet(Ptr(4500)), Now);
+        Assert.Contains((Instance, (ushort)33), cache.GetQuestions(Now));
+        cache.ProcessResponse(Packet(Srv()), Now); // TTL 120
+
+        var srvQuestions = new List<double>();
+        for (var second = 0.25; second <= 110; second += 0.25)
+            if (cache.GetQuestions(Now.AddSeconds(second)).Contains((Instance, (ushort)33)))
+                srvQuestions.Add(second);
+
+        // Not on the backoff interval (1, 3, 7, ... s), only at 80 % of the TTL (96 s)
+        Assert.Equal(new[] { 96.0 }, srvQuestions);
     }
 
     [Fact]

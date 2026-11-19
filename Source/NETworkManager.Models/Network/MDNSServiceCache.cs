@@ -196,7 +196,15 @@ public sealed class MDNSServiceCache
                     x.Entry.Record.Target.EndsWith("." + x.Type, StringComparison.OrdinalIgnoreCase) &&
                     x.Entry.Record.Target.Length > x.Type.Length + 1);
 
-    /// <summary>Returns at most 256 due questions per tick; repeated unanswered queries back off to 60 seconds.</summary>
+    /// <summary>Maximum interval of a repeated question in seconds (RFC 6762 5.2: 60 minutes).</summary>
+    private const int MaxQuestionInterval = 3600;
+
+    /// <summary>
+    ///     Returns at most 256 due questions per tick (RFC 6762 5.2). The interval of a question doubles from 1 second
+    ///     up to <see cref="MaxQuestionInterval" />. An answered question is asked again at 80 % of the remaining TTL of
+    ///     its records (refresh before they expire): SRV / TXT / A / AAAA (one answer) only then, PTR (several
+    ///     answers, new instances can appear) also on its interval.
+    /// </summary>
     public IReadOnlyList<(string Name, ushort Type)> GetQuestions(DateTimeOffset now)
     {
         Expire(now);
@@ -237,16 +245,30 @@ public sealed class MDNSServiceCache
         var due = new List<(string Name, ushort Type)>();
         foreach (var key in wanted.Keys)
         {
+            // An answered SRV / TXT / A / AAAA question only from 80 % of the TTL of its records (also if it was
+            // scheduled earlier, before the answer arrived)
+            if (key.Type != MDNSMessage.PTR && lifetimes[key].Any() &&
+                lifetimes[key].Min(x => x.Received + (x.Expires - x.Received) * 0.8) > now)
+                continue;
+
             if (_questions.TryGetValue(key, out var question) && question.Next > now)
                 continue;
             if (due.Count == 256)
                 break;
             due.Add((wanted[key], key.Type));
-            var interval = Math.Min(60, question == null ? 1 : question.Interval * 2);
-            // Refresh short-lived records before expiry, even after the question has backed off.
-            var lifetime = lifetimes[key]
-                .Select(x => (x.Expires - now).TotalSeconds * 0.8).DefaultIfEmpty(interval).Min();
-            _questions[key] = new Question(now.AddSeconds(Math.Max(1, Math.Min(interval, lifetime))), interval);
+            var interval = Math.Min(MaxQuestionInterval, question == null ? 1 : question.Interval * 2);
+            var cached = lifetimes[key].ToArray();
+            double next = interval;
+
+            if (cached.Length > 0)
+            {
+                // Refresh the records before they expire (also when the interval is longer)
+                var refresh = cached.Min(x => (x.Expires - now).TotalSeconds) * 0.8;
+
+                next = key.Type == MDNSMessage.PTR ? Math.Min(interval, refresh) : refresh;
+            }
+
+            _questions[key] = new Question(now.AddSeconds(Math.Max(1, next)), interval);
         }
         return due;
     }
