@@ -204,8 +204,25 @@ public sealed class MDNSServiceCache
                 ? type
                 : null))
         .Where(x => x.Type != null && x.Type != "*" && (BrowsesAll || _serviceTypes.Contains(x.Type)) &&
-                    x.Entry.Record.Target.EndsWith("." + x.Type, StringComparison.OrdinalIgnoreCase) &&
-                    x.Entry.Record.Target.Length > x.Type.Length + 1);
+                    IsInstanceOf(x.Entry.Record.Target, x.Type));
+
+    /// <summary>
+    ///     Checks if a name (escaped presentation format) is an instance of the type: "&lt;instance&gt;.&lt;type&gt;" with an
+    ///     unescaped dot before the type - "x\._ipp._tcp.local." is the label "x._ipp" in "_tcp.local.", not an instance
+    ///     of "_ipp._tcp.local.".
+    /// </summary>
+    private static bool IsInstanceOf(string name, string type)
+    {
+        if (name.Length <= type.Length + 1 || !name.EndsWith("." + type, StringComparison.OrdinalIgnoreCase))
+            return false;
+
+        // An even number of backslashes before the dot escape each other, not the dot
+        var backslashes = 0;
+        for (var i = name.Length - type.Length - 2; i >= 0 && name[i] == '\\'; i--)
+            backslashes++;
+
+        return backslashes % 2 == 0;
+    }
 
     /// <summary>Maximum interval of a repeated question in seconds (RFC 6762 5.2: 60 minutes).</summary>
     private const int MaxQuestionInterval = 3600;

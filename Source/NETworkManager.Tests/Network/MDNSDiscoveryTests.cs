@@ -199,6 +199,18 @@ public class MDNSDiscoveryTests
     }
 
     [Fact]
+    public void EscapedDotBeforeTheTypeIsNoInstance()
+    {
+        var cache = new MDNSServiceCache(Type, "Ethernet");
+        // Labels "x._ipp", "_tcp", "local" (the dot is part of the first label)
+        cache.ProcessResponse(Packet(new Record(Type, 12, Labels("x._ipp", "_tcp", "local"))), Now);
+        Assert.Empty(cache.GetServices(Now));
+        // Labels "x\", "_ipp", "_tcp", "local": an instance named "x\" (escaped backslash, then a real dot)
+        cache.ProcessResponse(Packet(new Record(Type, 12, Labels("x\\", "_ipp", "_tcp", "local"))), Now);
+        Assert.Equal("x\\", Assert.Single(cache.GetServices(Now)).Name);
+    }
+
+    [Fact]
     public void BrowsesSeveralServiceTypes()
     {
         var cache = new MDNSServiceCache(["_ipp._tcp", "_http._tcp.local."], "Ethernet");
