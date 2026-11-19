@@ -47,6 +47,8 @@ public class MDNSDiscoveryTests
     [InlineData("_ipp._tcp.local.", Type)]
     [InlineData("_pdl-datastream._tcp", "_pdl-datastream._tcp.local.")]
     [InlineData("_foo1._udp.local", "_foo1._udp.local.")]
+    [InlineData("_1a-2._tcp", "_1a-2._tcp.local.")]
+    [InlineData("_a._udp", "_a._udp.local.")]
     public void NormalizesLocalServiceTypes(string input, string expected)
     {
         Assert.True(MDNSServiceType.TryNormalize(input, out var type));
@@ -62,6 +64,9 @@ public class MDNSDiscoveryTests
     [InlineData("_123._tcp")]
     [InlineData("_-ipp._tcp")]
     [InlineData("_ip--p._tcp")]
+    [InlineData("_ipp-._tcp")]
+    [InlineData("_1-2._tcp")]
+    [InlineData("_ipp._tcp.local.local")]
     [InlineData("_1234567890123456._tcp")]
     [InlineData("_http._tcp;_ipp._tcp")]
     [InlineData("_Kerberos._tcp")] // Kelvin sign, not "k"

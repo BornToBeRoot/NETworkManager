@@ -1,5 +1,4 @@
 using System;
-using System.Text.RegularExpressions;
 
 namespace NETworkManager.Utilities;
 
@@ -23,9 +22,7 @@ public static class MDNSServiceType
             return false;
 
         // RFC 6335 service name: 1–15 letters/digits/hyphens, at least one letter, no consecutive hyphens.
-        if (!Regex.IsMatch(value, @"^_[a-z0-9](?:[a-z0-9-]{0,13}[a-z0-9])?\._(?:tcp|udp)(?:\.local)?$",
-                RegexOptions.CultureInvariant) || value.Split('.')[0].Contains("--") ||
-            !Regex.IsMatch(value.Split('.')[0], "[a-z]", RegexOptions.CultureInvariant))
+        if (!RegexHelper.MDNSServiceTypeRegex().IsMatch(value))
             return false;
 
         serviceType = value.EndsWith(".local", StringComparison.Ordinal) ? value + "." : value + ".local.";
