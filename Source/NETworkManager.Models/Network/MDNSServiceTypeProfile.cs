@@ -6,7 +6,7 @@ using NETworkManager.Utilities;
 namespace NETworkManager.Models.Network;
 
 /// <summary>
-///     Service type profiles of the mDNS / DNS-SD tool and the service type input (e.g. "Printers; _http._tcp"), like
+///     Service type profiles of the mDNS Discovery tool and the service type input (e.g. "Printers; _http._tcp"), like
 ///     the port profiles of the Port Scanner (see <see cref="PortProfile" />).
 /// </summary>
 public static class MDNSServiceTypeProfile

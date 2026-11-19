@@ -29,7 +29,7 @@ const tools = [
     note: "LLDP, CDP",
   },
   {
-    name: "mDNS / DNS-SD",
+    name: "mDNS Discovery",
     to: "/docs/application/mdns-discovery",
     note: "Printers, scanners, web and media services",
   },

@@ -122,7 +122,7 @@ public static class RunCommandManager
     }
 
     /// <summary>
-    ///     Gets the service type profiles of the mDNS / DNS-SD tool (e.g. "Printers"), which can be used instead of
+    ///     Gets the service type profiles of the mDNS Discovery tool (e.g. "Printers"), which can be used instead of
     ///     service types.
     /// </summary>
     /// <returns>Service type profiles.</returns>
@@ -132,7 +132,7 @@ public static class RunCommandManager
     }
 
     /// <summary>
-    ///     Gets the durations of the mDNS / DNS-SD tool in seconds (0 = until stopped).
+    ///     Gets the durations of the mDNS Discovery tool in seconds (0 = until stopped).
     /// </summary>
     /// <returns>Durations.</returns>
     public static IEnumerable<int> GetMDNSDurations()
@@ -394,7 +394,7 @@ public static class RunCommandManager
     }
 
     /// <summary>
-    ///     Validates the duration of the mDNS / DNS-SD tool: one of the durations that can be selected in the tool
+    ///     Validates the duration of the mDNS Discovery tool: one of the durations that can be selected in the tool
     ///     (seconds, 0 = until stopped).
     /// </summary>
     private static string ValidateDuration(string duration)

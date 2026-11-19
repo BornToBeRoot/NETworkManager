@@ -9,7 +9,7 @@ using NETworkManager.Utilities;
 namespace NETworkManager.ViewModels;
 
 /// <summary>
-///     View model of the dialog to add / edit a service type profile of the mDNS / DNS-SD tool.
+///     View model of the dialog to add / edit a service type profile of the mDNS Discovery tool.
 /// </summary>
 public class MDNSServiceTypeProfileViewModel : ViewModelBase
 {

@@ -3,7 +3,7 @@ using System;
 namespace NETworkManager.Models.Network;
 
 /// <summary>
-///     Service type profile of the mDNS / DNS-SD tool: a name for several service types (e.g. "Printers" =
+///     Service type profile of the mDNS Discovery tool: a name for several service types (e.g. "Printers" =
 ///     "_ipp._tcp; _ipps._tcp; ..."), which can be entered in the service type input (see
 ///     <see cref="MDNSServiceTypeProfile.TryResolve" />).
 /// </summary>

@@ -4019,7 +4019,7 @@ public class SettingsInfo : INotifyPropertyChanged
 
     #endregion
 
-    #region mDNS / DNS-SD
+    #region mDNS Discovery
 
     public string MDNSDiscovery_ServiceType
     {
@@ -4845,7 +4845,7 @@ public class SettingsInfo : INotifyPropertyChanged
         // SNTP Lookup
         SNTPLookup_SNTPServers.CollectionChanged += CollectionChanged;
 
-        // mDNS / DNS-SD
+        // mDNS Discovery
         MDNSDiscovery_ServiceTypeHistory.CollectionChanged += CollectionChanged;
         MDNSDiscovery_ServiceTypeProfiles.CollectionChanged += CollectionChanged;
 

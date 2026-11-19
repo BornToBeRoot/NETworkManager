@@ -6,7 +6,7 @@ using NETworkManager.Models.Network;
 namespace NETworkManager.Validators;
 
 /// <summary>
-///     Validates the service types of a service type profile of the mDNS / DNS-SD tool: service types separated by
+///     Validates the service types of a service type profile of the mDNS Discovery tool: service types separated by
 ///     ";" (e.g. "_ipp._tcp; _ipps._tcp"), see <see cref="MDNSServiceTypeProfile.TryParseServiceTypes" />.
 /// </summary>
 public class MDNSServiceTypesValidator : ValidationRule

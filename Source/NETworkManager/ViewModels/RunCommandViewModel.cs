@@ -1164,7 +1164,7 @@ public class RunCommandViewModel : ViewModelBase
     }
 
     /// <summary>
-    ///     Durations of the mDNS / DNS-SD tool (seconds, 0 = until stopped) that contain the typed word, if no duration
+    ///     Durations of the mDNS Discovery tool (seconds, 0 = until stopped) that contain the typed word, if no duration
     ///     was entered yet.
     /// </summary>
     private IEnumerable<RunCommandSuggestion> GetDurationSuggestions()
@@ -1176,7 +1176,7 @@ public class RunCommandViewModel : ViewModelBase
     }
 
     /// <summary>
-    ///     Service type profiles of the mDNS / DNS-SD tool (e.g. "Printers") and * that contain the typed word, while
+    ///     Service type profiles of the mDNS Discovery tool (e.g. "Printers") and * that contain the typed word, while
     ///     the target is typed. The target can be a list of service types and profiles (e.g. "printers;_ssh._tcp"), the
     ///     last entry is completed.
     /// </summary>

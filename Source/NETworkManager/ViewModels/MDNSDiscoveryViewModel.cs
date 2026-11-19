@@ -26,7 +26,7 @@ using System.Windows.Threading;
 namespace NETworkManager.ViewModels;
 
 /// <summary>
-///     View model of the mDNS / DNS-SD tool: browses the services advertised on the selected network interface
+///     View model of the mDNS Discovery tool: browses the services advertised on the selected network interface
 ///     (see <see cref="MDNSBrowser" />) and shows them (Services) and the received DNS records (Records).
 /// </summary>
 public sealed class MDNSDiscoveryViewModel : ViewModelBase
@@ -831,7 +831,7 @@ public sealed class MDNSDiscoveryViewModel : ViewModelBase
         }
         catch (Exception ex)
         {
-            Log.Error("mDNS / DNS-SD service discovery failed.", ex);
+            Log.Error("mDNS Discovery service discovery failed.", ex);
 
             SetStatusMessage(Strings.MDNSDiscovery_Failed + Environment.NewLine + ex.Message, StatusLevel.Error);
         }

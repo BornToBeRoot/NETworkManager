@@ -73,7 +73,7 @@ public sealed record WakeOnLANRequest() : ApplicationRequest(ApplicationName.Wak
 }
 
 /// <summary>
-///     Request to open the mDNS / DNS-SD tool.
+///     Request to open the mDNS Discovery tool.
 /// </summary>
 public sealed record MDNSDiscoveryRequest() : ApplicationRequest(ApplicationName.MDNSDiscovery)
 {

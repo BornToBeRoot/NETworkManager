@@ -16,7 +16,7 @@ using System.Windows.Input;
 namespace NETworkManager.ViewModels;
 
 /// <summary>
-///     View model of the mDNS / DNS-SD settings: the service type profiles (like the port profiles of the Port
+///     View model of the mDNS Discovery settings: the service type profiles (like the port profiles of the Port
 ///     Scanner settings).
 /// </summary>
 public class MDNSDiscoverySettingsViewModel : ViewModelBase

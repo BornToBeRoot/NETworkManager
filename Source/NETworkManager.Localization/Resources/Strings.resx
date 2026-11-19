@@ -5568,7 +5568,7 @@ Do you want to start the scan?</value>
     <value>ISC License</value>
   </data>
   <data name="ApplicationName_MDNSDiscovery" xml:space="preserve">
-    <value>mDNS / DNS-SD</value>
+    <value>mDNS Discovery</value>
   </data>
   <data name="MDNSDiscovery_Browse" xml:space="preserve">
     <value>Browse</value>

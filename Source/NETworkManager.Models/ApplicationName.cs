@@ -108,7 +108,7 @@ public enum ApplicationName
     DiscoveryProtocol,
 
     /// <summary>
-    ///     mDNS / DNS-SD (multicast DNS service discovery) application.
+    ///     mDNS Discovery (multicast DNS service discovery) application.
     /// </summary>
     MDNSDiscovery,
 

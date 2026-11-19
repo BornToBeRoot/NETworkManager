@@ -82,7 +82,7 @@ public sealed class InputSuggestions
     }
 
     /// <summary>
-    ///     Creates the list for the service types of the mDNS / DNS-SD tool: * (all service types, always first like the
+    ///     Creates the list for the service types of the mDNS Discovery tool: * (all service types, always first like the
     ///     Windows DNS server of DNS Lookup, not a stored profile), the service type profiles (sorted by name, with their
     ///     service types) and the service type history.
     /// </summary>

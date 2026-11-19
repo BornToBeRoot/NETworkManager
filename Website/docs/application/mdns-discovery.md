@@ -4,9 +4,9 @@ description: "Discover and inspect local network services advertised with mDNS a
 keywords: [NETworkManager, mDNS, DNS-SD, Bonjour, Avahi, printers, service discovery]
 ---
 
-# mDNS / DNS-SD
+# mDNS Discovery
 
-The **mDNS / DNS-SD** tool finds services advertised on a local network. Use it to inspect printers, scanners, web servers, SSH servers and media devices without knowing their IP addresses first. It browses DNS-SD service instances and resolves their SRV, TXT, A and AAAA records over multicast DNS.
+The **mDNS Discovery** tool finds services advertised on a local network. Use it to inspect printers, scanners, web servers, SSH servers and media devices without knowing their IP addresses first. It browses DNS-SD service instances and resolves their SRV, TXT, A and AAAA records over multicast DNS.
 
 Unlike the [IP Scanner's mDNS hostname lookup](./ip-scanner.md#resolve-mdns-hostname), this tool discovers advertised services rather than looking up the name of an already discovered IP address.
 

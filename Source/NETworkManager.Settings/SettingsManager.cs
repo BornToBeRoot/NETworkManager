@@ -928,7 +928,7 @@ public static class SettingsManager
     {
         Log.Info($"Apply upgrade to {version}...");
 
-        // Add mDNS / DNS-SD application
+        // Add mDNS Discovery application
         if (Current.General_ApplicationList.All(x => x.Name != ApplicationName.MDNSDiscovery))
         {
             Log.Info($"Add new app {nameof(ApplicationName.MDNSDiscovery)}.");
@@ -941,7 +941,7 @@ public static class SettingsManager
                 defaultList.First(x => x.Name == ApplicationName.MDNSDiscovery));
         }
 
-        // mDNS / DNS-SD - Add the missing default service type profiles (like the port profiles of the Port Scanner)
+        // mDNS Discovery - Add the missing default service type profiles (like the port profiles of the Port Scanner)
         foreach (var profile in MDNSServiceTypeProfile.GetDefaultList().Where(profile =>
                      MDNSServiceTypeProfile.FindByName(Current.MDNSDiscovery_ServiceTypeProfiles, profile.Name) == null))
         {

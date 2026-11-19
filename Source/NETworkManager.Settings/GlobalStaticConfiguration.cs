@@ -352,7 +352,7 @@ public static class GlobalStaticConfiguration
     public static int DiscoveryProtocol_Duration => 60;
     public static ExportFileType DiscoveryProtocol_ExportFileType => ExportFileType.Csv;
 
-    // Application: mDNS / DNS-SD
+    // Application: mDNS Discovery
     public static string MDNSDiscovery_ServiceType => "*";
     public static int MDNSDiscovery_Duration => 10;
     public static string MDNSDiscovery_InterfaceId => string.Empty;

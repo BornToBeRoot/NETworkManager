@@ -101,7 +101,7 @@ public enum DocumentationIdentifier
     ApplicationDiscoveryProtocol,
 
     /// <summary>
-    ///     mDNS / DNS-SD documentation page.
+    ///     mDNS Discovery documentation page.
     /// </summary>
     ApplicationMDNSDiscovery,
 

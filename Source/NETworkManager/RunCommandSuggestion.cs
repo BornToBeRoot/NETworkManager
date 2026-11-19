@@ -39,12 +39,12 @@ public enum RunCommandSuggestionKind
     PortProfile,
 
     /// <summary>
-    ///     Service type profile of the mDNS / DNS-SD tool (e.g. "Printers") or * (all service types).
+    ///     Service type profile of the mDNS Discovery tool (e.g. "Printers") or * (all service types).
     /// </summary>
     ServiceTypeProfile,
 
     /// <summary>
-    ///     Duration of the mDNS / DNS-SD tool (seconds, 0 = until stopped).
+    ///     Duration of the mDNS Discovery tool (seconds, 0 = until stopped).
     /// </summary>
     Duration,
 

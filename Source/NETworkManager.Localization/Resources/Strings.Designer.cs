@@ -1213,7 +1213,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to mDNS / DNS-SD.
+        ///   Looks up a localized string similar to mDNS Discovery.
         /// </summary>
         public static string ApplicationName_MDNSDiscovery {
             get {
