@@ -12,7 +12,7 @@ public static class MDNSServiceType
     public static bool TryNormalize(string input, out string serviceType)
     {
         serviceType = null;
-        var value = input?.Trim().TrimEnd('.').ToLowerInvariant();
+        var value = input == null ? null : DNSNameComparer.ToLower(input.Trim().TrimEnd('.'));
         if (value == "*")
         {
             serviceType = value;

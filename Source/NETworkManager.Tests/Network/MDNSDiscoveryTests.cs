@@ -64,6 +64,7 @@ public class MDNSDiscoveryTests
     [InlineData("_ip--p._tcp")]
     [InlineData("_1234567890123456._tcp")]
     [InlineData("_http._tcp;_ipp._tcp")]
+    [InlineData("_Kerberos._tcp")] // Kelvin sign, not "k"
     public void RejectsInvalidAndNonLocalServiceTypes(string input) =>
         Assert.False(MDNSServiceType.TryNormalize(input, out _));
 
@@ -556,6 +557,19 @@ public class MDNSDiscoveryTests
         // The cached PTR (TTL 2) is still refreshed by a new announcement
         cache.ProcessResponse(Packet(Ptr(2)), Now.AddSeconds(1.5));
         Assert.Single(cache.GetServices(Now.AddSeconds(3)));
+    }
+
+    [Fact]
+    public void InstanceNamesOnlyDifferingInTheCaseOfOtherThanAsciiLettersAreDifferentServices()
+    {
+        var cache = new MDNSServiceCache(Type, "Ethernet");
+        cache.ProcessResponse(Packet(new Record(Type, 12, Labels("Büro", "_ipp", "_tcp", "local")),
+            new Record(Type, 12, Labels("BÜRO", "_ipp", "_tcp", "local")),
+            new Record(Type, 12, Labels("büro", "_IPP", "_TCP", "LOCAL"))), Now); // same as the first (ASCII case)
+
+        var names = cache.GetServices(Now).Select(x => x.Name).ToArray();
+        Assert.Equal(2, names.Length);
+        Assert.Contains("BÜRO", names);
     }
 
     [Fact]

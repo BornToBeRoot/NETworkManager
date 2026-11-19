@@ -86,13 +86,13 @@ public sealed class MDNSServiceCache
     /// <summary>Number of new records that were not cached because the cache was full (<see cref="MaxRecords" />).</summary>
     public long RecordsNotCached { get; private set; }
 
-    private static string Key(MDNSRecord record) => $"{record.Name.ToLowerInvariant()}|{record.Type}|{record.Identity}";
+    private static string Key(MDNSRecord record) => $"{DNSNameComparer.ToLower(record.Name)}|{record.Type}|{record.Identity}";
 
-    private static (string Name, ushort Type) RRset(MDNSRecord record) => (record.Name.ToLowerInvariant(), record.Type);
+    private static (string Name, ushort Type) RRset(MDNSRecord record) => (DNSNameComparer.ToLower(record.Name), record.Type);
 
     // Hosts of the cached SRV records of the browsed services, with the number of SRV records (see IsBrowsed: the
     // addresses of these hosts are cached when the cache is full)
-    private readonly Dictionary<string, int> _browsedSrvTargets = new(StringComparer.OrdinalIgnoreCase);
+    private readonly Dictionary<string, int> _browsedSrvTargets = new(DNSNameComparer.Instance);
 
     private void Set(string key, Entry entry)
     {
@@ -164,7 +164,7 @@ public sealed class MDNSServiceCache
 
         HashSet<string> GetPacketSrvTargets() => packetSrvTargets ??= records
             .Where(x => x.Type == MDNSMessage.SRV && IsBrowsedInstance(x.Name)).Select(x => x.Target)
-            .ToHashSet(StringComparer.OrdinalIgnoreCase);
+            .ToHashSet(DNSNameComparer.Instance);
 
         // RRsets with a cache-flush record of this packet that was cached (not if the cache is full: the old values are
         // kept instead of losing the RRset)
@@ -219,7 +219,7 @@ public sealed class MDNSServiceCache
         switch (record.Type)
         {
             case MDNSMessage.PTR:
-                if (BrowsesAll && record.Name.Equals(MDNSServiceType.Enumeration, StringComparison.OrdinalIgnoreCase))
+                if (BrowsesAll && DNSNameComparer.Instance.Equals(record.Name, MDNSServiceType.Enumeration))
                     return true;
 
                 return MDNSServiceType.TryNormalize(record.Name, out var type) && type != "*" &&
@@ -303,7 +303,7 @@ public sealed class MDNSServiceCache
     /// </summary>
     private static bool IsInstanceOf(string name, string type)
     {
-        if (name.Length <= type.Length + 1 || !name.EndsWith("." + type, StringComparison.OrdinalIgnoreCase))
+        if (name.Length <= type.Length + 1 || !DNSNameComparer.EndsWith(name, "." + type))
             return false;
 
         // An even number of backslashes before the dot escape each other, not the dot
@@ -327,14 +327,14 @@ public sealed class MDNSServiceCache
     {
         Expire(now);
         var wanted = new Dictionary<(string Name, ushort Type), string>();
-        void Add(string name, ushort type) => wanted.TryAdd((name.ToLowerInvariant(), type), name);
+        void Add(string name, ushort type) => wanted.TryAdd((DNSNameComparer.ToLower(name), type), name);
         if (BrowsesAll)
         {
             Add(MDNSServiceType.Enumeration, MDNSMessage.PTR);
             foreach (var type in CommonServiceTypes)
                 Add(type, MDNSMessage.PTR);
             foreach (var record in _records.Values.Where(x => x.Record.Type == MDNSMessage.PTR &&
-                         x.Record.Name.Equals(MDNSServiceType.Enumeration, StringComparison.OrdinalIgnoreCase)))
+                         DNSNameComparer.Instance.Equals(x.Record.Name, MDNSServiceType.Enumeration)))
                 if (MDNSServiceType.TryNormalize(record.Record.Target, out var type) && type != "*")
                     Add(type, MDNSMessage.PTR);
         }
@@ -343,7 +343,7 @@ public sealed class MDNSServiceCache
                 Add(type, MDNSMessage.PTR);
 
         var instances = Instances.ToArray();
-        var instanceNames = instances.Select(x => x.Entry.Record.Target).ToHashSet(StringComparer.OrdinalIgnoreCase);
+        var instanceNames = instances.Select(x => x.Entry.Record.Target).ToHashSet(DNSNameComparer.Instance);
         foreach (var (instance, _) in instances)
         {
             Add(instance.Record.Target, MDNSMessage.SRV);
@@ -360,7 +360,7 @@ public sealed class MDNSServiceCache
 
         foreach (var key in _questions.Keys.Where(x => !wanted.ContainsKey(x)).ToArray())
             _questions.Remove(key);
-        var lifetimes = _records.Values.ToLookup(x => (x.Record.Name.ToLowerInvariant(), x.Record.Type));
+        var lifetimes = _records.Values.ToLookup(x => (DNSNameComparer.ToLower(x.Record.Name), x.Record.Type));
         var due = new List<(string Name, ushort Type)>();
         foreach (var key in wanted.Keys)
         {
@@ -397,7 +397,7 @@ public sealed class MDNSServiceCache
     {
         Expire(now);
         var result = new List<MDNSServiceInfo>();
-        var byName = _records.Values.ToLookup(x => x.Record.Name, StringComparer.OrdinalIgnoreCase);
+        var byName = _records.Values.ToLookup(x => x.Record.Name, DNSNameComparer.Instance);
         foreach (var (instance, type) in Instances)
         {
             var fullName = instance.Record.Target;

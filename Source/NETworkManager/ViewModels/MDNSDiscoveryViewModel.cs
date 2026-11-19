@@ -61,7 +61,7 @@ public sealed class MDNSDiscoveryViewModel : ViewModelBase
     private readonly Stopwatch _browseStopwatch = new();
 
     // Rows by key (service: full name, record: id), so a new snapshot updates the existing rows
-    private readonly Dictionary<string, MDNSServiceInfo> _serviceRows = new(StringComparer.OrdinalIgnoreCase);
+    private readonly Dictionary<string, MDNSServiceInfo> _serviceRows = new(DNSNameComparer.Instance);
     private readonly Dictionary<string, MDNSRecordInfo> _recordRows = new(StringComparer.Ordinal);
 
     /// <summary>
