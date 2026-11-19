@@ -657,6 +657,25 @@ public class MDNSDiscoveryTests
     }
 
     [Fact]
+    public void AnnouncedAgainTheServiceAndItsQuestionsUseTheNewTTL()
+    {
+        var cache = new MDNSServiceCache(Type, "Ethernet");
+        cache.ProcessResponse(Packet(Ptr(120), Srv()), Now);
+        Assert.Equal((uint)120, Assert.Single(cache.GetServices(Now)).TTL);
+        cache.GetQuestions(Now);
+
+        // Same records again (the cache doesn't change its version), 60 s later
+        var version = cache.Version;
+        cache.ProcessResponse(Packet(Ptr(120), Srv()), Now.AddSeconds(60));
+        Assert.Equal(version, cache.Version);
+        Assert.Equal((uint)120, Assert.Single(cache.GetServices(Now.AddSeconds(60))).TTL);
+
+        // The SRV question at 80 % of the new TTL (60 + 96 s), not of the first one
+        Assert.DoesNotContain((Instance, (ushort)33), cache.GetQuestions(Now.AddSeconds(100)));
+        Assert.Contains((Instance, (ushort)33), cache.GetQuestions(Now.AddSeconds(156)));
+    }
+
+    [Fact]
     public void FullCacheKeepsTheOldValuesOfACacheFlushThatIsNotCached()
     {
         var cache = new MDNSServiceCache(Type, "Ethernet");

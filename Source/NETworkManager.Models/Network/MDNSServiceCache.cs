@@ -285,18 +285,90 @@ public sealed class MDNSServiceCache
             Remove(key);
     }
 
+    // Derived from the cached records (see UpdateDerived): only rebuilt when the cache changed (Version), not for
+    // every tick of the browser and every snapshot
+    private long _derivedVersion = -1;
+    private (string Key, string Type)[] _instanceKeys = [];
+    private Dictionary<(string Name, ushort Type), string> _wanted = [];
+
     /// <summary>
     ///     PTR records of the browsed service types that point to an instance of the type, with the normalized type
     ///     (the owner name of the record can differ, e.g. without ".local." or with spaces, see
     ///     <see cref="MDNSServiceType.TryNormalize" />).
     /// </summary>
-    private IEnumerable<(Entry Entry, string Type)> Instances => _records.Values
-        .Select(x => (Entry: x,
-            Type: x.Record.Type == MDNSMessage.PTR && MDNSServiceType.TryNormalize(x.Record.Name, out var type)
-                ? type
-                : null))
-        .Where(x => x.Type != null && x.Type != "*" && (BrowsesAll || _serviceTypes.Contains(x.Type)) &&
-                    IsInstanceOf(x.Entry.Record.Target, x.Type));
+    private IEnumerable<(Entry Entry, string Type)> Instances
+    {
+        get
+        {
+            UpdateDerived();
+
+            // The current entries (TTL): a record that is announced again keeps its key, but gets a new entry
+            return _instanceKeys.Select(x => (_records[x.Key], x.Type));
+        }
+    }
+
+    /// <summary>
+    ///     Gets the cached records of an RRset (name, type).
+    /// </summary>
+    private IEnumerable<Entry> GetEntries(string name, ushort type) =>
+        _rrsets.TryGetValue((DNSNameComparer.ToLower(name), type), out var keys) ? keys.Select(x => _records[x]) : [];
+
+    /// <summary>
+    ///     Rebuilds the instances and the wanted questions (and removes the questions no longer wanted) if the cache
+    ///     changed since the last call. Every change of the records that matters here (added, value replaced, removed)
+    ///     increments <see cref="Version" />.
+    /// </summary>
+    private void UpdateDerived()
+    {
+        if (_derivedVersion == Version)
+            return;
+
+        _derivedVersion = Version;
+
+        _instanceKeys = _records
+            .Select(x => (x.Key, Entry: x.Value,
+                Type: x.Value.Record.Type == MDNSMessage.PTR && MDNSServiceType.TryNormalize(x.Value.Record.Name, out var type)
+                    ? type
+                    : null))
+            .Where(x => x.Type != null && x.Type != "*" && (BrowsesAll || _serviceTypes.Contains(x.Type)) &&
+                        IsInstanceOf(x.Entry.Record.Target, x.Type))
+            .Select(x => (x.Key, x.Type)).ToArray();
+
+        var wanted = new Dictionary<(string Name, ushort Type), string>();
+        void Add(string name, ushort type) => wanted.TryAdd((DNSNameComparer.ToLower(name), type), name);
+        if (BrowsesAll)
+        {
+            Add(MDNSServiceType.Enumeration, MDNSMessage.PTR);
+            foreach (var type in CommonServiceTypes)
+                Add(type, MDNSMessage.PTR);
+            foreach (var record in GetEntries(MDNSServiceType.Enumeration, MDNSMessage.PTR))
+                if (MDNSServiceType.TryNormalize(record.Record.Target, out var type) && type != "*")
+                    Add(type, MDNSMessage.PTR);
+        }
+        else
+            foreach (var type in _serviceTypes)
+                Add(type, MDNSMessage.PTR);
+
+        foreach (var instance in _instanceKeys.Select(x => _records[x.Key].Record.Target))
+        {
+            Add(instance, MDNSMessage.SRV);
+            Add(instance, MDNSMessage.TXT);
+
+            foreach (var srv in GetEntries(instance, MDNSMessage.SRV))
+            {
+                // In .local (an unescaped dot before "local.": "host\\.local." is one label under the root)
+                if (!IsInstanceOf(srv.Record.Target, "local."))
+                    continue;
+                Add(srv.Record.Target, MDNSMessage.A);
+                Add(srv.Record.Target, MDNSMessage.AAAA);
+            }
+        }
+
+        _wanted = wanted;
+
+        foreach (var key in _questions.Keys.Where(x => !wanted.ContainsKey(x)).ToArray())
+            _questions.Remove(key);
+    }
 
     /// <summary>
     ///     Checks if a name (escaped presentation format) is an instance of the type: "&lt;instance&gt;.&lt;type&gt;" with an
@@ -328,57 +400,26 @@ public sealed class MDNSServiceCache
     public IReadOnlyList<(string Name, ushort Type)> GetQuestions(DateTimeOffset now)
     {
         Expire(now);
-        var wanted = new Dictionary<(string Name, ushort Type), string>();
-        void Add(string name, ushort type) => wanted.TryAdd((DNSNameComparer.ToLower(name), type), name);
-        if (BrowsesAll)
-        {
-            Add(MDNSServiceType.Enumeration, MDNSMessage.PTR);
-            foreach (var type in CommonServiceTypes)
-                Add(type, MDNSMessage.PTR);
-            foreach (var record in _records.Values.Where(x => x.Record.Type == MDNSMessage.PTR &&
-                         DNSNameComparer.Instance.Equals(x.Record.Name, MDNSServiceType.Enumeration)))
-                if (MDNSServiceType.TryNormalize(record.Record.Target, out var type) && type != "*")
-                    Add(type, MDNSMessage.PTR);
-        }
-        else
-            foreach (var type in _serviceTypes)
-                Add(type, MDNSMessage.PTR);
+        UpdateDerived();
 
-        var instances = Instances.ToArray();
-        var instanceNames = instances.Select(x => x.Entry.Record.Target).ToHashSet(DNSNameComparer.Instance);
-        foreach (var (instance, _) in instances)
-        {
-            Add(instance.Record.Target, MDNSMessage.SRV);
-            Add(instance.Record.Target, MDNSMessage.TXT);
-        }
-        foreach (var record in _records.Values.Where(x => x.Record.Type == MDNSMessage.SRV && instanceNames.Contains(x.Record.Name)))
-        {
-            // In .local (an unescaped dot before "local.": "host\\.local." is one label under the root)
-            if (!IsInstanceOf(record.Record.Target, "local."))
-                continue;
-            Add(record.Record.Target, MDNSMessage.A);
-            Add(record.Record.Target, MDNSMessage.AAAA);
-        }
-
-        foreach (var key in _questions.Keys.Where(x => !wanted.ContainsKey(x)).ToArray())
-            _questions.Remove(key);
-        var lifetimes = _records.Values.ToLookup(x => (DNSNameComparer.ToLower(x.Record.Name), x.Record.Type));
         var due = new List<(string Name, ushort Type)>();
-        foreach (var key in wanted.Keys)
+        foreach (var (key, name) in _wanted)
         {
+            // The key is the RRset of the question (lowercase name, type)
+            var cached = _rrsets.TryGetValue(key, out var keys) ? keys.Select(x => _records[x]).ToArray() : [];
+
             // An answered SRV / TXT / A / AAAA question only from 80 % of the TTL of its records (also if it was
             // scheduled earlier, before the answer arrived)
-            if (key.Type != MDNSMessage.PTR && lifetimes[key].Any() &&
-                lifetimes[key].Min(x => x.Received + (x.Expires - x.Received) * 0.8) > now)
+            if (key.Type != MDNSMessage.PTR && cached.Length > 0 &&
+                cached.Min(x => x.Received + (x.Expires - x.Received) * 0.8) > now)
                 continue;
 
             if (_questions.TryGetValue(key, out var question) && question.Next > now)
                 continue;
             if (due.Count == 256)
                 break;
-            due.Add((wanted[key], key.Type));
+            due.Add((name, key.Type));
             var interval = Math.Min(MaxQuestionInterval, question == null ? 1 : question.Interval * 2);
-            var cached = lifetimes[key].ToArray();
             double next = interval;
 
             if (cached.Length > 0)
@@ -418,16 +459,15 @@ public sealed class MDNSServiceCache
     {
         Expire(now);
         var result = new List<MDNSServiceInfo>();
-        var byName = _records.Values.ToLookup(x => x.Record.Name, DNSNameComparer.Instance);
         foreach (var (instance, type) in Instances)
         {
             var fullName = instance.Record.Target;
-            var srv = byName[fullName].Where(x => x.Record.Type == MDNSMessage.SRV)
-                .OrderByDescending(x => x.Received).FirstOrDefault();
-            var txt = byName[fullName].Where(x => x.Record.Type == MDNSMessage.TXT)
-                .OrderByDescending(x => x.Received).FirstOrDefault();
-            var addresses = srv == null ? [] : byName[srv.Record.Target].Where(x => x.Record.Address != null)
-                .Select(x => x.Record.Address.ToString()).Distinct().Order().ToArray();
+            var srv = GetEntries(fullName, MDNSMessage.SRV).MaxBy(x => x.Received);
+            var txt = GetEntries(fullName, MDNSMessage.TXT).MaxBy(x => x.Received);
+            var addresses = srv == null
+                ? []
+                : GetEntries(srv.Record.Target, MDNSMessage.A).Concat(GetEntries(srv.Record.Target, MDNSMessage.AAAA))
+                    .Select(x => x.Record.Address.ToString()).Distinct().Order().ToArray();
             // Without the type (its normalized length, matched by Instances), as text (escapes decoded)
             var name = MDNSMessage.ToDisplayText(fullName[..^(type.Length + 1)]);
             result.Add(new MDNSServiceInfo(fullName, name, type, _networkInterface,
