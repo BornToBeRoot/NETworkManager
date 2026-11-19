@@ -90,6 +90,10 @@ public sealed class MDNSServiceCache
 
     private static (string Name, ushort Type) RRset(MDNSRecord record) => (record.Name.ToLowerInvariant(), record.Type);
 
+    // Hosts of the cached SRV records of the browsed services, with the number of SRV records (see IsBrowsed: the
+    // addresses of these hosts are cached when the cache is full)
+    private readonly Dictionary<string, int> _browsedSrvTargets = new(StringComparer.OrdinalIgnoreCase);
+
     private void Set(string key, Entry entry)
     {
         if (_records.TryAdd(key, entry))
@@ -100,6 +104,10 @@ public sealed class MDNSServiceCache
                 _rrsets[rrset] = keys = new HashSet<string>(StringComparer.Ordinal);
 
             keys.Add(key);
+
+            if (entry.Record.Type == MDNSMessage.SRV && IsBrowsedInstance(entry.Record.Name))
+                _browsedSrvTargets[entry.Record.Target] = _browsedSrvTargets.GetValueOrDefault(entry.Record.Target) + 1;
+
             Version++;
 
             return;
@@ -121,6 +129,16 @@ public sealed class MDNSServiceCache
 
         if (_rrsets.TryGetValue(rrset, out var keys) && keys.Remove(key) && keys.Count == 0)
             _rrsets.Remove(rrset);
+
+        // Only the SRV records counted by Set (of browsed instances)
+        if (entry.Record.Type == MDNSMessage.SRV && IsBrowsedInstance(entry.Record.Name) &&
+            _browsedSrvTargets.TryGetValue(entry.Record.Target, out var count))
+        {
+            if (count > 1)
+                _browsedSrvTargets[entry.Record.Target] = count - 1;
+            else
+                _browsedSrvTargets.Remove(entry.Record.Target);
+        }
 
         Version++;
     }
@@ -158,11 +176,12 @@ public sealed class MDNSServiceCache
             }
         }
 
-        // Hosts of the SRV records (cached and in this packet), only read if the cache is full (see IsBrowsed)
-        HashSet<string> srvTargets = null;
+        // Hosts of the SRV records of browsed services in this packet (an address can come before its SRV record),
+        // only read if the cache is full (see IsBrowsed); the cached ones are kept in _browsedSrvTargets
+        HashSet<string> packetSrvTargets = null;
 
-        HashSet<string> GetSrvTargets() => srvTargets ??= _records.Values.Select(x => x.Record)
-            .Concat(records).Where(x => x.Type == MDNSMessage.SRV).Select(x => x.Target)
+        HashSet<string> GetPacketSrvTargets() => packetSrvTargets ??= records
+            .Where(x => x.Type == MDNSMessage.SRV && IsBrowsedInstance(x.Name)).Select(x => x.Target)
             .ToHashSet(StringComparer.OrdinalIgnoreCase);
 
         foreach (var record in records)
@@ -176,7 +195,7 @@ public sealed class MDNSServiceCache
             // Full: records of the browsed services are still cached (up to twice the limit), so other traffic of the
             // link (reverse names, other services) can't hide them
             else if (_records.ContainsKey(key) || _records.Count < MaxRecords ||
-                     _records.Count < MaxRecords * 2 && IsBrowsed(record, GetSrvTargets))
+                     _records.Count < MaxRecords * 2 && IsBrowsed(record, GetPacketSrvTargets))
                 Set(key, new Entry(record, now, now.AddSeconds(record.TTL)));
             else if (RecordsNotCached++ == 0)
                 Log.Warn($"mDNS cache on \"{_networkInterface}\" is full ({MaxRecords} records), new records of other services are ignored until others expire.");
@@ -185,9 +204,10 @@ public sealed class MDNSServiceCache
 
     /// <summary>
     ///     Checks if a record belongs to the browsed services: PTR of a browsed type (or of the service type
-    ///     enumeration with *), SRV / TXT of an instance of a browsed type, A / AAAA of a host of an SRV record.
+    ///     enumeration with *), SRV / TXT of an instance of a browsed type, A / AAAA of a host of such an SRV record
+    ///     (cached or in the packet).
     /// </summary>
-    private bool IsBrowsed(MDNSRecord record, Func<HashSet<string>> getSrvTargets)
+    private bool IsBrowsed(MDNSRecord record, Func<HashSet<string>> getPacketSrvTargets)
     {
         switch (record.Type)
         {
@@ -199,18 +219,25 @@ public sealed class MDNSServiceCache
                        (BrowsesAll || _serviceTypes.Contains(type));
             case MDNSMessage.SRV:
             case MDNSMessage.TXT:
-                // The instance is the first label, the rest of the name is its type
-                var separator = FirstUnescapedDot(record.Name);
-
-                return separator > 0 &&
-                       MDNSServiceType.TryNormalize(record.Name[(separator + 1)..], out var instanceType) &&
-                       instanceType != "*" && (BrowsesAll || _serviceTypes.Contains(instanceType));
+                return IsBrowsedInstance(record.Name);
             case MDNSMessage.A:
             case MDNSMessage.AAAA:
-                return getSrvTargets().Contains(record.Name);
+                return _browsedSrvTargets.ContainsKey(record.Name) || getPacketSrvTargets().Contains(record.Name);
             default:
                 return false;
         }
+    }
+
+    /// <summary>
+    ///     Checks if a name is an instance of a browsed type: the instance is the first label, the rest of the name is
+    ///     its type.
+    /// </summary>
+    private bool IsBrowsedInstance(string name)
+    {
+        var separator = FirstUnescapedDot(name);
+
+        return separator > 0 && MDNSServiceType.TryNormalize(name[(separator + 1)..], out var type) && type != "*" &&
+               (BrowsesAll || _serviceTypes.Contains(type));
     }
 
     /// <summary>

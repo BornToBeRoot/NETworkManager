@@ -516,6 +516,12 @@ public class MDNSDiscoveryTests
         Assert.Contains("192.168.1.99", service.Addresses);
         Assert.Equal(1, cache.RecordsNotCached);
 
+        // The host of a service that is not browsed (SRV in the same packet) is not cached in the extra room
+        cache.ProcessResponse(Packet(new Record("Speaker._airplay._tcp.local.", 33, [0, 0, 0, 0, 0x1B, 0x58, .. Name("speaker.local.")]),
+            new Record("speaker.local.", 1, [192, 168, 1, 31])), Now);
+        Assert.Equal(3, cache.RecordsNotCached);
+        Assert.DoesNotContain(cache.GetRecords(Now), x => x.Value == "192.168.1.31");
+
         // The cached PTR (TTL 2) is still refreshed by a new announcement
         cache.ProcessResponse(Packet(Ptr(2)), Now.AddSeconds(1.5));
         Assert.Single(cache.GetServices(Now.AddSeconds(3)));
