@@ -60,6 +60,7 @@ Release date: **xx.xx.2026**
 **Settings**
 
 - Fixed the profile files (Settings > Profiles) not filling the width of the grid: the name column fills the remaining width. [#3719](https://github.com/BornToBeRoot/NETworkManager/pull/3719)
+- Fixed a custom DNS server name (Settings > Network) with a leading / trailing space not being detected as a duplicate. [#3719](https://github.com/BornToBeRoot/NETworkManager/pull/3719)
 
 **Profiles**
 
