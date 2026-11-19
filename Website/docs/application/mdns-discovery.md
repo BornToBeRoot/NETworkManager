@@ -51,7 +51,7 @@ Expand a row with the arrow in the first column (like the IP Scanner) to see the
 
 The search box filters by name, type, hostname, port, addresses and TXT contents. `Enter` in the search box applies the filter without starting discovery. Standard grid sorting and multi-selection are supported.
 
-The context menu provides **Copy...** with the name, service type, hostname, port, IP addresses, TXT records or all details of the selected services (one per line, in the order shown). **Export...** writes the filtered results (in their current sort order) or selected services to CSV, XML or JSON. It includes the interface, full service name, SRV fields, addresses, TXT records and remaining PTR TTL. Control characters and binary TXT values are escaped for display and export.
+The context menu provides **Copy...** with the full name, service type, hostname, port, IP addresses, TXT records or all details of the selected services (one per line, in the order shown). **Export...** writes the filtered results (in their current sort order) or selected services to CSV, XML or JSON. It includes the interface, full service name, SRV fields, addresses, TXT records and remaining PTR TTL. Control characters and binary TXT values are escaped for display and export.
 
 ### Raw DNS records
 
@@ -106,7 +106,7 @@ Named lists of service types. A service type profile can be entered by its name 
 - Discovery is limited to the selected local link and the `.local.` domain. VLANs, routed networks, VPNs, firewalls and Wi-Fi client isolation can prevent replies. A multicast reflector may make services from another link visible.
 - Allow UDP port `5353` through the firewall. Another application that exclusively owns that port can prevent the browser from starting.
 - If the interface disconnects, stop discovery, refresh the interface list and browse again.
-- The browser limits the cache and the Records view to 4096 records / rows to remain responsive on busy networks.
+- The browser limits the cache and the raw DNS records to 4096 records / rows to remain responsive on busy networks.
 - Advertised names and metadata are supplied by other devices and do not establish their identity. The tool displays metadata without executing TXT values or opening advertised URLs.
 
 Protocol references: [Multicast DNS (RFC 6762)](https://www.rfc-editor.org/rfc/rfc6762) and [DNS-Based Service Discovery (RFC 6763)](https://www.rfc-editor.org/rfc/rfc6763).
