@@ -48,19 +48,41 @@ public static class MDNSBrowser
     /// </summary>
     private static MDNSInterfaceInfo TryCreateInterfaceInfo(System.Net.NetworkInformation.NetworkInterface networkInterface)
     {
+        IPInterfaceProperties properties;
+
         try
         {
-            var properties = networkInterface.GetIPProperties();
-            var ipv4 = properties.UnicastAddresses.FirstOrDefault(a => a.Address.AddressFamily == AddressFamily.InterNetwork)?.Address;
-            var ipv6 = properties.UnicastAddresses.Any(a => a.Address.AddressFamily == AddressFamily.InterNetworkV6);
-            return new MDNSInterfaceInfo(networkInterface.Id, networkInterface.Name, ipv4,
-                ipv4 == null ? 0 : properties.GetIPv4Properties().Index, ipv6 ? properties.GetIPv6Properties().Index : 0);
+            properties = networkInterface.GetIPProperties();
         }
         catch (NetworkInformationException ex)
         {
             Log.Warn($"Cannot read the IP properties of the network interface \"{networkInterface.Name}\", it is skipped.", ex);
 
             return null;
+        }
+
+        var ipv4 = properties.UnicastAddresses.FirstOrDefault(a => a.Address.AddressFamily == AddressFamily.InterNetwork)?.Address;
+        var hasIPv6 = properties.UnicastAddresses.Any(a => a.Address.AddressFamily == AddressFamily.InterNetworkV6);
+
+        // Each address family on its own: one that can't be read (e.g. IPv6 partly configured) doesn't drop the other
+        var ipv4Index = ipv4 == null ? 0 : GetIndex(() => properties.GetIPv4Properties().Index, "IPv4");
+        var ipv6Index = hasIPv6 ? GetIndex(() => properties.GetIPv6Properties().Index, "IPv6") : 0;
+
+        return new MDNSInterfaceInfo(networkInterface.Id, networkInterface.Name, ipv4Index == 0 ? null : ipv4, ipv4Index,
+            ipv6Index);
+
+        int GetIndex(Func<int> getIndex, string addressFamily)
+        {
+            try
+            {
+                return getIndex();
+            }
+            catch (NetworkInformationException ex)
+            {
+                Log.Warn($"Cannot read the {addressFamily} properties of the network interface \"{networkInterface.Name}\".", ex);
+
+                return 0;
+            }
         }
     }
 
