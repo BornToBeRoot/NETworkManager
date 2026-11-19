@@ -411,13 +411,33 @@ public sealed class MDNSServiceCache
     }
 
     /// <summary>
-    ///     One row per resource record, with each character string of a TXT record on its own row. At most 4096 rows,
-    ///     in the order of the keys, so the same rows are shown in every snapshot.
+    ///     Maximum number of rows of <see cref="GetRecords" />: as many as the cache can hold (see
+    ///     <see cref="ProcessResponse" />), TXT strings are rows of their own.
+    /// </summary>
+    public const int MaxRecordRows = MaxRecords * 2;
+
+    /// <summary>
+    ///     One row per resource record, with each character string of a TXT record on its own row, in the order of the
+    ///     keys. At most <see cref="MaxRecordRows" /> rows: above, the records of the browsed services are kept first, so
+    ///     every service has its records. The same rows are shown in every snapshot.
     /// </summary>
     public IReadOnlyList<MDNSRecordInfo> GetRecords(DateTimeOffset now)
     {
         Expire(now);
-        return _records.OrderBy(x => x.Key, StringComparer.Ordinal).SelectMany(pair =>
+
+        var records = _records.OrderBy(x => x.Key, StringComparer.Ordinal).ToArray();
+        var rows = records.SelectMany(ToRows).ToArray();
+
+        if (rows.Length <= MaxRecordRows)
+            return rows;
+
+        var noPacketSrvTargets = new HashSet<string>();
+
+        return records.Where(x => IsBrowsed(x.Value.Record, () => noPacketSrvTargets))
+            .Concat(records.Where(x => !IsBrowsed(x.Value.Record, () => noPacketSrvTargets)))
+            .SelectMany(ToRows).Take(MaxRecordRows).OrderBy(x => x.Id, StringComparer.Ordinal).ToArray();
+
+        IEnumerable<MDNSRecordInfo> ToRows(KeyValuePair<string, Entry> pair)
         {
             var record = pair.Value.Record;
             var type = Enum.IsDefined((DnsClient.QueryType)record.Type)
@@ -433,6 +453,6 @@ public sealed class MDNSServiceCache
             var ttl = (uint)Math.Max(0, Math.Ceiling((pair.Value.Expires - now).TotalSeconds));
             return values.Select((value, index) => new MDNSRecordInfo($"{pair.Key}|{index}", record.Name, type, value,
                 _networkInterface, record.CacheFlush, ttl));
-        }).Take(MaxRecords).ToArray();
+        }
     }
 }

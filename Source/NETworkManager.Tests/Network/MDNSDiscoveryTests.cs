@@ -377,9 +377,9 @@ public class MDNSDiscoveryTests
     public void LargeTXTResponseHasBoundedRowsAndCompactUniqueIds()
     {
         var cache = new MDNSServiceCache(Type, "Ethernet");
-        cache.ProcessResponse(Packet(new Record(Instance, 16, new byte[8000])), Now);
+        cache.ProcessResponse(Packet(new Record(Instance, 16, new byte[16000])), Now);
         var rows = cache.GetRecords(Now);
-        Assert.Equal(4096, rows.Count);
+        Assert.Equal(MDNSServiceCache.MaxRecordRows, rows.Count);
         Assert.Equal(rows.Count, rows.Select(x => x.Id).Distinct().Count());
         Assert.All(rows, x => Assert.True(x.Id.Length < 500));
     }
@@ -556,6 +556,24 @@ public class MDNSDiscoveryTests
         // The cached PTR (TTL 2) is still refreshed by a new announcement
         cache.ProcessResponse(Packet(Ptr(2)), Now.AddSeconds(1.5));
         Assert.Single(cache.GetServices(Now.AddSeconds(3)));
+    }
+
+    [Fact]
+    public void RecordRowsKeepTheRecordsOfTheBrowsedServicesWhenThereAreTooMany()
+    {
+        var cache = new MDNSServiceCache(Type, "Ethernet");
+        cache.ProcessResponse(Packet(Ptr(), Srv(), Address()), Now);
+
+        // A TXT record of another service with more strings than rows can be shown (sorted before the printer)
+        var strings = Enumerable.Range(0, MDNSServiceCache.MaxRecordRows).SelectMany(_ => new byte[] { 1, (byte)'a' }).ToArray();
+        cache.ProcessResponse(Packet(new Record("A._airplay._tcp.local.", 16, strings)), Now);
+
+        var rows = cache.GetRecords(Now);
+        Assert.Equal(MDNSServiceCache.MaxRecordRows, rows.Count);
+        Assert.Contains(rows, x => x.Name == Type && x.Type == "PTR");
+        Assert.Contains(rows, x => x.Name == Instance && x.Type == "SRV");
+        Assert.Contains(rows, x => x.Name == Host && x.Value == "192.168.1.20");
+        Assert.Equal(rows.Select(x => x.Id).Order(StringComparer.Ordinal), rows.Select(x => x.Id));
     }
 
     [Fact]
