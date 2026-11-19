@@ -13,8 +13,9 @@ public sealed record MDNSRecord(string Name, ushort Type, uint TTL, bool CacheFl
     ushort Port = 0, ushort Priority = 0, ushort Weight = 0, IPAddress Address = null, string[] Text = null,
     byte[] RawData = null)
 {
-    // Keep row identities compact even when a TXT record contains thousands of strings.
-    public string Identity => $"{Target.ToLowerInvariant()}|{Port}|{Priority}|{Weight}|{Address}|" +
+    // Keep row identities compact even when a TXT record contains thousands of strings. Computed once: the record
+    // doesn't change and the identity is part of the cache key of every record of every packet.
+    public string Identity { get; } = $"{Target.ToLowerInvariant()}|{Port}|{Priority}|{Weight}|{Address}|" +
         (Text == null ? string.Empty : Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(string.Join('\0', Text))))) + "|" +
         (RawData == null ? string.Empty : Convert.ToHexString(SHA256.HashData(RawData)));
 }

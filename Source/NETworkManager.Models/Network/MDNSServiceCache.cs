@@ -175,9 +175,20 @@ public sealed class MDNSServiceCache
 
     private static DateTimeOffset Min(DateTimeOffset first, DateTimeOffset second) => first < second ? first : second;
 
-    /// <summary>Removes the expired records (also done by the Get methods).</summary>
+    // Time of the last Expire: the browser and the Get methods expire with the same time of a tick, only once
+    private DateTimeOffset _lastExpire = DateTimeOffset.MinValue;
+
+    /// <summary>
+    ///     Removes the expired records (also done by the Get methods). Records added since expire later than their
+    ///     time of receipt (at least one second), so a second call with the same time has nothing to do.
+    /// </summary>
     public void Expire(DateTimeOffset now)
     {
+        if (now == _lastExpire)
+            return;
+
+        _lastExpire = now;
+
         foreach (var key in _records.Where(x => x.Value.Expires <= now).Select(x => x.Key).ToArray())
             Remove(key);
     }
