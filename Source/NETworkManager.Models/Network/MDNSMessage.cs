@@ -262,9 +262,21 @@ public static class MDNSMessage
         return backslashes % 2 == 0;
     }
 
-    /// <summary>Rejects malformed/truncated packets atomically, including invalid compression and RDATA lengths.</summary>
+    /// <summary>
+    ///     Maximum size of a received packet: a multicast DNS packet must not exceed 9000 bytes (RFC 6762 17). Larger ones
+    ///     are ignored, so a single device can't fill the cache with records of up to 64 KB.
+    /// </summary>
+    public const int MaxPacketSize = 9000;
+
+    /// <summary>
+    ///     Rejects malformed/truncated packets atomically, including invalid compression and RDATA lengths, and packets
+    ///     larger than <see cref="MaxPacketSize" />.
+    /// </summary>
     public static IReadOnlyList<MDNSRecord> ReadResponse(byte[] data, long ipv6ScopeId = 0)
     {
+        if (data.Length > MaxPacketSize)
+            return [];
+
         try
         {
             var reader = new Reader(data);

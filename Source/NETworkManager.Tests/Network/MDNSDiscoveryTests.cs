@@ -378,7 +378,9 @@ public class MDNSDiscoveryTests
     public void LargeTXTResponseHasBoundedRowsAndCompactUniqueIds()
     {
         var cache = new MDNSServiceCache(Type, "Ethernet");
-        cache.ProcessResponse(Packet(new Record(Instance, 16, new byte[16000])), Now);
+        // Two TXT records with more empty strings than rows can be shown (packets up to 9000 bytes)
+        cache.ProcessResponse(Packet(new Record(Instance, 16, new byte[8000])), Now);
+        cache.ProcessResponse(Packet(new Record("Other._ipp._tcp.local.", 16, new byte[8000])), Now);
         var rows = cache.GetRecords(Now);
         Assert.Equal(MDNSServiceCache.MaxRecordRows, rows.Count);
         Assert.Equal(rows.Count, rows.Select(x => x.Id).Distinct().Count());
@@ -583,6 +585,14 @@ public class MDNSDiscoveryTests
         Assert.Equal(0, records[1].Address.ScopeId);
     }
 
+    [Fact]
+    public void PacketsLargerThan9000BytesAreIgnored()
+    {
+        var packet = Packet(Ptr(), new Record(Instance, 16, new byte[9000]));
+        Assert.Empty(MDNSMessage.ReadResponse(packet));
+        Assert.Single(MDNSMessage.ReadResponse(Packet(Ptr(), new Record(Instance, 16, new byte[8800]))), x => x.Type == 12);
+    }
+
     // Cache
 
     [Fact]
@@ -605,7 +615,7 @@ public class MDNSDiscoveryTests
         // Fill the cache with other records (A records of different hosts)
         var hosts = Enumerable.Range(0, MDNSServiceCache.MaxRecords - 1)
             .Select(i => new Record($"host{i}.local.", 1, [10, 0, (byte)(i >> 8), (byte)i])).ToArray();
-        foreach (var chunk in hosts.Chunk(500))
+        foreach (var chunk in hosts.Chunk(200))
             cache.ProcessResponse(Packet(chunk), Now);
 
         Assert.Equal(0, cache.RecordsNotCached);
@@ -652,7 +662,7 @@ public class MDNSDiscoveryTests
         var cache = new MDNSServiceCache(Type, "Ethernet");
         var hosts = Enumerable.Range(0, MDNSServiceCache.MaxRecords)
             .Select(i => new Record($"host{i}.local.", 1, [10, 0, (byte)(i >> 8), (byte)i])).ToArray();
-        foreach (var chunk in hosts.Chunk(500))
+        foreach (var chunk in hosts.Chunk(200))
             cache.ProcessResponse(Packet(chunk), Now);
 
         // New address of host0 with the cache-flush bit: not cached (full), the old one must not expire
@@ -667,9 +677,10 @@ public class MDNSDiscoveryTests
         var cache = new MDNSServiceCache(Type, "Ethernet");
         cache.ProcessResponse(Packet(Ptr(), Srv(), Address()), Now);
 
-        // A TXT record of another service with more strings than rows can be shown (sorted before the printer)
-        var strings = Enumerable.Range(0, MDNSServiceCache.MaxRecordRows).SelectMany(_ => new byte[] { 1, (byte)'a' }).ToArray();
-        cache.ProcessResponse(Packet(new Record("A._airplay._tcp.local.", 16, strings)), Now);
+        // TXT records of another service with more strings than rows can be shown (sorted before the printer)
+        var strings = Enumerable.Range(0, 3000).SelectMany(_ => new byte[] { 1, (byte)'a' }).ToArray();
+        foreach (var name in new[] { "A", "B", "C" })
+            cache.ProcessResponse(Packet(new Record($"{name}._airplay._tcp.local.", 16, strings)), Now);
 
         var rows = cache.GetRecords(Now);
         Assert.Equal(MDNSServiceCache.MaxRecordRows, rows.Count);

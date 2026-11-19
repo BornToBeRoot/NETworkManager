@@ -276,8 +276,9 @@ public static class MDNSBrowser
                 throw;
             }
 
+            // Larger packets than allowed (RFC 6762 17) are not even copied, see MDNSMessage.ReadResponse
             if (result.RemoteEndPoint is IPEndPoint { Port: 5353 } && result.PacketInformation.Interface == index &&
-                (result.SocketFlags & SocketFlags.Truncated) == 0)
+                (result.SocketFlags & SocketFlags.Truncated) == 0 && result.ReceivedBytes <= MDNSMessage.MaxPacketSize)
                 writer.TryWrite(buffer[..result.ReceivedBytes]);
         }
     }

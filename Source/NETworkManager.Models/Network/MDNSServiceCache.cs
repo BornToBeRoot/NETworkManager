@@ -125,6 +125,8 @@ public sealed class MDNSServiceCache
         if (!_records.Remove(key, out var entry))
             return;
 
+        _rowValues.Remove(key);
+
         var rrset = RRset(entry.Record);
 
         if (_rrsets.TryGetValue(rrset, out var keys) && keys.Remove(key) && keys.Count == 0)
@@ -466,19 +468,35 @@ public sealed class MDNSServiceCache
         IEnumerable<MDNSRecordInfo> ToRows(KeyValuePair<string, Entry> pair)
         {
             var record = pair.Value.Record;
-            var type = Enum.IsDefined((DnsClient.QueryType)record.Type)
-                ? ((DnsClient.QueryType)record.Type).ToString()
-                : $"TYPE{record.Type}";
-            var values = record.Type switch
-            {
-                MDNSMessage.PTR => new[] { record.Target },
-                MDNSMessage.SRV => [$"{record.Priority} {record.Weight} {record.Port} {record.Target}"],
-                MDNSMessage.TXT => record.Text is { Length: > 0 } ? record.Text : [string.Empty],
-                _ => [record.Address?.ToString() ?? $"\\# {record.RawData?.Length ?? 0} {Convert.ToHexString(record.RawData ?? [])}".TrimEnd()]
-            };
+
+            // Formatted once per record, not for every snapshot (e.g. the hex of a large record of an unknown type)
+            if (!_rowValues.TryGetValue(pair.Key, out var row))
+                _rowValues[pair.Key] = row = CreateRowValues(pair.Key, record);
+
             var ttl = (uint)Math.Max(0, Math.Ceiling((pair.Value.Expires - now).TotalSeconds));
-            return values.Select((value, index) => new MDNSRecordInfo($"{pair.Key}|{index}", record.Name, type, value,
+            return row.Values.Select((value, index) => new MDNSRecordInfo(row.Ids[index], record.Name, row.Type, value,
                 _networkInterface, record.CacheFlush, ttl));
         }
+    }
+
+    // Type, values and IDs of the rows of a record (see GetRecords), by key: the same key has the same values
+    private sealed record RowValues(string Type, string[] Values, string[] Ids);
+
+    private readonly Dictionary<string, RowValues> _rowValues = new(StringComparer.Ordinal);
+
+    private static RowValues CreateRowValues(string key, MDNSRecord record)
+    {
+        var type = Enum.IsDefined((DnsClient.QueryType)record.Type)
+            ? ((DnsClient.QueryType)record.Type).ToString()
+            : $"TYPE{record.Type}";
+        var values = record.Type switch
+        {
+            MDNSMessage.PTR => new[] { record.Target },
+            MDNSMessage.SRV => [$"{record.Priority} {record.Weight} {record.Port} {record.Target}"],
+            MDNSMessage.TXT => record.Text is { Length: > 0 } ? record.Text : [string.Empty],
+            _ => [record.Address?.ToString() ?? $"\\# {record.RawData?.Length ?? 0} {Convert.ToHexString(record.RawData ?? [])}".TrimEnd()]
+        };
+
+        return new RowValues(type, values, values.Select((_, index) => $"{key}|{index}").ToArray());
     }
 }
