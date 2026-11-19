@@ -700,10 +700,10 @@ public sealed class MDNSDiscoveryViewModel : ViewModelBase
 
             SetStatusMessage(_interfaceNotAvailableMessage, StatusLevel.Warning);
         }
-        // Messages of an earlier load that no longer apply
+        // Messages of an earlier load that no longer apply (not the error of a browse, it starts like the load error)
         else if (StatusMessage is not null &&
                  (StatusMessage == Strings.MDNSDiscovery_NoInterface || StatusMessage == _interfaceNotAvailableMessage ||
-                  StatusMessage.StartsWith(Strings.MDNSDiscovery_Failed)))
+                  StatusMessage == _loadInterfacesErrorMessage))
         {
             IsStatusMessageDisplayed = false;
         }
@@ -714,11 +714,16 @@ public sealed class MDNSDiscoveryViewModel : ViewModelBase
     private string _interfaceNotAvailableMessage;
     private bool _showInterfaceNotAvailableOnBrowse;
 
+    // Message of the last failed load of the interfaces (removed by the next successful load)
+    private string _loadInterfacesErrorMessage;
+
     private void LoadInterfacesFailed(Exception ex)
     {
         Log.Error("Cannot load the network interfaces with multicast support.", ex);
 
-        SetStatusMessage(Strings.MDNSDiscovery_Failed + Environment.NewLine + ex.Message, StatusLevel.Error);
+        _loadInterfacesErrorMessage = Strings.MDNSDiscovery_Failed + Environment.NewLine + ex.Message;
+
+        SetStatusMessage(_loadInterfacesErrorMessage, StatusLevel.Error);
     }
 
     /// <summary>
