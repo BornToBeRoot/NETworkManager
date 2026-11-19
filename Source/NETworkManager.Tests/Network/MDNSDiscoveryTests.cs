@@ -718,7 +718,11 @@ public class MDNSDiscoveryTests
         Assert.Contains(rows, x => x.Name == Type && x.Type == "PTR");
         Assert.Contains(rows, x => x.Name == Instance && x.Type == "SRV");
         Assert.Contains(rows, x => x.Name == Host && x.Value == "192.168.1.20");
-        Assert.Equal(rows.Select(x => x.Id).Order(StringComparer.Ordinal), rows.Select(x => x.Id));
+        // In the order of the records, the strings of a TXT record in their order (not "|10" before "|2")
+        var owners = rows.Select(x => x.Name).Distinct().ToArray();
+        Assert.Equal(owners.OrderBy(DNSNameComparer.ToLower, StringComparer.Ordinal), owners); // key: lowercase name
+        Assert.Equal(Enumerable.Range(0, 3000).Select(i => i.ToString()),
+            rows.Where(x => x.Name == "A._airplay._tcp.local.").Select(x => x.Id.Split('|')[^1]));
     }
 
     [Fact]

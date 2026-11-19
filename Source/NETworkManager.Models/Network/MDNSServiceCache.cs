@@ -501,11 +501,15 @@ public sealed class MDNSServiceCache
         if (rows.Length <= MaxRecordRows)
             return rows;
 
+        // Above the limit: the rows of the browsed services first, then the others - shown in the order of the keys
+        // (OrderBy is stable: the character strings of a TXT record keep their order)
         var noPacketSrvTargets = new HashSet<string>();
+        var ordered = records.Select((pair, order) =>
+            (Pair: pair, Order: order, IsBrowsed: IsBrowsed(pair.Value.Record, () => noPacketSrvTargets))).ToArray();
 
-        return records.Where(x => IsBrowsed(x.Value.Record, () => noPacketSrvTargets))
-            .Concat(records.Where(x => !IsBrowsed(x.Value.Record, () => noPacketSrvTargets)))
-            .SelectMany(ToRows).Take(MaxRecordRows).OrderBy(x => x.Id, StringComparer.Ordinal).ToArray();
+        return ordered.Where(x => x.IsBrowsed).Concat(ordered.Where(x => !x.IsBrowsed))
+            .SelectMany(x => ToRows(x.Pair).Select(row => (x.Order, Row: row)))
+            .Take(MaxRecordRows).OrderBy(x => x.Order).Select(x => x.Row).ToArray();
 
         IEnumerable<MDNSRecordInfo> ToRows(KeyValuePair<string, Entry> pair)
         {
