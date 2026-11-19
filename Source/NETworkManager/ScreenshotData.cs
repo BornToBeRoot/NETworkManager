@@ -1,8 +1,12 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Net;
 using NETworkManager.Models.Cloudflare;
 using NETworkManager.Models.IPApi;
+using NETworkManager.Models.Network;
 using NETworkManager.Settings;
+using NETworkManager.Utilities;
 
 namespace NETworkManager;
 
@@ -97,6 +101,86 @@ public static class ScreenshotData
             Hosting = false,
             Query = InternetIPv4
         });
+    }
+
+    #endregion
+
+    #region mDNS Discovery
+
+    /// <summary>
+    /// Creates the network interface of the mDNS Discovery tool (instead of the real adapters).
+    /// </summary>
+    public static IReadOnlyList<MDNSInterfaceInfo> CreateMDNSInterfaces()
+    {
+        return [new MDNSInterfaceInfo("screenshot", "Ethernet", IPAddress.Parse(ComputerIPv4), 12, 12)];
+    }
+
+    /// <summary>
+    /// Services of a home network: (instance, type, host, port, IPv4 address, TXT entries).
+    /// </summary>
+    private static readonly (string Instance, string Type, string Host, ushort Port, string IPv4, string[] Text)[]
+        MDNSServices =
+        [
+            ("Office Printer", "_ipp._tcp", "office-printer", 631, "192.168.1.20",
+                ["txtvers=1", "ty=Example LaserJet 400", "rp=ipp/print", "pdl=application/pdf,image/urf", "Color=T", "Duplex=T"]),
+            ("Office Printer", "_ipps._tcp", "office-printer", 631, "192.168.1.20",
+                ["txtvers=1", "ty=Example LaserJet 400", "rp=ipp/print", "TLS=1.3"]),
+            ("Office Printer", "_uscan._tcp", "office-printer", 80, "192.168.1.20",
+                ["txtvers=1", "ty=Example LaserJet 400", "rs=eSCL", "vers=2.63", "is=platen,adf"]),
+            ("NAS", "_smb._tcp", "nas", 445, "192.168.1.40", []),
+            ("NAS", "_http._tcp", "nas", 5000, "192.168.1.40", ["path=/"]),
+            ("NAS", "_ssh._tcp", "nas", 22, "192.168.1.40", []),
+            ("Living Room TV", "_googlecast._tcp", "living-room-tv", 8009, "192.168.1.30",
+                ["md=Example TV", "fn=Living Room TV", "ca=465413", "st=0"]),
+            ("Living Room Speaker", "_airplay._tcp", "living-room-speaker", 7000, "192.168.1.31",
+                ["model=ExampleSpeaker1,1", "srcvers=770.8.1", "flags=0x4"]),
+            ("Router", "_http._tcp", "router", 80, RouterIPv4, ["path=/"]),
+            ("Hallway Light", "_hap._tcp", "hallway-light", 5541, "192.168.1.50",
+                ["c#=2", "md=Example Light", "sf=0", "ci=5"])
+        ];
+
+    /// <summary>
+    /// Creates the services and the DNS records (PTR, SRV, TXT, A, AAAA and the service type enumeration) of the
+    /// mDNS Discovery tool, consistent with each other.
+    /// </summary>
+    public static MDNSDiscoverySnapshot CreateMDNSDiscoverySnapshot(string networkInterface)
+    {
+        const uint sharedTTL = 4498; // PTR (4500 s), announced a moment ago
+        const uint uniqueTTL = 118; // SRV / TXT / A / AAAA (120 s)
+
+        var services = new List<MDNSServiceInfo>();
+        var records = new List<MDNSRecordInfo>();
+
+        void AddRecord(string name, string type, string value, bool cacheFlush, uint ttl) =>
+            records.Add(new MDNSRecordInfo($"screenshot|{records.Count}", name, type, value, networkInterface, cacheFlush, ttl));
+
+        foreach (var service in MDNSServices)
+        {
+            var type = service.Type + ".local.";
+            var fullName = $"{service.Instance}.{type}";
+            var host = service.Host + ".local.";
+            var ipv6 = $"fe80::{service.IPv4.Split('.')[^1]}%12";
+
+            services.Add(new MDNSServiceInfo(fullName, service.Instance, type, networkInterface, host, service.Port, 0, 0,
+                $"{service.IPv4}; {ipv6}", string.Join(Environment.NewLine, service.Text), sharedTTL));
+
+            AddRecord(type, "PTR", fullName, false, sharedTTL);
+            AddRecord(fullName, "SRV", $"0 0 {service.Port} {host}", true, uniqueTTL);
+
+            foreach (var text in service.Text.DefaultIfEmpty(string.Empty))
+                AddRecord(fullName, "TXT", text, true, uniqueTTL);
+        }
+
+        foreach (var service in MDNSServices.DistinctBy(x => x.Host))
+        {
+            AddRecord(service.Host + ".local.", "A", service.IPv4, true, uniqueTTL);
+            AddRecord(service.Host + ".local.", "AAAA", $"fe80::{service.IPv4.Split('.')[^1]}%12", true, uniqueTTL);
+        }
+
+        foreach (var type in MDNSServices.Select(x => x.Type + ".local.").Distinct())
+            AddRecord(MDNSServiceType.Enumeration, "PTR", type, false, sharedTTL);
+
+        return new MDNSDiscoverySnapshot(services, records);
     }
 
     #endregion

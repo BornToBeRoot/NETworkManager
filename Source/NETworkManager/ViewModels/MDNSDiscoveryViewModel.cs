@@ -497,6 +497,10 @@ public sealed class MDNSDiscoveryViewModel : ViewModelBase
         LoadSettings();
 
         LoadInterfaces();
+
+        // Screenshot mode: results right away (like the dashboard)
+        if (ScreenshotData.IsEnabled)
+            ShowScreenshotData();
     }
 
     private void LoadSettings()
@@ -635,7 +639,7 @@ public sealed class MDNSDiscoveryViewModel : ViewModelBase
     {
         try
         {
-            SetInterfaces(MDNSBrowser.GetInterfaces());
+            SetInterfaces(GetInterfaces());
         }
         catch (Exception ex)
         {
@@ -653,7 +657,7 @@ public sealed class MDNSDiscoveryViewModel : ViewModelBase
 
         try
         {
-            var interfaces = await TaskHelper.WithMinimumDurationAsync(() => Task.Run(MDNSBrowser.GetInterfaces),
+            var interfaces = await TaskHelper.WithMinimumDurationAsync(() => Task.Run(GetInterfaces),
                 GlobalStaticConfiguration.ApplicationUIRefreshInterval);
 
             SetInterfaces(interfaces);
@@ -666,6 +670,35 @@ public sealed class MDNSDiscoveryViewModel : ViewModelBase
         {
             IsInterfacesLoading = false;
         }
+    }
+
+    /// <summary>
+    ///     Gets the interfaces with multicast support (screenshot mode: a sample interface instead of the real ones).
+    /// </summary>
+    private static IReadOnlyList<MDNSInterfaceInfo> GetInterfaces()
+    {
+        return ScreenshotData.IsEnabled ? ScreenshotData.CreateMDNSInterfaces() : MDNSBrowser.GetInterfaces();
+    }
+
+    /// <summary>
+    ///     Screenshot mode (<c>--screenshot</c>): shows sample services and records instead of a browse (no sockets,
+    ///     settings or history are changed).
+    /// </summary>
+    private void ShowScreenshotData()
+    {
+        IsStatusMessageDisplayed = false;
+
+        var snapshot = ScreenshotData.CreateMDNSDiscoverySnapshot(SelectedInterface?.Name ?? string.Empty);
+
+        _serviceRows.Clear();
+        _recordRows.Clear();
+        Results.Clear();
+        Records.Clear();
+        Merge(Results, _serviceRows, snapshot.Services, x => x.FullName, (row, value) => row.UpdateFrom(value));
+        Merge(Records, _recordRows, snapshot.Records, x => x.Id, (row, value) => row.UpdateFrom(value));
+
+        IsBrowsed = true;
+        LastScanTime = DateTime.Now;
     }
 
     /// <summary>
@@ -692,7 +725,8 @@ public sealed class MDNSDiscoveryViewModel : ViewModelBase
         }
         // The last used interface is gone (e.g. a USB adapter or VPN): say which one is used instead, also a run
         // command browses on it right away
-        else if (previousInterface == null && !string.IsNullOrEmpty(id))
+        // (not the sample interface of the screenshot mode)
+        else if (previousInterface == null && !string.IsNullOrEmpty(id) && !ScreenshotData.IsEnabled)
         {
             Log.Info($"Network interface \"{id}\" is not available, \"{SelectedInterface.Name}\" is used.");
 
@@ -752,6 +786,13 @@ public sealed class MDNSDiscoveryViewModel : ViewModelBase
                 out var serviceTypes))
         {
             SetStatusMessage(Strings.MDNSDiscovery_InvalidServiceType, StatusLevel.Error);
+
+            return;
+        }
+
+        if (ScreenshotData.IsEnabled)
+        {
+            ShowScreenshotData();
 
             return;
         }
@@ -922,7 +963,7 @@ public sealed class MDNSDiscoveryViewModel : ViewModelBase
     {
         try
         {
-            var interfaces = await Task.Run(MDNSBrowser.GetInterfaces);
+            var interfaces = await Task.Run(GetInterfaces);
 
             if (!IsRunning && !IsInterfacesLoading)
                 SetInterfaces(interfaces);
