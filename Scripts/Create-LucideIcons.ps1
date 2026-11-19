@@ -33,7 +33,8 @@ $Icons = @(
     "list-chevrons-down-up", "list-chevrons-up-down", "list-filter", "list-plus", "list-x", "lock", "map-pin",
     "maximize", "maximize-2", "minimize", "minus", "monitor", "monitor-check", "monitor-dot", "monitor-down", "monitor-x", "network", "octagon-alert", "palette",
     "pause", "pencil", "pin", "play", "plug-zap", "plus", "power", "radar", "radio-tower", "refresh-cw", "rocket",
-    "rotate-ccw", "route", "router", "save", "scan", "scan-line", "scissors", "search", "server", "settings", "shield",
+    "rotate-ccw", "route", "router", "satellite-dish", "save", "scan", "scan-line", "scissors", "search", "server",
+    "settings", "shield",
     "shield-lock", "shield-off", "sliders-horizontal", "square-chevron-right", "table", "tag", "terminal", "timer",
     "toggle-left", "toggle-right", "triangle-alert", "undo-2", "unplug", "user", "user-lock", "users", "wifi",
     "wifi-high", "wifi-lock", "wifi-low", "wifi-off", "wifi-zero", "x"

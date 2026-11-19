@@ -1,5 +1,5 @@
 ---
-sidebar_position: 20
+sidebar_position: 21
 description: "Look up registration data for domains, IP addresses, AS numbers and entities via RDAP (Registration Data Access Protocol) using NETworkManager. Structured, JSON-based successor of Whois."
 keywords: [NETworkManager, RDAP, Registration Data Access Protocol, domain lookup, IP lookup, ASN lookup, AS number, registrar, registry, Whois alternative]
 ---

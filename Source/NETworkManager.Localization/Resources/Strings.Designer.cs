@@ -1213,6 +1213,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to mDNS Discovery.
+        /// </summary>
+        public static string ApplicationName_MDNSDiscovery {
+            get {
+                return ResourceManager.GetString("ApplicationName_MDNSDiscovery", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Neighbor Table.
         /// </summary>
         public static string ApplicationName_NeighborTable {
@@ -8253,6 +8262,258 @@ namespace NETworkManager.Localization.Resources {
         public static string MDNS {
             get {
                 return ResourceManager.GetString("MDNS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add service type profile.
+        /// </summary>
+        public static string MDNSDiscovery_AddServiceTypeProfile {
+            get {
+                return ResourceManager.GetString("MDNSDiscovery_AddServiceTypeProfile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to All advertised service types.
+        /// </summary>
+        public static string MDNSDiscovery_AllServiceTypes {
+            get {
+                return ResourceManager.GetString("MDNSDiscovery_AllServiceTypes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Browse.
+        /// </summary>
+        public static string MDNSDiscovery_Browse {
+            get {
+                return ResourceManager.GetString("MDNSDiscovery_Browse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete service type profile.
+        /// </summary>
+        public static string MDNSDiscovery_DeleteServiceTypeProfile {
+            get {
+                return ResourceManager.GetString("MDNSDiscovery_DeleteServiceTypeProfile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The selected service type profile will be deleted permanently..
+        /// </summary>
+        public static string MDNSDiscovery_DeleteServiceTypeProfileMessage {
+            get {
+                return ResourceManager.GetString("MDNSDiscovery_DeleteServiceTypeProfileMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete service type profiles.
+        /// </summary>
+        public static string MDNSDiscovery_DeleteServiceTypeProfiles {
+            get {
+                return ResourceManager.GetString("MDNSDiscovery_DeleteServiceTypeProfiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The selected service type profiles will be deleted permanently..
+        /// </summary>
+        public static string MDNSDiscovery_DeleteServiceTypeProfilesMessage {
+            get {
+                return ResourceManager.GetString("MDNSDiscovery_DeleteServiceTypeProfilesMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit service type profile.
+        /// </summary>
+        public static string MDNSDiscovery_EditServiceTypeProfile {
+            get {
+                return ResourceManager.GetString("MDNSDiscovery_EditServiceTypeProfile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No services found. Devices must advertise their services on the network of the selected interface; firewalls, VPNs and Wi-Fi client isolation can block discovery..
+        /// </summary>
+        public static string MDNSDiscovery_Empty {
+            get {
+                return ResourceManager.GetString("MDNSDiscovery_Empty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter a duration in seconds: {0} (0 = until stopped)..
+        /// </summary>
+        public static string MDNSDiscovery_EnterValidDuration {
+            get {
+                return ResourceManager.GetString("MDNSDiscovery_EnterValidDuration", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter service types such as _ipp._tcp, separated by &quot;;&quot;..
+        /// </summary>
+        public static string MDNSDiscovery_EnterValidServiceTypes {
+            get {
+                return ResourceManager.GetString("MDNSDiscovery_EnterValidServiceTypes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Service discovery failed. Check the network interface and whether UDP port 5353 is available and allowed by the firewall..
+        /// </summary>
+        public static string MDNSDiscovery_Failed {
+            get {
+                return ResourceManager.GetString("MDNSDiscovery_Failed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The last used network interface is not available, &quot;{0}&quot; is used instead..
+        /// </summary>
+        public static string MDNSDiscovery_InterfaceNotAvailable {
+            get {
+                return ResourceManager.GetString("MDNSDiscovery_InterfaceNotAvailable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter *, service types such as _ipp._tcp and/or service type profiles, separated by &quot;;&quot;..
+        /// </summary>
+        public static string MDNSDiscovery_InvalidServiceType {
+            get {
+                return ResourceManager.GetString("MDNSDiscovery_InvalidServiceType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No active network interface with multicast support was found..
+        /// </summary>
+        public static string MDNSDiscovery_NoInterface {
+            get {
+                return ResourceManager.GetString("MDNSDiscovery_NoInterface", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No DNS records received..
+        /// </summary>
+        public static string MDNSDiscovery_NoRecords {
+            get {
+                return ResourceManager.GetString("MDNSDiscovery_NoRecords", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SRV priority.
+        /// </summary>
+        public static string MDNSDiscovery_Priority {
+            get {
+                return ResourceManager.GetString("MDNSDiscovery_Priority", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Raw DNS records.
+        /// </summary>
+        public static string MDNSDiscovery_RawRecords {
+            get {
+                return ResourceManager.GetString("MDNSDiscovery_RawRecords", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Service type.
+        /// </summary>
+        public static string MDNSDiscovery_ServiceType {
+            get {
+                return ResourceManager.GetString("MDNSDiscovery_ServiceType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter * to discover all advertised service types (also probes common printer, scanner, web and media service types), or service types such as _ipp._tcp and/or service type profiles (e.g. Printers), separated by &quot;;&quot;. The profiles can be changed in the settings. Discovery is limited to the local. domain..
+        /// </summary>
+        public static string MDNSDiscovery_ServiceTypeHelp {
+            get {
+                return ResourceManager.GetString("MDNSDiscovery_ServiceTypeHelp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The name must not contain &quot;;&quot; and must not be &quot;*&quot; or a service type..
+        /// </summary>
+        public static string MDNSDiscovery_ServiceTypeProfileNameInvalid {
+            get {
+                return ResourceManager.GetString("MDNSDiscovery_ServiceTypeProfileNameInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Service type profiles.
+        /// </summary>
+        public static string MDNSDiscovery_ServiceTypeProfiles {
+            get {
+                return ResourceManager.GetString("MDNSDiscovery_ServiceTypeProfiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Service types.
+        /// </summary>
+        public static string MDNSDiscovery_ServiceTypes {
+            get {
+                return ResourceManager.GetString("MDNSDiscovery_ServiceTypes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TXT records.
+        /// </summary>
+        public static string MDNSDiscovery_TXTRecords {
+            get {
+                return ResourceManager.GetString("MDNSDiscovery_TXTRecords", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Until stopped.
+        /// </summary>
+        public static string MDNSDiscovery_UntilStopped {
+            get {
+                return ResourceManager.GetString("MDNSDiscovery_UntilStopped", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SRV weight.
+        /// </summary>
+        public static string MDNSDiscovery_Weight {
+            get {
+                return ResourceManager.GetString("MDNSDiscovery_Weight", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} records.
+        /// </summary>
+        public static string MDNSDiscovery_XRecords {
+            get {
+                return ResourceManager.GetString("MDNSDiscovery_XRecords", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} services.
+        /// </summary>
+        public static string MDNSDiscovery_XServices {
+            get {
+                return ResourceManager.GetString("MDNSDiscovery_XServices", resourceCulture);
             }
         }
         

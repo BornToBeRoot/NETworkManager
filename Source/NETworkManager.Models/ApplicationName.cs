@@ -108,6 +108,11 @@ public enum ApplicationName
     DiscoveryProtocol,
 
     /// <summary>
+    ///     mDNS Discovery (multicast DNS service discovery) application.
+    /// </summary>
+    MDNSDiscovery,
+
+    /// <summary>
     ///     Wake on LAN application.
     /// </summary>
     WakeOnLAN,

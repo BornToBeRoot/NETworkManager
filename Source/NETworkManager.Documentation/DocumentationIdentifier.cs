@@ -101,6 +101,11 @@ public enum DocumentationIdentifier
     ApplicationDiscoveryProtocol,
 
     /// <summary>
+    ///     mDNS Discovery documentation page.
+    /// </summary>
+    ApplicationMDNSDiscovery,
+
+    /// <summary>
     ///     Wake on LAN documentation page.
     /// </summary>
     ApplicationWakeOnLan,

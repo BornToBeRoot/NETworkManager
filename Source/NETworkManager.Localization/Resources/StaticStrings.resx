@@ -381,4 +381,13 @@
   <data name="ExampleRDAPNameserver" xml:space="preserve">
     <value>a.iana-servers.net</value>
   </data>
+  <data name="ExampleMDNSServiceTypeProfileName" xml:space="preserve">
+    <value>Printers</value>
+  </data>
+  <data name="ExampleMDNSServiceTypes" xml:space="preserve">
+    <value>_ipp._tcp; _ipps._tcp</value>
+  </data>
+  <data name="ExampleMDNSServiceTypeInput" xml:space="preserve">
+    <value>Printers; _ssh._tcp</value>
+  </data>
 </root>

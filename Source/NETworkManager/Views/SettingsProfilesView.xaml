@@ -189,7 +189,8 @@
         <TextBlock Style="{StaticResource ResourceKey=HeaderTextBlock}"
                    Text="{x:Static Member=localization:Strings.ProfileFiles}" />
         <DataGrid x:Name="DataGridProfileLocations" ItemsSource="{Binding ProfileFiles}" SelectionMode="Single"
-                  SelectedItem="{Binding SelectedProfileFile}" Height="200" Margin="0,0,0,10">
+                  SelectedItem="{Binding SelectedProfileFile}" Height="200" Margin="0,0,0,10"
+                  wpfHelpers:DataGridHelper.FillRemainingWidth="True">
             <DataGrid.Resources>
                 <wpfHelpers:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
                 <ContextMenu x:Key="RowContextMenu" DataContext="{Binding Data, Source={StaticResource BindingProxy}}" MinWidth="150">
@@ -266,7 +267,7 @@
             <DataGrid.Columns>
                 <DataGridTextColumn Header="{x:Static Member=localization:Strings.Name}"
                                     Binding="{Binding Path=(profiles:ProfileFileInfo.Name)}" MinWidth="150"
-                                    Width="Auto" />
+                                    wpfHelpers:DataGridHelper.IsFillColumn="True" />
                 <DataGridCheckBoxColumn ElementStyle="{StaticResource ResourceKey=MahApps.Styles.CheckBox.DataGrid}"
                                         Header="{x:Static Member=localization:Strings.IsEncrypted}"
                                         Binding="{Binding Path=(profiles:ProfileFileInfo.IsEncrypted)}" Width="Auto" />

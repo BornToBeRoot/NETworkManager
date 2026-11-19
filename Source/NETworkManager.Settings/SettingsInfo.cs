@@ -4019,6 +4019,103 @@ public class SettingsInfo : INotifyPropertyChanged
 
     #endregion
 
+    #region mDNS Discovery
+
+    public string MDNSDiscovery_ServiceType
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.MDNSDiscovery_ServiceType;
+
+    public ObservableCollection<string> MDNSDiscovery_ServiceTypeHistory
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            UpdateCollectionChanged(field, value);
+            field = value;
+            OnPropertyChanged();
+        }
+    } = [];
+
+    public ObservableCollection<MDNSServiceTypeProfileInfo> MDNSDiscovery_ServiceTypeProfiles
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            UpdateCollectionChanged(field, value);
+            field = value;
+            OnPropertyChanged();
+        }
+    } = [];
+
+    public int MDNSDiscovery_Duration
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.MDNSDiscovery_Duration;
+
+    public string MDNSDiscovery_InterfaceId
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.MDNSDiscovery_InterfaceId;
+
+    public ExportFileType MDNSDiscovery_ExportFileType
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.MDNSDiscovery_ExportFileType;
+
+    public string MDNSDiscovery_ExportFilePath
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.MDNSDiscovery_ExportFilePath;
+
+    #endregion
+
     #region WakeOnLAN
 
     public int WakeOnLAN_Port
@@ -4747,6 +4844,10 @@ public class SettingsInfo : INotifyPropertyChanged
 
         // SNTP Lookup
         SNTPLookup_SNTPServers.CollectionChanged += CollectionChanged;
+
+        // mDNS Discovery
+        MDNSDiscovery_ServiceTypeHistory.CollectionChanged += CollectionChanged;
+        MDNSDiscovery_ServiceTypeProfiles.CollectionChanged += CollectionChanged;
 
         // Wake on LAN
         WakeOnLan_MACAddressHistory.CollectionChanged += CollectionChanged;

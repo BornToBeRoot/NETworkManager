@@ -116,6 +116,9 @@ public static class ApplicationManager
             case ApplicationName.DiscoveryProtocol:
                 canvas.Children.Add(new LucideIcon { Kind = LucideIconKind.ArrowLeftRight });
                 break;
+            case ApplicationName.MDNSDiscovery:
+                canvas.Children.Add(new LucideIcon { Kind = LucideIconKind.SatelliteDish });
+                break;
             case ApplicationName.WakeOnLAN:
                 canvas.Children.Add(new LucideIcon { Kind = LucideIconKind.Power });
                 break;
