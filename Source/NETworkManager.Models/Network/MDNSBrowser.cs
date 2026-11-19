@@ -49,10 +49,15 @@ public static class MDNSBrowser
     private static MDNSInterfaceInfo TryCreateInterfaceInfo(System.Net.NetworkInformation.NetworkInterface networkInterface)
     {
         IPInterfaceProperties properties;
+        IPAddress ipv4;
+        bool hasIPv6;
 
+        // The properties and the address list (read when enumerated)
         try
         {
             properties = networkInterface.GetIPProperties();
+            ipv4 = properties.UnicastAddresses.FirstOrDefault(a => a.Address.AddressFamily == AddressFamily.InterNetwork)?.Address;
+            hasIPv6 = properties.UnicastAddresses.Any(a => a.Address.AddressFamily == AddressFamily.InterNetworkV6);
         }
         catch (NetworkInformationException ex)
         {
@@ -60,9 +65,6 @@ public static class MDNSBrowser
 
             return null;
         }
-
-        var ipv4 = properties.UnicastAddresses.FirstOrDefault(a => a.Address.AddressFamily == AddressFamily.InterNetwork)?.Address;
-        var hasIPv6 = properties.UnicastAddresses.Any(a => a.Address.AddressFamily == AddressFamily.InterNetworkV6);
 
         // Each address family on its own: one that can't be read (e.g. IPv6 partly configured) doesn't drop the other
         var ipv4Index = ipv4 == null ? 0 : GetIndex(() => properties.GetIPv4Properties().Index, "IPv4");
