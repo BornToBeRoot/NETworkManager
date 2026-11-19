@@ -87,7 +87,7 @@ mdns printers 30
 dnssd Printers;_http._tcp.local. 0
 ```
 
-The selected interface is used, and the selected duration if none is entered. This tool has no profiles (`@profile`).
+The selected interface is used, and the selected duration if none is entered. A running browse is stopped and the new one started; with `Shift+Enter` (only fill in) a running browse continues and the input is filled in when it has ended. This tool has no profiles (`@profile`).
 
 ## Settings
 

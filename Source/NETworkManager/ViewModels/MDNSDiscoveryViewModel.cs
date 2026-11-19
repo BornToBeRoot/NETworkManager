@@ -54,6 +54,10 @@ public sealed class MDNSDiscoveryViewModel : ViewModelBase
     // The view is shown (OnViewVisible / OnViewHide): a pending resume is only done while it is shown
     private bool _isViewVisible = true;
 
+    // Request to fill in only (run command) that arrived while browsing: filled in when the browse has ended, so a
+    // running browse is not stopped and its input not changed (see OpenAsync)
+    private ApplicationRequest _pendingFillIn;
+
     // The browser reports detached snapshots from a worker thread; the latest one is merged into the rows by the
     // flush timer (like the results buffer of the scanners), so the dispatcher isn't called per snapshot.
     private MDNSDiscoverySnapshot _pendingSnapshot;
@@ -896,6 +900,10 @@ public sealed class MDNSDiscoveryViewModel : ViewModelBase
 
             IsCanceling = false;
             IsRunning = false;
+
+            // Not if paused: the browse continues when the view is shown
+            if (!_isPaused)
+                FillInPendingRequest();
         }
     }
 
@@ -913,7 +921,8 @@ public sealed class MDNSDiscoveryViewModel : ViewModelBase
 
     /// <summary>
     ///     Opens the tool with service types / profiles (run command). <see cref="ApplicationRequest.Start" /> = false
-    ///     only fills in the input.
+    ///     only fills in the input: a running (or paused) browse is not stopped, the input is filled in when it has
+    ///     ended (see <see cref="_pendingFillIn" />).
     /// </summary>
     /// <param name="request">Request with the service types / profiles as target.</param>
     public async Task OpenAsync(ApplicationRequest request)
@@ -921,6 +930,19 @@ public sealed class MDNSDiscoveryViewModel : ViewModelBase
         if (!MDNSServiceTypeProfile.TryResolve(request.Target, SettingsManager.Current.MDNSDiscovery_ServiceTypeProfiles,
                 out _))
             return;
+
+        if (!request.Start)
+        {
+            _pendingFillIn = request;
+
+            if (!IsRunning && !_isPaused)
+                FillInPendingRequest();
+
+            return;
+        }
+
+        // A newer request than a pending fill in
+        _pendingFillIn = null;
 
         // A paused browse is not resumed: the view was just shown (OnViewVisible) and a resume may wait for the same
         // browse to end - it would win and this request would be ignored (IsRunning)
@@ -930,14 +952,34 @@ public sealed class MDNSDiscoveryViewModel : ViewModelBase
 
         await _browseTask;
 
+        FillIn(request);
+
+        await (_browseTask = Browse());
+    }
+
+    /// <summary>
+    ///     Fills in the request to fill in only that arrived while browsing (see <see cref="OpenAsync" />).
+    /// </summary>
+    private void FillInPendingRequest()
+    {
+        var request = _pendingFillIn;
+
+        _pendingFillIn = null;
+
+        if (request != null)
+            FillIn(request);
+    }
+
+    /// <summary>
+    ///     Fills in the service types / profiles and the duration of a request (e.g. "mdns printers 30", otherwise the
+    ///     selected duration is kept).
+    /// </summary>
+    private void FillIn(ApplicationRequest request)
+    {
         ServiceType = request.Target;
 
-        // Duration of the run command (e.g. "mdns printers 30"), otherwise the selected one
         if (request is MDNSDiscoveryRequest { Duration: { } duration } && Durations.Contains(duration))
             SelectedDuration = duration;
-
-        if (request.Start)
-            await (_browseTask = Browse());
     }
 
     /// <summary>
