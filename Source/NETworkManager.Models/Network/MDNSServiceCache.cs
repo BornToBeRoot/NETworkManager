@@ -467,6 +467,8 @@ public sealed class MDNSServiceCache
             var addresses = srv == null
                 ? []
                 : GetEntries(srv.Record.Target, MDNSMessage.A).Concat(GetEntries(srv.Record.Target, MDNSMessage.AAAA))
+                    // Not an A / AAAA record with another length (kept as raw data, see MDNSMessage.ReadResponse)
+                    .Where(x => x.Record.Address != null)
                     .Select(x => x.Record.Address.ToString()).Distinct().Order().ToArray();
             // Without the type (its normalized length, matched by Instances), as text (escapes decoded)
             var name = MDNSMessage.ToDisplayText(fullName[..^(type.Length + 1)]);

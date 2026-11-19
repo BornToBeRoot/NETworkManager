@@ -657,6 +657,18 @@ public class MDNSDiscoveryTests
     }
 
     [Fact]
+    public void AddressRecordsWithAnInvalidLengthAreNoAddressesOfTheService()
+    {
+        var cache = new MDNSServiceCache(Type, "Ethernet");
+        // A with 16 bytes and AAAA with 4 bytes: kept as raw data (no address)
+        cache.ProcessResponse(Packet(Ptr(), Srv(), Address(), new Record(Host, 1, new byte[16]),
+            new Record(Host, 28, [192, 168, 1, 21])), Now);
+
+        Assert.Equal("192.168.1.20", Assert.Single(cache.GetServices(Now)).Addresses);
+        Assert.Contains(cache.GetRecords(Now), x => x.Type == "A" && x.Value.StartsWith("\\# 16"));
+    }
+
+    [Fact]
     public void AnnouncedAgainTheServiceAndItsQuestionsUseTheNewTTL()
     {
         var cache = new MDNSServiceCache(Type, "Ethernet");
