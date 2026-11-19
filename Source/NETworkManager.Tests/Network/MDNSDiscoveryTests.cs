@@ -559,6 +559,21 @@ public class MDNSDiscoveryTests
     }
 
     [Fact]
+    public void FullCacheKeepsTheOldValuesOfACacheFlushThatIsNotCached()
+    {
+        var cache = new MDNSServiceCache(Type, "Ethernet");
+        var hosts = Enumerable.Range(0, MDNSServiceCache.MaxRecords)
+            .Select(i => new Record($"host{i}.local.", 1, [10, 0, (byte)(i >> 8), (byte)i])).ToArray();
+        foreach (var chunk in hosts.Chunk(500))
+            cache.ProcessResponse(Packet(chunk), Now);
+
+        // New address of host0 with the cache-flush bit: not cached (full), the old one must not expire
+        cache.ProcessResponse(Packet(new Record("host0.local.", 1, [10, 9, 9, 9], Flush: true)), Now.AddSeconds(2));
+        Assert.Equal(1, cache.RecordsNotCached);
+        Assert.Contains(cache.GetRecords(Now.AddSeconds(4)), x => x.Name == "host0.local." && x.Value == "10.0.0.0");
+    }
+
+    [Fact]
     public void RecordRowsKeepTheRecordsOfTheBrowsedServicesWhenThereAreTooMany()
     {
         var cache = new MDNSServiceCache(Type, "Ethernet");

@@ -158,24 +158,6 @@ public sealed class MDNSServiceCache
         if (records.Count == 0)
             PacketsWithoutRecords++;
 
-        // A cache-flush RRset may span packets. Give older values one second's grace, and preserve values just
-        // received in the same second (RFC 6762 section 10.2); a goodbye is also held for one second.
-        foreach (var group in records.Where(x => x.CacheFlush && x.TTL > 0).GroupBy(RRset))
-        {
-            if (!_rrsets.TryGetValue(group.Key, out var cached))
-                continue;
-
-            var keys = group.Select(Key).ToHashSet(StringComparer.Ordinal);
-
-            foreach (var key in cached.Where(x => !keys.Contains(x)).ToArray())
-            {
-                var old = _records[key];
-
-                if (now - old.Received >= TimeSpan.FromSeconds(1))
-                    _records[key] = old with { Expires = Min(old.Expires, now.AddSeconds(1)) };
-            }
-        }
-
         // Hosts of the SRV records of browsed services in this packet (an address can come before its SRV record),
         // only read if the cache is full (see IsBrowsed); the cached ones are kept in _browsedSrvTargets
         HashSet<string> packetSrvTargets = null;
@@ -183,6 +165,10 @@ public sealed class MDNSServiceCache
         HashSet<string> GetPacketSrvTargets() => packetSrvTargets ??= records
             .Where(x => x.Type == MDNSMessage.SRV && IsBrowsedInstance(x.Name)).Select(x => x.Target)
             .ToHashSet(StringComparer.OrdinalIgnoreCase);
+
+        // RRsets with a cache-flush record of this packet that was cached (not if the cache is full: the old values are
+        // kept instead of losing the RRset)
+        HashSet<(string Name, ushort Type)> flushedRRsets = null;
 
         foreach (var record in records)
         {
@@ -196,9 +182,30 @@ public sealed class MDNSServiceCache
             // link (reverse names, other services) can't hide them
             else if (_records.ContainsKey(key) || _records.Count < MaxRecords ||
                      _records.Count < MaxRecords * 2 && IsBrowsed(record, GetPacketSrvTargets))
+            {
                 Set(key, new Entry(record, now, now.AddSeconds(record.TTL)));
+
+                if (record.CacheFlush)
+                    (flushedRRsets ??= []).Add(RRset(record));
+            }
             else if (RecordsNotCached++ == 0)
                 Log.Warn($"mDNS cache on \"{_networkInterface}\" is full ({MaxRecords} records), new records of other services are ignored until others expire.");
+        }
+
+        if (flushedRRsets == null)
+            return;
+
+        // A cache-flush RRset may span packets. Give older values one second's grace, and preserve values received in
+        // the same second (RFC 6762 section 10.2), e.g. the ones of this packet; a goodbye is also held for one second.
+        foreach (var rrset in flushedRRsets)
+        {
+            foreach (var key in _rrsets[rrset])
+            {
+                var old = _records[key];
+
+                if (now - old.Received >= TimeSpan.FromSeconds(1))
+                    _records[key] = old with { Expires = Min(old.Expires, now.AddSeconds(1)) };
+            }
         }
     }
 
