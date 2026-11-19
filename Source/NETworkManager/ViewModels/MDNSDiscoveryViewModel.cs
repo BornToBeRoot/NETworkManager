@@ -909,7 +909,8 @@ public sealed class MDNSDiscoveryViewModel : ViewModelBase
     /// </summary>
     public void OnViewHide()
     {
-        if (!IsRunning || BrowseDuration != 0)
+        // Not a browse that is being stopped (Stop pressed, then another tool selected): it would be resumed
+        if (!IsRunning || IsCanceling || BrowseDuration != 0)
             return;
 
         _isPaused = true;
