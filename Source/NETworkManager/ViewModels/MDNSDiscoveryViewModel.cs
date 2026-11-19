@@ -872,6 +872,10 @@ public sealed class MDNSDiscoveryViewModel : ViewModelBase
                 out _))
             return;
 
+        // A paused browse is not resumed: the view was just shown (OnViewVisible) and a resume may wait for the same
+        // browse to end - it would win and this request would be ignored (IsRunning)
+        _isPaused = false;
+
         Stop();
 
         await _browseTask;
