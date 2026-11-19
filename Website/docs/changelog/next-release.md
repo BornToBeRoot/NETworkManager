@@ -46,10 +46,12 @@ Release date: **xx.xx.2026**
 **DNS Lookup**
 
 - Fixed the last column of the DNS servers (settings) not filling the remaining width. [#3719](https://github.com/BornToBeRoot/NETworkManager/pull/3719)
+- Fixed a DNS server name with a leading / trailing space not being detected as a duplicate (settings). [#3719](https://github.com/BornToBeRoot/NETworkManager/pull/3719)
 
 **SNTP Lookup**
 
 - Fixed the last column of the SNTP servers (settings) not filling the remaining width. [#3719](https://github.com/BornToBeRoot/NETworkManager/pull/3719)
+- Fixed an SNTP server name with a leading / trailing space not being detected as a duplicate (settings). [#3719](https://github.com/BornToBeRoot/NETworkManager/pull/3719)
 
 **Hosts File Editor**
 
@@ -62,6 +64,10 @@ Release date: **xx.xx.2026**
 **Profiles**
 
 - Fixed the profile list not filling the width of the grid: the name column fills the remaining width. [#3719](https://github.com/BornToBeRoot/NETworkManager/pull/3719)
+
+**Port Scanner**
+
+- Fixed a port profile name with a leading / trailing space (e.g. `Webserver `) not being detected as a duplicate: the ports input always used the first port profile with the name. [#3719](https://github.com/BornToBeRoot/NETworkManager/pull/3719)
 
 **About**
 
