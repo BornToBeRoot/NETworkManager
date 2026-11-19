@@ -628,7 +628,8 @@ public sealed class MDNSDiscoveryViewModel : ViewModelBase
     #region Methods
 
     /// <summary>
-    ///     Loads the network interfaces right away (constructor, view shown: a run command may browse right after).
+    ///     Loads the network interfaces right away (constructor: a run command may browse right after the view was
+    ///     created). Shown again: see <see cref="ReloadInterfacesInBackground" />.
     /// </summary>
     private void LoadInterfaces()
     {
@@ -897,7 +898,7 @@ public sealed class MDNSDiscoveryViewModel : ViewModelBase
 
     /// <summary>
     ///     Called when the view is shown: resumes a paused browse (see <see cref="OnViewHide" />), otherwise reloads
-    ///     the interfaces (not while browsing).
+    ///     the interfaces in the background (not while browsing).
     /// </summary>
     public void OnViewVisible()
     {
@@ -909,7 +910,27 @@ public sealed class MDNSDiscoveryViewModel : ViewModelBase
         }
 
         if (!IsRunning && !IsInterfacesLoading)
-            LoadInterfaces();
+            _ = ReloadInterfacesInBackground();
+    }
+
+    /// <summary>
+    ///     Reloads the interfaces when the view is shown again, in the background: reading the IP properties of every
+    ///     adapter can take a while (many virtual adapters). No reload animation (not requested by the user). If a
+    ///     browse was started meanwhile (e.g. run command), the result is dropped - the browse keeps its interface.
+    /// </summary>
+    private async Task ReloadInterfacesInBackground()
+    {
+        try
+        {
+            var interfaces = await Task.Run(MDNSBrowser.GetInterfaces);
+
+            if (!IsRunning && !IsInterfacesLoading)
+                SetInterfaces(interfaces);
+        }
+        catch (Exception ex)
+        {
+            LoadInterfacesFailed(ex);
+        }
     }
 
     /// <summary>
