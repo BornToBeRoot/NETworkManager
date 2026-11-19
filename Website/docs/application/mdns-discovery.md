@@ -116,7 +116,7 @@ Named lists of service types. A service type profile can be entered by its name 
 - Discovery is limited to the selected local link and the `.local.` domain. VLANs, routed networks, VPNs, firewalls and Wi-Fi client isolation can prevent replies. A multicast reflector may make services from another link visible.
 - Allow UDP port `5353` through the firewall. Another application that exclusively owns that port can prevent the browser from starting.
 - If the interface disconnects, stop discovery, refresh the interface list and browse again.
-- The browser limits the cache and the raw DNS records to 4096 records / rows to remain responsive on busy networks.
+- The browser caches up to 4096 records to remain responsive on busy networks; above, only the records of the browsed services are cached (up to 8192), so other traffic of the network can't hide them. The raw DNS records show up to 4096 rows.
 - Advertised names and metadata are supplied by other devices and do not establish their identity. The tool displays metadata without executing TXT values or opening advertised URLs.
 
 Protocol references: [Multicast DNS (RFC 6762)](https://www.rfc-editor.org/rfc/rfc6762) and [DNS-Based Service Discovery (RFC 6763)](https://www.rfc-editor.org/rfc/rfc6763).

@@ -486,9 +486,18 @@ public class MDNSDiscoveryTests
             cache.ProcessResponse(Packet(chunk), Now);
 
         Assert.Equal(0, cache.RecordsNotCached);
+        // An address of a host without SRV record (other traffic of the link) is not cached
         cache.ProcessResponse(Packet(Address("192.168.1.99")), Now);
         Assert.Equal(1, cache.RecordsNotCached);
         Assert.DoesNotContain(cache.GetRecords(Now), x => x.Value == "192.168.1.99");
+
+        // The records of a browsed service are still cached (SRV of the instance, then the address of its host)
+        cache.ProcessResponse(Packet(Srv()), Now);
+        cache.ProcessResponse(Packet(Address("192.168.1.99")), Now);
+        var service = Assert.Single(cache.GetServices(Now));
+        Assert.Equal(Host, service.Hostname);
+        Assert.Contains("192.168.1.99", service.Addresses);
+        Assert.Equal(1, cache.RecordsNotCached);
 
         // The cached PTR (TTL 2) is still refreshed by a new announcement
         cache.ProcessResponse(Packet(Ptr(2)), Now.AddSeconds(1.5));

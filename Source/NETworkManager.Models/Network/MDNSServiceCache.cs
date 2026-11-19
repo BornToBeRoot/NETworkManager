@@ -158,6 +158,13 @@ public sealed class MDNSServiceCache
             }
         }
 
+        // Hosts of the SRV records (cached and in this packet), only read if the cache is full (see IsBrowsed)
+        HashSet<string> srvTargets = null;
+
+        HashSet<string> GetSrvTargets() => srvTargets ??= _records.Values.Select(x => x.Record)
+            .Concat(records).Where(x => x.Type == MDNSMessage.SRV).Select(x => x.Target)
+            .ToHashSet(StringComparer.OrdinalIgnoreCase);
+
         foreach (var record in records)
         {
             var key = Key(record);
@@ -166,11 +173,60 @@ public sealed class MDNSServiceCache
                 if (_records.TryGetValue(key, out var entry))
                     _records[key] = entry with { Expires = Min(entry.Expires, now.AddSeconds(1)) };
             }
-            else if (_records.ContainsKey(key) || _records.Count < MaxRecords)
+            // Full: records of the browsed services are still cached (up to twice the limit), so other traffic of the
+            // link (reverse names, other services) can't hide them
+            else if (_records.ContainsKey(key) || _records.Count < MaxRecords ||
+                     _records.Count < MaxRecords * 2 && IsBrowsed(record, GetSrvTargets))
                 Set(key, new Entry(record, now, now.AddSeconds(record.TTL)));
             else if (RecordsNotCached++ == 0)
-                Log.Warn($"mDNS cache on \"{_networkInterface}\" is full ({MaxRecords} records), new records are ignored until others expire.");
+                Log.Warn($"mDNS cache on \"{_networkInterface}\" is full ({MaxRecords} records), new records of other services are ignored until others expire.");
         }
+    }
+
+    /// <summary>
+    ///     Checks if a record belongs to the browsed services: PTR of a browsed type (or of the service type
+    ///     enumeration with *), SRV / TXT of an instance of a browsed type, A / AAAA of a host of an SRV record.
+    /// </summary>
+    private bool IsBrowsed(MDNSRecord record, Func<HashSet<string>> getSrvTargets)
+    {
+        switch (record.Type)
+        {
+            case MDNSMessage.PTR:
+                if (BrowsesAll && record.Name.Equals(MDNSServiceType.Enumeration, StringComparison.OrdinalIgnoreCase))
+                    return true;
+
+                return MDNSServiceType.TryNormalize(record.Name, out var type) && type != "*" &&
+                       (BrowsesAll || _serviceTypes.Contains(type));
+            case MDNSMessage.SRV:
+            case MDNSMessage.TXT:
+                // The instance is the first label, the rest of the name is its type
+                var separator = FirstUnescapedDot(record.Name);
+
+                return separator > 0 &&
+                       MDNSServiceType.TryNormalize(record.Name[(separator + 1)..], out var instanceType) &&
+                       instanceType != "*" && (BrowsesAll || _serviceTypes.Contains(instanceType));
+            case MDNSMessage.A:
+            case MDNSMessage.AAAA:
+                return getSrvTargets().Contains(record.Name);
+            default:
+                return false;
+        }
+    }
+
+    /// <summary>
+    ///     Gets the index of the first dot that separates labels (not escaped by a backslash), -1 if there is none.
+    /// </summary>
+    private static int FirstUnescapedDot(string name)
+    {
+        for (var i = 0; i < name.Length; i++)
+        {
+            if (name[i] == '\\')
+                i++; // escaped character
+            else if (name[i] == '.')
+                return i;
+        }
+
+        return -1;
     }
 
     private static DateTimeOffset Min(DateTimeOffset first, DateTimeOffset second) => first < second ? first : second;
