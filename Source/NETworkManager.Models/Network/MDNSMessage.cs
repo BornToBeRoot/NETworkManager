@@ -37,19 +37,28 @@ public static class MDNSMessage
 
         for (var i = 0; i < text.Length; i++)
         {
-            // A character (also a surrogate pair) as UTF-8
-            var length = char.IsHighSurrogate(text[i]) && i + 1 < text.Length ? 2 : 1;
+            // A character (also a surrogate pair) as UTF-8; a lone surrogate is no valid text
+            if (char.IsSurrogate(text[i]) && !char.IsSurrogatePair(text, i))
+                throw new ArgumentException("Invalid DNS name.", nameof(name));
+
+            var length = char.IsSurrogatePair(text, i) ? 2 : 1;
             var bytes = Encoding.UTF8.GetBytes(text, i, length);
 
             if (escaped)
             {
                 escaped = false;
 
-                // \DDD: a byte in decimal (RFC 1035 presentation format, see ReadResponse), e.g. a Latin-1 label
+                // \DDD: a byte in decimal (RFC 1035 presentation format, see ReadResponse), e.g. a Latin-1 label;
+                // above 255 it is no byte (invalid, not the digits as text)
                 if (i + 2 < text.Length && char.IsAsciiDigit(text[i]) && char.IsAsciiDigit(text[i + 1]) &&
-                    char.IsAsciiDigit(text[i + 2]) && int.Parse(text.AsSpan(i, 3)) <= 255)
+                    char.IsAsciiDigit(text[i + 2]))
                 {
-                    label.Add(byte.Parse(text.AsSpan(i, 3)));
+                    var value = int.Parse(text.AsSpan(i, 3));
+
+                    if (value > 255)
+                        throw new ArgumentException("Invalid DNS name.", nameof(name));
+
+                    label.Add((byte)value);
                     i += 2;
                     continue;
                 }

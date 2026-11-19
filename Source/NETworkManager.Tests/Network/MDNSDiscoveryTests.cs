@@ -410,6 +410,8 @@ public class MDNSDiscoveryTests
     // Query building
 
     [Theory]
+    [InlineData("a\\256b.local.")] // \DDD above 255
+    [InlineData("a\\999.local.")]
     [InlineData("")]
     [InlineData("a..local.")]
     [InlineData("trailing\\")]
@@ -423,6 +425,15 @@ public class MDNSDiscoveryTests
         Assert.Equal(Labels("a."), MDNSMessage.CreateQuery("a\\.", 12)[12..^4]);
         Assert.Equal(Labels("a\\"), MDNSMessage.CreateQuery("a\\\\.", 12)[12..^4]);
         Assert.Equal(Labels("local"), MDNSMessage.CreateQuery("local", 12)[12..^4]);
+    }
+
+    [Fact]
+    public void CreateQueryRejectsLoneSurrogates()
+    {
+        // In code: InlineData strings are stored as UTF-8 (a lone surrogate would arrive as U+FFFD)
+        Assert.Throws<ArgumentException>(() => MDNSMessage.CreateQuery("a\uD800.local.", 12)); // would take the dot
+        Assert.Throws<ArgumentException>(() => MDNSMessage.CreateQuery("a\uDC00.local.", 12));
+        Assert.Equal(Labels("a\U0001F5A8", "local"), MDNSMessage.CreateQuery("a\U0001F5A8.local.", 12)[12..^4]);
     }
 
     [Fact]
