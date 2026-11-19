@@ -29,34 +29,51 @@ public static class MDNSMessage
     public static byte[] CreateQuery(string name, ushort type)
     {
         var data = new List<byte> { 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0 };
-        var label = new StringBuilder();
+        var label = new List<byte>();
         var escaped = false;
         // Fully qualified: add the final dot if it is missing. Not TrimEnd: an escaped dot at the end of the last label
         // (e.g. a\.. = label "a.") is part of the label.
-        foreach (var character in EndsWithUnescapedDot(name) ? name : name + ".")
+        var text = EndsWithUnescapedDot(name) ? name : name + ".";
+
+        for (var i = 0; i < text.Length; i++)
         {
+            // A character (also a surrogate pair) as UTF-8
+            var length = char.IsHighSurrogate(text[i]) && i + 1 < text.Length ? 2 : 1;
+            var bytes = Encoding.UTF8.GetBytes(text, i, length);
+
             if (escaped)
             {
-                label.Append(character);
                 escaped = false;
+
+                // \DDD: a byte in decimal (RFC 1035 presentation format, see ReadResponse), e.g. a Latin-1 label
+                if (i + 2 < text.Length && char.IsAsciiDigit(text[i]) && char.IsAsciiDigit(text[i + 1]) &&
+                    char.IsAsciiDigit(text[i + 2]) && int.Parse(text.AsSpan(i, 3)) <= 255)
+                {
+                    label.Add(byte.Parse(text.AsSpan(i, 3)));
+                    i += 2;
+                    continue;
+                }
+
+                label.AddRange(bytes);
             }
-            else if (character == '\\')
+            else if (text[i] == '\\')
                 escaped = true;
-            else if (character != '.')
-                label.Append(character);
+            else if (text[i] != '.')
+                label.AddRange(bytes);
             else
             {
-                var bytes = Encoding.UTF8.GetBytes(label.ToString());
-                if (bytes.Length is < 1 or > 63)
+                if (label.Count is < 1 or > 63)
                     throw new ArgumentException("Invalid DNS label.", nameof(name));
-                data.Add((byte)bytes.Length);
-                data.AddRange(bytes);
+                data.Add((byte)label.Count);
+                data.AddRange(label);
                 label.Clear();
             }
+
+            i += length - 1;
         }
 
         // Open escape or a last label without a dot (e.g. name\ becomes name\. with an escaped dot)
-        if (escaped || label.Length > 0 || data.Count > 266)
+        if (escaped || label.Count > 0 || data.Count > 266)
             throw new ArgumentException("Invalid DNS name.", nameof(name));
         data.AddRange([0, (byte)(type >> 8), (byte)type, 0, 1]);
         return [.. data];
@@ -169,6 +186,42 @@ public static class MDNSMessage
         return string.Concat(text.Select(x => char.IsControl(x) || x == '\\' ? $"\\u{(int)x:X4}" : x.ToString()));
     }
 
+    /// <summary>
+    ///     Formats a label in the escaped presentation format: "\" and "." escaped. A label that is not valid UTF-8 (e.g.
+    ///     Latin-1 of an older device) or contains a control character is kept with its bytes: printable ASCII as is,
+    ///     other bytes as \DDD (decimal, RFC 1035), so the other records of the packet are not lost and a question for
+    ///     the name asks for the same bytes (see <see cref="CreateQuery" />).
+    /// </summary>
+    private static string FormatLabel(byte[] data, int offset, int count)
+    {
+        try
+        {
+            var text = new UTF8Encoding(false, true).GetString(data, offset, count);
+
+            if (!text.Any(char.IsControl))
+                return text.Replace("\\", "\\\\").Replace(".", "\\.");
+        }
+        catch (DecoderFallbackException)
+        {
+            // Bytes, see below
+        }
+
+        var label = new StringBuilder();
+
+        foreach (var value in data.AsSpan(offset, count))
+        {
+            label.Append(value switch
+            {
+                (byte)'\\' => "\\\\",
+                (byte)'.' => "\\.",
+                >= 0x20 and < 0x7F => ((char)value).ToString(),
+                _ => $"\\{value:D3}"
+            });
+        }
+
+        return label.ToString();
+    }
+
     private sealed class Reader(byte[] data)
     {
         public int Position { get; set; }
@@ -213,13 +266,7 @@ public static class MDNSMessage
                 if (length > 63 || position + length > data.Length ||
                     next < 0 && end.HasValue && position + length > end.Value || (wireLength += length + 1) > 255)
                     throw new InvalidDataException();
-                string label;
-                try { label = new UTF8Encoding(false, true).GetString(data, position, length); }
-                catch (DecoderFallbackException) { throw new InvalidDataException(); }
-                if (label.Any(char.IsControl))
-                    throw new InvalidDataException();
-                label = label.Replace("\\", "\\\\").Replace(".", "\\.");
-                labels.Add(label);
+                labels.Add(FormatLabel(data, position, length));
                 position += length;
             }
             Position = next < 0 ? position : next;

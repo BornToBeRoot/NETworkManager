@@ -104,6 +104,23 @@ public class MDNSDiscoveryTests
         Assert.Equal(instanceWire, query[12..^4]);
     }
 
+    [Theory]
+    [InlineData(new byte[] { 0x42, 0xFC, 0x72, 0x6F }, "B\\252ro")] // Latin-1 "Büro", not valid UTF-8
+    [InlineData(new byte[] { 0x61, 0x01, 0x62 }, "a\\001b")] // control character
+    [InlineData(new byte[] { 0x61, 0x2E, 0xFF }, "a\\.\\255")] // dot and invalid byte
+    public void KeepsLabelsThatAreNoUTF8TextAsBytesAndTheOtherRecords(byte[] label, string expected)
+    {
+        var instance = new byte[] { (byte)label.Length }.Concat(label).Concat(Name(Type)).ToArray();
+        var records = MDNSMessage.ReadResponse(Packet(new Record(Type, 12, instance), Address()));
+
+        // The other records of the packet are not lost
+        Assert.Equal(2, records.Count);
+        Assert.Equal(expected + "." + Type, records[0].Target);
+
+        // A question for the name asks for the same bytes
+        Assert.Equal(instance, MDNSMessage.CreateQuery(records[0].Target, 33)[12..^4]);
+    }
+
     [Fact]
     public void PreservesBinaryTXTAndEscapesControlCharacters()
     {
