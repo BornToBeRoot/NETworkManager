@@ -10,6 +10,16 @@ The **mDNS Discovery** tool finds services advertised on a local network. Use it
 
 Unlike the [IP Scanner's mDNS hostname lookup](./ip-scanner.md#resolve-mdns-hostname), this tool discovers advertised services rather than looking up the name of an already discovered IP address.
 
+:::info
+
+Multicast DNS (mDNS, RFC 6762) resolves names in the `.local` domain without a DNS server. Queries and responses use the normal DNS message format, but are sent via UDP port `5353` to the multicast address `224.0.0.251` (IPv4) or `ff02::fb` (IPv6) of the local link. Every device answers for its own names, and responses are usually sent to the multicast group, so all devices on the link can cache them. Each record has a TTL; a device that leaves sends a "goodbye" (TTL `0`), and the cache-flush bit marks records that replace older ones. mDNS packets are not routed, so they only reach devices on the same network segment (unless a multicast reflector forwards them).
+
+DNS-Based Service Discovery (DNS-SD, RFC 6763) describes services with standard DNS records: a `PTR` record of the service type (e.g. `_ipp._tcp.local.`) lists the service instances (e.g. `Office Printer._ipp._tcp.local.`), the `SRV` record of an instance names the host and port, its `TXT` record contains metadata as `key=value` pairs, and the `A` / `AAAA` records of the host contain its addresses. `_services._dns-sd._udp.local.` lists the service types advertised on the link. Together, mDNS and DNS-SD are known as zero-configuration networking (Zeroconf) and are implemented by Apple Bonjour, Avahi (Linux) and Windows. They are used by printers and scanners (AirPrint, IPP Everywhere, eSCL), media devices (AirPlay, Google Cast), smart home devices (HomeKit, Matter) and many embedded devices.
+
+:::
+
+![mDNS Discovery](../img/mdns-discovery.png)
+
 ## Browse
 
 1. Select the **Interface** connected to the devices. The refresh button next to it reloads the available interfaces.
