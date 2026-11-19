@@ -182,11 +182,19 @@ public sealed class MDNSServiceCache
             Remove(key);
     }
 
-    private IEnumerable<Entry> Instances => _records.Values.Where(x => x.Record.Type == MDNSMessage.PTR &&
-        MDNSServiceType.TryNormalize(x.Record.Name, out var type) && type != "*" &&
-        (BrowsesAll || _serviceTypes.Contains(type)) &&
-        x.Record.Target.EndsWith("." + type, StringComparison.OrdinalIgnoreCase) &&
-        x.Record.Target.Length > type.Length + 1);
+    /// <summary>
+    ///     PTR records of the browsed service types that point to an instance of the type, with the normalized type
+    ///     (the owner name of the record can differ, e.g. without ".local." or with spaces, see
+    ///     <see cref="MDNSServiceType.TryNormalize" />).
+    /// </summary>
+    private IEnumerable<(Entry Entry, string Type)> Instances => _records.Values
+        .Select(x => (Entry: x,
+            Type: x.Record.Type == MDNSMessage.PTR && MDNSServiceType.TryNormalize(x.Record.Name, out var type)
+                ? type
+                : null))
+        .Where(x => x.Type != null && x.Type != "*" && (BrowsesAll || _serviceTypes.Contains(x.Type)) &&
+                    x.Entry.Record.Target.EndsWith("." + x.Type, StringComparison.OrdinalIgnoreCase) &&
+                    x.Entry.Record.Target.Length > x.Type.Length + 1);
 
     /// <summary>Returns at most 256 due questions per tick; repeated unanswered queries back off to 60 seconds.</summary>
     public IReadOnlyList<(string Name, ushort Type)> GetQuestions(DateTimeOffset now)
@@ -209,8 +217,8 @@ public sealed class MDNSServiceCache
                 Add(type, MDNSMessage.PTR);
 
         var instances = Instances.ToArray();
-        var instanceNames = instances.Select(x => x.Record.Target).ToHashSet(StringComparer.OrdinalIgnoreCase);
-        foreach (var instance in instances)
+        var instanceNames = instances.Select(x => x.Entry.Record.Target).ToHashSet(StringComparer.OrdinalIgnoreCase);
+        foreach (var (instance, _) in instances)
         {
             Add(instance.Record.Target, MDNSMessage.SRV);
             Add(instance.Record.Target, MDNSMessage.TXT);
@@ -249,7 +257,7 @@ public sealed class MDNSServiceCache
         Expire(now);
         var result = new List<MDNSServiceInfo>();
         var byName = _records.Values.ToLookup(x => x.Record.Name, StringComparer.OrdinalIgnoreCase);
-        foreach (var instance in Instances)
+        foreach (var (instance, type) in Instances)
         {
             var fullName = instance.Record.Target;
             var srv = byName[fullName].Where(x => x.Record.Type == MDNSMessage.SRV)
@@ -258,8 +266,9 @@ public sealed class MDNSServiceCache
                 .OrderByDescending(x => x.Received).FirstOrDefault();
             var addresses = srv == null ? [] : byName[srv.Record.Target].Where(x => x.Record.Address != null)
                 .Select(x => x.Record.Address.ToString()).Distinct().Order().ToArray();
-            var name = fullName[..^(instance.Record.Name.Length + 1)].Replace("\\.", ".").Replace("\\\\", "\\");
-            result.Add(new MDNSServiceInfo(fullName, name, instance.Record.Name, _networkInterface,
+            // Without the type (its normalized length, matched by Instances), unescaped
+            var name = fullName[..^(type.Length + 1)].Replace("\\.", ".").Replace("\\\\", "\\");
+            result.Add(new MDNSServiceInfo(fullName, name, type, _networkInterface,
                 srv?.Record.Target ?? string.Empty, srv?.Record.Port, srv?.Record.Priority, srv?.Record.Weight,
                 string.Join("; ", addresses), string.Join(Environment.NewLine, txt?.Record.Text ?? []),
                 (uint)Math.Max(0, Math.Ceiling((instance.Expires - now).TotalSeconds))));

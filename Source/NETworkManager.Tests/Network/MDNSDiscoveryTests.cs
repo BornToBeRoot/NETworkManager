@@ -185,6 +185,19 @@ public class MDNSDiscoveryTests
         Assert.NotEmpty(cache.GetQuestions(Now.AddSeconds(1)));
     }
 
+    [Theory]
+    [InlineData(" _ipp._tcp.local.")] // spaces are allowed in a label, the type is trimmed
+    [InlineData("_ipp._tcp.")] // without .local.
+    [InlineData("_IPP._TCP.LOCAL.")]
+    public void InstanceNameIsCutByTheNormalizedType(string owner)
+    {
+        var cache = new MDNSServiceCache(Type, "Ethernet");
+        cache.ProcessResponse(Packet(new Record(owner, 12, Name(Instance))), Now);
+        var service = Assert.Single(cache.GetServices(Now));
+        Assert.Equal("Office Printer", service.Name);
+        Assert.Equal(Type, service.ServiceType);
+    }
+
     [Fact]
     public void BrowsesSeveralServiceTypes()
     {
