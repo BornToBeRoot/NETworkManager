@@ -344,7 +344,8 @@ public sealed class MDNSServiceCache
         }
         foreach (var record in _records.Values.Where(x => x.Record.Type == MDNSMessage.SRV && instanceNames.Contains(x.Record.Name)))
         {
-            if (!record.Record.Target.EndsWith(".local.", StringComparison.OrdinalIgnoreCase))
+            // In .local (an unescaped dot before "local.": "host\\.local." is one label under the root)
+            if (!IsInstanceOf(record.Record.Target, "local."))
                 continue;
             Add(record.Record.Target, MDNSMessage.A);
             Add(record.Record.Target, MDNSMessage.AAAA);

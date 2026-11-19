@@ -594,6 +594,15 @@ public class MDNSDiscoveryTests
     }
 
     [Fact]
+    public void NoAddressQuestionsForAHostWithAnEscapedDotBeforeLocal()
+    {
+        var cache = new MDNSServiceCache(Type, "Ethernet");
+        // Target: one label "host.local" under the root, not in .local
+        cache.ProcessResponse(Packet(Ptr(), new Record(Instance, 33, [0, 0, 0, 0, 0, 80, .. Labels("host.local")])), Now);
+        Assert.DoesNotContain(cache.GetQuestions(Now), x => x.Type is 1 or 28);
+    }
+
+    [Fact]
     public void RecordsAreReturnedInAStableOrder()
     {
         var cache = new MDNSServiceCache(Type, "Ethernet");
