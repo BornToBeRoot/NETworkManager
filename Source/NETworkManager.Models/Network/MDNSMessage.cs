@@ -50,7 +50,7 @@ public static class MDNSMessage
         Func<string, ushort, IReadOnlyList<(string Target, uint TTL)>> getKnownAnswers = null)
     {
         var packets = new List<byte[]>();
-        var current = new List<QueryQuestion>();
+        var builder = new QueryBuilder();
 
         foreach (var (name, type) in questions)
         {
@@ -58,27 +58,25 @@ public static class MDNSMessage
                 (getKnownAnswers?.Invoke(name, type) ?? []).Select(x => (Target: TryEncodeName(x.Target), x.TTL))
                 .Where(x => x.Target != null).ToArray());
 
-            if (TryBuildQuery([.. current, question], out _))
-            {
-                current.Add(question);
+            if (builder.TryAdd(question, requireAllKnownAnswers: true))
                 continue;
+
+            if (builder.QuestionCount > 0)
+            {
+                packets.Add(builder.Build());
+                builder = new QueryBuilder();
             }
 
-            if (current.Count > 0 && TryBuildQuery(current, out var packet))
-                packets.Add(packet);
-
-            current = [question];
-
-            // Alone with too many known answers: as many as fit
-            if (TryBuildQuery(current, out packet))
+            // Alone (always added): with as many known answers as fit - then the packet is full
+            if (builder.TryAdd(question, requireAllKnownAnswers: false))
                 continue;
 
-            packets.Add(packet);
-            current.Clear();
+            packets.Add(builder.Build());
+            builder = new QueryBuilder();
         }
 
-        if (current.Count > 0 && TryBuildQuery(current, out var last))
-            packets.Add(last);
+        if (builder.QuestionCount > 0)
+            packets.Add(builder.Build());
 
         return packets;
     }
@@ -86,67 +84,106 @@ public static class MDNSMessage
     private sealed record QueryQuestion(List<byte[]> Name, ushort Type, (List<byte[]> Target, uint TTL)[] KnownAnswers);
 
     /// <summary>
-    ///     Builds a query packet: the questions, then their known answers while they fit. Names are compressed against
-    ///     the names of the questions (their offsets don't change when an answer is added).
+    ///     Builds a query packet question by question: the questions, then their known answers. Names are compressed
+    ///     against the names of the questions: their offsets don't change when a question is added (the answers follow
+    ///     the questions and contain no pointers to each other), so a question that doesn't fit is simply removed again.
     /// </summary>
-    /// <returns>True if the packet fits and contains all known answers.</returns>
-    private static bool TryBuildQuery(IReadOnlyList<QueryQuestion> questions, out byte[] packet)
+    private sealed class QueryBuilder
     {
-        var data = new List<byte>(MaxQuerySize) { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-        var offsets = new Dictionary<string, int>(StringComparer.Ordinal);
+        private readonly List<byte> _questions = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+        private readonly List<byte> _answers = [];
+        private readonly Dictionary<string, int> _offsets = new(StringComparer.Ordinal);
+        private int _answerCount;
 
-        foreach (var question in questions)
+        public int QuestionCount { get; private set; }
+
+        /// <summary>
+        ///     Adds a question with its known answers if it fits (<see cref="MaxQuerySize" />).
+        /// </summary>
+        /// <param name="question">Question.</param>
+        /// <param name="requireAllKnownAnswers">
+        ///     True: only added if all known answers fit. False: added with as many known answers as fit (a question
+        ///     alone always fits).
+        /// </param>
+        /// <returns>True if the question was added with all its known answers.</returns>
+        public bool TryAdd(QueryQuestion question, bool requireAllKnownAnswers)
         {
-            WriteName(data, question.Name, offsets, true);
-            data.AddRange([(byte)(question.Type >> 8), (byte)question.Type, 0, 1]);
-        }
+            var length = _questions.Count;
+            var registered = new List<string>();
 
-        var answers = 0;
-        var complete = data.Count <= MaxQuerySize;
+            WriteName(_questions, question.Name, _offsets, registered);
+            _questions.AddRange([(byte)(question.Type >> 8), (byte)question.Type, 0, 1]);
 
-        foreach (var question in questions)
-        {
+            var size = _questions.Count + _answers.Count;
+            var answers = new List<byte>();
+            var answerCount = 0;
+            var complete = true;
+
             foreach (var (target, ttl) in question.KnownAnswers)
             {
                 var rdata = new List<byte>();
-                WriteName(rdata, target, offsets, false);
+                WriteName(rdata, target, _offsets, null);
 
                 var record = new List<byte>();
-                WriteName(record, question.Name, offsets, false);
+                WriteName(record, question.Name, _offsets, null);
                 record.AddRange([(byte)(question.Type >> 8), (byte)question.Type, 0, 1,
                     (byte)(ttl >> 24), (byte)(ttl >> 16), (byte)(ttl >> 8), (byte)ttl,
                     (byte)(rdata.Count >> 8), (byte)rdata.Count]);
                 record.AddRange(rdata);
 
-                if (data.Count + record.Count > MaxQuerySize)
+                if (size + answers.Count + record.Count > MaxQuerySize)
                 {
                     complete = false;
                     continue;
                 }
 
-                data.AddRange(record);
-                answers++;
+                answers.AddRange(record);
+                answerCount++;
             }
+
+            if (size > MaxQuerySize || !complete && requireAllKnownAnswers)
+            {
+                // Remove the question again
+                _questions.RemoveRange(length, _questions.Count - length);
+
+                foreach (var key in registered)
+                    _offsets.Remove(key);
+
+                return false;
+            }
+
+            _answers.AddRange(answers);
+            _answerCount += answerCount;
+            QuestionCount++;
+
+            return complete;
         }
 
-        data[4] = (byte)(questions.Count >> 8);
-        data[5] = (byte)questions.Count;
-        data[6] = (byte)(answers >> 8);
-        data[7] = (byte)answers;
+        public byte[] Build()
+        {
+            byte[] packet = [.. _questions, .. _answers];
 
-        packet = [.. data];
+            packet[4] = (byte)(QuestionCount >> 8);
+            packet[5] = (byte)QuestionCount;
+            packet[6] = (byte)(_answerCount >> 8);
+            packet[7] = (byte)_answerCount;
 
-        return complete;
+            return packet;
+        }
     }
 
     /// <summary>
     ///     Writes a name: its labels until a suffix that is already in the packet (a pointer to it, RFC 1035 4.1.4).
     /// </summary>
-    /// <param name="data">Packet (questions) or a record that is added to the packet later (answers).</param>
+    /// <param name="data">Questions of the packet, or a record that is added after them (answers).</param>
     /// <param name="labels">Labels of the name.</param>
     /// <param name="offsets">Offsets of the suffixes in the packet (key: lowercase ASCII, DNS compares like that).</param>
-    /// <param name="register">Add the suffixes to the offsets (only if <paramref name="data" /> is the packet).</param>
-    private static void WriteName(List<byte> data, List<byte[]> labels, Dictionary<string, int> offsets, bool register)
+    /// <param name="registered">
+    ///     Adds the new suffixes to the offsets and their keys to this list (only if <paramref name="data" /> are the
+    ///     questions), null to only use the offsets.
+    /// </param>
+    private static void WriteName(List<byte> data, List<byte[]> labels, Dictionary<string, int> offsets,
+        List<string> registered)
     {
         for (var i = 0; i < labels.Count; i++)
         {
@@ -158,8 +195,11 @@ public static class MDNSMessage
                 return;
             }
 
-            if (register && data.Count < 0x4000)
+            if (registered != null && data.Count < 0x4000)
+            {
                 offsets[key] = data.Count;
+                registered.Add(key);
+            }
 
             data.Add((byte)labels[i].Length);
             data.AddRange(labels[i]);
