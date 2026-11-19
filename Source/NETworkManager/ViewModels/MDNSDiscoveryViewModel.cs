@@ -58,6 +58,9 @@ public sealed class MDNSDiscoveryViewModel : ViewModelBase
     // running browse is not stopped and its input not changed (see OpenAsync)
     private ApplicationRequest _pendingFillIn;
 
+    // Number of the last request of OpenAsync (run command), see there
+    private int _openRequestId;
+
     // The browser reports detached snapshots from a worker thread; the latest one is merged into the rows by the
     // flush timer (like the results buffer of the scanners), so the dispatcher isn't called per snapshot.
     private MDNSDiscoverySnapshot _pendingSnapshot;
@@ -931,6 +934,9 @@ public sealed class MDNSDiscoveryViewModel : ViewModelBase
                 out _))
             return;
 
+        // The last request wins: an earlier one that is still waiting for the browse to end gives up (see below)
+        var requestId = ++_openRequestId;
+
         if (!request.Start)
         {
             _pendingFillIn = request;
@@ -951,6 +957,11 @@ public sealed class MDNSDiscoveryViewModel : ViewModelBase
         Stop();
 
         await _browseTask;
+
+        // A newer request arrived while the browse was ending (e.g. two run commands right after each other): it is
+        // used instead - otherwise this one would change the input of the newer browse and lose track of it
+        if (requestId != _openRequestId)
+            return;
 
         FillIn(request);
 
