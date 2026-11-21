@@ -16,12 +16,6 @@ The Cisco Discovery Protocol (CDP) is a proprietary Layer 2 protocol used by Cis
 
 :::
 
-:::warning
-
-If you are using a hypervisor like Hyper-V with a virtual switch configured as "External network" which is shared with the host where NETworkManager is running, you may not receive any packets. This is because the virtual switch does not forward the LLDP or CDP frames to the host. You may temporarily change the virtual switch to "Internal network" or "Private network" if you want to use Discovery Protocol to see which switch or router your device is connected to. You can also verify this behavior by using Wireshark.
-
-:::
-
 :::warning[Administrator privileges required]
 
 Without administrator privileges, capturing is not available. Use the **Restart as administrator** button to relaunch the application with elevated rights.
@@ -47,3 +41,14 @@ Without administrator privileges, capturing is not available. Use the **Restart 
 | Key | Action |
 |-----|--------|
 | `F5` / `Enter` | Start capturing |
+
+## Run command
+
+Open the tool with `discoveryprotocol`. The command accepts no target and no profile, see [Run Command](../run-command.md).
+
+## Troubleshooting and limits
+
+- Capturing requires administrator privileges.
+- The switch must send LLDP or CDP on the port (often disabled or limited to uplinks). LLDP is sent every 30 seconds, CDP every 60 seconds by default: select a duration longer than the interval, e.g. `90` seconds for CDP.
+- If you are using a hypervisor like Hyper-V with a virtual switch configured as "External network" which is shared with the host where NETworkManager is running, you may not receive any packets, because the virtual switch does not forward the LLDP or CDP frames to the host. Temporarily change the virtual switch to "Internal network" or "Private network", or verify the behavior with Wireshark.
+- Only the directly connected device is shown (LLDP / CDP frames are not forwarded by switches). A docking station, an unmanaged switch or a VoIP phone in between may hide the switch or show itself.
