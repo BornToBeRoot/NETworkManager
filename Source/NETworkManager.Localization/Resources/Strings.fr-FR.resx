@@ -2617,22 +2617,22 @@ est désactivée!</value>
   <data name="CaptureNetworkPacketsToViewLLDPorCDPInformation" xml:space="preserve">
     <value>Capturez les paquets réseau pour visualiser les informations LLDP ou CDP!</value>
   </data>
-  <data name="NoDiscoveryProtocolPackagesReceived" xml:space="preserve">
-    <value>Aucun paquet de protocole de découverte reçu!</value>
+  <data name="NoLLDPOrCDPPacketsReceived" xml:space="preserve">
+    <value>No LLDP or CDP packets received!</value>
   </data>
   <data name="CapturingNetworkPackagesDots" xml:space="preserve">
     <value>Capturer les paquets du réseau...</value>
   </data>
-  <data name="DiscoveryProtocol" xml:space="preserve">
-    <value>Protocole de découverte</value>
+  <data name="LLDPCDPCapture" xml:space="preserve">
+    <value>LLDP / CDP Capture</value>
   </data>
-  <data name="DiscoveryProtocol_Cdp" xml:space="preserve">
+  <data name="LLDPCDPProtocol_Cdp" xml:space="preserve">
     <value>CDP</value>
   </data>
-  <data name="DiscoveryProtocol_Lldp" xml:space="preserve">
+  <data name="LLDPCDPProtocol_Lldp" xml:space="preserve">
     <value>LLDP</value>
   </data>
-  <data name="DiscoveryProtocol_LldpCdp" xml:space="preserve">
+  <data name="LLDPCDPProtocol_LldpCdp" xml:space="preserve">
     <value>LLDP / CDP</value>
   </data>
   <data name="XXSecondsRemainingDots" xml:space="preserve">
@@ -2674,8 +2674,8 @@ est désactivée!</value>
   <data name="ApplicationName_Dashboard" xml:space="preserve">
     <value>Tableau de bord</value>
   </data>
-  <data name="ApplicationName_DiscoveryProtocol" xml:space="preserve">
-    <value>Protocole de découverte</value>
+  <data name="ApplicationName_LLDPCDPCapture" xml:space="preserve">
+    <value>LLDP / CDP Capture</value>
   </data>
   <data name="ApplicationName_DNSLookup" xml:space="preserve">
     <value>Recherche DNS</value>
