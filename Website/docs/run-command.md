@@ -28,43 +28,29 @@ The input is validated like the input field of the feature (e.g. a valid host or
 
 ## Commands
 
-| Command            | Aliases            | Arguments                           | Example                                  |
-| ------------------ | ------------------ | ----------------------------------- | ---------------------------------------- |
-| `ipscanner`        | `ipscan`           | `<range>`                           | `ipscan 10.0.0.0/24`                     |
-| `portscanner`      | `portscan`         | `<hosts> <ports\|port profiles>`    | `portscan 10.0.0.1 webserver;22`         |
-| `pingmonitor`      | `ping`             | `<hosts>`                           | `ping 10.0.0.1; 10.0.0.2`                |
-| `traceroute`       | `trace`, `tracert` | `<host>`                            | `trace borntoberoot.net`                 |
-| `dnslookup`        | `dns`, `nslookup`  | `<hosts> [server] [type]`           | `dns borntoberoot.net 1.1.1.1 aaaa`      |
-| `remotedesktop`    | `rdp`, `mstsc`     | `<host[:port]>`                     | `rdp server-01`                          |
-| `powershell`       | `ps`, `pwsh`       | `<host>`                            | `ps server-01`                           |
-| `putty`            | `ssh`              | `<host>`                            | `ssh server-01`                          |
-| `tigervnc`         | `vnc`              | `<host>`                            | `vnc server-01`                          |
-| `webconsole`       | `web`              | `<url>`                             | `web https://borntoberoot.net`           |
-| `snmp`             |                    | `<host>`                            | `snmp 10.0.0.1`                          |
-| `rdap`             |                    | `<query> [type]`                    | `rdap 1.10 asn`                          |
-| `whois`            |                    | `<domain>`                          | `whois borntoberoot.net`                 |
-| `ipgeolocation`    | `geo`              | `<host>`                            | `geo 1.1.1.1`                            |
-| `mdnsdiscovery`    | `mdns`, `dnssd`    | `<service types\|profiles\|*> [duration]` | `mdns printers;_ssh._tcp 30`        |
-| `wakeonlan`        | `wol`              | `<MAC address> [broadcast]`         | `wol 00:11:22:33:44:55 192.168.1.255`    |
-| `subnetcalculator` | `subnet`, `ipcalc` | `<subnet> [new mask \| subnet 2]`   | `subnet 10.0.0.0/16 /24`                 |
-| `lookup`           |                    | `<oui\|port> <query>`               | `lookup port 22; 443; ssh`               |
-| `settings`         |                    |                                     | `settings`                               |
+| Command                                                              | Aliases            | Arguments                           | Example                                  |
+| -------------------------------------------------------------------- | ------------------ | ----------------------------------- | ---------------------------------------- |
+| [`ipscanner`](./application/ip-scanner.md#run-command)               | `ipscan`           | `<range>`                           | `ipscan 10.0.0.0/24`                     |
+| [`portscanner`](./application/port-scanner.md#run-command)           | `portscan`         | `<hosts> <ports\|port profiles>`    | `portscan 10.0.0.1 webserver;22`         |
+| [`pingmonitor`](./application/ping-monitor.md#run-command)           | `ping`             | `<hosts>`                           | `ping 10.0.0.1; 10.0.0.2`                |
+| [`traceroute`](./application/traceroute.md#run-command)              | `trace`, `tracert` | `<host>`                            | `trace borntoberoot.net`                 |
+| [`dnslookup`](./application/dns-lookup.md#run-command)               | `dns`, `nslookup`  | `<hosts> [server] [type]`           | `dns borntoberoot.net 1.1.1.1 aaaa`      |
+| [`remotedesktop`](./application/remote-desktop.md#run-command)       | `rdp`, `mstsc`     | `<host[:port]>`                     | `rdp server-01`                          |
+| [`powershell`](./application/powershell.md#run-command)              | `ps`, `pwsh`       | `<host>`                            | `ps server-01`                           |
+| [`putty`](./application/putty.md#run-command)                        | `ssh`              | `<host>`                            | `ssh server-01`                          |
+| [`tigervnc`](./application/tigervnc.md#run-command)                  | `vnc`              | `<host>`                            | `vnc server-01`                          |
+| [`webconsole`](./application/web-console.md#run-command)             | `web`              | `<url>`                             | `web https://borntoberoot.net`           |
+| [`snmp`](./application/snmp.md#run-command)                          |                    | `<host>`                            | `snmp 10.0.0.1`                          |
+| [`rdap`](./application/rdap.md#run-command)                          |                    | `<query> [type]`                    | `rdap 1.10 asn`                          |
+| [`whois`](./application/whois.md#run-command)                        |                    | `<domain>`                          | `whois borntoberoot.net`                 |
+| [`ipgeolocation`](./application/ip-geolocation.md#run-command)       | `geo`              | `<host>`                            | `geo 1.1.1.1`                            |
+| [`mdnsdiscovery`](./application/mdns-discovery.md#run-command)       | `mdns`, `dnssd`    | `<service types\|profiles\|*> [duration]` | `mdns printers;_ssh._tcp 30`        |
+| [`wakeonlan`](./application/wake-on-lan.md#run-command)              | `wol`              | `<MAC address> [broadcast]`         | `wol 00:11:22:33:44:55 192.168.1.255`    |
+| [`subnetcalculator`](./application/subnet-calculator.md#run-command) | `subnet`, `ipcalc` | `<subnet> [new mask \| subnet 2]`   | `subnet 10.0.0.0/16 /24`                 |
+| [`lookup`](./application/lookup.md#run-command)                      |                    | `<oui\|port> <query>`               | `lookup port 22; 443; ssh`               |
+| `settings`                                                           |                    |                                     | `settings`                               |
 
-All features that accept a target also accept a profile (`@profile`), except the Subnet Calculator, Lookup and mDNS Discovery tools, which have no profiles. The other features (e.g. `firewall`, `listeners`) can be opened with their name. Features that are hidden in [Settings > General](./settings/general.md) are not available.
-
-:::note
-
-- **Remote Desktop, PowerShell, PuTTY, TigerVNC and Web Console** open the connect dialog with the host, so the connection settings can be adjusted before connecting. A profile connects directly with its settings.
-- **DNS lookup:** The type is the DNS record type (`a`, `aaaa`, `any`, `caa`, `cname`, `dnskey`, `mx`, `ns`, `ptr`, `soa`, `srv`, `txt`). Without a type, IP addresses are looked up with `ptr` and other hosts with the type selected in the feature. The DNS server is the name of a configured DNS server (case-insensitive, e.g. `cloudflare`) or a custom DNS server (an IP address or a host with a domain, with an optional port, e.g. `1.1.1.1`, `dns.google:53`), also several separated by `;` (e.g. `"Google Public DNS";cloudflare;9.9.9.9`, the configured DNS servers are suggested after a `;` as well).
-- **mDNS Discovery:** The target is `*` (all service types), service types (e.g. `_ipp._tcp`) and / or names of service type profiles (case-insensitive, e.g. `mdns printers` or `mdns printers;_ssh._tcp`; a name with spaces in quotes, also in a list, e.g. `"File sharing";web`). `*` and the service type profiles are suggested while the target is typed, also after a `;`. The optional duration is one of the durations of the tool in seconds (`10`, `30`, `60`, `120`, `300` or `0` = until stopped, suggested after the target); without it, the duration selected in the tool is used.
-- **RDAP:** The type is `domain`, `nameserver`, `tld`, `ip`, `asn` or `entity`. Without a type, it is detected from the query (see [RDAP](./application/rdap.md#example-inputs)).
-- **Subnet Calculator:** A subnet (e.g. `subnet 10.0.0.0/24`) is calculated in **Calculator**. With a new subnet mask or CIDR (e.g. `/26`, `26` or `255.255.255.192`), it is split in **Subnetting**; the new mask must be between the CIDR of the subnet and `/32` (IPv4) or `/128` (IPv6). With a second subnet (e.g. `subnet 10.0.0.0/24 10.0.1.0/24`), the **Wide Subnet** is calculated (IPv4 only).
-- **Lookup:** The first word after the command is the lookup: `oui` (MAC addresses or vendors, e.g. `lookup oui 00:11:22`) or `port` (ports, port ranges or services, e.g. `lookup port 22; 80-90/tcp; ssh`). The rest of the input is the query, so vendors can contain spaces without quotes (e.g. `lookup oui Cisco Systems`). Without a query (e.g. `lookup port`), the lookup is only shown.
-- **Port Scanner:** The ports are required (a new tab has none): ports and port ranges (e.g. `22; 80; 443`, `1-1024`) and / or names of port profiles of the Port Scanner (case-insensitive, e.g. `portscan 10.0.0.1 webserver` or `portscan 10.0.0.1 webserver;database;22`; a name with spaces in quotes, also in a list, e.g. `"DNS (via TCP)";webserver`). The port profiles are suggested after the host, also after a `;`.
-- **SNMP:** Opens a tab with the host; the query is started in the feature (as before), also with `Enter`.
-- **Wake on LAN:** The magic packet is sent to the broadcast address (or the one last used in the feature). If there is no valid broadcast address yet, the MAC address is only filled in. A profile sends the magic packet with its settings.
-
-:::
+The arguments, examples and the behavior of each command (e.g. the connect dialog of the remote tools, `Shift+Enter`) are described in the **Run command** section of the feature, linked in the table. All features that accept a target also accept a profile (`@profile`), except the Subnet Calculator, Lookup and mDNS Discovery tools, which have no profiles. The other features (e.g. `firewall`, `listeners`) can be opened with their name. Features that are hidden in [Settings > General](./settings/general.md) are not available.
 
 ## Target without a command
 
@@ -104,10 +90,10 @@ While typing, suggestions are shown below the input, grouped (e.g. _Recent_, _Pr
 | _empty_                      | Commands for the clipboard (if enabled), recently run commands, examples (without recent commands) and all features |
 | Command (e.g. `tr`)          | Matching features, recent commands that contain the word (e.g. a host) and commands for the clipboard (if enabled) that start with it |
 | Target (e.g. `10.0.0.1`)     | Recent commands that contain the target and the commands that accept it, see [Target without a command](#target-without-a-command) |
-| After the command (`rdp `)   | Recent commands of the feature and its profiles; mDNS Discovery: `*` and the service type profiles (also while typing the target) |
+| After the command (`rdp `)   | Recent commands of the feature and its profiles; values of the target of some features (e.g. the service type profiles of mDNS Discovery, see the feature) |
 | After `lookup `              | The lookups (`oui`, `port`) and recent commands                          |
 | `@` (e.g. `rdp @web`)        | Profiles of the feature (with group and host); exact names first, recently run profiles first within the same match |
-| After the target             | Configured DNS servers (DNS lookup), port profiles (Port Scanner), durations (mDNS Discovery), types of the feature (e.g. DNS record types) and recent commands, up to 10 of each |
+| After the target             | Values of the argument of the feature (e.g. DNS servers, port profiles, durations, see the feature), its types (e.g. DNS record types) and recent commands, up to 10 of each |
 
 `Enter` runs what was typed if no suggestion is selected: after the command, nothing is selected; profiles, recent commands, types and DNS servers are selected with the arrow keys (`Up` on the first suggestion selects none again). While typing the command, the best matching feature is selected (completing it keeps the arguments, e.g. `pin 10.0.0.1` → `ping 10.0.0.1`), but not if an unknown command has arguments; for a target without a command, see [Target without a command](#target-without-a-command). With an empty input, only the first command for the clipboard is selected (if enabled). While typing `@`, a profile is only selected if exactly one matches. While typing the lookup (e.g. `lookup po`), the matching lookup is selected.
 
