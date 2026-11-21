@@ -71,6 +71,18 @@ Right-clicking a session tab opens a context menu:
 | **Reconnect** | Restart the PowerShell console (and reconnect to the remote computer). |
 | **Resize**    | Resize the PowerShell console to the current view size (if connected). |
 
+## Run command
+
+Open the tool with `powershell`, `ps` or `pwsh`. Add a host (validated like the [host](#host) of the connect dialog) to connect to it with PowerShell Remoting:
+
+```text
+ps server-01
+pwsh server-01.borntoberoot.net
+ps @server-01
+```
+
+A host opens the [connect dialog](#connect) with the host filled in, so the options can be adjusted before connecting. A profile (`@profile`) connects directly with the settings of the profile and its group (also a local console or a [command](#command), e.g. `wsl`). `Shift+Enter` behaves like `Enter`. Without a host, the tool is only opened (e.g. `ps`).
+
 ## Connect
 
 ### Remote console
@@ -364,3 +376,10 @@ Default execution policy of the PowerShell console when it is started.
 - `RemoteSigned`
 - `Unrestricted`
 - `Bypass`
+
+## Troubleshooting and limits
+
+- If the [file path](#file-path) of PowerShell is not configured or the file doesn't exist, the tool shows a message instead of the console, and the run command only opens the tool. Configure the path and connect again.
+- The console is not embedded but opens in its own window (or in Windows Terminal): change the **Default terminal application** in the settings of Windows Terminal to **Windows Console Host**. NETworkManager waits up to 10 seconds for the console window.
+- A remote host is connected with `Enter-PSSession`: PowerShell Remoting (WinRM, TCP port `5985` / `5986`) must be enabled on the remote computer (`Enable-PSRemoting`). Connecting to an IP address or to a computer outside the domain needs it in the `TrustedHosts` of the local computer (or HTTPS). The error is shown in the console.
+- Scripts are blocked: the console is started with the [Execution policy](#execution-policy-3) of the settings (default `RemoteSigned`, downloaded scripts must be signed). It only applies to the consoles started by NETworkManager.
