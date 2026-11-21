@@ -48,6 +48,18 @@ Multiple OIDs (`.1.3.6.1.2.1.1; .1.3.6.1.2.1.2`) can be specified when using the
 | **Copy**      | Copy the selected information to the clipboard. |
 | **Export...** | Exports the results shown (all or the selected ones) to a file in the order shown, see [Export format](../faq/export-format.md) |
 
+## Run command
+
+Open the tool with `snmp`. Add a host to open a new tab with it:
+
+```text
+snmp 10.0.0.1
+snmp switch-01.borntoberoot.net
+snmp @switch-01
+```
+
+The query is not started: select the mode, version, OID and credentials in the tab and start it there (also with `Enter`). `Shift+Enter` behaves like `Enter`. A profile (`@profile`) opens a tab with the host, mode, version, OID and credentials of the profile or its group.
+
 ## Profile
 
 ### Inherit host from general
@@ -454,3 +466,12 @@ UDP port to use for SNMP requests.
 **Type:** `Integer` [Min `1`, Max `65535`]
 
 **Default:** `161`
+
+## Troubleshooting and limits
+
+- SNMP v1 / v2c: a device with another community usually doesn't answer at all, so the request ends after the [timeout](#timeout-ms) (default 60 seconds) without a result. Check the community and the access list of the device (many devices only answer to the IP addresses of the management network).
+- SNMP v3: wrong credentials are answered with an error (e.g. unknown user name, wrong digest). The security level, the authentication and privacy protocol must match the user on the device.
+- The device must answer on UDP port `161` (or the [port](#port) of the settings); a firewall in between or on the device can drop the requests.
+- An OID that doesn't exist on the device (or isn't visible for the community / user) returns no value (`get`) or no rows (`walk`). A `walk` of a large subtree (e.g. `.1.3.6.1`) can take long and returns many rows.
+- `set` needs a community / user with write access, which most devices don't have by default.
+- Traps (UDP port `162`) are not received.
