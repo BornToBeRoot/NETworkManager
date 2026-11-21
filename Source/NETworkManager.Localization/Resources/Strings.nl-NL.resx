@@ -2614,22 +2614,22 @@ is disabled!</value>
   <data name="CaptureNetworkPacketsToViewLLDPorCDPInformation" xml:space="preserve">
     <value>Capture network packets to view LLDP or CDP information!</value>
   </data>
-  <data name="NoDiscoveryProtocolPackagesReceived" xml:space="preserve">
-    <value>No discovery protocol packages received!</value>
+  <data name="NoLLDPOrCDPPacketsReceived" xml:space="preserve">
+    <value>No LLDP or CDP packets received!</value>
   </data>
   <data name="CapturingNetworkPackagesDots" xml:space="preserve">
     <value>Capturing network packages...</value>
   </data>
-  <data name="DiscoveryProtocol" xml:space="preserve">
-    <value>Discovery Protocol</value>
+  <data name="LLDPCDPCapture" xml:space="preserve">
+    <value>LLDP / CDP Capture</value>
   </data>
-  <data name="DiscoveryProtocol_Cdp" xml:space="preserve">
+  <data name="LLDPCDPProtocol_Cdp" xml:space="preserve">
     <value>CDP</value>
   </data>
-  <data name="DiscoveryProtocol_Lldp" xml:space="preserve">
+  <data name="LLDPCDPProtocol_Lldp" xml:space="preserve">
     <value>LLDP</value>
   </data>
-  <data name="DiscoveryProtocol_LldpCdp" xml:space="preserve">
+  <data name="LLDPCDPProtocol_LldpCdp" xml:space="preserve">
     <value>LLDP / CDP</value>
   </data>
   <data name="XXSecondsRemainingDots" xml:space="preserve">
@@ -2671,8 +2671,8 @@ is disabled!</value>
   <data name="ApplicationName_Dashboard" xml:space="preserve">
     <value>Dashboard</value>
   </data>
-  <data name="ApplicationName_DiscoveryProtocol" xml:space="preserve">
-    <value>Discovery Protocol</value>
+  <data name="ApplicationName_LLDPCDPCapture" xml:space="preserve">
+    <value>LLDP / CDP Capture</value>
   </data>
   <data name="ApplicationName_DNSLookup" xml:space="preserve">
     <value>DNS Lookup</value>
