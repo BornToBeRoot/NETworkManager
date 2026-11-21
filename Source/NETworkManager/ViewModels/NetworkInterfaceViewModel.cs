@@ -1487,12 +1487,12 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
             }
             else
             {
-                // Select it, so the result can be checked on the Information tab
-                SelectNetworkInterfaceOfProfile(boundNetworkInterface);
                 networkInterface = boundNetworkInterface;
             }
         }
 
+        // Checked before the bound network interface is selected: selecting it would replace the values on the
+        // Configure tab and restart the bandwidth measurement, although nothing is applied
         if (networkInterface is not { IsOperational: true })
         {
             StatusMessage = Strings.ConnectTheNetworkCardToConfigureIt;
@@ -1500,6 +1500,10 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
             IsStatusMessageDisplayed = true;
             return;
         }
+
+        // Select it, so the result can be checked on the Information tab
+        if (networkInterface.Id != SelectedNetworkInterface?.Id)
+            SelectNetworkInterfaceOfProfile(networkInterface);
 
         // Show the applied values on the Configure tab (selecting the bound network interface above filled in its
         // current configuration)
