@@ -14,18 +14,6 @@ Whois data for a domain is publicly available and provided by the domain registr
 
 :::
 
-:::note
-
-The firewall must allow outgoing TCP connections on port 43 to the Whois server associated with the top-level domain. For example, querying `borntoberoot.net` requires access to `whois.verisign-grs.com:43`.
-
-:::
-
-:::warning
-
-For .de domains, DENIC no longer provides information via the Whois protocol.
-
-:::
-
 ![Whois](../img/whois.png)
 
 ### Example inputs
@@ -44,6 +32,18 @@ The result can be exported via the **Export...** button below the result or via 
 |--------|-------------|
 | **Copy** | Copies the selected information to the clipboard |
 | **Export...** | Exports the selected or all results to a file |
+
+## Run command
+
+Open the tool with `whois`. Add a domain (validated like the input):
+
+```text
+whois borntoberoot.net
+whois example.org
+whois @borntoberoot.net
+```
+
+Every command opens a new tab, a query running in another tab continues. With `Shift+Enter` (only fill in), the domain is filled in without starting the query. A profile (`@profile`) queries its domain.
 
 ## Profile
 
@@ -70,3 +70,12 @@ Domain to query for Whois information.
 **Default:** `Empty`
 
 **Example:** `borntoberoot.net`
+
+## Troubleshooting and limits
+
+- The query is sent to the Whois server of the top-level domain, from a list included in NETworkManager (updated with each release). If the list has no server for the top-level domain, a message is shown. Use [RDAP](./rdap.md) instead, the standardized successor of Whois.
+- The firewall must allow outgoing TCP connections on port `43` to the Whois server of the top-level domain. For example, querying `borntoberoot.net` requires access to `whois.verisign-grs.com:43`.
+- The domain is queried as entered: enter the registered domain (e.g. `borntoberoot.net`, not `www.borntoberoot.net`).
+- Only the server of the registry is queried, a referral to the Whois server of the registrar (e.g. for `.com` / `.net`) is not followed. The registry may only return the registrar and the name servers.
+- For `.de` domains, DENIC no longer provides information via the Whois protocol. Personal data is usually redacted (GDPR).
+- Whois servers limit the number of queries per IP address; too many queries are answered with an error text or not at all.
