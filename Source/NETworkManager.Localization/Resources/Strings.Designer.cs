@@ -9049,6 +9049,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The network interface &quot;{0}&quot; of the profile was not found on this computer. The values are filled in for the selected network interface, check it before you apply them..
+        /// </summary>
+        public static string NetworkInterfaceXOfProfileNotFoundCheckSelected {
+            get {
+                return ResourceManager.GetString("NetworkInterfaceXOfProfileNotFoundCheckSelected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Network kind.
         /// </summary>
         public static string NetworkKind {

@@ -1333,10 +1333,24 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
     /// </summary>
     private void LoadProfile(ProfileInfo profile)
     {
+        // The message of a previous action or profile doesn't belong to this profile
+        IsStatusMessageDisplayed = false;
+
         var boundNetworkInterface = GetBoundNetworkInterface(profile);
 
         if (boundNetworkInterface != null)
+        {
             SelectedNetworkInterface = boundNetworkInterface;
+        }
+        else if (profile.NetworkInterface_BindToInterface)
+        {
+            // The values would be applied to the selected network interface by the Apply button (the context menu
+            // asks first, see ConfirmApplyToSelectedNetworkInterface)
+            StatusMessage = string.Format(Strings.NetworkInterfaceXOfProfileNotFoundCheckSelected,
+                profile.NetworkInterface_InterfaceName);
+            StatusMessageLevel = StatusLevel.Warning;
+            IsStatusMessageDisplayed = true;
+        }
 
         SetConfigurationFromProfile(profile);
     }
