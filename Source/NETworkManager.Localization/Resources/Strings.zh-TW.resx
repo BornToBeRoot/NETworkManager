@@ -2617,22 +2617,22 @@
   <data name="CaptureNetworkPacketsToViewLLDPorCDPInformation" xml:space="preserve">
     <value>捕捉網路封包以檢視 LLDP 或 CDP 資訊！</value>
   </data>
-  <data name="NoDiscoveryProtocolPackagesReceived" xml:space="preserve">
-    <value>未收到任何探測協定封包！</value>
+  <data name="NoLLDPOrCDPPacketsReceived" xml:space="preserve">
+    <value>No LLDP or CDP packets received!</value>
   </data>
   <data name="CapturingNetworkPackagesDots" xml:space="preserve">
     <value>正在擷取網路封包...</value>
   </data>
-  <data name="DiscoveryProtocol" xml:space="preserve">
-    <value>Discovery 通訊協定</value>
+  <data name="LLDPCDPCapture" xml:space="preserve">
+    <value>LLDP / CDP Capture</value>
   </data>
-  <data name="DiscoveryProtocol_Cdp" xml:space="preserve">
+  <data name="LLDPCDPProtocol_Cdp" xml:space="preserve">
     <value>CDP</value>
   </data>
-  <data name="DiscoveryProtocol_Lldp" xml:space="preserve">
+  <data name="LLDPCDPProtocol_Lldp" xml:space="preserve">
     <value>LLDP</value>
   </data>
-  <data name="DiscoveryProtocol_LldpCdp" xml:space="preserve">
+  <data name="LLDPCDPProtocol_LldpCdp" xml:space="preserve">
     <value>LLDP / CDP</value>
   </data>
   <data name="XXSecondsRemainingDots" xml:space="preserve">
@@ -2674,8 +2674,8 @@
   <data name="ApplicationName_Dashboard" xml:space="preserve">
     <value>儀表板</value>
   </data>
-  <data name="ApplicationName_DiscoveryProtocol" xml:space="preserve">
-    <value>Discovery 通訊協定</value>
+  <data name="ApplicationName_LLDPCDPCapture" xml:space="preserve">
+    <value>LLDP / CDP Capture</value>
   </data>
   <data name="ApplicationName_DNSLookup" xml:space="preserve">
     <value>DNS 查詢</value>
