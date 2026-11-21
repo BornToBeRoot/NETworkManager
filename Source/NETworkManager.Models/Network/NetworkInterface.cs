@@ -249,7 +249,8 @@ public sealed class NetworkInterface
     /// then the first one.
     /// </summary>
     /// <param name="networkInterfaces">Network interfaces, see <see cref="GetNetworkInterfaces"/>.</param>
-    /// <param name="rememberedId">ID of the network interface remembered in the settings.</param>
+    /// <param name="rememberedId">ID of the preferred network interface (remembered in the settings, or selected by a
+    /// profile in this session).</param>
     /// <param name="previousId">ID of the network interface selected before the reload.</param>
     /// <returns>The network interface to select, or <see langword="null" /> if the list is empty.</returns>
     public static NetworkInterfaceInfo GetNetworkInterfaceToSelect(

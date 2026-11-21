@@ -47,6 +47,13 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
     private bool _isSelectingNetworkInterfaceByCode;
 
     /// <summary>
+    /// The network interface to select after a reload (also if it is back after it was missing). Selected by the user
+    /// (saved in the settings), by a profile (only for this session: looking at a profile doesn't change the network
+    /// interface shown after a restart) or configured.
+    /// </summary>
+    private string _preferredNetworkInterfaceId = SettingsManager.Current.NetworkInterface_InterfaceId;
+
+    /// <summary>
     /// Gets or sets a value indicating whether network interfaces are currently loading.
     /// </summary>
     public bool IsNetworkInterfaceLoading
@@ -190,7 +197,7 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
                 _selectedNetworkInterfaceId = value.Id;
 
                 if (!_isSelectingNetworkInterfaceByCode)
-                    SettingsManager.Current.NetworkInterface_InterfaceId = value.Id;
+                    RememberNetworkInterface(value);
 
                 // Bandwidth
                 StartBandwidthMeter(value.Id);
@@ -1266,9 +1273,9 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
     }
 
     /// <summary>
-    /// Selects a network interface after the list was (re)loaded: the one selected by the user (saved in the settings,
+    /// Selects a network interface after the list was (re)loaded: the preferred one (selected by the user or a profile,
     /// also if it is back after it was missing, e.g. a VPN or USB adapter), then the one selected before, then the
-    /// first one. The selection is not saved, so a fallback doesn't replace the remembered network interface.
+    /// first one. The selection is not saved, so a fallback doesn't replace the preferred network interface.
     /// </summary>
     /// <param name="previousId">ID of the network interface selected before the reload.</param>
     private void SelectNetworkInterfaceAfterLoad(string previousId)
@@ -1278,7 +1285,7 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
         try
         {
             SelectedNetworkInterface = NetworkInterface.GetNetworkInterfaceToSelect(NetworkInterfaces,
-                SettingsManager.Current.NetworkInterface_InterfaceId, previousId);
+                _preferredNetworkInterfaceId, previousId);
         }
         finally
         {
@@ -1292,6 +1299,36 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
 
         RemoveBandwidthMeter();
         _selectedNetworkInterfaceId = null;
+    }
+
+    /// <summary>
+    /// Remembers a network interface selected by the user or configured: saved in the settings (selected again after
+    /// a restart) and preferred after a reload.
+    /// </summary>
+    private void RememberNetworkInterface(NetworkInterfaceInfo networkInterface)
+    {
+        SettingsManager.Current.NetworkInterface_InterfaceId = networkInterface.Id;
+        _preferredNetworkInterfaceId = networkInterface.Id;
+    }
+
+    /// <summary>
+    /// Selects the network interface a profile is bound to: preferred after a reload in this session, but not saved
+    /// (only looking at a profile doesn't change the network interface selected after a restart, see
+    /// <see cref="RememberNetworkInterface" /> when it is configured).
+    /// </summary>
+    private void SelectNetworkInterfaceOfProfile(NetworkInterfaceInfo networkInterface)
+    {
+        _preferredNetworkInterfaceId = networkInterface.Id;
+        _isSelectingNetworkInterfaceByCode = true;
+
+        try
+        {
+            SelectedNetworkInterface = networkInterface;
+        }
+        finally
+        {
+            _isSelectingNetworkInterfaceByCode = false;
+        }
     }
 
     private void ReloadIfPending()
@@ -1362,7 +1399,7 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
 
         if (boundNetworkInterface != null)
         {
-            SelectedNetworkInterface = boundNetworkInterface;
+            SelectNetworkInterfaceOfProfile(boundNetworkInterface);
         }
         else if (profile.NetworkInterface_BindToInterface)
         {
@@ -1424,7 +1461,7 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
             else
             {
                 // Select it, so the result can be checked on the Information tab
-                SelectedNetworkInterface = boundNetworkInterface;
+                SelectNetworkInterfaceOfProfile(boundNetworkInterface);
                 networkInterface = boundNetworkInterface;
             }
         }
@@ -1540,7 +1577,7 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
         NetworkInterfaceInfo networkInterface = null)
     {
         if (networkInterface != null)
-            SettingsManager.Current.NetworkInterface_InterfaceId = networkInterface.Id;
+            RememberNetworkInterface(networkInterface);
 
         IsConfigurationRunning = true;
         IsStatusMessageDisplayed = false;
