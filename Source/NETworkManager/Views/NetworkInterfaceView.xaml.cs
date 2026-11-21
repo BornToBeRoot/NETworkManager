@@ -2,7 +2,7 @@ using NETworkManager.ViewModels;
 
 namespace NETworkManager.Views;
 
-public partial class NetworkInterfaceView
+public partial class NetworkInterfaceView : IApplicationRequestHandler
 {
     private readonly NetworkInterfaceViewModel _viewModel = new();
 
@@ -20,5 +20,10 @@ public partial class NetworkInterfaceView
     public void OnViewVisible()
     {
         _viewModel.OnViewVisible();
+    }
+
+    public void Open(ApplicationRequest request)
+    {
+        _viewModel.Open(request);
     }
 }

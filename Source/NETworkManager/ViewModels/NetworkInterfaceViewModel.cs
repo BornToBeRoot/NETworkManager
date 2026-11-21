@@ -783,6 +783,28 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
 
     protected override ApplicationName ApplicationName => ApplicationName.NetworkInterface;
 
+    /// <summary>
+    /// Opens a request of the run command (e.g. "networkinterface @home"): selects the profile and fills in its values
+    /// like a double-click on the profile. The profile is never applied (also not with Enter): the configuration is
+    /// changed with elevated rights and can disconnect the computer, it is applied with Apply after checking the values.
+    /// </summary>
+    /// <param name="request">Request with the profile (a request without a profile only opens the tool).</param>
+    public void Open(ApplicationRequest request)
+    {
+        // Not while a configuration is applied (like selecting / double-clicking a profile)
+        if (request.Profile == null || IsConfigurationRunning)
+            return;
+
+        // Select it in the profile list if it is shown (not hidden by the search / filter): selecting loads it
+        if (Profiles.Contains(request.Profile) && !Equals(SelectedProfile, request.Profile))
+        {
+            SelectedProfile = request.Profile;
+            return;
+        }
+
+        LoadProfile(request.Profile);
+    }
+
     #endregion
 
     #region ICommands & Actions

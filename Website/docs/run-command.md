@@ -30,6 +30,7 @@ The input is validated like the input field of the feature (e.g. a valid host or
 
 | Command                                                              | Aliases            | Arguments                           | Example                                  |
 | -------------------------------------------------------------------- | ------------------ | ----------------------------------- | ---------------------------------------- |
+| [`networkinterface`](./application/network-interface.md#run-command) |                    | `[@profile]`                        | `networkinterface @home`                 |
 | [`ipscanner`](./application/ip-scanner.md#run-command)               | `ipscan`           | `<range>`                           | `ipscan 10.0.0.0/24`                     |
 | [`portscanner`](./application/port-scanner.md#run-command)           | `portscan`         | `<hosts> <ports\|port profiles>`    | `portscan 10.0.0.1 webserver;22`         |
 | [`pingmonitor`](./application/ping-monitor.md#run-command)           | `ping`             | `<hosts>`                           | `ping 10.0.0.1; 10.0.0.2`                |
@@ -51,7 +52,7 @@ The input is validated like the input field of the feature (e.g. a valid host or
 | [`lookup`](./application/lookup.md#run-command)                      |                    | `<oui\|port> <query>`               | `lookup port 22; 443; ssh`               |
 | `settings`                                                           |                    |                                     | `settings`                               |
 
-The arguments, examples and the behavior of each command (e.g. the connect dialog of the remote tools, `Shift+Enter`) are described in the **Run command** section of the feature, linked in the table. All features that accept a target also accept a profile (`@profile`), except the Subnet Calculator, Lookup and mDNS Discovery tools, which have no profiles. The other features (e.g. `firewall`, `listeners`) can be opened with their name. Features that are hidden in [Settings > General](./settings/general.md) are not available.
+The arguments, examples and the behavior of each command (e.g. the connect dialog of the remote tools, `Shift+Enter`) are described in the **Run command** section of the feature, linked in the table. All features that accept a target also accept a profile (`@profile`), except the Subnet Calculator, Lookup and mDNS Discovery tools, which have no profiles. **Network Interface** accepts no target, but a profile. The other features (e.g. `firewall`, `listeners`) can be opened with their name. Features that are hidden in [Settings > General](./settings/general.md) are not available.
 
 ## Target without a command
 

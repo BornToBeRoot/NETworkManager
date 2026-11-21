@@ -37,6 +37,7 @@ Release date: **xx.xx.2026**
 - **Add profile...** on the **Configure** tab creates a profile with the shown configuration, bound to the selected network interface, e.g. to save the current configuration and apply it again later. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 - **Reset** on the **Configure** tab shows the current configuration of the selected network adapter again, e.g. after a profile was selected. Static values of a previously selected adapter are no longer shown for an adapter that uses DHCP. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 - Double-click a profile (or press `Enter`) to fill in its values on the **Configure** tab again, e.g. after **Reset** or if the profile was selected automatically. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
+- The run command accepts a profile: `networkinterface @profile` selects the profile and fills in its values on the **Configure** tab (like a double-click on the profile), it is applied with **Apply**. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 
 **LLDP / CDP Capture**
 

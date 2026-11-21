@@ -63,11 +63,11 @@ public sealed class RunCommandDefinition
     public IReadOnlyList<RunCommandSyntaxPart> SyntaxParts { get; init; } = [];
 
     /// <summary>
-    ///     Syntax of the arguments (e.g. "&lt;Hosts&gt; [DNS server] [Type] | @&lt;Profile&gt;"), empty if there are
-    ///     none.
+    ///     Syntax of the arguments (e.g. "&lt;Hosts&gt; [DNS server] [Type] | @&lt;Profile&gt;", or
+    ///     "[@&lt;Profile&gt;]" without a target), empty if there are none.
     /// </summary>
     public string Syntax => string.Join(" ",
-        SyntaxParts.Select(x => x.Kind == RunCommandSyntaxPartKind.Profile ? $"| {x.Text}" : x.Text));
+        SyntaxParts.Select(x => x.Kind == RunCommandSyntaxPartKind.Profile && SupportsTarget ? $"| {x.Text}" : x.Text));
 
     /// <summary>
     ///     Checks if the text is the command or one of its aliases (case-insensitive).

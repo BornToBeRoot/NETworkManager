@@ -707,7 +707,8 @@ public class RunCommandViewModel : ViewModelBase
 
         foreach (var part in command.SyntaxParts)
         {
-            if (part.Kind == RunCommandSyntaxPartKind.Profile)
+            // Target or profile (without a target, the profile is optional: "[@<Profile>]")
+            if (part.Kind == RunCommandSyntaxPartKind.Profile && command.SupportsTarget)
                 parts.Add(new RunCommandHintPart("|", false));
 
             parts.Add(new RunCommandHintPart(part.Text, part.Kind == currentPart));

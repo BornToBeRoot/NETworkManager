@@ -134,7 +134,14 @@ netsh interface ipv4 set interface interface="Ethernet" dhcpstaticipcoexistence=
 
 ## Run command
 
-Open the tool with `networkinterface`. The command accepts no target and no profile, see [Run Command](../run-command.md).
+Open the tool with `networkinterface`. The command accepts no target, but a profile (`@profile`):
+
+```text
+networkinterface
+networkinterface @home
+```
+
+A profile is selected and its values are filled in on the **Configure** tab, like a double-click on the profile (also the network interface it is bound to, see [Bind to network interface](#bind-to-network-interface)). The profile is not applied, also not with `Enter`: check the values and click **Apply**. `Shift+Enter` behaves like `Enter`. See [Run Command](../run-command.md).
 
 ## Profile
 

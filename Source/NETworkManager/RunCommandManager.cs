@@ -513,6 +513,8 @@ public static class RunCommandManager
             ApplicationName.RDAP => Create(name, [], [Target(Strings.Query), type], types: [.. RDAPTypes.Keys]),
             ApplicationName.Whois => Create(name, [], [Target(Strings.Domain)]),
             ApplicationName.IPGeolocation => Create(name, ["geo"], [Target(Strings.Host)]),
+            // No target, but profiles: selects the profile and fills in its values (never applied, see the view model)
+            ApplicationName.NetworkInterface => Create(name, [], null, supportsProfile: true),
             ApplicationName.LLDPCDPCapture => Create(name, ["lldp", "cdp"], null),
             ApplicationName.MDNSDiscovery => Create(name, ["mdns", "dnssd"],
                 [Target(Strings.MDNSDiscovery_ServiceType), Argument(Strings.DurationS)], RunCommandArgument.Duration,
@@ -549,16 +551,17 @@ public static class RunCommandManager
     /// <param name="syntaxParts">Syntax of the arguments, or null if the command accepts no target.</param>
     /// <param name="argument">Second argument after the target.</param>
     /// <param name="types">Type keywords.</param>
-    /// <param name="supportsProfile">The application has profiles (only with a target).</param>
+    /// <param name="supportsProfile">The application has profiles (default: if it accepts a target).</param>
     /// <param name="typeBeforeTarget">The type keyword comes before the target.</param>
     private static RunCommandDefinition Create(ApplicationName application, string[] aliases,
         RunCommandSyntaxPart[] syntaxParts, RunCommandArgument argument = RunCommandArgument.None,
-        string[] types = null, bool supportsProfile = true, bool typeBeforeTarget = false)
+        string[] types = null, bool? supportsProfile = null, bool typeBeforeTarget = false)
     {
         var supportsTarget = syntaxParts != null;
 
-        // Applications that accept a target support profiles, unless they have none (e.g. Subnet Calculator).
-        supportsProfile &= supportsTarget;
+        // Applications that accept a target support profiles, unless they have none (e.g. Subnet Calculator). Without
+        // a target only if set (Network Interface: the profile is optional).
+        var profile = supportsProfile ?? supportsTarget;
 
         return new RunCommandDefinition
         {
@@ -567,12 +570,14 @@ public static class RunCommandManager
             Command = application.ToString().ToLowerInvariant(),
             Aliases = aliases,
             SupportsTarget = supportsTarget,
-            SupportsProfile = supportsProfile,
+            SupportsProfile = profile,
             Argument = argument,
             Types = types ?? [],
             TypeBeforeTarget = typeBeforeTarget,
-            SyntaxParts = supportsProfile
-                ? [.. syntaxParts, RunCommandSyntaxPart.Profile(Strings.Profile)]
+            SyntaxParts = profile
+                ? supportsTarget
+                    ? [.. syntaxParts, RunCommandSyntaxPart.Profile(Strings.Profile)]
+                    : [RunCommandSyntaxPart.OptionalProfile(Strings.Profile)]
                 : syntaxParts ?? []
         };
     }
