@@ -119,6 +119,21 @@ The repetition stops when a scan is canceled, the hosts or ports are changed (al
 | `Esc`    | Cancel the running scan                                       |
 | `Ctrl+T` | Open a new tab                                                |
 
+## Run command
+
+Open the tool with `portscanner` or `portscan`. Add the hosts (validated like the input, also IP ranges, subnets and exclusions) followed by the ports, which are required: ports, port ranges and / or names of [port profiles](#port-profiles) (case-insensitive; a name with spaces in quotes, also in a list). The port profiles are suggested after the host, also after a `;`:
+
+```text
+portscan 10.0.0.1 22
+portscan 10.0.0.1 1-1024
+portscan server-01 webserver
+portscan 10.0.0.0/24 webserver;database;3389
+portscan 10.0.0.1 "DNS (via TCP)";webserver
+portscan @server-01
+```
+
+Every command opens a new tab, a scan running in another tab continues. With `Shift+Enter` (only fill in), hosts and ports are filled in without starting the scan. A profile (`@profile`) scans its host and ports (or port profile). A scan of more than `65,536` ports must be confirmed in the tool as usual.
+
 ## Profile
 
 ### Inherit host from general
@@ -376,3 +391,13 @@ Maximum number of ports that are scanned at the same time for each host, if [Adj
 Too many simultaneous requests may be detected as a port scan and blocked or rate-limited by a firewall (local, on the network or on the scanned host). If ports are missing in the result (shown as timed out), reduce the number of threads. This will increase the scan time.
 
 :::
+
+## Troubleshooting and limits
+
+- Only TCP ports are scanned (full connection, no SYN or UDP scan). UDP services (e.g. DNS, SNMP, NTP via UDP) are not found.
+- **Timed out** means no answer within the [timeout](#timeout-ms), usually a firewall that drops the connection request; **closed** means the host refused it (no service listening, or a firewall that rejects). A port of a service that is not allowed through the firewall of the host is shown as timed out.
+- Ports are missing or shown as timed out on a large scan: a firewall or IDS may block or rate-limit the scan. Reduce the threads (disable [Adjust threads automatically](#adjust-threads-automatically) and lower [Max. concurrent host threads](#max-concurrent-host-threads) / [Max. concurrent port threads](#max-concurrent-port-threads)), or increase the [Attempts](#attempts) on an unreliable network (Wi-Fi, VPN, internet).
+- With [Ping hosts before the scan](#ping-hosts-before-the-scan), hosts that block ICMP (e.g. Windows with the firewall enabled) are not scanned, even if they have open ports.
+- A scan of more than `65,536` ports (hosts × ports) must be confirmed, more than `16,777,216` ports can't be scanned at once. At most `8,192` connections are opened at the same time.
+- A profile whose port profile was deleted (or a profile file shared from another computer, port profiles are saved in the settings) is scanned with the ports saved in the profile, and a note is shown.
+- The results and the comparison with the last scan are only kept while the tab is open. Export them to keep them.
