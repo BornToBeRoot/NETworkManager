@@ -1064,7 +1064,7 @@ Use the Credential Security Support Provider (CredSSP) protocol to authenticate 
 
 **Type:** `Boolean`
 
-**Default:** `Disabled`
+**Default:** `Enabled`
 
 ### Authentication level
 
