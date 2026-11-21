@@ -22,6 +22,10 @@ You may need to click into a widget first before keyboard shortcuts are recogniz
 
 :::
 
+## Run command
+
+Open the tool with `dashboard`. The command accepts no target and no profile, see [Run Command](../run-command.md).
+
 ## Settings
 
 ### Public IPv4 address
@@ -110,3 +114,10 @@ The result includes:
 - **Server location** — Cloudflare PoP (Point of Presence) handling the test
 
 Before running the test, a privacy disclaimer informs the user that `speed.cloudflare.com` will receive requests with the client's IP address and network information. The disclaimer is shown again after restarting the app because acceptance is not currently persisted. See the [Cloudflare privacy policy](https://www.cloudflare.com/privacypolicy/) for details. The widget never contacts Cloudflare's telemetry endpoint (`aim.cloudflare.com/__log`).
+
+## Troubleshooting and limits
+
+- The local IP address is detected by the route to the [Public IPv4 address](#public-ipv4-address) / [Public IPv6 address](#public-ipv6-address) (no packet is sent), otherwise from the first active network interface. With several network adapters (e.g. LAN and VPN), set an address that is routed via the adapter you want to see.
+- The internet is shown as reachable if the public IP address could be requested from `api.ipify.org` / `api6.ipify.org` (or the [custom API](#use-custom-ipv4-address-api)). A proxy or firewall that blocks the API shows the internet as not reachable although websites may work; disable [Check public IP address](#check-public-ip-address) or use another API. The IP geolocation and the DNS resolver are requested from `ip-api.com` (45 requests per minute).
+- Without IPv6 connectivity (or no IPv6 from the internet provider), the IPv6 checks fail, the IPv4 checks are not affected.
+- The [Speed Test](#speed-test) measures the connection to the nearest Cloudflare server. A VPN, a proxy or other traffic on the network at the same time lowers the result.
