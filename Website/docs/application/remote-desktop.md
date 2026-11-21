@@ -43,6 +43,19 @@ Right-clicking a session tab opens a context menu:
 | **Keyboard shortcuts > Explorer**     | Sends Win+E to the remote computer, opening File Explorer (only if connected and not in view only mode)                                                                                           |
 | **Keyboard shortcuts > Run dialog**   | Sends Win+R to the remote computer, opening the Run dialog (only if connected and not in view only mode)                                                                                          |
 
+## Run command
+
+Open the tool with `remotedesktop`, `rdp` or `mstsc`. Add a host with an optional port (validated like the [host](#host) of the connect dialog):
+
+```text
+rdp server-01
+rdp 10.0.0.10
+rdp server-01.borntoberoot.net:3390
+rdp @server-01
+```
+
+A host opens the [connect dialog](#connect) with the host filled in, so the credentials and options can be adjusted before connecting. A profile (`@profile`) connects directly with the settings of the profile and its group. `Shift+Enter` behaves like `Enter`.
+
 ## Connect
 
 ### Host
@@ -1274,3 +1287,11 @@ Configure the network connection type for the remote desktop connection.
 - `High-speed broadband (2 Mbps - 10 Mbps)`
 - `WAN (10 Mbps or higher with high latency)`
 - `LAN (10 Mbps or higher)`
+
+## Troubleshooting and limits
+
+- If the connection fails or is closed, the reason is shown in the tab (e.g. host not found, connection timed out, logon failure). Use **Reconnect** in the [tab context menu](#tab-context-menu) to try again.
+- The remote computer must allow Remote Desktop connections (**Settings > System > Remote Desktop**) and the firewall must allow TCP port `3389` (or the custom [port](#port-2)). Check it with the [Port Scanner](./port-scanner).
+- Remote computers that require Network Level Authentication (NLA, the default on Windows) need [Credential Security Support Provider](#settings) (enabled by default) - don't disable it in the profile or group.
+- A certificate warning (the remote computer uses a self-signed certificate) depends on the [Authentication level](#settings).
+- Behind a Remote Desktop Gateway, enable the gateway in the profile, group or [settings](#settings) (**Enable gateway server**). The gateway credentials can be shared with the remote computer.
