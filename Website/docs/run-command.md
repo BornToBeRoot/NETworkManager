@@ -44,6 +44,7 @@ The input is validated like the input field of the feature (e.g. a valid host or
 | [`rdap`](./application/rdap.md#run-command)                          |                    | `<query> [type]`                    | `rdap 1.10 asn`                          |
 | [`whois`](./application/whois.md#run-command)                        |                    | `<domain>`                          | `whois borntoberoot.net`                 |
 | [`ipgeolocation`](./application/ip-geolocation.md#run-command)       | `geo`              | `<host>`                            | `geo 1.1.1.1`                            |
+| [`lldpcdpcapture`](./application/lldp-cdp-capture.md#run-command)    | `lldp`, `cdp`      |                                     | `lldp`                                   |
 | [`mdnsdiscovery`](./application/mdns-discovery.md#run-command)       | `mdns`, `dnssd`    | `<service types\|profiles\|*> [duration]` | `mdns printers;_ssh._tcp 30`        |
 | [`wakeonlan`](./application/wake-on-lan.md#run-command)              | `wol`              | `<MAC address> [broadcast]`         | `wol 00:11:22:33:44:55 192.168.1.255`    |
 | [`subnetcalculator`](./application/subnet-calculator.md#run-command) | `subnet`, `ipcalc` | `<subnet> [new mask \| subnet 2]`   | `subnet 10.0.0.0/16 /24`                 |
