@@ -77,6 +77,7 @@ Release date: **xx.xx.2026**
 - Fixed the **Information** tab possibly showing the old configuration after **Apply**, **Release & Renew** or adding / removing an IP address, if the network adapters were reloaded because of a network change at the same time. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 - Fixed the selected network adapter not being selected again when it is back after it was missing (e.g. a VPN or USB adapter), also after a restart. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 - Fixed the **Information** tab not showing the changes made before an error, e.g. when the IP address was set but setting the DNS servers failed. The network adapters are now reloaded after an error too. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
+- Fixed **Add IPv4 address...** and **Remove IPv4 address...** changing another network adapter (or the application crashing if no adapter was left) when the network adapter was removed while the dialog was open (e.g. a USB or VPN adapter). Nothing is changed in this case. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 
 **DNS Lookup**
 

@@ -9040,6 +9040,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The network interface &quot;{0}&quot; was not found (e.g. it was removed). Nothing was changed..
+        /// </summary>
+        public static string NetworkInterfaceXNotFoundNothingChanged {
+            get {
+                return ResourceManager.GetString("NetworkInterfaceXNotFoundNothingChanged", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Network kind.
         /// </summary>
         public static string NetworkKind {

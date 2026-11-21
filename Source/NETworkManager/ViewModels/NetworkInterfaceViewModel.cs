@@ -1117,6 +1117,9 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
 
     private async Task AddIPv4AddressAction()
     {
+        // The network interface the dialog is opened for (the selection can change while it is open)
+        var networkInterface = SelectedNetworkInterface;
+
         var childWindow = new IPAddressAndSubnetmaskChildWindow();
 
         var childWindowViewModel = new IPAddressAndSubnetmaskViewModel(async instance =>
@@ -1124,7 +1127,7 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
             childWindow.IsOpen = false;
             ConfigurationManager.Current.IsChildWindowOpen = false;
 
-            await AddIPv4Address(instance.IPAddress, instance.Subnetmask);
+            await AddIPv4Address(networkInterface, instance.IPAddress, instance.Subnetmask);
         }, _ =>
         {
             childWindow.IsOpen = false;
@@ -1148,6 +1151,9 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
 
     private async Task RemoveIPv4AddressAction()
     {
+        // The network interface the dialog is opened for (the selection can change while it is open)
+        var networkInterface = SelectedNetworkInterface;
+
         var childWindow = new DropDownChildWindow();
 
         var childWindowViewModel = new DropDownViewModel(async instance =>
@@ -1155,13 +1161,13 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
                 childWindow.IsOpen = false;
                 ConfigurationManager.Current.IsChildWindowOpen = false;
 
-                await RemoveIPv4Address(instance.SelectedValue.Split("/")[0]);
+                await RemoveIPv4Address(networkInterface, instance.SelectedValue.Split("/")[0]);
             }, _ =>
             {
                 childWindow.IsOpen = false;
                 ConfigurationManager.Current.IsChildWindowOpen = false;
             },
-                [.. SelectedNetworkInterface.IPv4Address.Select(x => $"{x.Item1}/{Subnetmask.ConvertSubnetmaskToCidr(x.Item2)}")],
+                [.. networkInterface.IPv4Address.Select(x => $"{x.Item1}/{Subnetmask.ConvertSubnetmaskToCidr(x.Item2)}")],
                 Strings.IPv4Address
             );
 
@@ -1553,12 +1559,38 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
             });
     }
 
-    private Task AddIPv4Address(string ipAddress, string subnetmaskOrCidr)
+    /// <summary>
+    /// Gets the current object of a network interface a dialog was opened for. The list may have been reloaded while
+    /// the dialog was open (new objects) or the network interface may have been removed (e.g. a USB or VPN adapter):
+    /// then nothing is changed, instead of changing another network interface that was selected meanwhile.
+    /// </summary>
+    /// <param name="networkInterface">Network interface the dialog was opened for.</param>
+    /// <returns>The current object, or <see langword="null" /> if it no longer exists (a message is shown).</returns>
+    private NetworkInterfaceInfo GetCurrentNetworkInterface(NetworkInterfaceInfo networkInterface)
     {
+        var currentNetworkInterface = NetworkInterface.FindById(NetworkInterfaces, networkInterface.Id);
+
+        if (currentNetworkInterface != null)
+            return currentNetworkInterface;
+
+        StatusMessage = string.Format(Strings.NetworkInterfaceXNotFoundNothingChanged, networkInterface.Name);
+        StatusMessageLevel = StatusLevel.Warning;
+        IsStatusMessageDisplayed = true;
+
+        return null;
+    }
+
+    private Task AddIPv4Address(NetworkInterfaceInfo networkInterface, string ipAddress, string subnetmaskOrCidr)
+    {
+        networkInterface = GetCurrentNetworkInterface(networkInterface);
+
+        if (networkInterface == null)
+            return Task.CompletedTask;
+
         var config = new NetworkInterfaceConfig
         {
-            Name = SelectedNetworkInterface.Name,
-            EnableDhcpStaticIpCoexistence = SelectedNetworkInterface.DhcpEnabled,
+            Name = networkInterface.Name,
+            EnableDhcpStaticIpCoexistence = networkInterface.DhcpEnabled,
             IPAddress = ipAddress.Trim(),
             Subnetmask = NetworkInterfaceConfig.ConvertSubnetmaskOrCidr(subnetmaskOrCidr)
         };
@@ -1570,11 +1602,16 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
             Strings.IPv4AddressAddedSuccessfully);
     }
 
-    private Task RemoveIPv4Address(string ipAddress)
+    private Task RemoveIPv4Address(NetworkInterfaceInfo networkInterface, string ipAddress)
     {
+        networkInterface = GetCurrentNetworkInterface(networkInterface);
+
+        if (networkInterface == null)
+            return Task.CompletedTask;
+
         var config = new NetworkInterfaceConfig
         {
-            Name = SelectedNetworkInterface.Name,
+            Name = networkInterface.Name,
             IPAddress = ipAddress
         };
 
