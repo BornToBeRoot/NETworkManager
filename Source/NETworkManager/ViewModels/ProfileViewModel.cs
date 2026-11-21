@@ -641,11 +641,12 @@ public class ProfileViewModel : ViewModelBase
         NetworkInterface_Interfaces.Clear();
         networkInterfaces.ForEach(NetworkInterface_Interfaces.Add);
 
-        // Not bound yet: the network interface selected in the Network Interface tool (like "Add profile...")
+        // Not bound yet: the network interface last selected in the Network Interface tool, or the first one if it is
+        // not available (like the tool after a load, so the drop-down is not empty)
         if (string.IsNullOrEmpty(_networkInterfaceBoundId))
         {
-            NetworkInterface_SelectedInterface ??= NetworkInterface.FindById(NetworkInterface_Interfaces,
-                SettingsManager.Current.NetworkInterface_InterfaceId);
+            NetworkInterface_SelectedInterface ??= NetworkInterface.GetNetworkInterfaceToSelect(
+                NetworkInterface_Interfaces, SettingsManager.Current.NetworkInterface_InterfaceId, null);
 
             return;
         }
