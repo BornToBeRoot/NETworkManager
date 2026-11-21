@@ -1051,7 +1051,7 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
     /// </summary>
     private bool ApplyProfile_CanExecute(object parameter) =>
         ConfigureCommands_CanExecute(parameter) && SelectedProfile != null &&
-        (SelectedProfile.NetworkInterface_BindToInterface || CanConfigure);
+        (IsBoundToNetworkInterface(SelectedProfile) || CanConfigure);
 
     /// <summary>
     /// Gets the command to restart the application with administrator privileges.
@@ -1446,7 +1446,7 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
         {
             SelectNetworkInterfaceOfProfile(boundNetworkInterface);
         }
-        else if (profile.NetworkInterface_BindToInterface)
+        else if (IsBoundToNetworkInterface(profile))
         {
             // The values would be applied to the selected network interface by the Apply button (the context menu
             // asks first, see ConfirmApplyToSelectedNetworkInterface)
@@ -1492,7 +1492,7 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
         var networkInterface = SelectedNetworkInterface;
 
         // Profile bound to a network interface (matched by ID only, the name is not unique)
-        if (profile.NetworkInterface_BindToInterface)
+        if (IsBoundToNetworkInterface(profile))
         {
             var boundNetworkInterface = GetBoundNetworkInterface(profile);
 
@@ -1540,10 +1540,17 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
     /// </summary>
     private NetworkInterfaceInfo GetBoundNetworkInterface(ProfileInfo profile)
     {
-        return profile.NetworkInterface_BindToInterface
+        return IsBoundToNetworkInterface(profile)
             ? NetworkInterface.FindById(NetworkInterfaces, profile.NetworkInterface_InterfaceId)
             : null;
     }
+
+    /// <summary>
+    /// Whether a profile is bound to a network interface. A profile from an edited or imported file can have the option
+    /// enabled without an ID: it is used like a profile that is not bound (no "not found" message without a name / ID).
+    /// </summary>
+    private static bool IsBoundToNetworkInterface(ProfileInfo profile) =>
+        profile.NetworkInterface_BindToInterface && !string.IsNullOrEmpty(profile.NetworkInterface_InterfaceId);
 
     /// <summary>
     /// The network interface of the profile is not found on this computer: ask whether the profile should be applied

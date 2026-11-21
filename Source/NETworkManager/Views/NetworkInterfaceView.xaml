@@ -28,6 +28,8 @@
         <converters:BooleanReverseConverter x:Key="BooleanReverseConverter" />
         <converters:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
+        <converters:StringIsNotNullOrEmptyToVisibilityCollapsedConverter
+            x:Key="StringIsNotNullOrEmptyToVisibilityCollapsedConverter" />
         <converters:BooleansAndToVisibilityCollapsedConverter x:Key="BooleansAndToVisibilityCollapsedConverter" />
         <converters:BooleanToStringConverter x:Key="BooleanToStringConverter" />
         <converters:Bytes1000ToSpeedConverter x:Key="Bytes1000ToSpeedConverter" />
@@ -49,10 +51,18 @@
                 <Grid.ToolTip>
                     <ToolTip MinWidth="250">
                         <StackPanel Margin="10">
-                            <TextBlock Margin="0,0,0,5"
-                                       Visibility="{Binding NetworkInterface_BindToInterface, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+                            <TextBlock Margin="0,0,0,5">
                                 <TextBlock.Style>
-                                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DefaultTextBlock}" />
+                                    <!-- Bound to a network interface (with ID, an edited profile file may lack it) -->
+                                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DefaultTextBlock}">
+                                        <Setter Property="Visibility"
+                                                Value="{Binding NetworkInterface_InterfaceId, Converter={StaticResource StringIsNotNullOrEmptyToVisibilityCollapsedConverter}}" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding NetworkInterface_BindToInterface}" Value="False">
+                                                <Setter Property="Visibility" Value="Collapsed" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
                                 </TextBlock.Style>
                                 <Run Text="{x:Static localization:Strings.Interface}" /><Run Text=": " /><Run Text="{Binding NetworkInterface_InterfaceName, Mode=OneWay}" />
                             </TextBlock>
