@@ -781,12 +781,29 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
             IsNetworkInterfaceLoading = false;
         }
 
+        OpenPendingRequest();
         ReloadIfPending();
     }
 
     #endregion
 
     #region Profile host
+
+    /// <summary>
+    /// Request received while the network interfaces were loaded, opened after the load (see <see cref="Open" />).
+    /// </summary>
+    private ApplicationRequest _pendingRequest;
+
+    private void OpenPendingRequest()
+    {
+        if (_pendingRequest == null)
+            return;
+
+        var request = _pendingRequest;
+        _pendingRequest = null;
+
+        Open(request);
+    }
 
     protected override ApplicationName ApplicationName => ApplicationName.NetworkInterface;
 
@@ -801,6 +818,15 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
         // Not while a configuration is applied (like selecting / double-clicking a profile)
         if (request.Profile == null || IsConfigurationRunning)
             return;
+
+        // The network interfaces are (re)loaded, e.g. the run command opened the tool for the first time (the view and
+        // its view model are created right before): the bound network interface can only be selected afterwards, and
+        // the load would replace the values of the profile with the ones of the selected network interface.
+        if (IsNetworkInterfaceLoading)
+        {
+            _pendingRequest = request;
+            return;
+        }
 
         // Select it in the profile list if it is shown (not hidden by the search / filter): selecting loads it
         if (Profiles.Contains(request.Profile) && !Equals(SelectedProfile, request.Profile))
@@ -1269,6 +1295,7 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
             IsNetworkInterfaceLoading = false;
         }
 
+        OpenPendingRequest();
         ReloadIfPending();
     }
 
