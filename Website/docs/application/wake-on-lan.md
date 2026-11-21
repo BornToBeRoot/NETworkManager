@@ -14,12 +14,6 @@ Wake on LAN uses a magic packet starting with 6 bytes with the value `0xFF` foll
 
 :::
 
-:::note
-
-The computer's network interface card (NIC) must support Wake on LAN and the feature must be enabled in the BIOS. The computer must also be connected to the network via cable — Wake on LAN does not work over WLAN. You may need to configure your firewall to allow the magic packet through.
-
-:::
-
 ![Wake on LAN](../img/wake-on-lan.png)
 
 ### Example inputs
@@ -27,6 +21,19 @@ The computer's network interface card (NIC) must support Wake on LAN and the fea
 | MAC address | Broadcast address | Note |
 |-------------|-------------------|------|
 | `00:11:22:33:44:55` | `192.168.0.255` | Broadcast address of a `192.168.0.0/24` network |
+
+## Run command
+
+Open the tool with `wakeonlan` or `wol`. Add the MAC address (validated like the input), optionally followed by the broadcast address:
+
+```text
+wol 00:11:22:33:44:55
+wol 00:11:22:33:44:55 192.168.1.255
+wol 00-11-22-33-44-55 10.0.0.255
+wol @pc-01
+```
+
+The magic packet is sent to the broadcast address, or to the one last used in the tool if none is entered. If there is no valid broadcast address yet, the MAC address is only filled in. With `Shift+Enter` (only fill in), the values are filled in without sending the magic packet. A profile (`@profile`) sends the magic packet with the MAC address and broadcast address of the profile (with `Shift+Enter`, they are only filled in).
 
 ## Profile
 
@@ -59,3 +66,10 @@ UDP port on which the magic packet is sent.
 **Type:** `Integer` [Min `1`, Max `65535`]
 
 **Default:** `9`
+
+## Troubleshooting and limits
+
+- The network interface card (NIC) of the computer must support Wake on LAN and the feature must be enabled in the BIOS / UEFI and in the driver settings of the NIC in Windows (e.g. **Wake on Magic Packet**). The computer must also be connected to the network via cable — Wake on LAN does not work over WLAN.
+- Windows Fast Startup can prevent a computer from waking up after it was shut down. Disable it or put the computer to sleep / hibernate instead.
+- The magic packet is a UDP broadcast to the [port](#port) (default `9`). Use the broadcast address of the network of the computer (e.g. `192.168.1.255` for `192.168.1.0/24`). Routers don't forward broadcasts by default: to wake a computer in another network, the router must forward directed broadcasts to it (or use a computer in that network). Firewalls in between must allow the packet.
+- The magic packet is sent without an answer: the tool shows that it was sent, not that the computer woke up. Check it with the [Ping Monitor](./ping-monitor.md).
