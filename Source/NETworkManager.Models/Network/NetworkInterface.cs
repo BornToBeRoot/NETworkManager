@@ -222,8 +222,7 @@ public sealed class NetworkInterface
                 IPv6AddressLinkLocal = [.. listIPv6AddressLinkLocal],
                 IPv6Address = [.. listIPv6Address],
                 IPv6Gateway = [.. listIPv6Gateway],
-                DNSAutoconfigurationEnabled = IsDNSAutoconfigured(noStaticDNSServers,
-                    ipv4Properties is { IsDhcpEnabled: true }),
+                DNSAutoconfigurationEnabled = IsDNSAutoconfigured(noStaticDNSServers, ipv4Properties?.IsDhcpEnabled),
                 DNSSuffix = ipProperties.DnsSuffix,
                 DNSServer = [.. ipProperties.DnsAddresses],
                 Profile = profileByAlias.GetValueOrDefault(networkInterface.Name, NetworkProfile.NotConfigured)
@@ -543,11 +542,12 @@ public sealed class NetworkInterface
     /// </summary>
     /// <param name="noStaticDNSServers">No static DNS servers are set (see <see cref="IsDNSAutoconfigurationEnabled" />),
     /// <see langword="null" /> if unknown.</param>
-    /// <param name="dhcpEnabled">DHCP is enabled for the IPv4 address.</param>
+    /// <param name="dhcpEnabled">DHCP is enabled for the IPv4 address, <see langword="null" /> if IPv4 is not available
+    /// (e.g. IPv6 only: DNS servers obtained via IPv6 are not affected by a static IPv4 address).</param>
     /// <returns><see langword="true" /> if the DNS servers are obtained automatically.</returns>
-    public static bool IsDNSAutoconfigured(bool? noStaticDNSServers, bool dhcpEnabled)
+    public static bool IsDNSAutoconfigured(bool? noStaticDNSServers, bool? dhcpEnabled)
     {
-        return noStaticDNSServers == true && dhcpEnabled;
+        return noStaticDNSServers == true && dhcpEnabled != false;
     }
 
     /// <summary>

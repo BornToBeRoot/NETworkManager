@@ -16,7 +16,10 @@ public class NetworkInterfaceDNSAutoconfigurationTests
     [InlineData(false, false, false)]
     // Registry value not readable
     [InlineData(null, true, false)]
-    public void IsDNSAutoconfigured(bool? noStaticDNSServers, bool dhcpEnabled, bool expected)
+    // IPv4 not available (e.g. IPv6 only): only the static DNS servers count
+    [InlineData(true, null, true)]
+    [InlineData(false, null, false)]
+    public void IsDNSAutoconfigured(bool? noStaticDNSServers, bool? dhcpEnabled, bool expected)
     {
         Assert.Equal(expected, NetworkInterface.IsDNSAutoconfigured(noStaticDNSServers, dhcpEnabled));
     }
