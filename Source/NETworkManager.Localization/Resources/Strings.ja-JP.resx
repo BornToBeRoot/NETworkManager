@@ -2617,22 +2617,22 @@ URL: https://api.ipify.org and https://api6.ipify.org</value>
   <data name="CaptureNetworkPacketsToViewLLDPorCDPInformation" xml:space="preserve">
     <value>ネットワークパケットをキャプチャしてLLDPまたはCDP情報を表示!</value>
   </data>
-  <data name="NoDiscoveryProtocolPackagesReceived" xml:space="preserve">
-    <value>検出プロトコル パッケージを受信できませんでした!</value>
+  <data name="NoLLDPOrCDPPacketsReceived" xml:space="preserve">
+    <value>No LLDP or CDP packets received!</value>
   </data>
   <data name="CapturingNetworkPackagesDots" xml:space="preserve">
     <value>ネットワーク パッケージをキャプチャしています...</value>
   </data>
-  <data name="DiscoveryProtocol" xml:space="preserve">
-    <value>検出プロトコル</value>
+  <data name="LLDPCDPCapture" xml:space="preserve">
+    <value>LLDP / CDP Capture</value>
   </data>
-  <data name="DiscoveryProtocol_Cdp" xml:space="preserve">
+  <data name="LLDPCDPProtocol_Cdp" xml:space="preserve">
     <value>CDP</value>
   </data>
-  <data name="DiscoveryProtocol_Lldp" xml:space="preserve">
+  <data name="LLDPCDPProtocol_Lldp" xml:space="preserve">
     <value>LLDP</value>
   </data>
-  <data name="DiscoveryProtocol_LldpCdp" xml:space="preserve">
+  <data name="LLDPCDPProtocol_LldpCdp" xml:space="preserve">
     <value>LLDP / CDP</value>
   </data>
   <data name="XXSecondsRemainingDots" xml:space="preserve">
@@ -2674,8 +2674,8 @@ URL: https://api.ipify.org and https://api6.ipify.org</value>
   <data name="ApplicationName_Dashboard" xml:space="preserve">
     <value>ダッシュボード</value>
   </data>
-  <data name="ApplicationName_DiscoveryProtocol" xml:space="preserve">
-    <value>検出プロトコル</value>
+  <data name="ApplicationName_LLDPCDPCapture" xml:space="preserve">
+    <value>LLDP / CDP Capture</value>
   </data>
   <data name="ApplicationName_DNSLookup" xml:space="preserve">
     <value>DNS Lookup</value>
