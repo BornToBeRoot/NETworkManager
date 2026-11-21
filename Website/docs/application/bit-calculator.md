@@ -22,6 +22,10 @@ With the **Bit Calculator** you can convert between different data units — ent
 |--------|-------------|
 | **Copy** | Copies the selected information to the clipboard |
 
+## Run command
+
+Open the tool with `bitcalculator`. The command accepts no target and no profile, see [Run Command](../run-command.md).
+
 ## Settings
 
 ### Notation

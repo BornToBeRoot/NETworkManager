@@ -28,3 +28,13 @@ A network listener is a socket bound to a specific local IP address and port tha
 | Key | Action |
 |-----|--------|
 | `F5` | Refresh |
+
+## Run command
+
+Open the tool with `listeners`. The command accepts no target and no profile, see [Run Command](../run-command.md).
+
+## Troubleshooting and limits
+
+- The process of a listener is not shown. Use [Connections](./connections.md) for the process of a TCP connection.
+- The list is a snapshot: refresh it (`F5`) to see new listeners.
+- A listener on `0.0.0.0` / `::` accepts connections on all IP addresses of the computer; whether they are reachable from the network also depends on the [Firewall](./firewall.md).

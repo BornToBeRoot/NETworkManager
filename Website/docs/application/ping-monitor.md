@@ -93,6 +93,20 @@ When many hosts change state at almost the same time (for example, when an uplin
 
 :::
 
+## Run command
+
+Open the tool with `pingmonitor` or `ping`. Add hosts, IP ranges and / or subnets (validated like the input, also with exclusions) to add and ping them:
+
+```text
+ping 10.0.0.1
+ping borntoberoot.net
+ping 10.0.0.1; 10.0.0.2; server-01
+ping 10.0.0.0/29; !10.0.0.1
+ping @server-01
+```
+
+The hosts are added to the monitored hosts, hosts that are already monitored keep running. With `Shift+Enter` (only fill in), the host is filled in without adding it. A profile (`@profile`) adds its host to the group of the profile. While hosts are being added (e.g. a range), no other host can be added and an error is shown.
+
 ## Profile
 
 ### Inherit host from general
@@ -219,3 +233,12 @@ Time in seconds the notification popup is shown before it closes automatically.
 **Type:** `Integer` [Min `3`, Max `60`]
 
 **Default:** `10`
+
+## Troubleshooting and limits
+
+- A host that blocks ICMP (e.g. Windows with the firewall enabled, many cloud servers) is shown as down, although it is reachable. Check it with the [Port Scanner](./port-scanner) instead.
+- A hostname is resolved once when it is added (see [preferred protocol](../settings/network.md#preffered-protocol-when-resolving-hostnames)); the IP address is pinged, a later DNS change is not noticed. Remove and add the host again.
+- Every IP address of a range or subnet is added as its own host, e.g. a `/24` adds 256 hosts. To find the active hosts of a network, use the [IP Scanner](./ip-scanner).
+- A host that doesn't answer within the [timeout](#timeout-ms) counts as lost. A host on a slow or busy link (e.g. VPN, mobile) may need a higher timeout; brief losses only trigger a notification after the [Failure threshold](#failure-threshold).
+- With [Don't fragment](#dont-fragment) enabled, a [Buffer](#buffer) larger than the MTU of the path (e.g. above `1472` bytes with an MTU of `1500`) gets no reply.
+- The results are only kept while the host is monitored. Export them to keep them.

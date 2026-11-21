@@ -137,3 +137,15 @@ Optional comment associated with the entry. The comment is written after the hos
 If multiple entries are selected, **Edit entries...** (or `F2`) opens the same dialog in bulk mode. Only the [comment](#comment) can be changed, it is applied to all selected entries. To enable or disable multiple entries, use **Enable** / **Disable** in the context menu.
 
 If all selected entries have the same comment, it is pre-filled. Otherwise the field is empty and shows `Multiple values`. **OK** is only available after the comment was changed, so the existing comments are not overwritten by accident. To remove the comment from all selected entries, clear the field (e.g. type a character and delete it again) and confirm with **OK**.
+
+## Run command
+
+Open the tool with `hostsfileeditor`. The command accepts no target and no profile, see [Run Command](../run-command.md).
+
+## Troubleshooting and limits
+
+- Without administrator privileges, the entries are read-only.
+- Windows reads the changed `hosts` file right away, but applications and browsers may still use a cached name for a while. Restart the application, or flush the DNS cache of Windows with [Network Interface](./network-interface.md#configure) > **Flush DNS cache**.
+- Antivirus software (e.g. Microsoft Defender) may block or revert entries that redirect well-known domains.
+- If an entry was changed in the `hosts` file by another program in the meantime, the action is not applied and the list is refreshed - repeat the action.
+- A daily backup is kept in the same directory (up to 5, `hosts_backup_NETworkManager_YYYYMMDD`) to restore the file.

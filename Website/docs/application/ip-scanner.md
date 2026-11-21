@@ -189,6 +189,20 @@ The headers of the probes that can find a host (**Ping details**, **Ports**, **N
 | `Esc`    | Cancel the running scan                                       |
 | `Ctrl+T` | Open a new tab                                                |
 
+## Run command
+
+Open the tool with `ipscanner` or `ipscan`. Add hosts, IP ranges and / or subnets (validated like the input, also with exclusions) to scan them in a new tab:
+
+```text
+ipscan 10.0.0.0/24
+ipscan 10.0.0.100-199
+ipscan 192.168.1.0/24; 192.168.2.0/24
+ipscan 10.0.0.0/24; !10.0.0.1
+ipscan @Site A
+```
+
+Every command opens a new tab, a scan running in another tab continues. With `Shift+Enter` (only fill in), the input is filled in without starting the scan, e.g. to change the [options](#toolbar) first. A profile (`@profile`) scans its host with the SNMP version and credentials and the Windows credentials of the profile or its group, like a scan of the profile in the tool. A scan of more than `65,536` IP addresses must be confirmed in the tool as usual.
+
 ## Profile
 
 ### Inherit host from general
@@ -766,3 +780,14 @@ Maximum number of hosts whose NetApi requests of [Read Windows host information]
 **Type:** `Integer` [Min `1`, Max `64`]
 
 **Default:** `16`
+
+## Troubleshooting and limits
+
+- A host is only found if it answers one of the probes (ping, a TCP port, NetBIOS, SNMP) or, in a local subnet, by its ARP / NDP entry, see [How hosts are found](#how-hosts-are-found). Hosts behind a router that block ICMP and have none of the scanned [ports](#ports) open are not found. Add ports that the hosts typically have open (e.g. `445`, `3389`, `22`) to find them.
+- ARP / NDP ([Find hosts in the local subnet](#find-hosts-in-the-local-subnet), [MAC address and vendor](#resolve-mac-address-and-vendor)) only works in the subnets of the local network interfaces. Behind a router (also via VPN), the MAC address and vendor are only shown if the host answers NetBIOS.
+- Hosts are missing, or the network gets slow during a scan: an IDS or firewall may block or rate-limit the scan. Reduce [Max. concurrent host threads](#max-concurrent-host-threads) and [Max. concurrent port threads](#max-concurrent-port-threads), or disable [Ping hosts](#ping-hosts) if ICMP is rate-limited.
+- No hostname: the IP address has no `PTR` record in DNS, and the host doesn't answer mDNS or NetBIOS. The hostname is never taken from the input.
+- [Read Windows host information](#read-windows-host-information) shows `Access is denied.` or no logged-on users: the user (or the Windows credentials) needs admin rights on the host, and the host the firewall rule **File and Printer Sharing (SMB-In)**; the patch level also needs the **Remote Registry** service. Rejected credentials are not used again in the tab, see [Windows account lockout protection](../faq/windows-account-lockout-protection).
+- SNMP: a host with another community usually doesn't answer at all. SNMP v3 is only available with the credentials of a profile or group; wrong credentials are shown in the row details (**SNMP**).
+- A scan of more than `65,536` IP addresses must be confirmed, more than `16,777,216` IP addresses (a `/8`) can't be scanned at once - split the range into several scans.
+- The results and the comparison with the last scan are only kept while the tab is open. Export them to keep them.

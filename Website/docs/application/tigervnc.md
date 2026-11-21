@@ -45,6 +45,18 @@ Right-clicking a session tab opens a context menu:
 | ------------- | ------------------------------------------------------ |
 | **Reconnect** | Restart TigerVNC and reconnect to the remote computer. |
 
+## Run command
+
+Open the tool with `tigervnc` or `vnc`. Add a host (validated like the [host](#host) of the connect dialog):
+
+```text
+vnc server-01
+vnc 10.0.0.20
+vnc @server-01
+```
+
+A host opens the [connect dialog](#connect) with the host filled in, so the port can be adjusted before connecting. A profile (`@profile`) connects directly with the settings of the profile and its group. `Shift+Enter` behaves like `Enter`.
+
 ## Connect
 
 ### Host
@@ -143,3 +155,9 @@ Default TCP port to use for the VNC connection.
 **Type:** `Integer` [Min `1`, Max `65535`]
 
 **Default:** `5900`
+
+## Troubleshooting and limits
+
+- If the [file path](#file-path) of TigerVNC is not configured or the file doesn't exist, the tool shows a message instead of the session, and the run command only opens the tool. Install the TigerVNC viewer (`vncviewer.exe`), configure the path and connect again.
+- TigerVNC asks for the password in its own window. Errors (e.g. "Connection refused", an unsupported security type of the server) are shown by TigerVNC as well. NETworkManager waits up to 10 seconds for the TigerVNC window to embed it.
+- The VNC server must listen on the [port](#port) (default `5900`) and the firewall must allow it. Check it with the [Port Scanner](./port-scanner).

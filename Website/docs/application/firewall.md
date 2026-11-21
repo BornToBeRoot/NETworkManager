@@ -350,6 +350,10 @@ The last enabled profile cannot be unchecked — at least one profile must remai
 
 :::
 
+## Run command
+
+Open the tool with `firewall`. The command accepts no target and no profile, see [Run Command](../run-command.md).
+
 ## Settings
 
 ### Show all rules
@@ -361,3 +365,11 @@ See [Rules not managed by NETworkManager](#rules-not-managed-by-networkmanager) 
 **Type:** `Boolean`
 
 **Default:** `Disabled`
+
+## Troubleshooting and limits
+
+- Without administrator privileges, the rules are read-only.
+- Only rules managed by NETworkManager (display name prefixed with `NETworkManager_`) are shown, unless [Show all rules](#show-all-rules) is enabled.
+- Rules of a Group Policy or MDM (e.g. Microsoft Intune) and rules created by Windows at runtime can't be changed locally, see [Rules not managed by NETworkManager](#rules-not-managed-by-networkmanager). A local rule may also have no effect if a policy doesn't merge local rules.
+- If the rules can't be loaded (e.g. the Windows Firewall service is not running), an error is shown instead of an empty list.
+- A rule only controls the Windows Firewall of this computer, not a firewall in the network.

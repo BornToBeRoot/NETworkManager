@@ -69,6 +69,10 @@ Without administrator privileges, the view is read-only. Use the **Restart as ad
 | `Reachable` | The neighbor has been confirmed reachable within the last reachability timeout. |
 | `Permanent` | A static entry that was manually added and will not expire. |
 
+## Run command
+
+Open the tool with `neighbortable`. The command accepts no target and no profile, see [Run Command](../run-command.md).
+
 ## Add entry
 
 The **Add entry** dialog opens by clicking the **Add entry...** button. It creates a new permanent static neighbor entry that maps an IP address to a MAC address.
@@ -123,3 +127,10 @@ The network interface on which the entry is created.
 Adding a static entry requires administrator privileges. Internally, NETworkManager uses `New-NetNeighbor` (PowerShell `NetTCPIP` module) to create the entry with state `Permanent`.
 
 :::
+
+## Troubleshooting and limits
+
+- Without administrator privileges, entries can't be added or deleted.
+- The table only contains devices in the subnets of the local network adapters that the computer communicated with recently. Devices behind a router are never in the table (the MAC address of the router is used for them). To fill the table for a subnet, scan it with the [IP Scanner](./ip-scanner.md).
+- Entries that are not used expire after a short time (dynamic entries), static entries stay until they are deleted.
+- Several IP addresses with the same MAC address can be a router (proxy ARP), a host with several IP addresses or a spoofing attack.

@@ -14,12 +14,6 @@ IP geolocation data is provided by [ip-api.com](https://ip-api.com/) and the API
 
 :::
 
-:::note
-
-The free API endpoint is limited to 45 requests per minute, supports only the `HTTP` protocol and is available for non-commercial use only.
-
-:::
-
 ![IPGeolocation](../img/ip-geolocation.png)
 
 ### Example inputs
@@ -40,6 +34,19 @@ The free API endpoint is limited to 45 requests per minute, supports only the `H
 | Action | Description |
 |--------|-------------|
 | **Copy** | Copies the selected information to the clipboard |
+
+## Run command
+
+Open the tool with `ipgeolocation` or `geo`. Add a public IP address or a host (validated like the input):
+
+```text
+geo 1.1.1.1
+geo borntoberoot.net
+geo 2606:4700:4700::1111
+geo @borntoberoot.net
+```
+
+Every command opens a new tab, a query running in another tab continues. With `Shift+Enter` (only fill in), the host is filled in without starting the query. A profile (`@profile`) queries its host.
 
 ## Profile
 
@@ -69,3 +76,11 @@ Host (FQDN or public IP address) to query for IP geolocation information.
 
 - `borntoberoot.net`
 - `1.1.1.1`
+
+## Troubleshooting and limits
+
+- The free API endpoint of `ip-api.com` is limited to 45 requests per minute (for all tools and computers with the same public IP address), supports only the `http` protocol and is available for non-commercial use only. Shortly before the limit, the queries stop and a message shows when to try again.
+- Private and reserved IP addresses (e.g. `10.0.0.1`, `192.168.1.1`) have no geolocation.
+- A hostname is resolved by `ip-api.com`, not locally: names that only exist in the local network can't be queried.
+- The location of an IP address is an estimate of the provider (often the location of the internet provider or the data center, not of the device), anycast addresses (e.g. `1.1.1.1`) show one location only.
+- The firewall or proxy must allow outgoing HTTP connections (TCP port `80`) to `ip-api.com`.

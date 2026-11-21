@@ -21,20 +21,6 @@ The RDAP server for a query is determined using the bootstrap files published by
 
 :::
 
-:::note
-
-Not every registry offers RDAP. Many country code top-level domains (e.g. `.ru`, `.jp`) still only provide Whois. In this case, the domain can be opened in [Whois](./whois.md) with a single click.
-
-Registration data of personal contacts is usually redacted for privacy reasons (GDPR), the same as with Whois.
-
-:::
-
-:::note
-
-The firewall must allow outgoing HTTPS connections (TCP port 443) to `data.iana.org` and to the RDAP server of the registry. Some registries only offer RDAP via HTTP (TCP port 80).
-
-:::
-
 ![RDAP](../img/rdap.png)
 
 A running query can be canceled with **Cancel** (or `Esc`).
@@ -72,6 +58,21 @@ Right-click a row in one of the tables (events, nameservers, DNSSEC, networks, A
 | ------------- | -------------------------------------------------------------------- |
 | **Copy**      | Copies a value of the selected row (e.g. the email of a contact)     |
 | **Export...** | Exports the result to a file (see [Export](#export))                 |
+
+## Run command
+
+Open the tool with `rdap`. Add a query (validated like the input), optionally followed by the type: `domain`, `nameserver`, `tld`, `ip`, `asn` or `entity`. Without a type, it is detected from the query (**Auto**, see [Example inputs](#example-inputs)); the query must match the type (e.g. `1.10` as `asn`). The types are suggested after the query:
+
+```text
+rdap borntoberoot.net
+rdap 1.1.1.1
+rdap AS13335
+rdap 1.10 asn
+rdap a.iana-servers.net nameserver
+rdap @borntoberoot.net
+```
+
+Every command opens a new tab, a query running in another tab continues. With `Shift+Enter` (only fill in), the query and type are filled in without starting the query. A profile (`@profile`) queries its query with its type.
 
 ## Profile
 
@@ -140,3 +141,13 @@ Timeout in milliseconds for each request to an RDAP server, after which the requ
 **Type:** `Integer` [Min `1000`, Max `60000`]
 
 **Default:** `10000`
+
+## Troubleshooting and limits
+
+- Not every registry offers RDAP. Many country code top-level domains (e.g. `.ru`, `.jp`) still only provide Whois: a message is shown that no RDAP server is known, and the domain can be opened in [Whois](./whois.md) with a single click.
+- Registration data of personal contacts is usually redacted for privacy reasons (GDPR), the same as with Whois. For `.com` / `.net`, the contacts are only returned by the registrar, see [Follow referral to registrar](#follow-referral-to-registrar).
+- **Not found** (HTTP 404): the registry has no data for the query, e.g. a domain that is not registered, or a subdomain that is not a registered domain under a public suffix.
+- The firewall must allow outgoing HTTPS connections (TCP port `443`) to `data.iana.org` and to the RDAP server of the registry. Some registries only offer RDAP via HTTP (TCP port `80`). Without the bootstrap files (never downloaded and `data.iana.org` not reachable), no query is possible.
+- Registries limit the number of queries (HTTP 429). Wait a moment before querying again; the time to wait is shown if the server sends it.
+- A referral to the registrar is only followed via HTTPS and not to a local or private address, otherwise only the result of the registry is shown with a message.
+- Entities can only be queried if their handle ends with a service provider tag registered at IANA (e.g. `-RIPE`, `-ARIN`).

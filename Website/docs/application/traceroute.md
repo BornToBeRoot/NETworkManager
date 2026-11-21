@@ -52,6 +52,19 @@ You can interact with the map:
 
 Click the **Map** toggle in the top-left corner to collapse or expand the map.
 
+## Run command
+
+Open the tool with `traceroute`, `trace` or `tracert`. Add a host (validated like the input) to trace the route to it in a new tab:
+
+```text
+trace 1.1.1.1
+trace borntoberoot.net
+tracert 10.0.0.1
+trace @server-01
+```
+
+Every command opens a new tab, a trace running in another tab continues. With `Shift+Enter` (only fill in), the host is filled in without starting the trace. A profile (`@profile`) traces its host.
+
 ## Profile
 
 ### Inherit host from general
@@ -142,3 +155,11 @@ Only takes effect if [Check IP geolocation](#check-ip-geolocation) is also enabl
 **Type:** `Boolean`
 
 **Default:** `Enabled`
+
+## Troubleshooting and limits
+
+- Every hop is probed with three ICMP echo requests (no UDP or TCP traceroute). A hop without answer (shown as timed out) is a router that doesn't send ICMP "time exceeded" messages or rate-limits them, the trace still continues. If the target blocks ICMP, the last hops time out until [Maximum hops](#maximum-hops) is reached.
+- The time of a hop is the time of its ICMP reply. Routers answer with a low priority, so a high time on one hop (but not on the following ones) is not a problem of the path.
+- A hop without hostname has no `PTR` record in DNS.
+- The geolocation is only looked up for public IP addresses (not for private ones). The free endpoint of `ip-api.com` allows 45 requests per minute: the lookups stop shortly before the limit and continue after it is reset, so on long or repeated traces some hops have no geolocation (and no marker on the map). It is only used if [Check IP geolocation](#check-ip-geolocation) is enabled; the request is sent via `http`.
+- The route may differ for every probe (load balancing), only one address per hop is shown.

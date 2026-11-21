@@ -130,6 +130,10 @@ netsh interface ipv4 set interface interface="Ethernet" dhcpstaticipcoexistence=
 
 :::
 
+## Run command
+
+Open the tool with `networkinterface`. The command accepts no target and no profile, see [Run Command](../run-command.md).
+
 ## Profile
 
 ### Obtain an IP address automatically
@@ -250,3 +254,11 @@ Time range in seconds displayed in the bandwidth chart.
 **Type:** `Integer` [Min `30`, Max `3600`]
 
 **Default:** `60`
+
+## Troubleshooting and limits
+
+- Changing the configuration (also **Flush DNS cache**, **Release & Renew** and applying a profile) requires administrator privileges or a member of the **Network Configuration Operators** group in an elevated process, see [Configure](#configure). The error of Windows is shown below the configuration.
+- The network adapter must be connected to change its configuration.
+- The configuration covers IPv4 (IP address, subnet mask, gateway, DNS servers). IPv6 can only be released and renewed via DHCPv6.
+- The bandwidth is only measured while the tool is shown: switching to another tool stops the monitoring and resets the statistics.
+- Only Ethernet, Wi-Fi and virtual network adapters are listed, disabled adapters are not (enable them in **Control Panel > Network and Internet > Network Connections** first).

@@ -68,6 +68,26 @@ The DNS server can be selected from a list of configured servers or you can ente
 | **Copy**      | Copies the selected information to the clipboard |
 | **Export...** | Exports the results shown (all or the selected ones) to a file in the order shown, see [Export format](../faq/export-format.md) |
 
+## Run command
+
+Open the tool with `dnslookup`, `dns` or `nslookup`. Add hosts (validated like the input), optionally followed by the DNS server and / or the type (in any order):
+
+- **DNS server:** the name of a configured [DNS server](#dns-server-2) (case-insensitive, e.g. `cloudflare`) or a custom DNS server (an IP address or a host with a domain, with an optional port, e.g. `1.1.1.1`, `dns.google:53`), also several separated by `;` (e.g. `"Google Public DNS";cloudflare;9.9.9.9`, a name with spaces in quotes). Without a DNS server, the one selected in the tool is used.
+- **Type:** the record type (`a`, `aaaa`, `any`, `caa`, `cname`, `dnskey`, `mx`, `ns`, `ptr`, `soa`, `srv`, `txt`). Without a type, IP addresses are looked up with `ptr` and other hosts with the type selected in the tool.
+
+The configured DNS servers (also after a `;`) and the types are suggested after the host:
+
+```text
+dns borntoberoot.net
+dns 1.1.1.1
+dns borntoberoot.net mx
+dns borntoberoot.net cloudflare aaaa
+dns borntoberoot.net "Google Public DNS";9.9.9.9 txt
+dns @server-01
+```
+
+Every command opens a new tab, a lookup running in another tab continues. With `Shift+Enter` (only fill in), the values are filled in without starting the lookup. A profile (`@profile`) looks up its host with its DNS server(s) and type.
+
 ## Profile
 
 ### Inherit host from general
@@ -134,7 +154,7 @@ Record type to query instead of the automatic type: `PTR` for IP addresses, othe
 
 ### DNS server
 
-DNS server for the profiles of the group that don't set their own [DNS server](#dns-server), like the DNS server of a profile. If neither the profile nor the group has a DNS server, the DNS server selected in the DNS lookup is used.
+DNS server for the profiles of the group that don't set their own [DNS server](#dns-server-2), like the DNS server of a profile. If neither the profile nor the group has a DNS server, the DNS server selected in the DNS lookup is used.
 
 **Type:** `String`
 
@@ -252,3 +272,13 @@ Timeout in seconds for the DNS query, after which the query is considered lost.
 **Type:** `Integer` [Min `1`, Max `15`]
 
 **Default:** `2`
+
+## Troubleshooting and limits
+
+- A hostname without a domain (e.g. `server-01`) gets the DNS suffix appended (see [Add DNS suffix (primary) to hostname](#add-dns-suffix-primary-to-hostname)), so the result may be for `server-01.<suffix>`. Enter the full name with a trailing dot, or disable the option, to query the name as it is.
+- Names that are only resolved by Windows from other sources (hosts file, mDNS, NetBIOS / LLMNR) are not found: the DNS Lookup asks the DNS server directly, not the resolver of Windows. Use [mDNS Discovery](./mdns-discovery) for `.local` names.
+- A query that times out after all [retries](#retries) is shown as an error. A firewall that blocks UDP / TCP port `53` to a public DNS server (e.g. in a company network) only allows the DNS servers of the network: use `[Windows DNS]`.
+- Large answers (e.g. `TXT`, `DNSKEY`) are truncated via UDP and repeated via TCP automatically, which needs TCP port `53` to the DNS server. [Use only TCP](#use-only-tcp) sends every query via TCP (e.g. if UDP is blocked).
+- Many DNS servers don't answer `ANY` with all records of a name (RFC 8482). Query the record types you need instead.
+- With [Recursion](#recursion) disabled, a DNS server only answers for the zones it is authoritative for - query the name server of the domain (e.g. from the `NS` records).
+- A profile whose configured DNS server was deleted (or a profile file shared from another computer, DNS servers are saved in the settings) uses the DNS servers saved in the profile, and a note is shown.

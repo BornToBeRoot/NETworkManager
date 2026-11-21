@@ -111,7 +111,7 @@ The search box filters the records by name, type and value.
 
 ## Run command
 
-Open the tool with `mdnsdiscovery`, `mdns` or `dnssd`. Add service types and / or service type profiles (validated like the input) to start browsing, optionally followed by the duration in seconds (`10`, `30`, `60`, `120`, `300` or `0` = until stopped). The service type profiles and the durations are suggested:
+Open the tool with `mdnsdiscovery`, `mdns` or `dnssd`. Add `*` (all service types), service types and / or names of service type profiles (validated like the input; case-insensitive, a name with spaces in quotes, also in a list, e.g. `"File sharing";web`) to start browsing, optionally followed by the duration in seconds (`10`, `30`, `60`, `120`, `300` or `0` = until stopped). `*` and the service type profiles are suggested while the target is typed (also after a `;`), the durations after the target:
 
 ```text
 mdns *
