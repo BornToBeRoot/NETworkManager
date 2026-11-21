@@ -265,6 +265,11 @@ const config = {
             from: ["/docs/application/arp-table"],
             to: "/docs/application/neighbor-table",
           },
+          // Redirect legacy Discovery Protocol to LLDP / CDP Capture
+          {
+            from: ["/docs/application/discovery-protocol"],
+            to: "/docs/application/lldp-cdp-capture",
+          },
         ],
       },
     ],
