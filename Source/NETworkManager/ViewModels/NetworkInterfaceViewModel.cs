@@ -1392,6 +1392,7 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
         if (networkInterface is not { IsOperational: true })
         {
             StatusMessage = Strings.ConnectTheNetworkCardToConfigureIt;
+            StatusMessageLevel = StatusLevel.Warning;
             IsStatusMessageDisplayed = true;
             return;
         }
@@ -1468,6 +1469,7 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
             return true;
 
         StatusMessage = string.Format(Strings.NetworkInterfaceConfigInvalidValueX, invalidValue);
+        StatusMessageLevel = StatusLevel.Error;
         IsStatusMessageDisplayed = true;
 
         return false;
