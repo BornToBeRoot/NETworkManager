@@ -5568,4 +5568,91 @@ Do you want to start the scan?</value>
   <data name="License_ISCLicense" xml:space="preserve">
     <value>ISC License</value>
   </data>
+  <data name="ApplicationName_MDNSDiscovery" xml:space="preserve">
+    <value>mDNS Discovery</value>
+  </data>
+  <data name="MDNSDiscovery_Browse" xml:space="preserve">
+    <value>Browse</value>
+  </data>
+  <data name="MDNSDiscovery_Empty" xml:space="preserve">
+    <value>No services found. Devices must advertise their services on the network of the selected interface; firewalls, VPNs and Wi-Fi client isolation can block discovery.</value>
+  </data>
+  <data name="MDNSDiscovery_Failed" xml:space="preserve">
+    <value>Service discovery failed. Check the network interface and whether UDP port 5353 is available and allowed by the firewall.</value>
+  </data>
+  <data name="MDNSDiscovery_InvalidServiceType" xml:space="preserve">
+    <value>Enter *, service types such as _ipp._tcp and/or service type profiles, separated by ";".</value>
+  </data>
+  <data name="MDNSDiscovery_NoInterface" xml:space="preserve">
+    <value>No active network interface with multicast support was found.</value>
+  </data>
+  <data name="MDNSDiscovery_Priority" xml:space="preserve">
+    <value>SRV priority</value>
+  </data>
+  <data name="MDNSDiscovery_ServiceType" xml:space="preserve">
+    <value>Service type</value>
+  </data>
+  <data name="MDNSDiscovery_ServiceTypeHelp" xml:space="preserve">
+    <value>Enter * to discover all advertised service types (also probes common printer, scanner, web and media service types), or service types such as _ipp._tcp and/or service type profiles (e.g. Printers), separated by ";". The profiles can be changed in the settings. Discovery is limited to the local. domain.</value>
+  </data>
+  <data name="MDNSDiscovery_TXTRecords" xml:space="preserve">
+    <value>TXT records</value>
+  </data>
+  <data name="MDNSDiscovery_Weight" xml:space="preserve">
+    <value>SRV weight</value>
+  </data>
+  <data name="MDNSDiscovery_NoRecords" xml:space="preserve">
+    <value>No DNS records received.</value>
+  </data>
+  <data name="MDNSDiscovery_UntilStopped" xml:space="preserve">
+    <value>Until stopped</value>
+  </data>
+  <data name="MDNSDiscovery_XServices" xml:space="preserve">
+    <value>{0} services</value>
+  </data>
+  <data name="MDNSDiscovery_XRecords" xml:space="preserve">
+    <value>{0} records</value>
+  </data>
+  <data name="MDNSDiscovery_RawRecords" xml:space="preserve">
+    <value>Raw DNS records</value>
+  </data>
+  <data name="MDNSDiscovery_ServiceTypeProfiles" xml:space="preserve">
+    <value>Service type profiles</value>
+  </data>
+  <data name="MDNSDiscovery_AddServiceTypeProfile" xml:space="preserve">
+    <value>Add service type profile</value>
+  </data>
+  <data name="MDNSDiscovery_EditServiceTypeProfile" xml:space="preserve">
+    <value>Edit service type profile</value>
+  </data>
+  <data name="MDNSDiscovery_DeleteServiceTypeProfile" xml:space="preserve">
+    <value>Delete service type profile</value>
+  </data>
+  <data name="MDNSDiscovery_DeleteServiceTypeProfiles" xml:space="preserve">
+    <value>Delete service type profiles</value>
+  </data>
+  <data name="MDNSDiscovery_DeleteServiceTypeProfileMessage" xml:space="preserve">
+    <value>The selected service type profile will be deleted permanently.</value>
+  </data>
+  <data name="MDNSDiscovery_DeleteServiceTypeProfilesMessage" xml:space="preserve">
+    <value>The selected service type profiles will be deleted permanently.</value>
+  </data>
+  <data name="MDNSDiscovery_ServiceTypes" xml:space="preserve">
+    <value>Service types</value>
+  </data>
+  <data name="MDNSDiscovery_ServiceTypeProfileNameInvalid" xml:space="preserve">
+    <value>The name must not contain ";" and must not be "*" or a service type.</value>
+  </data>
+  <data name="MDNSDiscovery_EnterValidServiceTypes" xml:space="preserve">
+    <value>Enter service types such as _ipp._tcp, separated by ";".</value>
+  </data>
+  <data name="MDNSDiscovery_AllServiceTypes" xml:space="preserve">
+    <value>All advertised service types</value>
+  </data>
+  <data name="MDNSDiscovery_EnterValidDuration" xml:space="preserve">
+    <value>Enter a duration in seconds: {0} (0 = until stopped).</value>
+  </data>
+  <data name="MDNSDiscovery_InterfaceNotAvailable" xml:space="preserve">
+    <value>The last used network interface is not available, "{0}" is used instead.</value>
+  </data>
 </root>
