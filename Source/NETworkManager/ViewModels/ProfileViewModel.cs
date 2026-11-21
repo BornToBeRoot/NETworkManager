@@ -620,10 +620,16 @@ public class ProfileViewModel : ViewModelBase
             Log.Error("Error while loading the network interfaces.", ex);
         }
 
+        // Not bound yet: the network interface selected in the Network Interface tool (like "Add profile...")
         if (string.IsNullOrEmpty(_networkInterfaceBoundId))
-            return;
+        {
+            NetworkInterface_SelectedInterface ??= NetworkInterface.FindById(NetworkInterface_Interfaces,
+                SettingsManager.Current.NetworkInterface_InterfaceId);
 
-        var boundInterface = NetworkInterface_Interfaces.FirstOrDefault(x => x.Id == _networkInterfaceBoundId);
+            return;
+        }
+
+        var boundInterface = NetworkInterface.FindById(NetworkInterface_Interfaces, _networkInterfaceBoundId);
 
         if (boundInterface == null)
         {
