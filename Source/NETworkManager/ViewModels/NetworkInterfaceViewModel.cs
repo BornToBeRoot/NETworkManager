@@ -1250,10 +1250,8 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
 
         try
         {
-            SelectedNetworkInterface =
-                NetworkInterfaces.FirstOrDefault(x => x.Id == SettingsManager.Current.NetworkInterface_InterfaceId) ??
-                NetworkInterfaces.FirstOrDefault(x => x.Id == previousId) ??
-                NetworkInterfaces.FirstOrDefault();
+            SelectedNetworkInterface = NetworkInterface.GetNetworkInterfaceToSelect(NetworkInterfaces,
+                SettingsManager.Current.NetworkInterface_InterfaceId, previousId);
         }
         finally
         {
@@ -1414,10 +1412,9 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
     /// </summary>
     private NetworkInterfaceInfo GetBoundNetworkInterface(ProfileInfo profile)
     {
-        if (!profile.NetworkInterface_BindToInterface || string.IsNullOrEmpty(profile.NetworkInterface_InterfaceId))
-            return null;
-
-        return NetworkInterfaces.FirstOrDefault(x => x.Id == profile.NetworkInterface_InterfaceId);
+        return profile.NetworkInterface_BindToInterface
+            ? NetworkInterface.FindById(NetworkInterfaces, profile.NetworkInterface_InterfaceId)
+            : null;
     }
 
     /// <summary>

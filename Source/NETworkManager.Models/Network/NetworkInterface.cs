@@ -233,6 +233,33 @@ public sealed class NetworkInterface
     }
 
     /// <summary>
+    /// Finds a network interface by its ID (GUID, unique per computer; the name is not).
+    /// </summary>
+    /// <param name="networkInterfaces">Network interfaces, see <see cref="GetNetworkInterfaces"/>.</param>
+    /// <param name="id">ID of the network interface.</param>
+    /// <returns>The network interface, or <see langword="null" /> if the ID is empty or not found.</returns>
+    public static NetworkInterfaceInfo FindById(IEnumerable<NetworkInterfaceInfo> networkInterfaces, string id)
+    {
+        return string.IsNullOrEmpty(id) ? null : networkInterfaces.FirstOrDefault(x => x.Id == id);
+    }
+
+    /// <summary>
+    /// Gets the network interface to select after the list was (re)loaded: the remembered one (selected by the user,
+    /// also if it is back after it was missing, e.g. a VPN or USB adapter), then the one selected before the reload,
+    /// then the first one.
+    /// </summary>
+    /// <param name="networkInterfaces">Network interfaces, see <see cref="GetNetworkInterfaces"/>.</param>
+    /// <param name="rememberedId">ID of the network interface remembered in the settings.</param>
+    /// <param name="previousId">ID of the network interface selected before the reload.</param>
+    /// <returns>The network interface to select, or <see langword="null" /> if the list is empty.</returns>
+    public static NetworkInterfaceInfo GetNetworkInterfaceToSelect(
+        IReadOnlyCollection<NetworkInterfaceInfo> networkInterfaces, string rememberedId, string previousId)
+    {
+        return FindById(networkInterfaces, rememberedId) ?? FindById(networkInterfaces, previousId) ??
+            networkInterfaces.FirstOrDefault();
+    }
+
+    /// <summary>
     /// Gets the IPv4 subnets of the operational network interfaces (e.g. to scan the subnet of a specific network
     /// interface), in the order of the network interfaces with the link-local subnet (169.254.0.0/16, no DHCP server
     /// answered) at the end. Addresses without subnet mask and single addresses (/32, e.g. some VPN adapters) are
