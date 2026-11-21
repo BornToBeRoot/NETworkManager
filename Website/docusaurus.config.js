@@ -270,6 +270,23 @@ const config = {
             from: ["/docs/application/discovery-protocol"],
             to: "/docs/application/lldp-cdp-capture",
           },
+          // Redirect renamed / merged pages
+          {
+            from: ["/docs/features"],
+            to: "/docs/introduction",
+          },
+          {
+            from: ["/docs/profiles-and-groups"],
+            to: "/docs/groups-and-profiles",
+          },
+          {
+            from: ["/docs/faq/profilefile-encryption"],
+            to: "/docs/faq/profile-file-encryption",
+          },
+          {
+            from: ["/docs/faq/powershell-wsl"],
+            to: "/docs/faq/powershell-cmd-apps",
+          },
         ],
       },
     ],
