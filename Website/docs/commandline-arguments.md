@@ -55,7 +55,7 @@ Start a specific application on startup.
 - `SNTPLookup`
 - `HostsFileEditor`
 - `Firewall`
-- `DiscoveryProtocol`
+- `LLDPCDPCapture`
 - `WakeOnLAN`
 - `RDAP`
 - `Whois`

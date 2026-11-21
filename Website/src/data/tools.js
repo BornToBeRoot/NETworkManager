@@ -24,9 +24,9 @@ const tools = [
   { name: "Hosts File Editor", to: "/docs/application/hosts-file-editor" },
   { name: "Firewall", to: "/docs/application/firewall" },
   {
-    name: "Discovery Protocol",
-    to: "/docs/application/discovery-protocol",
-    note: "LLDP, CDP",
+    name: "LLDP / CDP Capture",
+    to: "/docs/application/lldp-cdp-capture",
+    note: "Switch, port and VLAN of the connection",
   },
   {
     name: "mDNS Discovery",
