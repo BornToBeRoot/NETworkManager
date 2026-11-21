@@ -1499,6 +1499,9 @@
                                     </Rectangle.Resources>
                                 </Rectangle>
                             </Grid>
+                            <TextBlock Text="{x:Static localization:Strings.FailedToLoadNetworkInterfacesTryAgain}"
+                                       Style="{StaticResource ErrorTextBlock}" Margin="0,0,0,10"
+                                       Visibility="{Binding NetworkInterface_InterfacesLoadFailed, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
                             <RadioButton x:Name="RadioButtonEnableDynamicIPAddress"
                                          GroupName="NetworkInterface_IPAddressConfig"
                                          IsChecked="{Binding NetworkInterface_EnableDynamicIPAddress}"

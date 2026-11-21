@@ -5283,6 +5283,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Failed to load the network interfaces. Disable &quot;Bind to network interface&quot; and enable it again to try again..
+        /// </summary>
+        public static string FailedToLoadNetworkInterfacesTryAgain {
+            get {
+                return ResourceManager.GetString("FailedToLoadNetworkInterfacesTryAgain", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Fax.
         /// </summary>
         public static string Fax {

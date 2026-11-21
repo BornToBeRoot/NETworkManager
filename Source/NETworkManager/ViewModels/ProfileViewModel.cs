@@ -541,6 +541,8 @@ public class ProfileViewModel : ViewModelBase
             field = value;
 
             OnPropertyChanged();
+
+            LoadNetworkInterfacesIfNeeded();
         }
     }
 
@@ -564,9 +566,8 @@ public class ProfileViewModel : ViewModelBase
             field = value;
             OnPropertyChanged();
 
-            // Only load the network interfaces if they are needed (PowerShell, slows down every profile dialog)
-            if (value)
-                _ = LoadNetworkInterfacesAsync();
+            // Only load the network interfaces if they are needed (slows down every profile dialog)
+            LoadNetworkInterfacesIfNeeded();
         }
     }
 
@@ -603,22 +604,42 @@ public class ProfileViewModel : ViewModelBase
     public string NetworkInterface_BoundInterfaceName =>
         NetworkInterface_SelectedInterface?.Name ?? _networkInterfaceBoundName;
 
+    /// <summary>
+    ///     Loads the network interfaces if they are needed: Network Interface is enabled and the profile is bound (it runs
+    ///     on every change of these options, but loads only once, see <see cref="LoadNetworkInterfacesAsync" />).
+    /// </summary>
+    private void LoadNetworkInterfacesIfNeeded()
+    {
+        if (NetworkInterface_Enabled && NetworkInterface_BindToInterface)
+            _ = LoadNetworkInterfacesAsync();
+    }
+
     private async Task LoadNetworkInterfacesAsync()
     {
         if (_networkInterfacesLoaded)
             return;
 
         _networkInterfacesLoaded = true;
+        NetworkInterface_InterfacesLoadFailed = false;
+
+        List<NetworkInterfaceInfo> networkInterfaces;
 
         try
         {
-            foreach (var networkInterface in await NetworkInterface.GetNetworkInterfacesAsync())
-                NetworkInterface_Interfaces.Add(networkInterface);
+            networkInterfaces = await NetworkInterface.GetNetworkInterfacesAsync();
         }
         catch (Exception ex)
         {
             Log.Error("Error while loading the network interfaces.", ex);
+
+            // Loaded again the next time the option is enabled
+            _networkInterfacesLoaded = false;
+            NetworkInterface_InterfacesLoadFailed = true;
+            networkInterfaces = [];
         }
+
+        NetworkInterface_Interfaces.Clear();
+        networkInterfaces.ForEach(NetworkInterface_Interfaces.Add);
 
         // Not bound yet: the network interface selected in the Network Interface tool (like "Add profile...")
         if (string.IsNullOrEmpty(_networkInterfaceBoundId))
@@ -633,17 +654,35 @@ public class ProfileViewModel : ViewModelBase
 
         if (boundInterface == null)
         {
+            // Kept, so the profile can be saved without changing it (not "not found" if the list couldn't be loaded)
             boundInterface = new NetworkInterfaceInfo
             {
                 Id = _networkInterfaceBoundId,
                 Name = _networkInterfaceBoundName,
-                Description = Strings.NotFoundOnThisComputer
+                Description = NetworkInterface_InterfacesLoadFailed ? string.Empty : Strings.NotFoundOnThisComputer
             };
 
             NetworkInterface_Interfaces.Add(boundInterface);
         }
 
         NetworkInterface_SelectedInterface = boundInterface;
+    }
+
+    /// <summary>
+    ///     The network interfaces could not be loaded (a hint is shown, they are loaded again when the option is enabled
+    ///     again).
+    /// </summary>
+    public bool NetworkInterface_InterfacesLoadFailed
+    {
+        get;
+        private set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
     }
 
     public bool NetworkInterface_EnableDynamicIPAddress
