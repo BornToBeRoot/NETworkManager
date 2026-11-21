@@ -45,3 +45,28 @@ A port is a logical construct that identifies a specific process to which networ
 |--------|-------------|
 | **Copy** | Copies the selected information to the clipboard |
 | **Export...** | Exports the results shown (all or the selected ones) to a file in the order shown, see [Export format](../faq/export-format.md) |
+
+## Run command
+
+Open the tool with `lookup`, followed by the lookup and the query:
+
+- `oui`: MAC addresses (also only the first 3 bytes) or vendors, e.g. `lookup oui 00:11:22`.
+- `port`: ports, port ranges (also with the protocol, e.g. `80-90/tcp`) or services, e.g. `lookup port 22; 443; ssh`.
+
+The rest of the input is the query, so a vendor can contain spaces without quotes (e.g. `lookup oui Cisco Systems`). Several queries are separated by `;`. The lookups are suggested after `lookup `:
+
+```text
+lookup oui 00:11:22:33:44:55
+lookup oui Cisco Systems
+lookup port 22; 443; ssh
+lookup port 80-90/tcp
+lookup port
+```
+
+Without a query (e.g. `lookup port`), the tab of the lookup is only shown. A MAC address, the first 3 bytes of a MAC address or a port typed without a command suggest the lookup as well. With `Shift+Enter` (only fill in), the query is filled in without looking it up; while a lookup is running, the command is ignored. This tool has no profiles (`@profile`).
+
+## Troubleshooting and limits
+
+- The OUI and port lists are included in NETworkManager and updated with each release; no request is sent to the internet. A vendor registered after the release is not found.
+- No vendor for a MAC address: randomized (private) MAC addresses, e.g. of phones and laptops with **Random hardware addresses** enabled, are locally administered (the second hex digit is `2`, `6`, `A` or `E`, e.g. `x2:...`) and not registered with the IEEE. Virtual machines and some devices also use addresses without a registered vendor.
+- The port list contains the ports registered with IANA. A port used by another application (e.g. a non-standard port) shows the registered service, not the application listening on it - see [Listeners](./listeners.md) for the local computer.
