@@ -7,24 +7,24 @@ using NETworkManager.Models.Network;
 namespace NETworkManager.Converters;
 
 /// <summary>
-///     Convert <see cref="DiscoveryProtocol" /> to translated <see cref="string" /> or wise versa.
+///     Convert <see cref="LLDPCDPProtocol" /> to translated <see cref="string" /> or wise versa.
 /// </summary>
-public sealed class DiscoveryProtocolToStringConverter : IValueConverter
+public sealed class LLDPCDPProtocolToStringConverter : IValueConverter
 {
     /// <summary>
-    ///     Convert <see cref="DiscoveryProtocol" /> to translated <see cref="string" />.
+    ///     Convert <see cref="LLDPCDPProtocol" /> to translated <see cref="string" />.
     /// </summary>
-    /// <param name="value">Object from type <see cref="DiscoveryProtocol" />.</param>
+    /// <param name="value">Object from type <see cref="LLDPCDPProtocol" />.</param>
     /// <param name="targetType"></param>
     /// <param name="parameter"></param>
     /// <param name="culture"></param>
-    /// <returns>Translated <see cref="DiscoveryProtocol" />.</returns>
+    /// <returns>Translated <see cref="LLDPCDPProtocol" />.</returns>
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        return value is not DiscoveryProtocol discoveryProtocol
+        return value is not LLDPCDPProtocol protocol
             ? "-/-"
-            : ResourceTranslator.Translate(ResourceIdentifier.DiscoveryProtocol,
-                discoveryProtocol);
+            : ResourceTranslator.Translate(ResourceIdentifier.LLDPCDPProtocol,
+                protocol);
     }
 
     /// <summary>

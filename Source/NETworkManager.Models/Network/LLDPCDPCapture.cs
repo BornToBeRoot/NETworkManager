@@ -10,7 +10,7 @@ namespace NETworkManager.Models.Network;
 /// <summary>
 ///     Class to capture network discovery protocol packages.
 /// </summary>
-public class DiscoveryProtocolCapture
+public class LLDPCDPCapture
 {
     /// <summary>
     ///     Holds the PowerShell script which is loaded when the class is initialized.
@@ -18,9 +18,9 @@ public class DiscoveryProtocolCapture
     private readonly string _psDiscoveryProtocolModule;
 
     /// <summary>
-    ///     Initializes a new instance of the <see cref="DiscoveryProtocol" /> class.
+    ///     Initializes a new instance of the <see cref="LLDPCDPProtocol" /> class.
     /// </summary>
-    public DiscoveryProtocolCapture()
+    public LLDPCDPCapture()
     {
         using var stream = Assembly.GetExecutingAssembly()
             .GetManifestResourceStream("NETworkManager.Models.Resources.PSDiscoveryProtocol.psm1");
@@ -34,13 +34,13 @@ public class DiscoveryProtocolCapture
     /// <summary>
     ///     Is triggered when a network package with a discovery protocol is received.
     /// </summary>
-    public event EventHandler<DiscoveryProtocolPackageArgs> PackageReceived;
+    public event EventHandler<LLDPCDPPackageArgs> PackageReceived;
 
     /// <summary>
     ///     Triggers the <see cref="PackageReceived" /> event.
     /// </summary>
-    /// <param name="e">Passes <see cref="DiscoveryProtocolPackageArgs" /> to the event.</param>
-    protected virtual void OnPackageReceived(DiscoveryProtocolPackageArgs e)
+    /// <param name="e">Passes <see cref="LLDPCDPPackageArgs" /> to the event.</param>
+    protected virtual void OnPackageReceived(LLDPCDPPackageArgs e)
     {
         PackageReceived?.Invoke(this, e);
     }
@@ -48,14 +48,14 @@ public class DiscoveryProtocolCapture
     /// <summary>
     ///     Is triggered when an error occurs during the capturing.
     /// </summary>
-    public event EventHandler<DiscoveryProtocolErrorArgs> ErrorReceived;
+    public event EventHandler<LLDPCDPErrorArgs> ErrorReceived;
 
 
     /// <summary>
     ///     Triggers the <see cref="ErrorReceived" /> event.
     /// </summary>
-    /// <param name="e">Passes <see cref="DiscoveryProtocolErrorArgs" /> to the event.</param>
-    protected virtual void OnErrorReceived(DiscoveryProtocolErrorArgs e)
+    /// <param name="e">Passes <see cref="LLDPCDPErrorArgs" /> to the event.</param>
+    protected virtual void OnErrorReceived(LLDPCDPErrorArgs e)
     {
         ErrorReceived?.Invoke(this, e);
     }
@@ -63,13 +63,13 @@ public class DiscoveryProtocolCapture
     /// <summary>
     ///     Is triggered when a warning occurs during the capturing.
     /// </summary>
-    public event EventHandler<DiscoveryProtocolWarningArgs> WarningReceived;
+    public event EventHandler<LLDPCDPWarningArgs> WarningReceived;
 
     /// <summary>
     ///     Triggers the <see cref="WarningReceived" /> event.
     /// </summary>
-    /// <param name="e">Passes <see cref="DiscoveryProtocolWarningArgs" /> to the event.</param>
-    protected virtual void OnWarningReceived(DiscoveryProtocolWarningArgs e)
+    /// <param name="e">Passes <see cref="LLDPCDPWarningArgs" /> to the event.</param>
+    protected virtual void OnWarningReceived(LLDPCDPWarningArgs e)
     {
         WarningReceived?.Invoke(this, e);
     }
@@ -94,14 +94,14 @@ public class DiscoveryProtocolCapture
     ///     packets according to the protocol.
     /// </summary>
     /// <param name="duration">Duration in seconds.</param>
-    /// <param name="protocol"><see cref="DiscoveryProtocol" /> to filter on.</param>
-    public void CaptureAsync(int duration, DiscoveryProtocol protocol)
+    /// <param name="protocol"><see cref="LLDPCDPProtocol" /> to filter on.</param>
+    public void CaptureAsync(int duration, LLDPCDPProtocol protocol)
     {
         Task.Run(() =>
         {
             using var ps = System.Management.Automation.PowerShell.Create();
 
-            var typeParam = protocol != DiscoveryProtocol.LldpCdp ? $" -Type {protocol.ToString().ToUpper()}" : "";
+            var typeParam = protocol != LLDPCDPProtocol.LldpCdp ? $" -Type {protocol.ToString().ToUpper()}" : "";
 
             ps.AddScript($@"
 Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process
@@ -123,7 +123,7 @@ Invoke-DiscoveryProtocolCapture -Duration {duration}{typeParam} -Force | Get-Dis
                     stringBuilder.Append(error.Exception.Message);
                 }
 
-                OnErrorReceived(new DiscoveryProtocolErrorArgs(stringBuilder.ToString()));
+                OnErrorReceived(new LLDPCDPErrorArgs(stringBuilder.ToString()));
             }
 
             if (ps.Streams.Warning.Count > 0)
@@ -138,7 +138,7 @@ Invoke-DiscoveryProtocolCapture -Duration {duration}{typeParam} -Force | Get-Dis
                     stringBuilder.Append(warning.Message);
                 }
 
-                OnWarningReceived(new DiscoveryProtocolWarningArgs(stringBuilder.ToString()));
+                OnWarningReceived(new LLDPCDPWarningArgs(stringBuilder.ToString()));
             }
 
             foreach (var result in results)
@@ -156,7 +156,7 @@ Invoke-DiscoveryProtocolCapture -Duration {duration}{typeParam} -Force | Get-Dis
                 if (result.Properties["Management"] != null)
                     managements.AddRange(result.Properties["Management"].Value as List<string>);
 
-                var packageInfo = new DiscoveryProtocolPackageInfo
+                var packageInfo = new LLDPCDPPackageInfo
                 {
                     Device = result.Properties["Device"]?.Value.ToString(),
                     DeviceDescription = result.Properties["SystemDescription"]?.Value.ToString(),
@@ -173,7 +173,7 @@ Invoke-DiscoveryProtocolCapture -Duration {duration}{typeParam} -Force | Get-Dis
                     LocalInterface = result.Properties["Interface"]?.Value.ToString()
                 };
 
-                OnPackageReceived(new DiscoveryProtocolPackageArgs(packageInfo));
+                OnPackageReceived(new LLDPCDPPackageArgs(packageInfo));
             }
 
             OnComplete();

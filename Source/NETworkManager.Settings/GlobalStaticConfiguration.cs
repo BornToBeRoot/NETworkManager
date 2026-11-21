@@ -347,10 +347,10 @@ public static class GlobalStaticConfiguration
     public static ExportFileType Firewall_ExportFileType => ExportFileType.Csv;
     public static bool Firewall_ShowAllRules => false;
 
-    // Application: Discovery Protocol
-    public static DiscoveryProtocol DiscoveryProtocol_Protocol => DiscoveryProtocol.LldpCdp;
-    public static int DiscoveryProtocol_Duration => 60;
-    public static ExportFileType DiscoveryProtocol_ExportFileType => ExportFileType.Csv;
+    // Application: LLDP / CDP Capture
+    public static LLDPCDPProtocol LLDPCDPCapture_Protocol => LLDPCDPProtocol.LldpCdp;
+    public static int LLDPCDPCapture_Duration => 60;
+    public static ExportFileType LLDPCDPCapture_ExportFileType => ExportFileType.Csv;
 
     // Application: mDNS Discovery
     public static string MDNSDiscovery_ServiceType => "*";

@@ -5,14 +5,14 @@ namespace NETworkManager.Models.Network;
 /// <summary>
 ///     Event arguments when a discovery protocol package is returned.
 /// </summary>
-public class DiscoveryProtocolPackageArgs : EventArgs
+public class LLDPCDPPackageArgs : EventArgs
 {
     /// <summary>
-    ///     Creates a new instance of <see cref="DiscoveryProtocolPackageArgs" /> with the given
-    ///     <see cref="DiscoveryProtocolPackageInfo" />.
+    ///     Creates a new instance of <see cref="LLDPCDPPackageArgs" /> with the given
+    ///     <see cref="LLDPCDPPackageInfo" />.
     /// </summary>
     /// <param name="packageInfo">Discovery protocol package.</param>
-    public DiscoveryProtocolPackageArgs(DiscoveryProtocolPackageInfo packageInfo)
+    public LLDPCDPPackageArgs(LLDPCDPPackageInfo packageInfo)
     {
         PackageInfo = packageInfo;
     }
@@ -20,5 +20,5 @@ public class DiscoveryProtocolPackageArgs : EventArgs
     /// <summary>
     ///     Discovery protocol package.
     /// </summary>
-    public DiscoveryProtocolPackageInfo PackageInfo { get; set; }
+    public LLDPCDPPackageInfo PackageInfo { get; set; }
 }

@@ -31,7 +31,7 @@ public class CommandLineViewModel : ViewModelBase
         ParameterApplication =
             CommandLineManager.GetParameterWithSplitIdentifier(CommandLineManager.ParameterApplication);
         ParameterApplicationValues = string.Join(", ",
-            Enum.GetValues(typeof(ApplicationName)).Cast<ApplicationName>().ToList());
+            ApplicationManager.GetDefaultList().Select(x => x.Name));
     }
 
     #endregion

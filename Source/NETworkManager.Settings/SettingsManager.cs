@@ -941,6 +941,26 @@ public static class SettingsManager
                 defaultList.First(x => x.Name == ApplicationName.MDNSDiscovery));
         }
 
+        // Replace DiscoveryProtocol with LLDPCDPCapture
+#pragma warning disable CS0618
+        var discoveryProtocolEntry =
+            Current.General_ApplicationList.FirstOrDefault(x => x.Name == ApplicationName.DiscoveryProtocol);
+#pragma warning restore CS0618
+
+        if (discoveryProtocolEntry != null)
+        {
+            Log.Info("Replacing obsolete \"DiscoveryProtocol\" app entry with \"LLDPCDPCapture\"...");
+
+            var index = Current.General_ApplicationList.IndexOf(discoveryProtocolEntry);
+            var lldpCdpCaptureEntry =
+                ApplicationManager.GetDefaultList().First(x => x.Name == ApplicationName.LLDPCDPCapture);
+
+            lldpCdpCaptureEntry.IsVisible = discoveryProtocolEntry.IsVisible;
+            lldpCdpCaptureEntry.IsDefault = discoveryProtocolEntry.IsDefault;
+
+            Current.General_ApplicationList[index] = lldpCdpCaptureEntry;
+        }
+
         // mDNS Discovery - Add the missing default service type profiles (like the port profiles of the Port Scanner)
         foreach (var profile in MDNSServiceTypeProfile.GetDefaultList().Where(profile =>
                      MDNSServiceTypeProfile.FindByName(Current.MDNSDiscovery_ServiceTypeProfiles, profile.Name) == null))

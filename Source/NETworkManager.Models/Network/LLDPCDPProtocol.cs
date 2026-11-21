@@ -3,7 +3,7 @@
 /// <summary>
 ///     Represents all discovery protocols.
 /// </summary>
-public enum DiscoveryProtocol
+public enum LLDPCDPProtocol
 {
     /// <summary>
     ///     Link layer and Cisco discovery protocol.
