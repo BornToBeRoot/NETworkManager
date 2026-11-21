@@ -43,10 +43,10 @@ public static class ProfileDialogManager
             NetworkInterface_Enabled = instance.NetworkInterface_Enabled,
             NetworkInterface_BindToInterface = instance.NetworkInterface_BindToInterface,
             NetworkInterface_InterfaceId = instance.NetworkInterface_BindToInterface
-                ? instance.NetworkInterface_SelectedInterface?.Id
+                ? instance.NetworkInterface_BoundInterfaceId
                 : null,
             NetworkInterface_InterfaceName = instance.NetworkInterface_BindToInterface
-                ? instance.NetworkInterface_SelectedInterface?.Name
+                ? instance.NetworkInterface_BoundInterfaceName
                 : null,
             NetworkInterface_EnableStaticIPAddress = instance.NetworkInterface_EnableStaticIPAddress,
             NetworkInterface_IPAddress = instance.NetworkInterface_IPAddress?.Trim(),

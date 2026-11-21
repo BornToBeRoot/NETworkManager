@@ -590,6 +590,19 @@ public class ProfileViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    ///     ID of the network interface to save: the selected one, or the one of the profile while the network interfaces
+    ///     are not loaded (yet, or loading failed), so saving doesn't remove the binding.
+    /// </summary>
+    public string NetworkInterface_BoundInterfaceId =>
+        NetworkInterface_SelectedInterface?.Id ?? _networkInterfaceBoundId;
+
+    /// <summary>
+    ///     Name of the network interface to save, see <see cref="NetworkInterface_BoundInterfaceId" />.
+    /// </summary>
+    public string NetworkInterface_BoundInterfaceName =>
+        NetworkInterface_SelectedInterface?.Name ?? _networkInterfaceBoundName;
+
     private async Task LoadNetworkInterfacesAsync()
     {
         if (_networkInterfacesLoaded)
