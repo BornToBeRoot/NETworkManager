@@ -32,6 +32,19 @@ Right-clicking a session tab opens a context menu:
 | ---------- | ------------------- |
 | **Reload** | Reload the website. |
 
+## Run command
+
+Open the tool with `webconsole` or `web`. Add a URL with `http://` or `https://` (validated like the URL of the connect dialog):
+
+```text
+web https://borntoberoot.net
+web http://10.0.0.1
+web https://pihole.borntoberoot.net/admin/
+web @pihole
+```
+
+A URL opens the [connect dialog](#connect) with the URL filled in. A profile (`@profile`) opens the URL of the profile directly. `Shift+Enter` behaves like `Enter`. A URL typed without a command (e.g. `https://...`) suggests the Web Console as well.
+
 ## Connect
 
 URL of the website to display in the web console.
@@ -88,3 +101,9 @@ a dialog similar to the one in Microsoft Edge when a website requests to save th
 ### Delete browsing data
 
 Button to delete the browsing data (e.g. history, cookies, cache, credentials, etc.) of the current WebView2 profile.
+
+## Troubleshooting and limits
+
+- If the Microsoft Edge WebView2 runtime is not installed, the tool shows a message instead of the web page, and the run command only opens the tool. Install the runtime and restart NETworkManager.
+- A web page with an invalid or self-signed certificate (e.g. the web interface of a switch or router) shows the certificate warning of Microsoft Edge.
+- All tabs share one browser profile of NETworkManager (cookies, cache, saved passwords), separate from Microsoft Edge. If a web interface behaves strangely after an update of the device, use [Delete browsing data](#delete-browsing-data).
