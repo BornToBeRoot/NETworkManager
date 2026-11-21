@@ -193,7 +193,6 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
                     SettingsManager.Current.NetworkInterface_InterfaceId = value.Id;
 
                 // Bandwidth
-                StopBandwidthMeter();
                 StartBandwidthMeter(value.Id);
 
                 // Configuration
@@ -1264,11 +1263,12 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
             _isSelectingNetworkInterfaceByCode = false;
         }
 
-        // No network interface left: stop the measurement of the removed one (it would look it up every second)
+        // No network interface left: remove the meter of the removed one (it would look it up every second, also
+        // after it was resumed when the view becomes visible again)
         if (SelectedNetworkInterface != null)
             return;
 
-        StopBandwidthMeter();
+        RemoveBandwidthMeter();
         _selectedNetworkInterfaceId = null;
     }
 
@@ -1726,6 +1726,8 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
 
     private void StartBandwidthMeter(string networkInterfaceId)
     {
+        RemoveBandwidthMeter();
+
         // Reset chart
         ResetBandwidthChart();
 
@@ -1753,6 +1755,20 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
         _resetBandwidthStatisticOnNextUpdate = true;
 
         _bandwidthMeter.Start();
+    }
+
+    /// <summary>
+    /// Stops the meter and removes it (with its event handler), e.g. before a meter for another network interface is
+    /// started or if no network interface is left.
+    /// </summary>
+    private void RemoveBandwidthMeter()
+    {
+        if (_bandwidthMeter == null)
+            return;
+
+        _bandwidthMeter.Stop();
+        _bandwidthMeter.UpdateSpeed -= BandwidthMeter_UpdateSpeed;
+        _bandwidthMeter = null;
     }
 
     private void StopBandwidthMeter()
