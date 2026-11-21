@@ -72,8 +72,8 @@ public static class DocumentationManager
         new DocumentationInfo(DocumentationIdentifier.ApplicationFirewall,
             @"docs/application/firewall"),
 
-        new DocumentationInfo(DocumentationIdentifier.ApplicationDiscoveryProtocol,
-            @"docs/application/discovery-protocol"),
+        new DocumentationInfo(DocumentationIdentifier.ApplicationLLDPCDPCapture,
+            @"docs/application/lldp-cdp-capture"),
 
         new DocumentationInfo(DocumentationIdentifier.ApplicationMDNSDiscovery,
             @"docs/application/mdns-discovery"),
@@ -224,7 +224,7 @@ public static class DocumentationManager
             ApplicationName.SNMP => DocumentationIdentifier.ApplicationSnmp,
             ApplicationName.SNTPLookup => DocumentationIdentifier.ApplicationSntpLookup,
             ApplicationName.HostsFileEditor => DocumentationIdentifier.ApplicationHostsFileEditor,
-            ApplicationName.DiscoveryProtocol => DocumentationIdentifier.ApplicationDiscoveryProtocol,
+            ApplicationName.LLDPCDPCapture => DocumentationIdentifier.ApplicationLLDPCDPCapture,
             ApplicationName.MDNSDiscovery => DocumentationIdentifier.ApplicationMDNSDiscovery,
             ApplicationName.Firewall => DocumentationIdentifier.ApplicationFirewall,
             ApplicationName.WakeOnLAN => DocumentationIdentifier.ApplicationWakeOnLan,

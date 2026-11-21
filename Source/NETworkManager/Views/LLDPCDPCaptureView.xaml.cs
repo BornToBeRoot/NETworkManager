@@ -2,11 +2,11 @@
 
 namespace NETworkManager.Views;
 
-public partial class DiscoveryProtocolView
+public partial class LLDPCDPCaptureView
 {
-    private readonly DiscoveryProtocolViewModel _viewModel = new();
+    private readonly LLDPCDPCaptureViewModel _viewModel = new();
 
-    public DiscoveryProtocolView()
+    public LLDPCDPCaptureView()
     {
         InitializeComponent();
         DataContext = _viewModel;

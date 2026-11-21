@@ -29,7 +29,7 @@ public static class ApplicationManager
     public static IEnumerable<ApplicationInfo> GetDefaultList()
     {
 #pragma warning disable CS0618
-        return [.. GetNames().Where(x => x != ApplicationName.None && x != ApplicationName.AWSSessionManager && x != ApplicationName.ARPTable).Select(name => new ApplicationInfo(name, true, name == ApplicationName.Dashboard))];
+        return [.. GetNames().Where(x => x != ApplicationName.None && x != ApplicationName.AWSSessionManager && x != ApplicationName.ARPTable && x != ApplicationName.DiscoveryProtocol).Select(name => new ApplicationInfo(name, true, name == ApplicationName.Dashboard))];
 #pragma warning restore CS0618
     }
 
@@ -113,7 +113,7 @@ public static class ApplicationManager
             case ApplicationName.HostsFileEditor:
                 canvas.Children.Add(new LucideIcon { Kind = LucideIconKind.FilePenLine });
                 break;
-            case ApplicationName.DiscoveryProtocol:
+            case ApplicationName.LLDPCDPCapture:
                 canvas.Children.Add(new LucideIcon { Kind = LucideIconKind.ArrowLeftRight });
                 break;
             case ApplicationName.MDNSDiscovery:

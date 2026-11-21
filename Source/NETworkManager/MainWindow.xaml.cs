@@ -693,7 +693,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
     private SNTPLookupHostView _sntpLookupHostView;
     private HostsFileEditorView _hostsFileEditorView;
     private FirewallView _firewallView;
-    private DiscoveryProtocolView _discoveryProtocolView;
+    private LLDPCDPCaptureView _lldpCdpCaptureView;
     private MDNSDiscoveryView _mdnsDiscoveryView;
     private WakeOnLANView _wakeOnLanView;
     private SubnetCalculatorHostView _subnetCalculatorHostView;
@@ -851,13 +851,13 @@ public sealed partial class MainWindow : INotifyPropertyChanged
 
                 ContentControlApplication.Content = _firewallView;
                 break;
-            case ApplicationName.DiscoveryProtocol:
-                if (_discoveryProtocolView == null)
-                    _discoveryProtocolView = new DiscoveryProtocolView();
+            case ApplicationName.LLDPCDPCapture:
+                if (_lldpCdpCaptureView == null)
+                    _lldpCdpCaptureView = new LLDPCDPCaptureView();
                 else
-                    _discoveryProtocolView.OnViewVisible();
+                    _lldpCdpCaptureView.OnViewVisible();
 
-                ContentControlApplication.Content = _discoveryProtocolView;
+                ContentControlApplication.Content = _lldpCdpCaptureView;
                 break;
             case ApplicationName.MDNSDiscovery:
                 if (_mdnsDiscoveryView == null)
@@ -1008,8 +1008,8 @@ public sealed partial class MainWindow : INotifyPropertyChanged
             case ApplicationName.Firewall:
                 _firewallView?.OnViewHide();
                 break;
-            case ApplicationName.DiscoveryProtocol:
-                _discoveryProtocolView?.OnViewHide();
+            case ApplicationName.LLDPCDPCapture:
+                _lldpCdpCaptureView?.OnViewHide();
                 break;
             case ApplicationName.MDNSDiscovery:
                 _mdnsDiscoveryView?.OnViewHide();

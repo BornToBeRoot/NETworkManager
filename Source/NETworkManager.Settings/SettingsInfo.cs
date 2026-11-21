@@ -3963,9 +3963,9 @@ public class SettingsInfo : INotifyPropertyChanged
 
     #endregion
 
-    #region Discovery Protocol
+    #region LLDP / CDP Capture
 
-    public DiscoveryProtocol DiscoveryProtocol_Protocol
+    public LLDPCDPProtocol LLDPCDPCapture_Protocol
     {
         get;
         set
@@ -3976,9 +3976,9 @@ public class SettingsInfo : INotifyPropertyChanged
             field = value;
             OnPropertyChanged();
         }
-    } = GlobalStaticConfiguration.DiscoveryProtocol_Protocol;
+    } = GlobalStaticConfiguration.LLDPCDPCapture_Protocol;
 
-    public int DiscoveryProtocol_Duration
+    public int LLDPCDPCapture_Duration
     {
         get;
         set
@@ -3989,9 +3989,9 @@ public class SettingsInfo : INotifyPropertyChanged
             field = value;
             OnPropertyChanged();
         }
-    } = GlobalStaticConfiguration.DiscoveryProtocol_Duration;
+    } = GlobalStaticConfiguration.LLDPCDPCapture_Duration;
 
-    public string DiscoveryProtocol_ExportFilePath
+    public string LLDPCDPCapture_ExportFilePath
     {
         get;
         set
@@ -4004,7 +4004,7 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     }
 
-    public ExportFileType DiscoveryProtocol_ExportFileType
+    public ExportFileType LLDPCDPCapture_ExportFileType
     {
         get;
         set
@@ -4015,7 +4015,7 @@ public class SettingsInfo : INotifyPropertyChanged
             field = value;
             OnPropertyChanged();
         }
-    } = GlobalStaticConfiguration.DiscoveryProtocol_ExportFileType;
+    } = GlobalStaticConfiguration.LLDPCDPCapture_ExportFileType;
 
     #endregion
 

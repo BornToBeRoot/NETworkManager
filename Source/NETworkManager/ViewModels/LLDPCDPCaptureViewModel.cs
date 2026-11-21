@@ -19,17 +19,17 @@ using System.Windows.Threading;
 namespace NETworkManager.ViewModels;
 
 /// <summary>
-/// View model for the discovery protocol view.
+/// View model for the LLDP / CDP Capture view.
 /// </summary>
-public class DiscoveryProtocolViewModel : ViewModelBase
+public class LLDPCDPCaptureViewModel : ViewModelBase
 {
     #region Variables
-    private static readonly ILog Log = LogManager.GetLogger(typeof(DiscoveryProtocolViewModel));
+    private static readonly ILog Log = LogManager.GetLogger(typeof(LLDPCDPCaptureViewModel));
 
     /// <summary>
-    /// The discovery protocol capture instance.
+    /// The LLDP / CDP capture instance.
     /// </summary>
-    private readonly DiscoveryProtocolCapture _discoveryProtocolCapture = new();
+    private readonly LLDPCDPCapture _lldpCdpCapture = new();
 
     /// <summary>
     /// Indicates whether the view model is loading.
@@ -63,9 +63,15 @@ public class DiscoveryProtocolViewModel : ViewModelBase
     } = true;
 
     /// <summary>
+    /// Indicates if packets can be captured: requires administrator rights, except in the screenshot mode
+    /// (<see cref="ScreenshotData" />), which shows sample data instead of a capture.
+    /// </summary>
+    public bool CanCapture => ConfigurationManager.Current.IsAdmin || ScreenshotData.IsEnabled;
+
+    /// <summary>
     /// Gets the list of available discovery protocols.
     /// </summary>
-    public List<DiscoveryProtocol> Protocols
+    public List<LLDPCDPProtocol> Protocols
     {
         get;
         private set
@@ -81,7 +87,7 @@ public class DiscoveryProtocolViewModel : ViewModelBase
     /// <summary>
     /// Gets or sets the selected discovery protocol.
     /// </summary>
-    public DiscoveryProtocol SelectedProtocol
+    public LLDPCDPProtocol SelectedProtocol
     {
         get;
         set
@@ -90,7 +96,7 @@ public class DiscoveryProtocolViewModel : ViewModelBase
                 return;
 
             if (!_isLoading)
-                SettingsManager.Current.DiscoveryProtocol_Protocol = value;
+                SettingsManager.Current.LLDPCDPCapture_Protocol = value;
 
             field = value;
             OnPropertyChanged();
@@ -125,7 +131,7 @@ public class DiscoveryProtocolViewModel : ViewModelBase
                 return;
 
             if (!_isLoading)
-                SettingsManager.Current.DiscoveryProtocol_Duration = value;
+                SettingsManager.Current.LLDPCDPCapture_Duration = value;
 
             field = value;
             OnPropertyChanged();
@@ -231,7 +237,7 @@ public class DiscoveryProtocolViewModel : ViewModelBase
     /// <summary>
     /// Gets the received discovery package.
     /// </summary>
-    public DiscoveryProtocolPackageInfo DiscoveryPackage
+    public LLDPCDPPackageInfo DiscoveryPackage
     {
         get;
         private set
@@ -249,17 +255,17 @@ public class DiscoveryProtocolViewModel : ViewModelBase
     #region Constructor, LoadSettings
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="DiscoveryProtocolViewModel"/> class.
+    /// Initializes a new instance of the <see cref="LLDPCDPCaptureViewModel"/> class.
     /// </summary>
     /// <param name="instance">The dialog coordinator instance.</param>
-    public DiscoveryProtocolViewModel()
+    public LLDPCDPCaptureViewModel()
     {
         _isLoading = true;
 
-        _discoveryProtocolCapture.PackageReceived += DiscoveryProtocol_PackageReceived;
-        _discoveryProtocolCapture.ErrorReceived += DiscoveryProtocol_ErrorReceived;
-        _discoveryProtocolCapture.WarningReceived += DiscoveryProtocol_WarningReceived;
-        _discoveryProtocolCapture.Complete += DiscoveryProtocol_Complete;
+        _lldpCdpCapture.PackageReceived += LLDPCDPCapture_PackageReceived;
+        _lldpCdpCapture.ErrorReceived += LLDPCDPCapture_ErrorReceived;
+        _lldpCdpCapture.WarningReceived += LLDPCDPCapture_WarningReceived;
+        _lldpCdpCapture.Complete += LLDPCDPCapture_Complete;
 
         _remainingTimer = new Timer
         {
@@ -271,6 +277,10 @@ public class DiscoveryProtocolViewModel : ViewModelBase
         LoadSettings();
 
         _isLoading = false;
+
+        // Screenshot mode: result right away (like the dashboard)
+        if (ScreenshotData.IsEnabled)
+            ShowScreenshotData();
     }
 
     /// <summary>
@@ -278,11 +288,11 @@ public class DiscoveryProtocolViewModel : ViewModelBase
     /// </summary>
     private void LoadSettings()
     {
-        Protocols = Enum.GetValues(typeof(DiscoveryProtocol)).Cast<DiscoveryProtocol>().OrderBy(x => x.ToString())
+        Protocols = Enum.GetValues(typeof(LLDPCDPProtocol)).Cast<LLDPCDPProtocol>().OrderBy(x => x.ToString())
             .ToList();
-        SelectedProtocol = Protocols.FirstOrDefault(x => x == SettingsManager.Current.DiscoveryProtocol_Protocol);
+        SelectedProtocol = Protocols.FirstOrDefault(x => x == SettingsManager.Current.LLDPCDPCapture_Protocol);
         Durations = new List<int> { 15, 30, 60, 90, 120 };
-        SelectedDuration = Durations.FirstOrDefault(x => x == SettingsManager.Current.DiscoveryProtocol_Duration);
+        SelectedDuration = Durations.FirstOrDefault(x => x == SettingsManager.Current.LLDPCDPCapture_Duration);
     }
 
     #endregion
@@ -314,13 +324,20 @@ public class DiscoveryProtocolViewModel : ViewModelBase
     /// </summary>
     public ICommand CaptureCommand => new RelayCommand(parameter => { _ = CaptureAction(); }, Capture_CanExecute);
 
-    private bool Capture_CanExecute(object _) => ConfigurationManager.Current.IsAdmin && !IsCapturing;
+    private bool Capture_CanExecute(object _) => CanCapture && !IsCapturing;
 
     /// <summary>
     /// Action to start the capture.
     /// </summary>
     private async Task CaptureAction()
     {
+        if (ScreenshotData.IsEnabled)
+        {
+            ShowScreenshotData();
+
+            return;
+        }
+
         if (FirstRun)
             FirstRun = false;
 
@@ -342,7 +359,7 @@ public class DiscoveryProtocolViewModel : ViewModelBase
 
         try
         {
-            _discoveryProtocolCapture.CaptureAsync(duration, SelectedProtocol);
+            _lldpCdpCapture.CaptureAsync(duration, SelectedProtocol);
         }
         catch (Exception ex)
         {
@@ -383,8 +400,8 @@ public class DiscoveryProtocolViewModel : ViewModelBase
                    Environment.NewLine + ex.Message, ChildWindowIcon.Error);
             }
 
-            SettingsManager.Current.DiscoveryProtocol_ExportFileType = instance.FileType;
-            SettingsManager.Current.DiscoveryProtocol_ExportFilePath = instance.FilePath;
+            SettingsManager.Current.LLDPCDPCapture_ExportFileType = instance.FileType;
+            SettingsManager.Current.LLDPCDPCapture_ExportFilePath = instance.FilePath;
         }, _ =>
         {
             childWindow.IsOpen = false;
@@ -392,8 +409,8 @@ public class DiscoveryProtocolViewModel : ViewModelBase
         },
             [
                 ExportFileType.Csv, ExportFileType.Xml, ExportFileType.Json
-            ], false, SettingsManager.Current.DiscoveryProtocol_ExportFileType,
-            SettingsManager.Current.DiscoveryProtocol_ExportFilePath);
+            ], false, SettingsManager.Current.LLDPCDPCapture_ExportFileType,
+            SettingsManager.Current.LLDPCDPCapture_ExportFilePath);
 
         childWindow.Title = Strings.Export;
 
@@ -424,6 +441,19 @@ public class DiscoveryProtocolViewModel : ViewModelBase
     }
 
     /// <summary>
+    ///     Screenshot mode (<c>--screenshot</c>): shows a sample packet instead of a capture (no PowerShell, no
+    ///     progress).
+    /// </summary>
+    private void ShowScreenshotData()
+    {
+        FirstRun = false;
+        IsStatusMessageDisplayed = false;
+
+        DiscoveryPackage = ScreenshotData.CreateLLDPCDPPackage();
+        DiscoveryPackageReceived = true;
+    }
+
+    /// <summary>
     /// Called when the view becomes visible.
     /// </summary>
     public void OnViewVisible()
@@ -442,9 +472,9 @@ public class DiscoveryProtocolViewModel : ViewModelBase
     #region Events
 
     /// <summary>
-    /// Handles the PackageReceived event of the discovery protocol capture.
+    /// Handles the PackageReceived event of the LLDP / CDP capture.
     /// </summary>
-    private void DiscoveryProtocol_PackageReceived(object sender, DiscoveryProtocolPackageArgs e)
+    private void LLDPCDPCapture_PackageReceived(object sender, LLDPCDPPackageArgs e)
     {
         DiscoveryPackage = e.PackageInfo;
 
@@ -452,9 +482,9 @@ public class DiscoveryProtocolViewModel : ViewModelBase
     }
 
     /// <summary>
-    /// Handles the WarningReceived event of the discovery protocol capture.
+    /// Handles the WarningReceived event of the LLDP / CDP capture.
     /// </summary>
-    private void DiscoveryProtocol_WarningReceived(object sender, DiscoveryProtocolWarningArgs e)
+    private void LLDPCDPCapture_WarningReceived(object sender, LLDPCDPWarningArgs e)
     {
         if (!string.IsNullOrEmpty(StatusMessage))
             StatusMessage += Environment.NewLine;
@@ -467,9 +497,9 @@ public class DiscoveryProtocolViewModel : ViewModelBase
     }
 
     /// <summary>
-    /// Handles the ErrorReceived event of the discovery protocol capture.
+    /// Handles the ErrorReceived event of the LLDP / CDP capture.
     /// </summary>
-    private void DiscoveryProtocol_ErrorReceived(object sender, DiscoveryProtocolErrorArgs e)
+    private void LLDPCDPCapture_ErrorReceived(object sender, LLDPCDPErrorArgs e)
     {
         if (!string.IsNullOrEmpty(StatusMessage))
             StatusMessage += Environment.NewLine;
@@ -481,9 +511,9 @@ public class DiscoveryProtocolViewModel : ViewModelBase
     }
 
     /// <summary>
-    /// Handles the Complete event of the discovery protocol capture.
+    /// Handles the Complete event of the LLDP / CDP capture.
     /// </summary>
-    private void DiscoveryProtocol_Complete(object sender, EventArgs e)
+    private void LLDPCDPCapture_Complete(object sender, EventArgs e)
     {
         _remainingTimer.Stop();
         IsCapturing = false;

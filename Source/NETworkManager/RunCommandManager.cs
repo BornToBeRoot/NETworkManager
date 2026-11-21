@@ -513,6 +513,7 @@ public static class RunCommandManager
             ApplicationName.RDAP => Create(name, [], [Target(Strings.Query), type], types: [.. RDAPTypes.Keys]),
             ApplicationName.Whois => Create(name, [], [Target(Strings.Domain)]),
             ApplicationName.IPGeolocation => Create(name, ["geo"], [Target(Strings.Host)]),
+            ApplicationName.LLDPCDPCapture => Create(name, ["lldp", "cdp"], null),
             ApplicationName.MDNSDiscovery => Create(name, ["mdns", "dnssd"],
                 [Target(Strings.MDNSDiscovery_ServiceType), Argument(Strings.DurationS)], RunCommandArgument.Duration,
                 supportsProfile: false),

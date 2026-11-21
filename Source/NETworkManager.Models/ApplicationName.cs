@@ -103,9 +103,9 @@ public enum ApplicationName
     Firewall,
 
     /// <summary>
-    ///     Discovery protocol application.
+    ///     LLDP / CDP capture application.
     /// </summary>
-    DiscoveryProtocol,
+    LLDPCDPCapture,
 
     /// <summary>
     ///     mDNS Discovery (multicast DNS service discovery) application.
@@ -167,5 +167,12 @@ public enum ApplicationName
     ///     with <c>"ARPTable"</c> can still be deserialized; migrated in <c>SettingsManager.Upgrade()</c>.
     /// </summary>
     [System.Obsolete("Use NeighborTable instead.")]
-    ARPTable
+    ARPTable,
+
+    /// <summary>
+    ///     Obsolete: renamed to <see cref="LLDPCDPCapture"/>. Kept so that old settings files
+    ///     with <c>"DiscoveryProtocol"</c> can still be deserialized; migrated in <c>SettingsManager.Upgrade()</c>.
+    /// </summary>
+    [System.Obsolete("Use LLDPCDPCapture instead.")]
+    DiscoveryProtocol
 }

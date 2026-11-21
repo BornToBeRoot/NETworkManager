@@ -232,6 +232,15 @@ public static class AppearanceManager
     /// </summary>
     public static void Load()
     {
+        // Screenshot mode: the default theme and accent (Dark / Mint) for consistent screenshots, without changing the
+        // settings
+        if (CommandLineManager.Current.Screenshot)
+        {
+            ChangeTheme(GlobalStaticConfiguration.Appearance_Theme, GlobalStaticConfiguration.Appearance_Accent);
+
+            return;
+        }
+
         if (SettingsManager.Current.Appearance_UseCustomTheme && CustomThemes.Count > 0)
         {
             ChangeTheme(
@@ -300,7 +309,9 @@ public static class AppearanceManager
     /// <summary>
     ///     Amount of the accent in the glow (0 = off).
     /// </summary>
-    private static double GetAccentGlowAmount() => SettingsManager.Current?.Appearance_AccentGlowIntensity switch
+    private static double GetAccentGlowAmount() => (CommandLineManager.Current.Screenshot
+        ? GlobalStaticConfiguration.Appearance_AccentGlowIntensity // Screenshot mode: default, like the theme
+        : SettingsManager.Current?.Appearance_AccentGlowIntensity) switch
     {
         AccentGlowIntensity.Subtle => 0.06,
         AccentGlowIntensity.Medium => 0.10,

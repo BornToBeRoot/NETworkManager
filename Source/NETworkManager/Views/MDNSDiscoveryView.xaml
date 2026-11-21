@@ -210,7 +210,7 @@
                                    Text="{x:Static localization:Strings.DurationS}"
                                    Style="{StaticResource DefaultTextBlock}"
                                    VerticalAlignment="Center" />
-                        <!-- Like the Discovery Protocol; 0 = until stopped -->
+                        <!-- Like the LLDP / CDP Capture; 0 = until stopped -->
                         <ComboBox Grid.Column="11"
                                   ItemsSource="{Binding Durations}"
                                   SelectedItem="{Binding SelectedDuration}"

@@ -42,7 +42,7 @@
                      Visual="{icons:Lucide Kind=Server}" />
         <VisualBrush x:Key="RunCommandPortProfileIcon" Stretch="Uniform"
                      Visual="{icons:Lucide Kind=List}" />
-        <!-- Like the duration of the Discovery Protocol capture -->
+        <!-- Like the duration of the LLDP / CDP Capture -->
         <VisualBrush x:Key="RunCommandDurationIcon" Stretch="Uniform"
                      Visual="{icons:Lucide Kind=Timer}" />
         <!-- Key of the key hints (e.g. "Enter") -->

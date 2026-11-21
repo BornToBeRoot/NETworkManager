@@ -288,14 +288,14 @@ public class ExportManagerToolTests
 
     #endregion
 
-    #region Discovery Protocol
+    #region LLDP / CDP Capture
 
     [Fact]
-    public void DiscoveryProtocol_Consistent()
+    public void LLDPCDPCapture_Consistent()
     {
         var files = ExportAll((f, t) => ExportManager.Export(f, t,
         [
-            new DiscoveryProtocolPackageInfo
+            new LLDPCDPPackageInfo
             {
                 Device = "sw1", DeviceDescription = "Cisco IOS, Version 15", Port = "Gi0/1", PortDescription = "Uplink",
                 Model = "C2960", VLAN = "10", IPAddress = "10.0.0.2", Protocol = "CDP", TimeToLive = "180",

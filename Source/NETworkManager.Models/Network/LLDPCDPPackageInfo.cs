@@ -3,12 +3,12 @@
 /// <summary>
 ///     Class contains discovery protocol package information's.
 /// </summary>
-public class DiscoveryProtocolPackageInfo
+public class LLDPCDPPackageInfo
 {
     /// <summary>
-    ///     Creates a new instance of <see cref="DiscoveryProtocolPackageInfo" />.
+    ///     Creates a new instance of <see cref="LLDPCDPPackageInfo" />.
     /// </summary>
-    public DiscoveryProtocolPackageInfo()
+    public LLDPCDPPackageInfo()
     {
     }
 

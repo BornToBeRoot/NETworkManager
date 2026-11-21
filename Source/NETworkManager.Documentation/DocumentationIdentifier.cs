@@ -96,9 +96,9 @@ public enum DocumentationIdentifier
     ApplicationFirewall,
 
     /// <summary>
-    ///     Discovery Protocol documentation page.
+    ///     LLDP / CDP Capture documentation page.
     /// </summary>
-    ApplicationDiscoveryProtocol,
+    ApplicationLLDPCDPCapture,
 
     /// <summary>
     ///     mDNS Discovery documentation page.

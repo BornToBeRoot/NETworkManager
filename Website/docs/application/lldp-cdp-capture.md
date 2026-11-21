@@ -1,12 +1,12 @@
 ---
 sidebar_position: 18
-description: "Capture LLDP and CDP frames to discover connected network switches and routers. NETworkManager Discovery Protocol shows device name, port, and VLAN information."
+description: "Capture LLDP and CDP frames to discover connected network switches and routers. NETworkManager LLDP / CDP Capture shows device name, port, and VLAN information."
 keywords: [NETworkManager, LLDP, CDP, discovery protocol, network discovery, switch identification, VLAN]
 ---
 
-# Discovery Protocol
+# LLDP / CDP Capture
 
-With **Discovery Protocol** you can capture LLDP (Link Layer Discovery Protocol) and CDP (Cisco Discovery Protocol) frames to see which switch or router your device is connected to. Device name, port, VLAN, and other information are shown in labeled fields.
+With **LLDP / CDP Capture** you can capture LLDP (Link Layer Discovery Protocol) and CDP (Cisco Discovery Protocol) frames to see which switch or router your device is connected to. Device name, port, VLAN, and other information are shown in labeled fields.
 
 :::info
 
@@ -22,7 +22,7 @@ Without administrator privileges, capturing is not available. Use the **Restart 
 
 :::
 
-![Discovery Protocol](../img/discovery-protocol.png)
+![LLDP / CDP Capture](../img/lldp-cdp-capture.png)
 
 ### Toolbar
 
@@ -44,7 +44,7 @@ Without administrator privileges, capturing is not available. Use the **Restart 
 
 ## Run command
 
-Open the tool with `discoveryprotocol`. The command accepts no target and no profile, see [Run Command](../run-command.md).
+Open the tool with `lldpcdpcapture` (or `lldp`, `cdp`). The command accepts no target and no profile, see [Run Command](../run-command.md).
 
 ## Troubleshooting and limits
 

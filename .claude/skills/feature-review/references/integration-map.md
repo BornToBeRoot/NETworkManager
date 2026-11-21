@@ -40,7 +40,7 @@ sort the hits into the categories below. Some names differ between places (e.g. 
   Remote Desktop, SNMP, SNTP Lookup, Subnet Calculator, TigerVNC, Traceroute, Web Console, Whois.
   Compare tab handling, profile context menu ("extra items"), tab title, "open in other tool".
 - **Single view** (`<Tool>View` only): Dashboard, Network Interface (with profiles), WiFi, Hosts File Editor,
-  Firewall, Discovery Protocol, Wake on LAN (with profiles), Bit Calculator, Connections, Listeners,
+  Firewall, LLDP / CDP Capture, Wake on LAN (with profiles), Bit Calculator, Connections, Listeners,
   Neighbor Table. Compare refresh logic, context menus, admin handling, export.
 - **Removed but still referenced**: `AWSSessionManager` (hidden in `ApplicationManager`, kept for settings
   migration, docs page marked as removed) — not a finding unless something still uses it.
@@ -50,7 +50,7 @@ sort the hits into the categories below. Some names differ between places (e.g. 
 Review one unit at a time. Tools:
 
 - **Network**: Dashboard (+ widgets: Network Connection, IP API, Speed Test), Network Interface, WiFi, IP Scanner,
-  Port Scanner, Ping Monitor, Traceroute, DNS Lookup, Discovery Protocol, Wake on LAN, SNMP, SNTP Lookup
+  Port Scanner, Ping Monitor, Traceroute, DNS Lookup, LLDP / CDP Capture, Wake on LAN, SNMP, SNTP Lookup
 - **Remote access**: Remote Desktop, PowerShell, PuTTY, TigerVNC, Web Console
 - **System**: Hosts File Editor, Firewall, Connections, Listeners, Neighbor Table
 - **Lookup / calculators**: Whois, RDAP, IP Geolocation, Lookup (OUI/port), Subnet Calculator, Bit Calculator
