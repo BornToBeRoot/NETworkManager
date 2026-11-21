@@ -5690,4 +5690,7 @@ Do you want to start the scan?</value>
   <data name="FailedToLoadNetworkInterfacesTryAgain" xml:space="preserve">
     <value>Failed to load the network interfaces. Disable "Bind to network interface" and enable it again to try again.</value>
   </data>
+  <data name="CommandXOnlyAcceptsAProfile" xml:space="preserve">
+    <value>The command "{0}" only accepts a profile: enter "@" and the name of the profile!</value>
+  </data>
 </root>

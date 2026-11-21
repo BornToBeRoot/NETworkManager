@@ -2396,6 +2396,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The command &quot;{0}&quot; only accepts a profile: enter &quot;@&quot; and the name of the profile!.
+        /// </summary>
+        public static string CommandXOnlyAcceptsAProfile {
+            get {
+                return ResourceManager.GetString("CommandXOnlyAcceptsAProfile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Comment.
         /// </summary>
         public static string Comment {

@@ -301,6 +301,7 @@ public static class RunCommandManager
             RunCommandParseError.NoProfiles => string.Format(Strings.CommandXDoesNotSupportProfiles, result.ErrorValue),
             RunCommandParseError.MissingProfileName => Strings.EnterTheNameOfAProfileAfterAt,
             RunCommandParseError.UnknownArgument => string.Format(Strings.UnknownArgumentX, result.ErrorValue),
+            RunCommandParseError.OnlyProfile => string.Format(Strings.CommandXOnlyAcceptsAProfile, result.ErrorValue),
             _ => throw new ArgumentOutOfRangeException(nameof(result), result.Error, null)
         };
     }

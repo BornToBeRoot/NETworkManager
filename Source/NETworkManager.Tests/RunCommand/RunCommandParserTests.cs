@@ -335,7 +335,6 @@ public class RunCommandParserTests
     [Theory]
     [InlineData("firewall 10.0.0.1")]
     [InlineData("settings general")]
-    [InlineData("networkinterface 10.0.0.1")]
     public void NoArguments(string input)
     {
         var result = Parse(input);
@@ -498,6 +497,17 @@ public class RunCommandParserTests
         Assert.Equal(RunCommandParseError.None, result.Error);
         Assert.Equal(profileName, result.ProfileName);
         Assert.Null(result.Target);
+    }
+
+    [Theory]
+    [InlineData("networkinterface home")]
+    [InlineData("networkinterface 10.0.0.1 ")]
+    public void ProfileWithoutTargetNeedsAt(string input)
+    {
+        var result = Parse(input);
+
+        Assert.Equal(RunCommandParseError.OnlyProfile, result.Error);
+        Assert.Equal("networkinterface", result.ErrorValue);
     }
 
     [Fact]
