@@ -43,6 +43,19 @@ Right-clicking a session tab opens a context menu:
 | **Resize**          | Resize the PuTTY window to the current view size (if connected). |
 | **Restart session** | Restart the PuTTY session (if connected).                        |
 
+## Run command
+
+Open the tool with `putty` or `ssh`. Add a host (validated like the [host](#host) of the connect dialog):
+
+```text
+ssh server-01
+ssh 10.0.0.1
+putty switch-01.borntoberoot.net
+ssh @switch-01
+```
+
+A host opens the [connect dialog](#connect) with the host filled in, so the [mode](#mode) (e.g. Telnet instead of SSH), the username and the other options can be adjusted before connecting. A profile (`@profile`) connects directly with the settings of the profile and its group (also a serial connection). `Shift+Enter` behaves like `Enter`.
+
 ## Connect
 
 ### Mode
@@ -844,3 +857,11 @@ Port to use for `RAW` connections.
 **Default:** `23`
 
 **Example:** `23`
+
+## Troubleshooting and limits
+
+- If the [file path](#file-path) of PuTTY is not configured or the file doesn't exist, the tool shows a message instead of the session, and the run command only opens the tool. Install PuTTY, configure the path and connect again.
+- PuTTY shows its own messages in the session window (e.g. the host key of a new server to accept, a wrong password, "Connection refused"). NETworkManager waits up to 10 seconds for the PuTTY window to embed it.
+- A [private key file](#private-key-file) must be in the PuTTY format (`.ppk`). Convert an OpenSSH key with PuTTYgen.
+- A [PuTTY profile](#profile) (saved session) is loaded by its name and must exist in the PuTTY configuration of the current user.
+- Serial: the serial line (e.g. `COM1`) must exist and must not be used by another application.
