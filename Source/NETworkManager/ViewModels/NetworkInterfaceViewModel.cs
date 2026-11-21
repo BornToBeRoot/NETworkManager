@@ -1377,9 +1377,9 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
 
     private Task ApplyConfiguration()
     {
-        return ApplyConfigurationAsync(NetworkInterfaceConfig.Create(SelectedNetworkInterface.Name,
-            ConfigEnableStaticIPAddress, ConfigIPAddress, ConfigSubnetmask, ConfigGateway, ConfigEnableStaticDNS,
-            ConfigPrimaryDNSServer, ConfigSecondaryDNSServer));
+        return ApplyConfigurationAsync(SelectedNetworkInterface, NetworkInterfaceConfig.Create(
+            SelectedNetworkInterface.Name, ConfigEnableStaticIPAddress, ConfigIPAddress, ConfigSubnetmask, ConfigGateway,
+            ConfigEnableStaticDNS, ConfigPrimaryDNSServer, ConfigSecondaryDNSServer));
     }
 
     private async Task ApplyConfigurationFromProfile()
@@ -1419,7 +1419,7 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
         // current configuration)
         SetConfigurationFromProfile(profile);
 
-        await ApplyConfigurationAsync(NetworkInterfaceConfig.Create(networkInterface.Name,
+        await ApplyConfigurationAsync(networkInterface, NetworkInterfaceConfig.Create(networkInterface.Name,
             profile.NetworkInterface_EnableStaticIPAddress, profile.NetworkInterface_IPAddress,
             profile.NetworkInterface_Subnetmask, profile.NetworkInterface_Gateway,
             profile.NetworkInterface_EnableStaticDNS, profile.NetworkInterface_PrimaryDNSServer,
@@ -1492,24 +1492,31 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
         return false;
     }
 
-    private Task ApplyConfigurationAsync(NetworkInterfaceConfig config)
+    private Task ApplyConfigurationAsync(NetworkInterfaceInfo networkInterface, NetworkInterfaceConfig config)
     {
         if (!ValidateConfiguration(config))
             return Task.CompletedTask;
 
         return RunConfigurationAsync(() => NetworkInterface.ConfigureNetworkInterfaceAsync(config),
-            Strings.NetworkInterfaceConfigurationAppliedSuccessfully);
+            Strings.NetworkInterfaceConfigurationAppliedSuccessfully, networkInterface);
     }
 
     /// <summary>
     /// Runs a configuration action (netsh / ipconfig): only one at a time, the success message or the error (of
-    /// Windows) is shown below the configuration, the network interfaces are reloaded afterwards (also after an error).
+    /// Windows) is shown below the configuration. If a network interface is changed, it is remembered (like a
+    /// selection by the user: it stays selected after the reload, also if it was only selected as a fallback for a
+    /// missing one) and the network interfaces are reloaded afterwards (also after an error).
     /// </summary>
     /// <param name="action">Action to run.</param>
     /// <param name="successMessage">Message shown if the action succeeded.</param>
-    /// <param name="reload">Reload the network interfaces (not needed if no interface is changed).</param>
-    private async Task RunConfigurationAsync(Func<Task> action, string successMessage, bool reload = true)
+    /// <param name="networkInterface">Network interface that is changed, or <see langword="null" /> if none is
+    /// changed (e.g. flush DNS cache).</param>
+    private async Task RunConfigurationAsync(Func<Task> action, string successMessage,
+        NetworkInterfaceInfo networkInterface = null)
     {
+        if (networkInterface != null)
+            SettingsManager.Current.NetworkInterface_InterfaceId = networkInterface.Id;
+
         IsConfigurationRunning = true;
         IsStatusMessageDisplayed = false;
 
@@ -1533,7 +1540,7 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
 
             // Also after an error: the commands run one after another and stop at the first error, the ones before
             // may have changed the configuration (e.g. IP address set, DNS servers failed).
-            if (reload)
+            if (networkInterface != null)
                 ReloadNetworkInterfaces();
         }
     }
@@ -1553,14 +1560,14 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
 
     private Task FlushDNSAsync()
     {
-        return RunConfigurationAsync(NetworkInterface.FlushDnsAsync, Strings.FlushDNSCacheSuccessfully, false);
+        return RunConfigurationAsync(NetworkInterface.FlushDnsAsync, Strings.FlushDNSCacheSuccessfully);
     }
 
     private Task ReleaseRenewAsync(IPConfigReleaseRenewMode releaseRenewMode)
     {
-        var name = SelectedNetworkInterface.Name;
+        var networkInterface = SelectedNetworkInterface;
 
-        return RunConfigurationAsync(() => NetworkInterface.ReleaseRenewAsync(releaseRenewMode, name),
+        return RunConfigurationAsync(() => NetworkInterface.ReleaseRenewAsync(releaseRenewMode, networkInterface.Name),
             releaseRenewMode switch
             {
                 IPConfigReleaseRenewMode.ReleaseRenew => Strings.IPv4AddressReleasedAndRenewedSuccessfully,
@@ -1570,7 +1577,7 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
                 IPConfigReleaseRenewMode.Release6 => Strings.IPv6AddressReleasedSuccessfully,
                 IPConfigReleaseRenewMode.Renew6 => Strings.IPv6AddressRenewedSuccessfully,
                 _ => string.Empty
-            });
+            }, networkInterface);
     }
 
     /// <summary>
@@ -1613,7 +1620,7 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
             return Task.CompletedTask;
 
         return RunConfigurationAsync(() => NetworkInterface.AddIPAddressToNetworkInterfaceAsync(config),
-            Strings.IPv4AddressAddedSuccessfully);
+            Strings.IPv4AddressAddedSuccessfully, networkInterface);
     }
 
     private Task RemoveIPv4Address(NetworkInterfaceInfo networkInterface, string ipAddress)
@@ -1633,7 +1640,7 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
             return Task.CompletedTask;
 
         return RunConfigurationAsync(() => NetworkInterface.RemoveIPAddressFromNetworkInterfaceAsync(config),
-            Strings.IPv4AddressRemovedSuccessfully);
+            Strings.IPv4AddressRemovedSuccessfully, networkInterface);
     }
 
     private void ResetBandwidthChart()
