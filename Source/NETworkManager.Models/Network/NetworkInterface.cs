@@ -173,7 +173,7 @@ public sealed class NetworkInterface
                 }
             }
 
-            var dnsAutoconfigurationEnabled = IsDNSAutoconfigurationEnabled(networkInterface.Id) == true;
+            var noStaticDNSServers = IsDNSAutoconfigurationEnabled(networkInterface.Id);
 
             // Check if IPv4 protocol is available
             var ipv4ProtocolAvailable = true;
@@ -222,7 +222,8 @@ public sealed class NetworkInterface
                 IPv6AddressLinkLocal = [.. listIPv6AddressLinkLocal],
                 IPv6Address = [.. listIPv6Address],
                 IPv6Gateway = [.. listIPv6Gateway],
-                DNSAutoconfigurationEnabled = dnsAutoconfigurationEnabled,
+                DNSAutoconfigurationEnabled = IsDNSAutoconfigured(noStaticDNSServers,
+                    ipv4Properties is { IsDhcpEnabled: true }),
                 DNSSuffix = ipProperties.DnsSuffix,
                 DNSServer = [.. ipProperties.DnsAddresses],
                 Profile = profileByAlias.GetValueOrDefault(networkInterface.Name, NetworkProfile.NotConfigured)
@@ -532,6 +533,21 @@ public sealed class NetworkInterface
         }
 
         return commands;
+    }
+
+    /// <summary>
+    /// Whether the DNS servers of a network interface are obtained automatically (shown on the Information tab and
+    /// exported): no static DNS servers and DHCP enabled for the IPv4 address. With a static IP address, DNS servers can't
+    /// be obtained automatically (Windows dialog); without static DNS servers it has no DNS servers at all (the
+    /// "NameServer" value is empty in both cases).
+    /// </summary>
+    /// <param name="noStaticDNSServers">No static DNS servers are set (see <see cref="IsDNSAutoconfigurationEnabled" />),
+    /// <see langword="null" /> if unknown.</param>
+    /// <param name="dhcpEnabled">DHCP is enabled for the IPv4 address.</param>
+    /// <returns><see langword="true" /> if the DNS servers are obtained automatically.</returns>
+    public static bool IsDNSAutoconfigured(bool? noStaticDNSServers, bool dhcpEnabled)
+    {
+        return noStaticDNSServers == true && dhcpEnabled;
     }
 
     /// <summary>

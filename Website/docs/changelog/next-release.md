@@ -79,6 +79,7 @@ Release date: **xx.xx.2026**
 - Fixed the selected network adapter not being selected again when it is back after it was missing (e.g. a VPN or USB adapter), also after a restart. A network adapter that was configured meanwhile (e.g. **Apply**, **Release & Renew**) stays selected. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 - Fixed the **Information** tab not showing the changes made before an error, e.g. when the IP address was set but setting the DNS servers failed. The network adapters are now reloaded after an error too. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 - Fixed **Add IPv4 address...** and **Remove IPv4 address...** changing another network adapter (or the application crashing if no adapter was left) when the network adapter was removed while the dialog was open (e.g. a USB or VPN adapter). Nothing is changed in this case. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
+- Fixed **DNS autoconfiguration** on the **Information** tab (and in the export) showing **Yes** for a network adapter with a static IP address and no DNS servers. DNS servers can only be obtained automatically with DHCP. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 
 **DNS Lookup**
 
