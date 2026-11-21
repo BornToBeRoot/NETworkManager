@@ -10689,6 +10689,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The profile &quot;{0}&quot; was not loaded, because a configuration is being applied. Run the command again when it has finished..
+        /// </summary>
+        public static string ProfileXNotLoadedConfigurationRunning {
+            get {
+                return ResourceManager.GetString("ProfileXNotLoadedConfigurationRunning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Program.
         /// </summary>
         public static string Program {

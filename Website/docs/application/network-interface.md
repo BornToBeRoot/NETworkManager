@@ -141,7 +141,7 @@ networkinterface
 networkinterface @home
 ```
 
-A profile is selected and its values are filled in on the **Configure** tab, like a double-click on the profile (also the network interface it is bound to, see [Bind to network interface](#bind-to-network-interface)). The profile is not applied, also not with `Enter`: check the values and click **Apply**. While a configuration is applied, the profile is loaded when it has finished. `Shift+Enter` behaves like `Enter`. See [Run Command](../run-command.md).
+A profile is selected and its values are filled in on the **Configure** tab, like a double-click on the profile (also the network interface it is bound to, see [Bind to network interface](#bind-to-network-interface)). The profile is not applied, also not with `Enter`: check the values and click **Apply**. While a configuration is applied, the profile is not loaded (a message is shown). `Shift+Enter` behaves like `Enter`. See [Run Command](../run-command.md).
 
 ## Profile
 

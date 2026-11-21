@@ -197,7 +197,13 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
                 _selectedNetworkInterfaceId = value.Id;
 
                 if (!_isSelectingNetworkInterfaceByCode)
+                {
                     RememberNetworkInterface(value);
+
+                    // Selected by the user while the network interfaces were loaded: a profile selected before must
+                    // not switch the network interface back after the load
+                    _pendingProfile = null;
+                }
 
                 // Bandwidth
                 StartBandwidthMeter(value.Id);
@@ -523,7 +529,7 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
             // must not overwrite the values entered on the Configure tab or switch the network interface.
             // Not while a configuration is applied (like Reset): the result would be shown for another interface
             if (value != null && !IsProfileSelectedByCode && !IsConfigurationRunning)
-                LoadProfile(value);
+                LoadProfileAfterLoad(value);
 
             base.SelectedProfile = value;
         }
@@ -781,7 +787,7 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
             IsNetworkInterfaceLoading = false;
         }
 
-        OpenPendingRequest();
+        LoadPendingProfile();
         ReloadIfPending();
     }
 
@@ -790,33 +796,41 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
     #region Profile host
 
     /// <summary>
-    /// Request received while the network interfaces were loaded, opened after the load (see <see cref="Open" />).
+    /// Profile to load after the network interfaces are (re)loaded (see <see cref="LoadProfileAfterLoad" />).
     /// </summary>
-    private ApplicationRequest _pendingRequest;
+    private ProfileInfo _pendingProfile;
 
     /// <summary>
-    /// A pending request is opened: the message of a configuration applied meanwhile stays visible.
+    /// Loads a profile (selects its bound network interface and fills in its values). While the network interfaces are
+    /// (re)loaded (e.g. the tool was opened the first time, a network change), it is loaded afterwards: the bound
+    /// network interface may not be in the list yet, and the load would replace the values with the ones of the
+    /// selected network interface. A later selection replaces it.
     /// </summary>
-    private bool _isOpeningPendingRequest;
-
-    private void OpenPendingRequest()
+    private void LoadProfileAfterLoad(ProfileInfo profile)
     {
-        if (_pendingRequest == null)
+        if (IsNetworkInterfaceLoading)
+        {
+            _pendingProfile = profile;
+            return;
+        }
+
+        _pendingProfile = null;
+
+        LoadProfile(profile);
+    }
+
+    private void LoadPendingProfile()
+    {
+        var profile = _pendingProfile;
+        _pendingProfile = null;
+
+        // Not if a configuration was started meanwhile (like selecting a profile) or if the profile was changed or
+        // deleted meanwhile (changed profiles are new objects): the old values would be filled in
+        if (profile == null || IsConfigurationRunning ||
+            ProfileManager.LoadedProfileFileData?.Groups.Any(x => x.Profiles.Contains(profile)) != true)
             return;
 
-        var request = _pendingRequest;
-        _pendingRequest = null;
-
-        _isOpeningPendingRequest = true;
-
-        try
-        {
-            Open(request);
-        }
-        finally
-        {
-            _isOpeningPendingRequest = false;
-        }
+        LoadProfile(profile);
     }
 
     protected override ApplicationName ApplicationName => ApplicationName.NetworkInterface;
@@ -832,15 +846,14 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
         if (request.Profile == null)
             return;
 
-        // Opened afterwards (the run command dialog is closed already, so it must not be lost):
-        // - The network interfaces are (re)loaded, e.g. the run command opened the tool for the first time (the view and
-        //   its view model are created right before): the bound network interface can only be selected afterwards,
-        //   and the load would replace the values of the profile with the ones of the selected network interface.
-        // - A configuration is applied: the result would be shown for another network interface (like selecting /
-        //   double-clicking a profile, which is not possible meanwhile).
-        if (IsNetworkInterfaceLoading || IsConfigurationRunning)
+        // Not while a configuration is applied (like selecting / double-clicking a profile: the result would be shown
+        // for another network interface). The run command dialog is closed already, and a status message would be
+        // replaced by the result of the configuration: a message dialog says why nothing happens.
+        if (IsConfigurationRunning)
         {
-            _pendingRequest = request;
+            _ = DialogHelper.ShowMessageAsync(Application.Current.MainWindow, Strings.NetworkInterface,
+                string.Format(Strings.ProfileXNotLoadedConfigurationRunning, request.Profile.Name),
+                ChildWindowIcon.Info);
             return;
         }
 
@@ -851,7 +864,7 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
             return;
         }
 
-        LoadProfile(request.Profile);
+        LoadProfileAfterLoad(request.Profile);
     }
 
     #endregion
@@ -952,7 +965,8 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
     /// network interface and fills in its values, e.g. after Reset or if the profile was selected automatically
     /// (clicking the selected profile doesn't change the selection).
     /// </summary>
-    public ICommand LoadProfileCommand => new RelayCommand(_ => LoadProfile(SelectedProfile), LoadProfile_CanExecute);
+    public ICommand LoadProfileCommand =>
+        new RelayCommand(_ => LoadProfileAfterLoad(SelectedProfile), LoadProfile_CanExecute);
 
     private bool LoadProfile_CanExecute(object parameter) => SelectedProfile != null && !IsConfigurationRunning;
 
@@ -1311,7 +1325,7 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
             IsNetworkInterfaceLoading = false;
         }
 
-        OpenPendingRequest();
+        LoadPendingProfile();
         ReloadIfPending();
     }
 
@@ -1435,10 +1449,8 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
     /// </summary>
     private void LoadProfile(ProfileInfo profile)
     {
-        // The message of a previous action or profile doesn't belong to this profile (except the result of a
-        // configuration that was applied while the request of the run command waited, see OpenPendingRequest)
-        if (!_isOpeningPendingRequest)
-            IsStatusMessageDisplayed = false;
+        // The message of a previous action or profile doesn't belong to this profile
+        IsStatusMessageDisplayed = false;
 
         var boundNetworkInterface = GetBoundNetworkInterface(profile);
 
@@ -1658,11 +1670,8 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
 
             // Also after an error: the commands run one after another and stop at the first error, the ones before
             // may have changed the configuration (e.g. IP address set, DNS servers failed).
-            // A request received meanwhile is opened after the reload (or now, if nothing is reloaded)
             if (networkInterface != null)
                 ReloadNetworkInterfaces();
-            else
-                OpenPendingRequest();
         }
     }
 

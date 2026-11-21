@@ -5693,4 +5693,7 @@ Do you want to start the scan?</value>
   <data name="CommandXOnlyAcceptsAProfile" xml:space="preserve">
     <value>The command "{0}" only accepts a profile: enter "@" and the name of the profile!</value>
   </data>
+  <data name="ProfileXNotLoadedConfigurationRunning" xml:space="preserve">
+    <value>The profile "{0}" was not loaded, because a configuration is being applied. Run the command again when it has finished.</value>
+  </data>
 </root>
