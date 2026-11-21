@@ -1485,7 +1485,10 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
         if (invalidValue == null)
             return true;
 
-        StatusMessage = string.Format(Strings.NetworkInterfaceConfigInvalidValueX, invalidValue);
+        // An empty value means the IP address or subnet mask of a static IP address is missing
+        StatusMessage = invalidValue.Length == 0
+            ? Strings.NetworkInterfaceConfigIPAddressAndSubnetmaskRequired
+            : string.Format(Strings.NetworkInterfaceConfigInvalidValueX, invalidValue);
         StatusMessageLevel = StatusLevel.Error;
         IsStatusMessageDisplayed = true;
 

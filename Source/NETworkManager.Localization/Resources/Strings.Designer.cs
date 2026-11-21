@@ -9004,6 +9004,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to A static IP address needs an IPv4 address and a subnet mask. Check the configuration (or the profile) and try again..
+        /// </summary>
+        public static string NetworkInterfaceConfigIPAddressAndSubnetmaskRequired {
+            get {
+                return ResourceManager.GetString("NetworkInterfaceConfigIPAddressAndSubnetmaskRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Configuration applied.
         /// </summary>
         public static string NetworkInterfaceConfigurationAppliedSuccessfully {

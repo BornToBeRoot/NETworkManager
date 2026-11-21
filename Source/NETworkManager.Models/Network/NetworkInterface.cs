@@ -716,8 +716,12 @@ public sealed class NetworkInterface
     {
         var invalidValue = config.GetInvalidValue();
 
-        if (invalidValue != null)
-            throw new FormatException($"\"{invalidValue}\" is not a valid IPv4 address or subnet mask.");
+        if (invalidValue == null)
+            return;
+
+        throw new FormatException(invalidValue.Length == 0
+            ? "A static IP address needs an IPv4 address and a subnet mask."
+            : $"\"{invalidValue}\" is not a valid IPv4 address or subnet mask.");
     }
 
     /// <summary>
