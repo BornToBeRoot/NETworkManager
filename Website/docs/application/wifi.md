@@ -137,6 +137,10 @@ Move the mouse over a network to display details such as SSID, BSSID, channel, c
 
 :::
 
+## Run command
+
+Open the tool with `wifi`. The command accepts no target and no profile, see [Run Command](../run-command.md).
+
 ## Settings
 
 ### Show notification popup on changes
@@ -162,3 +166,11 @@ Time in seconds the notification popup is shown before it closes automatically.
 **Type:** `Integer` [Min `3`, Max `60`]
 
 **Default:** `10`
+
+## Troubleshooting and limits
+
+- No adapter or networks are shown on Windows 11 24H2 and later: allow the access to the location for desktop apps / NETworkManager (see the note at the top). Without a WiFi adapter (or with a disabled one), no networks can be scanned.
+- Only the networks that the adapter can receive are shown: an adapter without 6 GHz (or 5 GHz) support doesn't show these networks. The bands of the adapter, the antenna and its position also affect which networks and which signal strength are shown.
+- Windows scans the networks: a network that was just turned on or is far away may appear only after the next scan. Hidden networks are shown as `Hidden Network` (their SSID is not sent in the beacon).
+- If the channel width is not in the beacon of the access point, it is estimated (shown as `~80 MHz`).
+- The signal strength varies with every scan and is not a measurement of the throughput.
