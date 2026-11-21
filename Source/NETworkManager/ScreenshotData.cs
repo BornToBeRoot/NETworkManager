@@ -105,6 +105,35 @@ public static class ScreenshotData
 
     #endregion
 
+    #region LLDP / CDP Capture
+
+    /// <summary>
+    /// Creates the LLDP packet of the switch the computer is connected to (instead of a capture).
+    /// </summary>
+    public static LLDPCDPPackageInfo CreateLLDPCDPPackage()
+    {
+        const string switchIPv4 = "192.168.1.2";
+
+        return new LLDPCDPPackageInfo
+        {
+            Device = "switch-01.home.arpa",
+            DeviceDescription = "Example Switch OS 4.2.1, Example GS-24P 24-Port Gigabit PoE Switch",
+            Port = "gi1/0/12",
+            PortDescription = "Office - PC-01",
+            Model = "Example GS-24P",
+            VLAN = "10",
+            IPAddress = switchIPv4,
+            Management = switchIPv4,
+            ChassisId = "02005E1000AB",
+            Protocol = "LLDP",
+            TimeToLive = "120",
+            LocalConnection = "Ethernet",
+            LocalInterface = "Example Gigabit Network Connection"
+        };
+    }
+
+    #endregion
+
     #region mDNS Discovery
 
     /// <summary>

@@ -83,6 +83,7 @@ Starts the application in screenshot mode to take consistent screenshots, e.g. f
 - The window always looks like an active window (accent glow), even if the screenshot tool takes the focus.
 - Embedded **PowerShell** and **PuTTY** windows don't take the focus automatically (e.g. when the window is activated or the tab is switched), so the screenshot tool keeps it. Click into the console to type.
 - The **Dashboard** shows sample data instead of your own IP addresses, hostnames, provider and location (network connection, IP geolocation, DNS resolver, speed test). It uses the address ranges and domains reserved for documentation (e.g. `203.0.113.0/24`, `2001:db8::/32`, `example.net`). The speed test shows a sample result without running a test.
+- **LLDP / CDP Capture** shows a sample LLDP packet of a switch when it is opened and on **Capture**, without capturing (no administrator rights required).
 - The input of the [Run command](run-command.md) always shows the same placeholder text (`Ready when your network isn't...`) instead of a random one.
 
 **Example:**

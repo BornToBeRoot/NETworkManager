@@ -63,6 +63,12 @@ public class LLDPCDPCaptureViewModel : ViewModelBase
     } = true;
 
     /// <summary>
+    /// Indicates if packets can be captured: requires administrator rights, except in the screenshot mode
+    /// (<see cref="ScreenshotData" />), which shows sample data instead of a capture.
+    /// </summary>
+    public bool CanCapture => ConfigurationManager.Current.IsAdmin || ScreenshotData.IsEnabled;
+
+    /// <summary>
     /// Gets the list of available discovery protocols.
     /// </summary>
     public List<LLDPCDPProtocol> Protocols
@@ -271,6 +277,10 @@ public class LLDPCDPCaptureViewModel : ViewModelBase
         LoadSettings();
 
         _isLoading = false;
+
+        // Screenshot mode: result right away (like the dashboard)
+        if (ScreenshotData.IsEnabled)
+            ShowScreenshotData();
     }
 
     /// <summary>
@@ -314,13 +324,20 @@ public class LLDPCDPCaptureViewModel : ViewModelBase
     /// </summary>
     public ICommand CaptureCommand => new RelayCommand(parameter => { _ = CaptureAction(); }, Capture_CanExecute);
 
-    private bool Capture_CanExecute(object _) => ConfigurationManager.Current.IsAdmin && !IsCapturing;
+    private bool Capture_CanExecute(object _) => CanCapture && !IsCapturing;
 
     /// <summary>
     /// Action to start the capture.
     /// </summary>
     private async Task CaptureAction()
     {
+        if (ScreenshotData.IsEnabled)
+        {
+            ShowScreenshotData();
+
+            return;
+        }
+
         if (FirstRun)
             FirstRun = false;
 
@@ -421,6 +438,19 @@ public class LLDPCDPCaptureViewModel : ViewModelBase
             if (_secondsRemaining > 0)
                 _secondsRemaining--;
         }));
+    }
+
+    /// <summary>
+    ///     Screenshot mode (<c>--screenshot</c>): shows a sample packet instead of a capture (no PowerShell, no
+    ///     progress).
+    /// </summary>
+    private void ShowScreenshotData()
+    {
+        FirstRun = false;
+        IsStatusMessageDisplayed = false;
+
+        DiscoveryPackage = ScreenshotData.CreateLLDPCDPPackage();
+        DiscoveryPackageReceived = true;
     }
 
     /// <summary>

@@ -10,7 +10,6 @@
              xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
              xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
              xmlns:wpfHelpers="clr-namespace:NETworkManager.Utilities.WPF;assembly=NETworkManager.Utilities.WPF"
-             xmlns:settings="clr-namespace:NETworkManager.Settings;assembly=NETworkManager.Settings"
              mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:LLDPCDPCaptureViewModel}">
     <UserControl.Resources>
         <converters:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
@@ -68,7 +67,7 @@
                                       SelectedItem="{Binding SelectedDuration}" />
                             <Button Grid.Column="8" Command="{Binding CaptureCommand}"
                                     wpfHelpers:PermissionToolTipHelper.Text="{x:Static localization:Strings.NetworkPacketsCaptureAdminMessage}"
-                                    wpfHelpers:PermissionToolTipHelper.HasPermission="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=IsAdmin}"
+                                    wpfHelpers:PermissionToolTipHelper.HasPermission="{Binding CanCapture}"
                                     Style="{StaticResource ImageWithTextButton}">
                                 <Button.Content>
                                     <Grid>
@@ -267,7 +266,7 @@
                         <icons:AdminNotice Text="{x:Static localization:Strings.NetworkPacketsCaptureAdminMessage}"
                                            Command="{Binding RestartAsAdminCommand}"
                                            Grid.Row="7"
-                                           Visibility="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=IsAdmin, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}"
+                                           Visibility="{Binding CanCapture, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}"
                                            Margin="0,10,0,0" />
                     </Grid>
             </Grid>
