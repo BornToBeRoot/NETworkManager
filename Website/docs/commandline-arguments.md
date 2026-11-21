@@ -80,6 +80,7 @@ Starts the application in screenshot mode to take consistent screenshots, e.g. f
 - The window has a fixed size of `1280x800` and is centered on the primary screen. It can't be resized or maximized.
 - The size is in device-independent pixels and is scaled with the Windows display scaling. For example, `1280x800` is `1920x1200` pixels with `150 %` scaling, which looks sharp on high-resolution screens.
 - The saved window position and size are not loaded and not overwritten.
+- The default theme and accent (**Dark** / **Mint**, accent glow **Medium**) are used instead of your appearance settings (they are not changed).
 - The window always looks like an active window (accent glow), even if the screenshot tool takes the focus.
 - Embedded **PowerShell** and **PuTTY** windows don't take the focus automatically (e.g. when the window is activated or the tab is switched), so the screenshot tool keeps it. Click into the console to type.
 - The **Dashboard** shows sample data instead of your own IP addresses, hostnames, provider and location (network connection, IP geolocation, DNS resolver, speed test). It uses the address ranges and domains reserved for documentation (e.g. `203.0.113.0/24`, `2001:db8::/32`, `example.net`). The speed test shows a sample result without running a test.
