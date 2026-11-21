@@ -135,6 +135,7 @@ public class SettingsViewModel : ViewModelBase
     private SNMPSettingsView _snmpSettingsView;
     private SNTPLookupSettingsView _sntpLookupSettingsView;
     private FirewallSettingsView _firewallSettingsView;
+    private MDNSDiscoverySettingsView _mdnsDiscoverySettingsView;
     private WakeOnLANSettingsView _wakeOnLANSettingsView;
     private RDAPSettingsView _rdapSettingsView;
     private BitCalculatorSettingsView _bitCalculatorSettingsView;
@@ -343,6 +344,11 @@ public class SettingsViewModel : ViewModelBase
                 _firewallSettingsView ??= new FirewallSettingsView();
 
                 SettingsContent = _firewallSettingsView;
+                break;
+            case SettingsName.MDNSDiscovery:
+                _mdnsDiscoverySettingsView ??= new MDNSDiscoverySettingsView();
+
+                SettingsContent = _mdnsDiscoverySettingsView;
                 break;
             case SettingsName.WakeOnLAN:
                 _wakeOnLANSettingsView ??= new WakeOnLANSettingsView();

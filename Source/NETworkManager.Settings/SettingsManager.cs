@@ -494,6 +494,10 @@ public static class SettingsManager
         if (fromVersion < new Version(2026, 7, 7, 0))
             UpgradeTo_2026_7_7_0();
 
+        // 2026.11.15.0
+        if (fromVersion < new Version(2026, 11, 15, 0))
+            UpgradeTo_2026_11_15_0();
+
         // Latest
         if (fromVersion < toVersion)
             UpgradeToLatest(toVersion);
@@ -738,12 +742,11 @@ public static class SettingsManager
     }
 
     /// <summary>
-    ///     Method to apply changes for the latest version.
+    ///     Method to apply changes for version 2026.11.15.0.
     /// </summary>
-    /// <param name="version">Latest version.</param>
-    private static void UpgradeToLatest(Version version)
+    private static void UpgradeTo_2026_11_15_0()
     {
-        Log.Info($"Apply upgrade to {version}...");
+        Log.Info("Apply upgrade to 2026.11.15.0...");
 
         // Add RDAP application
         if (Current.General_ApplicationList.All(x => x.Name != ApplicationName.RDAP))
@@ -915,6 +918,36 @@ public static class SettingsManager
             Current.Network_CustomDNSServer = string.Empty; // Clear the old property to avoid multiple migrations with pre-release versions
         }
 #pragma warning restore CS0618
+    }
+
+    /// <summary>
+    ///     Method to apply changes for the latest version.
+    /// </summary>
+    /// <param name="version">Latest version.</param>
+    private static void UpgradeToLatest(Version version)
+    {
+        Log.Info($"Apply upgrade to {version}...");
+
+        // Add mDNS Discovery application
+        if (Current.General_ApplicationList.All(x => x.Name != ApplicationName.MDNSDiscovery))
+        {
+            Log.Info($"Add new app {nameof(ApplicationName.MDNSDiscovery)}.");
+
+            var defaultList = ApplicationManager.GetDefaultList().ToList();
+
+            Current.General_ApplicationList.Insert(
+                Math.Min(defaultList.FindIndex(x => x.Name == ApplicationName.MDNSDiscovery),
+                    Current.General_ApplicationList.Count),
+                defaultList.First(x => x.Name == ApplicationName.MDNSDiscovery));
+        }
+
+        // mDNS Discovery - Add the missing default service type profiles (like the port profiles of the Port Scanner)
+        foreach (var profile in MDNSServiceTypeProfile.GetDefaultList().Where(profile =>
+                     MDNSServiceTypeProfile.FindByName(Current.MDNSDiscovery_ServiceTypeProfiles, profile.Name) == null))
+        {
+            Log.Info($"Add \"{profile.Name}\" to \"MDNSDiscovery_ServiceTypeProfiles\"...");
+            Current.MDNSDiscovery_ServiceTypeProfiles.Add(profile);
+        }
     }
     #endregion
 }

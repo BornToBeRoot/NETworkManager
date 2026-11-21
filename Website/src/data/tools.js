@@ -28,6 +28,11 @@ const tools = [
     to: "/docs/application/discovery-protocol",
     note: "LLDP, CDP",
   },
+  {
+    name: "mDNS Discovery",
+    to: "/docs/application/mdns-discovery",
+    note: "Printers, scanners, web and media services",
+  },
   { name: "Wake on LAN", to: "/docs/application/wake-on-lan" },
   {
     name: "RDAP",

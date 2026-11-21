@@ -29,6 +29,7 @@ public enum SettingsName
     SNMP,
     SNTPLookup,
     Firewall,
+    MDNSDiscovery,
     WakeOnLAN,
     RDAP,
     BitCalculator,

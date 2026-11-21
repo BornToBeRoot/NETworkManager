@@ -92,7 +92,8 @@
                                               Grid.Column="0" Grid.Row="2"
                                               ItemsSource="{Binding ResultsView}"
                                               SelectedItem="{Binding SelectedResult}"
-                                              SelectedItemsList="{Binding SelectedResults, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                              SelectedItemsList="{Binding SelectedResults, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                              wpfHelpers:DataGridHelper.FillRemainingWidth="True">
                     <controls:MultiSelectDataGrid.Resources>
                         <ContextMenu x:Key="RowContextMenu" DataContext="{Binding Data, Source={StaticResource BindingProxy}}" Opened="ContextMenu_Opened" MinWidth="150">
                             <MenuItem Header="{x:Static Member=localization:Strings.EnableEntry}"

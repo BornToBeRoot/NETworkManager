@@ -21,7 +21,8 @@
         <TextBlock Text="{x:Static localization:Strings.DNSServer}" Style="{DynamicResource DefaultTextBlock}"
                    Margin="0,0,0,10" />
         <DataGrid x:Name="DataGridDNSServers" ItemsSource="{Binding DNSServers}" SelectionMode="Single"
-                  SelectedItem="{Binding SelectedDNSServer}" Height="200" Margin="0,0,0,10">
+                  SelectedItem="{Binding SelectedDNSServer}" Height="200" Margin="0,0,0,10"
+                  wpfHelpers:DataGridHelper.FillRemainingWidth="True">
             <DataGrid.Resources>
                 <ContextMenu x:Key="RowContextMenu" DataContext="{Binding Data, Source={StaticResource BindingProxy}}" MinWidth="150">
                     <MenuItem Header="{x:Static localization:Strings.EditDots}"

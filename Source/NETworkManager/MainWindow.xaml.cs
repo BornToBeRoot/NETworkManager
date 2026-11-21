@@ -499,6 +499,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
                 SettingsManager.Current.General_ApplicationList = [.. ApplicationManager.GetDefaultList()];
                 SettingsManager.Current.IPScanner_CustomCommands = [.. IPScannerCustomCommand.GetDefaultList()];
                 SettingsManager.Current.PortScanner_PortProfiles = [.. PortProfile.GetDefaultList()];
+                SettingsManager.Current.MDNSDiscovery_ServiceTypeProfiles = [.. MDNSServiceTypeProfile.GetDefaultList()];
                 SettingsManager.Current.DNSLookup_DNSServers = [.. DNSServer.GetDefaultList()];
                 SettingsManager.Current.SNMP_OidProfiles = [.. SNMPOIDProfile.GetDefaultList()];
                 SettingsManager.Current.SNTPLookup_SNTPServers = [.. SNTPServer.GetDefaultList()];
@@ -693,6 +694,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
     private HostsFileEditorView _hostsFileEditorView;
     private FirewallView _firewallView;
     private DiscoveryProtocolView _discoveryProtocolView;
+    private MDNSDiscoveryView _mdnsDiscoveryView;
     private WakeOnLANView _wakeOnLanView;
     private SubnetCalculatorHostView _subnetCalculatorHostView;
     private BitCalculatorView _bitCalculatorView;
@@ -857,6 +859,14 @@ public sealed partial class MainWindow : INotifyPropertyChanged
 
                 ContentControlApplication.Content = _discoveryProtocolView;
                 break;
+            case ApplicationName.MDNSDiscovery:
+                if (_mdnsDiscoveryView == null)
+                    _mdnsDiscoveryView = new MDNSDiscoveryView();
+                else
+                    _mdnsDiscoveryView.OnViewVisible();
+
+                ContentControlApplication.Content = _mdnsDiscoveryView;
+                break;
             case ApplicationName.WakeOnLAN:
                 if (_wakeOnLanView == null)
                     _wakeOnLanView = new WakeOnLANView();
@@ -1000,6 +1010,9 @@ public sealed partial class MainWindow : INotifyPropertyChanged
                 break;
             case ApplicationName.DiscoveryProtocol:
                 _discoveryProtocolView?.OnViewHide();
+                break;
+            case ApplicationName.MDNSDiscovery:
+                _mdnsDiscoveryView?.OnViewHide();
                 break;
             case ApplicationName.WakeOnLAN:
                 _wakeOnLanView?.OnViewHide();

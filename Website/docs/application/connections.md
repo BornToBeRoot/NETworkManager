@@ -1,5 +1,5 @@
 ---
-sidebar_position: 26
+sidebar_position: 27
 description: "View all active TCP connections with source and destination endpoints and associated processes. NETworkManager Connections works like an enhanced netstat."
 keywords: [NETworkManager, connections, active connections, netstat, TCP connections, network connections]
 ---

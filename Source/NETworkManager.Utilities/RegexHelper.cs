@@ -291,6 +291,17 @@ public static partial class RegexHelper
     [GeneratedRegex(@"^[A-Za-z][A-Za-z0-9-]*=[^,]+(,\s*[A-Za-z][A-Za-z0-9-]*=[^,]+)*$")]
     public static partial Regex LdapSearchBaseRegex();
 
+    /// <summary>
+    ///     Provides a compiled regular expression that matches a DNS-SD service type in lowercase, with an optional
+    ///     ".local" (without the final dot), e.g. "_ipp._tcp" or "_pdl-datastream._tcp.local". The service name is an
+    ///     RFC 6335 service name: 1 - 15 letters, digits and hyphens, at least one letter, no hyphen at the start / end
+    ///     and no consecutive hyphens.
+    /// </summary>
+    /// <returns>A <see cref="Regex"/> instance that matches local DNS-SD service types.</returns>
+    [GeneratedRegex(@"^_(?=[a-z0-9-]*[a-z])(?![a-z0-9-]*--)[a-z0-9](?:[a-z0-9-]{0,13}[a-z0-9])?\._(?:tcp|udp)(?:\.local)?$",
+        RegexOptions.CultureInvariant)]
+    public static partial Regex MDNSServiceTypeRegex();
+
     // Match a hosts file entry with optional comments, supporting IPv4, IPv6, and hostnames
     // ^*                                    : Matches the beginning of the line
     // (#)?                                  : Optionally matches a comment (#) at the start of the line

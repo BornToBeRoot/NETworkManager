@@ -34,6 +34,9 @@ public class RunCommandTargetTests
     [InlineData("80-90/tcp", RunCommandTargetKind.Ports)]
     [InlineData("AS13335", RunCommandTargetKind.ASN)]
     [InlineData("https://borntoberoot.net", RunCommandTargetKind.URL)]
+    [InlineData("_ipp._tcp", RunCommandTargetKind.ServiceType)]
+    [InlineData("_http._tcp.local.", RunCommandTargetKind.ServiceType)]
+    [InlineData("*", RunCommandTargetKind.ServiceType)]
     public void Kind(string target, RunCommandTargetKind kind)
     {
         Assert.Equal(kind, RunCommandTarget.GetKind(target));
