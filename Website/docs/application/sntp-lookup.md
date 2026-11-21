@@ -25,6 +25,10 @@ SNTP (Simple Network Time Protocol) is a simplified version of NTP (Network Time
 | **Copy** | Copies the selected information to the clipboard |
 | **Export...** | Exports the results shown (all or the selected ones) to a file in the order shown, see [Export format](../faq/export-format.md) |
 
+## Run command
+
+Open the tool with `sntplookup`. The command accepts no target and no profile, see [Run Command](../run-command.md).
+
 ## Settings
 
 ### SNTP servers
@@ -59,3 +63,10 @@ Timeout in milliseconds after the SNTP request is canceled.
 **Type:** `Integer` [Min `100`, Max `15000`]
 
 **Default:** `4000`
+
+## Troubleshooting and limits
+
+- The SNTP servers must be reachable via UDP port `123` (or the port of the server). Many company networks only allow the internal time servers: add them as an [SNTP server](#sntp-servers) profile.
+- A server that doesn't answer within the [timeout](#timeout-ms) is shown with an error, also if its hostname can't be resolved.
+- The offset is calculated like NTP from one request and includes the asymmetry of the network delay; on a slow or busy link (e.g. VPN, Wi-Fi), the offset varies by some milliseconds. Use a server close to you for a precise value.
+- The tool only shows the time, it doesn't set the clock of the computer.
