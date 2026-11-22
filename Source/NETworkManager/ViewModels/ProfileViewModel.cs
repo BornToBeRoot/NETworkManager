@@ -74,6 +74,20 @@ public class ProfileViewModel : ViewModelBase
             : profileInfo.NetworkInterface_Enabled;
         _networkInterfaceBoundId = profileInfo.NetworkInterface_InterfaceId;
         _networkInterfaceBoundName = profileInfo.NetworkInterface_InterfaceName;
+
+        // Show the bound network interface (stored name) until the network interfaces are loaded, which is only done
+        // when they are needed (e.g. not for a profile with Network Interface disabled, see LoadNetworkInterfacesIfNeeded)
+        if (profileInfo.NetworkInterface_BindToInterface && !string.IsNullOrEmpty(_networkInterfaceBoundId))
+        {
+            NetworkInterface_SelectedInterface = new NetworkInterfaceInfo
+            {
+                Id = _networkInterfaceBoundId,
+                Name = _networkInterfaceBoundName
+            };
+
+            NetworkInterface_Interfaces.Add(NetworkInterface_SelectedInterface);
+        }
+
         NetworkInterface_BindToInterface = profileInfo.NetworkInterface_BindToInterface;
         NetworkInterface_EnableDynamicIPAddress = !profileInfo.NetworkInterface_EnableStaticIPAddress;
         NetworkInterface_EnableStaticIPAddress = profileInfo.NetworkInterface_EnableStaticIPAddress;
