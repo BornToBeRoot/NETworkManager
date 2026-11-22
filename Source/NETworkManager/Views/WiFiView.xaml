@@ -985,30 +985,51 @@
                 <icons:EmptyStateMessage Icon="WifiOff" Text="{x:Static Member=localization:Strings.NoWiFiAdaptersFound}"
                            Visibility="{Binding Path=IsAdaptersLoading, Converter={StaticResource ResourceKey=BooleanReverseToVisibilityCollapsedConverter}}"
                            Margin="0,0,0,10" />
-                <Button Command="{Binding Path=ReloadAdaptersCommand}"
-                        IsEnabled="{Binding Path=IsAdaptersLoading, Converter={StaticResource ResourceKey=BooleanReverseConverter}}"
-                        Visibility="{Binding Path=IsAdaptersLoading, Converter={StaticResource ResourceKey=BooleanReverseToVisibilityCollapsedConverter}}"
-                        HorizontalAlignment="Center"
-                        Style="{StaticResource ResourceKey=ImageWithTextButton}">
-                    <Button.Content>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-                            <Rectangle Grid.Column="0" Grid.Row="0"
-                                       Style="{StaticResource ResourceKey=ButtonWithImageRectangle}">
-                                <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform"
-                                                 Visual="{icons:Lucide Kind=RefreshCw}" />
-                                </Rectangle.OpacityMask>
-                            </Rectangle>
-                            <TextBlock Grid.Column="1" Grid.Row="0"
-                                       Text="{x:Static Member=localization:Strings.Refresh}"
-                                       Style="{StaticResource ResourceKey=ButtonWithImageTextBlock}" />
-                        </Grid>
-                    </Button.Content>
-                </Button>
+                <!-- Refresh and the network connections of Windows (e.g. to enable a disabled adapter), like Network
+                     Interface -->
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"
+                            Visibility="{Binding Path=IsAdaptersLoading, Converter={StaticResource ResourceKey=BooleanReverseToVisibilityCollapsedConverter}}">
+                    <Button Command="{Binding Path=ReloadAdaptersCommand}"
+                            IsEnabled="{Binding Path=IsAdaptersLoading, Converter={StaticResource ResourceKey=BooleanReverseConverter}}"
+                            Style="{StaticResource ResourceKey=ImageWithTextButton}" Margin="0,0,10,0">
+                        <Button.Content>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Rectangle Grid.Column="0" Grid.Row="0"
+                                           Style="{StaticResource ResourceKey=ButtonWithImageRectangle}">
+                                    <Rectangle.OpacityMask>
+                                        <VisualBrush Stretch="Uniform"
+                                                     Visual="{icons:Lucide Kind=RefreshCw}" />
+                                    </Rectangle.OpacityMask>
+                                </Rectangle>
+                                <TextBlock Grid.Column="1" Grid.Row="0"
+                                           Text="{x:Static Member=localization:Strings.Refresh}"
+                                           Style="{StaticResource ResourceKey=ButtonWithImageTextBlock}" />
+                            </Grid>
+                        </Button.Content>
+                    </Button>
+                    <Button Command="{Binding OpenNetworkConnectionsCommand}"
+                            Style="{StaticResource ImageWithTextButton}">
+                        <Button.Content>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Rectangle Style="{StaticResource ButtonWithImageRectangle}">
+                                    <Rectangle.OpacityMask>
+                                        <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=EthernetPort}" />
+                                    </Rectangle.OpacityMask>
+                                </Rectangle>
+                                <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.NetworkConnectionsDots}"
+                                           Style="{StaticResource ButtonWithImageTextBlock}" />
+                            </Grid>
+                        </Button.Content>
+                    </Button>
+                </StackPanel>
                 <StackPanel VerticalAlignment="Center"
                             Visibility="{Binding Path=IsAdaptersLoading, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}">
                     <mah:ProgressRing IsActive="True" Style="{StaticResource ProgressRingLarge}"

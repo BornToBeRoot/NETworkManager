@@ -41,6 +41,10 @@ Release date: **xx.xx.2026**
 - Screenshot mode (`--screenshot`): sample network adapters and a filled bandwidth chart instead of your own adapters and a measurement. Configuration actions only show their result, nothing is changed. [#3728](https://github.com/BornToBeRoot/NETworkManager/pull/3728)
 - **Refresh** button next to **Network connections...** when no network adapter was found, like in **WiFi** (e.g. after an adapter was enabled). [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 
+**WiFi**
+
+- **Network connections...** button next to **Refresh** when no WiFi adapter was found (e.g. to enable a disabled adapter), like in **Network Interface**. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
+
 **LLDP / CDP Capture**
 
 - Renamed "Discovery Protocol" to "LLDP / CDP Capture", so it is clear what the tool does (and it is not confused with mDNS Discovery). The run command is now `lldpcdpcapture` with the aliases `lldp` and `cdp`, the documentation moved to [LLDP / CDP Capture](../application/lldp-cdp-capture.md). The selected protocol and duration are reset to the defaults. [#3721](https://github.com/BornToBeRoot/NETworkManager/issues/3721)

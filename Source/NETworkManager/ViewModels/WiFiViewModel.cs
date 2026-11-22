@@ -661,6 +661,31 @@ public class WiFiViewModel : ViewModelBase
         _ = LoadAdaptersAsync(SelectedAdapter?.NetworkInterfaceInfo.Id);
     }
 
+    /// <summary>
+    ///     Gets the command to open the network connections of Windows (e.g. to enable a disabled WiFi adapter), like
+    ///     Network Interface.
+    /// </summary>
+    public ICommand OpenNetworkConnectionsCommand =>
+        new RelayCommand(_ => OpenNetworkConnectionsAction(), _ => !DialogHelper.IsAnyDialogOpen());
+
+    private void OpenNetworkConnectionsAction()
+    {
+        _ = OpenNetworkConnectionsAsync();
+    }
+
+    private static async Task OpenNetworkConnectionsAsync()
+    {
+        try
+        {
+            ExternalProcessStarter.RunProcess("NCPA.cpl");
+        }
+        catch (Exception ex)
+        {
+            await DialogHelper.ShowMessageAsync(Application.Current.MainWindow, Strings.Error, ex.Message,
+                ChildWindowIcon.Error);
+        }
+    }
+
     public ICommand ScanNetworksCommand =>
         new RelayCommand(parameter => { _ = ScanNetworksAction(); }, ScanNetworks_CanExecute);
 
