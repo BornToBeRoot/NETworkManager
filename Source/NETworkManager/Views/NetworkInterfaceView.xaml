@@ -1375,6 +1375,8 @@
                                         <ColumnDefinition Width="*" />
                                         <ColumnDefinition Width="10" />
                                         <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="10" />
+                                        <ColumnDefinition Width="Auto" />
                                     </Grid.ColumnDefinitions>
                                     <WrapPanel Grid.Column="0" HorizontalAlignment="Left" Orientation="Horizontal" Margin="0,0,0,-10">
                                         <Button HorizontalAlignment="Left" Command="{Binding FlushDNSCommand}"
@@ -1454,7 +1456,7 @@
                                                 </MenuItem>
                                             </mah:DropDownButton.Items>
                                         </mah:DropDownButton>
-                                        <mah:DropDownButton Style="{StaticResource ImageDropDrownButton}" Margin="0,0,10,10">
+                                        <mah:DropDownButton Style="{StaticResource ImageDropDrownButton}" Margin="0,0,0,10">
                                             <mah:DropDownButton.Content>
                                                 <Grid>
                                                     <Grid.ColumnDefinitions>
@@ -1506,27 +1508,28 @@
                                                 </MenuItem>
                                             </mah:DropDownButton.Items>
                                         </mah:DropDownButton>
-                                        <Button HorizontalAlignment="Left" Command="{Binding AddProfileFromConfigurationCommand}"
-                                                Style="{StaticResource ImageWithTextButton}" Margin="0,0,0,10">
-                                            <Button.Content>
-                                                <Grid>
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="Auto" />
-                                                        <ColumnDefinition Width="*" />
-                                                    </Grid.ColumnDefinitions>
-                                                    <Rectangle Style="{StaticResource ButtonWithImageRectangle}">
-                                                        <Rectangle.OpacityMask>
-                                                            <VisualBrush Stretch="Uniform"
-                                                                         Visual="{icons:Lucide Kind=Plus}" />
-                                                        </Rectangle.OpacityMask>
-                                                    </Rectangle>
-                                                    <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.AddProfileDots}"
-                                                               Style="{StaticResource ButtonWithImageTextBlock}" />
-                                                </Grid>
-                                            </Button.Content>
-                                        </Button>
                                     </WrapPanel>
-                                    <Button Grid.Column="2" Command="{Binding ApplyConfigurationCommand}"
+                                    <!-- Uses the values of the form above, like Apply (the actions on the left change the system right away) -->
+                                    <Button Grid.Column="2" Command="{Binding AddProfileFromConfigurationCommand}"
+                                            Style="{StaticResource ImageWithTextButton}" VerticalAlignment="Bottom">
+                                        <Button.Content>
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="Auto" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+                                                <Rectangle Style="{StaticResource ButtonWithImageRectangle}">
+                                                    <Rectangle.OpacityMask>
+                                                        <VisualBrush Stretch="Uniform"
+                                                                     Visual="{icons:Lucide Kind=Plus}" />
+                                                    </Rectangle.OpacityMask>
+                                                </Rectangle>
+                                                <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.AddProfileDots}"
+                                                           Style="{StaticResource ButtonWithImageTextBlock}" />
+                                            </Grid>
+                                        </Button.Content>
+                                    </Button>
+                                    <Button Grid.Column="4" Command="{Binding ApplyConfigurationCommand}"
                                             wpfHelpers:PermissionToolTipHelper.Text="{x:Static localization:Strings.NetworkInterfaceConfigureAdminMessage}"
                                             wpfHelpers:PermissionToolTipHelper.HasPermission="{Binding HasPermissionToConfigure}"
                                             VerticalAlignment="Bottom">
