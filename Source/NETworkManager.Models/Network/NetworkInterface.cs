@@ -173,8 +173,6 @@ public sealed class NetworkInterface
                 }
             }
 
-            var noStaticDNSServers = IsDNSAutoconfigurationEnabled(networkInterface.Id);
-
             // Check if IPv4 protocol is available
             var ipv4ProtocolAvailable = true;
             IPv4InterfaceProperties ipv4Properties = null;
@@ -187,6 +185,9 @@ public sealed class NetworkInterface
             {
                 ipv4ProtocolAvailable = false;
             }
+
+            // Static DNS servers of IPv4, or of IPv6 if IPv4 is not available (e.g. IPv6 only)
+            var noStaticDNSServers = IsDNSAutoconfigurationEnabled(networkInterface.Id, ipv6: ipv4Properties == null);
 
             // Check if IPv6 protocol is available
             var ipv6ProtocolAvailable = true;
@@ -543,7 +544,8 @@ public sealed class NetworkInterface
     /// <param name="noStaticDNSServers">No static DNS servers are set (see <see cref="IsDNSAutoconfigurationEnabled" />),
     /// <see langword="null" /> if unknown.</param>
     /// <param name="dhcpEnabled">DHCP is enabled for the IPv4 address, <see langword="null" /> if IPv4 is not available
-    /// (e.g. IPv6 only: DNS servers obtained via IPv6 are not affected by a static IPv4 address).</param>
+    /// (e.g. IPv6 only: then <paramref name="noStaticDNSServers" /> is about the IPv6 DNS servers, which are not affected
+    /// by a static IPv4 address).</param>
     /// <returns><see langword="true" /> if the DNS servers are obtained automatically.</returns>
     public static bool IsDNSAutoconfigured(bool? noStaticDNSServers, bool? dhcpEnabled)
     {
@@ -555,11 +557,12 @@ public sealed class NetworkInterface
     /// detected via the registry: the "NameServer" value of the interface is empty, if no static DNS servers are set.
     /// </summary>
     /// <param name="interfaceId">ID (GUID) of the network interface.</param>
+    /// <param name="ipv6">Check the IPv6 DNS servers ("Tcpip6") instead of the IPv4 ones ("Tcpip").</param>
     /// <returns>Whether DNS autoconfiguration is enabled, or <see langword="null" /> if it cannot be determined.</returns>
-    private static bool? IsDNSAutoconfigurationEnabled(string interfaceId)
+    private static bool? IsDNSAutoconfigurationEnabled(string interfaceId, bool ipv6 = false)
     {
         using var interfaceKey = Registry.LocalMachine.OpenSubKey(
-            $@"SYSTEM\CurrentControlSet\Services\Tcpip\Parameters\Interfaces\{interfaceId}");
+            $@"SYSTEM\CurrentControlSet\Services\{(ipv6 ? "Tcpip6" : "Tcpip")}\Parameters\Interfaces\{interfaceId}");
 
         var nameServer = interfaceKey?.GetValue("NameServer");
 
