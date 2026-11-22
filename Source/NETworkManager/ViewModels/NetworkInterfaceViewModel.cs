@@ -524,7 +524,7 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
             if (value == base.SelectedProfile)
                 return;
 
-            // Another profile (or none) selected by the user: a profile that waits for the first load is not loaded
+            // Another profile (or none) selected by the user: a profile that waits for the load is not loaded
             if (!IsProfileSelectedByCode)
                 _pendingProfile = null;
 
@@ -806,15 +806,15 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
 
     /// <summary>
     /// Loads a profile (selects its bound network interface and fills in its values). While the network interfaces are
-    /// loaded the first time (e.g. the run command opened the tool, the view model was created right before), it is
-    /// loaded afterwards: the bound network interface is not in the list yet, and the first selection would replace
-    /// the values with the ones of the selected network interface. A later selection replaces it.
-    /// Not needed for a reload (e.g. after a network change): the list is replaced at once on the UI thread, and the
-    /// network interface of the profile stays selected (preferred, see SelectNetworkInterfaceOfProfile).
+    /// (re)loaded, it is loaded afterwards: the first load (e.g. the run command opened the tool, the view model was
+    /// created right before) has no network interfaces yet, and a reload (e.g. a VPN or USB adapter was connected /
+    /// removed) can add or remove the bound network interface or select another one, which would replace the values.
+    /// Any change of the profile selection by the user drops it; configuration actions (and Reset) are disabled while
+    /// the network interfaces are loaded, so they can't be overridden by it.
     /// </summary>
     private void LoadProfileAfterLoad(ProfileInfo profile)
     {
-        if (IsNetworkInterfaceLoading && NetworkInterfaces.Count == 0)
+        if (IsNetworkInterfaceLoading)
         {
             _pendingProfile = profile;
             return;
@@ -994,7 +994,7 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
         ResetConfiguration_CanExecute);
 
     private bool ResetConfiguration_CanExecute(object parameter) =>
-        SelectedNetworkInterface != null && !IsConfigurationRunning;
+        SelectedNetworkInterface != null && !IsConfigurationRunning && !IsNetworkInterfaceLoading;
 
     private void ResetConfigurationAction()
     {
@@ -1049,7 +1049,7 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
     /// <summary>
     /// Configuration actions that don't need a network interface (e.g. flush DNS cache). Only one runs at a time, not
     /// while the network interfaces are (re)loaded (like modify vs. refresh in the other tools: a profile selected
-    /// meanwhile is loaded after the load, see LoadPendingProfile, and would hide the result).
+    /// meanwhile is loaded after the load, see LoadProfileAfterLoad, and would hide the result / switch the adapter).
     /// </summary>
     private bool ConfigureCommands_CanExecute(object parameter) => HasPermissionToConfigure &&
                                                                    !IsConfigurationRunning &&
