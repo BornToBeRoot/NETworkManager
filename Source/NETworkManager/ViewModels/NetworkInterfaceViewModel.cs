@@ -524,6 +524,10 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
             if (value == base.SelectedProfile)
                 return;
 
+            // Another profile (or none) selected by the user: a profile that waits for the first load is not loaded
+            if (!IsProfileSelectedByCode)
+                _pendingProfile = null;
+
             // Only if the user selects the profile. The profile list is rebuilt (and the previous or the first profile
             // selected again) when the view becomes visible, on search / filter and when a profile changes: this
             // must not overwrite the values entered on the Configure tab or switch the network interface.
@@ -802,13 +806,15 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
 
     /// <summary>
     /// Loads a profile (selects its bound network interface and fills in its values). While the network interfaces are
-    /// (re)loaded (e.g. the tool was opened the first time, a network change), it is loaded afterwards: the bound
-    /// network interface may not be in the list yet, and the load would replace the values with the ones of the
-    /// selected network interface. A later selection replaces it.
+    /// loaded the first time (e.g. the run command opened the tool, the view model was created right before), it is
+    /// loaded afterwards: the bound network interface is not in the list yet, and the first selection would replace
+    /// the values with the ones of the selected network interface. A later selection replaces it.
+    /// Not needed for a reload (e.g. after a network change): the list is replaced at once on the UI thread, and the
+    /// network interface of the profile stays selected (preferred, see SelectNetworkInterfaceOfProfile).
     /// </summary>
     private void LoadProfileAfterLoad(ProfileInfo profile)
     {
-        if (IsNetworkInterfaceLoading)
+        if (IsNetworkInterfaceLoading && NetworkInterfaces.Count == 0)
         {
             _pendingProfile = profile;
             return;
