@@ -214,12 +214,12 @@ const config = {
             to: "/docs/changelog/2026-11-15-0",
           },
           // Redirect pre-versions to the corresponding new versions
-          // {
-          //   from: [
-          //     "/docs/changelog/2026-x-x-0",
-          //   ],
-          //   to: "/docs/changelog/next-release",
-          // },
+          {
+            from: [
+              "/docs/changelog/2026-11-22-0"
+            ],
+            to: "/docs/changelog/next-release",
+          },
           {
             from: [
               "/docs/changelog/2026-7-16-0",
@@ -254,10 +254,7 @@ const config = {
             to: "/docs/changelog/2026-2-22-0",
           },
           {
-            from: [
-              "/docs/changelog/2025-6-13-0", 
-              "/docs/changelog/2025-7-9-0"
-            ],
+            from: ["/docs/changelog/2025-6-13-0", "/docs/changelog/2025-7-9-0"],
             to: "/docs/changelog/2025-8-10-0",
           },
           // Redirect legacy ARP Table to Neighbor Table
