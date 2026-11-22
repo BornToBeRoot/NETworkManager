@@ -1041,10 +1041,13 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
     }
 
     /// <summary>
-    /// Configuration actions that don't need a network interface (e.g. flush DNS cache). Only one runs at a time.
+    /// Configuration actions that don't need a network interface (e.g. flush DNS cache). Only one runs at a time, not
+    /// while the network interfaces are (re)loaded (like modify vs. refresh in the other tools: a profile selected
+    /// meanwhile is loaded after the load, see LoadPendingProfile, and would hide the result).
     /// </summary>
     private bool ConfigureCommands_CanExecute(object parameter) => HasPermissionToConfigure &&
                                                                    !IsConfigurationRunning &&
+                                                                   !IsNetworkInterfaceLoading &&
                                                                    !DialogHelper.IsAnyDialogOpen();
 
     /// <summary>
