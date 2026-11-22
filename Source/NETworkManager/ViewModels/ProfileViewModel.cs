@@ -626,7 +626,10 @@ public class ProfileViewModel : ViewModelBase
 
         try
         {
-            networkInterfaces = await NetworkInterface.GetNetworkInterfacesAsync();
+            // Sample network interfaces in the screenshot mode (like the Network Interface tool)
+            networkInterfaces = ScreenshotData.IsEnabled
+                ? ScreenshotData.CreateNetworkInterfaces()
+                : await NetworkInterface.GetNetworkInterfacesAsync();
         }
         catch (Exception ex)
         {

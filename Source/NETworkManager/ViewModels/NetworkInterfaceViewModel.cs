@@ -73,7 +73,10 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
     /// Gets a value indicating whether the application has the permission to change the network configuration
     /// (running as administrator or as member of the "Network Configuration Operators" group).
     /// </summary>
-    public bool HasPermissionToConfigure { get; } = NetworkInterface.HasPermissionToConfigure();
+    /// <remarks>Always in the screenshot mode (<see cref="ScreenshotData" />): nothing is changed there, see
+    /// <see cref="RunConfigurationAsync" />.</remarks>
+    public bool HasPermissionToConfigure { get; } =
+        NetworkInterface.HasPermissionToConfigure() || ScreenshotData.IsEnabled;
 
     /// <summary>
     /// Gets or sets a value indicating whether configuration is allowed.
@@ -777,7 +780,7 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
         try
         {
             // Get all network interfaces...
-            (await NetworkInterface.GetNetworkInterfacesAsync()).ForEach(NetworkInterfaces.Add);
+            (await GetNetworkInterfacesAsync()).ForEach(NetworkInterfaces.Add);
 
             // Get the last selected interface, if it is still available on this machine...
             SelectNetworkInterfaceAfterLoad(null);
@@ -1310,7 +1313,7 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
             var id = SelectedNetworkInterface?.Id;
 
             // Get all network interfaces...
-            var networkInterfaces = await NetworkInterface.GetNetworkInterfacesAsync();
+            var networkInterfaces = await GetNetworkInterfacesAsync();
 
             // Invoke on UI thread synchronously
             Application.Current.Dispatcher.Invoke(() =>
@@ -1373,8 +1376,22 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
     /// </summary>
     private void RememberNetworkInterface(NetworkInterfaceInfo networkInterface)
     {
-        SettingsManager.Current.NetworkInterface_InterfaceId = networkInterface.Id;
+        // Not saved in the screenshot mode (sample network interfaces)
+        if (!ScreenshotData.IsEnabled)
+            SettingsManager.Current.NetworkInterface_InterfaceId = networkInterface.Id;
+
         _preferredNetworkInterfaceId = networkInterface.Id;
+    }
+
+    /// <summary>
+    /// Gets the network interfaces of this computer, or the sample network interfaces in the screenshot mode
+    /// (<see cref="ScreenshotData" />).
+    /// </summary>
+    private static Task<List<NetworkInterfaceInfo>> GetNetworkInterfacesAsync()
+    {
+        return ScreenshotData.IsEnabled
+            ? Task.FromResult(ScreenshotData.CreateNetworkInterfaces())
+            : NetworkInterface.GetNetworkInterfacesAsync();
     }
 
     /// <summary>
@@ -1661,7 +1678,9 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
 
         try
         {
-            await action();
+            // Nothing is changed in the screenshot mode (sample network interfaces), only the result is shown
+            if (!ScreenshotData.IsEnabled)
+                await action();
 
             StatusMessage = successMessage;
             StatusMessageLevel = StatusLevel.Success;
@@ -1880,6 +1899,12 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
         // Reset statistic
         _resetBandwidthStatisticOnNextUpdate = true;
 
+        if (ScreenshotData.IsEnabled)
+        {
+            ShowScreenshotBandwidth(networkInterfaceId);
+            return;
+        }
+
         _bandwidthMeter = new BandwidthMeter(networkInterfaceId);
         _bandwidthMeter.UpdateSpeed += BandwidthMeter_UpdateSpeed;
 
@@ -1887,6 +1912,27 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
         // the measurement when the view becomes visible (ResumeBandwidthMeter).
         if (_isViewVisible)
             _bandwidthMeter.Start();
+    }
+
+    /// <summary>
+    /// Fills the bandwidth chart and statistics with sample values in the screenshot mode (<see cref="ScreenshotData" />),
+    /// instead of a measurement (static, no live updates). Only for a connected network interface.
+    /// </summary>
+    private void ShowScreenshotBandwidth(string networkInterfaceId)
+    {
+        if (NetworkInterface.FindById(NetworkInterfaces, networkInterfaceId) is not { IsOperational: true })
+            return;
+
+        var samples = ScreenshotData.CreateBandwidthSamples((int)BandwidthChartWindowSeconds);
+
+        _bandwidthSessionStartTime = samples[0].DateTime;
+
+        foreach (var sample in samples)
+            BandwidthMeter_UpdateSpeed(this, sample);
+
+        // The statistic started with the first sample (not now)
+        BandwidthStartTime = samples[0].DateTime;
+        BandwidthMeasuredTime = samples[^1].DateTime - BandwidthStartTime;
     }
 
     private void ResumeBandwidthMeter()
