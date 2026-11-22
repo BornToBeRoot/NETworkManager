@@ -2618,7 +2618,7 @@ ist deaktiviert!</value>
     <value>Nehmen Sie Netzwerkpakete auf, um LLDP oder CDP Informationen anzuzeigen.</value>
   </data>
   <data name="NoLLDPOrCDPPacketsReceived" xml:space="preserve">
-    <value>No LLDP or CDP packets received!</value>
+    <value>Keine LLDP- oder CDP-Pakete empfangen!</value>
   </data>
   <data name="CapturingNetworkPackagesDots" xml:space="preserve">
     <value>Netzwerkpakete werden aufgenommen...</value>
@@ -5571,87 +5571,132 @@ Scan starten?</value>
     <value>mDNS Discovery</value>
   </data>
   <data name="MDNSDiscovery_Browse" xml:space="preserve">
-    <value>Browse</value>
+    <value>Durchsuchen</value>
   </data>
   <data name="MDNSDiscovery_Empty" xml:space="preserve">
-    <value>No services found. Devices must advertise their services on the network of the selected interface; firewalls, VPNs and Wi-Fi client isolation can block discovery.</value>
+    <value>Keine Dienste gefunden. Geräte müssen ihre Dienste im Netzwerk des ausgewählten Interfaces ankündigen; Firewalls, VPNs und WLAN-Client-Isolation können die Erkennung blockieren.</value>
   </data>
   <data name="MDNSDiscovery_Failed" xml:space="preserve">
-    <value>Service discovery failed. Check the network interface and whether UDP port 5353 is available and allowed by the firewall.</value>
+    <value>Die Diensterkennung ist fehlgeschlagen. Prüfe das Netzwerkinterface und ob UDP-Port 5353 verfügbar und in der Firewall erlaubt ist.</value>
   </data>
   <data name="MDNSDiscovery_InvalidServiceType" xml:space="preserve">
-    <value>Enter *, service types such as _ipp._tcp and/or service type profiles, separated by ";".</value>
+    <value>Gib *, Diensttypen wie _ipp._tcp und/oder Diensttyp-Profile ein, getrennt durch „;".</value>
   </data>
   <data name="MDNSDiscovery_NoInterface" xml:space="preserve">
-    <value>No active network interface with multicast support was found.</value>
+    <value>Es wurde kein aktives Netzwerkinterface mit Multicast-Unterstützung gefunden.</value>
   </data>
   <data name="MDNSDiscovery_Priority" xml:space="preserve">
-    <value>SRV priority</value>
+    <value>SRV-Priorität</value>
   </data>
   <data name="MDNSDiscovery_ServiceType" xml:space="preserve">
-    <value>Service type</value>
+    <value>Diensttyp</value>
   </data>
   <data name="MDNSDiscovery_ServiceTypeHelp" xml:space="preserve">
-    <value>Enter * to discover all advertised service types (also probes common printer, scanner, web and media service types), or service types such as _ipp._tcp and/or service type profiles (e.g. Printers), separated by ";". The profiles can be changed in the settings. Discovery is limited to the local. domain.</value>
+    <value>Gib * ein, um alle angekündigten Diensttypen zu finden (fragt auch gängige Drucker-, Scanner-, Web- und Medien-Diensttypen ab), oder Diensttypen wie _ipp._tcp und/oder Diensttyp-Profile (z. B. Drucker), getrennt durch „;". Die Profile können in den Einstellungen geändert werden. Die Suche ist auf die Domain local. beschränkt.</value>
   </data>
   <data name="MDNSDiscovery_TXTRecords" xml:space="preserve">
-    <value>TXT records</value>
+    <value>TXT-Einträge</value>
   </data>
   <data name="MDNSDiscovery_Weight" xml:space="preserve">
-    <value>SRV weight</value>
+    <value>SRV-Gewichtung</value>
   </data>
   <data name="MDNSDiscovery_NoRecords" xml:space="preserve">
-    <value>No DNS records received.</value>
+    <value>Keine DNS-Einträge empfangen.</value>
   </data>
   <data name="MDNSDiscovery_UntilStopped" xml:space="preserve">
-    <value>Until stopped</value>
+    <value>Bis zum Stoppen</value>
   </data>
   <data name="MDNSDiscovery_XServices" xml:space="preserve">
-    <value>{0} services</value>
+    <value>{0} Dienste</value>
   </data>
   <data name="MDNSDiscovery_XRecords" xml:space="preserve">
-    <value>{0} records</value>
+    <value>{0} Einträge</value>
   </data>
   <data name="MDNSDiscovery_RawRecords" xml:space="preserve">
-    <value>Raw DNS records</value>
+    <value>DNS-Rohdaten</value>
   </data>
   <data name="MDNSDiscovery_ServiceTypeProfiles" xml:space="preserve">
-    <value>Service type profiles</value>
+    <value>Diensttyp-Profile</value>
   </data>
   <data name="MDNSDiscovery_AddServiceTypeProfile" xml:space="preserve">
-    <value>Add service type profile</value>
+    <value>Diensttyp-Profil hinzufügen</value>
   </data>
   <data name="MDNSDiscovery_EditServiceTypeProfile" xml:space="preserve">
-    <value>Edit service type profile</value>
+    <value>Diensttyp-Profil bearbeiten</value>
   </data>
   <data name="MDNSDiscovery_DeleteServiceTypeProfile" xml:space="preserve">
-    <value>Delete service type profile</value>
+    <value>Diensttyp-Profil löschen</value>
   </data>
   <data name="MDNSDiscovery_DeleteServiceTypeProfiles" xml:space="preserve">
-    <value>Delete service type profiles</value>
+    <value>Diensttyp-Profile löschen</value>
   </data>
   <data name="MDNSDiscovery_DeleteServiceTypeProfileMessage" xml:space="preserve">
-    <value>The selected service type profile will be deleted permanently.</value>
+    <value>Das ausgewählte Diensttyp-Profil wird unwiederbringlich gelöscht.</value>
   </data>
   <data name="MDNSDiscovery_DeleteServiceTypeProfilesMessage" xml:space="preserve">
-    <value>The selected service type profiles will be deleted permanently.</value>
+    <value>Die ausgewählten Diensttyp-Profile werden unwiederbringlich gelöscht.</value>
   </data>
   <data name="MDNSDiscovery_ServiceTypes" xml:space="preserve">
-    <value>Service types</value>
+    <value>Diensttypen</value>
   </data>
   <data name="MDNSDiscovery_ServiceTypeProfileNameInvalid" xml:space="preserve">
-    <value>The name must not contain ";" and must not be "*" or a service type.</value>
+    <value>Der Name darf kein „;" enthalten und weder „*" noch ein Diensttyp sein.</value>
   </data>
   <data name="MDNSDiscovery_EnterValidServiceTypes" xml:space="preserve">
-    <value>Enter service types such as _ipp._tcp, separated by ";".</value>
+    <value>Gib Diensttypen wie _ipp._tcp ein, getrennt durch „;".</value>
   </data>
   <data name="MDNSDiscovery_AllServiceTypes" xml:space="preserve">
-    <value>All advertised service types</value>
+    <value>Alle angekündigten Diensttypen</value>
   </data>
   <data name="MDNSDiscovery_EnterValidDuration" xml:space="preserve">
-    <value>Enter a duration in seconds: {0} (0 = until stopped).</value>
+    <value>Gib eine Dauer in Sekunden ein: {0} (0 = bis zum Stoppen).</value>
   </data>
   <data name="MDNSDiscovery_InterfaceNotAvailable" xml:space="preserve">
-    <value>The last used network interface is not available, "{0}" is used instead.</value>
+    <value>Das zuletzt verwendete Netzwerkinterface ist nicht verfügbar, stattdessen wird „{0}" verwendet.</value>
+  </data>
+  <data name="NetworkInterfaceConfigInvalidValueX" xml:space="preserve">
+    <value>„{0}" ist keine gültige IPv4-Adresse oder Subnetzmaske. Prüfe die Konfiguration (oder das Profil) und versuche es erneut.</value>
+  </data>
+  <data name="BindToNetworkInterface" xml:space="preserve">
+    <value>An Netzwerkinterface binden</value>
+  </data>
+  <data name="HelpMessage_BindToNetworkInterface" xml:space="preserve">
+    <value>Das Profil wird immer auf dieses Netzwerkinterface angewendet (nicht auf das in Netzwerkinterface ausgewählte), beim Auswählen des Profils wird auch das Netzwerkinterface ausgewählt. Das Netzwerkinterface wird über seine ID erkannt, die pro Computer eindeutig ist: Wähle auf einem anderen Computer das Netzwerkinterface erneut aus oder deaktiviere diese Option.</value>
+  </data>
+  <data name="NotFoundOnThisComputer" xml:space="preserve">
+    <value>Auf diesem Computer nicht gefunden</value>
+  </data>
+  <data name="NetworkInterfaceNotFound" xml:space="preserve">
+    <value>Netzwerkinterface nicht gefunden</value>
+  </data>
+  <data name="NetworkInterfaceOfProfileXNotFoundOnThisComputer" xml:space="preserve">
+    <value>Das Netzwerkinterface des Profils „{0}" wurde auf diesem Computer nicht gefunden:</value>
+  </data>
+  <data name="ApplyProfileToSelectedNetworkInterfaceXInstead" xml:space="preserve">
+    <value>Das Profil stattdessen auf das ausgewählte Netzwerkinterface „{0}" anwenden?</value>
+  </data>
+  <data name="FixNetworkInterfaceOfProfileHint" xml:space="preserve">
+    <value>Bearbeite das Profil und wähle ein anderes Netzwerkinterface aus oder deaktiviere „An Netzwerkinterface binden", um das zu beheben.</value>
+  </data>
+  <data name="NetworkInterfaceXNotFoundNothingChanged" xml:space="preserve">
+    <value>Das Netzwerkinterface „{0}" wurde nicht gefunden (z. B. wurde es entfernt). Es wurde nichts geändert.</value>
+  </data>
+  <data name="NetworkInterfaceXOfProfileNotFoundCheckSelected" xml:space="preserve">
+    <value>Das Netzwerkinterface „{0}" des Profils wurde auf diesem Computer nicht gefunden. Die Werte wurden für das ausgewählte Netzwerkinterface eingetragen, prüfe sie, bevor du sie anwendest.</value>
+  </data>
+  <data name="NetworkInterfaceConfigIPAddressAndSubnetmaskRequired" xml:space="preserve">
+    <value>Eine statische IP-Adresse benötigt eine IPv4-Adresse und eine Subnetzmaske. Prüfe die Konfiguration (oder das Profil) und versuche es erneut.</value>
+  </data>
+  <data name="FailedToLoadNetworkInterfacesTryAgain" xml:space="preserve">
+    <value>Die Netzwerkinterfaces konnten nicht geladen werden. Deaktiviere „An Netzwerkinterface binden" und aktiviere es erneut, um es nochmals zu versuchen.</value>
+  </data>
+  <data name="CommandXOnlyAcceptsAProfile" xml:space="preserve">
+    <value>Der Befehl „{0}" akzeptiert nur ein Profil: Gib „@" und den Namen des Profils ein!</value>
+  </data>
+  <data name="ProfileXNotLoadedConfigurationRunning" xml:space="preserve">
+    <value>Das Profil „{0}" wurde nicht geladen, weil gerade eine Konfiguration angewendet wird. Führe den Befehl erneut aus, wenn sie abgeschlossen ist.</value>
+  </data>
+  <data name="SearchingNetworkAdaptersDots" xml:space="preserve">
+    <value>Searching for network adapters...</value>
   </data>
 </root>
