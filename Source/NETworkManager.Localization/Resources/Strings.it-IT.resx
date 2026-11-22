@@ -2641,13 +2641,13 @@ Vedi messaggio errore: "{0}"</value>
     <value>Cattura pacchetti di rete per visualizzare le info LLDP o CDP!</value>
   </data>
   <data name="NoLLDPOrCDPPacketsReceived" xml:space="preserve">
-    <value>No LLDP or CDP packets received!</value>
+    <value>Nessun pacchetto LLDP o CDP ricevuto!</value>
   </data>
   <data name="CapturingNetworkPackagesDots" xml:space="preserve">
     <value>Cattura pacchetti rete...</value>
   </data>
   <data name="LLDPCDPCapture" xml:space="preserve">
-    <value>LLDP / CDP Capture</value>
+    <value>Cattura LLDP / CDP</value>
   </data>
   <data name="LLDPCDPProtocol_Cdp" xml:space="preserve">
     <value>CDP</value>
@@ -2698,7 +2698,7 @@ Vedi messaggio errore: "{0}"</value>
     <value>Pannello di controllo</value>
   </data>
   <data name="ApplicationName_LLDPCDPCapture" xml:space="preserve">
-    <value>LLDP / CDP Capture</value>
+    <value>Cattura LLDP / CDP</value>
   </data>
   <data name="ApplicationName_DNSLookup" xml:space="preserve">
     <value>Consultazione DNS</value>
@@ -5666,16 +5666,16 @@ Vuoi avviare la scansione?</value>
     <value>Licenza ISC</value>
   </data>
   <data name="ApplicationName_MDNSDiscovery" xml:space="preserve">
-    <value>mDNS Discovery</value>
+    <value>Ricerca mDNS</value>
   </data>
   <data name="MDNSDiscovery_Browse" xml:space="preserve">
-    <value>Browse</value>
+    <value>Sfoglia</value>
   </data>
   <data name="MDNSDiscovery_Empty" xml:space="preserve">
-    <value>No services found. Devices must advertise their services on the network of the selected interface; firewalls, VPNs and Wi-Fi client isolation can block discovery.</value>
+    <value>Nessun servizio trovato. I dispositivi devono pubblicizzare i loro servizi nella  rete della scheda selezionata; firewall, VPN e isolamento client Wi-Fi possono bloccare la rilevazione.</value>
   </data>
   <data name="MDNSDiscovery_Failed" xml:space="preserve">
-    <value>Service discovery failed. Check the network interface and whether UDP port 5353 is available and allowed by the firewall.</value>
+    <value>Servizio discovery non riuscito. Verifica la scheda di rete e se la porta UDP 5353 è disponibile e consentita dal firewall.</value>
   </data>
   <data name="MDNSDiscovery_InvalidServiceType" xml:space="preserve">
     <value>Enter *, service types such as _ipp._tcp and/or service type profiles, separated by ";".</value>
