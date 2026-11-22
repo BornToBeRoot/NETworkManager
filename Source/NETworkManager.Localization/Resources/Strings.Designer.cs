@@ -13497,6 +13497,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Searching for network adapters....
+        /// </summary>
+        public static string SearchingNetworkAdaptersDots {
+            get {
+                return ResourceManager.GetString("SearchingNetworkAdaptersDots", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Searching for WiFi adapters....
         /// </summary>
         public static string SearchingWiFiAdaptersDots {

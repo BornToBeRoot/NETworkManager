@@ -1606,8 +1606,12 @@
         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center"
                     Visibility="{Binding NetworkInterfaces.Count, Converter={StaticResource IntZeroToVisibilityCollapsedConverter}}"
                     Margin="10">
-            <icons:EmptyStateMessage Icon="EthernetPort" Text="{x:Static localization:Strings.NoEnabledNetworkAdaptersFound}" Margin="0,0,0,10" />
+            <!-- Not while the network adapters are loaded (e.g. the first load when the tool is opened), like WiFi -->
+            <icons:EmptyStateMessage Icon="EthernetPort" Text="{x:Static localization:Strings.NoEnabledNetworkAdaptersFound}"
+                                     Visibility="{Binding IsNetworkInterfaceLoading, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}"
+                                     Margin="0,0,0,10" />
             <Button Command="{Binding OpenNetworkConnectionsCommand}" HorizontalAlignment="Center"
+                    Visibility="{Binding IsNetworkInterfaceLoading, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}"
                     Style="{StaticResource ImageWithTextButton}">
                 <Button.Content>
                     <Grid>
@@ -1625,6 +1629,12 @@
                     </Grid>
                 </Button.Content>
             </Button>
+            <StackPanel VerticalAlignment="Center"
+                        Visibility="{Binding IsNetworkInterfaceLoading, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+                <mah:ProgressRing IsActive="True" Style="{StaticResource ProgressRingLarge}" Margin="0,0,0,10" />
+                <TextBlock Text="{x:Static localization:Strings.SearchingNetworkAdaptersDots}"
+                           Style="{StaticResource MessageTextBlock}" />
+            </StackPanel>
         </StackPanel>
     </Grid>
 </UserControl>

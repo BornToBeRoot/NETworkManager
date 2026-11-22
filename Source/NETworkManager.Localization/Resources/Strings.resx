@@ -5696,4 +5696,7 @@ Do you want to start the scan?</value>
   <data name="ProfileXNotLoadedConfigurationRunning" xml:space="preserve">
     <value>The profile "{0}" was not loaded, because a configuration is being applied. Run the command again when it has finished.</value>
   </data>
+  <data name="SearchingNetworkAdaptersDots" xml:space="preserve">
+    <value>Searching for network adapters...</value>
+  </data>
 </root>
