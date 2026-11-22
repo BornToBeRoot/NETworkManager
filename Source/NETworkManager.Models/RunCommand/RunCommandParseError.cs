@@ -11,5 +11,10 @@ public enum RunCommandParseError
     NoArguments,
     NoProfiles,
     MissingProfileName,
-    UnknownArgument
+    UnknownArgument,
+
+    /// <summary>
+    ///     A command without a target that accepts a profile (e.g. "networkinterface") got an argument without "@".
+    /// </summary>
+    OnlyProfile
 }

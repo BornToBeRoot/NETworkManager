@@ -143,7 +143,8 @@ public static partial class RunCommandParser
                 Position = RunCommandPosition.Target,
                 CurrentWord = endsWithWhitespace ? string.Empty : words[^1],
                 InputBeforeCurrentWord = string.Join(" ", tokens[..^(endsWithWhitespace ? 0 : 1)]) + " ",
-                Error = RunCommandParseError.NoArguments,
+                // A profile can follow (e.g. "networkinterface home" instead of "networkinterface @home")
+                Error = command.SupportsProfile ? RunCommandParseError.OnlyProfile : RunCommandParseError.NoArguments,
                 ErrorValue = command.Command
             };
 

@@ -89,7 +89,10 @@ public sealed class RunCommandParseResult
                 case RunCommandPosition.Type:
                     return RunCommandSyntaxPartKind.Type;
                 case RunCommandPosition.Target:
-                    return RunCommandSyntaxPartKind.Target;
+                    // Without a target, only a profile can follow the command (e.g. "networkinterface @home")
+                    return Command.SupportsTarget || !Command.SupportsProfile
+                        ? RunCommandSyntaxPartKind.Target
+                        : RunCommandSyntaxPartKind.Profile;
             }
 
             // A complete type keyword is being typed (e.g. "aaaa").

@@ -100,6 +100,8 @@ If a change fails (e.g. due to missing permissions), the error message of Window
 | **Release & Renew > IPv6 > Renew**                | Renews the IPv6 address via DHCPv6 for the selected adapter (`ipconfig /renew6 <ADAPTER>`)                                               |
 | **Additional config... > Add IPv4 address...**    | Opens a dialog to add an IPv4 address with a subnet mask or CIDR to the selected adapter                                                 |
 | **Additional config... > Remove IPv4 address...** | Opens a dialog to remove an IPv4 address from the selected adapter                                                                       |
+| **Reset** (icon next to **Configure**)            | Shows the current configuration of the selected adapter again (e.g. after a profile was selected or values were changed) |
+| **Add profile...**                                | Opens the profile dialog with the IP and DNS configuration of this tab, bound to the selected adapter (see [Bind to network interface](#bind-to-network-interface)) |
 | **Apply**                                         | Applies the IP and DNS configuration to the selected adapter                                                                             |
 
 :::note
@@ -132,9 +134,28 @@ netsh interface ipv4 set interface interface="Ethernet" dhcpstaticipcoexistence=
 
 ## Run command
 
-Open the tool with `networkinterface`. The command accepts no target and no profile, see [Run Command](../run-command.md).
+Open the tool with `networkinterface`. The command accepts no target, but a profile (`@profile`):
+
+```text
+networkinterface
+networkinterface @home
+```
+
+A profile is selected and its values are filled in on the **Configure** tab, like a double-click on the profile (also the network interface it is bound to, see [Bind to network interface](#bind-to-network-interface)). The profile is not applied, also not with `Enter`: check the values and click **Apply**. While a configuration is applied, the profile is not loaded (a message is shown). `Shift+Enter` behaves like `Enter`. See [Run Command](../run-command.md).
 
 ## Profile
+
+Selecting a profile fills in its values on the **Configure** tab, where they can be adjusted before **Apply**. Double-click a profile (or press `Enter`) to fill in its values again, e.g. after **Reset**. **Apply** in the context menu of a profile applies the profile directly.
+
+### Bind to network interface
+
+Apply the profile always to the network interface selected here (in the profile), not to the one selected in the **Network Interface** tool. Selecting the profile also selects the network interface, so the result can be checked on the **Information** tab after **Apply**. When the option is enabled, the network interface you last selected (or configured) in the **Network Interface** tool is preselected, or the first one if it is not available. A network interface selected by a profile is not used for this.
+
+The network interface is identified by its ID, which is unique per computer (the name, e.g. `Ethernet`, is not). If the network interface is not found on this computer (e.g. the profile file is used on another computer or the adapter was removed), selecting the profile fills in its values for the selected network interface and shows a warning. **Apply** in the context menu of the profile shows the name and ID of the missing network interface and asks whether the profile should be applied to the selected network interface instead. To fix this, edit the profile and select another network interface or disable this option.
+
+**Type:** `Boolean` + network interface
+
+**Default:** `Disabled`
 
 ### Obtain an IP address automatically
 

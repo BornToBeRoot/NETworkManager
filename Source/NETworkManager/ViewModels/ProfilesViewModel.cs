@@ -406,6 +406,9 @@ public class ProfilesViewModel : ViewModelBase, IProfileManager
                 ).OrderBy(x => x.Name)
         }.View;
 
+        // A profile that was edited meanwhile is a new object: select the edited one
+        profile = ProfileManager.GetCurrentProfile(profile);
+
         // Set specific profile or first if null
         SelectedProfile = null;
 

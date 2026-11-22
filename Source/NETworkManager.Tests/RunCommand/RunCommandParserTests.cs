@@ -48,6 +48,13 @@ public class RunCommandParserTests
             SupportsTarget = true, Types = ["oui", "port"], TypeBeforeTarget = true
         },
         new() { Type = RunCommandType.Application, Application = ApplicationName.Firewall, Command = "firewall" },
+        // No target, but a profile (optional)
+        new()
+        {
+            Type = RunCommandType.Application, Application = ApplicationName.NetworkInterface,
+            Command = "networkinterface", SupportsProfile = true,
+            SyntaxParts = [RunCommandSyntaxPart.OptionalProfile("Profile")]
+        },
         new() { Type = RunCommandType.Setting, Command = "settings" }
     ];
 
@@ -474,6 +481,41 @@ public class RunCommandParserTests
         Assert.Equal("<Hosts> [DNS server] [Type] | @<Profile>", result.Command.Syntax);
     }
 
+    [Fact]
+    public void SyntaxProfileWithoutTarget()
+    {
+        Assert.Equal("[@<Profile>]", Parse("networkinterface ").Command.Syntax);
+    }
+
+    [Theory]
+    [InlineData("networkinterface @home", "home")]
+    [InlineData("networkinterface @Home Office", "Home Office")]
+    public void ProfileWithoutTarget(string input, string profileName)
+    {
+        var result = Parse(input);
+
+        Assert.Equal(RunCommandParseError.None, result.Error);
+        Assert.Equal(profileName, result.ProfileName);
+        Assert.Null(result.Target);
+    }
+
+    [Theory]
+    [InlineData("networkinterface home")]
+    [InlineData("networkinterface 10.0.0.1 ")]
+    public void ProfileWithoutTargetNeedsAt(string input)
+    {
+        var result = Parse(input);
+
+        Assert.Equal(RunCommandParseError.OnlyProfile, result.Error);
+        Assert.Equal("networkinterface", result.ErrorValue);
+    }
+
+    [Fact]
+    public void ProfileWithoutTargetNotSupported()
+    {
+        Assert.Equal(RunCommandParseError.NoProfiles, Parse("firewall @home").Error);
+    }
+
     [Theory]
     [InlineData("dns", null)]
     [InlineData("dns ", RunCommandSyntaxPartKind.Target)]
@@ -492,6 +534,8 @@ public class RunCommandParserTests
     [InlineData("lookup ", RunCommandSyntaxPartKind.Type)]
     [InlineData("lookup port 2", RunCommandSyntaxPartKind.Target)]
     [InlineData("portscan 10.0.0.1 ", RunCommandSyntaxPartKind.Argument)]
+    [InlineData("networkinterface ", RunCommandSyntaxPartKind.Profile)]
+    [InlineData("networkinterface @ho", RunCommandSyntaxPartKind.Profile)]
     public void CurrentSyntaxPart(string input, RunCommandSyntaxPartKind? part)
     {
         Assert.Equal(part, Parse(input).CurrentSyntaxPart);

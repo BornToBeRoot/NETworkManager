@@ -173,8 +173,6 @@ public sealed class NetworkInterface
                 }
             }
 
-            var dnsAutoconfigurationEnabled = IsDNSAutoconfigurationEnabled(networkInterface.Id) == true;
-
             // Check if IPv4 protocol is available
             var ipv4ProtocolAvailable = true;
             IPv4InterfaceProperties ipv4Properties = null;
@@ -187,6 +185,9 @@ public sealed class NetworkInterface
             {
                 ipv4ProtocolAvailable = false;
             }
+
+            // Static DNS servers of IPv4, or of IPv6 if IPv4 is not available (e.g. IPv6 only)
+            var noStaticDNSServers = IsDNSAutoconfigurationEnabled(networkInterface.Id, ipv6: ipv4Properties == null);
 
             // Check if IPv6 protocol is available
             var ipv6ProtocolAvailable = true;
@@ -222,7 +223,7 @@ public sealed class NetworkInterface
                 IPv6AddressLinkLocal = [.. listIPv6AddressLinkLocal],
                 IPv6Address = [.. listIPv6Address],
                 IPv6Gateway = [.. listIPv6Gateway],
-                DNSAutoconfigurationEnabled = dnsAutoconfigurationEnabled,
+                DNSAutoconfigurationEnabled = IsDNSAutoconfigured(noStaticDNSServers, ipv4Properties?.IsDhcpEnabled),
                 DNSSuffix = ipProperties.DnsSuffix,
                 DNSServer = [.. ipProperties.DnsAddresses],
                 Profile = profileByAlias.GetValueOrDefault(networkInterface.Name, NetworkProfile.NotConfigured)
@@ -230,6 +231,34 @@ public sealed class NetworkInterface
         }
 
         return listNetworkInterfaceInfo;
+    }
+
+    /// <summary>
+    /// Finds a network interface by its ID (GUID, unique per computer; the name is not).
+    /// </summary>
+    /// <param name="networkInterfaces">Network interfaces, see <see cref="GetNetworkInterfaces"/>.</param>
+    /// <param name="id">ID of the network interface.</param>
+    /// <returns>The network interface, or <see langword="null" /> if the ID is empty or not found.</returns>
+    public static NetworkInterfaceInfo FindById(IEnumerable<NetworkInterfaceInfo> networkInterfaces, string id)
+    {
+        return string.IsNullOrEmpty(id) ? null : networkInterfaces.FirstOrDefault(x => x.Id == id);
+    }
+
+    /// <summary>
+    /// Gets the network interface to select after the list was (re)loaded: the remembered one (selected by the user,
+    /// also if it is back after it was missing, e.g. a VPN or USB adapter), then the one selected before the reload,
+    /// then the first one.
+    /// </summary>
+    /// <param name="networkInterfaces">Network interfaces, see <see cref="GetNetworkInterfaces"/>.</param>
+    /// <param name="rememberedId">ID of the preferred network interface (remembered in the settings, or selected by a
+    /// profile in this session).</param>
+    /// <param name="previousId">ID of the network interface selected before the reload.</param>
+    /// <returns>The network interface to select, or <see langword="null" /> if the list is empty.</returns>
+    public static NetworkInterfaceInfo GetNetworkInterfaceToSelect(
+        IReadOnlyCollection<NetworkInterfaceInfo> networkInterfaces, string rememberedId, string previousId)
+    {
+        return FindById(networkInterfaces, rememberedId) ?? FindById(networkInterfaces, previousId) ??
+            networkInterfaces.FirstOrDefault();
     }
 
     /// <summary>
@@ -456,23 +485,45 @@ public sealed class NetworkInterface
     /// gateway, and DNS server settings. Cannot be null.</param>
     private static void ConfigureNetworkInterface(NetworkInterfaceConfig config)
     {
-        var name = PowerShellHelper.EscapeSingleQuotes(config.Name);
-        var commands = new List<string>();
+        ThrowIfInvalid(config);
 
         // netsh returns an error if DHCP is already enabled. Skip these commands, so every error can be reported.
         var (dhcpEnabled, dnsAutoconfigurationEnabled) = GetCurrentDhcpState(config.Name);
 
-        // IP
+        RunCommands(GetConfigureCommands(config, dhcpEnabled, dnsAutoconfigurationEnabled));
+    }
+
+    /// <summary>
+    /// Gets the <c>netsh</c> commands to apply the configuration to a network interface. Switching to DHCP is skipped
+    /// if DHCP is already enabled, because <c>netsh</c> returns an error in that case.
+    /// </summary>
+    /// <param name="config">Configuration to apply (values must be validated, see <see cref="ThrowIfInvalid" />).</param>
+    /// <param name="dhcpEnabled">Whether DHCP is currently enabled for the IP address (<see langword="null" /> if unknown).</param>
+    /// <param name="dnsAutoconfigurationEnabled">Whether DHCP is currently enabled for the DNS servers (<see langword="null" /> if unknown).</param>
+    /// <returns>Commands to run.</returns>
+    public static List<string> GetConfigureCommands(NetworkInterfaceConfig config, bool? dhcpEnabled,
+        bool? dnsAutoconfigurationEnabled)
+    {
+        var name = PowerShellHelper.EscapeSingleQuotes(config.Name);
+        var commands = new List<string>();
+
+        // IP (without gateway: "gateway=none", an empty value is a syntax error)
         if (config.EnableStaticIPAddress)
-            commands.Add($"& netsh interface ipv4 set address name='{name}' source=static address={config.IPAddress} mask={config.Subnetmask} gateway={config.Gateway}");
+        {
+            var gateway = string.IsNullOrEmpty(config.Gateway) ? "none" : config.Gateway;
+
+            commands.Add($"& netsh interface ipv4 set address name='{name}' source=static address={config.IPAddress} mask={config.Subnetmask} gateway={gateway}");
+        }
         else if (dhcpEnabled != true)
+        {
             commands.Add($"& netsh interface ipv4 set address name='{name}' source=dhcp");
+        }
 
         // DNS
         if (config.EnableStaticDNS)
         {
             commands.Add($"& netsh interface ipv4 set dnsservers name='{name}' source=static address={config.PrimaryDNSServer} register=primary validate=no");
-          
+
             if (!string.IsNullOrEmpty(config.SecondaryDNSServer))
                 commands.Add($"& netsh interface ipv4 add dnsservers name='{name}' address={config.SecondaryDNSServer} index=2 validate=no");
         }
@@ -481,7 +532,24 @@ public sealed class NetworkInterface
             commands.Add($"& netsh interface ipv4 set dnsservers name='{name}' source=dhcp");
         }
 
-        RunCommands(commands);
+        return commands;
+    }
+
+    /// <summary>
+    /// Whether the DNS servers of a network interface are obtained automatically (shown on the Information tab and
+    /// exported): no static DNS servers and DHCP enabled for the IPv4 address. With a static IP address, DNS servers can't
+    /// be obtained automatically (Windows dialog); without static DNS servers it has no DNS servers at all (the
+    /// "NameServer" value is empty in both cases).
+    /// </summary>
+    /// <param name="noStaticDNSServers">No static DNS servers are set (see <see cref="IsDNSAutoconfigurationEnabled" />),
+    /// <see langword="null" /> if unknown.</param>
+    /// <param name="dhcpEnabled">DHCP is enabled for the IPv4 address, <see langword="null" /> if IPv4 is not available
+    /// (e.g. IPv6 only: then <paramref name="noStaticDNSServers" /> is about the IPv6 DNS servers, which are not affected
+    /// by a static IPv4 address).</param>
+    /// <returns><see langword="true" /> if the DNS servers are obtained automatically.</returns>
+    public static bool IsDNSAutoconfigured(bool? noStaticDNSServers, bool? dhcpEnabled)
+    {
+        return noStaticDNSServers == true && dhcpEnabled != false;
     }
 
     /// <summary>
@@ -489,15 +557,23 @@ public sealed class NetworkInterface
     /// detected via the registry: the "NameServer" value of the interface is empty, if no static DNS servers are set.
     /// </summary>
     /// <param name="interfaceId">ID (GUID) of the network interface.</param>
+    /// <param name="ipv6">Check the IPv6 DNS servers ("Tcpip6") instead of the IPv4 ones ("Tcpip").</param>
     /// <returns>Whether DNS autoconfiguration is enabled, or <see langword="null" /> if it cannot be determined.</returns>
-    private static bool? IsDNSAutoconfigurationEnabled(string interfaceId)
+    private static bool? IsDNSAutoconfigurationEnabled(string interfaceId, bool ipv6 = false)
     {
         using var interfaceKey = Registry.LocalMachine.OpenSubKey(
-            $@"SYSTEM\CurrentControlSet\Services\Tcpip\Parameters\Interfaces\{interfaceId}");
+            $@"SYSTEM\CurrentControlSet\Services\{(ipv6 ? "Tcpip6" : "Tcpip")}\Parameters\Interfaces\{interfaceId}");
 
-        var nameServer = interfaceKey?.GetValue("NameServer");
+        if (interfaceKey == null)
+            return null;
 
-        return nameServer == null ? null : string.IsNullOrEmpty(nameServer.ToString());
+        var nameServer = interfaceKey.GetValue("NameServer");
+
+        // IPv6: the value may not exist if DNS servers were never set statically (IPv4 always has it)
+        if (nameServer == null)
+            return ipv6 ? true : null;
+
+        return string.IsNullOrEmpty(nameServer.ToString());
     }
 
     /// <summary>
@@ -620,6 +696,8 @@ public sealed class NetworkInterface
     /// coexistence settings. Cannot be null.</param>
     private static void AddIPAddressToNetworkInterface(NetworkInterfaceConfig config)
     {
+        ThrowIfInvalid(config);
+
         var name = PowerShellHelper.EscapeSingleQuotes(config.Name);
         var commands = new List<string>();
 
@@ -649,8 +727,28 @@ public sealed class NetworkInterface
     /// null.</param>
     private static void RemoveIPAddressFromNetworkInterface(NetworkInterfaceConfig config)
     {
+        ThrowIfInvalid(config);
+
         var name = PowerShellHelper.EscapeSingleQuotes(config.Name);
         RunCommands([$"& netsh interface ipv4 delete address '{name}' {config.IPAddress}"]);
+    }
+
+    /// <summary>
+    /// Throws if a value of the configuration is not a valid IPv4 address or subnet mask, so that nothing else (e.g. a
+    /// command from a manipulated profile file) can be inserted into the command line that runs elevated.
+    /// </summary>
+    /// <param name="config">Configuration to check.</param>
+    /// <exception cref="FormatException">If a value is invalid.</exception>
+    private static void ThrowIfInvalid(NetworkInterfaceConfig config)
+    {
+        var invalidValue = config.GetInvalidValue();
+
+        if (invalidValue == null)
+            return;
+
+        throw new FormatException(invalidValue.Length == 0
+            ? "A static IP address needs an IPv4 address and a subnet mask."
+            : $"\"{invalidValue}\" is not a valid IPv4 address or subnet mask.");
     }
 
     /// <summary>

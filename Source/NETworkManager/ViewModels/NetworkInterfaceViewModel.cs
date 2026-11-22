@@ -40,7 +40,18 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
 
     private BandwidthMeter _bandwidthMeter;
 
-    private readonly bool _isLoading;
+    /// <summary>
+    /// The network interface is selected by the (re)load of the network interfaces, not by the user: the selection is
+    /// not saved, so a fallback (e.g. while a VPN or USB adapter is missing) doesn't replace the remembered one.
+    /// </summary>
+    private bool _isSelectingNetworkInterfaceByCode;
+
+    /// <summary>
+    /// The network interface to select after a reload (also if it is back after it was missing). Selected by the user
+    /// (saved in the settings), by a profile (only for this session: looking at a profile doesn't change the network
+    /// interface shown after a restart) or configured.
+    /// </summary>
+    private string _preferredNetworkInterfaceId = SettingsManager.Current.NetworkInterface_InterfaceId;
 
     /// <summary>
     /// Gets or sets a value indicating whether network interfaces are currently loading.
@@ -62,7 +73,10 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
     /// Gets a value indicating whether the application has the permission to change the network configuration
     /// (running as administrator or as member of the "Network Configuration Operators" group).
     /// </summary>
-    public bool HasPermissionToConfigure { get; } = NetworkInterface.HasPermissionToConfigure();
+    /// <remarks>Always in the screenshot mode (<see cref="ScreenshotData" />): nothing is changed there, see
+    /// <see cref="RunConfigurationAsync" />.</remarks>
+    public bool HasPermissionToConfigure { get; } =
+        NetworkInterface.HasPermissionToConfigure() || ScreenshotData.IsEnabled;
 
     /// <summary>
     /// Gets or sets a value indicating whether configuration is allowed.
@@ -163,6 +177,11 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
     } = [];
 
     /// <summary>
+    /// ID of the interface the bandwidth meter and the configuration were set up for.
+    /// </summary>
+    private string _selectedNetworkInterfaceId;
+
+    /// <summary>
     /// Gets or sets the currently selected network interface.
     /// </summary>
     public NetworkInterfaceInfo SelectedNetworkInterface
@@ -173,20 +192,30 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
             if (value == field)
                 return;
 
-            if (value != null)
+            // A reload creates new objects for the same interfaces (and the ComboBox selects null while the list is
+            // replaced). Only start a new measurement and reset the configuration if another interface is selected,
+            // not when the selected one is reloaded (e.g. after a network change or Apply).
+            if (value != null && value.Id != _selectedNetworkInterfaceId)
             {
-                if (!_isLoading)
-                    SettingsManager.Current.NetworkInterface_InterfaceId = value.Id;
+                _selectedNetworkInterfaceId = value.Id;
+
+                if (!_isSelectingNetworkInterfaceByCode)
+                {
+                    RememberNetworkInterface(value);
+
+                    // Selected by the user while the network interfaces were loaded: a profile selected before must
+                    // not switch the network interface back after the load
+                    _pendingProfile = null;
+                }
 
                 // Bandwidth
-                StopBandwidthMeter();
                 StartBandwidthMeter(value.Id);
 
                 // Configuration
                 SetConfigurationDefaults(value);
-
-                CanConfigure = value.IsOperational;
             }
+
+            CanConfigure = value?.IsOperational == true;
 
             field = value;
             OnPropertyChanged();
@@ -360,7 +389,12 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
             if (value == field)
                 return;
 
-            ConfigEnableStaticDNS = true;
+            // DNS servers can only be obtained automatically with DHCP (same as the Windows dialog)
+            if (value)
+            {
+                ConfigEnableDynamicDNS = false;
+                ConfigEnableStaticDNS = true;
+            }
 
             field = value;
             OnPropertyChanged();
@@ -482,7 +516,8 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
     #endregion
 
     /// <summary>
-    /// Gets or sets the selected profile. Pre-fills the <c>Config*</c> fields from the profile.
+    /// Gets or sets the selected profile. Selecting a profile selects the network interface it is bound to and fills
+    /// in its values on the Configure tab.
     /// </summary>
     public override ProfileInfo SelectedProfile
     {
@@ -492,18 +527,16 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
             if (value == base.SelectedProfile)
                 return;
 
-            if (value != null)
-            {
-                ConfigEnableDynamicIPAddress = !value.NetworkInterface_EnableStaticIPAddress;
-                ConfigEnableStaticIPAddress = value.NetworkInterface_EnableStaticIPAddress;
-                ConfigIPAddress = value.NetworkInterface_IPAddress;
-                ConfigGateway = value.NetworkInterface_Gateway;
-                ConfigSubnetmask = value.NetworkInterface_Subnetmask;
-                ConfigEnableDynamicDNS = !value.NetworkInterface_EnableStaticDNS;
-                ConfigEnableStaticDNS = value.NetworkInterface_EnableStaticDNS;
-                ConfigPrimaryDNSServer = value.NetworkInterface_PrimaryDNSServer;
-                ConfigSecondaryDNSServer = value.NetworkInterface_SecondaryDNSServer;
-            }
+            // Another profile (or none) selected by the user: a profile that waits for the load is not loaded
+            if (!IsProfileSelectedByCode)
+                _pendingProfile = null;
+
+            // Only if the user selects the profile. The profile list is rebuilt (and the previous or the first profile
+            // selected again) when the view becomes visible, on search / filter and when a profile changes: this
+            // must not overwrite the values entered on the Configure tab or switch the network interface.
+            // Not while a configuration is applied (like Reset): the result would be shown for another interface
+            if (value != null && !IsProfileSelectedByCode && !IsConfigurationRunning)
+                LoadProfileAfterLoad(value);
 
             base.SelectedProfile = value;
         }
@@ -518,8 +551,6 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
     /// </summary>
     public NetworkInterfaceViewModel()
     {
-        _isLoading = true;
-
         // Initialize the bandwidth chart before loading interfaces, so the chart collections
         // exist by the time the (possibly synchronous) interface load selects an interface and
         // starts the bandwidth meter.
@@ -529,17 +560,17 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
 
         InitializeProfileHost();
 
-        // Detect if network address or status changed...
-        NetworkChange.NetworkAvailabilityChanged += (_, _) => ReloadNetworkInterfaces();
-        NetworkChange.NetworkAddressChanged += (_, _) => ReloadNetworkInterfaces();
+        // Detect if network address or status changed... The events are raised on a thread pool thread: reload on the
+        // UI thread, otherwise the bandwidth meter (DispatcherTimer) of the selected interface is created on a thread
+        // without a running dispatcher and never updates.
+        NetworkChange.NetworkAvailabilityChanged += (_, _) => ReloadNetworkInterfacesOnUIThread();
+        NetworkChange.NetworkAddressChanged += (_, _) => ReloadNetworkInterfacesOnUIThread();
 
         // React to settings changes (e.g. the configurable bandwidth chart time window)
         SettingsManager.Current.PropertyChanged += SettingsManager_PropertyChanged;
 
         // Colors of the bandwidth chart for the new theme (the paints don't follow the theme)
         AppearanceManager.ThemeResourcesChanged += (_, _) => ApplyBandwidthChartColors();
-
-        _isLoading = false;
     }
 
     /// <summary>
@@ -746,26 +777,104 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
     {
         IsNetworkInterfaceLoading = true;
 
-        // Get all network interfaces...
-        (await NetworkInterface.GetNetworkInterfacesAsync()).ForEach(NetworkInterfaces.Add);
-
-        // Get the last selected interface, if it is still available on this machine...
-        if (NetworkInterfaces.Count > 0)
+        try
         {
-            var info = NetworkInterfaces.FirstOrDefault(s =>
-                s.Id == SettingsManager.Current.NetworkInterface_InterfaceId);
+            // Get all network interfaces...
+            (await GetNetworkInterfacesAsync()).ForEach(NetworkInterfaces.Add);
 
-            SelectedNetworkInterface = info ?? NetworkInterfaces[0];
+            // Get the last selected interface, if it is still available on this machine...
+            SelectNetworkInterfaceAfterLoad(null);
+        }
+        catch (Exception ex)
+        {
+            Log.Error("Error while loading the network interfaces.", ex);
+        }
+        finally
+        {
+            IsNetworkInterfaceLoading = false;
         }
 
-        IsNetworkInterfaceLoading = false;
+        LoadPendingProfile();
+        ReloadIfPending();
     }
 
     #endregion
 
     #region Profile host
 
+    /// <summary>
+    /// Profile to load after the network interfaces are (re)loaded (see <see cref="LoadProfileAfterLoad" />).
+    /// </summary>
+    private ProfileInfo _pendingProfile;
+
+    /// <summary>
+    /// Loads a profile (selects its bound network interface and fills in its values). While the network interfaces are
+    /// (re)loaded, it is loaded afterwards: the first load (e.g. the run command opened the tool, the view model was
+    /// created right before) has no network interfaces yet, and a reload (e.g. a VPN or USB adapter was connected /
+    /// removed) can add or remove the bound network interface or select another one, which would replace the values.
+    /// Any change of the profile selection by the user drops it; configuration actions (and Reset) are disabled while
+    /// the network interfaces are loaded, so they can't be overridden by it.
+    /// </summary>
+    private void LoadProfileAfterLoad(ProfileInfo profile)
+    {
+        if (IsNetworkInterfaceLoading)
+        {
+            _pendingProfile = profile;
+            return;
+        }
+
+        _pendingProfile = null;
+
+        LoadProfile(profile);
+    }
+
+    private void LoadPendingProfile()
+    {
+        var profile = _pendingProfile;
+        _pendingProfile = null;
+
+        // Not if a configuration was started meanwhile (like selecting a profile) or if the profile was changed or
+        // deleted meanwhile (changed profiles are new objects): the old values would be filled in
+        if (profile == null || IsConfigurationRunning ||
+            ProfileManager.LoadedProfileFileData?.Groups.Any(x => x.Profiles.Contains(profile)) != true)
+            return;
+
+        LoadProfile(profile);
+    }
+
     protected override ApplicationName ApplicationName => ApplicationName.NetworkInterface;
+
+    /// <summary>
+    /// Opens a request of the run command (e.g. "networkinterface @home"): selects the profile and fills in its values
+    /// like a double-click on the profile. The profile is never applied (also not with Enter): the configuration is
+    /// changed with elevated rights and can disconnect the computer, it is applied with Apply after checking the values.
+    /// </summary>
+    /// <param name="request">Request with the profile (a request without a profile only opens the tool).</param>
+    public void Open(ApplicationRequest request)
+    {
+        if (request.Profile == null)
+            return;
+
+        // Not while a configuration is applied (like selecting / double-clicking a profile: the result would be shown
+        // for another network interface). The run command dialog is closed already, and a status message would be
+        // replaced by the result of the configuration: a message dialog says why nothing happens.
+        if (IsConfigurationRunning)
+        {
+            _ = DialogHelper.ShowMessageAsync(Application.Current.MainWindow, Strings.NetworkInterface,
+                string.Format(Strings.ProfileXNotLoadedConfigurationRunning, request.Profile.Name),
+                ChildWindowIcon.Info);
+            return;
+        }
+
+        // Select it in the profile list if it is shown (not hidden by the search / filter): selecting loads it
+        if (Profiles.Contains(request.Profile) && !Equals(SelectedProfile, request.Profile))
+        {
+            SelectedProfile = request.Profile;
+            return;
+        }
+
+        LoadProfileAfterLoad(request.Profile);
+    }
 
     #endregion
 
@@ -850,7 +959,7 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
     /// Gets the command to apply the network configuration.
     /// </summary>
     public ICommand ApplyConfigurationCommand =>
-        new RelayCommand(_ => ApplyConfigurationAction(), ConfigureCommands_CanExecute);
+        new RelayCommand(_ => ApplyConfigurationAction(), ApplyConfiguration_CanExecute);
 
     /// <summary>
     /// Action to apply the network configuration.
@@ -861,13 +970,76 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
     }
 
     /// <summary>
+    /// Gets the command to load the selected profile again (double-click / Enter in the profile list): selects its
+    /// network interface and fills in its values, e.g. after Reset or if the profile was selected automatically
+    /// (clicking the selected profile doesn't change the selection).
+    /// </summary>
+    public ICommand LoadProfileCommand =>
+        new RelayCommand(_ => LoadProfileAfterLoad(SelectedProfile), LoadProfile_CanExecute);
+
+    private bool LoadProfile_CanExecute(object parameter) => SelectedProfile != null && !IsConfigurationRunning;
+
+    /// <summary>
     /// Gets the command to apply the profile configuration.
     /// </summary>
-    public ICommand ApplyProfileCommand => new RelayCommand(_ => ApplyProfileAction(), ConfigureCommands_CanExecute);
+    public ICommand ApplyProfileCommand => new RelayCommand(_ => ApplyProfileAction(), ApplyProfile_CanExecute);
 
     private void ApplyProfileAction()
     {
         _ = ApplyConfigurationFromProfile();
+    }
+
+    /// <summary>
+    /// Gets the command to reset the Configure tab to the current configuration of the selected network interface
+    /// (e.g. after a profile was selected or values were changed).
+    /// </summary>
+    public ICommand ResetConfigurationCommand => new RelayCommand(_ => ResetConfigurationAction(),
+        ResetConfiguration_CanExecute);
+
+    private bool ResetConfiguration_CanExecute(object parameter) =>
+        SelectedNetworkInterface != null && !IsConfigurationRunning && !IsNetworkInterfaceLoading;
+
+    private void ResetConfigurationAction()
+    {
+        SetConfigurationDefaults(SelectedNetworkInterface);
+    }
+
+    /// <summary>
+    /// Gets the command to add a profile with the configuration of the Configure tab, bound to the selected network
+    /// interface.
+    /// </summary>
+    public ICommand AddProfileFromConfigurationCommand => new RelayCommand(_ => AddProfileFromConfigurationAction(),
+        AddProfileFromConfiguration_CanExecute);
+
+    private bool AddProfileFromConfiguration_CanExecute(object parameter) =>
+        AdditionalCommands_CanExecute(parameter) && SelectedNetworkInterface != null;
+
+    private void AddProfileFromConfigurationAction()
+    {
+        var networkInterface = SelectedNetworkInterface;
+
+        ProfileInfo profileInfo = new()
+        {
+            Name = networkInterface.Name,
+            // Required by the profile, not used by the Network Interface
+            Host = ConfigEnableStaticIPAddress
+                ? ConfigIPAddress?.Trim()
+                : networkInterface.IPv4Address?.FirstOrDefault()?.Item1.ToString(),
+
+            NetworkInterface_BindToInterface = true,
+            NetworkInterface_InterfaceId = networkInterface.Id,
+            NetworkInterface_InterfaceName = networkInterface.Name,
+            NetworkInterface_EnableStaticIPAddress = ConfigEnableStaticIPAddress,
+            NetworkInterface_IPAddress = ConfigIPAddress,
+            NetworkInterface_Subnetmask = ConfigSubnetmask,
+            NetworkInterface_Gateway = ConfigGateway,
+            NetworkInterface_EnableStaticDNS = ConfigEnableStaticDNS,
+            NetworkInterface_PrimaryDNSServer = ConfigPrimaryDNSServer,
+            NetworkInterface_SecondaryDNSServer = ConfigSecondaryDNSServer
+        };
+
+        _ = ProfileDialogManager.ShowAddProfileDialog(Application.Current.MainWindow, this, profileInfo, null,
+            ApplicationName.NetworkInterface);
     }
 
     #region Additional commands
@@ -877,8 +1049,35 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
         return !DialogHelper.IsAnyDialogOpen();
     }
 
+    /// <summary>
+    /// Configuration actions that don't need a network interface (e.g. flush DNS cache). Only one runs at a time, not
+    /// while the network interfaces are (re)loaded (like modify vs. refresh in the other tools: a profile selected
+    /// meanwhile is loaded after the load, see LoadProfileAfterLoad, and would hide the result / switch the adapter).
+    /// </summary>
     private bool ConfigureCommands_CanExecute(object parameter) => HasPermissionToConfigure &&
+                                                                   !IsConfigurationRunning &&
+                                                                   !IsNetworkInterfaceLoading &&
                                                                    !DialogHelper.IsAnyDialogOpen();
+
+    /// <summary>
+    /// Configuration actions on the selected network interface (release/renew, add/remove IP address).
+    /// </summary>
+    private bool ConfigureNetworkInterface_CanExecute(object parameter) =>
+        ConfigureCommands_CanExecute(parameter) && SelectedNetworkInterface != null;
+
+    /// <summary>
+    /// Apply the configuration (Configure tab): the network interface must be connected.
+    /// </summary>
+    private bool ApplyConfiguration_CanExecute(object parameter) =>
+        ConfigureCommands_CanExecute(parameter) && CanConfigure;
+
+    /// <summary>
+    /// Apply the selected profile (profile context menu): same conditions as the Apply button. A profile bound to a
+    /// network interface doesn't depend on the selected one (checked when it is applied).
+    /// </summary>
+    private bool ApplyProfile_CanExecute(object parameter) =>
+        ConfigureCommands_CanExecute(parameter) && SelectedProfile != null &&
+        (IsBoundToNetworkInterface(SelectedProfile) || CanConfigure);
 
     /// <summary>
     /// Gets the command to restart the application with administrator privileges.
@@ -912,13 +1111,21 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
     /// <summary>
     /// Gets the command to open IP Scanner.
     /// </summary>
-    public ICommand IPScannerCommand => new RelayCommand(_ => IPScannerAction(), AdditionalCommands_CanExecute);
+    public ICommand IPScannerCommand => new RelayCommand(_ => IPScannerAction(), IPScanner_CanExecute);
+
+    /// <summary>
+    /// The IP Scanner needs an IPv4 address with subnet mask (e.g. not for a disconnected adapter).
+    /// </summary>
+    private bool IPScanner_CanExecute(object parameter) => AdditionalCommands_CanExecute(parameter) &&
+                                                          GetFirstIPv4AddressWithSubnetmask() != null;
+
+    private Tuple<System.Net.IPAddress, System.Net.IPAddress> GetFirstIPv4AddressWithSubnetmask() =>
+        SelectedNetworkInterface?.IPv4Address?.FirstOrDefault(x => x.Item2 != null);
 
     private void IPScannerAction()
     {
-        var ipTuple = SelectedNetworkInterface?.IPv4Address.FirstOrDefault();
+        var ipTuple = GetFirstIPv4AddressWithSubnetmask();
 
-        // ToDo: Log error in the future
         if (ipTuple == null)
             return;
 
@@ -941,7 +1148,7 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
     /// <summary>
     /// Gets the command to release and renew IP address.
     /// </summary>
-    public ICommand ReleaseRenewCommand => new RelayCommand(_ => ReleaseRenewAction(), ConfigureCommands_CanExecute);
+    public ICommand ReleaseRenewCommand => new RelayCommand(_ => ReleaseRenewAction(), ConfigureNetworkInterface_CanExecute);
 
     private void ReleaseRenewAction()
     {
@@ -951,7 +1158,7 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
     /// <summary>
     /// Gets the command to release IP address.
     /// </summary>
-    public ICommand ReleaseCommand => new RelayCommand(_ => ReleaseAction(), ConfigureCommands_CanExecute);
+    public ICommand ReleaseCommand => new RelayCommand(_ => ReleaseAction(), ConfigureNetworkInterface_CanExecute);
 
     private void ReleaseAction()
     {
@@ -961,7 +1168,7 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
     /// <summary>
     /// Gets the command to renew IP address.
     /// </summary>
-    public ICommand RenewCommand => new RelayCommand(_ => RenewAction(), ConfigureCommands_CanExecute);
+    public ICommand RenewCommand => new RelayCommand(_ => RenewAction(), ConfigureNetworkInterface_CanExecute);
 
     private void RenewAction()
     {
@@ -971,7 +1178,7 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
     /// <summary>
     /// Gets the command to release and renew IPv6 address.
     /// </summary>
-    public ICommand ReleaseRenew6Command => new RelayCommand(_ => ReleaseRenew6Action(), ConfigureCommands_CanExecute);
+    public ICommand ReleaseRenew6Command => new RelayCommand(_ => ReleaseRenew6Action(), ConfigureNetworkInterface_CanExecute);
 
     private void ReleaseRenew6Action()
     {
@@ -981,7 +1188,7 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
     /// <summary>
     /// Gets the command to release IPv6 address.
     /// </summary>
-    public ICommand Release6Command => new RelayCommand(_ => Release6Action(), ConfigureCommands_CanExecute);
+    public ICommand Release6Command => new RelayCommand(_ => Release6Action(), ConfigureNetworkInterface_CanExecute);
 
     private void Release6Action()
     {
@@ -991,7 +1198,7 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
     /// <summary>
     /// Gets the command to renew IPv6 address.
     /// </summary>
-    public ICommand Renew6Command => new RelayCommand(_ => Renew6Action(), ConfigureCommands_CanExecute);
+    public ICommand Renew6Command => new RelayCommand(_ => Renew6Action(), ConfigureNetworkInterface_CanExecute);
 
     private void Renew6Action()
     {
@@ -1002,10 +1209,13 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
     /// Gets the command to add an IPv4 address.
     /// </summary>
     public ICommand AddIPv4AddressCommand => new RelayCommand(parameter => { _ = AddIPv4AddressAction(); },
-        ConfigureCommands_CanExecute);
+        ConfigureNetworkInterface_CanExecute);
 
     private async Task AddIPv4AddressAction()
     {
+        // The network interface the dialog is opened for (the selection can change while it is open)
+        var networkInterface = SelectedNetworkInterface;
+
         var childWindow = new IPAddressAndSubnetmaskChildWindow();
 
         var childWindowViewModel = new IPAddressAndSubnetmaskViewModel(async instance =>
@@ -1013,7 +1223,7 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
             childWindow.IsOpen = false;
             ConfigurationManager.Current.IsChildWindowOpen = false;
 
-            await AddIPv4Address(instance.IPAddress, instance.Subnetmask);
+            await AddIPv4Address(networkInterface, instance.IPAddress, instance.Subnetmask);
         }, _ =>
         {
             childWindow.IsOpen = false;
@@ -1033,10 +1243,13 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
     /// Gets the command to remove an IPv4 address.
     /// </summary>
     public ICommand RemoveIPv4AddressCommand => new RelayCommand(parameter => { _ = RemoveIPv4AddressAction(); },
-        ConfigureCommands_CanExecute);
+        ConfigureNetworkInterface_CanExecute);
 
     private async Task RemoveIPv4AddressAction()
     {
+        // The network interface the dialog is opened for (the selection can change while it is open)
+        var networkInterface = SelectedNetworkInterface;
+
         var childWindow = new DropDownChildWindow();
 
         var childWindowViewModel = new DropDownViewModel(async instance =>
@@ -1044,13 +1257,13 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
                 childWindow.IsOpen = false;
                 ConfigurationManager.Current.IsChildWindowOpen = false;
 
-                await RemoveIPv4Address(instance.SelectedValue.Split("/")[0]);
+                await RemoveIPv4Address(networkInterface, instance.SelectedValue.Split("/")[0]);
             }, _ =>
             {
                 childWindow.IsOpen = false;
                 ConfigurationManager.Current.IsChildWindowOpen = false;
             },
-                [.. SelectedNetworkInterface.IPv4Address.Select(x => $"{x.Item1}/{Subnetmask.ConvertSubnetmaskToCidr(x.Item2)}")],
+                [.. networkInterface.IPv4Address.Select(x => $"{x.Item1}/{Subnetmask.ConvertSubnetmaskToCidr(x.Item2)}")],
                 Strings.IPv4Address
             );
 
@@ -1069,49 +1282,165 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
 
     #region Methods
 
+    private void ReloadNetworkInterfacesOnUIThread()
+    {
+        Application.Current?.Dispatcher.BeginInvoke(new Action(ReloadNetworkInterfaces));
+    }
+
+    /// <summary>
+    /// A reload was requested while the network interfaces were loaded (e.g. after Apply while a reload started by
+    /// a network change is running, which may have read the interfaces in the middle of the change).
+    /// </summary>
+    private bool _reloadPending;
+
     private async void ReloadNetworkInterfaces()
     {
-        // Avoid multiple reloads
+        // Avoid multiple reloads at the same time, but reload once more afterwards
         if (IsNetworkInterfaceLoading)
+        {
+            _reloadPending = true;
             return;
+        }
 
         IsNetworkInterfaceLoading = true;
 
-        // Make the user happy, let him see a reload animation (and he cannot spam the reload command)
-        await Task.Delay(GlobalStaticConfiguration.ApplicationUIRefreshInterval);
-
-        // Store the last selected id
-        var id = SelectedNetworkInterface?.Id ?? string.Empty;
-
-        // Get all network interfaces...
-        var networkInterfaces = await NetworkInterface.GetNetworkInterfacesAsync();
-
-        // Invoke on UI thread synchronously
-        Application.Current.Dispatcher.Invoke(() =>
+        try
         {
-            // Clear the list
-            NetworkInterfaces.Clear();
+            // Make the user happy, let him see a reload animation (and he cannot spam the reload command)
+            await Task.Delay(GlobalStaticConfiguration.ApplicationUIRefreshInterval);
 
-            // Add all network interfaces to the list
-            networkInterfaces.ForEach(NetworkInterfaces.Add);
-        });
+            // Store the last selected id
+            var id = SelectedNetworkInterface?.Id;
 
-        // Set the last selected interface, if it is still available on this machine...
-        SelectedNetworkInterface = string.IsNullOrEmpty(id)
-            ? NetworkInterfaces.FirstOrDefault()
-            : NetworkInterfaces.FirstOrDefault(x => x.Id == id);
+            // Get all network interfaces...
+            var networkInterfaces = await GetNetworkInterfacesAsync();
 
-        IsNetworkInterfaceLoading = false;
+            // Invoke on UI thread synchronously
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                // Clear the list
+                NetworkInterfaces.Clear();
+
+                // Add all network interfaces to the list
+                networkInterfaces.ForEach(NetworkInterfaces.Add);
+            });
+
+            SelectNetworkInterfaceAfterLoad(id);
+        }
+        catch (Exception ex)
+        {
+            // async void: an unhandled exception would crash the application
+            Log.Error("Error while reloading the network interfaces.", ex);
+        }
+        finally
+        {
+            IsNetworkInterfaceLoading = false;
+        }
+
+        LoadPendingProfile();
+        ReloadIfPending();
+    }
+
+    /// <summary>
+    /// Selects a network interface after the list was (re)loaded: the preferred one (selected by the user or a profile,
+    /// also if it is back after it was missing, e.g. a VPN or USB adapter), then the one selected before, then the
+    /// first one. The selection is not saved, so a fallback doesn't replace the preferred network interface.
+    /// </summary>
+    /// <param name="previousId">ID of the network interface selected before the reload.</param>
+    private void SelectNetworkInterfaceAfterLoad(string previousId)
+    {
+        _isSelectingNetworkInterfaceByCode = true;
+
+        try
+        {
+            SelectedNetworkInterface = NetworkInterface.GetNetworkInterfaceToSelect(NetworkInterfaces,
+                _preferredNetworkInterfaceId, previousId);
+        }
+        finally
+        {
+            _isSelectingNetworkInterfaceByCode = false;
+        }
+
+        // No network interface left: remove the meter of the removed one (it would look it up every second, also
+        // after it was resumed when the view becomes visible again)
+        if (SelectedNetworkInterface != null)
+            return;
+
+        RemoveBandwidthMeter();
+        _selectedNetworkInterfaceId = null;
+    }
+
+    /// <summary>
+    /// Remembers a network interface selected by the user or configured: saved in the settings (selected again after
+    /// a restart) and preferred after a reload.
+    /// </summary>
+    private void RememberNetworkInterface(NetworkInterfaceInfo networkInterface)
+    {
+        // Not saved in the screenshot mode (sample network interfaces)
+        if (!ScreenshotData.IsEnabled)
+            SettingsManager.Current.NetworkInterface_InterfaceId = networkInterface.Id;
+
+        _preferredNetworkInterfaceId = networkInterface.Id;
+    }
+
+    /// <summary>
+    /// Gets the network interfaces of this computer, or the sample network interfaces in the screenshot mode
+    /// (<see cref="ScreenshotData" />).
+    /// </summary>
+    private static Task<List<NetworkInterfaceInfo>> GetNetworkInterfacesAsync()
+    {
+        return ScreenshotData.IsEnabled
+            ? Task.FromResult(ScreenshotData.CreateNetworkInterfaces())
+            : NetworkInterface.GetNetworkInterfacesAsync();
+    }
+
+    /// <summary>
+    /// Selects the network interface a profile is bound to: preferred after a reload in this session, but not saved
+    /// (only looking at a profile doesn't change the network interface selected after a restart, see
+    /// <see cref="RememberNetworkInterface" /> when it is configured).
+    /// </summary>
+    private void SelectNetworkInterfaceOfProfile(NetworkInterfaceInfo networkInterface)
+    {
+        _preferredNetworkInterfaceId = networkInterface.Id;
+        _isSelectingNetworkInterfaceByCode = true;
+
+        try
+        {
+            SelectedNetworkInterface = networkInterface;
+        }
+        finally
+        {
+            _isSelectingNetworkInterfaceByCode = false;
+        }
+    }
+
+    private void ReloadIfPending()
+    {
+        if (!_reloadPending)
+            return;
+
+        _reloadPending = false;
+
+        ReloadNetworkInterfaces();
     }
 
     private void SetConfigurationDefaults(NetworkInterfaceInfo info)
     {
+        // Both options of a radio button pair are set: the RadioButton group only unchecks the other one while the
+        // Configure tab is loaded (not if another tab is shown).
         if (info.DhcpEnabled)
         {
             ConfigEnableDynamicIPAddress = true;
+            ConfigEnableStaticIPAddress = false;
+
+            // Values of another interface or profile don't belong to this one (same as the Windows dialog: empty)
+            ConfigIPAddress = string.Empty;
+            ConfigSubnetmask = string.Empty;
+            ConfigGateway = string.Empty;
         }
         else
         {
+            ConfigEnableDynamicIPAddress = false;
             ConfigEnableStaticIPAddress = true;
             ConfigIPAddress = info.IPv4Address.FirstOrDefault()?.Item1.ToString();
             ConfigSubnetmask = info.IPv4Address.FirstOrDefault()?.Item2.ToString();
@@ -1120,12 +1449,17 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
                 : string.Empty;
         }
 
-        if (info.DNSAutoconfigurationEnabled)
+        if (info.DNSAutoconfigurationEnabled && info.DhcpEnabled)
         {
             ConfigEnableDynamicDNS = true;
+            ConfigEnableStaticDNS = false;
+
+            ConfigPrimaryDNSServer = string.Empty;
+            ConfigSecondaryDNSServer = string.Empty;
         }
         else
         {
+            ConfigEnableDynamicDNS = false;
             ConfigEnableStaticDNS = true;
 
             var dnsServers = info.DNSServer.Where(x => x.AddressFamily == AddressFamily.InterNetwork)
@@ -1135,111 +1469,220 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
         }
     }
 
-    private async Task ApplyConfiguration()
+    /// <summary>
+    /// Selects the network interface the profile is bound to (if it exists on this computer) and fills in the values
+    /// of the profile on the Configure tab.
+    /// </summary>
+    private void LoadProfile(ProfileInfo profile)
     {
-        IsConfigurationRunning = true;
+        // The message of a previous action or profile doesn't belong to this profile
         IsStatusMessageDisplayed = false;
 
-        var subnetmask = ConfigSubnetmask;
+        var boundNetworkInterface = GetBoundNetworkInterface(profile);
 
-        // CIDR to subnetmask
-        if (ConfigEnableStaticIPAddress && subnetmask.StartsWith("/"))
-            subnetmask = Subnetmask.GetFromCidr(int.Parse(subnetmask.TrimStart('/'))).Subnetmask;
-
-        // If primary and secondary DNS are empty --> autoconfiguration
-        if (ConfigEnableStaticDNS && string.IsNullOrEmpty(ConfigPrimaryDNSServer) &&
-            string.IsNullOrEmpty(ConfigSecondaryDNSServer))
-            ConfigEnableDynamicDNS = true;
-
-        // When primary DNS is empty, swap it with secondary (if not empty)
-        if (ConfigEnableStaticDNS && string.IsNullOrEmpty(ConfigPrimaryDNSServer) &&
-            !string.IsNullOrEmpty(ConfigSecondaryDNSServer))
+        if (boundNetworkInterface != null)
         {
-            ConfigPrimaryDNSServer = ConfigSecondaryDNSServer;
-            ConfigSecondaryDNSServer = string.Empty;
+            SelectNetworkInterfaceOfProfile(boundNetworkInterface);
         }
-
-        var config = new NetworkInterfaceConfig
+        else if (IsBoundToNetworkInterface(profile))
         {
-            Name = SelectedNetworkInterface.Name,
-            EnableStaticIPAddress = ConfigEnableStaticIPAddress,
-            IPAddress = ConfigIPAddress,
-            Subnetmask = subnetmask,
-            Gateway = ConfigGateway,
-            EnableStaticDNS = ConfigEnableStaticDNS,
-            PrimaryDNSServer = ConfigPrimaryDNSServer,
-            SecondaryDNSServer = ConfigSecondaryDNSServer
-        };
-
-        try
-        {
-            await NetworkInterface.ConfigureNetworkInterfaceAsync(config);
-
-            ReloadNetworkInterfaces();
-
-            StatusMessage = Strings.NetworkInterfaceConfigurationAppliedSuccessfully;
-            StatusMessageLevel = StatusLevel.Success;
+            // The values would be applied to the selected network interface by the Apply button (the context menu
+            // asks first, see ConfirmApplyToSelectedNetworkInterface)
+            StatusMessage = string.Format(Strings.NetworkInterfaceXOfProfileNotFoundCheckSelected,
+                profile.NetworkInterface_InterfaceName);
+            StatusMessageLevel = StatusLevel.Warning;
             IsStatusMessageDisplayed = true;
         }
-        catch (Exception ex)
-        {
-            StatusMessage = ex.Message;
-            StatusMessageLevel = StatusLevel.Error;
-            IsStatusMessageDisplayed = true;
-        }
-        finally
-        {
-            IsConfigurationRunning = false;
-        }
+
+        SetConfigurationFromProfile(profile);
+    }
+
+    /// <summary>
+    /// Fills in the values of a profile on the Configure tab.
+    /// </summary>
+    private void SetConfigurationFromProfile(ProfileInfo profile)
+    {
+        ConfigEnableDynamicIPAddress = !profile.NetworkInterface_EnableStaticIPAddress;
+        ConfigEnableStaticIPAddress = profile.NetworkInterface_EnableStaticIPAddress;
+        ConfigIPAddress = profile.NetworkInterface_IPAddress;
+        ConfigGateway = profile.NetworkInterface_Gateway;
+        ConfigSubnetmask = profile.NetworkInterface_Subnetmask;
+
+        // DNS servers can only be obtained automatically with DHCP (older profiles may contain both)
+        var enableStaticDNS = profile.NetworkInterface_EnableStaticIPAddress ||
+                              profile.NetworkInterface_EnableStaticDNS;
+        ConfigEnableDynamicDNS = !enableStaticDNS;
+        ConfigEnableStaticDNS = enableStaticDNS;
+        ConfigPrimaryDNSServer = profile.NetworkInterface_PrimaryDNSServer;
+        ConfigSecondaryDNSServer = profile.NetworkInterface_SecondaryDNSServer;
+    }
+
+    private Task ApplyConfiguration()
+    {
+        return ApplyConfigurationAsync(SelectedNetworkInterface, NetworkInterfaceConfig.Create(
+            SelectedNetworkInterface.Name, ConfigEnableStaticIPAddress, ConfigIPAddress, ConfigSubnetmask, ConfigGateway,
+            ConfigEnableStaticDNS, ConfigPrimaryDNSServer, ConfigSecondaryDNSServer));
     }
 
     private async Task ApplyConfigurationFromProfile()
     {
+        var profile = SelectedProfile;
+        var networkInterface = SelectedNetworkInterface;
+
+        // Profile bound to a network interface (matched by ID only, the name is not unique)
+        if (IsBoundToNetworkInterface(profile))
+        {
+            var boundNetworkInterface = GetBoundNetworkInterface(profile);
+
+            if (boundNetworkInterface == null)
+            {
+                networkInterface = await ConfirmApplyToSelectedNetworkInterface(profile);
+
+                if (networkInterface == null)
+                    return;
+            }
+            else
+            {
+                networkInterface = boundNetworkInterface;
+            }
+        }
+
+        // Checked before the bound network interface is selected: selecting it would replace the values on the
+        // Configure tab and restart the bandwidth measurement, although nothing is applied
+        if (networkInterface is not { IsOperational: true })
+        {
+            StatusMessage = Strings.ConnectTheNetworkCardToConfigureIt;
+            StatusMessageLevel = StatusLevel.Warning;
+            IsStatusMessageDisplayed = true;
+            return;
+        }
+
+        // Select it, so the result can be checked on the Information tab
+        if (networkInterface.Id != SelectedNetworkInterface?.Id)
+            SelectNetworkInterfaceOfProfile(networkInterface);
+
+        // Show the applied values on the Configure tab (selecting the bound network interface above filled in its
+        // current configuration)
+        SetConfigurationFromProfile(profile);
+
+        await ApplyConfigurationAsync(networkInterface, NetworkInterfaceConfig.Create(networkInterface.Name,
+            profile.NetworkInterface_EnableStaticIPAddress, profile.NetworkInterface_IPAddress,
+            profile.NetworkInterface_Subnetmask, profile.NetworkInterface_Gateway,
+            profile.NetworkInterface_EnableStaticDNS, profile.NetworkInterface_PrimaryDNSServer,
+            profile.NetworkInterface_SecondaryDNSServer));
+    }
+
+    /// <summary>
+    /// Gets the network interface a profile is bound to, or <see langword="null" /> if the profile is not bound or the
+    /// network interface is not found on this computer.
+    /// </summary>
+    private NetworkInterfaceInfo GetBoundNetworkInterface(ProfileInfo profile)
+    {
+        return IsBoundToNetworkInterface(profile)
+            ? NetworkInterface.FindById(NetworkInterfaces, profile.NetworkInterface_InterfaceId)
+            : null;
+    }
+
+    /// <summary>
+    /// Whether a profile is bound to a network interface. A profile from an edited or imported file can have the option
+    /// enabled without an ID: it is used like a profile that is not bound (no "not found" message without a name / ID).
+    /// </summary>
+    private static bool IsBoundToNetworkInterface(ProfileInfo profile) =>
+        profile.NetworkInterface_BindToInterface && !string.IsNullOrEmpty(profile.NetworkInterface_InterfaceId);
+
+    /// <summary>
+    /// The network interface of the profile is not found on this computer: ask whether the profile should be applied
+    /// to the selected network interface instead (only if it can be configured).
+    /// </summary>
+    /// <returns>The selected network interface (current object after the dialog, the list may have been reloaded
+    /// meanwhile), or <see langword="null" /> if canceled or it is no longer selected.</returns>
+    private async Task<NetworkInterfaceInfo> ConfirmApplyToSelectedNetworkInterface(ProfileInfo profile)
+    {
+        var message = string.Format(Strings.NetworkInterfaceOfProfileXNotFoundOnThisComputer, profile.Name) +
+                      Environment.NewLine + Environment.NewLine +
+                      $"{Strings.Name}: {profile.NetworkInterface_InterfaceName}" + Environment.NewLine +
+                      $"{Strings.ID}: {profile.NetworkInterface_InterfaceId}" + Environment.NewLine +
+                      Environment.NewLine;
+
+        var selectedNetworkInterface = SelectedNetworkInterface;
+
+        if (selectedNetworkInterface is not { IsOperational: true })
+        {
+            await DialogHelper.ShowMessageAsync(Application.Current.MainWindow, Strings.NetworkInterfaceNotFound,
+                message + Strings.FixNetworkInterfaceOfProfileHint, ChildWindowIcon.Warn);
+
+            return null;
+        }
+
+        if (!await DialogHelper.ShowConfirmationMessageAsync(Application.Current.MainWindow,
+                Strings.NetworkInterfaceNotFound,
+                message + string.Format(Strings.ApplyProfileToSelectedNetworkInterfaceXInstead,
+                    selectedNetworkInterface.Name) + Environment.NewLine + Environment.NewLine +
+                Strings.FixNetworkInterfaceOfProfileHint, ChildWindowIcon.Warn, Strings.Apply))
+            return null;
+
+        // Only the network interface named in the dialog (a reload may have selected another one meanwhile)
+        return SelectedNetworkInterface?.Id == selectedNetworkInterface.Id ? SelectedNetworkInterface : null;
+    }
+
+    /// <summary>
+    /// Shows a (localized) message if a value of the configuration is not a valid IPv4 address or subnet mask. The
+    /// model checks it again before running netsh, but its exception is not localized.
+    /// </summary>
+    /// <returns><see langword="true" /> if the configuration is valid.</returns>
+    private bool ValidateConfiguration(NetworkInterfaceConfig config)
+    {
+        // Profiles can contain values that were not validated by the UI (e.g. edited or shared profile files).
+        var invalidValue = config.GetInvalidValue();
+
+        if (invalidValue == null)
+            return true;
+
+        // An empty value means the IP address or subnet mask of a static IP address is missing
+        StatusMessage = invalidValue.Length == 0
+            ? Strings.NetworkInterfaceConfigIPAddressAndSubnetmaskRequired
+            : string.Format(Strings.NetworkInterfaceConfigInvalidValueX, invalidValue);
+        StatusMessageLevel = StatusLevel.Error;
+        IsStatusMessageDisplayed = true;
+
+        return false;
+    }
+
+    private Task ApplyConfigurationAsync(NetworkInterfaceInfo networkInterface, NetworkInterfaceConfig config)
+    {
+        if (!ValidateConfiguration(config))
+            return Task.CompletedTask;
+
+        return RunConfigurationAsync(() => NetworkInterface.ConfigureNetworkInterfaceAsync(config),
+            Strings.NetworkInterfaceConfigurationAppliedSuccessfully, networkInterface);
+    }
+
+    /// <summary>
+    /// Runs a configuration action (netsh / ipconfig): only one at a time, the success message or the error (of
+    /// Windows) is shown below the configuration. If a network interface is changed, it is remembered (like a
+    /// selection by the user: it stays selected after the reload, also if it was only selected as a fallback for a
+    /// missing one) and the network interfaces are reloaded afterwards (also after an error).
+    /// </summary>
+    /// <param name="action">Action to run.</param>
+    /// <param name="successMessage">Message shown if the action succeeded.</param>
+    /// <param name="networkInterface">Network interface that is changed, or <see langword="null" /> if none is
+    /// changed (e.g. flush DNS cache).</param>
+    private async Task RunConfigurationAsync(Func<Task> action, string successMessage,
+        NetworkInterfaceInfo networkInterface = null)
+    {
+        if (networkInterface != null)
+            RememberNetworkInterface(networkInterface);
+
         IsConfigurationRunning = true;
         IsStatusMessageDisplayed = false;
 
-        var subnetmask = SelectedProfile.NetworkInterface_Subnetmask;
-
-        // CIDR to subnetmask
-        if (SelectedProfile.NetworkInterface_EnableStaticIPAddress && subnetmask.StartsWith("/"))
-            subnetmask = Subnetmask.GetFromCidr(int.Parse(subnetmask.TrimStart('/'))).Subnetmask;
-
-        var enableStaticDNS = SelectedProfile.NetworkInterface_EnableStaticDNS;
-
-        var primaryDNSServer = SelectedProfile.NetworkInterface_PrimaryDNSServer;
-        var secondaryDNSServer = SelectedProfile.NetworkInterface_SecondaryDNSServer;
-
-        // If primary and secondary DNS are empty --> autoconfiguration
-        if (enableStaticDNS && string.IsNullOrEmpty(primaryDNSServer) && string.IsNullOrEmpty(secondaryDNSServer))
-            enableStaticDNS = false;
-
-        // When primary DNS is empty, swap it with secondary (if not empty)
-        if (SelectedProfile.NetworkInterface_EnableStaticDNS && string.IsNullOrEmpty(primaryDNSServer) &&
-            !string.IsNullOrEmpty(secondaryDNSServer))
-        {
-            primaryDNSServer = secondaryDNSServer;
-            secondaryDNSServer = string.Empty;
-        }
-
-        var config = new NetworkInterfaceConfig
-        {
-            Name = SelectedNetworkInterface.Name,
-            EnableStaticIPAddress = SelectedProfile.NetworkInterface_EnableStaticIPAddress,
-            IPAddress = SelectedProfile.NetworkInterface_IPAddress,
-            Subnetmask = subnetmask,
-            Gateway = SelectedProfile.NetworkInterface_Gateway,
-            EnableStaticDNS = enableStaticDNS,
-            PrimaryDNSServer = primaryDNSServer,
-            SecondaryDNSServer = secondaryDNSServer
-        };
-
         try
         {
-            await NetworkInterface.ConfigureNetworkInterfaceAsync(config);
+            // Nothing is changed in the screenshot mode (sample network interfaces), only the result is shown
+            if (!ScreenshotData.IsEnabled)
+                await action();
 
-            ReloadNetworkInterfaces();
-
-            StatusMessage = Strings.NetworkInterfaceConfigurationAppliedSuccessfully;
+            StatusMessage = successMessage;
             StatusMessageLevel = StatusLevel.Success;
             IsStatusMessageDisplayed = true;
         }
@@ -1252,6 +1695,11 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
         finally
         {
             IsConfigurationRunning = false;
+
+            // Also after an error: the commands run one after another and stop at the first error, the ones before
+            // may have changed the configuration (e.g. IP address set, DNS servers failed).
+            if (networkInterface != null)
+                ReloadNetworkInterfaces();
         }
     }
 
@@ -1268,43 +1716,17 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
         }
     }
 
-    private async Task FlushDNSAsync()
+    private Task FlushDNSAsync()
     {
-        IsConfigurationRunning = true;
-        IsStatusMessageDisplayed = false;
-
-        try
-        {
-            await NetworkInterface.FlushDnsAsync();
-
-            StatusMessage = Strings.FlushDNSCacheSuccessfully;
-            StatusMessageLevel = StatusLevel.Success;
-            IsStatusMessageDisplayed = true;
-        }
-        catch (Exception ex)
-        {
-            StatusMessage = ex.Message;
-            StatusMessageLevel = StatusLevel.Error;
-            IsStatusMessageDisplayed = true;
-        }
-        finally
-        {
-            IsConfigurationRunning = false;
-        }
+        return RunConfigurationAsync(NetworkInterface.FlushDnsAsync, Strings.FlushDNSCacheSuccessfully);
     }
 
-    private async Task ReleaseRenewAsync(IPConfigReleaseRenewMode releaseRenewMode)
+    private Task ReleaseRenewAsync(IPConfigReleaseRenewMode releaseRenewMode)
     {
-        IsConfigurationRunning = true;
-        IsStatusMessageDisplayed = false;
+        var networkInterface = SelectedNetworkInterface;
 
-        try
-        {
-            await NetworkInterface.ReleaseRenewAsync(releaseRenewMode, SelectedNetworkInterface.Name);
-
-            ReloadNetworkInterfaces();
-
-            StatusMessage = releaseRenewMode switch
+        return RunConfigurationAsync(() => NetworkInterface.ReleaseRenewAsync(releaseRenewMode, networkInterface.Name),
+            releaseRenewMode switch
             {
                 IPConfigReleaseRenewMode.ReleaseRenew => Strings.IPv4AddressReleasedAndRenewedSuccessfully,
                 IPConfigReleaseRenewMode.Release => Strings.IPv4AddressReleasedSuccessfully,
@@ -1313,94 +1735,70 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
                 IPConfigReleaseRenewMode.Release6 => Strings.IPv6AddressReleasedSuccessfully,
                 IPConfigReleaseRenewMode.Renew6 => Strings.IPv6AddressRenewedSuccessfully,
                 _ => string.Empty
-            };
-            StatusMessageLevel = StatusLevel.Success;
-            IsStatusMessageDisplayed = true;
-        }
-        catch (Exception ex)
-        {
-            StatusMessage = ex.Message;
-            StatusMessageLevel = StatusLevel.Error;
-            IsStatusMessageDisplayed = true;
-        }
-        finally
-        {
-            IsConfigurationRunning = false;
-        }
+            }, networkInterface);
     }
 
-    private async Task AddIPv4Address(string ipAddress, string subnetmaskOrCidr)
+    /// <summary>
+    /// Gets the current object of a network interface a dialog was opened for. The list may have been reloaded while
+    /// the dialog was open (new objects) or the network interface may have been removed (e.g. a USB or VPN adapter):
+    /// then nothing is changed, instead of changing another network interface that was selected meanwhile.
+    /// </summary>
+    /// <param name="networkInterface">Network interface the dialog was opened for.</param>
+    /// <returns>The current object, or <see langword="null" /> if it no longer exists (a message is shown).</returns>
+    private NetworkInterfaceInfo GetCurrentNetworkInterface(NetworkInterfaceInfo networkInterface)
     {
-        IsConfigurationRunning = true;
-        IsStatusMessageDisplayed = false;
+        var currentNetworkInterface = NetworkInterface.FindById(NetworkInterfaces, networkInterface.Id);
 
-        var subnetmask = subnetmaskOrCidr;
+        if (currentNetworkInterface != null)
+            return currentNetworkInterface;
 
-        // CIDR to subnetmask
-        if (subnetmask.StartsWith("/"))
-            subnetmask = Subnetmask.GetFromCidr(int.Parse(subnetmask.TrimStart('/'))).Subnetmask;
+        StatusMessage = string.Format(Strings.NetworkInterfaceXNotFoundNothingChanged, networkInterface.Name);
+        StatusMessageLevel = StatusLevel.Warning;
+        IsStatusMessageDisplayed = true;
+
+        return null;
+    }
+
+    private Task AddIPv4Address(NetworkInterfaceInfo networkInterface, string ipAddress, string subnetmaskOrCidr)
+    {
+        networkInterface = GetCurrentNetworkInterface(networkInterface);
+
+        if (networkInterface == null)
+            return Task.CompletedTask;
 
         var config = new NetworkInterfaceConfig
         {
-            Name = SelectedNetworkInterface.Name,
-            EnableDhcpStaticIpCoexistence = SelectedNetworkInterface.DhcpEnabled,
-            IPAddress = ipAddress,
-            Subnetmask = subnetmask
+            Name = networkInterface.Name,
+            EnableDhcpStaticIpCoexistence = networkInterface.DhcpEnabled,
+            IPAddress = ipAddress.Trim(),
+            Subnetmask = NetworkInterfaceConfig.ConvertSubnetmaskOrCidr(subnetmaskOrCidr)
         };
 
-        try
-        {
-            await NetworkInterface.AddIPAddressToNetworkInterfaceAsync(config);
+        if (!ValidateConfiguration(config))
+            return Task.CompletedTask;
 
-            ReloadNetworkInterfaces();
-
-            StatusMessage = Strings.IPv4AddressAddedSuccessfully;
-            StatusMessageLevel = StatusLevel.Success;
-            IsStatusMessageDisplayed = true;
-        }
-        catch (Exception ex)
-        {
-            StatusMessage = ex.Message;
-            StatusMessageLevel = StatusLevel.Error;
-            IsStatusMessageDisplayed = true;
-        }
-        finally
-        {
-            IsConfigurationRunning = false;
-        }
+        return RunConfigurationAsync(() => NetworkInterface.AddIPAddressToNetworkInterfaceAsync(config),
+            Strings.IPv4AddressAddedSuccessfully, networkInterface);
     }
 
-    private async Task RemoveIPv4Address(string ipAddress)
+    private Task RemoveIPv4Address(NetworkInterfaceInfo networkInterface, string ipAddress)
     {
-        IsConfigurationRunning = true;
-        IsStatusMessageDisplayed = false;
+        networkInterface = GetCurrentNetworkInterface(networkInterface);
+
+        if (networkInterface == null)
+            return Task.CompletedTask;
 
         var config = new NetworkInterfaceConfig
         {
-            Name = SelectedNetworkInterface.Name,
+            Name = networkInterface.Name,
             IPAddress = ipAddress
         };
 
-        try
-        {
-            await NetworkInterface.RemoveIPAddressFromNetworkInterfaceAsync(config);
+        if (!ValidateConfiguration(config))
+            return Task.CompletedTask;
 
-            ReloadNetworkInterfaces();
-
-            StatusMessage = Strings.IPv4AddressRemovedSuccessfully;
-            StatusMessageLevel = StatusLevel.Success;
-            IsStatusMessageDisplayed = true;
-        }
-        catch (Exception ex)
-        {
-            StatusMessage = ex.Message;
-            StatusMessageLevel = StatusLevel.Error;
-            IsStatusMessageDisplayed = true;
-        }
-        finally
-        {
-            IsConfigurationRunning = false;
-        }
+        return RunConfigurationAsync(() => NetworkInterface.RemoveIPAddressFromNetworkInterfaceAsync(config),
+            Strings.IPv4AddressRemovedSuccessfully, networkInterface);
     }
 
     private void ResetBandwidthChart()
@@ -1486,17 +1884,55 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
 
     private bool _resetBandwidthStatisticOnNextUpdate;
 
+    /// <summary>
+    /// The view is created when it is shown for the first time (without OnViewVisible).
+    /// </summary>
+    private bool _isViewVisible = true;
+
     private void StartBandwidthMeter(string networkInterfaceId)
     {
+        RemoveBandwidthMeter();
+
         // Reset chart
         ResetBandwidthChart();
 
         // Reset statistic
         _resetBandwidthStatisticOnNextUpdate = true;
 
+        if (ScreenshotData.IsEnabled)
+        {
+            ShowScreenshotBandwidth(networkInterfaceId);
+            return;
+        }
+
         _bandwidthMeter = new BandwidthMeter(networkInterfaceId);
         _bandwidthMeter.UpdateSpeed += BandwidthMeter_UpdateSpeed;
-        _bandwidthMeter.Start();
+
+        // Another adapter can be selected while the view is hidden (e.g. by a reload after a network change): start
+        // the measurement when the view becomes visible (ResumeBandwidthMeter).
+        if (_isViewVisible)
+            _bandwidthMeter.Start();
+    }
+
+    /// <summary>
+    /// Fills the bandwidth chart and statistics with sample values in the screenshot mode (<see cref="ScreenshotData" />),
+    /// instead of a measurement (static, no live updates). Only for a connected network interface.
+    /// </summary>
+    private void ShowScreenshotBandwidth(string networkInterfaceId)
+    {
+        if (NetworkInterface.FindById(NetworkInterfaces, networkInterfaceId) is not { IsOperational: true })
+            return;
+
+        var samples = ScreenshotData.CreateBandwidthSamples((int)BandwidthChartWindowSeconds);
+
+        _bandwidthSessionStartTime = samples[0].DateTime;
+
+        foreach (var sample in samples)
+            BandwidthMeter_UpdateSpeed(this, sample);
+
+        // The statistic started with the first sample (not now)
+        BandwidthStartTime = samples[0].DateTime;
+        BandwidthMeasuredTime = samples[^1].DateTime - BandwidthStartTime;
     }
 
     private void ResumeBandwidthMeter()
@@ -1513,6 +1949,20 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
         _bandwidthMeter.Start();
     }
 
+    /// <summary>
+    /// Stops the meter and removes it (with its event handler), e.g. before a meter for another network interface is
+    /// started or if no network interface is left.
+    /// </summary>
+    private void RemoveBandwidthMeter()
+    {
+        if (_bandwidthMeter == null)
+            return;
+
+        _bandwidthMeter.Stop();
+        _bandwidthMeter.UpdateSpeed -= BandwidthMeter_UpdateSpeed;
+        _bandwidthMeter = null;
+    }
+
     private void StopBandwidthMeter()
     {
         if (_bandwidthMeter is not { IsRunning: true })
@@ -1526,6 +1976,8 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
     /// </summary>
     public override void OnViewVisible()
     {
+        _isViewVisible = true;
+
         base.OnViewVisible();
 
         ResumeBandwidthMeter();
@@ -1536,6 +1988,8 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
     /// </summary>
     public override void OnViewHide()
     {
+        _isViewVisible = false;
+
         StopBandwidthMeter();
 
         base.OnViewHide();

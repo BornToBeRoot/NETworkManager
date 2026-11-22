@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Net.NetworkInformation;
 using NETworkManager.Models.Cloudflare;
 using NETworkManager.Models.IPApi;
 using NETworkManager.Models.Network;
@@ -101,6 +102,104 @@ public static class ScreenshotData
             Hosting = false,
             Query = InternetIPv4
         });
+    }
+
+    #endregion
+
+    #region Network Interface
+
+    /// <summary>
+    /// Creates the network adapters of the Network Interface tool (instead of the real adapters): a connected Ethernet
+    /// adapter (the computer in the home network, DHCP) and a disconnected Wi-Fi adapter. The MAC addresses are locally
+    /// administered (02-...), so they don't belong to a real vendor.
+    /// </summary>
+    public static List<NetworkInterfaceInfo> CreateNetworkInterfaces()
+    {
+        var now = DateTime.Now;
+
+        return
+        [
+            new NetworkInterfaceInfo
+            {
+                Id = "{6F1C2D3E-0000-4000-8000-000000000001}",
+                Name = "Ethernet",
+                Description = "Example Gigabit Network Connection",
+                Type = "Ethernet",
+                PhysicalAddress = PhysicalAddress.Parse("02-00-5E-10-00-0A"),
+                Status = OperationalStatus.Up,
+                IsOperational = true,
+                Speed = 1_000_000_000,
+                IPv4ProtocolAvailable = true,
+                IPv4Address =
+                [
+                    new Tuple<IPAddress, IPAddress>(IPAddress.Parse(ComputerIPv4), IPAddress.Parse("255.255.255.0"))
+                ],
+                IPv4Gateway = [IPAddress.Parse(RouterIPv4)],
+                DhcpEnabled = true,
+                DhcpServer = [IPAddress.Parse(RouterIPv4)],
+                DhcpLeaseObtained = now.AddHours(-2),
+                DhcpLeaseExpires = now.AddHours(22),
+                IPv6ProtocolAvailable = true,
+                IPv6Address = [IPAddress.Parse(ComputerIPv6)],
+                IPv6AddressLinkLocal = [IPAddress.Parse("fe80::10")],
+                IPv6Gateway = [IPAddress.Parse(RouterIPv6)],
+                DNSAutoconfigurationEnabled = true,
+                DNSSuffix = "home.arpa",
+                DNSServer = [IPAddress.Parse(RouterIPv4)],
+                Profile = NetworkProfile.Private
+            },
+            new NetworkInterfaceInfo
+            {
+                Id = "{6F1C2D3E-0000-4000-8000-000000000002}",
+                Name = "Wi-Fi",
+                Description = "Example Wi-Fi 6 Wireless Adapter",
+                Type = "Wireless80211",
+                PhysicalAddress = PhysicalAddress.Parse("02-00-5E-10-00-0B"),
+                Status = OperationalStatus.Down,
+                IsOperational = false,
+                Speed = -1,
+                IPv4ProtocolAvailable = true,
+                IPv4Address = [],
+                IPv4Gateway = [],
+                DhcpEnabled = true,
+                DhcpServer = [],
+                IPv6ProtocolAvailable = true,
+                IPv6Address = [],
+                IPv6AddressLinkLocal = [],
+                IPv6Gateway = [],
+                DNSAutoconfigurationEnabled = true,
+                DNSServer = []
+            }
+        ];
+    }
+
+    /// <summary>
+    /// Creates the samples of the bandwidth chart (one per second, ending now): a download with a short peak and a
+    /// smaller upload, so the chart is filled without a measurement.
+    /// </summary>
+    /// <param name="count">Number of samples (seconds).</param>
+    public static List<BandwidthMeterSpeedArgs> CreateBandwidthSamples(int count)
+    {
+        var start = DateTime.Now.AddSeconds(-count);
+        var samples = new List<BandwidthMeterSpeedArgs>();
+
+        long totalReceived = 48_213_557_120; // ~48 GB since boot
+        long totalSent = 6_902_114_304;
+
+        for (var i = 0; i < count; i++)
+        {
+            // Bytes per second: ~3-6 MB/s download with a peak in the middle, ~0.3-0.6 MB/s upload
+            var peak = Math.Exp(-Math.Pow((i - count * 0.6) / (count * 0.08), 2));
+            var received = (long)(4_000_000 + 1_500_000 * Math.Sin(i / 4.0) + 9_000_000 * peak);
+            var sent = (long)(450_000 + 150_000 * Math.Cos(i / 3.0) + 900_000 * peak);
+
+            totalReceived += received;
+            totalSent += sent;
+
+            samples.Add(new BandwidthMeterSpeedArgs(start.AddSeconds(i), totalReceived, totalSent, received, sent));
+        }
+
+        return samples;
     }
 
     #endregion

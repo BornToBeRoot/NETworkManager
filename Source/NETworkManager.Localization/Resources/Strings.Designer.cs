@@ -1420,6 +1420,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Apply the profile to the selected network interface &quot;{0}&quot; instead?.
+        /// </summary>
+        public static string ApplyProfileToSelectedNetworkInterfaceXInstead {
+            get {
+                return ResourceManager.GetString("ApplyProfileToSelectedNetworkInterfaceXInstead", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Apply theme to PowerShell console.
         /// </summary>
         public static string ApplyThemeToPowerShellConsole {
@@ -1686,6 +1695,15 @@ namespace NETworkManager.Localization.Resources {
         public static string BetaFeatureMessage {
             get {
                 return ResourceManager.GetString("BetaFeatureMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bind to network interface.
+        /// </summary>
+        public static string BindToNetworkInterface {
+            get {
+                return ResourceManager.GetString("BindToNetworkInterface", resourceCulture);
             }
         }
         
@@ -2374,6 +2392,15 @@ namespace NETworkManager.Localization.Resources {
         public static string CommandXDoesNotSupportProfiles {
             get {
                 return ResourceManager.GetString("CommandXDoesNotSupportProfiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The command &quot;{0}&quot; only accepts a profile: enter &quot;@&quot; and the name of the profile!.
+        /// </summary>
+        public static string CommandXOnlyAcceptsAProfile {
+            get {
+                return ResourceManager.GetString("CommandXOnlyAcceptsAProfile", resourceCulture);
             }
         }
         
@@ -5265,6 +5292,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Failed to load the network interfaces. Disable &quot;Bind to network interface&quot; and enable it again to try again..
+        /// </summary>
+        public static string FailedToLoadNetworkInterfacesTryAgain {
+            get {
+                return ResourceManager.GetString("FailedToLoadNetworkInterfacesTryAgain", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Fax.
         /// </summary>
         public static string Fax {
@@ -5762,6 +5798,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to To fix this, edit the profile and select another network interface or disable &quot;Bind to network interface&quot;..
+        /// </summary>
+        public static string FixNetworkInterfaceOfProfileHint {
+            get {
+                return ResourceManager.GetString("FixNetworkInterfaceOfProfileHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Flush DNS cache.
         /// </summary>
         public static string FlushDNSCache {
@@ -6081,7 +6126,7 @@ namespace NETworkManager.Localization.Resources {
         ///
         ///Only the PowerShell consoles configured in the PowerShell settings are modified. Both Windows PowerShell and PWSH (PowerShell 7 and higher) are supported.
         ///
-        ///Click in the upper right corner on the help / documentation button ( [rest of string was truncated]&quot;;.
+        ///Click in the upper right corner on the help / documentation button (left [rest of string was truncated]&quot;;.
         /// </summary>
         public static string HelpMessage_ApplyThemeToPowerShellConsole {
             get {
@@ -6099,6 +6144,15 @@ namespace NETworkManager.Localization.Resources {
         public static string HelpMessage_BackgroundJob {
             get {
                 return ResourceManager.GetString("HelpMessage_BackgroundJob", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The profile is always applied to this network interface (not to the one selected in Network Interface), selecting the profile also selects the network interface. The network interface is identified by its ID, which is unique per computer: on another computer, select the network interface again or disable this option..
+        /// </summary>
+        public static string HelpMessage_BindToNetworkInterface {
+            get {
+                return ResourceManager.GetString("HelpMessage_BindToNetworkInterface", resourceCulture);
             }
         }
         
@@ -8959,6 +9013,24 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &quot;{0}&quot; is not a valid IPv4 address or subnet mask. Check the configuration (or the profile) and try again..
+        /// </summary>
+        public static string NetworkInterfaceConfigInvalidValueX {
+            get {
+                return ResourceManager.GetString("NetworkInterfaceConfigInvalidValueX", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A static IP address needs an IPv4 address and a subnet mask. Check the configuration (or the profile) and try again..
+        /// </summary>
+        public static string NetworkInterfaceConfigIPAddressAndSubnetmaskRequired {
+            get {
+                return ResourceManager.GetString("NetworkInterfaceConfigIPAddressAndSubnetmaskRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Configuration applied.
         /// </summary>
         public static string NetworkInterfaceConfigurationAppliedSuccessfully {
@@ -8973,6 +9045,42 @@ namespace NETworkManager.Localization.Resources {
         public static string NetworkInterfaceConfigureAdminMessage {
             get {
                 return ResourceManager.GetString("NetworkInterfaceConfigureAdminMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Network interface not found.
+        /// </summary>
+        public static string NetworkInterfaceNotFound {
+            get {
+                return ResourceManager.GetString("NetworkInterfaceNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The network interface of the profile &quot;{0}&quot; was not found on this computer:.
+        /// </summary>
+        public static string NetworkInterfaceOfProfileXNotFoundOnThisComputer {
+            get {
+                return ResourceManager.GetString("NetworkInterfaceOfProfileXNotFoundOnThisComputer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The network interface &quot;{0}&quot; was not found (e.g. it was removed). Nothing was changed..
+        /// </summary>
+        public static string NetworkInterfaceXNotFoundNothingChanged {
+            get {
+                return ResourceManager.GetString("NetworkInterfaceXNotFoundNothingChanged", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The network interface &quot;{0}&quot; of the profile was not found on this computer. The values are filled in for the selected network interface, check it before you apply them..
+        /// </summary>
+        public static string NetworkInterfaceXOfProfileNotFoundCheckSelected {
+            get {
+                return ResourceManager.GetString("NetworkInterfaceXOfProfileNotFoundCheckSelected", resourceCulture);
             }
         }
         
@@ -9289,6 +9397,15 @@ namespace NETworkManager.Localization.Resources {
         public static string Note {
             get {
                 return ResourceManager.GetString("Note", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Not found on this computer.
+        /// </summary>
+        public static string NotFoundOnThisComputer {
+            get {
+                return ResourceManager.GetString("NotFoundOnThisComputer", resourceCulture);
             }
         }
         
@@ -10420,7 +10537,7 @@ namespace NETworkManager.Localization.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Profile files are encrypted on disk using AES with a key size of 256 bits and a block size of 128 bits in CBC mode. The encryption key is derived from a master password using Rfc2898DeriveBytes (PBKDF2) with 1,000,000 iterations. At runtime, passwords are stored as SecureString once the profile file is loaded. For some functions, the password must be converted to a normal string and remains unencrypted in memory until the garbage collector cleans them up.
         ///
-        ///First make a backup copy of your profile files be [rest of string was truncated]&quot;;.
+        ///First make a backup copy of your profile files befo [rest of string was truncated]&quot;;.
         /// </summary>
         public static string ProfileEncryptionDisclaimer {
             get {
@@ -10568,6 +10685,15 @@ namespace NETworkManager.Localization.Resources {
         public static string ProfileXNotFound {
             get {
                 return ResourceManager.GetString("ProfileXNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The profile &quot;{0}&quot; was not loaded, because a configuration is being applied. Run the command again when it has finished..
+        /// </summary>
+        public static string ProfileXNotLoadedConfigurationRunning {
+            get {
+                return ResourceManager.GetString("ProfileXNotLoadedConfigurationRunning", resourceCulture);
             }
         }
         

@@ -32,4 +32,15 @@ public sealed record RunCommandSyntaxPart(RunCommandSyntaxPartKind Kind, string 
     {
         return new RunCommandSyntaxPart(RunCommandSyntaxPartKind.Profile, name, $"@<{name}>");
     }
+
+    /// <summary>
+    ///     Profile of a command without a target (e.g. "[@&lt;Profile&gt;]"): the profile is optional, the command
+    ///     alone opens the application.
+    /// </summary>
+    /// <param name="name">Name of the part (e.g. "Profile").</param>
+    /// <returns>Part of the syntax.</returns>
+    public static RunCommandSyntaxPart OptionalProfile(string name)
+    {
+        return new RunCommandSyntaxPart(RunCommandSyntaxPartKind.Profile, name, $"[@<{name}>]");
+    }
 }
