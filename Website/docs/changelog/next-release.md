@@ -39,6 +39,7 @@ Release date: **xx.xx.2026**
 - Double-click a profile (or press `Enter`) to fill in its values on the **Configure** tab again, e.g. after **Reset** or if the profile was selected automatically. [#3728](https://github.com/BornToBeRoot/NETworkManager/pull/3728)
 - The run command accepts a profile: `networkinterface @profile` selects the profile and fills in its values on the **Configure** tab (like a double-click on the profile), it is applied with **Apply**. [#3728](https://github.com/BornToBeRoot/NETworkManager/pull/3728)
 - Screenshot mode (`--screenshot`): sample network adapters and a filled bandwidth chart instead of your own adapters and a measurement. Configuration actions only show their result, nothing is changed. [#3728](https://github.com/BornToBeRoot/NETworkManager/pull/3728)
+- **Refresh** button next to **Network connections...** when no network adapter was found, like in **WiFi** (e.g. after an adapter was enabled). [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 
 **LLDP / CDP Capture**
 
