@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Security;
 using System.Text;
 using System.Text.Json;
@@ -1308,6 +1309,26 @@ public static class ProfileManager
     }
 
     /// <summary>
+    ///     Profiles replaced by <see cref="ReplaceProfile" /> (old -> new). Weak, so the old profiles are not kept alive.
+    /// </summary>
+    private static readonly ConditionalWeakTable<ProfileInfo, ProfileInfo> ReplacedProfiles = new();
+
+    /// <summary>
+    ///     Gets the current version of a profile: a profile is replaced by a new object when it is edited (see
+    ///     <see cref="ReplaceProfile" />). Lists that select the previously selected profile again after the profiles
+    ///     were updated use it, so the edited profile stays selected (instead of the first one).
+    /// </summary>
+    /// <param name="profile">Profile, e.g. the one selected before the profiles were updated.</param>
+    /// <returns>The profile that replaced it (also if it was edited several times), or the profile itself.</returns>
+    public static ProfileInfo GetCurrentProfile(ProfileInfo profile)
+    {
+        while (profile != null && ReplacedProfiles.TryGetValue(profile, out var newProfile))
+            profile = newProfile;
+
+        return profile;
+    }
+
+    /// <summary>
     ///     Method to replace a profile in a group.
     /// </summary>
     /// <param name="oldProfile">Old profile as <see cref="ProfileInfo" />.</param>
@@ -1340,6 +1361,9 @@ public static class ProfileManager
             throw new InvalidOperationException($"Group '{newProfile.Group}' not found for new profile after creation attempt.");
 
         newGroup.Profiles.Add(newProfile);
+
+        // Before the lists are updated (they select the edited profile again, see GetCurrentProfile)
+        ReplacedProfiles.AddOrUpdate(oldProfile, newProfile);
 
         ProfilesUpdated();
     }

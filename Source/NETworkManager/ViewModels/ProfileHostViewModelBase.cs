@@ -462,6 +462,9 @@ public abstract class ProfileHostViewModelBase : ViewModelBase, IProfileHostView
 
         Profiles.GroupDescriptions.Add(new PropertyGroupDescription(nameof(ProfileInfo.Group)));
 
+        // A profile that was edited meanwhile is a new object: select the edited one
+        profile = ProfileManager.GetCurrentProfile(profile);
+
         // Set specific profile or first if null
         IsProfileSelectedByCode = true;
 

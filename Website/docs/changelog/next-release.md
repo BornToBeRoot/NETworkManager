@@ -104,6 +104,7 @@ Release date: **xx.xx.2026**
 **Profiles**
 
 - Fixed the profile list not filling the width of the grid: the name column fills the remaining width. [#3719](https://github.com/BornToBeRoot/NETworkManager/pull/3719)
+- Fixed the first profile being selected after a profile was edited, instead of the edited profile (profile list of the tools and **Settings > Profiles**). [#3728](https://github.com/BornToBeRoot/NETworkManager/pull/3728)
 
 **Port Scanner**
 
