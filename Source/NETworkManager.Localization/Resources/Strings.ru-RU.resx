@@ -5654,4 +5654,49 @@ Do you want to start the scan?</value>
   <data name="MDNSDiscovery_InterfaceNotAvailable" xml:space="preserve">
     <value>The last used network interface is not available, "{0}" is used instead.</value>
   </data>
+  <data name="NetworkInterfaceConfigInvalidValueX" xml:space="preserve">
+    <value>"{0}" is not a valid IPv4 address or subnet mask. Check the configuration (or the profile) and try again.</value>
+  </data>
+  <data name="BindToNetworkInterface" xml:space="preserve">
+    <value>Bind to network interface</value>
+  </data>
+  <data name="HelpMessage_BindToNetworkInterface" xml:space="preserve">
+    <value>The profile is always applied to this network interface (not to the one selected in Network Interface), selecting the profile also selects the network interface. The network interface is identified by its ID, which is unique per computer: on another computer, select the network interface again or disable this option.</value>
+  </data>
+  <data name="NotFoundOnThisComputer" xml:space="preserve">
+    <value>Not found on this computer</value>
+  </data>
+  <data name="NetworkInterfaceNotFound" xml:space="preserve">
+    <value>Network interface not found</value>
+  </data>
+  <data name="NetworkInterfaceOfProfileXNotFoundOnThisComputer" xml:space="preserve">
+    <value>The network interface of the profile "{0}" was not found on this computer:</value>
+  </data>
+  <data name="ApplyProfileToSelectedNetworkInterfaceXInstead" xml:space="preserve">
+    <value>Apply the profile to the selected network interface "{0}" instead?</value>
+  </data>
+  <data name="FixNetworkInterfaceOfProfileHint" xml:space="preserve">
+    <value>To fix this, edit the profile and select another network interface or disable "Bind to network interface".</value>
+  </data>
+  <data name="NetworkInterfaceXNotFoundNothingChanged" xml:space="preserve">
+    <value>The network interface "{0}" was not found (e.g. it was removed). Nothing was changed.</value>
+  </data>
+  <data name="NetworkInterfaceXOfProfileNotFoundCheckSelected" xml:space="preserve">
+    <value>The network interface "{0}" of the profile was not found on this computer. The values are filled in for the selected network interface, check it before you apply them.</value>
+  </data>
+  <data name="NetworkInterfaceConfigIPAddressAndSubnetmaskRequired" xml:space="preserve">
+    <value>A static IP address needs an IPv4 address and a subnet mask. Check the configuration (or the profile) and try again.</value>
+  </data>
+  <data name="FailedToLoadNetworkInterfacesTryAgain" xml:space="preserve">
+    <value>Failed to load the network interfaces. Disable "Bind to network interface" and enable it again to try again.</value>
+  </data>
+  <data name="CommandXOnlyAcceptsAProfile" xml:space="preserve">
+    <value>The command "{0}" only accepts a profile: enter "@" and the name of the profile!</value>
+  </data>
+  <data name="ProfileXNotLoadedConfigurationRunning" xml:space="preserve">
+    <value>The profile "{0}" was not loaded, because a configuration is being applied. Run the command again when it has finished.</value>
+  </data>
+  <data name="SearchingNetworkAdaptersDots" xml:space="preserve">
+    <value>Searching for network adapters...</value>
+  </data>
 </root>
