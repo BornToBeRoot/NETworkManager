@@ -564,9 +564,16 @@ public sealed class NetworkInterface
         using var interfaceKey = Registry.LocalMachine.OpenSubKey(
             $@"SYSTEM\CurrentControlSet\Services\{(ipv6 ? "Tcpip6" : "Tcpip")}\Parameters\Interfaces\{interfaceId}");
 
-        var nameServer = interfaceKey?.GetValue("NameServer");
+        if (interfaceKey == null)
+            return null;
 
-        return nameServer == null ? null : string.IsNullOrEmpty(nameServer.ToString());
+        var nameServer = interfaceKey.GetValue("NameServer");
+
+        // IPv6: the value may not exist if DNS servers were never set statically (IPv4 always has it)
+        if (nameServer == null)
+            return ipv6 ? true : null;
+
+        return string.IsNullOrEmpty(nameServer.ToString());
     }
 
     /// <summary>
