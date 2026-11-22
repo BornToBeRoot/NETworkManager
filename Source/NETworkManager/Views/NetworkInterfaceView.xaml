@@ -1084,7 +1084,7 @@
                                                     </Style>
                                                 </ComboBox.ItemContainerStyle>
                                             </ComboBox>
-                                            <Button Grid.Column="1" Grid.Row="0"
+                                            <Button x:Name="ButtonReloadNetworkInterfaces" Grid.Column="1" Grid.Row="0"
                                                     Width="{Binding RelativeSource={RelativeSource Self}, Path=ActualHeight}"
                                                     Height="{Binding ElementName=ComboBoxNetworkInterfaceProfiles, Path=ActualHeight}"
                                                     Command="{Binding ReloadNetworkInterfacesCommand}"
@@ -1119,12 +1119,18 @@
                                                        Visibility="{Binding CanConfigure, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" Margin="0,10,0,0" />
                                         </Grid>
                                     </StackPanel>
-                                    <StackPanel Grid.Row="1" Orientation="Horizontal">
-                                        <TextBlock Style="{StaticResource HeaderTextBlock}"
+                                    <Grid Grid.Row="1">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Grid.Column="0" Style="{StaticResource HeaderTextBlock}"
                                                    Text="{x:Static localization:Strings.Configure}"
                                                    VerticalAlignment="Center" />
-                                        <!-- Reset the values below to the current configuration of the network adapter -->
-                                        <Button Command="{Binding ResetConfigurationCommand}"
+                                        <!-- Reset the values below to the current configuration of the network adapter.
+                                             Same width as the reload button above, so both icons are in one column -->
+                                        <Button Grid.Column="1" Command="{Binding ResetConfigurationCommand}"
+                                                Width="{Binding ElementName=ButtonReloadNetworkInterfaces, Path=ActualWidth}"
                                                 Style="{StaticResource CleanButton}"
                                                 ToolTip="{x:Static localization:Strings.Reset}"
                                                 VerticalAlignment="Center" Margin="10,0,0,10">
@@ -1155,7 +1161,7 @@
                                                 </Rectangle.Style>
                                             </Rectangle>
                                         </Button>
-                                    </StackPanel>
+                                    </Grid>
                                     <ScrollViewer Grid.Row="2">
                                         <StackPanel>
                                             <RadioButton x:Name="RadioButtonConfigEnableDynamicIPAddress"
