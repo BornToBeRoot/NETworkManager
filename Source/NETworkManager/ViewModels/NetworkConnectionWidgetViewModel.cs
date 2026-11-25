@@ -5,7 +5,6 @@ using System;
 using System.Net;
 using System.Net.Http;
 using System.Text.RegularExpressions;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using log4net;
@@ -116,14 +115,14 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
     /// <summary>
     /// Gets the command to check connections.
     /// </summary>
-    public ICommand CheckCommand => new RelayCommand(_ => Check());
+    public ICommand CheckCommand => new RelayCommand(_ => Check(), _ => !IsChecking);
 
     #endregion
 
     #region Methods
 
     /// <summary>
-    /// Checks the network connections.
+    /// Checks the network connections. If a check is already running, it is repeated once it has finished.
     /// </summary>
     public void Check()
     {
@@ -131,96 +130,60 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
     }
 
     /// <summary>
-    /// The cancellation token source.
+    /// A check was requested while another one was running (e.g. a network change during a check). The running check
+    /// is repeated once it has finished, so the result shows the latest state. Only used on the UI thread.
     /// </summary>
-    private CancellationTokenSource _cancellationTokenSource;
-
-    /// <summary>
-    /// The check task.
-    /// </summary>
-    private Task _checkTask = Task.CompletedTask;
-
-    /// <summary>
-    /// Monotonically increasing id of the current check run. None of the underlying detection/DNS
-    /// calls support real mid-flight cancellation (see <see cref="RunTask"/>), so a superseded run
-    /// can still be executing in the background after a newer run has started. Every write to a
-    /// <see cref="ConnectionCheckItem"/> is guarded by comparing against this field, so a superseded
-    /// run's results are silently discarded instead of racing with the current run's writes.
-    /// </summary>
-    private long _generation;
+    private bool _recheckPending;
 
     /// <summary>
     /// Checks the network connections asynchronously.
     /// </summary>
     private async Task CheckAsync()
     {
-        Log.Info("Checking network connection...");
-
-        // Bump the generation immediately so a still-running previous check stops writing
-        // its results as soon as possible, even before it notices the cancellation below.
-        var generation = Interlocked.Increment(ref _generation);
-
-        // Cancel previous checks if running
-        if (!_checkTask.IsCompleted)
+        if (IsChecking)
         {
-            Log.Info("Cancelling previous checks...");
-            await _cancellationTokenSource.CancelAsync();
-
-            try
-            {
-                await _checkTask;
-            }
-            catch (OperationCanceledException)
-            {
-                Log.Info("Task was cancelled from previous checks.");
-            }
-            finally
-            {
-                _cancellationTokenSource.Dispose();
-            }
+            _recheckPending = true;
+            return;
         }
-
-        _cancellationTokenSource = new CancellationTokenSource();
-        var wasCanceled = false;
 
         IsChecking = true;
 
         try
         {
-            _checkTask = RunTask(_cancellationTokenSource.Token, generation);
-            await _checkTask;
+            do
+            {
+                _recheckPending = false;
+
+                Log.Info("Checking network connection...");
+
+                // Takes at least the refresh interval, so the reload animation is visible and the check can't be
+                // spammed - the checks run at the same time
+                await TaskHelper.WithMinimumDurationAsync(RunTask, GlobalStaticConfiguration.ApplicationUIRefreshInterval);
+
+                Log.Info("Network connection check completed.");
+            } while (_recheckPending);
         }
-        catch (OperationCanceledException)
+        catch (Exception ex)
         {
-            wasCanceled = true;
-            Log.Info("Task was cancelled from current checks.");
+            Log.Error("Network connection check failed.", ex);
         }
         finally
         {
             IsChecking = false;
-            _cancellationTokenSource.Dispose();
-
-            if (!wasCanceled)
-                Log.Info("Network connection check completed.");
         }
     }
 
     /// <summary>
     /// Runs the check tasks.
     /// </summary>
-    /// <param name="ct">The cancellation token.</param>
-    /// <param name="generation">The id of this check run, see <see cref="_generation"/>.</param>
     /// <returns>A task representing the asynchronous operation.</returns>
-    private async Task RunTask(CancellationToken ct, long generation)
+    private async Task RunTask()
     {
         ResetAllItems();
 
         if (ScreenshotData.IsEnabled)
         {
-            // Wait like a real check, so the loading animation is visible
-            await Task.Delay(GlobalStaticConfiguration.ApplicationUIRefreshInterval, ct);
-
-            SetScreenshotData(generation);
+            SetScreenshotData();
             return;
         }
 
@@ -232,19 +195,16 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
 
         await Task.WhenAll(localIPv4Task, localIPv6Task);
 
-        if (ct.IsCancellationRequested)
-            ct.ThrowIfCancellationRequested();
-
         var localIPv4 = localIPv4Task.Result;
         var localIPv6 = localIPv6Task.Result;
 
-        SetAddressResult(ComputerIPv4, localIPv4, generation);
-        SetAddressResult(ComputerIPv6, localIPv6, generation);
+        SetAddressResult(ComputerIPv4, localIPv4);
+        SetAddressResult(ComputerIPv6, localIPv6);
 
         await Task.WhenAll(
-            CheckConnectionComputerDnsAsync(ct, generation),
-            CheckConnectionRouterAsync(localIPv4, localIPv6, ct, generation),
-            CheckConnectionInternetAsync(ct, generation)
+            CheckConnectionComputerDnsAsync(),
+            CheckConnectionRouterAsync(localIPv4, localIPv6),
+            CheckConnectionInternetAsync()
         );
     }
 
@@ -272,14 +232,10 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
     }
 
     /// <summary>
-    /// Sets the sample data of <see cref="ScreenshotData" /> instead of the real (personal) addresses, unless a newer
-    /// check has started in the meantime.
+    /// Sets the sample data of <see cref="ScreenshotData" /> instead of the real (personal) addresses.
     /// </summary>
-    private void SetScreenshotData(long generation)
+    private void SetScreenshotData()
     {
-        if (generation != _generation)
-            return;
-
         ComputerIPv4.Complete(ScreenshotData.ComputerIPv4, ConnectionState.OK);
         ComputerIPv6.Complete(ScreenshotData.ComputerIPv6, ConnectionState.OK);
         ComputerDNS.Complete(ScreenshotData.ComputerDNS, ConnectionState.OK);
@@ -369,27 +325,22 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
     }
 
     /// <summary>
-    /// Applies a detected address to a <see cref="ConnectionCheckItem"/>, unless a newer check has
-    /// started in the meantime.
+    /// Applies a detected address to a <see cref="ConnectionCheckItem"/>.
     /// </summary>
-    private void SetAddressResult(ConnectionCheckItem item, IPAddress detected, long generation)
+    private static void SetAddressResult(ConnectionCheckItem item, IPAddress detected)
     {
-        if (generation != _generation)
-            return;
-
         item.Complete(detected?.ToString() ?? "-/-", detected != null ? ConnectionState.OK : ConnectionState.Critical);
     }
 
     /// <summary>
-    /// Resolves the DNS (PTR) name for an address item, trying IPv4 first and falling back to IPv6,
-    /// unless a newer check has started in the meantime.
+    /// Resolves the DNS (PTR) name for an address item, trying IPv4 first and falling back to IPv6.
     /// </summary>
     /// <remarks>
     /// A PTR lookup that completes without a server error but simply has no record (e.g. most home
     /// routers and many ISPs don't configure reverse DNS) is reported as <see cref="ConnectionState.Info"/>
     /// rather than <see cref="ConnectionState.Critical"/> - it's not a sign of a broken DNS setup.
     /// </remarks>
-    private async Task ResolveDnsAsync(ConnectionCheckItem dnsItem, ConnectionCheckItem addressIPv4, ConnectionCheckItem addressIPv6, long generation, string context)
+    private async Task ResolveDnsAsync(ConnectionCheckItem dnsItem, ConnectionCheckItem addressIPv4, ConnectionCheckItem addressIPv6, string context)
     {
         DNSClientResultString ipv4Result = null;
         DNSClientResultString ipv6Result = null;
@@ -405,9 +356,6 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
             Log.Debug($"{context} > {nameof(ResolveDnsAsync)} - Resolving DNS based on IPv6...");
             ipv6Result = await DNSClient.GetInstance().ResolvePtrAsync(IPAddress.Parse(addressIPv6.Value));
         }
-
-        if (generation != _generation)
-            return;
 
         // Prefer a successful resolution from either family. If neither succeeded, a clean
         // "not found" from either family still wins over a hard failure from the other - e.g.
@@ -436,14 +384,14 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
     /// <summary>
     /// Resolves the computer's DNS (PTR) name.
     /// </summary>
-    private Task CheckConnectionComputerDnsAsync(CancellationToken ct, long generation)
+    private Task CheckConnectionComputerDnsAsync()
     {
         return Task.Run(async () =>
         {
             Log.Debug($"{nameof(CheckConnectionComputerDnsAsync)} - Checking computer DNS...");
-            await ResolveDnsAsync(ComputerDNS, ComputerIPv4, ComputerIPv6, generation, nameof(CheckConnectionComputerDnsAsync));
+            await ResolveDnsAsync(ComputerDNS, ComputerIPv4, ComputerIPv6, nameof(CheckConnectionComputerDnsAsync));
             Log.Debug($"{nameof(CheckConnectionComputerDnsAsync)} - Computer DNS check completed.");
-        }, ct);
+        });
     }
 
     /// <summary>
@@ -451,10 +399,8 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
     /// </summary>
     /// <param name="localIPv4">The already-detected local IPv4 address, or <c>null</c>.</param>
     /// <param name="localIPv6">The already-detected local IPv6 address, or <c>null</c>.</param>
-    /// <param name="ct">The cancellation token.</param>
-    /// <param name="generation">The id of this check run, see <see cref="_generation"/>.</param>
     /// <returns>A task representing the asynchronous operation.</returns>
-    private Task CheckConnectionRouterAsync(IPAddress localIPv4, IPAddress localIPv6, CancellationToken ct, long generation)
+    private Task CheckConnectionRouterAsync(IPAddress localIPv4, IPAddress localIPv6)
     {
         return Task.Run(async () =>
         {
@@ -467,10 +413,7 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
                 ? await NetworkInterface.DetectGatewayFromLocalIPAddressAsync(localIPv4)
                 : null;
 
-            SetAddressResult(RouterIPv4, routerIPv4, generation);
-
-            if (ct.IsCancellationRequested)
-                ct.ThrowIfCancellationRequested();
+            SetAddressResult(RouterIPv4, routerIPv4);
 
             // Detect router IPv6 gateway
             Log.Debug($"{nameof(CheckConnectionRouterAsync)} - Detecting router IPv6 address...");
@@ -479,25 +422,20 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
                 ? await NetworkInterface.DetectGatewayFromLocalIPAddressAsync(localIPv6)
                 : null;
 
-            SetAddressResult(RouterIPv6, routerIPv6, generation);
-
-            if (ct.IsCancellationRequested)
-                ct.ThrowIfCancellationRequested();
+            SetAddressResult(RouterIPv6, routerIPv6);
 
             // Resolve router DNS
-            await ResolveDnsAsync(RouterDNS, RouterIPv4, RouterIPv6, generation, nameof(CheckConnectionRouterAsync));
+            await ResolveDnsAsync(RouterDNS, RouterIPv4, RouterIPv6, nameof(CheckConnectionRouterAsync));
 
             Log.Debug($"{nameof(CheckConnectionRouterAsync)} - Router connection check completed.");
-        }, ct);
+        });
     }
 
     /// <summary>
     /// Checks the internet connection asynchronously.
     /// </summary>
-    /// <param name="ct">The cancellation token.</param>
-    /// <param name="generation">The id of this check run, see <see cref="_generation"/>.</param>
     /// <returns>A task representing the asynchronous operation.</returns>
-    private Task CheckConnectionInternetAsync(CancellationToken ct, long generation)
+    private Task CheckConnectionInternetAsync()
     {
         return Task.Run(async () =>
         {
@@ -518,12 +456,9 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
             {
                 Log.Debug($"{nameof(CheckConnectionInternetAsync)} - Checking public IPv4 address from: " + publicIPv4AddressAPI);
 
-                var httpResponse = await PublicIPHttpClient.GetAsync(publicIPv4AddressAPI, ct);
-                var result = await httpResponse.Content.ReadAsStringAsync(ct);
+                var httpResponse = await PublicIPHttpClient.GetAsync(publicIPv4AddressAPI);
+                var result = await httpResponse.Content.ReadAsStringAsync();
                 var match = RegexHelper.IPv4AddressExtractRegex().Match(result);
-
-                if (generation != _generation)
-                    return;
 
                 if (match.Success)
                 {
@@ -536,16 +471,12 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
                     InternetIPv4.Complete("-/-", ConnectionState.Critical);
                 }
             }
-            catch (Exception ex) when (ex is not OperationCanceledException)
+            catch (Exception ex)
             {
                 Log.Debug($"{nameof(CheckConnectionInternetAsync)} - Public IPv4 address not detected due to exception: " + ex.Message);
 
-                if (generation == _generation)
-                    InternetIPv4.Complete("-/-", ConnectionState.Critical);
+                InternetIPv4.Complete("-/-", ConnectionState.Critical);
             }
-
-            if (ct.IsCancellationRequested)
-                ct.ThrowIfCancellationRequested();
 
             // Detect public IPv6 and if it is reachable
             Log.Debug($"{nameof(CheckConnectionInternetAsync)} - Detecting public IPv6 address...");
@@ -558,12 +489,9 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
             {
                 Log.Debug($"{nameof(CheckConnectionInternetAsync)} - Checking public IPv6 address from: " + publicIPv6AddressAPI);
 
-                var httpResponse = await PublicIPHttpClient.GetAsync(publicIPv6AddressAPI, ct);
-                var result = await httpResponse.Content.ReadAsStringAsync(ct);
+                var httpResponse = await PublicIPHttpClient.GetAsync(publicIPv6AddressAPI);
+                var result = await httpResponse.Content.ReadAsStringAsync();
                 var match = Regex.Match(result, RegexHelper.IPv6AddressRegex);
-
-                if (generation != _generation)
-                    return;
 
                 if (match.Success)
                 {
@@ -576,22 +504,18 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
                     InternetIPv6.Complete("-/-", ConnectionState.Critical);
                 }
             }
-            catch (Exception ex) when (ex is not OperationCanceledException)
+            catch (Exception ex)
             {
                 Log.Debug($"{nameof(CheckConnectionInternetAsync)} - Public IPv6 address not detected due to exception: " + ex.Message);
 
-                if (generation == _generation)
-                    InternetIPv6.Complete("-/-", ConnectionState.Critical);
+                InternetIPv6.Complete("-/-", ConnectionState.Critical);
             }
 
-            if (ct.IsCancellationRequested)
-                ct.ThrowIfCancellationRequested();
-
             // Resolve internet DNS
-            await ResolveDnsAsync(InternetDNS, InternetIPv4, InternetIPv6, generation, nameof(CheckConnectionInternetAsync));
+            await ResolveDnsAsync(InternetDNS, InternetIPv4, InternetIPv6, nameof(CheckConnectionInternetAsync));
 
             Log.Debug($"{nameof(CheckConnectionInternetAsync)} - Internet connection check completed.");
-        }, ct);
+        });
     }
 
     #endregion

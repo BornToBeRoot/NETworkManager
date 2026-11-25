@@ -121,6 +121,10 @@ Release date: **xx.xx.2026**
 - Fixed the license of ControlzEx in the library list: it showed the license text and link of Dragablz. [#3717](https://github.com/BornToBeRoot/NETworkManager/pull/3717)
 - Updated the license of MahApps.Metro in the library list (copyright: .NET Foundation and Contributors). [#3717](https://github.com/BornToBeRoot/NETworkManager/pull/3717)
 
+**Dashboard**
+
+- Fixed the network connection check getting stuck (all values loading until the next refresh) when the refresh was used several times while a check was running. A refresh during a check now repeats the check once it has finished. [#PR](PRLINK)
+
 ## Dependencies, Refactoring & Documentation
 
 - Code cleanup & refactoring
