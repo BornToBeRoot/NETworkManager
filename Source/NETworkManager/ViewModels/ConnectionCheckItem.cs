@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Net;
 using System.Windows.Input;
 using NETworkManager.Localization;
 using NETworkManager.Models;
@@ -62,6 +63,13 @@ public class ConnectionCheckItem : PropertyChangedBase
     /// Gets a value indicating whether the value is the IP address of the gateway / router (e.g. web interface).
     /// </summary>
     public bool IsRouterIPAddress => Kind == ConnectionCheckItemKind.RouterIPAddress;
+
+    /// <summary>
+    /// Gets a value indicating whether the target can be opened in the Web Console: the gateway / router, but not a
+    /// link-local IPv6 address (the scope id, e.g. <c>fe80::1%12</c>, is not valid in a URL).
+    /// </summary>
+    public bool IsWebConsoleAvailable => IsRouterIPAddress &&
+                                         !(IPAddress.TryParse(Target, out var ipAddress) && ipAddress.IsIPv6LinkLocal);
 
     /// <summary>
     /// Gets a value indicating whether the value is the public IP address (e.g. IP geolocation, RDAP).
@@ -147,6 +155,7 @@ public class ConnectionCheckItem : PropertyChangedBase
 
             field = value;
             OnPropertyChanged();
+            OnPropertyChanged(nameof(IsWebConsoleAvailable));
         }
     }
 

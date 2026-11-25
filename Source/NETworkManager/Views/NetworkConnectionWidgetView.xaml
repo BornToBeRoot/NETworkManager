@@ -133,7 +133,7 @@
                             <MenuItem Header="{x:Static localization:Strings.WebConsole}"
                                       Command="{Binding OpenApplicationCommand}"
                                       CommandParameter="{x:Static models:ApplicationName.WebConsole}"
-                                      Visibility="{Binding IsRouterIPAddress, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+                                      Visibility="{Binding IsWebConsoleAvailable, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
                                 <MenuItem.Icon>
                                     <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                         <Rectangle.OpacityMask>
