@@ -150,7 +150,7 @@ public static class GlobalStaticConfiguration
     /// </summary>
     public static TimeSpan Dashboard_RecheckInterval => TimeSpan.FromSeconds(60);
 
-    // Ping of the gateway and the public IP address (same defaults as the IP Scanner / Port Scanner)
+    // Ping of the gateway and the public IP address
     public static int Dashboard_PingTimeout => 2000;
     public static int Dashboard_PingAttempts => 2;
     public static int Dashboard_PingBuffer => 32;
