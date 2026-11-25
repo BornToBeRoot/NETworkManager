@@ -526,7 +526,8 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
     /// <param name="item">Item of the internet check (IPv4 or IPv6).</param>
     /// <param name="addressFamily">IPv4 or IPv6.</param>
     /// <param name="connectivityLevelTask">Internet connectivity reported by Windows (read once per check).</param>
-    /// <returns>The IP address returned by the API (also if private), or <c>null</c>.</returns>
+    /// <returns>The public IP address returned by the API, or <c>null</c> (also if the API returned a private one, e.g.
+    /// a captive portal - its DNS name is not the one of the internet connection).</returns>
     private static async Task<IPAddress> CheckInternetAsync(ConnectionCheckItem item, AddressFamily addressFamily,
         Task<InternetConnectivityLevel> connectivityLevelTask)
     {
@@ -552,7 +553,7 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
             publicIPAddress, connectivityLevelTask.Result), publicIPAddress?.IPAddress?.ToString() ??
                                                             (isPingSuccessful ? pingInfo.IPAddress.ToString() : null));
 
-        return publicIPAddress?.IPAddress;
+        return publicIPAddress is { Status: PublicIPAddressCheckStatus.Success } ? publicIPAddress.IPAddress : null;
     }
 
     /// <summary>
