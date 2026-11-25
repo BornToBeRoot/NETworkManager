@@ -232,6 +232,10 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
         finally
         {
             IsChecking = false;
+
+            // Enable the refresh / copy all buttons (CanExecute is otherwise only evaluated on the next input, e.g. not
+            // in the status window opened on a network change without the focus)
+            CommandManager.InvalidateRequerySuggested();
         }
     }
 
