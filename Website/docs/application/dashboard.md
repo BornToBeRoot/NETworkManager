@@ -129,7 +129,7 @@ Enables or disables the detection of the DNS resolver in use via [`ip-api.com`](
 
 ### Widgets
 
-Show or hide the widgets on the dashboard: **Network connection**, **Speed Test**, **IP geolocation** and **DNS resolver**. A hidden widget doesn't check anything (e.g. no request is sent to `ip-api.com`). If one of IP geolocation and DNS resolver is hidden, the other one uses the whole width. The status window always shows the network connection.
+Show or hide the widgets on the dashboard: **Network connection**, **Speed Test**, **IP geolocation** and **DNS resolver**. A hidden widget doesn't check anything (e.g. no request is sent to `ip-api.com`); a speed test that is already running when the widget is hidden is completed. If one of IP geolocation and DNS resolver is hidden, the other one uses the whole width. The status window always shows the network connection.
 
 **Type:** `Boolean`
 

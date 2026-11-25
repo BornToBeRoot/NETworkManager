@@ -35,7 +35,7 @@ Release date: **xx.xx.2026**
 
 **Dashboard**
 
-- The widgets of the dashboard (Network connection, Speed Test, IP geolocation, DNS resolver) can be hidden in the settings (**Settings > Dashboard > Widgets**). A hidden widget doesn't check anything. [#PR](PRLINK)
+- The widgets of the dashboard (Network connection, Speed Test, IP geolocation, DNS resolver) can be hidden in the settings (**Settings > Dashboard > Widgets**). A hidden widget doesn't check anything (a running speed test is completed). [#PR](PRLINK)
 
 ## Improvements
 
