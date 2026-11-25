@@ -153,6 +153,7 @@ Release date: **xx.xx.2026**
 - The status window that opens on a network change no longer takes the keyboard focus from the application you are working in. Clicking into it keeps it open (the countdown stops). [#PR](PRLINK)
 - Fixed the status window being hidden right after it was opened from the tray icon when the countdown of a previous network change had just ended. [#PR](PRLINK)
 - Fixed the status window being cut off on the left on small screens (e.g. 1280 x 720 with 150 % scaling). It is no longer wider than the screen. [#PR](PRLINK)
+- Fixed the status window opened by the user (e.g. from the tray icon) closing itself after a network change. It stays open and checks the network connection again. [#PR](PRLINK)
 
 ## Dependencies, Refactoring & Documentation
 

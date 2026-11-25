@@ -140,6 +140,13 @@ public partial class StatusWindow : INotifyPropertyChanged
     /// <param name="enableCloseTimer">Automatically close the window after a certain time.</param>
     public void ShowWindow(bool enableCloseTimer = false)
     {
+        // A network change while the user has the window open (no countdown): keep it open, only check again
+        if (enableCloseTimer && IsVisible && !ShowTime)
+        {
+            Check();
+            return;
+        }
+
         // Position bottom-right on the primary screen. With SizeToContent="Height" the final
         // height is only known after layout, so this is refined again in SizeChanged.
         UpdatePosition();
