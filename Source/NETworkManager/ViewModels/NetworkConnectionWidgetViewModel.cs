@@ -360,15 +360,20 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
     /// Detects the gateway of the local IP address and pings it, see <see cref="NetworkConnectionCheck.GetGatewayResult" />.
     /// </summary>
     /// <param name="item">Item of the router check (IPv4 or IPv6).</param>
-    /// <param name="localIPAddress">Local IP address, or <c>null</c>.</param>
+    /// <param name="localIPAddress">Local IP address, or <c>null</c> (IPv4 only, IPv6 is not checked without one).</param>
     /// <param name="isRouted">The local IP address was detected via the route to the public IP address.</param>
     /// <returns>The gateway, or <c>null</c> if none was found.</returns>
     private static async Task<IPAddress> CheckGatewayAsync(ConnectionCheckItem item, IPAddress localIPAddress,
         bool isRouted)
     {
-        var gateway = localIPAddress != null
-            ? await NetworkInterface.DetectGatewayFromLocalIPAddressAsync(localIPAddress)
-            : null;
+        // No local IP address (shown as error on the computer): no gateway to detect
+        if (localIPAddress == null)
+        {
+            item.Complete("-/-", new ConnectionCheckResult(ConnectionState.Info, ConnectionCheckReason.NoIPv4Address));
+            return null;
+        }
+
+        var gateway = await NetworkInterface.DetectGatewayFromLocalIPAddressAsync(localIPAddress);
 
         var isReachable = false;
 

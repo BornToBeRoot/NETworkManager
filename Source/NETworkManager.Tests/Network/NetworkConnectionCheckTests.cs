@@ -105,7 +105,7 @@ public class NetworkConnectionCheckTests
     [InlineData("192.168.1.1", true, false, ConnectionState.Warning, ConnectionCheckReason.GatewayNoReply)]
     // Routed via an adapter without a gateway (e.g. VPN)
     [InlineData(null, true, false, ConnectionState.Warning, ConnectionCheckReason.NoGateway)]
-    // No route and no gateway (or no local IP address)
+    // No route and no gateway
     [InlineData(null, false, false, ConnectionState.Critical, ConnectionCheckReason.NoGateway)]
     public void GetGatewayResult(string gateway, bool isRouted, bool isReachable, ConnectionState state,
         ConnectionCheckReason reason)
