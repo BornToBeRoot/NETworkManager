@@ -148,7 +148,7 @@ Release date: **xx.xx.2026**
 
 **Dashboard**
 
-- Fixed the network connection check getting stuck (all values loading until the next refresh) when the refresh was used several times while a check was running. A refresh during a check now repeats the check once it has finished. [#PR](PRLINK)
+- Fixed the network connection check getting stuck (all values loading until the next refresh) when it was started several times while a check was running (e.g. the refresh and a network change). The refresh is disabled while a check runs, a network change during a check repeats the check once it has finished. [#PR](PRLINK)
 - Fixed the network connection widget (dashboard and status window) not updating when **Check public IP address** was changed in the settings until the application was restarted: an old public IP address could be shown as current. [#PR](PRLINK)
 - Fixed the network connection not being checked again when the network changed while the dashboard was open (e.g. a cable unplugged or a VPN connected), although the documentation says so. If the dashboard is not open, it is checked when it is opened again. [#PR](PRLINK)
 - Fixed the gateway / router not being found (shown as failed although the internet works) for VPN connections whose adapter is not an Ethernet or Wi-Fi adapter (e.g. the Windows VPN client with IKEv2 / SSTP). A VPN adapter without a gateway is no longer shown with the gateway `0.0.0.0`. [#PR](PRLINK)
