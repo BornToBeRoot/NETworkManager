@@ -180,9 +180,15 @@ public partial class StatusWindow : INotifyPropertyChanged
             return;
 
         var scaleFactor = System.Windows.Media.VisualTreeHelper.GetDpi(this).DpiScaleX;
+        var workingArea = Screen.PrimaryScreen.WorkingArea;
 
-        Left = Screen.PrimaryScreen.WorkingArea.Right / scaleFactor - Width - 10;
-        Top = Screen.PrimaryScreen.WorkingArea.Bottom / scaleFactor - ActualHeight - 10;
+        // Not wider than the working area (e.g. 1280 x 720 with 150 % scaling is 853 px wide), otherwise the window
+        // would start outside the screen on the left
+        MaxWidth = Math.Max(0, workingArea.Width / scaleFactor - 20);
+
+        Left = Math.Max(workingArea.Left / scaleFactor + 10,
+            workingArea.Right / scaleFactor - Math.Min(Width, MaxWidth) - 10);
+        Top = workingArea.Bottom / scaleFactor - ActualHeight - 10;
     }
 
     private void SetupCloseTimer()
