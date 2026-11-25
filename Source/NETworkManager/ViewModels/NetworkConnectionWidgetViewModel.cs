@@ -218,9 +218,7 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
     }
 
     /// <summary>
-    /// Resets all connection check items to their initial "checking" state. The Internet items are
-    /// only reset when the public IP address check is enabled, so they stay untouched (not stuck
-    /// "checking") when it is disabled.
+    /// Resets all connection check items to their initial "checking" state.
     /// </summary>
     private void ResetAllItems()
     {
@@ -231,9 +229,6 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
         RouterIPv4.Reset();
         RouterIPv6.Reset();
         RouterDNS.Reset();
-
-        if (!SettingsManager.Current.Dashboard_CheckPublicIPAddress)
-            return;
 
         InternetIPv4.Reset();
         InternetIPv6.Reset();
@@ -252,9 +247,6 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
         RouterIPv4.Complete(ScreenshotData.RouterIPv4, ConnectionState.OK);
         RouterIPv6.Complete(ScreenshotData.RouterIPv6, ConnectionState.OK);
         RouterDNS.Complete(ScreenshotData.RouterDNS, ConnectionState.OK);
-
-        if (!SettingsManager.Current.Dashboard_CheckPublicIPAddress)
-            return;
 
         InternetIPv4.Complete(ScreenshotData.InternetIPv4, ConnectionState.OK);
         InternetIPv6.Complete(ScreenshotData.InternetIPv6, ConnectionState.OK);
@@ -412,17 +404,13 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
     }
 
     /// <summary>
-    /// Requests the public IP address from the API (setting) and completes the item, see
-    /// <see cref="PublicIPAddressCheck" />.
+    /// Requests the public IP address from the API (setting), see <see cref="PublicIPAddressCheck" />.
     /// </summary>
-    /// <param name="item">Item of the internet check (IPv4 or IPv6).</param>
     /// <param name="addressFamily">IPv4 or IPv6.</param>
-    /// <returns>The IP address returned by the API (also if private), or <c>null</c>.</returns>
-    private static async Task<IPAddress> CheckPublicIPAddressAsync(ConnectionCheckItem item, AddressFamily addressFamily)
+    /// <returns>Result of the request.</returns>
+    private static async Task<PublicIPAddressCheckResult> RequestPublicIPAddressAsync(AddressFamily addressFamily)
     {
-        var isIPv4 = addressFamily == AddressFamily.InterNetwork;
-
-        var api = isIPv4
+        var api = addressFamily == AddressFamily.InterNetwork
             ? SettingsManager.Current.Dashboard_UseCustomPublicIPv4AddressAPI
                 ? SettingsManager.Current.Dashboard_CustomPublicIPv4AddressAPI
                 : GlobalStaticConfiguration.Dashboard_PublicIPv4AddressAPI
@@ -430,29 +418,84 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
                 ? SettingsManager.Current.Dashboard_CustomPublicIPv6AddressAPI
                 : GlobalStaticConfiguration.Dashboard_PublicIPv6AddressAPI;
 
-        PublicIPAddressCheckResult result;
-
         try
         {
-            Log.Debug($"{nameof(CheckPublicIPAddressAsync)} - Checking public {addressFamily} address from: {api}");
+            Log.Debug($"{nameof(RequestPublicIPAddressAsync)} - Checking public {addressFamily} address from: {api}");
 
             using var httpResponse = await PublicIPHttpClient.GetAsync(api);
             var content = await httpResponse.Content.ReadAsStringAsync();
 
-            result = PublicIPAddressCheck.ParseResponse(httpResponse.IsSuccessStatusCode, content, addressFamily);
+            var result = PublicIPAddressCheck.ParseResponse(httpResponse.IsSuccessStatusCode, content, addressFamily);
 
-            Log.Debug($"{nameof(CheckPublicIPAddressAsync)} - HTTP {(int)httpResponse.StatusCode}: {result.Status} {result.IPAddress}");
+            Log.Debug($"{nameof(RequestPublicIPAddressAsync)} - HTTP {(int)httpResponse.StatusCode}: {result.Status} {result.IPAddress}");
+
+            return result;
         }
         catch (Exception ex)
         {
-            result = PublicIPAddressCheck.FromException(ex);
+            var result = PublicIPAddressCheck.FromException(ex);
 
-            Log.Debug($"{nameof(CheckPublicIPAddressAsync)} - {result.Status}: {ex.Message}");
+            Log.Debug($"{nameof(RequestPublicIPAddressAsync)} - {result.Status}: {ex.Message}");
+
+            return result;
+        }
+    }
+
+    /// <summary>
+    /// Pings the public IP address (setting) to check if the internet is reachable.
+    /// </summary>
+    /// <param name="ipAddress">Public IPv4 or IPv6 address (setting).</param>
+    /// <param name="addressFamily">IPv4 or IPv6.</param>
+    /// <returns>Result of the ping, or <c>null</c> if the address in the settings is invalid.</returns>
+    private static async Task<PingInfo> PingPublicIPAddressAsync(string ipAddress, AddressFamily addressFamily)
+    {
+        if (!IPAddress.TryParse(ipAddress, out var target) || target.AddressFamily != addressFamily)
+        {
+            Log.Warn($"{nameof(PingPublicIPAddressAsync)} - Invalid public {addressFamily} address \"{ipAddress}\" in the settings, skipping the ping.");
+            return null;
         }
 
-        item.Complete(result.IPAddress?.ToString() ?? "-/-", NetworkConnectionCheck.GetPublicIPAddressResult(result));
+        var pingInfo = await PingProbe.PingAsync(target, GlobalStaticConfiguration.Dashboard_PingTimeout,
+            GlobalStaticConfiguration.Dashboard_PingAttempts, PingBuffer, CancellationToken.None);
 
-        return result.IPAddress;
+        Log.Debug($"{nameof(PingPublicIPAddressAsync)} - Ping {target}: {pingInfo.Status}");
+
+        return pingInfo;
+    }
+
+    /// <summary>
+    /// Checks the internet connection of an address family: ping of the public IP address (setting) and the public IP
+    /// address API (if enabled) at the same time, see <see cref="NetworkConnectionCheck.GetInternetResult" />.
+    /// </summary>
+    /// <param name="item">Item of the internet check (IPv4 or IPv6).</param>
+    /// <param name="addressFamily">IPv4 or IPv6.</param>
+    /// <param name="connectivityLevelTask">Internet connectivity reported by Windows (read once per check).</param>
+    /// <returns>The IP address returned by the API (also if private), or <c>null</c>.</returns>
+    private static async Task<IPAddress> CheckInternetAsync(ConnectionCheckItem item, AddressFamily addressFamily,
+        Task<InternetConnectivityLevel> connectivityLevelTask)
+    {
+        var pingTask = PingPublicIPAddressAsync(addressFamily == AddressFamily.InterNetwork
+            ? SettingsManager.Current.Dashboard_PublicIPv4Address
+            : SettingsManager.Current.Dashboard_PublicIPv6Address, addressFamily);
+
+        var publicIPAddressTask = SettingsManager.Current.Dashboard_CheckPublicIPAddress
+            ? RequestPublicIPAddressAsync(addressFamily)
+            : Task.FromResult<PublicIPAddressCheckResult>(null);
+
+        await Task.WhenAll(pingTask, publicIPAddressTask, connectivityLevelTask);
+
+        var pingInfo = pingTask.Result;
+        var publicIPAddress = publicIPAddressTask.Result;
+        var isPingSuccessful = pingInfo is { Status: IPStatus.Success };
+
+        // Public IP address (API), otherwise the pinged address with the round-trip time
+        var value = publicIPAddress?.IPAddress?.ToString() ??
+                    (isPingSuccessful ? $"{pingInfo.IPAddress} ({pingInfo.Time} ms)" : "-/-");
+
+        item.Complete(value, NetworkConnectionCheck.GetInternetResult(addressFamily, isPingSuccessful,
+            publicIPAddress, connectivityLevelTask.Result));
+
+        return publicIPAddress?.IPAddress;
     }
 
     /// <summary>
@@ -464,26 +507,30 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
     {
         return Task.Run(async () =>
         {
-            // If public IP address check is disabled
-            if (!SettingsManager.Current.Dashboard_CheckPublicIPAddress)
-                return;
-
             Log.Debug($"{nameof(CheckConnectionInternetAsync)} - Checking internet connection...");
 
-            var publicIPv4Task = CheckPublicIPAddressAsync(InternetIPv4, AddressFamily.InterNetwork);
+            var connectivityLevelTask = Task.Run(InternetConnectivity.GetLevel);
+
+            var publicIPv4Task = CheckInternetAsync(InternetIPv4, AddressFamily.InterNetwork, connectivityLevelTask);
             var publicIPv6Task = Task.FromResult<IPAddress>(null);
 
             // Only if the computer has a routed IPv6 address
             if (isIPv6Available)
-                publicIPv6Task = CheckPublicIPAddressAsync(InternetIPv6, AddressFamily.InterNetworkV6);
+                publicIPv6Task = CheckInternetAsync(InternetIPv6, AddressFamily.InterNetworkV6, connectivityLevelTask);
             else
                 SetIPv6NotAvailable(InternetIPv6);
 
             await Task.WhenAll(publicIPv4Task, publicIPv6Task);
 
-            // Resolve internet DNS
-            await ResolveDnsAsync(InternetDNS, publicIPv4Task.Result, publicIPv6Task.Result,
-                nameof(CheckConnectionInternetAsync));
+            Log.Debug($"{nameof(CheckConnectionInternetAsync)} - Windows reports: {connectivityLevelTask.Result}");
+
+            // Resolve internet DNS (of the public IP address)
+            if (SettingsManager.Current.Dashboard_CheckPublicIPAddress)
+                await ResolveDnsAsync(InternetDNS, publicIPv4Task.Result, publicIPv6Task.Result,
+                    nameof(CheckConnectionInternetAsync));
+            else
+                InternetDNS.Complete("-/-", new ConnectionCheckResult(ConnectionState.Info,
+                    ConnectionCheckReason.PublicIPAddressCheckDisabled));
 
             Log.Debug($"{nameof(CheckConnectionInternetAsync)} - Internet connection check completed.");
         });

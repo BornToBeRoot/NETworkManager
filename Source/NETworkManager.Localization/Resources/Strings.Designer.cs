@@ -2612,6 +2612,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Windows reports limited internet access (e.g. a hotspot / captive portal that requires a sign-in)..
+        /// </summary>
+        public static string ConnectionCheckReason_CaptivePortal {
+            get {
+                return ResourceManager.GetString("ConnectionCheckReason_CaptivePortal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The DNS server did not answer or returned an error..
         /// </summary>
         public static string ConnectionCheckReason_DNSError {
@@ -2626,6 +2635,24 @@ namespace NETworkManager.Localization.Resources {
         public static string ConnectionCheckReason_GatewayNoReply {
             get {
                 return ResourceManager.GetString("ConnectionCheckReason_GatewayNoReply", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No reply to the ping and no public IP address from the API, but Windows reports internet access. ICMP and the API may be blocked by a firewall or only reachable via a proxy..
+        /// </summary>
+        public static string ConnectionCheckReason_InternetAccessReportedByWindows {
+            get {
+                return ResourceManager.GetString("ConnectionCheckReason_InternetAccessReportedByWindows", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The internet is not reachable (no reply to the ping of the public IP address and no answer from the public IP address API)..
+        /// </summary>
+        public static string ConnectionCheckReason_InternetNotReachable {
+            get {
+                return ResourceManager.GetString("ConnectionCheckReason_InternetNotReachable", resourceCulture);
             }
         }
         
@@ -2698,6 +2725,15 @@ namespace NETworkManager.Localization.Resources {
         public static string ConnectionCheckReason_PTRNotFound {
             get {
                 return ResourceManager.GetString("ConnectionCheckReason_PTRNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The public IP address is not requested (disabled in the settings)..
+        /// </summary>
+        public static string ConnectionCheckReason_PublicIPAddressCheckDisabled {
+            get {
+                return ResourceManager.GetString("ConnectionCheckReason_PublicIPAddressCheckDisabled", resourceCulture);
             }
         }
         
@@ -6498,7 +6534,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Public IPv4 address reachable via ICMP..
+        ///   Looks up a localized string similar to Public IPv4 address that is pinged to check the internet connection. The route to it is used to detect the local IPv4 address (of the network adapter that is used for the internet)..
         /// </summary>
         public static string HelpMessage_PublicIPv4Address {
             get {
@@ -6507,7 +6543,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Public IPv6 address reachable via ICMP..
+        ///   Looks up a localized string similar to Public IPv6 address that is pinged to check the internet connection. The route to it is used to detect the local IPv6 address (of the network adapter that is used for the internet)..
         /// </summary>
         public static string HelpMessage_PublicIPv6Address {
             get {

@@ -126,4 +126,45 @@ public class NetworkConnectionCheckTests
         Assert.Equal(new ConnectionCheckResult(state, reason),
             NetworkConnectionCheck.GetPublicIPAddressResult(new PublicIPAddressCheckResult(status)));
     }
+
+    private static PublicIPAddressCheckResult Api(PublicIPAddressCheckStatus? status) =>
+        status == null ? null : new PublicIPAddressCheckResult(status.Value);
+
+    [Theory]
+    // API returned the public IP address
+    [InlineData(true, PublicIPAddressCheckStatus.Success, InternetConnectivityLevel.InternetAccess, ConnectionState.OK, ConnectionCheckReason.None)]
+    [InlineData(false, PublicIPAddressCheckStatus.Success, InternetConnectivityLevel.InternetAccess, ConnectionState.OK, ConnectionCheckReason.None)]
+    // API disabled: ping decides
+    [InlineData(true, null, InternetConnectivityLevel.InternetAccess, ConnectionState.OK, ConnectionCheckReason.None)]
+    [InlineData(false, null, InternetConnectivityLevel.LocalAccess, ConnectionState.Critical, ConnectionCheckReason.InternetNotReachable)]
+    // Captive portal (Windows) always wins
+    [InlineData(true, PublicIPAddressCheckStatus.Success, InternetConnectivityLevel.ConstrainedInternetAccess, ConnectionState.Warning, ConnectionCheckReason.CaptivePortal)]
+    [InlineData(false, null, InternetConnectivityLevel.ConstrainedInternetAccess, ConnectionState.Warning, ConnectionCheckReason.CaptivePortal)]
+    // Private IP address from the API (e.g. proxy)
+    [InlineData(true, PublicIPAddressCheckStatus.PrivateIPAddress, InternetConnectivityLevel.InternetAccess, ConnectionState.Warning, ConnectionCheckReason.PublicIPAddressPrivate)]
+    // Ping works, API blocked / DNS broken
+    [InlineData(true, PublicIPAddressCheckStatus.RequestFailed, InternetConnectivityLevel.InternetAccess, ConnectionState.Warning, ConnectionCheckReason.PublicIPAddressRequestFailed)]
+    [InlineData(true, PublicIPAddressCheckStatus.NameResolutionFailed, InternetConnectivityLevel.InternetAccess, ConnectionState.Warning, ConnectionCheckReason.NameResolutionFailed)]
+    // Ping and API failed, but Windows reports internet access (ICMP and API blocked, e.g. proxy)
+    [InlineData(false, PublicIPAddressCheckStatus.RequestFailed, InternetConnectivityLevel.InternetAccess, ConnectionState.Warning, ConnectionCheckReason.InternetAccessReportedByWindows)]
+    [InlineData(false, null, InternetConnectivityLevel.InternetAccess, ConnectionState.Warning, ConnectionCheckReason.InternetAccessReportedByWindows)]
+    // Everything failed
+    [InlineData(false, PublicIPAddressCheckStatus.RequestFailed, InternetConnectivityLevel.LocalAccess, ConnectionState.Critical, ConnectionCheckReason.InternetNotReachable)]
+    [InlineData(false, PublicIPAddressCheckStatus.InvalidResponse, InternetConnectivityLevel.Unknown, ConnectionState.Critical, ConnectionCheckReason.InternetNotReachable)]
+    [InlineData(false, PublicIPAddressCheckStatus.NameResolutionFailed, InternetConnectivityLevel.None, ConnectionState.Critical, ConnectionCheckReason.NameResolutionFailed)]
+    public void GetInternetResult_IPv4(bool isPingSuccessful, PublicIPAddressCheckStatus? apiStatus,
+        InternetConnectivityLevel level, ConnectionState state, ConnectionCheckReason reason)
+    {
+        Assert.Equal(new ConnectionCheckResult(state, reason),
+            NetworkConnectionCheck.GetInternetResult(AddressFamily.InterNetwork, isPingSuccessful, Api(apiStatus), level));
+    }
+
+    [Fact]
+    public void GetInternetResult_IPv6_WindowsInternetAccessIsNotUsed()
+    {
+        // Windows doesn't report the connectivity per address family (internet access may be IPv4 only)
+        Assert.Equal(new ConnectionCheckResult(ConnectionState.Critical, ConnectionCheckReason.InternetNotReachable),
+            NetworkConnectionCheck.GetInternetResult(AddressFamily.InterNetworkV6, false,
+                Api(PublicIPAddressCheckStatus.RequestFailed), InternetConnectivityLevel.InternetAccess));
+    }
 }

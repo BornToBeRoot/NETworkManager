@@ -70,5 +70,26 @@ public enum ConnectionCheckReason
     /// <summary>
     ///     The host name of the public IP address API could not be resolved (DNS).
     /// </summary>
-    NameResolutionFailed
+    NameResolutionFailed,
+
+    /// <summary>
+    ///     Windows reports limited internet access (e.g. a hotspot / captive portal that requires a sign-in).
+    /// </summary>
+    CaptivePortal,
+
+    /// <summary>
+    ///     The ping and the public IP address API failed, but Windows reports internet access (e.g. ICMP and the API are
+    ///     blocked by a firewall or only reachable via a proxy).
+    /// </summary>
+    InternetAccessReportedByWindows,
+
+    /// <summary>
+    ///     The internet is not reachable (no reply to the ping, no answer from the API).
+    /// </summary>
+    InternetNotReachable,
+
+    /// <summary>
+    ///     The public IP address is not requested (disabled in the settings).
+    /// </summary>
+    PublicIPAddressCheckDisabled
 }

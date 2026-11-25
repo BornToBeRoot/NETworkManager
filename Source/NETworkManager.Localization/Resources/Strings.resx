@@ -3091,10 +3091,10 @@ Enable profile file encryption in Settings&gt;Profile to store credentials secur
     <value>Enter a valid IPv6 address!</value>
   </data>
   <data name="HelpMessage_PublicIPv4Address" xml:space="preserve">
-    <value>Public IPv4 address reachable via ICMP.</value>
+    <value>Public IPv4 address that is pinged to check the internet connection. The route to it is used to detect the local IPv4 address (of the network adapter that is used for the internet).</value>
   </data>
   <data name="HelpMessage_PublicIPv6Address" xml:space="preserve">
-    <value>Public IPv6 address reachable via ICMP.</value>
+    <value>Public IPv6 address that is pinged to check the internet connection. The route to it is used to detect the local IPv6 address (of the network adapter that is used for the internet).</value>
   </data>
   <data name="PublicIPv4Address" xml:space="preserve">
     <value>Public IPv4 address</value>
@@ -5734,5 +5734,17 @@ Do you want to start the scan?</value>
   </data>
   <data name="ConnectionCheckReason_NameResolutionFailed" xml:space="preserve">
     <value>The name of the public IP address API could not be resolved. Check the DNS server.</value>
+  </data>
+  <data name="ConnectionCheckReason_CaptivePortal" xml:space="preserve">
+    <value>Windows reports limited internet access (e.g. a hotspot / captive portal that requires a sign-in).</value>
+  </data>
+  <data name="ConnectionCheckReason_InternetAccessReportedByWindows" xml:space="preserve">
+    <value>No reply to the ping and no public IP address from the API, but Windows reports internet access. ICMP and the API may be blocked by a firewall or only reachable via a proxy.</value>
+  </data>
+  <data name="ConnectionCheckReason_InternetNotReachable" xml:space="preserve">
+    <value>The internet is not reachable (no reply to the ping of the public IP address and no answer from the public IP address API).</value>
+  </data>
+  <data name="ConnectionCheckReason_PublicIPAddressCheckDisabled" xml:space="preserve">
+    <value>The public IP address is not requested (disabled in the settings).</value>
   </data>
 </root>

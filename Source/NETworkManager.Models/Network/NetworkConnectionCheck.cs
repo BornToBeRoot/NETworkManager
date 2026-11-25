@@ -121,4 +121,43 @@ public static class NetworkConnectionCheck
             _ => new ConnectionCheckResult(ConnectionState.Critical, ConnectionCheckReason.PublicIPAddressRequestFailed)
         };
     }
+
+    /// <summary>
+    ///     State of the internet connection (IPv4 or IPv6) from three sources: the ping of the public IP address
+    ///     (setting), the public IP address API (if enabled) and the connectivity reported by Windows.
+    /// </summary>
+    /// <remarks>
+    ///     A captive portal (Windows) is a warning. Otherwise a public IP address from the API or a reply to the ping is
+    ///     OK; a private IP address from the API is a warning, as is a failed API when the ping works (e.g. the API is
+    ///     blocked). If both fail but Windows reports internet access (only used for IPv4, Windows doesn't report it per
+    ///     address family), ICMP and the API may be blocked: warning. Otherwise critical.
+    /// </remarks>
+    /// <param name="addressFamily">IPv4 or IPv6.</param>
+    /// <param name="isPingSuccessful">The public IP address (setting) replied to the ping.</param>
+    /// <param name="publicIPAddress">Result of the API, or <c>null</c> if disabled.</param>
+    /// <param name="connectivityLevel">Internet connectivity reported by Windows.</param>
+    /// <returns>State and reason.</returns>
+    public static ConnectionCheckResult GetInternetResult(AddressFamily addressFamily, bool isPingSuccessful,
+        PublicIPAddressCheckResult publicIPAddress, InternetConnectivityLevel connectivityLevel)
+    {
+        if (connectivityLevel == InternetConnectivityLevel.ConstrainedInternetAccess)
+            return new ConnectionCheckResult(ConnectionState.Warning, ConnectionCheckReason.CaptivePortal);
+
+        if (publicIPAddress is { Status: PublicIPAddressCheckStatus.Success or PublicIPAddressCheckStatus.PrivateIPAddress })
+            return GetPublicIPAddressResult(publicIPAddress);
+
+        if (isPingSuccessful)
+            return publicIPAddress == null
+                ? new ConnectionCheckResult(ConnectionState.OK)
+                : new ConnectionCheckResult(ConnectionState.Warning, GetPublicIPAddressResult(publicIPAddress).Reason);
+
+        if (addressFamily == AddressFamily.InterNetwork &&
+            connectivityLevel == InternetConnectivityLevel.InternetAccess)
+            return new ConnectionCheckResult(ConnectionState.Warning,
+                ConnectionCheckReason.InternetAccessReportedByWindows);
+
+        return publicIPAddress is { Status: PublicIPAddressCheckStatus.NameResolutionFailed }
+            ? new ConnectionCheckResult(ConnectionState.Critical, ConnectionCheckReason.NameResolutionFailed)
+            : new ConnectionCheckResult(ConnectionState.Critical, ConnectionCheckReason.InternetNotReachable);
+    }
 }
