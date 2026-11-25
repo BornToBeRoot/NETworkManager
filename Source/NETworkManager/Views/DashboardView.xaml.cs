@@ -59,10 +59,16 @@ public partial class DashboardView
         // The widgets may have been shown or hidden in the settings
         ApplyWidgetSettings();
 
-        // Check the network connection again if something changed, or if the last check is older than the recheck
-        // interval (e.g. the public IP address may have changed) - not on every switch between the applications
-        if (_isOutdated || DateTime.Now - _lastCheck >= GlobalStaticConfiguration.Dashboard_RecheckInterval)
-            CheckNetworkConnection();
+        CheckNetworkConnectionIfOutdated();
+    }
+
+    /// <summary>
+    ///     Called by the main window when it is shown again (from the tray or minimized).
+    /// </summary>
+    public void OnMainWindowShown()
+    {
+        if (_isViewVisible)
+            CheckNetworkConnectionIfOutdated();
     }
 
     public void OnViewHide()
@@ -75,12 +81,24 @@ public partial class DashboardView
     /// <summary>
     ///     Called by the main window when the network has changed (addresses, adapter connected or disconnected).
     /// </summary>
-    public void OnNetworkChanged()
+    /// <param name="isMainWindowShown">The main window is shown (not in the tray or minimized). Otherwise the check runs
+    ///     when the window is shown again (the status window checks the network connection meanwhile).</param>
+    public void OnNetworkChanged(bool isMainWindowShown)
     {
-        if (_isViewVisible)
+        if (_isViewVisible && isMainWindowShown)
             CheckNetworkConnection();
         else
             _isOutdated = true;
+    }
+
+    /// <summary>
+    ///     Checks the network connection again if something changed, or if the last check is older than the recheck
+    ///     interval (e.g. the public IP address may have changed) - not on every switch between the applications.
+    /// </summary>
+    private void CheckNetworkConnectionIfOutdated()
+    {
+        if (_isOutdated || DateTime.Now - _lastCheck >= GlobalStaticConfiguration.Dashboard_RecheckInterval)
+            CheckNetworkConnection();
     }
 
     private void CheckNetworkConnection()

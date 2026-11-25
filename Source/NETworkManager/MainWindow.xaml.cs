@@ -1608,7 +1608,11 @@ public sealed partial class MainWindow : INotifyPropertyChanged
         }
 
         if (WindowState != WindowState.Minimized)
+        {
+            // Restored: the dashboard may be outdated (e.g. a network change while minimized)
+            _dashboardView?.OnMainWindowShown();
             return;
+        }
 
         if (SettingsManager.Current.Window_MinimizeToTrayInsteadOfTaskbar)
             HideWindowToTray();
@@ -1809,6 +1813,9 @@ public sealed partial class MainWindow : INotifyPropertyChanged
 
         Show();
 
+        // The dashboard may be outdated (e.g. a network change while in the tray)
+        _dashboardView?.OnMainWindowShown();
+
         _notifyIcon.Visible = SettingsManager.Current.TrayIcon_AlwaysShowIcon;
     }
 
@@ -1915,7 +1922,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
         }
 
         // Check the network connection on the dashboard again
-        _dashboardView?.OnNetworkChanged();
+        _dashboardView?.OnNetworkChanged(!_isInTray && WindowState != WindowState.Minimized);
 
         // Show status window on network change
         if (SettingsManager.Current.Status_ShowWindowOnNetworkChange)
