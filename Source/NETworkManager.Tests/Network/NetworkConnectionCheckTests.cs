@@ -162,6 +162,17 @@ public class NetworkConnectionCheckTests
             NetworkConnectionCheck.GetInternetResult(AddressFamily.InterNetwork, isPingSuccessful, Api(apiStatus), level));
     }
 
+    [Theory]
+    [InlineData(true, ConnectionState.OK, ConnectionCheckReason.None)]
+    [InlineData(false, ConnectionState.Critical, ConnectionCheckReason.InternetNotReachable)]
+    public void GetInternetResult_IPv6_CaptivePortalOfWindowsIsNotUsed(bool isPingSuccessful, ConnectionState state,
+        ConnectionCheckReason reason)
+    {
+        Assert.Equal(new ConnectionCheckResult(state, reason),
+            NetworkConnectionCheck.GetInternetResult(AddressFamily.InterNetworkV6, isPingSuccessful, null,
+                InternetConnectivityLevel.ConstrainedInternetAccess));
+    }
+
     [Fact]
     public void GetInternetResult_IPv6_WindowsInternetAccessIsNotUsed()
     {

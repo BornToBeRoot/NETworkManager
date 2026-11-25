@@ -129,7 +129,7 @@ public static class NetworkConnectionCheck
     /// <remarks>
     ///     A public IP address from the API is OK (the HTTPS request reached the internet), even if Windows reports a
     ///     captive portal (e.g. a proxy or web filter intercepts the probe of Windows). Otherwise a captive portal
-    ///     (Windows) is a warning; a reply to the ping is OK; a private IP address from the API is a warning, as is a
+    ///     (Windows, only used for IPv4) is a warning, also if the ping works (a captive portal may let ICMP through); a reply to the ping is OK; a private IP address from the API is a warning, as is a
     ///     failed API when the ping works (e.g. the API is blocked). If both fail but Windows reports internet access (only used for IPv4, Windows doesn't report it per
     ///     address family), ICMP and the API may be blocked: warning. Otherwise critical.
     /// </remarks>
@@ -144,7 +144,9 @@ public static class NetworkConnectionCheck
         if (publicIPAddress is { Status: PublicIPAddressCheckStatus.Success })
             return new ConnectionCheckResult(ConnectionState.OK);
 
-        if (connectivityLevel == InternetConnectivityLevel.ConstrainedInternetAccess)
+        // Windows doesn't report the connectivity per address family (a captive portal is IPv4 in practice)
+        if (addressFamily == AddressFamily.InterNetwork &&
+            connectivityLevel == InternetConnectivityLevel.ConstrainedInternetAccess)
             return new ConnectionCheckResult(ConnectionState.Warning, ConnectionCheckReason.CaptivePortal);
 
         if (publicIPAddress is { Status: PublicIPAddressCheckStatus.PrivateIPAddress })
