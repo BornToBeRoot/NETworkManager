@@ -54,6 +54,12 @@ public partial class StatusWindow : INotifyPropertyChanged
     private readonly DispatcherTimer _dispatcherTimerClose = new(DispatcherPriority.Render);
     private readonly Stopwatch _stopwatch = new();
 
+    /// <summary>
+    ///     Incremented whenever the close timer is started or stopped. The expired timer only hides the window if it is
+    ///     still the same run (the user may have opened the window again while the timer waited before hiding it).
+    /// </summary>
+    private int _closeTimerRun;
+
     private readonly MainWindow _mainWindow;
     private readonly NetworkConnectionWidgetView _networkConnectionView;
 
@@ -106,7 +112,7 @@ public partial class StatusWindow : INotifyPropertyChanged
 
     private void ShowMainWindowAction()
     {
-        Hide();
+        HideWindow();
 
         if (_mainWindow.ShowWindowCommand.CanExecute(null))
             _mainWindow.ShowWindowCommand.Execute(null);
@@ -116,7 +122,7 @@ public partial class StatusWindow : INotifyPropertyChanged
 
     private void CloseAction()
     {
-        Hide();
+        HideWindow();
     }
 
     #endregion
@@ -134,9 +140,25 @@ public partial class StatusWindow : INotifyPropertyChanged
     /// <param name="enableCloseTimer">Automatically close the window after a certain time.</param>
     public void ShowWindow(bool enableCloseTimer = false)
     {
+        // A network change while the user has the window open (no countdown): keep it open, only check again
+        if (enableCloseTimer && IsVisible && !ShowTime)
+        {
+            Check();
+            return;
+        }
+
         // Position bottom-right on the primary screen. With SizeToContent="Height" the final
         // height is only known after layout, so this is refined again in SizeChanged.
         UpdatePosition();
+
+        // Opened on a network change: don't take the focus from the application the user is working in (the window
+        // closes itself, see the close timer). Clicking into it stops the close timer (Activated).
+        ShowActivated = !enableCloseTimer;
+
+        // Close the window after a certain time. Before Show(), so the countdown is part of the first layout (the
+        // window doesn't grow and move right after it was shown).
+        if (enableCloseTimer)
+            SetupCloseTimer();
 
         // Show the window
         Show();
@@ -144,17 +166,11 @@ public partial class StatusWindow : INotifyPropertyChanged
         // Check the network connection
         Check();
 
-        // Close the window after a certain time
         if (enableCloseTimer)
-        {
-            SetupCloseTimer();
             return;
-        }
 
         // Opened by the user, cancel a running close timer (e.g. if the window was opened on a network change)
-        _dispatcherTimerClose.Stop();
-        _stopwatch.Stop();
-        ShowTime = false;
+        StopCloseTimer();
 
         // Focus the window
         Activate();
@@ -172,13 +188,21 @@ public partial class StatusWindow : INotifyPropertyChanged
             return;
 
         var scaleFactor = System.Windows.Media.VisualTreeHelper.GetDpi(this).DpiScaleX;
+        var workingArea = Screen.PrimaryScreen.WorkingArea;
 
-        Left = Screen.PrimaryScreen.WorkingArea.Right / scaleFactor - Width - 10;
-        Top = Screen.PrimaryScreen.WorkingArea.Bottom / scaleFactor - ActualHeight - 10;
+        // Not wider than the working area (e.g. 1280 x 720 with 150 % scaling is 853 px wide), otherwise the window
+        // would start outside the screen on the left
+        MaxWidth = Math.Max(0, workingArea.Width / scaleFactor - 20);
+
+        Left = Math.Max(workingArea.Left / scaleFactor + 10,
+            workingArea.Right / scaleFactor - Math.Min(Width, MaxWidth) - 10);
+        Top = workingArea.Bottom / scaleFactor - ActualHeight - 10;
     }
 
     private void SetupCloseTimer()
     {
+        _closeTimerRun++;
+
         TimeMax = SettingsManager.Current.Status_WindowCloseTime;
         Time = TimeMax;
 
@@ -187,20 +211,51 @@ public partial class StatusWindow : INotifyPropertyChanged
         _dispatcherTimerClose.Start();
     }
 
+    /// <summary>
+    ///     Stops the close timer (e.g. the window is opened by the user or hidden). A pending close of the expired timer
+    ///     is canceled, see <see cref="_closeTimerRun" />.
+    /// </summary>
+    private void StopCloseTimer()
+    {
+        _closeTimerRun++;
+
+        _dispatcherTimerClose.Stop();
+        _stopwatch.Stop();
+        ShowTime = false;
+    }
+
+    /// <summary>
+    ///     Hides the window and stops the close timer, so it doesn't keep running in the background.
+    /// </summary>
+    private void HideWindow()
+    {
+        StopCloseTimer();
+
+        Hide();
+    }
+
     #endregion
 
     #region Events
 
+    private void MetroWindow_Activated(object sender, EventArgs e)
+    {
+        // The user clicked into the window that was opened on a network change: keep it open (like opened by the user).
+        // ShowTime: the countdown is running or has just ended (the window is hidden after a short delay).
+        if (ShowTime)
+            StopCloseTimer();
+    }
+
     private void MetroWindow_Deactivated(object sender, EventArgs e)
     {
-        Hide();
+        HideWindow();
     }
 
     private void MetroWindow_Closing(object sender, CancelEventArgs e)
     {
         e.Cancel = true;
 
-        Hide();
+        HideWindow();
     }
 
     private async void DispatcherTimerTime_Tick(object sender, EventArgs e)
@@ -216,11 +271,15 @@ public partial class StatusWindow : INotifyPropertyChanged
         _dispatcherTimerClose.Stop();
         _stopwatch.Stop();
 
+        var run = _closeTimerRun;
+
         await Task.Delay(250);
 
-        ShowTime = false;
+        // Opened again (by the user or another network change) in the meantime
+        if (run != _closeTimerRun)
+            return;
 
-        Hide();
+        HideWindow();
     }
 
     #endregion

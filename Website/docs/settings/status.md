@@ -8,7 +8,7 @@ keywords: [NETworkManager, status settings, status window, network change notifi
 
 ### Show status window on network change
 
-Show the status window when the network changes (e.g. Ethernet cable is plugged in, WLAN or VPN is connected, etc.).
+Show the status window when the network changes (e.g. Ethernet cable is plugged in, WLAN or VPN is connected, etc.). The window opens once the network has settled (5 seconds without further changes, e.g. after the DHCP address was assigned, at most 20 seconds after the first change) and checks the network connection, see [Dashboard](../application/dashboard.md#network-connection). It doesn't take the keyboard focus; click into it to keep it open.
 
 **Type:** `Boolean`
 

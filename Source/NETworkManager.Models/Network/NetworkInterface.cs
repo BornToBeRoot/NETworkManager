@@ -109,19 +109,7 @@ public sealed class NetworkInterface
 
         foreach (var networkInterface in System.Net.NetworkInformation.NetworkInterface.GetAllNetworkInterfaces())
         {
-            // NetworkInterfaceType 53 is proprietary virtual/internal interface
-            // https://docs.microsoft.com/en-us/windows-hardware/drivers/network/ndis-interface-types
-            if (networkInterface.NetworkInterfaceType != NetworkInterfaceType.Ethernet &&
-                networkInterface.NetworkInterfaceType != NetworkInterfaceType.Wireless80211 &&
-                (int)networkInterface.NetworkInterfaceType != 53)
-                continue;
-
-            // Filter out virtual/filter adapters introduced in .NET 9/10
-            // Check if the adapter name or description contains any filtered pattern
-            // See: https://github.com/dotnet/runtime/issues/122751
-            if (NetworkInterfaceFilteredPatterns.Any(pattern =>
-                networkInterface.Name.Contains(pattern) ||
-                networkInterface.Description.Contains(pattern)))
+            if (!IsSupportedNetworkInterface(networkInterface))
                 continue;
 
             var listIPv4Address = new List<Tuple<IPAddress, IPAddress>>();
@@ -231,6 +219,29 @@ public sealed class NetworkInterface
         }
 
         return listNetworkInterfaceInfo;
+    }
+
+    /// <summary>
+    /// Network interfaces shown and used by the application: Ethernet, Wireless80211 and proprietary virtual/internal
+    /// interfaces, without the virtual/filter adapters listed in <see cref="NetworkInterfaceFilteredPatterns" />.
+    /// </summary>
+    /// <param name="networkInterface">Network interface of the .NET API.</param>
+    /// <returns><see langword="true" /> if the network interface is supported.</returns>
+    private static bool IsSupportedNetworkInterface(System.Net.NetworkInformation.NetworkInterface networkInterface)
+    {
+        // NetworkInterfaceType 53 is proprietary virtual/internal interface
+        // https://docs.microsoft.com/en-us/windows-hardware/drivers/network/ndis-interface-types
+        if (networkInterface.NetworkInterfaceType != NetworkInterfaceType.Ethernet &&
+            networkInterface.NetworkInterfaceType != NetworkInterfaceType.Wireless80211 &&
+            (int)networkInterface.NetworkInterfaceType != 53)
+            return false;
+
+        // Filter out virtual/filter adapters introduced in .NET 9/10
+        // Check if the adapter name or description contains any filtered pattern
+        // See: https://github.com/dotnet/runtime/issues/122751
+        return !NetworkInterfaceFilteredPatterns.Any(pattern =>
+            networkInterface.Name.Contains(pattern) ||
+            networkInterface.Description.Contains(pattern));
     }
 
     /// <summary>
@@ -363,69 +374,55 @@ public sealed class NetworkInterface
 
     /// <summary>
     /// Detects and returns the first local IP address assigned to an operational network interface that matches the
-    /// specified address family.
+    /// specified address family, see <see cref="SelectLocalIPAddress" />.
     /// </summary>
-    /// <remarks>For IPv4, the method prefers non-link-local addresses but will return a link-local address if
-    /// no other is available. For IPv6, the method returns the first global or unique local address if present;
-    /// otherwise, it returns a link-local address if available. The returned address is selected from operational
-    /// network interfaces only.</remarks>
+    /// <remarks>Only reads the addresses (no PowerShell / registry like <see cref="GetNetworkInterfaces" />), the
+    /// network interfaces are filtered the same way.</remarks>
     /// <param name="addressFamily">The address family to search for. Specify <see cref="AddressFamily.InterNetwork"/> for IPv4 addresses or <see
     /// cref="AddressFamily.InterNetworkV6"/> for IPv6 addresses.</param>
     /// <returns>An <see cref="IPAddress"/> representing the first detected local IP address for the specified address family, or
     /// <see langword="null"/> if no suitable address is found.</returns>
     public static IPAddress DetectLocalIPAddressFromNetworkInterface(AddressFamily addressFamily)
     {
-        // Filter operational network interfaces
-        var networkInterfaces = GetNetworkInterfaces()
-            .Where(x => x.IsOperational)
+        var addresses = System.Net.NetworkInformation.NetworkInterface.GetAllNetworkInterfaces()
+            .Where(x => x.OperationalStatus == OperationalStatus.Up && IsSupportedNetworkInterface(x))
+            .Select(x => x.GetIPProperties().UnicastAddresses.Select(y => y.Address).ToArray());
+
+        return SelectLocalIPAddress(addresses, addressFamily);
+    }
+
+    /// <summary>
+    /// Selects the local IP address of the address family from the addresses of the network interfaces (in their
+    /// order). For IPv4, the first address that is not link-local (169.254.x.x, no DHCP server) is preferred; for IPv6,
+    /// the first global or unique local address. Otherwise, the first link-local address is returned.
+    /// </summary>
+    /// <param name="addressesPerNetworkInterface">Unicast addresses of each network interface.</param>
+    /// <param name="addressFamily">The address family to search for.</param>
+    /// <returns>The selected IP address, or <see langword="null"/> if there is no address of the family.</returns>
+    public static IPAddress SelectLocalIPAddress(IEnumerable<IPAddress[]> addressesPerNetworkInterface,
+        AddressFamily addressFamily)
+    {
+        var candidates = addressesPerNetworkInterface
+            .SelectMany(x => x)
+            .Where(x => x.AddressFamily == addressFamily)
             .ToList();
 
-        var candidates = new List<IPAddress>();
+        return candidates.FirstOrDefault(x => !IsLinkLocal(x)) ?? candidates.FirstOrDefault();
+    }
 
-        switch (addressFamily)
-        {
-            // IPv4
-            case AddressFamily.InterNetwork:
-            {
-                foreach (var networkInterface in networkInterfaces)
-                {
-                    foreach (var ipAddress in networkInterface.IPv4Address)
-                        candidates.Add(ipAddress.Item1);
-                }
+    /// <summary>
+    /// Checks if the IP address is a link-local address (IPv4 169.254.0.0/16, IPv6 fe80::/10).
+    /// </summary>
+    /// <param name="ipAddress">IP address.</param>
+    /// <returns><see langword="true" /> if the IP address is link-local.</returns>
+    public static bool IsLinkLocal(IPAddress ipAddress)
+    {
+        if (ipAddress.AddressFamily == AddressFamily.InterNetworkV6)
+            return ipAddress.IsIPv6LinkLocal;
 
-                // Prefer non-link-local addresses
-                var nonLinkLocal = candidates.FirstOrDefault(x =>
-                {
-                    var bytes = x.GetAddressBytes();
+        var bytes = ipAddress.GetAddressBytes();
 
-                    return !(bytes[0] == 169 && bytes[1] == 254);
-                });
-
-                // Return first non-link-local or first candidate if none found (might be null - no addresses at all)
-                return nonLinkLocal ?? candidates.FirstOrDefault();
-            }
-            // IPv6
-            case AddressFamily.InterNetworkV6:
-            {
-                // First try to get global or unique local addresses
-                foreach (var networkInterface in networkInterfaces)
-                    candidates.AddRange(networkInterface.IPv6Address);
-
-                // Return first candidate if any found
-                if (candidates.Count != 0)
-                    return candidates.First();
-
-                // Fallback to link-local addresses
-                var firstWithLinkLocal = networkInterfaces
-                    .FirstOrDefault(ni => ni.IPv6AddressLinkLocal.Length != 0);
-
-                if (firstWithLinkLocal != null)
-                    return firstWithLinkLocal.IPv6AddressLinkLocal.First();
-                break;
-            }
-        }
-
-        return null;
+        return bytes[0] == 169 && bytes[1] == 254;
     }
 
     /// <summary>
@@ -442,26 +439,41 @@ public sealed class NetworkInterface
     /// <summary>
     /// Attempts to determine the default gateway address associated with the specified local IP address.
     /// </summary>
-    /// <remarks>This method searches all available network interfaces to find one that has the specified
-    /// local IP address assigned. If found, it returns the first associated gateway address for that interface and
-    /// address family. Returns null if the local IP address is not assigned to any interface or if no gateway is
-    /// configured.</remarks>
+    /// <remarks>All network interfaces are searched (also VPN adapters, e.g. PPP or tunnel, which are not shown in the
+    /// application) and only their addresses are read (no PowerShell / registry like <see cref="GetNetworkInterfaces" />).
+    /// See <see cref="SelectGateway" />.</remarks>
     /// <param name="localIPAddress">The local IP address for which to detect the corresponding gateway. Must be either an IPv4 or IPv6 address.</param>
     /// <returns>An IPAddress representing the default gateway for the specified local IP address, or null if no matching gateway
     /// is found.</returns>
     private static IPAddress DetectGatewayFromLocalIPAddress(IPAddress localIPAddress)
     {
-        foreach (var networkInterface in GetNetworkInterfaces())
+        var networkInterfaces = System.Net.NetworkInformation.NetworkInterface.GetAllNetworkInterfaces()
+            .Select(x => x.GetIPProperties())
+            .Select(x => (x.UnicastAddresses.Select(y => y.Address).ToArray(),
+                x.GatewayAddresses.Select(y => y.Address).ToArray()));
+
+        return SelectGateway(networkInterfaces, localIPAddress);
+    }
+
+    /// <summary>
+    /// Selects the gateway of the first network interface that has the local IP address assigned. The scope id of IPv6
+    /// addresses is ignored. Unspecified gateways (<c>0.0.0.0</c> / <c>::</c>, e.g. some VPN adapters) are skipped.
+    /// </summary>
+    /// <param name="networkInterfaces">Unicast and gateway addresses of each network interface.</param>
+    /// <param name="localIPAddress">The local IP address (IPv4 or IPv6).</param>
+    /// <returns>The first gateway of the same address family, or <see langword="null"/> if there is none.</returns>
+    public static IPAddress SelectGateway(IEnumerable<(IPAddress[] Addresses, IPAddress[] Gateways)> networkInterfaces,
+        IPAddress localIPAddress)
+    {
+        var local = IPAddressHelper.WithoutScopeId(localIPAddress);
+
+        foreach (var (addresses, gateways) in networkInterfaces)
         {
-            switch (localIPAddress.AddressFamily)
-            {
-                // IPv4
-                case AddressFamily.InterNetwork when networkInterface.IPv4Address.Any(x => x.Item1.Equals(localIPAddress)):
-                    return networkInterface.IPv4Gateway.FirstOrDefault();
-                // IPv6
-                case AddressFamily.InterNetworkV6 when networkInterface.IPv6Address.Contains(localIPAddress):
-                    return networkInterface.IPv6Gateway.FirstOrDefault();
-            }
+            if (!addresses.Any(x => IPAddressHelper.WithoutScopeId(x).Equals(local)))
+                continue;
+
+            return gateways.FirstOrDefault(x => x.AddressFamily == localIPAddress.AddressFamily &&
+                                                !x.Equals(IPAddress.Any) && !x.Equals(IPAddress.IPv6Any));
         }
 
         return null;

@@ -135,7 +135,7 @@
         <mah:MetroProgressBar Grid.Row="1"
                               Minimum="0"
                               Maximum="{Binding TimeMax, Mode=OneWay}"
-                              Value="{Binding TimeRemaining, Mode=OneWay}"
+                              networkManager:SmoothProgress.Value="{Binding TimeRemaining, Mode=OneWay}"
                               BorderThickness="0"
                               Padding="0" />
     </Grid>

@@ -2,15 +2,18 @@ using NETworkManager.Models.Network;
 using NETworkManager.Settings;
 using NETworkManager.Utilities;
 using System;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Text.RegularExpressions;
 using System.Threading;
+using System.Net.NetworkInformation;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using log4net;
 using NetworkInterface = NETworkManager.Models.Network.NetworkInterface;
 using System.Net.Sockets;
+using System.Text;
+using NETworkManager.Localization.Resources;
 
 namespace NETworkManager.ViewModels;
 
@@ -31,22 +34,27 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
     /// </summary>
     private static readonly HttpClient PublicIPHttpClient = new() { Timeout = TimeSpan.FromSeconds(10) };
 
+    /// <summary>
+    /// Data sent with the ping of the gateway and the public IP address.
+    /// </summary>
+    private static readonly byte[] PingBuffer = new byte[GlobalStaticConfiguration.Dashboard_PingBuffer];
+
     #region Computer
 
     /// <summary>
     /// Gets the computer IPv4 check (is checking / value / state).
     /// </summary>
-    public ConnectionCheckItem ComputerIPv4 { get; } = new();
+    public ConnectionCheckItem ComputerIPv4 { get; } = new(ConnectionCheckItemKind.ComputerIPAddress);
 
     /// <summary>
     /// Gets the computer IPv6 check (is checking / value / state).
     /// </summary>
-    public ConnectionCheckItem ComputerIPv6 { get; } = new();
+    public ConnectionCheckItem ComputerIPv6 { get; } = new(ConnectionCheckItemKind.ComputerIPAddress);
 
     /// <summary>
     /// Gets the computer DNS check (is checking / value / state).
     /// </summary>
-    public ConnectionCheckItem ComputerDNS { get; } = new();
+    public ConnectionCheckItem ComputerDNS { get; } = new(ConnectionCheckItemKind.DNSName);
 
     #endregion
 
@@ -55,17 +63,17 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
     /// <summary>
     /// Gets the router IPv4 check (is checking / value / state).
     /// </summary>
-    public ConnectionCheckItem RouterIPv4 { get; } = new();
+    public ConnectionCheckItem RouterIPv4 { get; } = new(ConnectionCheckItemKind.RouterIPAddress);
 
     /// <summary>
     /// Gets the router IPv6 check (is checking / value / state).
     /// </summary>
-    public ConnectionCheckItem RouterIPv6 { get; } = new();
+    public ConnectionCheckItem RouterIPv6 { get; } = new(ConnectionCheckItemKind.RouterIPAddress);
 
     /// <summary>
     /// Gets the router DNS check (is checking / value / state).
     /// </summary>
-    public ConnectionCheckItem RouterDNS { get; } = new();
+    public ConnectionCheckItem RouterDNS { get; } = new(ConnectionCheckItemKind.DNSName);
 
     #endregion
 
@@ -74,24 +82,35 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
     /// <summary>
     /// Gets the internet IPv4 check (is checking / value / state).
     /// </summary>
-    public ConnectionCheckItem InternetIPv4 { get; } = new();
+    public ConnectionCheckItem InternetIPv4 { get; } = new(ConnectionCheckItemKind.PublicIPAddress);
 
     /// <summary>
     /// Gets the internet IPv6 check (is checking / value / state).
     /// </summary>
-    public ConnectionCheckItem InternetIPv6 { get; } = new();
+    public ConnectionCheckItem InternetIPv6 { get; } = new(ConnectionCheckItemKind.PublicIPAddress);
 
     /// <summary>
     /// Gets the internet DNS check (is checking / value / state).
     /// </summary>
-    public ConnectionCheckItem InternetDNS { get; } = new();
+    public ConnectionCheckItem InternetDNS { get; } = new(ConnectionCheckItemKind.DNSName);
 
     #endregion
 
     /// <summary>
-    /// Gets a value indicating whether checking the public IP address is enabled.
+    /// Gets the time of the last check, <c>null</c> before the first one.
     /// </summary>
-    public bool CheckPublicIPAddressEnabled => SettingsManager.Current.Dashboard_CheckPublicIPAddress;
+    public DateTime? LastCheckTime
+    {
+        get;
+        private set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
 
     /// <summary>
     /// Gets or sets a value indicating whether a check is currently running.
@@ -116,14 +135,44 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
     /// <summary>
     /// Gets the command to check connections.
     /// </summary>
-    public ICommand CheckCommand => new RelayCommand(_ => Check());
+    public ICommand CheckCommand => new RelayCommand(_ => Check(), _ => !IsChecking);
+
+    /// <summary>
+    /// Gets the command to copy all values (with the reasons of the states), e.g. for a support request.
+    /// </summary>
+    public ICommand CopyAllCommand => new RelayCommand(_ => CopyAllAction(), _ => !IsChecking && LastCheckTime != null);
+
+    private void CopyAllAction()
+    {
+        var text = new StringBuilder();
+
+        foreach (var (title, ipv4, ipv6, dns) in new[]
+                 {
+                     (Strings.Computer, ComputerIPv4, ComputerIPv6, ComputerDNS),
+                     (Strings.GatewayRouter, RouterIPv4, RouterIPv6, RouterDNS),
+                     (Strings.Internet, InternetIPv4, InternetIPv6, InternetDNS)
+                 })
+        {
+            if (text.Length > 0)
+                text.AppendLine();
+
+            text.AppendLine(title);
+
+            foreach (var (label, item) in new[] { (Strings.IPv4, ipv4), (Strings.IPv6, ipv6), (Strings.DNS, dns) })
+                text.AppendLine(item.Message == null
+                    ? $"{label}: {item.Value}"
+                    : $"{label}: {item.Value} ({item.Message})");
+        }
+
+        ClipboardHelper.SetClipboard(text.ToString().TrimEnd());
+    }
 
     #endregion
 
     #region Methods
 
     /// <summary>
-    /// Checks the network connections.
+    /// Checks the network connections. If a check is already running, it is repeated once it has finished.
     /// </summary>
     public void Check()
     {
@@ -131,155 +180,135 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
     }
 
     /// <summary>
-    /// The cancellation token source.
+    /// A check was requested while another one was running (e.g. a network change during a check). The running check
+    /// is repeated once it has finished, so the result shows the latest state. Only used on the UI thread.
     /// </summary>
-    private CancellationTokenSource _cancellationTokenSource;
-
-    /// <summary>
-    /// The check task.
-    /// </summary>
-    private Task _checkTask = Task.CompletedTask;
-
-    /// <summary>
-    /// Monotonically increasing id of the current check run. None of the underlying detection/DNS
-    /// calls support real mid-flight cancellation (see <see cref="RunTask"/>), so a superseded run
-    /// can still be executing in the background after a newer run has started. Every write to a
-    /// <see cref="ConnectionCheckItem"/> is guarded by comparing against this field, so a superseded
-    /// run's results are silently discarded instead of racing with the current run's writes.
-    /// </summary>
-    private long _generation;
+    private bool _recheckPending;
 
     /// <summary>
     /// Checks the network connections asynchronously.
     /// </summary>
     private async Task CheckAsync()
     {
-        Log.Info("Checking network connection...");
-
-        // Bump the generation immediately so a still-running previous check stops writing
-        // its results as soon as possible, even before it notices the cancellation below.
-        var generation = Interlocked.Increment(ref _generation);
-
-        // Cancel previous checks if running
-        if (!_checkTask.IsCompleted)
+        if (IsChecking)
         {
-            Log.Info("Cancelling previous checks...");
-            await _cancellationTokenSource.CancelAsync();
-
-            try
-            {
-                await _checkTask;
-            }
-            catch (OperationCanceledException)
-            {
-                Log.Info("Task was cancelled from previous checks.");
-            }
-            finally
-            {
-                _cancellationTokenSource.Dispose();
-            }
+            _recheckPending = true;
+            return;
         }
-
-        _cancellationTokenSource = new CancellationTokenSource();
-        var wasCanceled = false;
 
         IsChecking = true;
 
         try
         {
-            _checkTask = RunTask(_cancellationTokenSource.Token, generation);
-            await _checkTask;
-        }
-        catch (OperationCanceledException)
-        {
-            wasCanceled = true;
-            Log.Info("Task was cancelled from current checks.");
+            do
+            {
+                _recheckPending = false;
+
+                try
+                {
+                    Log.Info("Checking network connection...");
+
+                    // Takes at least the refresh interval, so the reload animation is visible and the check can't be
+                    // spammed - the checks run at the same time
+                    await TaskHelper.WithMinimumDurationAsync(RunTask,
+                        GlobalStaticConfiguration.ApplicationUIRefreshInterval);
+
+                    Log.Info("Network connection check completed.");
+                }
+                catch (Exception ex)
+                {
+                    Log.Error("Network connection check failed.", ex);
+
+                    // Don't leave the remaining rows loading until the next check
+                    foreach (var item in GetAllItems().Where(x => x.IsChecking))
+                        item.Complete("-/-", ConnectionState.Critical);
+                }
+
+                LastCheckTime = DateTime.Now;
+
+                // A check requested in the meantime (e.g. a network change) runs also after an error
+            } while (_recheckPending);
         }
         finally
         {
             IsChecking = false;
-            _cancellationTokenSource.Dispose();
 
-            if (!wasCanceled)
-                Log.Info("Network connection check completed.");
+            // Enable the refresh / copy all buttons (CanExecute is otherwise only evaluated on the next input, e.g. not
+            // in the status window opened on a network change without the focus)
+            CommandManager.InvalidateRequerySuggested();
         }
     }
 
     /// <summary>
     /// Runs the check tasks.
     /// </summary>
-    /// <param name="ct">The cancellation token.</param>
-    /// <param name="generation">The id of this check run, see <see cref="_generation"/>.</param>
     /// <returns>A task representing the asynchronous operation.</returns>
-    private async Task RunTask(CancellationToken ct, long generation)
+    private async Task RunTask()
     {
         ResetAllItems();
 
         if (ScreenshotData.IsEnabled)
         {
-            // Wait like a real check, so the loading animation is visible
-            await Task.Delay(GlobalStaticConfiguration.ApplicationUIRefreshInterval, ct);
-
-            SetScreenshotData(generation);
+            SetScreenshotData();
             return;
         }
 
-        // Detect the local IPv4/IPv6 address once and share it between the Computer and Router
-        // checks below, instead of each of them redetecting it independently (both used to
-        // trigger their own, potentially PowerShell-backed, network interface lookup).
-        var localIPv4Task = DetectLocalIPv4Async();
-        var localIPv6Task = DetectLocalIPv6Async();
+        // Detect the local IPv4/IPv6 address once and share it between the Computer, Router and Internet checks below
+        var localIPv4Task = DetectLocalIPAddressAsync(SettingsManager.Current.Dashboard_PublicIPv4Address,
+            AddressFamily.InterNetwork);
+        var localIPv6Task = DetectLocalIPAddressAsync(SettingsManager.Current.Dashboard_PublicIPv6Address,
+            AddressFamily.InterNetworkV6);
 
         await Task.WhenAll(localIPv4Task, localIPv6Task);
 
-        if (ct.IsCancellationRequested)
-            ct.ThrowIfCancellationRequested();
+        var (localIPv4, isIPv4Routed) = localIPv4Task.Result;
+        var (localIPv6, isIPv6Routed) = localIPv6Task.Result;
 
-        var localIPv4 = localIPv4Task.Result;
-        var localIPv6 = localIPv6Task.Result;
+        var computerIPv4Result = NetworkConnectionCheck.GetLocalIPAddressResult(localIPv4, AddressFamily.InterNetwork, isIPv4Routed);
+        var computerIPv6Result = NetworkConnectionCheck.GetLocalIPAddressResult(localIPv6, AddressFamily.InterNetworkV6, isIPv6Routed);
 
-        SetAddressResult(ComputerIPv4, localIPv4, generation);
-        SetAddressResult(ComputerIPv6, localIPv6, generation);
+        ComputerIPv4.Complete(localIPv4?.ToString() ?? "-/-", computerIPv4Result);
+        ComputerIPv6.Complete(localIPv6?.ToString() ?? "-/-", computerIPv6Result);
+
+        // Without a routed IPv6 address, the IPv6 checks of the router and the internet are not available
+        var isIPv6Available = computerIPv6Result.State == ConnectionState.OK;
+
+        // No DNS name of a link-local IPv4 address (no DHCP server): the lookup fails and would point to the DNS server
+        var resolveIPv4 = localIPv4 != null && !NetworkInterface.IsLinkLocal(localIPv4) ? localIPv4 : null;
 
         await Task.WhenAll(
-            CheckConnectionComputerDnsAsync(ct, generation),
-            CheckConnectionRouterAsync(localIPv4, localIPv6, ct, generation),
-            CheckConnectionInternetAsync(ct, generation)
+            CheckConnectionComputerDnsAsync(resolveIPv4, isIPv6Available ? localIPv6 : null),
+            CheckConnectionRouterAsync(localIPv4, isIPv4Routed, isIPv6Available ? localIPv6 : null),
+            CheckConnectionInternetAsync(isIPv6Available)
         );
     }
 
     /// <summary>
-    /// Resets all connection check items to their initial "checking" state. The Internet items are
-    /// only reset when the public IP address check is enabled, so they stay untouched (not stuck
-    /// "checking") when it is disabled.
+    /// Resets all connection check items to their initial "checking" state.
     /// </summary>
     private void ResetAllItems()
     {
-        ComputerIPv4.Reset();
-        ComputerIPv6.Reset();
-        ComputerDNS.Reset();
-
-        RouterIPv4.Reset();
-        RouterIPv6.Reset();
-        RouterDNS.Reset();
-
-        if (!CheckPublicIPAddressEnabled)
-            return;
-
-        InternetIPv4.Reset();
-        InternetIPv6.Reset();
-        InternetDNS.Reset();
+        foreach (var item in GetAllItems())
+            item.Reset();
     }
 
     /// <summary>
-    /// Sets the sample data of <see cref="ScreenshotData" /> instead of the real (personal) addresses, unless a newer
-    /// check has started in the meantime.
+    /// Gets all connection check items.
     /// </summary>
-    private void SetScreenshotData(long generation)
+    private ConnectionCheckItem[] GetAllItems()
     {
-        if (generation != _generation)
-            return;
+        return
+        [
+            ComputerIPv4, ComputerIPv6, ComputerDNS, RouterIPv4, RouterIPv6, RouterDNS, InternetIPv4, InternetIPv6,
+            InternetDNS
+        ];
+    }
 
+    /// <summary>
+    /// Sets the sample data of <see cref="ScreenshotData" /> instead of the real (personal) addresses.
+    /// </summary>
+    private void SetScreenshotData()
+    {
         ComputerIPv4.Complete(ScreenshotData.ComputerIPv4, ConnectionState.OK);
         ComputerIPv6.Complete(ScreenshotData.ComputerIPv6, ConnectionState.OK);
         ComputerDNS.Complete(ScreenshotData.ComputerDNS, ConnectionState.OK);
@@ -288,310 +317,302 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
         RouterIPv6.Complete(ScreenshotData.RouterIPv6, ConnectionState.OK);
         RouterDNS.Complete(ScreenshotData.RouterDNS, ConnectionState.OK);
 
-        if (!CheckPublicIPAddressEnabled)
-            return;
-
         InternetIPv4.Complete(ScreenshotData.InternetIPv4, ConnectionState.OK);
         InternetIPv6.Complete(ScreenshotData.InternetIPv6, ConnectionState.OK);
         InternetDNS.Complete(ScreenshotData.InternetDNS, ConnectionState.OK);
     }
 
     /// <summary>
-    /// Detects the local IPv4 address, based on routing to the configured public IPv4 address, with
-    /// a fallback to detection based on the network interfaces.
+    /// Detects the local IP address, based on routing to the configured public IP address (setting), with a fallback
+    /// to detection based on the network interfaces.
     /// </summary>
-    private static async Task<IPAddress> DetectLocalIPv4Async()
+    /// <param name="remoteIPAddress">Public IPv4 or IPv6 address (setting) used to find the route.</param>
+    /// <param name="addressFamily">IPv4 or IPv6.</param>
+    /// <returns>Local IP address (<c>null</c> if none was found) and whether it was detected via the route.</returns>
+    private static async Task<(IPAddress Address, bool IsRouted)> DetectLocalIPAddressAsync(string remoteIPAddress,
+        AddressFamily addressFamily)
     {
-        Log.Debug($"{nameof(DetectLocalIPv4Async)} - Detecting local IPv4 address...");
+        Log.Debug($"{nameof(DetectLocalIPAddressAsync)} - Detecting local {addressFamily} address...");
 
-        IPAddress remoteIPv4 = null;
+        IPAddress detected = null;
 
-        try
+        if (IPAddress.TryParse(remoteIPAddress, out var remote) && remote.AddressFamily == addressFamily)
+            detected = await NetworkInterface.DetectLocalIPAddressBasedOnRoutingAsync(remote);
+        else
+            Log.Warn($"{nameof(DetectLocalIPAddressAsync)} - Invalid public {addressFamily} address \"{remoteIPAddress}\" in the settings, skipping routing based detection.");
+
+        var isRouted = detected != null;
+
+        if (!isRouted)
         {
-            remoteIPv4 = IPAddress.Parse(SettingsManager.Current.Dashboard_PublicIPv4Address);
-        }
-        catch (Exception ex)
-        {
-            Log.Warn($"{nameof(DetectLocalIPv4Async)} - Invalid Dashboard_PublicIPv4Address setting, skipping routing based detection.", ex);
-        }
-
-        var detected = remoteIPv4 != null
-            ? await NetworkInterface.DetectLocalIPAddressBasedOnRoutingAsync(remoteIPv4)
-            : null;
-
-        if (detected == null)
-        {
-            Log.Debug($"{nameof(DetectLocalIPv4Async)} - Local IPv4 address detection via routing failed, trying network interfaces...");
-            detected = await NetworkInterface.DetectLocalIPAddressFromNetworkInterfaceAsync(AddressFamily.InterNetwork);
+            Log.Debug($"{nameof(DetectLocalIPAddressAsync)} - Local {addressFamily} address detection via routing failed, trying network interfaces...");
+            detected = await NetworkInterface.DetectLocalIPAddressFromNetworkInterfaceAsync(addressFamily);
         }
 
         Log.Debug(detected != null
-            ? $"{nameof(DetectLocalIPv4Async)} - Local IPv4 address detected: " + detected
-            : $"{nameof(DetectLocalIPv4Async)} - Local IPv4 address not detected.");
+            ? $"{nameof(DetectLocalIPAddressAsync)} - Local {addressFamily} address detected: {detected} (routed: {isRouted})"
+            : $"{nameof(DetectLocalIPAddressAsync)} - Local {addressFamily} address not detected.");
 
-        return detected;
+        return (detected, isRouted);
     }
 
     /// <summary>
-    /// Detects the local IPv6 address, based on routing to the configured public IPv6 address, with
-    /// a fallback to detection based on the network interfaces.
+    /// Detects the gateway of the local IP address and pings it, see <see cref="NetworkConnectionCheck.GetGatewayResult" />.
     /// </summary>
-    private static async Task<IPAddress> DetectLocalIPv6Async()
+    /// <param name="item">Item of the router check (IPv4 or IPv6).</param>
+    /// <param name="localIPAddress">Local IP address, or <c>null</c> (IPv4 only, IPv6 is not checked without one).</param>
+    /// <param name="isRouted">The local IP address was detected via the route to the public IP address.</param>
+    /// <returns>The gateway, or <c>null</c> if none was found.</returns>
+    private static async Task<IPAddress> CheckGatewayAsync(ConnectionCheckItem item, IPAddress localIPAddress,
+        bool isRouted)
     {
-        Log.Debug($"{nameof(DetectLocalIPv6Async)} - Detecting local IPv6 address...");
-
-        IPAddress remoteIPv6 = null;
-
-        try
+        // No local IP address (shown as error on the computer): no gateway to detect
+        if (localIPAddress == null)
         {
-            remoteIPv6 = IPAddress.Parse(SettingsManager.Current.Dashboard_PublicIPv6Address);
-        }
-        catch (Exception ex)
-        {
-            Log.Warn($"{nameof(DetectLocalIPv6Async)} - Invalid Dashboard_PublicIPv6Address setting, skipping routing based detection.", ex);
+            item.Complete("-/-", new ConnectionCheckResult(ConnectionState.Info, ConnectionCheckReason.NoIPv4Address));
+            return null;
         }
 
-        var detected = remoteIPv6 != null
-            ? await NetworkInterface.DetectLocalIPAddressBasedOnRoutingAsync(remoteIPv6)
-            : null;
+        var gateway = await NetworkInterface.DetectGatewayFromLocalIPAddressAsync(localIPAddress);
 
-        if (detected == null)
+        var isReachable = false;
+
+        if (gateway != null)
         {
-            Log.Debug($"{nameof(DetectLocalIPv6Async)} - Local IPv6 address detection via routing failed, trying network interfaces...");
-            detected = await NetworkInterface.DetectLocalIPAddressFromNetworkInterfaceAsync(AddressFamily.InterNetworkV6);
+            var pingInfo = await PingProbe.PingAsync(gateway, GlobalStaticConfiguration.Dashboard_PingTimeout,
+                GlobalStaticConfiguration.Dashboard_PingAttempts, PingBuffer, CancellationToken.None);
+
+            isReachable = pingInfo.Status == IPStatus.Success;
+
+            Log.Debug($"{nameof(CheckGatewayAsync)} - Ping {gateway}: {pingInfo.Status}");
         }
 
-        Log.Debug(detected != null
-            ? $"{nameof(DetectLocalIPv6Async)} - Local IPv6 address detected: " + detected
-            : $"{nameof(DetectLocalIPv6Async)} - Local IPv6 address not detected.");
+        item.Complete(gateway?.ToString() ?? "-/-",
+            NetworkConnectionCheck.GetGatewayResult(gateway, isRouted, isReachable));
 
-        return detected;
+        return gateway;
     }
 
     /// <summary>
-    /// Applies a detected address to a <see cref="ConnectionCheckItem"/>, unless a newer check has
-    /// started in the meantime.
+    /// Marks an IPv6 check as not available (the computer has no routed IPv6 address).
     /// </summary>
-    private void SetAddressResult(ConnectionCheckItem item, IPAddress detected, long generation)
+    private static void SetIPv6NotAvailable(ConnectionCheckItem item)
     {
-        if (generation != _generation)
-            return;
-
-        item.Complete(detected?.ToString() ?? "-/-", detected != null ? ConnectionState.OK : ConnectionState.Critical);
+        item.Complete("-/-", new ConnectionCheckResult(ConnectionState.Info, ConnectionCheckReason.IPv6NotAvailable));
     }
 
     /// <summary>
-    /// Resolves the DNS (PTR) name for an address item, trying IPv4 first and falling back to IPv6,
-    /// unless a newer check has started in the meantime.
+    /// Resolves the DNS (PTR) name of the IPv4 address, and of the IPv6 address if needed (see
+    /// <see cref="NetworkConnectionCheck.ShouldResolveIPv6" /> / <see cref="NetworkConnectionCheck.GetDNSResult" />).
     /// </summary>
-    /// <remarks>
-    /// A PTR lookup that completes without a server error but simply has no record (e.g. most home
-    /// routers and many ISPs don't configure reverse DNS) is reported as <see cref="ConnectionState.Info"/>
-    /// rather than <see cref="ConnectionState.Critical"/> - it's not a sign of a broken DNS setup.
-    /// </remarks>
-    private async Task ResolveDnsAsync(ConnectionCheckItem dnsItem, ConnectionCheckItem addressIPv4, ConnectionCheckItem addressIPv6, long generation, string context)
+    private static async Task ResolveDnsAsync(ConnectionCheckItem dnsItem, IPAddress ipv4Address, IPAddress ipv6Address,
+        string context)
     {
         DNSClientResultString ipv4Result = null;
         DNSClientResultString ipv6Result = null;
 
-        if (addressIPv4.State == ConnectionState.OK)
+        if (ipv4Address != null)
         {
             Log.Debug($"{context} > {nameof(ResolveDnsAsync)} - Resolving DNS based on IPv4...");
-            ipv4Result = await DNSClient.GetInstance().ResolvePtrAsync(IPAddress.Parse(addressIPv4.Value));
+            ipv4Result = await DNSClient.GetInstance().ResolvePtrAsync(ipv4Address);
         }
 
-        if (ipv4Result is not { HasError: false } && addressIPv6.State == ConnectionState.OK)
+        if (ipv6Address != null && NetworkConnectionCheck.ShouldResolveIPv6(ipv4Result))
         {
             Log.Debug($"{context} > {nameof(ResolveDnsAsync)} - Resolving DNS based on IPv6...");
-            ipv6Result = await DNSClient.GetInstance().ResolvePtrAsync(IPAddress.Parse(addressIPv6.Value));
+            ipv6Result = await DNSClient.GetInstance().ResolvePtrAsync(ipv6Address);
         }
 
-        if (generation != _generation)
-            return;
+        var (result, hostname) = NetworkConnectionCheck.GetDNSResult(ipv4Result, ipv6Result);
 
-        // Prefer a successful resolution from either family. If neither succeeded, a clean
-        // "not found" from either family still wins over a hard failure from the other - e.g.
-        // IPv4 has no PTR (NXDOMAIN) while IPv6 times out should show as "no record", not as a
-        // broken DNS setup.
-        var resolved = ipv4Result is { HasError: false } ? ipv4Result : ipv6Result is { HasError: false } ? ipv6Result : null;
-        var notFound = ipv4Result is { IsNotFound: true } || ipv6Result is { IsNotFound: true };
+        Log.Debug($"{context} > {nameof(ResolveDnsAsync)} - {result.State} ({result.Reason}): {hostname}. IPv4: {ipv4Result?.ErrorMessage ?? "n/a"} | IPv6: {ipv6Result?.ErrorMessage ?? "n/a"}");
 
-        if (resolved != null)
-        {
-            Log.Debug($"{context} > {nameof(ResolveDnsAsync)} - DNS resolved: " + resolved.Value);
-            dnsItem.Complete(resolved.Value, ConnectionState.OK);
-        }
-        else if (notFound)
-        {
-            Log.Debug($"{context} > {nameof(ResolveDnsAsync)} - DNS not resolved (no record found).");
-            dnsItem.Complete("-/-", ConnectionState.Info);
-        }
-        else
-        {
-            Log.Debug($"{context} > {nameof(ResolveDnsAsync)} - DNS not resolved due to error. IPv4: {ipv4Result?.ErrorMessage ?? "n/a"} | IPv6: {ipv6Result?.ErrorMessage ?? "n/a"}");
-            dnsItem.Complete("-/-", ConnectionState.Critical);
-        }
+        dnsItem.Complete(hostname ?? "-/-", result);
     }
 
     /// <summary>
     /// Resolves the computer's DNS (PTR) name.
     /// </summary>
-    private Task CheckConnectionComputerDnsAsync(CancellationToken ct, long generation)
+    /// <param name="localIPv4">The local IPv4 address, or <c>null</c>.</param>
+    /// <param name="localIPv6">The local IPv6 address, or <c>null</c> (also if IPv6 is not available).</param>
+    private Task CheckConnectionComputerDnsAsync(IPAddress localIPv4, IPAddress localIPv6)
     {
         return Task.Run(async () =>
         {
             Log.Debug($"{nameof(CheckConnectionComputerDnsAsync)} - Checking computer DNS...");
-            await ResolveDnsAsync(ComputerDNS, ComputerIPv4, ComputerIPv6, generation, nameof(CheckConnectionComputerDnsAsync));
+            await ResolveDnsAsync(ComputerDNS, localIPv4, localIPv6, nameof(CheckConnectionComputerDnsAsync));
             Log.Debug($"{nameof(CheckConnectionComputerDnsAsync)} - Computer DNS check completed.");
-        }, ct);
+        });
     }
 
     /// <summary>
-    /// Checks the router connection asynchronously.
+    /// Checks the router connection asynchronously: detects the IPv4 / IPv6 gateway, pings both at the same time, then
+    /// resolves the DNS name.
     /// </summary>
     /// <param name="localIPv4">The already-detected local IPv4 address, or <c>null</c>.</param>
-    /// <param name="localIPv6">The already-detected local IPv6 address, or <c>null</c>.</param>
-    /// <param name="ct">The cancellation token.</param>
-    /// <param name="generation">The id of this check run, see <see cref="_generation"/>.</param>
+    /// <param name="isIPv4Routed">The local IPv4 address was detected via the route to the public IP address.</param>
+    /// <param name="localIPv6">The already-detected local IPv6 address, or <c>null</c> if IPv6 is not available.</param>
     /// <returns>A task representing the asynchronous operation.</returns>
-    private Task CheckConnectionRouterAsync(IPAddress localIPv4, IPAddress localIPv6, CancellationToken ct, long generation)
+    private Task CheckConnectionRouterAsync(IPAddress localIPv4, bool isIPv4Routed, IPAddress localIPv6)
     {
         return Task.Run(async () =>
         {
             Log.Debug($"{nameof(CheckConnectionRouterAsync)} - Checking router connection...");
 
-            // Detect router IPv4 gateway
-            Log.Debug($"{nameof(CheckConnectionRouterAsync)} - Detecting router IPv4 address...");
+            var routerIPv4Task = CheckGatewayAsync(RouterIPv4, localIPv4, isIPv4Routed);
+            var routerIPv6Task = Task.FromResult<IPAddress>(null);
 
-            var routerIPv4 = localIPv4 != null
-                ? await NetworkInterface.DetectGatewayFromLocalIPAddressAsync(localIPv4)
-                : null;
+            if (localIPv6 != null)
+                routerIPv6Task = CheckGatewayAsync(RouterIPv6, localIPv6, true);
+            else
+                SetIPv6NotAvailable(RouterIPv6);
 
-            SetAddressResult(RouterIPv4, routerIPv4, generation);
-
-            if (ct.IsCancellationRequested)
-                ct.ThrowIfCancellationRequested();
-
-            // Detect router IPv6 gateway
-            Log.Debug($"{nameof(CheckConnectionRouterAsync)} - Detecting router IPv6 address...");
-
-            var routerIPv6 = localIPv6 != null
-                ? await NetworkInterface.DetectGatewayFromLocalIPAddressAsync(localIPv6)
-                : null;
-
-            SetAddressResult(RouterIPv6, routerIPv6, generation);
-
-            if (ct.IsCancellationRequested)
-                ct.ThrowIfCancellationRequested();
+            await Task.WhenAll(routerIPv4Task, routerIPv6Task);
 
             // Resolve router DNS
-            await ResolveDnsAsync(RouterDNS, RouterIPv4, RouterIPv6, generation, nameof(CheckConnectionRouterAsync));
+            await ResolveDnsAsync(RouterDNS, routerIPv4Task.Result, routerIPv6Task.Result,
+                nameof(CheckConnectionRouterAsync));
 
             Log.Debug($"{nameof(CheckConnectionRouterAsync)} - Router connection check completed.");
-        }, ct);
+        });
+    }
+
+    /// <summary>
+    /// Requests the public IP address from the API (setting), see <see cref="PublicIPAddressCheck" />.
+    /// </summary>
+    /// <param name="addressFamily">IPv4 or IPv6.</param>
+    /// <returns>Result of the request.</returns>
+    private static async Task<PublicIPAddressCheckResult> RequestPublicIPAddressAsync(AddressFamily addressFamily)
+    {
+        var api = addressFamily == AddressFamily.InterNetwork
+            ? SettingsManager.Current.Dashboard_UseCustomPublicIPv4AddressAPI
+                ? SettingsManager.Current.Dashboard_CustomPublicIPv4AddressAPI
+                : GlobalStaticConfiguration.Dashboard_PublicIPv4AddressAPI
+            : SettingsManager.Current.Dashboard_UseCustomPublicIPv6AddressAPI
+                ? SettingsManager.Current.Dashboard_CustomPublicIPv6AddressAPI
+                : GlobalStaticConfiguration.Dashboard_PublicIPv6AddressAPI;
+
+        try
+        {
+            Log.Debug($"{nameof(RequestPublicIPAddressAsync)} - Checking public {addressFamily} address from: {api}");
+
+            using var httpResponse = await PublicIPHttpClient.GetAsync(api);
+            var content = await httpResponse.Content.ReadAsStringAsync();
+
+            var result = PublicIPAddressCheck.ParseResponse(httpResponse.IsSuccessStatusCode, content, addressFamily);
+
+            Log.Debug($"{nameof(RequestPublicIPAddressAsync)} - HTTP {(int)httpResponse.StatusCode}: {result.Status} {result.IPAddress}");
+
+            return result;
+        }
+        catch (Exception ex)
+        {
+            var result = PublicIPAddressCheck.FromException(ex);
+
+            Log.Debug($"{nameof(RequestPublicIPAddressAsync)} - {result.Status}: {ex.Message}");
+
+            return result;
+        }
+    }
+
+    /// <summary>
+    /// Pings the public IP address (setting) to check if the internet is reachable.
+    /// </summary>
+    /// <param name="ipAddress">Public IPv4 or IPv6 address (setting).</param>
+    /// <param name="addressFamily">IPv4 or IPv6.</param>
+    /// <returns>Result of the ping, or <c>null</c> if the address in the settings is invalid.</returns>
+    private static async Task<PingInfo> PingPublicIPAddressAsync(string ipAddress, AddressFamily addressFamily)
+    {
+        if (!IPAddress.TryParse(ipAddress, out var target) || target.AddressFamily != addressFamily)
+        {
+            Log.Warn($"{nameof(PingPublicIPAddressAsync)} - Invalid public {addressFamily} address \"{ipAddress}\" in the settings, skipping the ping.");
+            return null;
+        }
+
+        var pingInfo = await PingProbe.PingAsync(target, GlobalStaticConfiguration.Dashboard_PingTimeout,
+            GlobalStaticConfiguration.Dashboard_PingAttempts, PingBuffer, CancellationToken.None);
+
+        Log.Debug($"{nameof(PingPublicIPAddressAsync)} - Ping {target}: {pingInfo.Status}");
+
+        return pingInfo;
+    }
+
+    /// <summary>
+    /// Checks the internet connection of an address family: ping of the public IP address (setting) and the public IP
+    /// address API (if enabled) at the same time, see <see cref="NetworkConnectionCheck.GetInternetResult" />.
+    /// </summary>
+    /// <param name="item">Item of the internet check (IPv4 or IPv6).</param>
+    /// <param name="addressFamily">IPv4 or IPv6.</param>
+    /// <param name="connectivityLevelTask">Internet connectivity reported by Windows (read once per check).</param>
+    /// <returns>The public IP address returned by the API, or <c>null</c> (also if the API returned a private one, e.g.
+    /// a captive portal - its DNS name is not the one of the internet connection).</returns>
+    private static async Task<IPAddress> CheckInternetAsync(ConnectionCheckItem item, AddressFamily addressFamily,
+        Task<InternetConnectivityLevel> connectivityLevelTask)
+    {
+        var pingTask = PingPublicIPAddressAsync(addressFamily == AddressFamily.InterNetwork
+            ? SettingsManager.Current.Dashboard_PublicIPv4Address
+            : SettingsManager.Current.Dashboard_PublicIPv6Address, addressFamily);
+
+        var publicIPAddressTask = SettingsManager.Current.Dashboard_CheckPublicIPAddress
+            ? RequestPublicIPAddressAsync(addressFamily)
+            : Task.FromResult<PublicIPAddressCheckResult>(null);
+
+        await Task.WhenAll(pingTask, publicIPAddressTask, connectivityLevelTask);
+
+        var pingInfo = pingTask.Result;
+        var publicIPAddress = publicIPAddressTask.Result;
+        var isPingSuccessful = pingInfo is { Status: IPStatus.Success };
+
+        // Public IP address (API), otherwise the pinged address with the round-trip time
+        var value = publicIPAddress?.IPAddress?.ToString() ??
+                    (isPingSuccessful ? $"{pingInfo.IPAddress} ({pingInfo.Time} ms)" : "-/-");
+
+        // Only the public IP address is opened in other tools (e.g. RDAP, IP geolocation): not a private one (e.g. a
+        // captive portal) and not the pinged address (e.g. 1.1.1.1, it is not the IP address of the user)
+        var publicIP = publicIPAddress is { Status: PublicIPAddressCheckStatus.Success } ? publicIPAddress.IPAddress : null;
+
+        item.Complete(value, NetworkConnectionCheck.GetInternetResult(addressFamily, isPingSuccessful,
+            publicIPAddress, connectivityLevelTask.Result), publicIP?.ToString() ?? string.Empty);
+
+        return publicIP;
     }
 
     /// <summary>
     /// Checks the internet connection asynchronously.
     /// </summary>
-    /// <param name="ct">The cancellation token.</param>
-    /// <param name="generation">The id of this check run, see <see cref="_generation"/>.</param>
+    /// <param name="isIPv6Available">The computer has a routed IPv6 address (otherwise IPv6 is not checked).</param>
     /// <returns>A task representing the asynchronous operation.</returns>
-    private Task CheckConnectionInternetAsync(CancellationToken ct, long generation)
+    private Task CheckConnectionInternetAsync(bool isIPv6Available)
     {
         return Task.Run(async () =>
         {
-            // If public IP address check is disabled
-            if (!CheckPublicIPAddressEnabled)
-                return;
-
             Log.Debug($"{nameof(CheckConnectionInternetAsync)} - Checking internet connection...");
 
-            // Detect public IPv4 and if it is reachable
-            Log.Debug($"{nameof(CheckConnectionInternetAsync)} - Detecting public IPv4 address...");
+            var connectivityLevelTask = Task.Run(InternetConnectivity.GetLevel);
 
-            var publicIPv4AddressAPI = SettingsManager.Current.Dashboard_UseCustomPublicIPv4AddressAPI
-                ? SettingsManager.Current.Dashboard_CustomPublicIPv4AddressAPI
-                : GlobalStaticConfiguration.Dashboard_PublicIPv4AddressAPI;
+            var publicIPv4Task = CheckInternetAsync(InternetIPv4, AddressFamily.InterNetwork, connectivityLevelTask);
+            var publicIPv6Task = Task.FromResult<IPAddress>(null);
 
-            try
-            {
-                Log.Debug($"{nameof(CheckConnectionInternetAsync)} - Checking public IPv4 address from: " + publicIPv4AddressAPI);
+            // Only if the computer has a routed IPv6 address
+            if (isIPv6Available)
+                publicIPv6Task = CheckInternetAsync(InternetIPv6, AddressFamily.InterNetworkV6, connectivityLevelTask);
+            else
+                SetIPv6NotAvailable(InternetIPv6);
 
-                var httpResponse = await PublicIPHttpClient.GetAsync(publicIPv4AddressAPI, ct);
-                var result = await httpResponse.Content.ReadAsStringAsync(ct);
-                var match = RegexHelper.IPv4AddressExtractRegex().Match(result);
+            await Task.WhenAll(publicIPv4Task, publicIPv6Task);
 
-                if (generation != _generation)
-                    return;
+            Log.Debug($"{nameof(CheckConnectionInternetAsync)} - Windows reports: {connectivityLevelTask.Result}");
 
-                if (match.Success)
-                {
-                    Log.Debug($"{nameof(CheckConnectionInternetAsync)} - Public IPv4 address detected: " + match.Value);
-                    InternetIPv4.Complete(match.Value, ConnectionState.OK);
-                }
-                else
-                {
-                    Log.Debug($"{nameof(CheckConnectionInternetAsync)} - Public IPv4 address not detected due to invalid format.");
-                    InternetIPv4.Complete("-/-", ConnectionState.Critical);
-                }
-            }
-            catch (Exception ex) when (ex is not OperationCanceledException)
-            {
-                Log.Debug($"{nameof(CheckConnectionInternetAsync)} - Public IPv4 address not detected due to exception: " + ex.Message);
-
-                if (generation == _generation)
-                    InternetIPv4.Complete("-/-", ConnectionState.Critical);
-            }
-
-            if (ct.IsCancellationRequested)
-                ct.ThrowIfCancellationRequested();
-
-            // Detect public IPv6 and if it is reachable
-            Log.Debug($"{nameof(CheckConnectionInternetAsync)} - Detecting public IPv6 address...");
-
-            var publicIPv6AddressAPI = SettingsManager.Current.Dashboard_UseCustomPublicIPv6AddressAPI
-                ? SettingsManager.Current.Dashboard_CustomPublicIPv6AddressAPI
-                : GlobalStaticConfiguration.Dashboard_PublicIPv6AddressAPI;
-
-            try
-            {
-                Log.Debug($"{nameof(CheckConnectionInternetAsync)} - Checking public IPv6 address from: " + publicIPv6AddressAPI);
-
-                var httpResponse = await PublicIPHttpClient.GetAsync(publicIPv6AddressAPI, ct);
-                var result = await httpResponse.Content.ReadAsStringAsync(ct);
-                var match = Regex.Match(result, RegexHelper.IPv6AddressRegex);
-
-                if (generation != _generation)
-                    return;
-
-                if (match.Success)
-                {
-                    Log.Debug($"{nameof(CheckConnectionInternetAsync)} - Public IPv6 address detected: " + match.Value);
-                    InternetIPv6.Complete(match.Value, ConnectionState.OK);
-                }
-                else
-                {
-                    Log.Debug($"{nameof(CheckConnectionInternetAsync)} - Public IPv6 address not detected due to invalid format.");
-                    InternetIPv6.Complete("-/-", ConnectionState.Critical);
-                }
-            }
-            catch (Exception ex) when (ex is not OperationCanceledException)
-            {
-                Log.Debug($"{nameof(CheckConnectionInternetAsync)} - Public IPv6 address not detected due to exception: " + ex.Message);
-
-                if (generation == _generation)
-                    InternetIPv6.Complete("-/-", ConnectionState.Critical);
-            }
-
-            if (ct.IsCancellationRequested)
-                ct.ThrowIfCancellationRequested();
-
-            // Resolve internet DNS
-            await ResolveDnsAsync(InternetDNS, InternetIPv4, InternetIPv6, generation, nameof(CheckConnectionInternetAsync));
+            // Resolve internet DNS (of the public IP address)
+            if (SettingsManager.Current.Dashboard_CheckPublicIPAddress)
+                await ResolveDnsAsync(InternetDNS, publicIPv4Task.Result, publicIPv6Task.Result,
+                    nameof(CheckConnectionInternetAsync));
+            else
+                InternetDNS.Complete("-/-", new ConnectionCheckResult(ConnectionState.Info,
+                    ConnectionCheckReason.PublicIPAddressCheckDisabled));
 
             Log.Debug($"{nameof(CheckConnectionInternetAsync)} - Internet connection check completed.");
-        }, ct);
+        });
     }
 
     #endregion

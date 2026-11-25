@@ -123,11 +123,23 @@ public sealed partial class MainWindow : INotifyPropertyChanged
     /// </summary>
     private readonly DispatcherTimer _configureDNSServerDispatcherTimer = new();
 
+    /// <summary>
+    ///     Timer to handle a network change once the network has settled: Windows raises several events per change (e.g.
+    ///     link up, then the DHCP address), every event restarts the timer.
+    /// </summary>
+    private readonly DispatcherTimer _networkChangeDispatcherTimer = new();
+
+    /// <summary>
+    ///     First network change event since the last handled change. The timer is not restarted anymore after 3 times
+    ///     <see cref="GlobalStaticConfiguration.NetworkChangeDetectionDelay" />, so a network that keeps changing (e.g.
+    ///     flapping Wi-Fi, VPN reconnects) is still handled.
+    /// </summary>
+    private DateTime _firstNetworkChange;
+
     private readonly bool _isLoading;
     private bool _isProfileFilesLoading;
     private bool _isProfileFileUpdating;
     private bool _isApplicationViewLoading;
-    private bool _isNetworkChanging;
 
     private bool _isInTray;
     private bool _isClosing;
@@ -566,6 +578,10 @@ public sealed partial class MainWindow : INotifyPropertyChanged
         _statusWindow = new StatusWindow(this);
 
         // Detect network changes...
+        _networkChangeDispatcherTimer.Interval =
+            TimeSpan.FromMilliseconds(GlobalStaticConfiguration.NetworkChangeDetectionDelay);
+        _networkChangeDispatcherTimer.Tick += NetworkChangeDispatcherTimer_Tick;
+
         NetworkChange.NetworkAvailabilityChanged += (_, _) => OnNetworkHasChanged();
         NetworkChange.NetworkAddressChanged += (_, _) => OnNetworkHasChanged();
 
@@ -1080,6 +1096,9 @@ public sealed partial class MainWindow : INotifyPropertyChanged
 
     private async void NavigationManager_ApplicationRequested(object sender, ApplicationRequest request)
     {
+        // Requested from another window (e.g. the status window): show the main window, also for the error message below
+        ShowWindow();
+
         // Clear the search, otherwise the application may be filtered out
         ApplicationSearch = string.Empty;
 
@@ -1589,7 +1608,11 @@ public sealed partial class MainWindow : INotifyPropertyChanged
         }
 
         if (WindowState != WindowState.Minimized)
+        {
+            // Restored: the dashboard may be outdated (e.g. a network change while minimized)
+            _dashboardView?.OnMainWindowShown();
             return;
+        }
 
         if (SettingsManager.Current.Window_MinimizeToTrayInsteadOfTaskbar)
             HideWindowToTray();
@@ -1790,6 +1813,9 @@ public sealed partial class MainWindow : INotifyPropertyChanged
 
         Show();
 
+        // The dashboard may be outdated (e.g. a network change while in the tray)
+        _dashboardView?.OnMainWindowShown();
+
         _notifyIcon.Visible = SettingsManager.Current.TrayIcon_AlwaysShowIcon;
     }
 
@@ -1852,33 +1878,55 @@ public sealed partial class MainWindow : INotifyPropertyChanged
         _statusWindow.ShowWindow(enableCloseTimer);
     }
 
-    private async void OnNetworkHasChanged()
+    /// <summary>
+    ///     Called by the <see cref="NetworkChange" /> events (thread pool, several times per change). (Re)starts the
+    ///     timer on the UI thread, so the change is handled once, when the network has settled.
+    /// </summary>
+    private void OnNetworkHasChanged()
     {
-        if (_isNetworkChanging)
-            return;
+        Dispatcher.InvokeAsync(() =>
+        {
+            if (!_networkChangeDispatcherTimer.IsEnabled)
+            {
+                _firstNetworkChange = DateTime.Now;
+            }
+            else if (DateTime.Now - _firstNetworkChange >=
+                     TimeSpan.FromMilliseconds(GlobalStaticConfiguration.NetworkChangeDetectionDelay * 3))
+            {
+                // Waited long enough: let the running timer handle the change
+                return;
+            }
 
-        _isNetworkChanging = true;
+            _networkChangeDispatcherTimer.Stop();
+            _networkChangeDispatcherTimer.Start();
+        });
+    }
 
-        // Wait, because the event may be triggered several times.
-        await Task.Delay(GlobalStaticConfiguration.NetworkChangeDetectionDelay);
+    private void NetworkChangeDispatcherTimer_Tick(object sender, EventArgs e)
+    {
+        _networkChangeDispatcherTimer.Stop();
 
         Log.Info("Network availability or address has changed!");
 
         // Reconfigure the DNS client if network changed - re-detects the Windows default DNS servers
         // and, if enabled, the auto-detected DNS suffix (both of which can differ on the new network).
-        Log.Info("Update DNS server configuration...");
-        ConfigureDNSServer();
+        // On the UI thread like after a change of the DNS settings, so both can't overlap (the last one wins).
+        try
+        {
+            Log.Info("Update DNS server configuration...");
+            ConfigureDNSServer();
+        }
+        catch (Exception ex)
+        {
+            Log.Error("Could not update the DNS server configuration after the network has changed.", ex);
+        }
+
+        // Check the network connection on the dashboard again
+        _dashboardView?.OnNetworkChanged(!_isInTray && WindowState != WindowState.Minimized);
 
         // Show status window on network change
         if (SettingsManager.Current.Status_ShowWindowOnNetworkChange)
-        {
-            await Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
-            {
-                OpenStatusWindow(true);
-            }));
-        }
-
-        _isNetworkChanging = false;
+            OpenStatusWindow(true);
     }
 
     #endregion

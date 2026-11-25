@@ -562,7 +562,8 @@ SemiBold (section headers), `MessageTextBlock` 16 gray (messages in empty areas)
 - Inputs: radius 4, focus border gray (`Gray5`), hover border `Brushes.Control.Border.MouseOver`.
 - Drop-downs: `ComboBoxPopupBehavior` (rounded popup with shadow), implicit `ComboBoxItem` style in `DefaultComboBox`.
 - Progress: `DefaultMetroProgressBar` (accent on a subtle track) and `ProgressRingSmall` / `Medium` / `Large`
-  (16 inline / 24 dialogs / 48 centered, `ProgressBarStyles.xaml`); scanner progress via `SmoothProgress.Value`.
+  (16 inline / 24 dialogs / 48 centered, `ProgressBarStyles.xaml`); scanner progress and countdowns (status window,
+  notifications) via `SmoothProgress.Value`.
 - Dialogs: `DefaultChildWindow` (own template, radius 8, shadow, overlay, zoom animation) for all dialogs.
 - Status values in lists (e.g. firewall action, TCP / neighbor state): `StatusDot` (8 px `Ellipse` in front of the text,
   `Tag` = `StatusLevel` None / Success / Warning / Error via a `*ToStatusLevelConverter`), text in the normal color.

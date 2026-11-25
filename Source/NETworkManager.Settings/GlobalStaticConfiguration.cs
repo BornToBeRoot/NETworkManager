@@ -139,6 +139,21 @@ public static class GlobalStaticConfiguration
     public static string Dashboard_PublicIPv6AddressAPI => "https://api6.ipify.org";
     public static bool Dashboard_CheckIPApiIPGeolocation => false;
     public static bool Dashboard_CheckIPApiDNSResolver => false;
+    public static bool Dashboard_ShowNetworkConnectionWidget => true;
+    public static bool Dashboard_ShowSpeedTestWidget => true;
+    public static bool Dashboard_ShowIPGeolocationWidget => true;
+    public static bool Dashboard_ShowDNSResolverWidget => true;
+
+    /// <summary>
+    ///     Minimum time between two network connection checks when switching back to the dashboard (the public IP address
+    ///     may have changed, but no requests on every switch). A refresh and a network change always check.
+    /// </summary>
+    public static TimeSpan Dashboard_RecheckInterval => TimeSpan.FromSeconds(60);
+
+    // Ping of the gateway and the public IP address
+    public static int Dashboard_PingTimeout => 2000;
+    public static int Dashboard_PingAttempts => 2;
+    public static int Dashboard_PingBuffer => 32;
 
     // Application: Network Interface
     public static ExportFileType NetworkInterface_ExportFileType => ExportFileType.Csv;
