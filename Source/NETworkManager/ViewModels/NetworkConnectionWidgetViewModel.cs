@@ -94,6 +94,22 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
     #endregion
 
     /// <summary>
+    /// Gets the time of the last check, <c>null</c> before the first one.
+    /// </summary>
+    public DateTime? LastCheckTime
+    {
+        get;
+        private set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
     /// Gets or sets a value indicating whether a check is currently running.
     /// </summary>
     public bool IsChecking
@@ -160,6 +176,8 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
                 // Takes at least the refresh interval, so the reload animation is visible and the check can't be
                 // spammed - the checks run at the same time
                 await TaskHelper.WithMinimumDurationAsync(RunTask, GlobalStaticConfiguration.ApplicationUIRefreshInterval);
+
+                LastCheckTime = DateTime.Now;
 
                 Log.Info("Network connection check completed.");
             } while (_recheckPending);

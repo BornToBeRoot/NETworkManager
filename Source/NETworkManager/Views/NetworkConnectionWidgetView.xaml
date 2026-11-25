@@ -8,6 +8,7 @@
              xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
+             xmlns:internalControls="clr-namespace:NETworkManager.Controls"
              xmlns:models="clr-namespace:NETworkManager.Models;assembly=NETworkManager.Models"
              xmlns:wpfHelpers="clr-namespace:NETworkManager.Utilities.WPF;assembly=NETworkManager.Utilities.WPF"
              mc:Ignorable="d"
@@ -251,6 +252,11 @@
                         <TextBlock Text="{x:Static localization:Strings.Internet}"
                                Style="{StaticResource ConnectionCheckCardTitle}" />
                     </StackPanel>
+                    <internalControls:RefreshStatusControl Grid.Column="1"
+                                                           LastRefreshTime="{Binding LastCheckTime}"
+                                                           IsRefreshing="{Binding IsChecking}"
+                                                           HorizontalAlignment="Right"
+                                                           Margin="10,0,10,0" />
                     <Button Grid.Column="2" Command="{Binding CheckCommand}"
                             Style="{StaticResource CleanButton}"
                             ToolTip="{x:Static localization:Strings.Refresh}"
