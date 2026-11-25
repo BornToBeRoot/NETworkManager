@@ -85,8 +85,9 @@ public partial class DashboardView
 
     private void CheckNetworkConnection()
     {
-        // Hidden: checked when it is shown (a changed setting marks the data as outdated)
-        if (!SettingsManager.Current.Dashboard_ShowNetworkConnectionWidget)
+        // Hidden or not created yet: checked when it is shown (a changed setting marks the data as outdated, the widget
+        // is created in OnViewVisible)
+        if (!SettingsManager.Current.Dashboard_ShowNetworkConnectionWidget || _networkConnectionWidgetView == null)
             return;
 
         _isOutdated = false;
