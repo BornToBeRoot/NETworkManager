@@ -2090,9 +2090,11 @@ Wann en Iech gefält, kënnt Dir d'Entwécklung ënnerstëtzen – mat engem St�
 URL: https://api.github.com/</value>
   </data>
   <data name="HelpMessage_CheckPublicIPAddress" xml:space="preserve">
-    <value>D'ëffentlech IP-Adress gëtt iwwer ipify.org ermëttelt.
+    <value>The public IP address is determined via ipify.org.
 
-URL: https://api.ipify.org an https://api6.ipify.org</value>
+URL: https://api.ipify.org and https://api6.ipify.org
+
+If disabled, the internet connection is only checked with a ping of the public IP address and the internet connectivity reported by Windows.</value>
   </data>
   <data name="Privacy" xml:space="preserve">
     <value>Privatsphär</value>
@@ -2183,7 +2185,7 @@ ass deaktivéiert!</value>
     <value>Benotzerdefinéiert IPv4-Adressen-API benotzen</value>
   </data>
   <data name="HelpMessage_CustomPublicIPv4AddressAPI" xml:space="preserve">
-    <value>URL zu engem Webdéngscht, deen iwwer http oder https erreechbar ass an eng IPv4-Adress, z. B. "xx.xx.xx.xx", als Äntwert zréckgëtt.</value>
+    <value>URL to a web service that can be reached via http or https and returns an IPv4 address e.g., "xx.xx.xx.xx" as response (plain text, or a JSON object with the address as a string value).</value>
   </data>
   <data name="CouldNotParsePublicIPAddressFromXXXMessage" xml:space="preserve">
     <value>Ëffentlech IP-Adress vu "{0}" konnt net geparst ginn! Probéiert en anere Déngscht oder benotzt d'Standardastellung...</value>
@@ -3091,10 +3093,10 @@ Aktivéiert d'Verschlësselung vun der Profildatei an Astellungen&gt;Profil fir 
     <value>Gitt eng gülteg IPv6-Adress an!</value>
   </data>
   <data name="HelpMessage_PublicIPv4Address" xml:space="preserve">
-    <value>Ëffentlech IPv4-Adress déi iwwer ICMP erreechbar ass.</value>
+    <value>Public IPv4 address that is pinged to check the internet connection. The route to it is used to detect the local IPv4 address (of the network adapter that is used for the internet).</value>
   </data>
   <data name="HelpMessage_PublicIPv6Address" xml:space="preserve">
-    <value>Ëffentlech IPv6-Adress déi iwwer ICMP erreechbar ass.</value>
+    <value>Public IPv6 address that is pinged to check the internet connection. The route to it is used to detect the local IPv6 address (of the network adapter that is used for the internet).</value>
   </data>
   <data name="PublicIPv4Address" xml:space="preserve">
     <value>Ëffentlech IPv4-Adress</value>
@@ -3325,7 +3327,7 @@ Wann d'Optioun erëm deaktivéiert gëtt, ginn d'Wäerter net méi geännert. D�
     <value>SNTP-Server</value>
   </data>
   <data name="HelpMessage_CustomPublicIPv6AddressAPI" xml:space="preserve">
-    <value>URL zu engem Webdéngscht, deen iwwer http oder https erreechbar ass an eng IPv6-Adress, z. B. "xxxx:xx:xxx::xx", als Äntwert zréckgëtt.</value>
+    <value>URL to a web service that can be reached via http or https and returns an IPv6 address e.g., "xxxx:xx:xxx::xx" as response (plain text, or a JSON object with the address as a string value).</value>
   </data>
   <data name="IPEndPoint" xml:space="preserve">
     <value>IP-Endpunkt</value>
@@ -5698,5 +5700,62 @@ Do you want to start the scan?</value>
   </data>
   <data name="SearchingNetworkAdaptersDots" xml:space="preserve">
     <value>Searching for network adapters...</value>
+  </data>
+  <data name="ConnectionCheckReason_NoIPv4Address" xml:space="preserve">
+    <value>No IPv4 address.</value>
+  </data>
+  <data name="ConnectionCheckReason_IPv4LinkLocal" xml:space="preserve">
+    <value>Link-local address (169.254.x.x): the network adapter did not get an IPv4 address from a DHCP server.</value>
+  </data>
+  <data name="ConnectionCheckReason_NoRoute" xml:space="preserve">
+    <value>No route to the internet (no default gateway). The address of the first active network adapter is shown.</value>
+  </data>
+  <data name="ConnectionCheckReason_IPv6NotAvailable" xml:space="preserve">
+    <value>No IPv6 connection. The network or the internet provider may not support IPv6.</value>
+  </data>
+  <data name="ConnectionCheckReason_NoIPAddressToResolve" xml:space="preserve">
+    <value>No IP address to resolve.</value>
+  </data>
+  <data name="ConnectionCheckReason_PTRNotFound" xml:space="preserve">
+    <value>No DNS record (PTR) found for the IP address. Many networks don't have one, this is not an error.</value>
+  </data>
+  <data name="ConnectionCheckReason_DNSError" xml:space="preserve">
+    <value>The DNS server did not answer or returned an error.</value>
+  </data>
+  <data name="ConnectionCheckReason_NoGateway" xml:space="preserve">
+    <value>No default gateway found on the network adapter (e.g. a VPN connection without a gateway).</value>
+  </data>
+  <data name="ConnectionCheckReason_GatewayNoReply" xml:space="preserve">
+    <value>The gateway did not reply to the ping. It may be offline or block ICMP.</value>
+  </data>
+  <data name="ConnectionCheckReason_PublicIPAddressPrivate" xml:space="preserve">
+    <value>The API returned a private IP address instead of the public one (e.g. the page of a hotspot / captive portal or a proxy).</value>
+  </data>
+  <data name="ConnectionCheckReason_PublicIPAddressRequestFailed" xml:space="preserve">
+    <value>The public IP address could not be requested from the API (no answer, an error or no IP address in the answer).</value>
+  </data>
+  <data name="ConnectionCheckReason_NameResolutionFailed" xml:space="preserve">
+    <value>The name of the public IP address API could not be resolved. Check the DNS server.</value>
+  </data>
+  <data name="ConnectionCheckReason_CaptivePortal" xml:space="preserve">
+    <value>Windows reports limited internet access (e.g. a hotspot / captive portal that requires a sign-in).</value>
+  </data>
+  <data name="ConnectionCheckReason_InternetAccessReportedByWindows" xml:space="preserve">
+    <value>No reply to the ping and no public IP address from the API, but Windows reports internet access. ICMP and the API may be blocked by a firewall or only reachable via a proxy.</value>
+  </data>
+  <data name="ConnectionCheckReason_InternetNotReachable" xml:space="preserve">
+    <value>The internet is not reachable (no reply to the ping of the public IP address and no answer from the public IP address API).</value>
+  </data>
+  <data name="ConnectionCheckReason_PublicIPAddressCheckDisabled" xml:space="preserve">
+    <value>The public IP address is not requested (disabled in the settings).</value>
+  </data>
+  <data name="CopyAll" xml:space="preserve">
+    <value>Copy all</value>
+  </data>
+  <data name="Widgets" xml:space="preserve">
+    <value>Widgets</value>
+  </data>
+  <data name="AllWidgetsAreHiddenMessage" xml:space="preserve">
+    <value>All widgets are hidden. You can show them in the settings of the dashboard.</value>
   </data>
 </root>
