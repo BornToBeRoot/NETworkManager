@@ -232,8 +232,9 @@ public partial class StatusWindow : INotifyPropertyChanged
 
     private void MetroWindow_Activated(object sender, EventArgs e)
     {
-        // The user clicked into the window that was opened on a network change: keep it open (like opened by the user)
-        if (_dispatcherTimerClose.IsEnabled)
+        // The user clicked into the window that was opened on a network change: keep it open (like opened by the user).
+        // ShowTime: the countdown is running or has just ended (the window is hidden after a short delay).
+        if (ShowTime)
             StopCloseTimer();
     }
 
