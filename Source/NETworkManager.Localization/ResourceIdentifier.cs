@@ -6,6 +6,7 @@ public enum ResourceIdentifier
     AccentGlowIntensity,
     AnimationMode,
     ApplicationName,
+    ConnectionCheckReason,
     LLDPCDPProtocol,
     IPStatus,
     PortState,

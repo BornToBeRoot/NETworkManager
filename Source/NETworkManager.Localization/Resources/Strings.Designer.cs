@@ -2612,6 +2612,42 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Link-local address (169.254.x.x): the network adapter did not get an IPv4 address from a DHCP server..
+        /// </summary>
+        public static string ConnectionCheckReason_IPv4LinkLocal {
+            get {
+                return ResourceManager.GetString("ConnectionCheckReason_IPv4LinkLocal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No IPv6 connection. The network or the internet provider may not support IPv6..
+        /// </summary>
+        public static string ConnectionCheckReason_IPv6NotAvailable {
+            get {
+                return ResourceManager.GetString("ConnectionCheckReason_IPv6NotAvailable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No IPv4 address..
+        /// </summary>
+        public static string ConnectionCheckReason_NoIPv4Address {
+            get {
+                return ResourceManager.GetString("ConnectionCheckReason_NoIPv4Address", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No route to the internet (no default gateway). The address of the first active network adapter is shown..
+        /// </summary>
+        public static string ConnectionCheckReason_NoRoute {
+            get {
+                return ResourceManager.GetString("ConnectionCheckReason_NoRoute", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Connections.
         /// </summary>
         public static string Connections {

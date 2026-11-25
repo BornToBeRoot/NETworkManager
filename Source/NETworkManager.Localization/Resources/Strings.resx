@@ -5699,4 +5699,16 @@ Do you want to start the scan?</value>
   <data name="SearchingNetworkAdaptersDots" xml:space="preserve">
     <value>Searching for network adapters...</value>
   </data>
+  <data name="ConnectionCheckReason_NoIPv4Address" xml:space="preserve">
+    <value>No IPv4 address.</value>
+  </data>
+  <data name="ConnectionCheckReason_IPv4LinkLocal" xml:space="preserve">
+    <value>Link-local address (169.254.x.x): the network adapter did not get an IPv4 address from a DHCP server.</value>
+  </data>
+  <data name="ConnectionCheckReason_NoRoute" xml:space="preserve">
+    <value>No route to the internet (no default gateway). The address of the first active network adapter is shown.</value>
+  </data>
+  <data name="ConnectionCheckReason_IPv6NotAvailable" xml:space="preserve">
+    <value>No IPv6 connection. The network or the internet provider may not support IPv6.</value>
+  </data>
 </root>

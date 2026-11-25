@@ -39,7 +39,8 @@
                                   IsActive="{Binding IsChecking}" />
                 <Rectangle Grid.Column="0" Width="16" Height="16"
                            Style="{Binding State, Converter={StaticResource ConnectionStateToRectangleStyleConverter}}"
-                           Visibility="{Binding IsChecking, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" />
+                           Visibility="{Binding IsChecking, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}"
+                           ToolTip="{Binding Message}" />
                 <TextBlock Grid.Column="2" Style="{StaticResource CenterTextBlock}"
                            Text="{Binding Tag, RelativeSource={RelativeSource AncestorType={x:Type ContentControl}}}" />
                 <TextBox Grid.Column="4" Style="{StaticResource ConnectionCheckValueTextBox}"
