@@ -58,7 +58,7 @@
                               Margin="0"
                               Minimum="0"
                               Maximum="{Binding TimeMax, Mode=OneWay}"
-                              Value="{Binding Time, Mode=OneWay}"
+                              networkManager:SmoothProgress.Value="{Binding Time, Mode=OneWay}"
                               Visibility="{Binding ShowTime, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}"
                               BorderThickness="0"
                               Padding="0" />

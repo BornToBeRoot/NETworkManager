@@ -155,18 +155,19 @@ public partial class StatusWindow : INotifyPropertyChanged
         // closes itself, see the close timer). Clicking into it stops the close timer (Activated).
         ShowActivated = !enableCloseTimer;
 
+        // Close the window after a certain time. Before Show(), so the countdown is part of the first layout (the
+        // window doesn't grow and move right after it was shown).
+        if (enableCloseTimer)
+            SetupCloseTimer();
+
         // Show the window
         Show();
 
         // Check the network connection
         Check();
 
-        // Close the window after a certain time
         if (enableCloseTimer)
-        {
-            SetupCloseTimer();
             return;
-        }
 
         // Opened by the user, cancel a running close timer (e.g. if the window was opened on a network change)
         StopCloseTimer();

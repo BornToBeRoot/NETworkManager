@@ -66,6 +66,14 @@ Release date: **xx.xx.2026**
 - The network connection shows the time of the last check ("Reloaded at ...") next to the refresh button, like other tools. [#PR](PRLINK)
 - New **Copy all** button in the network connection: copies all values with the reasons of the states as text, e.g. for a support request. [#PR](PRLINK)
 
+**Status window**
+
+- The countdown of the status window moves smoothly (like the progress of the IP Scanner) instead of in small steps, and the window no longer grows and moves right after it was opened on a network change. [#PR](PRLINK)
+
+**Notifications**
+
+- The countdown of the notifications (e.g. Ping Monitor, IP Scanner) moves smoothly, like the progress of the IP Scanner, instead of in small steps. [#PR](PRLINK)
+
 ## Bug Fixes
 
 **Tabs**
