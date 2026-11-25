@@ -555,11 +555,14 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
         var value = publicIPAddress?.IPAddress?.ToString() ??
                     (isPingSuccessful ? $"{pingInfo.IPAddress} ({pingInfo.Time} ms)" : "-/-");
 
-        item.Complete(value, NetworkConnectionCheck.GetInternetResult(addressFamily, isPingSuccessful,
-            publicIPAddress, connectivityLevelTask.Result), publicIPAddress?.IPAddress?.ToString() ??
-                                                            (isPingSuccessful ? pingInfo.IPAddress.ToString() : null));
+        // Public IP address for the other tools (e.g. RDAP, IP geolocation), not a private one (e.g. a captive portal)
+        var publicIP = publicIPAddress is { Status: PublicIPAddressCheckStatus.Success } ? publicIPAddress.IPAddress : null;
 
-        return publicIPAddress is { Status: PublicIPAddressCheckStatus.Success } ? publicIPAddress.IPAddress : null;
+        item.Complete(value, NetworkConnectionCheck.GetInternetResult(addressFamily, isPingSuccessful,
+                publicIPAddress, connectivityLevelTask.Result),
+            publicIP?.ToString() ?? (isPingSuccessful ? pingInfo.IPAddress.ToString() : null));
+
+        return publicIP;
     }
 
     /// <summary>
