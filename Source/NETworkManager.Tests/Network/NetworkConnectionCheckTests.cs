@@ -1,6 +1,7 @@
 using System.Net;
 using System.Net.Sockets;
 using NETworkManager.Models.Network;
+using NETworkManager.Utilities;
 using Xunit;
 
 namespace NETworkManager.Tests.Network;
@@ -37,5 +38,64 @@ public class NetworkConnectionCheckTests
     {
         Assert.Equal(new ConnectionCheckResult(state, reason),
             NetworkConnectionCheck.GetLocalIPAddressResult(Ip(ipAddress), AddressFamily.InterNetworkV6, isRouted));
+    }
+
+    private static DNSClientResultString Resolved(string hostname) => new(hostname, "192.168.1.1:53");
+
+    private static DNSClientResultString NotFound() => new(true, "Non-Existent Domain", "192.168.1.1:53")
+        { IsNotFound = true };
+
+    private static DNSClientResultString Error() => new(true, "Timeout");
+
+    [Fact]
+    public void ShouldResolveIPv6()
+    {
+        Assert.True(NetworkConnectionCheck.ShouldResolveIPv6(null));
+        Assert.True(NetworkConnectionCheck.ShouldResolveIPv6(NotFound()));
+        Assert.False(NetworkConnectionCheck.ShouldResolveIPv6(Resolved("pc.example.com")));
+        // The same DNS server would time out again
+        Assert.False(NetworkConnectionCheck.ShouldResolveIPv6(Error()));
+    }
+
+    [Fact]
+    public void GetDNSResult_ResolvedIPv4()
+    {
+        var (result, hostname) = NetworkConnectionCheck.GetDNSResult(Resolved("pc.example.com"), null);
+
+        Assert.Equal(new ConnectionCheckResult(ConnectionState.OK), result);
+        Assert.Equal("pc.example.com", hostname);
+    }
+
+    [Fact]
+    public void GetDNSResult_ResolvedIPv6AfterIPv4NotFound()
+    {
+        var (result, hostname) = NetworkConnectionCheck.GetDNSResult(NotFound(), Resolved("pc6.example.com"));
+
+        Assert.Equal(ConnectionState.OK, result.State);
+        Assert.Equal("pc6.example.com", hostname);
+    }
+
+    [Fact]
+    public void GetDNSResult_NotFoundWinsOverError()
+    {
+        // e.g. IPv4 has no PTR while IPv6 times out: no record, not a broken DNS setup
+        var (result, hostname) = NetworkConnectionCheck.GetDNSResult(NotFound(), Error());
+
+        Assert.Equal(new ConnectionCheckResult(ConnectionState.Info, ConnectionCheckReason.PTRNotFound), result);
+        Assert.Null(hostname);
+    }
+
+    [Fact]
+    public void GetDNSResult_Error()
+    {
+        Assert.Equal(new ConnectionCheckResult(ConnectionState.Critical, ConnectionCheckReason.DNSError),
+            NetworkConnectionCheck.GetDNSResult(Error(), null).Result);
+    }
+
+    [Fact]
+    public void GetDNSResult_NothingToResolve()
+    {
+        Assert.Equal(new ConnectionCheckResult(ConnectionState.Info, ConnectionCheckReason.NoIPAddressToResolve),
+            NetworkConnectionCheck.GetDNSResult(null, null).Result);
     }
 }

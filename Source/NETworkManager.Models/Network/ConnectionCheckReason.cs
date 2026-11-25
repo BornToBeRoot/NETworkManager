@@ -30,5 +30,20 @@ public enum ConnectionCheckReason
     /// <summary>
     ///     The computer has no routed IPv6 address (only link-local or none), e.g. the network doesn't support IPv6.
     /// </summary>
-    IPv6NotAvailable
+    IPv6NotAvailable,
+
+    /// <summary>
+    ///     There is no IP address to resolve the DNS name (PTR) for.
+    /// </summary>
+    NoIPAddressToResolve,
+
+    /// <summary>
+    ///     The DNS server answered, but there is no DNS record (PTR) for the IP address (common for private addresses).
+    /// </summary>
+    PTRNotFound,
+
+    /// <summary>
+    ///     The DNS server did not answer or returned an error.
+    /// </summary>
+    DNSError
 }

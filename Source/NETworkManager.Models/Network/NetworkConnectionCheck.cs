@@ -1,5 +1,6 @@
 using System.Net;
 using System.Net.Sockets;
+using NETworkManager.Utilities;
 
 namespace NETworkManager.Models.Network;
 
@@ -45,5 +46,40 @@ public static class NetworkConnectionCheck
         return isRouted
             ? new ConnectionCheckResult(ConnectionState.OK)
             : new ConnectionCheckResult(ConnectionState.Warning, ConnectionCheckReason.NoRoute);
+    }
+
+    /// <summary>
+    ///     Decides whether the DNS name (PTR) is also resolved for the IPv6 address: if the IPv4 address was not resolved
+    ///     or has no record. Not after a DNS server error, the same server would fail again (and the timeout doubles).
+    /// </summary>
+    /// <param name="ipv4Result">Result of the IPv4 lookup, or <c>null</c> if there was no IPv4 address.</param>
+    /// <returns><see langword="true" /> if the IPv6 address should be resolved.</returns>
+    public static bool ShouldResolveIPv6(DNSClientResultString ipv4Result)
+    {
+        return ipv4Result is null or { HasError: true, IsNotFound: true };
+    }
+
+    /// <summary>
+    ///     State of the DNS name (PTR) of the IPv4 / IPv6 address: a resolved name of either address is OK. Otherwise a
+    ///     clean "not found" of either address is info (many networks have no reverse DNS), not a broken DNS setup.
+    /// </summary>
+    /// <param name="ipv4Result">Result of the IPv4 lookup, or <c>null</c> if not resolved.</param>
+    /// <param name="ipv6Result">Result of the IPv6 lookup, or <c>null</c> if not resolved.</param>
+    /// <returns>State and reason, and the resolved name (<c>null</c> if none).</returns>
+    public static (ConnectionCheckResult Result, string Hostname) GetDNSResult(DNSClientResultString ipv4Result,
+        DNSClientResultString ipv6Result)
+    {
+        if (ipv4Result == null && ipv6Result == null)
+            return (new ConnectionCheckResult(ConnectionState.Info, ConnectionCheckReason.NoIPAddressToResolve), null);
+
+        var resolved = ipv4Result is { HasError: false } ? ipv4Result :
+            ipv6Result is { HasError: false } ? ipv6Result : null;
+
+        if (resolved != null)
+            return (new ConnectionCheckResult(ConnectionState.OK), resolved.Value);
+
+        return ipv4Result is { IsNotFound: true } || ipv6Result is { IsNotFound: true }
+            ? (new ConnectionCheckResult(ConnectionState.Info, ConnectionCheckReason.PTRNotFound), null)
+            : (new ConnectionCheckResult(ConnectionState.Critical, ConnectionCheckReason.DNSError), null);
     }
 }

@@ -12,14 +12,14 @@ The **Dashboard** shows the status of your computer's current network connection
 
 ## Network connection
 
-The **Network connection** widget (also shown in the status window) checks the connection of the computer, the gateway / router and the internet, each for IPv4, IPv6 and DNS. The icon in front of each value shows the result, hover over it to see the reason:
+The **Network connection** widget (also shown in the status window) checks the connection of the computer, the gateway / router and the internet, each for IPv4, IPv6 and DNS. The icon in front of each value shows the result, hover over it to see the reason. **DNS** is the DNS name (PTR record) of the IPv4 address, or of the IPv6 address if the IPv4 address has none:
 
 | Icon | Meaning |
 |------|---------|
 | Green | OK |
 | Yellow | Works partly or may not work, e.g. the computer has only a link-local IPv4 address (`169.254.x.x`, no address from a DHCP server) or no route to the internet (the address of the first active network adapter is shown) |
-| Red | Failed, e.g. the computer has no IPv4 address |
-| Gray | Information, e.g. no IPv6 connection: the network or the internet provider may not support IPv6 (the IPv6 checks of the router and the internet are skipped) |
+| Red | Failed, e.g. the computer has no IPv4 address or the DNS server did not answer |
+| Gray | Information, e.g. no IPv6 connection: the network or the internet provider may not support IPv6 (the IPv6 checks of the router and the internet are skipped), or no DNS name (PTR record) for the IP address, which many networks don't have |
 
 ### Keyboard shortcuts
 

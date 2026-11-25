@@ -5711,4 +5711,13 @@ Do you want to start the scan?</value>
   <data name="ConnectionCheckReason_IPv6NotAvailable" xml:space="preserve">
     <value>No IPv6 connection. The network or the internet provider may not support IPv6.</value>
   </data>
+  <data name="ConnectionCheckReason_NoIPAddressToResolve" xml:space="preserve">
+    <value>No IP address to resolve.</value>
+  </data>
+  <data name="ConnectionCheckReason_PTRNotFound" xml:space="preserve">
+    <value>No DNS record (PTR) found for the IP address. Many networks don't have one, this is not an error.</value>
+  </data>
+  <data name="ConnectionCheckReason_DNSError" xml:space="preserve">
+    <value>The DNS server did not answer or returned an error.</value>
+  </data>
 </root>

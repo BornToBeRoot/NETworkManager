@@ -2612,6 +2612,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The DNS server did not answer or returned an error..
+        /// </summary>
+        public static string ConnectionCheckReason_DNSError {
+            get {
+                return ResourceManager.GetString("ConnectionCheckReason_DNSError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Link-local address (169.254.x.x): the network adapter did not get an IPv4 address from a DHCP server..
         /// </summary>
         public static string ConnectionCheckReason_IPv4LinkLocal {
@@ -2630,6 +2639,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No IP address to resolve..
+        /// </summary>
+        public static string ConnectionCheckReason_NoIPAddressToResolve {
+            get {
+                return ResourceManager.GetString("ConnectionCheckReason_NoIPAddressToResolve", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No IPv4 address..
         /// </summary>
         public static string ConnectionCheckReason_NoIPv4Address {
@@ -2644,6 +2662,15 @@ namespace NETworkManager.Localization.Resources {
         public static string ConnectionCheckReason_NoRoute {
             get {
                 return ResourceManager.GetString("ConnectionCheckReason_NoRoute", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No DNS record (PTR) found for the IP address. Many networks don&apos;t have one, this is not an error..
+        /// </summary>
+        public static string ConnectionCheckReason_PTRNotFound {
+            get {
+                return ResourceManager.GetString("ConnectionCheckReason_PTRNotFound", resourceCulture);
             }
         }
         

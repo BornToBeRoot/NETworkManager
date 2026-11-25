@@ -306,13 +306,9 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
     }
 
     /// <summary>
-    /// Resolves the DNS (PTR) name for an address item, trying IPv4 first and falling back to IPv6.
+    /// Resolves the DNS (PTR) name of the IPv4 address, and of the IPv6 address if needed (see
+    /// <see cref="NetworkConnectionCheck.ShouldResolveIPv6" /> / <see cref="NetworkConnectionCheck.GetDNSResult" />).
     /// </summary>
-    /// <remarks>
-    /// A PTR lookup that completes without a server error but simply has no record (e.g. most home
-    /// routers and many ISPs don't configure reverse DNS) is reported as <see cref="ConnectionState.Info"/>
-    /// rather than <see cref="ConnectionState.Critical"/> - it's not a sign of a broken DNS setup.
-    /// </remarks>
     private static async Task ResolveDnsAsync(ConnectionCheckItem dnsItem, IPAddress ipv4Address, IPAddress ipv6Address,
         string context)
     {
@@ -325,34 +321,17 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
             ipv4Result = await DNSClient.GetInstance().ResolvePtrAsync(ipv4Address);
         }
 
-        if (ipv4Result is not { HasError: false } && ipv6Address != null)
+        if (ipv6Address != null && NetworkConnectionCheck.ShouldResolveIPv6(ipv4Result))
         {
             Log.Debug($"{context} > {nameof(ResolveDnsAsync)} - Resolving DNS based on IPv6...");
             ipv6Result = await DNSClient.GetInstance().ResolvePtrAsync(ipv6Address);
         }
 
-        // Prefer a successful resolution from either family. If neither succeeded, a clean
-        // "not found" from either family still wins over a hard failure from the other - e.g.
-        // IPv4 has no PTR (NXDOMAIN) while IPv6 times out should show as "no record", not as a
-        // broken DNS setup.
-        var resolved = ipv4Result is { HasError: false } ? ipv4Result : ipv6Result is { HasError: false } ? ipv6Result : null;
-        var notFound = ipv4Result is { IsNotFound: true } || ipv6Result is { IsNotFound: true };
+        var (result, hostname) = NetworkConnectionCheck.GetDNSResult(ipv4Result, ipv6Result);
 
-        if (resolved != null)
-        {
-            Log.Debug($"{context} > {nameof(ResolveDnsAsync)} - DNS resolved: " + resolved.Value);
-            dnsItem.Complete(resolved.Value, ConnectionState.OK);
-        }
-        else if (notFound)
-        {
-            Log.Debug($"{context} > {nameof(ResolveDnsAsync)} - DNS not resolved (no record found).");
-            dnsItem.Complete("-/-", ConnectionState.Info);
-        }
-        else
-        {
-            Log.Debug($"{context} > {nameof(ResolveDnsAsync)} - DNS not resolved due to error. IPv4: {ipv4Result?.ErrorMessage ?? "n/a"} | IPv6: {ipv6Result?.ErrorMessage ?? "n/a"}");
-            dnsItem.Complete("-/-", ConnectionState.Critical);
-        }
+        Log.Debug($"{context} > {nameof(ResolveDnsAsync)} - {result.State} ({result.Reason}): {hostname}. IPv4: {ipv4Result?.ErrorMessage ?? "n/a"} | IPv6: {ipv6Result?.ErrorMessage ?? "n/a"}");
+
+        dnsItem.Complete(hostname ?? "-/-", result);
     }
 
     /// <summary>
