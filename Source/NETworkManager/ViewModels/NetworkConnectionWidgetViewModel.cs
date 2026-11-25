@@ -185,8 +185,10 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
         // Detect the local IPv4/IPv6 address once and share it between the Computer and Router
         // checks below, instead of each of them redetecting it independently (both used to
         // trigger their own, potentially PowerShell-backed, network interface lookup).
-        var localIPv4Task = DetectLocalIPv4Async();
-        var localIPv6Task = DetectLocalIPv6Async();
+        var localIPv4Task = DetectLocalIPAddressAsync(SettingsManager.Current.Dashboard_PublicIPv4Address,
+            AddressFamily.InterNetwork);
+        var localIPv6Task = DetectLocalIPAddressAsync(SettingsManager.Current.Dashboard_PublicIPv6Address,
+            AddressFamily.InterNetworkV6);
 
         await Task.WhenAll(localIPv4Task, localIPv6Task);
 
@@ -248,73 +250,32 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
     }
 
     /// <summary>
-    /// Detects the local IPv4 address, based on routing to the configured public IPv4 address, with
-    /// a fallback to detection based on the network interfaces.
+    /// Detects the local IP address, based on routing to the configured public IP address (setting), with a fallback
+    /// to detection based on the network interfaces.
     /// </summary>
-    private static async Task<IPAddress> DetectLocalIPv4Async()
+    /// <param name="remoteIPAddress">Public IPv4 or IPv6 address (setting) used to find the route.</param>
+    /// <param name="addressFamily">IPv4 or IPv6.</param>
+    /// <returns>Local IP address, or <c>null</c> if none was found.</returns>
+    private static async Task<IPAddress> DetectLocalIPAddressAsync(string remoteIPAddress, AddressFamily addressFamily)
     {
-        Log.Debug($"{nameof(DetectLocalIPv4Async)} - Detecting local IPv4 address...");
+        Log.Debug($"{nameof(DetectLocalIPAddressAsync)} - Detecting local {addressFamily} address...");
 
-        IPAddress remoteIPv4 = null;
+        IPAddress detected = null;
 
-        try
-        {
-            remoteIPv4 = IPAddress.Parse(SettingsManager.Current.Dashboard_PublicIPv4Address);
-        }
-        catch (Exception ex)
-        {
-            Log.Warn($"{nameof(DetectLocalIPv4Async)} - Invalid Dashboard_PublicIPv4Address setting, skipping routing based detection.", ex);
-        }
-
-        var detected = remoteIPv4 != null
-            ? await NetworkInterface.DetectLocalIPAddressBasedOnRoutingAsync(remoteIPv4)
-            : null;
+        if (IPAddress.TryParse(remoteIPAddress, out var remote) && remote.AddressFamily == addressFamily)
+            detected = await NetworkInterface.DetectLocalIPAddressBasedOnRoutingAsync(remote);
+        else
+            Log.Warn($"{nameof(DetectLocalIPAddressAsync)} - Invalid public {addressFamily} address \"{remoteIPAddress}\" in the settings, skipping routing based detection.");
 
         if (detected == null)
         {
-            Log.Debug($"{nameof(DetectLocalIPv4Async)} - Local IPv4 address detection via routing failed, trying network interfaces...");
-            detected = await NetworkInterface.DetectLocalIPAddressFromNetworkInterfaceAsync(AddressFamily.InterNetwork);
+            Log.Debug($"{nameof(DetectLocalIPAddressAsync)} - Local {addressFamily} address detection via routing failed, trying network interfaces...");
+            detected = await NetworkInterface.DetectLocalIPAddressFromNetworkInterfaceAsync(addressFamily);
         }
 
         Log.Debug(detected != null
-            ? $"{nameof(DetectLocalIPv4Async)} - Local IPv4 address detected: " + detected
-            : $"{nameof(DetectLocalIPv4Async)} - Local IPv4 address not detected.");
-
-        return detected;
-    }
-
-    /// <summary>
-    /// Detects the local IPv6 address, based on routing to the configured public IPv6 address, with
-    /// a fallback to detection based on the network interfaces.
-    /// </summary>
-    private static async Task<IPAddress> DetectLocalIPv6Async()
-    {
-        Log.Debug($"{nameof(DetectLocalIPv6Async)} - Detecting local IPv6 address...");
-
-        IPAddress remoteIPv6 = null;
-
-        try
-        {
-            remoteIPv6 = IPAddress.Parse(SettingsManager.Current.Dashboard_PublicIPv6Address);
-        }
-        catch (Exception ex)
-        {
-            Log.Warn($"{nameof(DetectLocalIPv6Async)} - Invalid Dashboard_PublicIPv6Address setting, skipping routing based detection.", ex);
-        }
-
-        var detected = remoteIPv6 != null
-            ? await NetworkInterface.DetectLocalIPAddressBasedOnRoutingAsync(remoteIPv6)
-            : null;
-
-        if (detected == null)
-        {
-            Log.Debug($"{nameof(DetectLocalIPv6Async)} - Local IPv6 address detection via routing failed, trying network interfaces...");
-            detected = await NetworkInterface.DetectLocalIPAddressFromNetworkInterfaceAsync(AddressFamily.InterNetworkV6);
-        }
-
-        Log.Debug(detected != null
-            ? $"{nameof(DetectLocalIPv6Async)} - Local IPv6 address detected: " + detected
-            : $"{nameof(DetectLocalIPv6Async)} - Local IPv6 address not detected.");
+            ? $"{nameof(DetectLocalIPAddressAsync)} - Local {addressFamily} address detected: {detected}"
+            : $"{nameof(DetectLocalIPAddressAsync)} - Local {addressFamily} address not detected.");
 
         return detected;
     }
