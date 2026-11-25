@@ -52,6 +52,7 @@ Release date: **xx.xx.2026**
 **Dashboard**
 
 - Switching back to the dashboard checks the network connection only if the last check is at least 60 seconds old (or the network / the dashboard settings changed), instead of on every switch between the tools. **F5** and the refresh button always check. [#PR](PRLINK)
+- The network connection check is faster (also at startup and in the status window): the local IP address and the gateway are read directly from the network adapters instead of querying all adapter details incl. PowerShell up to four times per check. This also speeds up the detection of the local IP address in the **IP Scanner** when no route is available. [#PR](PRLINK)
 
 ## Bug Fixes
 
@@ -130,6 +131,7 @@ Release date: **xx.xx.2026**
 - Fixed the network connection check getting stuck (all values loading until the next refresh) when the refresh was used several times while a check was running. A refresh during a check now repeats the check once it has finished. [#PR](PRLINK)
 - Fixed the network connection widget (dashboard and status window) not updating when **Check public IP address** was changed in the settings until the application was restarted: an old public IP address could be shown as current. [#PR](PRLINK)
 - Fixed the network connection not being checked again when the network changed while the dashboard was open (e.g. a cable unplugged or a VPN connected), although the documentation says so. If the dashboard is not open, it is checked when it is opened again. [#PR](PRLINK)
+- Fixed the gateway / router not being found (shown as failed although the internet works) for VPN connections whose adapter is not an Ethernet or Wi-Fi adapter (e.g. the Windows VPN client with IKEv2 / SSTP). A VPN adapter without a gateway is no longer shown with the gateway `0.0.0.0`. [#PR](PRLINK)
 
 **Status window**
 
