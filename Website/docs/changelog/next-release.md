@@ -126,6 +126,10 @@ Release date: **xx.xx.2026**
 - Fixed the network connection check getting stuck (all values loading until the next refresh) when the refresh was used several times while a check was running. A refresh during a check now repeats the check once it has finished. [#PR](PRLINK)
 - Fixed the network connection widget (dashboard and status window) not updating when **Check public IP address** was changed in the settings until the application was restarted: an old public IP address could be shown as current. [#PR](PRLINK)
 
+**Status window**
+
+- The status window now opens after a network change once the network has settled (5 seconds without further changes, e.g. after the DHCP address was assigned) instead of 5 seconds after the first change, so it no longer shows an intermediate state. An error while updating the DNS configuration after a network change no longer stops the detection of further network changes. [#PR](PRLINK)
+
 ## Dependencies, Refactoring & Documentation
 
 - Code cleanup & refactoring
