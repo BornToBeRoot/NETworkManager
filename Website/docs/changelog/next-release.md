@@ -58,6 +58,7 @@ Release date: **xx.xx.2026**
 - The gateway / router is now pinged (2 attempts, 2 seconds timeout) instead of only checking that a gateway is configured. No reply is shown as a warning (some routers block ICMP). A network adapter without a gateway (e.g. a VPN connection) is shown as a warning instead of failed if the internet is routed via it. [#PR](PRLINK)
 - The internet is now checked with a ping of the public IPv4 / IPv6 address (settings, `1.1.1.1` / `2606:4700:4700::1111`), the public IP address API and the internet connectivity reported by Windows. A hotspot / captive portal that requires a sign-in, a blocked public IP address API (e.g. a proxy) or blocked ICMP are shown as a warning instead of the internet being not reachable. With **Check public IP address** disabled, the internet is still checked (ping and Windows) instead of showing "Check is disabled!". [#PR](PRLINK)
 - The values of the network connection (dashboard and status window) can be opened in other tools via the context menu: Port Scanner, Ping Monitor, Traceroute and DNS Lookup, the gateway / router also in the Web Console, the public IP address also in RDAP and IP Geolocation. **Copy** copies the whole value. Opening a tool from the status window shows the main window. [#PR](PRLINK)
+- A value of the network connection that is cut off in a narrow window (e.g. a long IPv6 address or DNS name) is shown completely in the tooltip. [#PR](PRLINK)
 
 ## Bug Fixes
 

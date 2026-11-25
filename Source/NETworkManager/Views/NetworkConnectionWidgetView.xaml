@@ -22,6 +22,16 @@
         <Style x:Key="ConnectionCheckValueTextBox" TargetType="{x:Type TextBox}" BasedOn="{StaticResource TextBlockAsTextBox}">
             <Setter Property="TextWrapping" Value="NoWrap" />
             <Setter Property="FontFamily" Value="{StaticResource Fonts.Family.Mono}" />
+            <!-- The full value, e.g. a long IPv6 address or DNS name cut off in a narrow window -->
+            <Setter Property="ToolTip" Value="{Binding Value}" />
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Value}" Value="">
+                    <Setter Property="ToolTip" Value="{x:Null}" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Value}" Value="-/-">
+                    <Setter Property="ToolTip" Value="{x:Null}" />
+                </DataTrigger>
+            </Style.Triggers>
         </Style>
         <!-- One row of a card (e.g. Computer > IPv4): state (loading / icon), label (Tag of the ContentControl), value.
              The label column has the same width in all rows of a card (Grid.IsSharedSizeScope on the rows). -->
