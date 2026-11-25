@@ -129,6 +129,13 @@ public sealed partial class MainWindow : INotifyPropertyChanged
     /// </summary>
     private readonly DispatcherTimer _networkChangeDispatcherTimer = new();
 
+    /// <summary>
+    ///     First network change event since the last handled change. The timer is not restarted anymore after 3 times
+    ///     <see cref="GlobalStaticConfiguration.NetworkChangeDetectionDelay" />, so a network that keeps changing (e.g.
+    ///     flapping Wi-Fi, VPN reconnects) is still handled.
+    /// </summary>
+    private DateTime _firstNetworkChange;
+
     private readonly bool _isLoading;
     private bool _isProfileFilesLoading;
     private bool _isProfileFileUpdating;
@@ -1872,6 +1879,17 @@ public sealed partial class MainWindow : INotifyPropertyChanged
     {
         Dispatcher.InvokeAsync(() =>
         {
+            if (!_networkChangeDispatcherTimer.IsEnabled)
+            {
+                _firstNetworkChange = DateTime.Now;
+            }
+            else if (DateTime.Now - _firstNetworkChange >=
+                     TimeSpan.FromMilliseconds(GlobalStaticConfiguration.NetworkChangeDetectionDelay * 3))
+            {
+                // Waited long enough: let the running timer handle the change
+                return;
+            }
+
             _networkChangeDispatcherTimer.Stop();
             _networkChangeDispatcherTimer.Start();
         });
