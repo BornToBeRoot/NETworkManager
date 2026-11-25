@@ -19,6 +19,10 @@ Release date: **xx.xx.2026**
 
 ## Breaking Changes
 
+**Dashboard**
+
+- A custom public IP address API (**Settings > Dashboard**) must return the IP address as plain text or in a JSON object (e.g. `{"ip":"xx.xx.xx.xx"}`). An address inside other text or an HTML page (e.g. `checkip.dyndns.org`) is no longer used, because the page of a hotspot / captive portal could be shown as the public IP address. See the [examples](../application/dashboard.md#use-custom-ipv4-address-api). [#PR](PRLINK)
+
 ## What's new?
 
 **Network Interface**
