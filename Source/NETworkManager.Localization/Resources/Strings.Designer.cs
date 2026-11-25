@@ -6354,7 +6354,9 @@ namespace NETworkManager.Localization.Resources {
         /// <summary>
         ///   Looks up a localized string similar to The public IP address is determined via ipify.org.
         ///
-        ///URL: https://api.ipify.org and https://api6.ipify.org.
+        ///URL: https://api.ipify.org and https://api6.ipify.org
+        ///
+        ///If disabled, the internet connection is only checked with a ping of the public IP address and the internet connectivity reported by Windows..
         /// </summary>
         public static string HelpMessage_CheckPublicIPAddress {
             get {

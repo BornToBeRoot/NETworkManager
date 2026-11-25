@@ -2092,7 +2092,9 @@ URL: https://api.github.com/</value>
   <data name="HelpMessage_CheckPublicIPAddress" xml:space="preserve">
     <value>The public IP address is determined via ipify.org.
 
-URL: https://api.ipify.org and https://api6.ipify.org</value>
+URL: https://api.ipify.org and https://api6.ipify.org
+
+If disabled, the internet connection is only checked with a ping of the public IP address and the internet connectivity reported by Windows.</value>
   </data>
   <data name="Privacy" xml:space="preserve">
     <value>Privacy</value>
