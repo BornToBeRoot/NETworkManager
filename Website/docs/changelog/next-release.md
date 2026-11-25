@@ -134,6 +134,8 @@ Release date: **xx.xx.2026**
 **Status window**
 
 - The status window now opens after a network change once the network has settled (5 seconds without further changes, e.g. after the DHCP address was assigned) instead of 5 seconds after the first change, so it no longer shows an intermediate state. An error while updating the DNS configuration after a network change no longer stops the detection of further network changes. [#PR](PRLINK)
+- The status window that opens on a network change no longer takes the keyboard focus from the application you are working in. Clicking into it keeps it open (the countdown stops). [#PR](PRLINK)
+- Fixed the status window being hidden right after it was opened from the tray icon when the countdown of a previous network change had just ended. [#PR](PRLINK)
 
 ## Dependencies, Refactoring & Documentation
 

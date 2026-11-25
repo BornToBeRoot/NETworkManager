@@ -11,6 +11,7 @@
                  mc:Ignorable="d" d:DataContext="{d:DesignInstance networkManager:StatusWindow}"
                  TitleAlignment="Left"
                  Style="{DynamicResource ResourceKey=FrameWindow}"
+                 Activated="MetroWindow_Activated"
                  Deactivated="MetroWindow_Deactivated"                 
                  Topmost="True"
                  ShowInTaskbar="False"

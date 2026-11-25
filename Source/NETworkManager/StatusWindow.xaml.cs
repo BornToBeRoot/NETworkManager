@@ -54,6 +54,12 @@ public partial class StatusWindow : INotifyPropertyChanged
     private readonly DispatcherTimer _dispatcherTimerClose = new(DispatcherPriority.Render);
     private readonly Stopwatch _stopwatch = new();
 
+    /// <summary>
+    ///     Incremented whenever the close timer is started or stopped. The expired timer only hides the window if it is
+    ///     still the same run (the user may have opened the window again while the timer waited before hiding it).
+    /// </summary>
+    private int _closeTimerRun;
+
     private readonly MainWindow _mainWindow;
     private readonly NetworkConnectionWidgetView _networkConnectionView;
 
@@ -106,7 +112,7 @@ public partial class StatusWindow : INotifyPropertyChanged
 
     private void ShowMainWindowAction()
     {
-        Hide();
+        HideWindow();
 
         if (_mainWindow.ShowWindowCommand.CanExecute(null))
             _mainWindow.ShowWindowCommand.Execute(null);
@@ -116,7 +122,7 @@ public partial class StatusWindow : INotifyPropertyChanged
 
     private void CloseAction()
     {
-        Hide();
+        HideWindow();
     }
 
     #endregion
@@ -138,6 +144,10 @@ public partial class StatusWindow : INotifyPropertyChanged
         // height is only known after layout, so this is refined again in SizeChanged.
         UpdatePosition();
 
+        // Opened on a network change: don't take the focus from the application the user is working in (the window
+        // closes itself, see the close timer). Clicking into it stops the close timer (Activated).
+        ShowActivated = !enableCloseTimer;
+
         // Show the window
         Show();
 
@@ -152,9 +162,7 @@ public partial class StatusWindow : INotifyPropertyChanged
         }
 
         // Opened by the user, cancel a running close timer (e.g. if the window was opened on a network change)
-        _dispatcherTimerClose.Stop();
-        _stopwatch.Stop();
-        ShowTime = false;
+        StopCloseTimer();
 
         // Focus the window
         Activate();
@@ -179,6 +187,8 @@ public partial class StatusWindow : INotifyPropertyChanged
 
     private void SetupCloseTimer()
     {
+        _closeTimerRun++;
+
         TimeMax = SettingsManager.Current.Status_WindowCloseTime;
         Time = TimeMax;
 
@@ -187,20 +197,50 @@ public partial class StatusWindow : INotifyPropertyChanged
         _dispatcherTimerClose.Start();
     }
 
+    /// <summary>
+    ///     Stops the close timer (e.g. the window is opened by the user or hidden). A pending close of the expired timer
+    ///     is canceled, see <see cref="_closeTimerRun" />.
+    /// </summary>
+    private void StopCloseTimer()
+    {
+        _closeTimerRun++;
+
+        _dispatcherTimerClose.Stop();
+        _stopwatch.Stop();
+        ShowTime = false;
+    }
+
+    /// <summary>
+    ///     Hides the window and stops the close timer, so it doesn't keep running in the background.
+    /// </summary>
+    private void HideWindow()
+    {
+        StopCloseTimer();
+
+        Hide();
+    }
+
     #endregion
 
     #region Events
 
+    private void MetroWindow_Activated(object sender, EventArgs e)
+    {
+        // The user clicked into the window that was opened on a network change: keep it open (like opened by the user)
+        if (_dispatcherTimerClose.IsEnabled)
+            StopCloseTimer();
+    }
+
     private void MetroWindow_Deactivated(object sender, EventArgs e)
     {
-        Hide();
+        HideWindow();
     }
 
     private void MetroWindow_Closing(object sender, CancelEventArgs e)
     {
         e.Cancel = true;
 
-        Hide();
+        HideWindow();
     }
 
     private async void DispatcherTimerTime_Tick(object sender, EventArgs e)
@@ -216,11 +256,15 @@ public partial class StatusWindow : INotifyPropertyChanged
         _dispatcherTimerClose.Stop();
         _stopwatch.Stop();
 
+        var run = _closeTimerRun;
+
         await Task.Delay(250);
 
-        ShowTime = false;
+        // Opened again (by the user or another network change) in the meantime
+        if (run != _closeTimerRun)
+            return;
 
-        Hide();
+        HideWindow();
     }
 
     #endregion
