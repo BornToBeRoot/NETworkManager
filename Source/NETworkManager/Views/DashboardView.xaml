@@ -5,36 +5,33 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
+             xmlns:icons="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls"
              mc:Ignorable="d"
              d:DataContext="{d:DesignInstance viewModels:DashboardViewModel}">
     <TabControl Style="{StaticResource ResourceKey=DefaultTabControl}">
         <TabItem Header="{x:Static Member=localization:Strings.Dashboard }">
-            <ScrollViewer HorizontalScrollBarVisibility="Disabled" Margin="10">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="10" />
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="10" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="10" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="10" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="10" />
-                        <RowDefinition Height="*" />
-                    </Grid.RowDefinitions>
-                    <ContentControl x:Name="ContentControlNetworkConnection" Grid.Column="0" Grid.Row="0"
-                                    Grid.ColumnSpan="5" />
-                    <ContentControl x:Name="ContentControlSpeedTest" Grid.Column="0" Grid.Row="2"
-                                    Grid.ColumnSpan="5" />
-                    <ContentControl x:Name="ContentControlIPApiIPGeolocation" Grid.Column="0" Grid.Row="4"
-                                    Grid.ColumnSpan="3" />
-                    <ContentControl x:Name="ContentControlIPApiDNSResolver" Grid.Column="4" Grid.Row="4" />
-                </Grid>
+            <!-- Widgets one below the other, each with a bottom margin (hidden widgets leave no gap), see the
+                 settings Dashboard_Show*Widget -->
+            <ScrollViewer HorizontalScrollBarVisibility="Disabled" Margin="10,10,10,0">
+                <StackPanel>
+                    <ContentControl x:Name="ContentControlNetworkConnection" Margin="0,0,0,10" />
+                    <ContentControl x:Name="ContentControlSpeedTest" Margin="0,0,0,10" />
+                    <!-- IP geolocation (2/3) and DNS resolver (1/3), the remaining one spans the row -->
+                    <Grid x:Name="GridIPApi" Margin="0,0,0,10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="10" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="10" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <ContentControl x:Name="ContentControlIPApiIPGeolocation" Grid.Column="0" Grid.ColumnSpan="3" />
+                        <ContentControl x:Name="ContentControlIPApiDNSResolver" Grid.Column="4" />
+                    </Grid>
+                    <icons:EmptyStateMessage x:Name="EmptyStateMessageNoWidgets" Icon="LayoutDashboard"
+                                             Text="{x:Static localization:Strings.AllWidgetsAreHiddenMessage}"
+                                             Margin="0,0,0,10" />
+                </StackPanel>
             </ScrollViewer>
         </TabItem>
     </TabControl>

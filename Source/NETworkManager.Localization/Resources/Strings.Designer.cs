@@ -1006,6 +1006,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to All widgets are hidden. You can show them in the settings of the dashboard..
+        /// </summary>
+        public static string AllWidgetsAreHiddenMessage {
+            get {
+                return ResourceManager.GetString("AllWidgetsAreHiddenMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Always show icon in tray.
         /// </summary>
         public static string AlwaysShowIconInTray {
@@ -16283,6 +16292,15 @@ namespace NETworkManager.Localization.Resources {
         public static string WideSubnet {
             get {
                 return ResourceManager.GetString("WideSubnet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Widgets.
+        /// </summary>
+        public static string Widgets {
+            get {
+                return ResourceManager.GetString("Widgets", resourceCulture);
             }
         }
         

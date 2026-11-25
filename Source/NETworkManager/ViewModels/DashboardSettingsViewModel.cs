@@ -185,6 +185,82 @@ public class DashboardSettingsViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Gets or sets a value indicating whether the network connection widget is shown on the dashboard.
+    /// </summary>
+    public bool ShowNetworkConnectionWidget
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            if (!_isLoading)
+                SettingsManager.Current.Dashboard_ShowNetworkConnectionWidget = value;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
+    /// Gets or sets a value indicating whether the speed test widget is shown on the dashboard.
+    /// </summary>
+    public bool ShowSpeedTestWidget
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            if (!_isLoading)
+                SettingsManager.Current.Dashboard_ShowSpeedTestWidget = value;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
+    /// Gets or sets a value indicating whether the IP geolocation widget is shown on the dashboard.
+    /// </summary>
+    public bool ShowIPGeolocationWidget
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            if (!_isLoading)
+                SettingsManager.Current.Dashboard_ShowIPGeolocationWidget = value;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
+    /// Gets or sets a value indicating whether the DNS resolver widget is shown on the dashboard.
+    /// </summary>
+    public bool ShowDNSResolverWidget
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            if (!_isLoading)
+                SettingsManager.Current.Dashboard_ShowDNSResolverWidget = value;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
     #endregion
 
     #region Contructor, load settings
@@ -215,6 +291,10 @@ public class DashboardSettingsViewModel : ViewModelBase
         CustomPublicIPv6AddressAPI = SettingsManager.Current.Dashboard_CustomPublicIPv6AddressAPI;
         CheckIPApiIPGeolocationEnabled = SettingsManager.Current.Dashboard_CheckIPApiIPGeolocation;
         CheckIPApiDNSResolverEnabled = SettingsManager.Current.Dashboard_CheckIPApiDNSResolver;
+        ShowNetworkConnectionWidget = SettingsManager.Current.Dashboard_ShowNetworkConnectionWidget;
+        ShowSpeedTestWidget = SettingsManager.Current.Dashboard_ShowSpeedTestWidget;
+        ShowIPGeolocationWidget = SettingsManager.Current.Dashboard_ShowIPGeolocationWidget;
+        ShowDNSResolverWidget = SettingsManager.Current.Dashboard_ShowDNSResolverWidget;
     }
 
     #endregion

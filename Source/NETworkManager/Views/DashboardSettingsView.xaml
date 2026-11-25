@@ -156,7 +156,7 @@
                 </Rectangle.Resources>
             </Rectangle>
         </StackPanel>
-        <StackPanel Orientation="Horizontal">
+        <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
             <mah:ToggleSwitch IsOn="{Binding CheckIPApiDNSResolverEnabled}"
                               Header="{x:Static localization:Strings.CheckDNSResolver}" />
             <Rectangle Width="24" Height="24" VerticalAlignment="Top"
@@ -167,5 +167,14 @@
                 </Rectangle.Resources>
             </Rectangle>
         </StackPanel>
+        <TextBlock Text="{x:Static localization:Strings.Widgets}" Style="{StaticResource HeaderTextBlock}" />
+        <mah:ToggleSwitch Header="{x:Static localization:Strings.NetworkConnection}"
+                          IsOn="{Binding ShowNetworkConnectionWidget}" Margin="0,0,0,10" />
+        <mah:ToggleSwitch Header="{x:Static localization:Strings.SpeedTest}"
+                          IsOn="{Binding ShowSpeedTestWidget}" Margin="0,0,0,10" />
+        <mah:ToggleSwitch Header="{x:Static localization:Strings.IPGeolocation}"
+                          IsOn="{Binding ShowIPGeolocationWidget}" Margin="0,0,0,10" />
+        <mah:ToggleSwitch Header="{x:Static localization:Strings.DNSResolver}"
+                          IsOn="{Binding ShowDNSResolverWidget}" />
     </StackPanel>
 </UserControl>

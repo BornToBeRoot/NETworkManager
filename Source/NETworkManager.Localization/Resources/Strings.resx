@@ -5750,4 +5750,10 @@ Do you want to start the scan?</value>
   <data name="CopyAll" xml:space="preserve">
     <value>Copy all</value>
   </data>
+  <data name="Widgets" xml:space="preserve">
+    <value>Widgets</value>
+  </data>
+  <data name="AllWidgetsAreHiddenMessage" xml:space="preserve">
+    <value>All widgets are hidden. You can show them in the settings of the dashboard.</value>
+  </data>
 </root>

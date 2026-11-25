@@ -1063,6 +1063,58 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     } = GlobalStaticConfiguration.Dashboard_CheckIPApiDNSResolver;
 
+    public bool Dashboard_ShowNetworkConnectionWidget
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.Dashboard_ShowNetworkConnectionWidget;
+
+    public bool Dashboard_ShowSpeedTestWidget
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.Dashboard_ShowSpeedTestWidget;
+
+    public bool Dashboard_ShowIPGeolocationWidget
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.Dashboard_ShowIPGeolocationWidget;
+
+    public bool Dashboard_ShowDNSResolverWidget
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.Dashboard_ShowDNSResolverWidget;
+
     #endregion
 
     #region Network Interface

@@ -113,6 +113,14 @@ Enables or disables the detection of the DNS resolver in use via [`ip-api.com`](
 
 **Default:** `Enabled`
 
+### Widgets
+
+Show or hide the widgets on the dashboard: **Network connection**, **Speed Test**, **IP geolocation** and **DNS resolver**. A hidden widget doesn't check anything (e.g. no request is sent to `ip-api.com`). If one of IP geolocation and DNS resolver is hidden, the other one uses the whole width. The status window always shows the network connection.
+
+**Type:** `Boolean`
+
+**Default:** `Enabled` (all widgets)
+
 ## Speed Test
 
 The **Speed Test** widget measures the current connection's download and upload speed, latency, and jitter against [`speed.cloudflare.com`](https://speed.cloudflare.com/). The test is **user-initiated** — it does not run automatically on dashboard load. Click **Speed Test** to run a measurement.

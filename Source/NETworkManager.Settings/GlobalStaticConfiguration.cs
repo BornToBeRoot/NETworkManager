@@ -139,6 +139,10 @@ public static class GlobalStaticConfiguration
     public static string Dashboard_PublicIPv6AddressAPI => "https://api6.ipify.org";
     public static bool Dashboard_CheckIPApiIPGeolocation => false;
     public static bool Dashboard_CheckIPApiDNSResolver => false;
+    public static bool Dashboard_ShowNetworkConnectionWidget => true;
+    public static bool Dashboard_ShowSpeedTestWidget => true;
+    public static bool Dashboard_ShowIPGeolocationWidget => true;
+    public static bool Dashboard_ShowDNSResolverWidget => true;
 
     /// <summary>
     ///     Minimum time between two network connection checks when switching back to the dashboard (the public IP address
