@@ -103,7 +103,7 @@ The free API endpoint is limited to 45 requests per minute, supports only the `h
 
 **Type:** `Boolean`
 
-**Default:** `Enabled`
+**Default:** `Disabled`
 
 ### Check DNS resolver
 
@@ -111,7 +111,7 @@ Enables or disables the detection of the DNS resolver in use via [`ip-api.com`](
 
 **Type:** `Boolean`
 
-**Default:** `Enabled`
+**Default:** `Disabled`
 
 ### Widgets
 
