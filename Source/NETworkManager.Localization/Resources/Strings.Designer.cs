@@ -2855,6 +2855,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Copy all.
+        /// </summary>
+        public static string CopyAll {
+            get {
+                return ResourceManager.GetString("CopyAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Copy as....
         /// </summary>
         public static string CopyAsDots {

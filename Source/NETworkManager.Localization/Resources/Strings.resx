@@ -5747,4 +5747,7 @@ Do you want to start the scan?</value>
   <data name="ConnectionCheckReason_PublicIPAddressCheckDisabled" xml:space="preserve">
     <value>The public IP address is not requested (disabled in the settings).</value>
   </data>
+  <data name="CopyAll" xml:space="preserve">
+    <value>Copy all</value>
+  </data>
 </root>

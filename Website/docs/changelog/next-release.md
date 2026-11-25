@@ -60,6 +60,7 @@ Release date: **xx.xx.2026**
 - The values of the network connection (dashboard and status window) can be opened in other tools via the context menu: Port Scanner, Ping Monitor, Traceroute and DNS Lookup, the gateway / router also in the Web Console, the public IP address also in RDAP and IP Geolocation. **Copy** copies the whole value. Opening a tool from the status window shows the main window. [#PR](PRLINK)
 - A value of the network connection that is cut off in a narrow window (e.g. a long IPv6 address or DNS name) is shown completely in the tooltip. [#PR](PRLINK)
 - The network connection shows the time of the last check ("Reloaded at ...") next to the refresh button, like other tools. [#PR](PRLINK)
+- New **Copy all** button in the network connection: copies all values with the reasons of the states as text, e.g. for a support request. [#PR](PRLINK)
 
 ## Bug Fixes
 

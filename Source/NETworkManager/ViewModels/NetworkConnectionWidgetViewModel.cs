@@ -11,6 +11,8 @@ using System.Windows.Input;
 using log4net;
 using NetworkInterface = NETworkManager.Models.Network.NetworkInterface;
 using System.Net.Sockets;
+using System.Text;
+using NETworkManager.Localization.Resources;
 
 namespace NETworkManager.ViewModels;
 
@@ -133,6 +135,36 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
     /// Gets the command to check connections.
     /// </summary>
     public ICommand CheckCommand => new RelayCommand(_ => Check(), _ => !IsChecking);
+
+    /// <summary>
+    /// Gets the command to copy all values (with the reasons of the states), e.g. for a support request.
+    /// </summary>
+    public ICommand CopyAllCommand => new RelayCommand(_ => CopyAllAction(), _ => !IsChecking && LastCheckTime != null);
+
+    private void CopyAllAction()
+    {
+        var text = new StringBuilder();
+
+        foreach (var (title, ipv4, ipv6, dns) in new[]
+                 {
+                     (Strings.Computer, ComputerIPv4, ComputerIPv6, ComputerDNS),
+                     (Strings.GatewayRouter, RouterIPv4, RouterIPv6, RouterDNS),
+                     (Strings.Internet, InternetIPv4, InternetIPv6, InternetDNS)
+                 })
+        {
+            if (text.Length > 0)
+                text.AppendLine();
+
+            text.AppendLine(title);
+
+            foreach (var (label, item) in new[] { (Strings.IPv4, ipv4), (Strings.IPv6, ipv6), (Strings.DNS, dns) })
+                text.AppendLine(item.Message == null
+                    ? $"{label}: {item.Value}"
+                    : $"{label}: {item.Value} ({item.Message})");
+        }
+
+        ClipboardHelper.SetClipboard(text.ToString().TrimEnd());
+    }
 
     #endregion
 
