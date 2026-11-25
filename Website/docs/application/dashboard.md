@@ -75,9 +75,18 @@ Override the default IPv4 address API to resolve the public IP address. The API 
 
 **Example:**
 
-- [`api.ipify.org`](https://api.ipify.org/)
-- [`ip4.seeip.org`](https://ip4.seeip.org/)
-- [`api.my-ip.io/ip`](https://api.my-ip.io/ip)
+| API | Answer |
+|-----|--------|
+| [`https://api.ipify.org`](https://api.ipify.org/) | Plain text |
+| [`https://api.ipify.org?format=json`](https://api.ipify.org?format=json) | JSON `{"ip":"xx.xx.xx.xx"}` |
+| [`https://checkip.amazonaws.com`](https://checkip.amazonaws.com/) | Plain text |
+| [`https://ifconfig.co/ip`](https://ifconfig.co/ip) | Plain text |
+| [`https://ipinfo.io/ip`](https://ipinfo.io/ip) | Plain text |
+| [`https://ip4.seeip.org`](https://ip4.seeip.org/) | Plain text |
+| [`https://api.my-ip.io/ip`](https://api.my-ip.io/ip) | Plain text |
+| [`http://ip-api.com/line/?fields=query`](http://ip-api.com/line/?fields=query) | Plain text (`http` only, 45 requests per minute, non-commercial use only) |
+
+Many APIs also return JSON with more information (e.g. `https://ipinfo.io/json`, `https://ifconfig.co/json`, `http://ip-api.com/json`), the first string value that is an IP address is used. An API that returns `key=value` lines (e.g. `https://1.1.1.1/cdn-cgi/trace`) is not supported.
 
 ### Use custom IPv6 address API
 
@@ -89,7 +98,12 @@ Override the default IPv6 address API to resolve the public IP address. The API 
 
 **Example:**
 
-- [`api6.ipify.org`](https://api6.ipify.org/)
+| API | Answer |
+|-----|--------|
+| [`https://api6.ipify.org`](https://api6.ipify.org/) | Plain text |
+| [`https://api64.ipify.org?format=json`](https://api64.ipify.org?format=json) | JSON `{"ip":"xxxx:xx:xxx::xx"}` (IPv6 if available, otherwise IPv4 - then the answer is not accepted) |
+| [`https://ipv6.icanhazip.com`](https://ipv6.icanhazip.com/) | Plain text |
+| [`https://v6.ident.me`](https://v6.ident.me/) | Plain text |
 
 ### Check IP geolocation
 
