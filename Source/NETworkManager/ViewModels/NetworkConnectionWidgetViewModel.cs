@@ -2,6 +2,7 @@ using NETworkManager.Models.Network;
 using NETworkManager.Settings;
 using NETworkManager.Utilities;
 using System;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading;
@@ -217,6 +218,10 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
         catch (Exception ex)
         {
             Log.Error("Network connection check failed.", ex);
+
+            // Don't leave the remaining rows loading until the next check
+            foreach (var item in GetAllItems().Where(x => x.IsChecking))
+                item.Complete("-/-", ConnectionState.Critical);
         }
         finally
         {
@@ -238,9 +243,7 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
             return;
         }
 
-        // Detect the local IPv4/IPv6 address once and share it between the Computer and Router
-        // checks below, instead of each of them redetecting it independently (both used to
-        // trigger their own, potentially PowerShell-backed, network interface lookup).
+        // Detect the local IPv4/IPv6 address once and share it between the Computer, Router and Internet checks below
         var localIPv4Task = DetectLocalIPAddressAsync(SettingsManager.Current.Dashboard_PublicIPv4Address,
             AddressFamily.InterNetwork);
         var localIPv6Task = DetectLocalIPAddressAsync(SettingsManager.Current.Dashboard_PublicIPv6Address,
@@ -272,17 +275,20 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
     /// </summary>
     private void ResetAllItems()
     {
-        ComputerIPv4.Reset();
-        ComputerIPv6.Reset();
-        ComputerDNS.Reset();
+        foreach (var item in GetAllItems())
+            item.Reset();
+    }
 
-        RouterIPv4.Reset();
-        RouterIPv6.Reset();
-        RouterDNS.Reset();
-
-        InternetIPv4.Reset();
-        InternetIPv6.Reset();
-        InternetDNS.Reset();
+    /// <summary>
+    /// Gets all connection check items.
+    /// </summary>
+    private ConnectionCheckItem[] GetAllItems()
+    {
+        return
+        [
+            ComputerIPv4, ComputerIPv6, ComputerDNS, RouterIPv4, RouterIPv6, RouterDNS, InternetIPv4, InternetIPv6,
+            InternetDNS
+        ];
     }
 
     /// <summary>
