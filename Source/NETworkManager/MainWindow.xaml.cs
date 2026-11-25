@@ -1089,6 +1089,9 @@ public sealed partial class MainWindow : INotifyPropertyChanged
 
     private async void NavigationManager_ApplicationRequested(object sender, ApplicationRequest request)
     {
+        // Requested from another window (e.g. the status window): show the main window, also for the error message below
+        ShowWindow();
+
         // Clear the search, otherwise the application may be filtered out
         ApplicationSearch = string.Empty;
 
@@ -1104,9 +1107,6 @@ public sealed partial class MainWindow : INotifyPropertyChanged
 
             return;
         }
-
-        // Requested from another window (e.g. the status window): show the main window
-        ShowWindow();
 
         if (SettingsViewIsOpen)
             CloseSettings();
