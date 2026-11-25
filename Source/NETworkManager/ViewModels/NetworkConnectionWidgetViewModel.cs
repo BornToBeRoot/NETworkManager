@@ -88,11 +88,6 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
     #endregion
 
     /// <summary>
-    /// Gets a value indicating whether checking the public IP address is enabled.
-    /// </summary>
-    public bool CheckPublicIPAddressEnabled => SettingsManager.Current.Dashboard_CheckPublicIPAddress;
-
-    /// <summary>
     /// Gets or sets a value indicating whether a check is currently running.
     /// </summary>
     public bool IsChecking
@@ -223,7 +218,7 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
         RouterIPv6.Reset();
         RouterDNS.Reset();
 
-        if (!CheckPublicIPAddressEnabled)
+        if (!SettingsManager.Current.Dashboard_CheckPublicIPAddress)
             return;
 
         InternetIPv4.Reset();
@@ -244,7 +239,7 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
         RouterIPv6.Complete(ScreenshotData.RouterIPv6, ConnectionState.OK);
         RouterDNS.Complete(ScreenshotData.RouterDNS, ConnectionState.OK);
 
-        if (!CheckPublicIPAddressEnabled)
+        if (!SettingsManager.Current.Dashboard_CheckPublicIPAddress)
             return;
 
         InternetIPv4.Complete(ScreenshotData.InternetIPv4, ConnectionState.OK);
@@ -440,7 +435,7 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
         return Task.Run(async () =>
         {
             // If public IP address check is disabled
-            if (!CheckPublicIPAddressEnabled)
+            if (!SettingsManager.Current.Dashboard_CheckPublicIPAddress)
                 return;
 
             Log.Debug($"{nameof(CheckConnectionInternetAsync)} - Checking internet connection...");

@@ -124,6 +124,7 @@ Release date: **xx.xx.2026**
 **Dashboard**
 
 - Fixed the network connection check getting stuck (all values loading until the next refresh) when the refresh was used several times while a check was running. A refresh during a check now repeats the check once it has finished. [#PR](PRLINK)
+- Fixed the network connection widget (dashboard and status window) not updating when **Check public IP address** was changed in the settings until the application was restarted: an old public IP address could be shown as current. [#PR](PRLINK)
 
 ## Dependencies, Refactoring & Documentation
 
