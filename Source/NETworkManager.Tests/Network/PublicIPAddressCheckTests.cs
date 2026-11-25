@@ -110,6 +110,35 @@ public class PublicIPAddressCheckTests
         Assert.Equal(expected, PublicIPAddressCheck.GetStatus(IPAddress.Parse(ipAddress)));
     }
 
+    // Answer formats of public IP address APIs (examples in the documentation and other common ones), with
+    // documentation addresses. checkip.amazonaws.com: real answer (line break at the end).
+    [Theory]
+    [InlineData("api.ipify.org, ip4.seeip.org, api.my-ip.io/ip, ifconfig.me/ip", "203.0.113.10", AddressFamily.InterNetwork, "203.0.113.10")]
+    [InlineData("icanhazip.com, ifconfig.co/ip, ipinfo.io/ip, ident.me, checkip.amazonaws.com", "203.0.113.10\n", AddressFamily.InterNetwork, "203.0.113.10")]
+    [InlineData("ip-api.com/line/?fields=query", "203.0.113.10\n", AddressFamily.InterNetwork, "203.0.113.10")]
+    [InlineData("api.ipify.org?format=json, api.seeip.org/jsonip", "{\"ip\":\"203.0.113.10\"}", AddressFamily.InterNetwork, "203.0.113.10")]
+    [InlineData("api.my-ip.io/v2/ip.json", "{\"success\":true,\"ip\":\"203.0.113.10\",\"type\":\"IPv4\"}", AddressFamily.InterNetwork, "203.0.113.10")]
+    [InlineData("ip-api.com/json", "{\"status\":\"success\",\"country\":\"Germany\",\"countryCode\":\"DE\",\"region\":\"BE\",\"regionName\":\"Land Berlin\",\"city\":\"Berlin\",\"zip\":\"10115\",\"lat\":52.5,\"lon\":13.4,\"timezone\":\"Europe/Berlin\",\"isp\":\"Example ISP\",\"org\":\"\",\"as\":\"AS64496 Example\",\"query\":\"203.0.113.10\"}", AddressFamily.InterNetwork, "203.0.113.10")]
+    [InlineData("ipinfo.io/json", "{\n  \"ip\": \"203.0.113.10\",\n  \"hostname\": \"host.example.com\",\n  \"city\": \"Berlin\",\n  \"loc\": \"52.5244,13.4105\",\n  \"readme\": \"https://ipinfo.io/missingauth\"\n}", AddressFamily.InterNetwork, "203.0.113.10")]
+    [InlineData("ifconfig.co/json", "{\n  \"ip\": \"203.0.113.10\",\n  \"ip_decimal\": 3405803786,\n  \"country\": \"Germany\"\n}", AddressFamily.InterNetwork, "203.0.113.10")]
+    [InlineData("api6.ipify.org, v6.ident.me", "2001:db8:85a3::8a2e:370:7334", AddressFamily.InterNetworkV6, "2001:db8:85a3::8a2e:370:7334")]
+    [InlineData("ipv6.icanhazip.com", "2001:db8:85a3::8a2e:370:7334\n", AddressFamily.InterNetworkV6, "2001:db8:85a3::8a2e:370:7334")]
+    [InlineData("api64.ipify.org?format=json", "{\"ip\":\"2001:db8:85a3::8a2e:370:7334\"}", AddressFamily.InterNetworkV6, "2001:db8:85a3::8a2e:370:7334")]
+    [InlineData("api.my-ip.io/v2/ip.json (IPv6)", "{\"success\":true,\"ip\":\"2001:db8:85a3::8a2e:370:7334\",\"type\":\"IPv6\"}", AddressFamily.InterNetworkV6, "2001:db8:85a3::8a2e:370:7334")]
+    // A dual-stack API answering with IPv6 to the IPv4 request: no valid answer for IPv4
+    [InlineData("api64.ipify.org (IPv6 answer)", "2001:db8:85a3::8a2e:370:7334", AddressFamily.InterNetwork, null)]
+    // Cloudflare trace (key=value lines, h= is the host, not the client): not supported
+    [InlineData("1.1.1.1/cdn-cgi/trace", "fl=123f45\nh=1.1.1.1\nip=203.0.113.10\nts=1700000000.123\n", AddressFamily.InterNetwork, null)]
+    public void ParseResponse_KnownAPIs(string api, string content, AddressFamily addressFamily, string expected)
+    {
+        var result = PublicIPAddressCheck.ParseResponse(true, content, addressFamily);
+
+        Assert.True(expected == null
+                ? result.Status == PublicIPAddressCheckStatus.InvalidResponse
+                : result.Status == PublicIPAddressCheckStatus.Success && result.IPAddress.Equals(IPAddress.Parse(expected)),
+            $"{api}: {result.Status} {result.IPAddress}");
+    }
+
     [Fact]
     public void FromException_NameResolutionFailed()
     {
