@@ -14,9 +14,9 @@ public class PublicIPAddressCheckTests
     [InlineData("203.0.113.10", "203.0.113.10")]
     [InlineData("203.0.113.10\n", "203.0.113.10")]
     [InlineData("  203.0.113.10  ", "203.0.113.10")]
-    // Custom API with the address in a text / JSON
+    // Custom API with the address in a JSON object
     [InlineData("{\"ip\":\"203.0.113.10\"}", "203.0.113.10")]
-    [InlineData("Your IP: 203.0.113.10", "203.0.113.10")]
+    [InlineData("{ \"country\": \"DE\", \"ip\": \"203.0.113.10\" }", "203.0.113.10")]
     public void ParseResponse_IPv4_Success(string content, string expected)
     {
         var result = PublicIPAddressCheck.ParseResponse(true, content, AddressFamily.InterNetwork);
@@ -28,6 +28,7 @@ public class PublicIPAddressCheckTests
     [Theory]
     [InlineData("2001:db8:1234::10")]
     [InlineData("2001:db8:1234::10\n")]
+    [InlineData("{\"ip\":\"2001:db8:1234::10\"}")]
     public void ParseResponse_IPv6_Success(string content)
     {
         var result = PublicIPAddressCheck.ParseResponse(true, content, AddressFamily.InterNetworkV6);
@@ -37,9 +38,9 @@ public class PublicIPAddressCheckTests
     }
 
     [Theory]
-    // e.g. the page of a captive portal or a proxy
-    [InlineData("<html>Please sign in: http://192.168.1.1/login</html>", AddressFamily.InterNetwork)]
+    // e.g. the answer of a captive portal or a proxy
     [InlineData("10.1.0.1", AddressFamily.InterNetwork)]
+    [InlineData("{\"ip\":\"192.168.1.1\"}", AddressFamily.InterNetwork)]
     [InlineData("169.254.1.1", AddressFamily.InterNetwork)]
     [InlineData("127.0.0.1", AddressFamily.InterNetwork)]
     [InlineData("fd00::1", AddressFamily.InterNetworkV6)]
@@ -54,6 +55,12 @@ public class PublicIPAddressCheckTests
     [InlineData(true, "", AddressFamily.InterNetwork)]
     [InlineData(true, null, AddressFamily.InterNetwork)]
     [InlineData(true, "<html>Forbidden</html>", AddressFamily.InterNetwork)]
+    // HTML page of a captive portal with a link to its (public) login server
+    [InlineData(true, "<html><a href=\"http://203.0.113.5/login\">Sign in</a></html>", AddressFamily.InterNetwork)]
+    [InlineData(true, "<html>Sign in: http://192.168.1.1/login</html>", AddressFamily.InterNetwork)]
+    [InlineData(true, "Your IP: 203.0.113.10", AddressFamily.InterNetwork)]
+    // JSON without an address of the family
+    [InlineData(true, "{\"ip\":\"2001:db8::10\"}", AddressFamily.InterNetwork)]
     // Address of the other address family
     [InlineData(true, "2001:db8::10", AddressFamily.InterNetwork)]
     [InlineData(true, "203.0.113.10", AddressFamily.InterNetworkV6)]

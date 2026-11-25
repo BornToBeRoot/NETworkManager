@@ -6392,7 +6392,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to URL to a web service that can be reached via http or https and returns an IPv4 address e.g., &quot;xx.xx.xx.xx&quot; as response..
+        ///   Looks up a localized string similar to URL to a web service that can be reached via http or https and returns an IPv4 address e.g., &quot;xx.xx.xx.xx&quot; as response (plain text, or a JSON object with the address as a string value)..
         /// </summary>
         public static string HelpMessage_CustomPublicIPv4AddressAPI {
             get {
@@ -6401,7 +6401,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to URL to a web service that can be reached via http or https and returns an IPv6 address e.g., &quot;xxxx:xx:xxx::xx&quot; as response..
+        ///   Looks up a localized string similar to URL to a web service that can be reached via http or https and returns an IPv6 address e.g., &quot;xxxx:xx:xxx::xx&quot; as response (plain text, or a JSON object with the address as a string value)..
         /// </summary>
         public static string HelpMessage_CustomPublicIPv6AddressAPI {
             get {

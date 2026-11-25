@@ -67,7 +67,7 @@ Enables or disables the resolution of the public IP address via [`api.ipify.org`
 
 ### Use custom IPv4 address API
 
-Override the default IPv4 address API to resolve the public IP address. The API should return only a plain text IPv4 address like `xx.xx.xx.xx`.
+Override the default IPv4 address API to resolve the public IP address. The API should return only a plain text IPv4 address like `xx.xx.xx.xx`, or a JSON object with the address as a string value like `{"ip":"xx.xx.xx.xx"}`. Other answers (e.g. an HTML page) are not accepted.
 
 **Type:** `Boolean | String`
 
@@ -81,7 +81,7 @@ Override the default IPv4 address API to resolve the public IP address. The API 
 
 ### Use custom IPv6 address API
 
-Override the default IPv6 address API to resolve the public IP address. The API should return only a plain text IPv6 address like `xxxx:xx:xxx::xx`.
+Override the default IPv6 address API to resolve the public IP address. The API should return only a plain text IPv6 address like `xxxx:xx:xxx::xx`, or a JSON object with the address as a string value like `{"ip":"xxxx:xx:xxx::xx"}`. Other answers (e.g. an HTML page) are not accepted.
 
 **Type:** `Boolean | String`
 

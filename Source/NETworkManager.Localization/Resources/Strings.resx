@@ -2185,7 +2185,7 @@ is disabled!</value>
     <value>Use custom IPv4 address API</value>
   </data>
   <data name="HelpMessage_CustomPublicIPv4AddressAPI" xml:space="preserve">
-    <value>URL to a web service that can be reached via http or https and returns an IPv4 address e.g., "xx.xx.xx.xx" as response.</value>
+    <value>URL to a web service that can be reached via http or https and returns an IPv4 address e.g., "xx.xx.xx.xx" as response (plain text, or a JSON object with the address as a string value).</value>
   </data>
   <data name="CouldNotParsePublicIPAddressFromXXXMessage" xml:space="preserve">
     <value>Could not parse public ip address from "{0}"! Try another service or use the default... </value>
@@ -3327,7 +3327,7 @@ If the option is disabled again, the values are no longer modified. However, the
     <value>SNTP server(s)</value>
   </data>
   <data name="HelpMessage_CustomPublicIPv6AddressAPI" xml:space="preserve">
-    <value>URL to a web service that can be reached via http or https and returns an IPv6 address e.g., "xxxx:xx:xxx::xx" as response.</value>
+    <value>URL to a web service that can be reached via http or https and returns an IPv6 address e.g., "xxxx:xx:xxx::xx" as response (plain text, or a JSON object with the address as a string value).</value>
   </data>
   <data name="IPEndPoint" xml:space="preserve">
     <value>IP endpoint</value>

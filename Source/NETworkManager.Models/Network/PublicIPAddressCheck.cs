@@ -48,11 +48,12 @@ public sealed record PublicIPAddressCheckResult(PublicIPAddressCheckStatus Statu
 /// <summary>
 ///     Evaluates the answer of a public IP address API.
 /// </summary>
-public static class PublicIPAddressCheck
+public static partial class PublicIPAddressCheck
 {
     /// <summary>
-    ///     Parses the answer of the API. The answer should be the IP address as plain text; for custom APIs the first IP
-    ///     address of the address family in the text is used (e.g. in a JSON object).
+    ///     Parses the answer of the API: the IP address as plain text, or (custom APIs) the first string value of a JSON
+    ///     object that is an IP address of the address family (e.g. <c>{"ip":"203.0.113.10"}</c>). Other text (e.g. the
+    ///     HTML page of a captive portal with a link to an IP address) is no valid answer.
     /// </summary>
     /// <param name="isSuccessStatusCode">The HTTP status code is 2xx.</param>
     /// <param name="content">Content of the answer.</param>
@@ -66,15 +67,9 @@ public static class PublicIPAddressCheck
 
         var text = content?.Trim() ?? string.Empty;
 
-        if (!TryParseIPAddress(text, addressFamily, out var ipAddress))
-        {
-            var match = addressFamily == AddressFamily.InterNetwork
-                ? RegexHelper.IPv4AddressExtractRegex().Match(text)
-                : Regex.Match(text, RegexHelper.IPv6AddressRegex);
-
-            if (!match.Success || !TryParseIPAddress(match.Value, addressFamily, out ipAddress))
-                return new PublicIPAddressCheckResult(PublicIPAddressCheckStatus.InvalidResponse);
-        }
+        if (!TryParseIPAddress(text, addressFamily, out var ipAddress) &&
+            !TryParseJsonStringValue(text, addressFamily, out ipAddress))
+            return new PublicIPAddressCheckResult(PublicIPAddressCheckStatus.InvalidResponse);
 
         return GetStatus(ipAddress) switch
         {
@@ -83,6 +78,35 @@ public static class PublicIPAddressCheck
             var status => new PublicIPAddressCheckResult(status, ipAddress)
         };
     }
+
+    /// <summary>
+    ///     Gets the first string value of a JSON object (<c>"..."</c>) that is an IP address of the address family.
+    /// </summary>
+    /// <param name="text">Answer of the API.</param>
+    /// <param name="addressFamily">IPv4 or IPv6.</param>
+    /// <param name="ipAddress">Parsed IP address.</param>
+    /// <returns><see langword="true" /> if an IP address was found.</returns>
+    private static bool TryParseJsonStringValue(string text, AddressFamily addressFamily, out IPAddress ipAddress)
+    {
+        ipAddress = null;
+
+        if (!text.StartsWith('{'))
+            return false;
+
+        foreach (Match match in JsonStringRegex().Matches(text))
+        {
+            if (TryParseIPAddress(match.Groups[1].Value, addressFamily, out ipAddress))
+                return true;
+        }
+
+        return false;
+    }
+
+    /// <summary>
+    ///     A short JSON string without whitespace, e.g. <c>"203.0.113.10"</c> (the value without the quotes in group 1).
+    /// </summary>
+    [GeneratedRegex("\"([^\"\\s]{2,45})\"")]
+    private static partial Regex JsonStringRegex();
 
     /// <summary>
     ///     Parses an IP address in its normal notation only: IPv4 as four decimal numbers (<see cref="IPAddress.TryParse(string, out IPAddress)" />
