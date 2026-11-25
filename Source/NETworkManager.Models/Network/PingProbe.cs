@@ -7,9 +7,10 @@ using System.Threading.Tasks;
 namespace NETworkManager.Models.Network;
 
 /// <summary>
-///     Provides a shared ICMP echo (ping) probe used by <see cref="IPScanner" /> and <see cref="PortScanner" />.
+///     Provides a shared ICMP echo (ping) probe used by <see cref="IPScanner" />, <see cref="PortScanner" /> and the
+///     network connection check (dashboard).
 /// </summary>
-internal static class PingProbe
+public static class PingProbe
 {
     /// <summary>
     ///     Pings the host. Another echo request is only sent if the previous one timed out (e.g. a lost packet),

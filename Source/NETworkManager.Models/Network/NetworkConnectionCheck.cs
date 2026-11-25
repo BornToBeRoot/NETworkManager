@@ -82,4 +82,24 @@ public static class NetworkConnectionCheck
             ? (new ConnectionCheckResult(ConnectionState.Info, ConnectionCheckReason.PTRNotFound), null)
             : (new ConnectionCheckResult(ConnectionState.Critical, ConnectionCheckReason.DNSError), null);
     }
+
+    /// <summary>
+    ///     State of the gateway (router): found and replies to the ping → OK; no reply → warning (some routers block
+    ///     ICMP). Not found → warning if the local IP address is routed anyway (e.g. a VPN adapter without a gateway),
+    ///     otherwise critical.
+    /// </summary>
+    /// <param name="gateway">Gateway, or <c>null</c> if none was found.</param>
+    /// <param name="isRouted">The local IP address was detected via the route to the public IP address.</param>
+    /// <param name="isReachable">The gateway replied to the ping.</param>
+    /// <returns>State and reason.</returns>
+    public static ConnectionCheckResult GetGatewayResult(IPAddress gateway, bool isRouted, bool isReachable)
+    {
+        if (gateway == null)
+            return new ConnectionCheckResult(isRouted ? ConnectionState.Warning : ConnectionState.Critical,
+                ConnectionCheckReason.NoGateway);
+
+        return isReachable
+            ? new ConnectionCheckResult(ConnectionState.OK)
+            : new ConnectionCheckResult(ConnectionState.Warning, ConnectionCheckReason.GatewayNoReply);
+    }
 }

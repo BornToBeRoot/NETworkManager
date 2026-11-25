@@ -146,6 +146,11 @@ public static class GlobalStaticConfiguration
     /// </summary>
     public static TimeSpan Dashboard_RecheckInterval => TimeSpan.FromSeconds(60);
 
+    // Ping of the gateway and the public IP address (same defaults as the IP Scanner / Port Scanner)
+    public static int Dashboard_PingTimeout => 2000;
+    public static int Dashboard_PingAttempts => 2;
+    public static int Dashboard_PingBuffer => 32;
+
     // Application: Network Interface
     public static ExportFileType NetworkInterface_ExportFileType => ExportFileType.Csv;
     public static int NetworkInterface_BandwidthChartTime => 60;

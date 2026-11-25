@@ -5,6 +5,8 @@ using System;
 using System.Net;
 using System.Net.Http;
 using System.Text.RegularExpressions;
+using System.Threading;
+using System.Net.NetworkInformation;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using log4net;
@@ -29,6 +31,11 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
     /// Shared, timeout-bound HTTP client used to detect the public IPv4/IPv6 address.
     /// </summary>
     private static readonly HttpClient PublicIPHttpClient = new() { Timeout = TimeSpan.FromSeconds(10) };
+
+    /// <summary>
+    /// Data sent with the ping of the gateway and the public IP address.
+    /// </summary>
+    private static readonly byte[] PingBuffer = new byte[GlobalStaticConfiguration.Dashboard_PingBuffer];
 
     #region Computer
 
@@ -206,7 +213,7 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
 
         await Task.WhenAll(
             CheckConnectionComputerDnsAsync(localIPv4, isIPv6Available ? localIPv6 : null),
-            CheckConnectionRouterAsync(localIPv4, isIPv6Available ? localIPv6 : null),
+            CheckConnectionRouterAsync(localIPv4, isIPv4Routed, isIPv6Available ? localIPv6 : null),
             CheckConnectionInternetAsync(isIPv6Available)
         );
     }
@@ -290,11 +297,35 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
     }
 
     /// <summary>
-    /// Applies a detected gateway to a <see cref="ConnectionCheckItem"/>.
+    /// Detects the gateway of the local IP address and pings it, see <see cref="NetworkConnectionCheck.GetGatewayResult" />.
     /// </summary>
-    private static void SetGatewayResult(ConnectionCheckItem item, IPAddress detected)
+    /// <param name="item">Item of the router check (IPv4 or IPv6).</param>
+    /// <param name="localIPAddress">Local IP address, or <c>null</c>.</param>
+    /// <param name="isRouted">The local IP address was detected via the route to the public IP address.</param>
+    /// <returns>The gateway, or <c>null</c> if none was found.</returns>
+    private static async Task<IPAddress> CheckGatewayAsync(ConnectionCheckItem item, IPAddress localIPAddress,
+        bool isRouted)
     {
-        item.Complete(detected?.ToString() ?? "-/-", detected != null ? ConnectionState.OK : ConnectionState.Critical);
+        var gateway = localIPAddress != null
+            ? await NetworkInterface.DetectGatewayFromLocalIPAddressAsync(localIPAddress)
+            : null;
+
+        var isReachable = false;
+
+        if (gateway != null)
+        {
+            var pingInfo = await PingProbe.PingAsync(gateway, GlobalStaticConfiguration.Dashboard_PingTimeout,
+                GlobalStaticConfiguration.Dashboard_PingAttempts, PingBuffer, CancellationToken.None);
+
+            isReachable = pingInfo.Status == IPStatus.Success;
+
+            Log.Debug($"{nameof(CheckGatewayAsync)} - Ping {gateway}: {pingInfo.Status}");
+        }
+
+        item.Complete(gateway?.ToString() ?? "-/-",
+            NetworkConnectionCheck.GetGatewayResult(gateway, isRouted, isReachable));
+
+        return gateway;
     }
 
     /// <summary>
@@ -350,44 +381,32 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
     }
 
     /// <summary>
-    /// Checks the router connection asynchronously.
+    /// Checks the router connection asynchronously: detects the IPv4 / IPv6 gateway, pings both at the same time, then
+    /// resolves the DNS name.
     /// </summary>
     /// <param name="localIPv4">The already-detected local IPv4 address, or <c>null</c>.</param>
+    /// <param name="isIPv4Routed">The local IPv4 address was detected via the route to the public IP address.</param>
     /// <param name="localIPv6">The already-detected local IPv6 address, or <c>null</c> if IPv6 is not available.</param>
     /// <returns>A task representing the asynchronous operation.</returns>
-    private Task CheckConnectionRouterAsync(IPAddress localIPv4, IPAddress localIPv6)
+    private Task CheckConnectionRouterAsync(IPAddress localIPv4, bool isIPv4Routed, IPAddress localIPv6)
     {
         return Task.Run(async () =>
         {
             Log.Debug($"{nameof(CheckConnectionRouterAsync)} - Checking router connection...");
 
-            // Detect router IPv4 gateway
-            Log.Debug($"{nameof(CheckConnectionRouterAsync)} - Detecting router IPv4 address...");
-
-            var routerIPv4 = localIPv4 != null
-                ? await NetworkInterface.DetectGatewayFromLocalIPAddressAsync(localIPv4)
-                : null;
-
-            SetGatewayResult(RouterIPv4, routerIPv4);
-
-            // Detect router IPv6 gateway
-            IPAddress routerIPv6 = null;
+            var routerIPv4Task = CheckGatewayAsync(RouterIPv4, localIPv4, isIPv4Routed);
+            var routerIPv6Task = Task.FromResult<IPAddress>(null);
 
             if (localIPv6 != null)
-            {
-                Log.Debug($"{nameof(CheckConnectionRouterAsync)} - Detecting router IPv6 address...");
-
-                routerIPv6 = await NetworkInterface.DetectGatewayFromLocalIPAddressAsync(localIPv6);
-
-                SetGatewayResult(RouterIPv6, routerIPv6);
-            }
+                routerIPv6Task = CheckGatewayAsync(RouterIPv6, localIPv6, true);
             else
-            {
                 SetIPv6NotAvailable(RouterIPv6);
-            }
+
+            await Task.WhenAll(routerIPv4Task, routerIPv6Task);
 
             // Resolve router DNS
-            await ResolveDnsAsync(RouterDNS, routerIPv4, routerIPv6, nameof(CheckConnectionRouterAsync));
+            await ResolveDnsAsync(RouterDNS, routerIPv4Task.Result, routerIPv6Task.Result,
+                nameof(CheckConnectionRouterAsync));
 
             Log.Debug($"{nameof(CheckConnectionRouterAsync)} - Router connection check completed.");
         });

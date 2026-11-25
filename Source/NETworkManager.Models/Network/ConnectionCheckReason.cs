@@ -45,5 +45,15 @@ public enum ConnectionCheckReason
     /// <summary>
     ///     The DNS server did not answer or returned an error.
     /// </summary>
-    DNSError
+    DNSError,
+
+    /// <summary>
+    ///     No default gateway was found on the network adapter of the local IP address (e.g. a VPN connection).
+    /// </summary>
+    NoGateway,
+
+    /// <summary>
+    ///     The gateway did not reply to the ping (it may be offline or block ICMP).
+    /// </summary>
+    GatewayNoReply
 }

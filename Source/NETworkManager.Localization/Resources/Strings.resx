@@ -5720,4 +5720,10 @@ Do you want to start the scan?</value>
   <data name="ConnectionCheckReason_DNSError" xml:space="preserve">
     <value>The DNS server did not answer or returned an error.</value>
   </data>
+  <data name="ConnectionCheckReason_NoGateway" xml:space="preserve">
+    <value>No default gateway found on the network adapter (e.g. a VPN connection without a gateway).</value>
+  </data>
+  <data name="ConnectionCheckReason_GatewayNoReply" xml:space="preserve">
+    <value>The gateway did not reply to the ping. It may be offline or block ICMP.</value>
+  </data>
 </root>

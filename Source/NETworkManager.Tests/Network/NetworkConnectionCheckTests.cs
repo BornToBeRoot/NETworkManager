@@ -98,4 +98,19 @@ public class NetworkConnectionCheckTests
         Assert.Equal(new ConnectionCheckResult(ConnectionState.Info, ConnectionCheckReason.NoIPAddressToResolve),
             NetworkConnectionCheck.GetDNSResult(null, null).Result);
     }
+
+    [Theory]
+    [InlineData("192.168.1.1", true, true, ConnectionState.OK, ConnectionCheckReason.None)]
+    // Some routers block ICMP
+    [InlineData("192.168.1.1", true, false, ConnectionState.Warning, ConnectionCheckReason.GatewayNoReply)]
+    // Routed via an adapter without a gateway (e.g. VPN)
+    [InlineData(null, true, false, ConnectionState.Warning, ConnectionCheckReason.NoGateway)]
+    // No route and no gateway (or no local IP address)
+    [InlineData(null, false, false, ConnectionState.Critical, ConnectionCheckReason.NoGateway)]
+    public void GetGatewayResult(string gateway, bool isRouted, bool isReachable, ConnectionState state,
+        ConnectionCheckReason reason)
+    {
+        Assert.Equal(new ConnectionCheckResult(state, reason),
+            NetworkConnectionCheck.GetGatewayResult(Ip(gateway), isRouted, isReachable));
+    }
 }

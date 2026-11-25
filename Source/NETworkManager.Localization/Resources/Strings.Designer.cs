@@ -2621,6 +2621,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The gateway did not reply to the ping. It may be offline or block ICMP..
+        /// </summary>
+        public static string ConnectionCheckReason_GatewayNoReply {
+            get {
+                return ResourceManager.GetString("ConnectionCheckReason_GatewayNoReply", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Link-local address (169.254.x.x): the network adapter did not get an IPv4 address from a DHCP server..
         /// </summary>
         public static string ConnectionCheckReason_IPv4LinkLocal {
@@ -2635,6 +2644,15 @@ namespace NETworkManager.Localization.Resources {
         public static string ConnectionCheckReason_IPv6NotAvailable {
             get {
                 return ResourceManager.GetString("ConnectionCheckReason_IPv6NotAvailable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No default gateway found on the network adapter (e.g. a VPN connection without a gateway)..
+        /// </summary>
+        public static string ConnectionCheckReason_NoGateway {
+            get {
+                return ResourceManager.GetString("ConnectionCheckReason_NoGateway", resourceCulture);
             }
         }
         
