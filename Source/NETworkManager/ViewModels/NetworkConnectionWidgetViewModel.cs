@@ -4,7 +4,6 @@ using NETworkManager.Utilities;
 using System;
 using System.Net;
 using System.Net.Http;
-using System.Text.RegularExpressions;
 using System.Threading;
 using System.Net.NetworkInformation;
 using System.Threading.Tasks;
@@ -413,6 +412,50 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
     }
 
     /// <summary>
+    /// Requests the public IP address from the API (setting) and completes the item, see
+    /// <see cref="PublicIPAddressCheck" />.
+    /// </summary>
+    /// <param name="item">Item of the internet check (IPv4 or IPv6).</param>
+    /// <param name="addressFamily">IPv4 or IPv6.</param>
+    /// <returns>The IP address returned by the API (also if private), or <c>null</c>.</returns>
+    private static async Task<IPAddress> CheckPublicIPAddressAsync(ConnectionCheckItem item, AddressFamily addressFamily)
+    {
+        var isIPv4 = addressFamily == AddressFamily.InterNetwork;
+
+        var api = isIPv4
+            ? SettingsManager.Current.Dashboard_UseCustomPublicIPv4AddressAPI
+                ? SettingsManager.Current.Dashboard_CustomPublicIPv4AddressAPI
+                : GlobalStaticConfiguration.Dashboard_PublicIPv4AddressAPI
+            : SettingsManager.Current.Dashboard_UseCustomPublicIPv6AddressAPI
+                ? SettingsManager.Current.Dashboard_CustomPublicIPv6AddressAPI
+                : GlobalStaticConfiguration.Dashboard_PublicIPv6AddressAPI;
+
+        PublicIPAddressCheckResult result;
+
+        try
+        {
+            Log.Debug($"{nameof(CheckPublicIPAddressAsync)} - Checking public {addressFamily} address from: {api}");
+
+            using var httpResponse = await PublicIPHttpClient.GetAsync(api);
+            var content = await httpResponse.Content.ReadAsStringAsync();
+
+            result = PublicIPAddressCheck.ParseResponse(httpResponse.IsSuccessStatusCode, content, addressFamily);
+
+            Log.Debug($"{nameof(CheckPublicIPAddressAsync)} - HTTP {(int)httpResponse.StatusCode}: {result.Status} {result.IPAddress}");
+        }
+        catch (Exception ex)
+        {
+            result = PublicIPAddressCheck.FromException(ex);
+
+            Log.Debug($"{nameof(CheckPublicIPAddressAsync)} - {result.Status}: {ex.Message}");
+        }
+
+        item.Complete(result.IPAddress?.ToString() ?? "-/-", NetworkConnectionCheck.GetPublicIPAddressResult(result));
+
+        return result.IPAddress;
+    }
+
+    /// <summary>
     /// Checks the internet connection asynchronously.
     /// </summary>
     /// <param name="isIPv6Available">The computer has a routed IPv6 address (otherwise IPv6 is not checked).</param>
@@ -427,86 +470,20 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
 
             Log.Debug($"{nameof(CheckConnectionInternetAsync)} - Checking internet connection...");
 
-            IPAddress publicIPv4 = null;
-            IPAddress publicIPv6 = null;
+            var publicIPv4Task = CheckPublicIPAddressAsync(InternetIPv4, AddressFamily.InterNetwork);
+            var publicIPv6Task = Task.FromResult<IPAddress>(null);
 
-            // Detect public IPv4 and if it is reachable
-            Log.Debug($"{nameof(CheckConnectionInternetAsync)} - Detecting public IPv4 address...");
-
-            var publicIPv4AddressAPI = SettingsManager.Current.Dashboard_UseCustomPublicIPv4AddressAPI
-                ? SettingsManager.Current.Dashboard_CustomPublicIPv4AddressAPI
-                : GlobalStaticConfiguration.Dashboard_PublicIPv4AddressAPI;
-
-            try
-            {
-                Log.Debug($"{nameof(CheckConnectionInternetAsync)} - Checking public IPv4 address from: " + publicIPv4AddressAPI);
-
-                var httpResponse = await PublicIPHttpClient.GetAsync(publicIPv4AddressAPI);
-                var result = await httpResponse.Content.ReadAsStringAsync();
-                var match = RegexHelper.IPv4AddressExtractRegex().Match(result);
-
-                if (match.Success)
-                {
-                    Log.Debug($"{nameof(CheckConnectionInternetAsync)} - Public IPv4 address detected: " + match.Value);
-                    publicIPv4 = IPAddress.Parse(match.Value);
-                    InternetIPv4.Complete(match.Value, ConnectionState.OK);
-                }
-                else
-                {
-                    Log.Debug($"{nameof(CheckConnectionInternetAsync)} - Public IPv4 address not detected due to invalid format.");
-                    InternetIPv4.Complete("-/-", ConnectionState.Critical);
-                }
-            }
-            catch (Exception ex)
-            {
-                Log.Debug($"{nameof(CheckConnectionInternetAsync)} - Public IPv4 address not detected due to exception: " + ex.Message);
-
-                InternetIPv4.Complete("-/-", ConnectionState.Critical);
-            }
-
-            // Detect public IPv6 and if it is reachable (only if the computer has a routed IPv6 address)
-            if (!isIPv6Available)
-            {
-                SetIPv6NotAvailable(InternetIPv6);
-            }
+            // Only if the computer has a routed IPv6 address
+            if (isIPv6Available)
+                publicIPv6Task = CheckPublicIPAddressAsync(InternetIPv6, AddressFamily.InterNetworkV6);
             else
-            {
-                Log.Debug($"{nameof(CheckConnectionInternetAsync)} - Detecting public IPv6 address...");
+                SetIPv6NotAvailable(InternetIPv6);
 
-                var publicIPv6AddressAPI = SettingsManager.Current.Dashboard_UseCustomPublicIPv6AddressAPI
-                    ? SettingsManager.Current.Dashboard_CustomPublicIPv6AddressAPI
-                    : GlobalStaticConfiguration.Dashboard_PublicIPv6AddressAPI;
-
-                try
-                {
-                    Log.Debug($"{nameof(CheckConnectionInternetAsync)} - Checking public IPv6 address from: " + publicIPv6AddressAPI);
-
-                    var httpResponse = await PublicIPHttpClient.GetAsync(publicIPv6AddressAPI);
-                    var result = await httpResponse.Content.ReadAsStringAsync();
-                    var match = Regex.Match(result, RegexHelper.IPv6AddressRegex);
-
-                    if (match.Success)
-                    {
-                        Log.Debug($"{nameof(CheckConnectionInternetAsync)} - Public IPv6 address detected: " + match.Value);
-                        publicIPv6 = IPAddress.Parse(match.Value);
-                        InternetIPv6.Complete(match.Value, ConnectionState.OK);
-                    }
-                    else
-                    {
-                        Log.Debug($"{nameof(CheckConnectionInternetAsync)} - Public IPv6 address not detected due to invalid format.");
-                        InternetIPv6.Complete("-/-", ConnectionState.Critical);
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Log.Debug($"{nameof(CheckConnectionInternetAsync)} - Public IPv6 address not detected due to exception: " + ex.Message);
-
-                    InternetIPv6.Complete("-/-", ConnectionState.Critical);
-                }
-            }
+            await Task.WhenAll(publicIPv4Task, publicIPv6Task);
 
             // Resolve internet DNS
-            await ResolveDnsAsync(InternetDNS, publicIPv4, publicIPv6, nameof(CheckConnectionInternetAsync));
+            await ResolveDnsAsync(InternetDNS, publicIPv4Task.Result, publicIPv6Task.Result,
+                nameof(CheckConnectionInternetAsync));
 
             Log.Debug($"{nameof(CheckConnectionInternetAsync)} - Internet connection check completed.");
         });

@@ -2648,6 +2648,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The name of the public IP address API could not be resolved. Check the DNS server..
+        /// </summary>
+        public static string ConnectionCheckReason_NameResolutionFailed {
+            get {
+                return ResourceManager.GetString("ConnectionCheckReason_NameResolutionFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No default gateway found on the network adapter (e.g. a VPN connection without a gateway)..
         /// </summary>
         public static string ConnectionCheckReason_NoGateway {
@@ -2689,6 +2698,24 @@ namespace NETworkManager.Localization.Resources {
         public static string ConnectionCheckReason_PTRNotFound {
             get {
                 return ResourceManager.GetString("ConnectionCheckReason_PTRNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The API returned a private IP address instead of the public one (e.g. the page of a hotspot / captive portal or a proxy)..
+        /// </summary>
+        public static string ConnectionCheckReason_PublicIPAddressPrivate {
+            get {
+                return ResourceManager.GetString("ConnectionCheckReason_PublicIPAddressPrivate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The public IP address could not be requested from the API (no answer, an error or no IP address in the answer)..
+        /// </summary>
+        public static string ConnectionCheckReason_PublicIPAddressRequestFailed {
+            get {
+                return ResourceManager.GetString("ConnectionCheckReason_PublicIPAddressRequestFailed", resourceCulture);
             }
         }
         

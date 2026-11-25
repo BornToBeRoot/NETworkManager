@@ -135,6 +135,7 @@ Release date: **xx.xx.2026**
 - Fixed the network connection widget (dashboard and status window) not updating when **Check public IP address** was changed in the settings until the application was restarted: an old public IP address could be shown as current. [#PR](PRLINK)
 - Fixed the network connection not being checked again when the network changed while the dashboard was open (e.g. a cable unplugged or a VPN connected), although the documentation says so. If the dashboard is not open, it is checked when it is opened again. [#PR](PRLINK)
 - Fixed the gateway / router not being found (shown as failed although the internet works) for VPN connections whose adapter is not an Ethernet or Wi-Fi adapter (e.g. the Windows VPN client with IKEv2 / SSTP). A VPN adapter without a gateway is no longer shown with the gateway `0.0.0.0`. [#PR](PRLINK)
+- Fixed an IP address on an error page or the page of a hotspot / captive portal (e.g. hotel Wi-Fi) being shown as the public IP address. The answer of the API must have a success status code, a private IP address is shown as a warning, and an API name that can't be resolved points to the DNS server. The public IPv4 and IPv6 addresses are requested at the same time. [#PR](PRLINK)
 
 **Status window**
 

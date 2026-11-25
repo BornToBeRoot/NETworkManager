@@ -55,5 +55,20 @@ public enum ConnectionCheckReason
     /// <summary>
     ///     The gateway did not reply to the ping (it may be offline or block ICMP).
     /// </summary>
-    GatewayNoReply
+    GatewayNoReply,
+
+    /// <summary>
+    ///     The API returned a private IP address (e.g. the page of a captive portal or a proxy).
+    /// </summary>
+    PublicIPAddressPrivate,
+
+    /// <summary>
+    ///     The public IP address could not be requested from the API (no answer, an error or no IP address).
+    /// </summary>
+    PublicIPAddressRequestFailed,
+
+    /// <summary>
+    ///     The host name of the public IP address API could not be resolved (DNS).
+    /// </summary>
+    NameResolutionFailed
 }

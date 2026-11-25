@@ -113,4 +113,17 @@ public class NetworkConnectionCheckTests
         Assert.Equal(new ConnectionCheckResult(state, reason),
             NetworkConnectionCheck.GetGatewayResult(Ip(gateway), isRouted, isReachable));
     }
+
+    [Theory]
+    [InlineData(PublicIPAddressCheckStatus.Success, ConnectionState.OK, ConnectionCheckReason.None)]
+    [InlineData(PublicIPAddressCheckStatus.PrivateIPAddress, ConnectionState.Warning, ConnectionCheckReason.PublicIPAddressPrivate)]
+    [InlineData(PublicIPAddressCheckStatus.InvalidResponse, ConnectionState.Critical, ConnectionCheckReason.PublicIPAddressRequestFailed)]
+    [InlineData(PublicIPAddressCheckStatus.RequestFailed, ConnectionState.Critical, ConnectionCheckReason.PublicIPAddressRequestFailed)]
+    [InlineData(PublicIPAddressCheckStatus.NameResolutionFailed, ConnectionState.Critical, ConnectionCheckReason.NameResolutionFailed)]
+    public void GetPublicIPAddressResult(PublicIPAddressCheckStatus status, ConnectionState state,
+        ConnectionCheckReason reason)
+    {
+        Assert.Equal(new ConnectionCheckResult(state, reason),
+            NetworkConnectionCheck.GetPublicIPAddressResult(new PublicIPAddressCheckResult(status)));
+    }
 }

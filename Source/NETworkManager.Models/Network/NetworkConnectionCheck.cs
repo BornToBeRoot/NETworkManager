@@ -102,4 +102,23 @@ public static class NetworkConnectionCheck
             ? new ConnectionCheckResult(ConnectionState.OK)
             : new ConnectionCheckResult(ConnectionState.Warning, ConnectionCheckReason.GatewayNoReply);
     }
+
+    /// <summary>
+    ///     State of the public IP address requested from the API: a public IP address is OK, a private one a warning
+    ///     (e.g. captive portal or proxy), everything else critical.
+    /// </summary>
+    /// <param name="result">Result of the request.</param>
+    /// <returns>State and reason.</returns>
+    public static ConnectionCheckResult GetPublicIPAddressResult(PublicIPAddressCheckResult result)
+    {
+        return result.Status switch
+        {
+            PublicIPAddressCheckStatus.Success => new ConnectionCheckResult(ConnectionState.OK),
+            PublicIPAddressCheckStatus.PrivateIPAddress => new ConnectionCheckResult(ConnectionState.Warning,
+                ConnectionCheckReason.PublicIPAddressPrivate),
+            PublicIPAddressCheckStatus.NameResolutionFailed => new ConnectionCheckResult(ConnectionState.Critical,
+                ConnectionCheckReason.NameResolutionFailed),
+            _ => new ConnectionCheckResult(ConnectionState.Critical, ConnectionCheckReason.PublicIPAddressRequestFailed)
+        };
+    }
 }

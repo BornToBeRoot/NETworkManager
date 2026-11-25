@@ -17,7 +17,7 @@ The **Network connection** widget (also shown in the status window) checks the c
 | Icon | Meaning |
 |------|---------|
 | Green | OK |
-| Yellow | Works partly or may not work, e.g. the computer has only a link-local IPv4 address (`169.254.x.x`, no address from a DHCP server) or no route to the internet (the address of the first active network adapter is shown), the gateway did not reply to the ping (it may block ICMP), or the network adapter has no gateway (e.g. a VPN connection) |
+| Yellow | Works partly or may not work, e.g. the computer has only a link-local IPv4 address (`169.254.x.x`, no address from a DHCP server) or no route to the internet (the address of the first active network adapter is shown), the gateway did not reply to the ping (it may block ICMP), the network adapter has no gateway (e.g. a VPN connection), or the public IP address API returned a private IP address (e.g. the page of a hotspot / captive portal or a proxy) |
 | Red | Failed, e.g. the computer has no IPv4 address or the DNS server did not answer |
 | Gray | Information, e.g. no IPv6 connection: the network or the internet provider may not support IPv6 (the IPv6 checks of the router and the internet are skipped), or no DNS name (PTR record) for the IP address, which many networks don't have |
 

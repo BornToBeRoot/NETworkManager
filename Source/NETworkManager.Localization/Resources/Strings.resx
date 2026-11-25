@@ -5726,4 +5726,13 @@ Do you want to start the scan?</value>
   <data name="ConnectionCheckReason_GatewayNoReply" xml:space="preserve">
     <value>The gateway did not reply to the ping. It may be offline or block ICMP.</value>
   </data>
+  <data name="ConnectionCheckReason_PublicIPAddressPrivate" xml:space="preserve">
+    <value>The API returned a private IP address instead of the public one (e.g. the page of a hotspot / captive portal or a proxy).</value>
+  </data>
+  <data name="ConnectionCheckReason_PublicIPAddressRequestFailed" xml:space="preserve">
+    <value>The public IP address could not be requested from the API (no answer, an error or no IP address in the answer).</value>
+  </data>
+  <data name="ConnectionCheckReason_NameResolutionFailed" xml:space="preserve">
+    <value>The name of the public IP address API could not be resolved. Check the DNS server.</value>
+  </data>
 </root>
