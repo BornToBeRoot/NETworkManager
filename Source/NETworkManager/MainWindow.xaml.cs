@@ -1877,7 +1877,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
         });
     }
 
-    private async void NetworkChangeDispatcherTimer_Tick(object sender, EventArgs e)
+    private void NetworkChangeDispatcherTimer_Tick(object sender, EventArgs e)
     {
         _networkChangeDispatcherTimer.Stop();
 
@@ -1885,10 +1885,11 @@ public sealed partial class MainWindow : INotifyPropertyChanged
 
         // Reconfigure the DNS client if network changed - re-detects the Windows default DNS servers
         // and, if enabled, the auto-detected DNS suffix (both of which can differ on the new network).
+        // On the UI thread like after a change of the DNS settings, so both can't overlap (the last one wins).
         try
         {
             Log.Info("Update DNS server configuration...");
-            await Task.Run(ConfigureDNSServer);
+            ConfigureDNSServer();
         }
         catch (Exception ex)
         {
