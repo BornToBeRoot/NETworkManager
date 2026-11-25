@@ -555,7 +555,8 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
         var value = publicIPAddress?.IPAddress?.ToString() ??
                     (isPingSuccessful ? $"{pingInfo.IPAddress} ({pingInfo.Time} ms)" : "-/-");
 
-        // Public IP address for the other tools (e.g. RDAP, IP geolocation), not a private one (e.g. a captive portal)
+        // Only the public IP address is opened in other tools (e.g. RDAP, IP geolocation): not a private one (e.g. a
+        // captive portal) and not the pinged address (e.g. 1.1.1.1, it is not the IP address of the user)
         var publicIP = publicIPAddress is { Status: PublicIPAddressCheckStatus.Success } ? publicIPAddress.IPAddress : null;
 
         item.Complete(value, NetworkConnectionCheck.GetInternetResult(addressFamily, isPingSuccessful,

@@ -177,11 +177,14 @@ public class ConnectionCheckItem : PropertyChangedBase
     /// <param name="value">Value shown (<c>-/-</c> if there is none).</param>
     /// <param name="state">State of the check.</param>
     /// <param name="message">Reason of the state (tooltip), <c>null</c> if none.</param>
-    /// <param name="target">IP address or DNS name for other tools, by default the value (if there is one).</param>
+    /// <param name="target">IP address or DNS name for other tools, by default the value (if there is one), an empty
+    /// string for none.</param>
     public void Complete(string value, ConnectionState state, string message = null, string target = null)
     {
         Value = value;
-        Target = target ?? (string.IsNullOrEmpty(value) || value == "-/-" ? null : value);
+        Target = target != null
+            ? target.Length == 0 ? null : target
+            : string.IsNullOrEmpty(value) || value == "-/-" ? null : value;
         State = state;
         Message = message;
         IsChecking = false;
@@ -192,7 +195,8 @@ public class ConnectionCheckItem : PropertyChangedBase
     /// </summary>
     /// <param name="value">Value shown (<c>-/-</c> if there is none).</param>
     /// <param name="result">State and reason.</param>
-    /// <param name="target">IP address or DNS name for other tools, by default the value (if there is one).</param>
+    /// <param name="target">IP address or DNS name for other tools, by default the value (if there is one), an empty
+    /// string for none.</param>
     public void Complete(string value, ConnectionCheckResult result, string target = null)
     {
         Complete(value, result.State, result.Reason == ConnectionCheckReason.None
