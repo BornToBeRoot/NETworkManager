@@ -27,11 +27,11 @@ Right-click a value to open it in another tool: an IP address in the **Port Scan
 
 | Key | Action |
 |-----|--------|
-| `F5` | Refresh the dashboard |
+| `F5` | Check the network connection again |
 
 :::note
 
-You may need to click into a widget first before keyboard shortcuts are recognized.
+`F5` only works while the **Network connection** widget has the focus (e.g. click into it first). The other widgets are refreshed with their refresh button.
 
 :::
 
