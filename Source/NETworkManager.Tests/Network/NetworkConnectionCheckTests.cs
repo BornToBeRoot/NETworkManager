@@ -137,9 +137,12 @@ public class NetworkConnectionCheckTests
     // API disabled: ping decides
     [InlineData(true, null, InternetConnectivityLevel.InternetAccess, ConnectionState.OK, ConnectionCheckReason.None)]
     [InlineData(false, null, InternetConnectivityLevel.LocalAccess, ConnectionState.Critical, ConnectionCheckReason.InternetNotReachable)]
-    // Captive portal (Windows) always wins
-    [InlineData(true, PublicIPAddressCheckStatus.Success, InternetConnectivityLevel.ConstrainedInternetAccess, ConnectionState.Warning, ConnectionCheckReason.CaptivePortal)]
+    // Captive portal (Windows), unless the API returned a public IP address (e.g. a web filter intercepts the probe
+    // of Windows, the internet works)
+    [InlineData(true, PublicIPAddressCheckStatus.Success, InternetConnectivityLevel.ConstrainedInternetAccess, ConnectionState.OK, ConnectionCheckReason.None)]
+    [InlineData(true, null, InternetConnectivityLevel.ConstrainedInternetAccess, ConnectionState.Warning, ConnectionCheckReason.CaptivePortal)]
     [InlineData(false, null, InternetConnectivityLevel.ConstrainedInternetAccess, ConnectionState.Warning, ConnectionCheckReason.CaptivePortal)]
+    [InlineData(false, PublicIPAddressCheckStatus.PrivateIPAddress, InternetConnectivityLevel.ConstrainedInternetAccess, ConnectionState.Warning, ConnectionCheckReason.CaptivePortal)]
     // Private IP address from the API (e.g. proxy)
     [InlineData(true, PublicIPAddressCheckStatus.PrivateIPAddress, InternetConnectivityLevel.InternetAccess, ConnectionState.Warning, ConnectionCheckReason.PublicIPAddressPrivate)]
     // Ping works, API blocked / DNS broken

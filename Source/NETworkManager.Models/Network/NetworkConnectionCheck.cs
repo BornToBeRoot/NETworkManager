@@ -127,9 +127,10 @@ public static class NetworkConnectionCheck
     ///     (setting), the public IP address API (if enabled) and the connectivity reported by Windows.
     /// </summary>
     /// <remarks>
-    ///     A captive portal (Windows) is a warning. Otherwise a public IP address from the API or a reply to the ping is
-    ///     OK; a private IP address from the API is a warning, as is a failed API when the ping works (e.g. the API is
-    ///     blocked). If both fail but Windows reports internet access (only used for IPv4, Windows doesn't report it per
+    ///     A public IP address from the API is OK (the HTTPS request reached the internet), even if Windows reports a
+    ///     captive portal (e.g. a proxy or web filter intercepts the probe of Windows). Otherwise a captive portal
+    ///     (Windows) is a warning; a reply to the ping is OK; a private IP address from the API is a warning, as is a
+    ///     failed API when the ping works (e.g. the API is blocked). If both fail but Windows reports internet access (only used for IPv4, Windows doesn't report it per
     ///     address family), ICMP and the API may be blocked: warning. Otherwise critical.
     /// </remarks>
     /// <param name="addressFamily">IPv4 or IPv6.</param>
@@ -140,10 +141,13 @@ public static class NetworkConnectionCheck
     public static ConnectionCheckResult GetInternetResult(AddressFamily addressFamily, bool isPingSuccessful,
         PublicIPAddressCheckResult publicIPAddress, InternetConnectivityLevel connectivityLevel)
     {
+        if (publicIPAddress is { Status: PublicIPAddressCheckStatus.Success })
+            return new ConnectionCheckResult(ConnectionState.OK);
+
         if (connectivityLevel == InternetConnectivityLevel.ConstrainedInternetAccess)
             return new ConnectionCheckResult(ConnectionState.Warning, ConnectionCheckReason.CaptivePortal);
 
-        if (publicIPAddress is { Status: PublicIPAddressCheckStatus.Success or PublicIPAddressCheckStatus.PrivateIPAddress })
+        if (publicIPAddress is { Status: PublicIPAddressCheckStatus.PrivateIPAddress })
             return GetPublicIPAddressResult(publicIPAddress);
 
         if (isPingSuccessful)
