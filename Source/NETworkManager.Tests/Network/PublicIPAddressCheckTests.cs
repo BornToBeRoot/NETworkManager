@@ -65,6 +65,44 @@ public class PublicIPAddressCheckTests
         Assert.Null(result.IPAddress);
     }
 
+    [Theory]
+    // IPAddress.TryParse accepts these as IPv4 (e.g. an HTTP status code as answer)
+    [InlineData("429", AddressFamily.InterNetwork)]
+    [InlineData("1", AddressFamily.InterNetwork)]
+    [InlineData("10.1", AddressFamily.InterNetwork)]
+    [InlineData("0x7f000001", AddressFamily.InterNetwork)]
+    // Unspecified, multicast, reserved / broadcast
+    [InlineData("0.0.0.0", AddressFamily.InterNetwork)]
+    [InlineData("224.0.0.1", AddressFamily.InterNetwork)]
+    [InlineData("255.255.255.255", AddressFamily.InterNetwork)]
+    [InlineData("::", AddressFamily.InterNetworkV6)]
+    [InlineData("ff02::1", AddressFamily.InterNetworkV6)]
+    // Scope id
+    [InlineData("fe80::1%12", AddressFamily.InterNetworkV6)]
+    public void ParseResponse_NotAnIPAddressOrReserved_InvalidResponse(string content, AddressFamily addressFamily)
+    {
+        var result = PublicIPAddressCheck.ParseResponse(true, content, addressFamily);
+
+        Assert.Equal(PublicIPAddressCheckStatus.InvalidResponse, result.Status);
+        Assert.Null(result.IPAddress);
+    }
+
+    [Theory]
+    [InlineData("203.0.113.10", PublicIPAddressCheckStatus.Success)]
+    [InlineData("2001:db8::10", PublicIPAddressCheckStatus.Success)]
+    [InlineData("100.64.0.1", PublicIPAddressCheckStatus.PrivateIPAddress)]
+    [InlineData("100.127.255.254", PublicIPAddressCheckStatus.PrivateIPAddress)]
+    [InlineData("100.128.0.1", PublicIPAddressCheckStatus.Success)]
+    [InlineData("172.16.0.1", PublicIPAddressCheckStatus.PrivateIPAddress)]
+    [InlineData("::1", PublicIPAddressCheckStatus.PrivateIPAddress)]
+    [InlineData("fe80::1", PublicIPAddressCheckStatus.PrivateIPAddress)]
+    [InlineData("0.1.2.3", PublicIPAddressCheckStatus.InvalidResponse)]
+    [InlineData("240.0.0.1", PublicIPAddressCheckStatus.InvalidResponse)]
+    public void GetStatus(string ipAddress, PublicIPAddressCheckStatus expected)
+    {
+        Assert.Equal(expected, PublicIPAddressCheck.GetStatus(IPAddress.Parse(ipAddress)));
+    }
+
     [Fact]
     public void FromException_NameResolutionFailed()
     {

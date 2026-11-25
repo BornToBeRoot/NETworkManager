@@ -66,22 +66,74 @@ public static class PublicIPAddressCheck
 
         var text = content?.Trim() ?? string.Empty;
 
-        if (!IPAddress.TryParse(text, out var ipAddress) || ipAddress.AddressFamily != addressFamily)
+        if (!TryParseIPAddress(text, addressFamily, out var ipAddress))
         {
             var match = addressFamily == AddressFamily.InterNetwork
                 ? RegexHelper.IPv4AddressExtractRegex().Match(text)
                 : Regex.Match(text, RegexHelper.IPv6AddressRegex);
 
-            if (!match.Success || !IPAddress.TryParse(match.Value, out ipAddress) ||
-                ipAddress.AddressFamily != addressFamily)
+            if (!match.Success || !TryParseIPAddress(match.Value, addressFamily, out ipAddress))
                 return new PublicIPAddressCheckResult(PublicIPAddressCheckStatus.InvalidResponse);
         }
 
-        var isPrivate = IPAddressHelper.IsPrivateIPAddress(ipAddress) || NetworkInterface.IsLinkLocal(ipAddress) ||
-                        IPAddress.IsLoopback(ipAddress);
+        return GetStatus(ipAddress) switch
+        {
+            PublicIPAddressCheckStatus.InvalidResponse => new PublicIPAddressCheckResult(
+                PublicIPAddressCheckStatus.InvalidResponse),
+            var status => new PublicIPAddressCheckResult(status, ipAddress)
+        };
+    }
 
-        return new PublicIPAddressCheckResult(
-            isPrivate ? PublicIPAddressCheckStatus.PrivateIPAddress : PublicIPAddressCheckStatus.Success, ipAddress);
+    /// <summary>
+    ///     Parses an IP address in its normal notation only: IPv4 as four decimal numbers (<see cref="IPAddress.TryParse(string, out IPAddress)" />
+    ///     also accepts e.g. "429" as 0.0.1.173 - an HTTP status code in the answer), IPv6 without a scope id.
+    /// </summary>
+    /// <param name="text">Text to parse.</param>
+    /// <param name="addressFamily">IPv4 or IPv6.</param>
+    /// <param name="ipAddress">Parsed IP address.</param>
+    /// <returns><see langword="true" /> if the text is an IP address of the address family.</returns>
+    private static bool TryParseIPAddress(string text, AddressFamily addressFamily, out IPAddress ipAddress)
+    {
+        ipAddress = null;
+
+        var isValidNotation = addressFamily == AddressFamily.InterNetwork
+            ? RegexHelper.IPv4AddressRegex().IsMatch(text)
+            : text.Contains(':') && !text.Contains('%');
+
+        return isValidNotation && IPAddress.TryParse(text, out ipAddress) && ipAddress.AddressFamily == addressFamily;
+    }
+
+    /// <summary>
+    ///     Status of an IP address returned by the API: a private, shared (carrier-grade NAT), link-local or loopback
+    ///     address is not the public IP address (e.g. the answer of a captive portal or a proxy); an unspecified,
+    ///     multicast or reserved address is no valid answer.
+    /// </summary>
+    /// <param name="ipAddress">IP address returned by the API.</param>
+    /// <returns><see cref="PublicIPAddressCheckStatus.Success" />, <see cref="PublicIPAddressCheckStatus.PrivateIPAddress" />
+    ///     or <see cref="PublicIPAddressCheckStatus.InvalidResponse" />.</returns>
+    public static PublicIPAddressCheckStatus GetStatus(IPAddress ipAddress)
+    {
+        var bytes = ipAddress.GetAddressBytes();
+
+        if (ipAddress.AddressFamily == AddressFamily.InterNetwork)
+        {
+            // 0.0.0.0/8 (this network), 224.0.0.0/4 (multicast), 240.0.0.0/4 (reserved, broadcast)
+            if (bytes[0] == 0 || bytes[0] >= 224)
+                return PublicIPAddressCheckStatus.InvalidResponse;
+
+            // 100.64.0.0/10 (shared address space, carrier-grade NAT)
+            if (bytes[0] == 100 && bytes[1] is >= 64 and <= 127)
+                return PublicIPAddressCheckStatus.PrivateIPAddress;
+        }
+        else if (ipAddress.Equals(IPAddress.IPv6Any) || ipAddress.IsIPv6Multicast)
+        {
+            return PublicIPAddressCheckStatus.InvalidResponse;
+        }
+
+        return IPAddressHelper.IsPrivateIPAddress(ipAddress) || NetworkInterface.IsLinkLocal(ipAddress) ||
+               IPAddress.IsLoopback(ipAddress)
+            ? PublicIPAddressCheckStatus.PrivateIPAddress
+            : PublicIPAddressCheckStatus.Success;
     }
 
     /// <summary>
