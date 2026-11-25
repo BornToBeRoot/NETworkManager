@@ -204,24 +204,30 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
             {
                 _recheckPending = false;
 
-                Log.Info("Checking network connection...");
+                try
+                {
+                    Log.Info("Checking network connection...");
 
-                // Takes at least the refresh interval, so the reload animation is visible and the check can't be
-                // spammed - the checks run at the same time
-                await TaskHelper.WithMinimumDurationAsync(RunTask, GlobalStaticConfiguration.ApplicationUIRefreshInterval);
+                    // Takes at least the refresh interval, so the reload animation is visible and the check can't be
+                    // spammed - the checks run at the same time
+                    await TaskHelper.WithMinimumDurationAsync(RunTask,
+                        GlobalStaticConfiguration.ApplicationUIRefreshInterval);
+
+                    Log.Info("Network connection check completed.");
+                }
+                catch (Exception ex)
+                {
+                    Log.Error("Network connection check failed.", ex);
+
+                    // Don't leave the remaining rows loading until the next check
+                    foreach (var item in GetAllItems().Where(x => x.IsChecking))
+                        item.Complete("-/-", ConnectionState.Critical);
+                }
 
                 LastCheckTime = DateTime.Now;
 
-                Log.Info("Network connection check completed.");
+                // A check requested in the meantime (e.g. a network change) runs also after an error
             } while (_recheckPending);
-        }
-        catch (Exception ex)
-        {
-            Log.Error("Network connection check failed.", ex);
-
-            // Don't leave the remaining rows loading until the next check
-            foreach (var item in GetAllItems().Where(x => x.IsChecking))
-                item.Complete("-/-", ConnectionState.Critical);
         }
         finally
         {
