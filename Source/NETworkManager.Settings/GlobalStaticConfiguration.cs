@@ -140,6 +140,12 @@ public static class GlobalStaticConfiguration
     public static bool Dashboard_CheckIPApiIPGeolocation => false;
     public static bool Dashboard_CheckIPApiDNSResolver => false;
 
+    /// <summary>
+    ///     Minimum time between two network connection checks when switching back to the dashboard (the public IP address
+    ///     may have changed, but no requests on every switch). A refresh and a network change always check.
+    /// </summary>
+    public static TimeSpan Dashboard_RecheckInterval => TimeSpan.FromSeconds(60);
+
     // Application: Network Interface
     public static ExportFileType NetworkInterface_ExportFileType => ExportFileType.Csv;
     public static int NetworkInterface_BandwidthChartTime => 60;

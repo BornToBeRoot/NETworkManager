@@ -49,6 +49,10 @@ Release date: **xx.xx.2026**
 
 - Renamed "Discovery Protocol" to "LLDP / CDP Capture", so it is clear what the tool does (and it is not confused with mDNS Discovery). The run command is now `lldpcdpcapture` with the aliases `lldp` and `cdp`, the documentation moved to [LLDP / CDP Capture](../application/lldp-cdp-capture.md). The selected protocol and duration are reset to the defaults. [#3721](https://github.com/BornToBeRoot/NETworkManager/issues/3721)
 
+**Dashboard**
+
+- Switching back to the dashboard checks the network connection only if the last check is at least 60 seconds old (or the network / the dashboard settings changed), instead of on every switch between the tools. **F5** and the refresh button always check. [#PR](PRLINK)
+
 ## Bug Fixes
 
 **Tabs**
@@ -125,6 +129,7 @@ Release date: **xx.xx.2026**
 
 - Fixed the network connection check getting stuck (all values loading until the next refresh) when the refresh was used several times while a check was running. A refresh during a check now repeats the check once it has finished. [#PR](PRLINK)
 - Fixed the network connection widget (dashboard and status window) not updating when **Check public IP address** was changed in the settings until the application was restarted: an old public IP address could be shown as current. [#PR](PRLINK)
+- Fixed the network connection not being checked again when the network changed while the dashboard was open (e.g. a cable unplugged or a VPN connected), although the documentation says so. If the dashboard is not open, it is checked when it is opened again. [#PR](PRLINK)
 
 **Status window**
 

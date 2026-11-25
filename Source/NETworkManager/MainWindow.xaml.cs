@@ -1892,6 +1892,9 @@ public sealed partial class MainWindow : INotifyPropertyChanged
             Log.Error("Could not update the DNS server configuration after the network has changed.", ex);
         }
 
+        // Check the network connection on the dashboard again
+        _dashboardView?.OnNetworkChanged();
+
         // Show status window on network change
         if (SettingsManager.Current.Status_ShowWindowOnNetworkChange)
             OpenStatusWindow(true);
