@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
@@ -24,7 +25,8 @@ public partial class DashboardView
     private bool _isViewVisible = true;
 
     /// <summary>
-    ///     The network or a dashboard setting changed while the dashboard was hidden: check again when it is shown.
+    ///     The network or a setting of the network connection check changed while the dashboard was hidden: check again
+    ///     when it is shown.
     /// </summary>
     private bool _isOutdated;
 
@@ -153,9 +155,25 @@ public partial class DashboardView
         return view;
     }
 
+    /// <summary>
+    ///     Settings used by the network connection check: a change marks it as outdated (checked when the dashboard is
+    ///     shown again). Other dashboard settings (e.g. the other widgets) keep the recheck interval.
+    /// </summary>
+    private static readonly HashSet<string> NetworkConnectionSettings =
+    [
+        nameof(SettingsInfo.Dashboard_PublicIPv4Address),
+        nameof(SettingsInfo.Dashboard_PublicIPv6Address),
+        nameof(SettingsInfo.Dashboard_CheckPublicIPAddress),
+        nameof(SettingsInfo.Dashboard_UseCustomPublicIPv4AddressAPI),
+        nameof(SettingsInfo.Dashboard_CustomPublicIPv4AddressAPI),
+        nameof(SettingsInfo.Dashboard_UseCustomPublicIPv6AddressAPI),
+        nameof(SettingsInfo.Dashboard_CustomPublicIPv6AddressAPI),
+        nameof(SettingsInfo.Dashboard_ShowNetworkConnectionWidget)
+    ];
+
     private void SettingsManager_PropertyChanged(object sender, PropertyChangedEventArgs e)
     {
-        if (e.PropertyName?.StartsWith("Dashboard_", StringComparison.Ordinal) == true)
+        if (e.PropertyName != null && NetworkConnectionSettings.Contains(e.PropertyName))
             _isOutdated = true;
     }
 }

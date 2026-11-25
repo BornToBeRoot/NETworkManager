@@ -6,7 +6,7 @@ keywords: [NETworkManager, dashboard, network status, network connection, networ
 
 # Dashboard
 
-The **Dashboard** shows the status of your computer's current network connection to provide a quick overview of the most important information. Whenever the local network adapter changes state (e.g. an Ethernet cable is plugged in, Wi-Fi or VPN connects), the dashboard checks connectivity to the router and the internet. When you switch back to the dashboard, the network connection is only checked again if the last check is at least 60 seconds old (e.g. the public IP address may have changed) or the network or the dashboard settings have changed in the meantime, so switching between the tools doesn't send a request each time. **F5** or the refresh button always checks again.
+The **Dashboard** shows the status of your computer's current network connection to provide a quick overview of the most important information. Whenever the local network adapter changes state (e.g. an Ethernet cable is plugged in, Wi-Fi or VPN connects), the dashboard checks connectivity to the router and the internet. When you switch back to the dashboard, the network connection is only checked again if the last check is at least 60 seconds old (e.g. the public IP address may have changed) or the network or a setting of the network connection (e.g. the public IP address) has changed in the meantime, so switching between the tools doesn't send a request each time. **F5** or the refresh button always checks again.
 
 ![Dashboard](../img/dashboard.png)
 

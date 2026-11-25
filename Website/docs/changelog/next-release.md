@@ -55,7 +55,7 @@ Release date: **xx.xx.2026**
 
 **Dashboard**
 
-- Switching back to the dashboard checks the network connection only if the last check is at least 60 seconds old (or the network / the dashboard settings changed), instead of on every switch between the tools. **F5** and the refresh button always check. [#PR](PRLINK)
+- Switching back to the dashboard checks the network connection only if the last check is at least 60 seconds old (or the network / a setting of the network connection changed), instead of on every switch between the tools. **F5** and the refresh button always check. [#PR](PRLINK)
 - The network connection check is faster (also at startup and in the status window): the local IP address and the gateway are read directly from the network adapters instead of querying all adapter details incl. PowerShell up to four times per check. This also speeds up the detection of the local IP address in the **IP Scanner** when no route is available. [#PR](PRLINK)
 - The network connection shows a warning instead of OK if the computer has only a link-local IPv4 address (`169.254.x.x`, no address from a DHCP server) or no route to the internet. Without an IPv6 connection (e.g. the internet provider doesn't support IPv6), the IPv6 values are shown as information (gray) instead of failed (red), and the IPv6 address of the router and the internet are not checked. Hover over an icon to see the reason. [#PR](PRLINK)
 - The DNS name (PTR) of the IPv6 address is no longer requested after the DNS server failed for the IPv4 address (the same server would time out again), so the network connection check finishes faster without a working DNS server. Without an IP address to resolve, the DNS value is shown as information instead of failed. [#PR](PRLINK)
