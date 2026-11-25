@@ -104,6 +104,9 @@ public class PublicIPAddressCheckTests
     [InlineData("::1", PublicIPAddressCheckStatus.PrivateIPAddress)]
     [InlineData("fe80::1", PublicIPAddressCheckStatus.PrivateIPAddress)]
     [InlineData("0.1.2.3", PublicIPAddressCheckStatus.InvalidResponse)]
+    [InlineData("::ffff:10.1.2.3", PublicIPAddressCheckStatus.InvalidResponse)]
+    [InlineData("::ffff:203.0.113.10", PublicIPAddressCheckStatus.InvalidResponse)]
+    [InlineData("fec0::1", PublicIPAddressCheckStatus.PrivateIPAddress)]
     [InlineData("240.0.0.1", PublicIPAddressCheckStatus.InvalidResponse)]
     public void GetStatus(string ipAddress, PublicIPAddressCheckStatus expected)
     {

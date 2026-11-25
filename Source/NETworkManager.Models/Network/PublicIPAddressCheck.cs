@@ -129,8 +129,8 @@ public static partial class PublicIPAddressCheck
 
     /// <summary>
     ///     Status of an IP address returned by the API: a private, shared (carrier-grade NAT), link-local or loopback
-    ///     address is not the public IP address (e.g. the answer of a captive portal or a proxy); an unspecified,
-    ///     multicast or reserved address is no valid answer.
+    ///     address (IPv6 also site-local) is not the public IP address (e.g. the answer of a captive portal or a proxy);
+    ///     an unspecified, multicast, reserved or IPv4-mapped IPv6 address is no valid answer.
     /// </summary>
     /// <param name="ipAddress">IP address returned by the API.</param>
     /// <returns><see cref="PublicIPAddressCheckStatus.Success" />, <see cref="PublicIPAddressCheckStatus.PrivateIPAddress" />
@@ -149,9 +149,15 @@ public static partial class PublicIPAddressCheck
             if (bytes[0] == 100 && bytes[1] is >= 64 and <= 127)
                 return PublicIPAddressCheckStatus.PrivateIPAddress;
         }
-        else if (ipAddress.Equals(IPAddress.IPv6Any) || ipAddress.IsIPv6Multicast)
+        else
         {
-            return PublicIPAddressCheckStatus.InvalidResponse;
+            // Unspecified, multicast, IPv4-mapped (e.g. ::ffff:10.1.2.3, no IPv6 address)
+            if (ipAddress.Equals(IPAddress.IPv6Any) || ipAddress.IsIPv6Multicast || ipAddress.IsIPv4MappedToIPv6)
+                return PublicIPAddressCheckStatus.InvalidResponse;
+
+            // Site-local (fec0::/10, deprecated)
+            if (ipAddress.IsIPv6SiteLocal)
+                return PublicIPAddressCheckStatus.PrivateIPAddress;
         }
 
         return IPAddressHelper.IsPrivateIPAddress(ipAddress) || NetworkInterface.IsLinkLocal(ipAddress) ||
