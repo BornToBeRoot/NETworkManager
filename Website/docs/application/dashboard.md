@@ -83,7 +83,6 @@ Override the default IPv4 address API to resolve the public IP address. The API 
 | [`https://ifconfig.co/ip`](https://ifconfig.co/ip) | Plain text |
 | [`https://ipinfo.io/ip`](https://ipinfo.io/ip) | Plain text |
 | [`https://ip4.seeip.org`](https://ip4.seeip.org/) | Plain text |
-| [`https://api.my-ip.io/ip`](https://api.my-ip.io/ip) | Plain text |
 | [`http://ip-api.com/line/?fields=query`](http://ip-api.com/line/?fields=query) | Plain text (`http` only, 45 requests per minute, non-commercial use only) |
 
 Many APIs also return JSON with more information (e.g. `https://ipinfo.io/json`, `https://ifconfig.co/json`, `http://ip-api.com/json`), the first string value that is an IP address is used. An API that returns `key=value` lines (e.g. `https://1.1.1.1/cdn-cgi/trace`) is not supported.
