@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using NETworkManager.Settings;
@@ -119,11 +120,16 @@ public partial class DashboardView
         Grid.SetColumn(ContentControlIPApiDNSResolver, showIPGeolocation ? 4 : 0);
         Grid.SetColumnSpan(ContentControlIPApiDNSResolver, showIPGeolocation ? 1 : 5);
 
-        EmptyStateMessageNoWidgets.Visibility = settings.Dashboard_ShowNetworkConnectionWidget ||
-                                                settings.Dashboard_ShowSpeedTestWidget || showIPGeolocation ||
-                                                showDNSResolver
-            ? Visibility.Collapsed
-            : Visibility.Visible;
+        // Gap of 10 between the visible widgets (not below the last one, the scroll viewer has a margin of 10)
+        var visibleWidgets = new FrameworkElement[]
+                { ContentControlNetworkConnection, ContentControlSpeedTest, GridIPApi }
+            .Where(x => x.Visibility == Visibility.Visible)
+            .ToList();
+
+        for (var i = 0; i < visibleWidgets.Count; i++)
+            visibleWidgets[i].Margin = new Thickness(0, 0, 0, i < visibleWidgets.Count - 1 ? 10 : 0);
+
+        EmptyStateMessageNoWidgets.Visibility = visibleWidgets.Count == 0 ? Visibility.Visible : Visibility.Collapsed;
     }
 
     /// <summary>
