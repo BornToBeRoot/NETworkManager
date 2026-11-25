@@ -269,8 +269,11 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
         // Without a routed IPv6 address, the IPv6 checks of the router and the internet are not available
         var isIPv6Available = computerIPv6Result.State == ConnectionState.OK;
 
+        // No DNS name of a link-local IPv4 address (no DHCP server): the lookup fails and would point to the DNS server
+        var resolveIPv4 = localIPv4 != null && !NetworkInterface.IsLinkLocal(localIPv4) ? localIPv4 : null;
+
         await Task.WhenAll(
-            CheckConnectionComputerDnsAsync(localIPv4, isIPv6Available ? localIPv6 : null),
+            CheckConnectionComputerDnsAsync(resolveIPv4, isIPv6Available ? localIPv6 : null),
             CheckConnectionRouterAsync(localIPv4, isIPv4Routed, isIPv6Available ? localIPv6 : null),
             CheckConnectionInternetAsync(isIPv6Available)
         );
@@ -560,8 +563,7 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
         var publicIP = publicIPAddress is { Status: PublicIPAddressCheckStatus.Success } ? publicIPAddress.IPAddress : null;
 
         item.Complete(value, NetworkConnectionCheck.GetInternetResult(addressFamily, isPingSuccessful,
-                publicIPAddress, connectivityLevelTask.Result),
-            publicIP?.ToString() ?? (isPingSuccessful ? pingInfo.IPAddress.ToString() : null));
+            publicIPAddress, connectivityLevelTask.Result), publicIP?.ToString() ?? string.Empty);
 
         return publicIP;
     }
