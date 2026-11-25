@@ -208,7 +208,7 @@ public class ConnectionCheckItem : PropertyChangedBase
     /// Gets the command to copy the value.
     /// </summary>
     public ICommand CopyValueCommand => new RelayCommand(_ => ClipboardHelper.SetClipboard(Value),
-        _ => !string.IsNullOrEmpty(Value));
+        _ => !string.IsNullOrEmpty(Value) && Value != "-/-");
 
     /// <summary>
     /// Gets the command to open the target in another tool (parameter: <see cref="ApplicationName"/>).
