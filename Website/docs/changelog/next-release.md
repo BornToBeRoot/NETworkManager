@@ -21,7 +21,7 @@ Release date: **xx.xx.2026**
 
 **Dashboard**
 
-- A custom public IP address API (**Settings > Dashboard**) must return the IP address as plain text or in a JSON object (e.g. `{"ip":"xx.xx.xx.xx"}`). An address inside other text or an HTML page (e.g. `checkip.dyndns.org`) is no longer used, because the page of a hotspot / captive portal could be shown as the public IP address. See the [examples](../application/dashboard.md#use-custom-ipv4-address-api). [#PR](PRLINK)
+- A custom public IP address API (**Settings > Dashboard**) must return the IP address as plain text or in a JSON object (e.g. `{"ip":"xx.xx.xx.xx"}`). An address inside other text or an HTML page (e.g. `checkip.dyndns.org`) is no longer used, because the page of a hotspot / captive portal could be shown as the public IP address. See the [examples](../application/dashboard.md#use-custom-ipv4-address-api). [#3734](https://github.com/BornToBeRoot/NETworkManager/pull/3734)
 
 ## What's new?
 
@@ -35,7 +35,7 @@ Release date: **xx.xx.2026**
 
 **Dashboard**
 
-- The widgets of the dashboard (Network connection, Speed Test, IP geolocation, DNS resolver) can be hidden in the settings (**Settings > Dashboard > Widgets**). A hidden widget doesn't check anything (a running speed test is completed). [#PR](PRLINK)
+- The widgets of the dashboard (Network connection, Speed Test, IP geolocation, DNS resolver) can be hidden in the settings (**Settings > Dashboard > Widgets**). A hidden widget doesn't check anything (a running speed test is completed). [#3734](https://github.com/BornToBeRoot/NETworkManager/pull/3734)
 
 ## Improvements
 
@@ -59,24 +59,24 @@ Release date: **xx.xx.2026**
 
 **Dashboard**
 
-- Switching back to the dashboard checks the network connection only if the last check is at least 60 seconds old (or the network / a setting of the network connection changed), instead of on every switch between the tools. **F5** and the refresh button always check. [#PR](PRLINK)
-- The network connection check is faster (also at startup and in the status window): the local IP address and the gateway are read directly from the network adapters instead of querying all adapter details incl. PowerShell up to four times per check. This also speeds up the detection of the local IP address in the **IP Scanner** when no route is available. [#PR](PRLINK)
-- The network connection shows a warning instead of OK if the computer has only a link-local IPv4 address (`169.254.x.x`, no address from a DHCP server) or no route to the internet. Without an IPv6 connection (e.g. the internet provider doesn't support IPv6), the IPv6 values are shown as information (gray) instead of failed (red), and the IPv6 address of the router and the internet are not checked. Hover over an icon to see the reason. [#PR](PRLINK)
-- The DNS name (PTR) of the IPv6 address is no longer requested after the DNS server failed for the IPv4 address (the same server would time out again), so the network connection check finishes faster without a working DNS server. Without an IP address to resolve, the DNS value is shown as information instead of failed. [#PR](PRLINK)
-- The gateway / router is now pinged (2 attempts, 2 seconds timeout) instead of only checking that a gateway is configured. No reply is shown as a warning (some routers block ICMP). A network adapter without a gateway (e.g. a VPN connection) is shown as a warning instead of failed if the internet is routed via it. [#PR](PRLINK)
-- The internet is now checked with a ping of the public IPv4 / IPv6 address (settings, `1.1.1.1` / `2606:4700:4700::1111`), the public IP address API and the internet connectivity reported by Windows. A hotspot / captive portal that requires a sign-in, a blocked public IP address API (e.g. a proxy) or blocked ICMP are shown as a warning instead of the internet being not reachable. With **Check public IP address** disabled, the internet is still checked (ping and Windows) instead of showing "Check is disabled!". [#PR](PRLINK)
-- The values of the network connection (dashboard and status window) can be opened in other tools via the context menu: Port Scanner, Ping Monitor, Traceroute and DNS Lookup, the gateway / router also in the Web Console, the public IP address also in RDAP and IP Geolocation. **Copy** copies the whole value. Opening a tool from the status window shows the main window. [#PR](PRLINK)
-- A value of the network connection that is cut off in a narrow window (e.g. a long IPv6 address or DNS name) is shown completely in the tooltip. [#PR](PRLINK)
-- The network connection shows the time of the last check ("Reloaded at ...") next to the refresh button, like other tools. [#PR](PRLINK)
-- New **Copy all** button in the network connection: copies all values with the reasons of the states as text, e.g. for a support request. [#PR](PRLINK)
+- Switching back to the dashboard checks the network connection only if the last check is at least 60 seconds old (or the network / a setting of the network connection changed), instead of on every switch between the tools. **F5** and the refresh button always check. [#3734](https://github.com/BornToBeRoot/NETworkManager/pull/3734)
+- The network connection check is faster (also at startup and in the status window): the local IP address and the gateway are read directly from the network adapters instead of querying all adapter details incl. PowerShell up to four times per check. This also speeds up the detection of the local IP address in the **IP Scanner** when no route is available. [#3734](https://github.com/BornToBeRoot/NETworkManager/pull/3734)
+- The network connection shows a warning instead of OK if the computer has only a link-local IPv4 address (`169.254.x.x`, no address from a DHCP server) or no route to the internet. Without an IPv6 connection (e.g. the internet provider doesn't support IPv6), the IPv6 values are shown as information (gray) instead of failed (red), and the IPv6 address of the router and the internet are not checked. Hover over an icon to see the reason. [#3734](https://github.com/BornToBeRoot/NETworkManager/pull/3734)
+- The DNS name (PTR) of the IPv6 address is no longer requested after the DNS server failed for the IPv4 address (the same server would time out again), so the network connection check finishes faster without a working DNS server. Without an IP address to resolve, the DNS value is shown as information instead of failed. [#3734](https://github.com/BornToBeRoot/NETworkManager/pull/3734)
+- The gateway / router is now pinged (2 attempts, 2 seconds timeout) instead of only checking that a gateway is configured. No reply is shown as a warning (some routers block ICMP). A network adapter without a gateway (e.g. a VPN connection) is shown as a warning instead of failed if the internet is routed via it. [#3734](https://github.com/BornToBeRoot/NETworkManager/pull/3734)
+- The internet is now checked with a ping of the public IPv4 / IPv6 address (settings, `1.1.1.1` / `2606:4700:4700::1111`), the public IP address API and the internet connectivity reported by Windows. A hotspot / captive portal that requires a sign-in, a blocked public IP address API (e.g. a proxy) or blocked ICMP are shown as a warning instead of the internet being not reachable. With **Check public IP address** disabled, the internet is still checked (ping and Windows) instead of showing "Check is disabled!". [#3734](https://github.com/BornToBeRoot/NETworkManager/pull/3734)
+- The values of the network connection (dashboard and status window) can be opened in other tools via the context menu: Port Scanner, Ping Monitor, Traceroute and DNS Lookup, the gateway / router also in the Web Console, the public IP address also in RDAP and IP Geolocation. **Copy** copies the whole value. Opening a tool from the status window shows the main window. [#3734](https://github.com/BornToBeRoot/NETworkManager/pull/3734)
+- A value of the network connection that is cut off in a narrow window (e.g. a long IPv6 address or DNS name) is shown completely in the tooltip. [#3734](https://github.com/BornToBeRoot/NETworkManager/pull/3734)
+- The network connection shows the time of the last check ("Reloaded at ...") next to the refresh button, like other tools. [#3734](https://github.com/BornToBeRoot/NETworkManager/pull/3734)
+- New **Copy all** button in the network connection: copies all values with the reasons of the states as text, e.g. for a support request. [#3734](https://github.com/BornToBeRoot/NETworkManager/pull/3734)
 
 **Status window**
 
-- The countdown of the status window moves smoothly (like the progress of the IP Scanner) instead of in small steps, and the window no longer grows and moves right after it was opened on a network change. [#PR](PRLINK)
+- The countdown of the status window moves smoothly (like the progress of the IP Scanner) instead of in small steps, and the window no longer grows and moves right after it was opened on a network change. [#3734](https://github.com/BornToBeRoot/NETworkManager/pull/3734)
 
 **Notifications**
 
-- The countdown of the notifications (e.g. Ping Monitor, IP Scanner) moves smoothly, like the progress of the IP Scanner, instead of in small steps. [#PR](PRLINK)
+- The countdown of the notifications (e.g. Ping Monitor, IP Scanner) moves smoothly, like the progress of the IP Scanner, instead of in small steps. [#3734](https://github.com/BornToBeRoot/NETworkManager/pull/3734)
 
 ## Bug Fixes
 
@@ -152,20 +152,20 @@ Release date: **xx.xx.2026**
 
 **Dashboard**
 
-- Fixed the network connection check getting stuck (all values loading until the next refresh) when it was started several times while a check was running (e.g. the refresh and a network change). The refresh is disabled while a check runs, a network change during a check repeats the check once it has finished. [#PR](PRLINK)
-- Fixed the network connection widget (dashboard and status window) not updating when **Check public IP address** was changed in the settings until the application was restarted: an old public IP address could be shown as current. [#PR](PRLINK)
-- Fixed the network connection not being checked again when the network changed while the dashboard was open (e.g. a cable unplugged or a VPN connected), although the documentation says so. If the dashboard is not open (or the window is in the tray / minimized, the status window checks meanwhile), it is checked when it is shown again. [#PR](PRLINK)
-- Fixed the gateway / router not being found (shown as failed although the internet works) for VPN connections whose adapter is not an Ethernet or Wi-Fi adapter (e.g. the Windows VPN client with IKEv2 / SSTP). A VPN adapter without a gateway is no longer shown with the gateway `0.0.0.0`. [#PR](PRLINK)
-- Fixed an IP address on an error page or the page of a hotspot / captive portal (e.g. hotel Wi-Fi) being shown as the public IP address. The answer of the API must have a success status code, a private IP address is shown as a warning, and an API name that can't be resolved points to the DNS server. The public IPv4 and IPv6 addresses are requested at the same time. [#PR](PRLINK)
-- Fixed custom public IPv6 address APIs that answer with a JSON object (e.g. `{"ip":"2001:db8::1"}`) not being recognized. A custom API may answer with the IP address as plain text or in a JSON object; other answers (e.g. the HTML page of a captive portal) are no longer searched for an IP address. [#PR](PRLINK)
+- Fixed the network connection check getting stuck (all values loading until the next refresh) when it was started several times while a check was running (e.g. the refresh and a network change). The refresh is disabled while a check runs, a network change during a check repeats the check once it has finished. [#3734](https://github.com/BornToBeRoot/NETworkManager/pull/3734)
+- Fixed the network connection widget (dashboard and status window) not updating when **Check public IP address** was changed in the settings until the application was restarted: an old public IP address could be shown as current. [#3734](https://github.com/BornToBeRoot/NETworkManager/pull/3734)
+- Fixed the network connection not being checked again when the network changed while the dashboard was open (e.g. a cable unplugged or a VPN connected), although the documentation says so. If the dashboard is not open (or the window is in the tray / minimized, the status window checks meanwhile), it is checked when it is shown again. [#3734](https://github.com/BornToBeRoot/NETworkManager/pull/3734)
+- Fixed the gateway / router not being found (shown as failed although the internet works) for VPN connections whose adapter is not an Ethernet or Wi-Fi adapter (e.g. the Windows VPN client with IKEv2 / SSTP). A VPN adapter without a gateway is no longer shown with the gateway `0.0.0.0`. [#3734](https://github.com/BornToBeRoot/NETworkManager/pull/3734)
+- Fixed an IP address on an error page or the page of a hotspot / captive portal (e.g. hotel Wi-Fi) being shown as the public IP address. The answer of the API must have a success status code, a private IP address is shown as a warning, and an API name that can't be resolved points to the DNS server. The public IPv4 and IPv6 addresses are requested at the same time. [#3734](https://github.com/BornToBeRoot/NETworkManager/pull/3734)
+- Fixed custom public IPv6 address APIs that answer with a JSON object (e.g. `{"ip":"2001:db8::1"}`) not being recognized. A custom API may answer with the IP address as plain text or in a JSON object; other answers (e.g. the HTML page of a captive portal) are no longer searched for an IP address. [#3734](https://github.com/BornToBeRoot/NETworkManager/pull/3734)
 
 **Status window**
 
-- The status window now opens after a network change once the network has settled (5 seconds without further changes, e.g. after the DHCP address was assigned, at most 20 seconds after the first change) instead of 5 seconds after the first change, so it no longer shows an intermediate state. An error while updating the DNS configuration after a network change no longer stops the detection of further network changes. [#PR](PRLINK)
-- The status window that opens on a network change no longer takes the keyboard focus from the application you are working in. Clicking into it keeps it open (the countdown stops). [#PR](PRLINK)
-- Fixed the status window being hidden right after it was opened from the tray icon when the countdown of a previous network change had just ended. [#PR](PRLINK)
-- Fixed the status window being cut off on the left on small screens (e.g. 1280 x 720 with 150 % scaling). It is no longer wider than the screen. [#PR](PRLINK)
-- Fixed the status window opened by the user (e.g. from the tray icon) closing itself after a network change. It stays open and checks the network connection again. [#PR](PRLINK)
+- The status window now opens after a network change once the network has settled (5 seconds without further changes, e.g. after the DHCP address was assigned, at most 20 seconds after the first change) instead of 5 seconds after the first change, so it no longer shows an intermediate state. An error while updating the DNS configuration after a network change no longer stops the detection of further network changes. [#3734](https://github.com/BornToBeRoot/NETworkManager/pull/3734)
+- The status window that opens on a network change no longer takes the keyboard focus from the application you are working in. Clicking into it keeps it open (the countdown stops). [#3734](https://github.com/BornToBeRoot/NETworkManager/pull/3734)
+- Fixed the status window being hidden right after it was opened from the tray icon when the countdown of a previous network change had just ended. [#3734](https://github.com/BornToBeRoot/NETworkManager/pull/3734)
+- Fixed the status window being cut off on the left on small screens (e.g. 1280 x 720 with 150 % scaling). It is no longer wider than the screen. [#3734](https://github.com/BornToBeRoot/NETworkManager/pull/3734)
+- Fixed the status window opened by the user (e.g. from the tray icon) closing itself after a network change. It stays open and checks the network connection again. [#3734](https://github.com/BornToBeRoot/NETworkManager/pull/3734)
 
 ## Dependencies, Refactoring & Documentation
 
