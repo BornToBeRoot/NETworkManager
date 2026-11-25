@@ -8,6 +8,7 @@
              xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
+             xmlns:models="clr-namespace:NETworkManager.Models;assembly=NETworkManager.Models"
              xmlns:wpfHelpers="clr-namespace:NETworkManager.Utilities.WPF;assembly=NETworkManager.Utilities.WPF"
              mc:Ignorable="d"
              d:DataContext="{d:DesignInstance viewModels:NetworkConnectionWidgetViewModel}">
@@ -16,9 +17,9 @@
     </UserControl.InputBindings>
     <UserControl.Resources>
         <converters:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
+        <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
         <converters:ConnectionStateToRectangleStyleConverter x:Key="ConnectionStateToRectangleStyleConverter" />
         <Style x:Key="ConnectionCheckValueTextBox" TargetType="{x:Type TextBox}" BasedOn="{StaticResource TextBlockAsTextBox}">
-            <Setter Property="ContextMenu" Value="{StaticResource CopyContextMenu}" />
             <Setter Property="TextWrapping" Value="NoWrap" />
             <Setter Property="FontFamily" Value="{StaticResource Fonts.Family.Mono}" />
         </Style>
@@ -42,7 +43,108 @@
                 <TextBlock Grid.Column="2" Style="{StaticResource CenterTextBlock}"
                            Text="{Binding Tag, RelativeSource={RelativeSource AncestorType={x:Type ContentControl}}}" />
                 <TextBox Grid.Column="4" Style="{StaticResource ConnectionCheckValueTextBox}"
-                         Text="{Binding Value, Mode=OneWay}" />
+                         Text="{Binding Value, Mode=OneWay}">
+                    <!-- Open the value in another tool (e.g. the router in the Web Console), then copy. Declared on the
+                         TextBox, so it inherits the DataContext (the ConnectionCheckItem) -->
+                    <TextBox.ContextMenu>
+                        <ContextMenu MinWidth="150">
+                            <MenuItem Header="{x:Static localization:Strings.PortScanner}"
+                                      Command="{Binding OpenApplicationCommand}"
+                                      CommandParameter="{x:Static models:ApplicationName.PortScanner}"
+                                      Visibility="{Binding IsIPAddress, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+                                <MenuItem.Icon>
+                                    <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                                        <Rectangle.OpacityMask>
+                                            <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=ScanLine}" />
+                                        </Rectangle.OpacityMask>
+                                    </Rectangle>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <MenuItem Header="{x:Static localization:Strings.PingMonitor}"
+                                      Command="{Binding OpenApplicationCommand}"
+                                      CommandParameter="{x:Static models:ApplicationName.PingMonitor}"
+                                      Visibility="{Binding IsIPAddress, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+                                <MenuItem.Icon>
+                                    <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                                        <Rectangle.OpacityMask>
+                                            <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=Radar}" />
+                                        </Rectangle.OpacityMask>
+                                    </Rectangle>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <MenuItem Header="{x:Static localization:Strings.Traceroute}"
+                                      Command="{Binding OpenApplicationCommand}"
+                                      CommandParameter="{x:Static models:ApplicationName.Traceroute}"
+                                      Visibility="{Binding IsIPAddress, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+                                <MenuItem.Icon>
+                                    <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                                        <Rectangle.OpacityMask>
+                                            <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=Route}" />
+                                        </Rectangle.OpacityMask>
+                                    </Rectangle>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <MenuItem Header="{x:Static localization:Strings.DNSLookup}"
+                                      Command="{Binding OpenApplicationCommand}"
+                                      CommandParameter="{x:Static models:ApplicationName.DNSLookup}">
+                                <MenuItem.Icon>
+                                    <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                                        <Rectangle.OpacityMask>
+                                            <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=Globe}" />
+                                        </Rectangle.OpacityMask>
+                                    </Rectangle>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <MenuItem Header="{x:Static localization:Strings.RDAP}"
+                                      Command="{Binding OpenApplicationCommand}"
+                                      CommandParameter="{x:Static models:ApplicationName.RDAP}"
+                                      Visibility="{Binding IsPublicIPAddress, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+                                <MenuItem.Icon>
+                                    <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                                        <Rectangle.OpacityMask>
+                                            <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=IdCard}" />
+                                        </Rectangle.OpacityMask>
+                                    </Rectangle>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <MenuItem Header="{x:Static localization:Strings.IPGeolocation}"
+                                      Command="{Binding OpenApplicationCommand}"
+                                      CommandParameter="{x:Static models:ApplicationName.IPGeolocation}"
+                                      Visibility="{Binding IsPublicIPAddress, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+                                <MenuItem.Icon>
+                                    <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                                        <Rectangle.OpacityMask>
+                                            <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=MapPin}" />
+                                        </Rectangle.OpacityMask>
+                                    </Rectangle>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <MenuItem Header="{x:Static localization:Strings.WebConsole}"
+                                      Command="{Binding OpenApplicationCommand}"
+                                      CommandParameter="{x:Static models:ApplicationName.WebConsole}"
+                                      Visibility="{Binding IsRouterIPAddress, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+                                <MenuItem.Icon>
+                                    <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                                        <Rectangle.OpacityMask>
+                                            <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=AppWindow}" />
+                                        </Rectangle.OpacityMask>
+                                    </Rectangle>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <Separator />
+                            <MenuItem Header="{x:Static localization:Strings.Copy}"
+                                      Command="{Binding CopyValueCommand}">
+                                <MenuItem.Icon>
+                                    <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                                        <Rectangle.OpacityMask>
+                                            <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=Copy}" />
+                                        </Rectangle.OpacityMask>
+                                    </Rectangle>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                        </ContextMenu>
+                    </TextBox.ContextMenu>
+                </TextBox>
             </Grid>
         </DataTemplate>
         <Style x:Key="ConnectionCheckRow" TargetType="{x:Type ContentControl}">

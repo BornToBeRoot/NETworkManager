@@ -1105,6 +1105,9 @@ public sealed partial class MainWindow : INotifyPropertyChanged
             return;
         }
 
+        // Requested from another window (e.g. the status window): show the main window
+        ShowWindow();
+
         if (SettingsViewIsOpen)
             CloseSettings();
 

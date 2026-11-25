@@ -21,6 +21,8 @@ The **Network connection** widget (also shown in the status window) checks the c
 | Red | Failed, e.g. the computer has no IPv4 address, the DNS server did not answer, or the internet is not reachable |
 | Gray | Information, e.g. no IPv6 connection: the network or the internet provider may not support IPv6 (the IPv6 checks of the router and the internet are skipped), or no DNS name (PTR record) for the IP address, which many networks don't have |
 
+Right-click a value to open it in another tool: an IP address in the **Port Scanner**, **Ping Monitor**, **Traceroute** or **DNS Lookup**, the gateway / router also in the **Web Console** (e.g. its web interface), the public IP address also in **RDAP** and **IP Geolocation**, and a DNS name in the **DNS Lookup**. **Copy** copies the value.
+
 ### Keyboard shortcuts
 
 | Key | Action |

@@ -41,17 +41,17 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
     /// <summary>
     /// Gets the computer IPv4 check (is checking / value / state).
     /// </summary>
-    public ConnectionCheckItem ComputerIPv4 { get; } = new();
+    public ConnectionCheckItem ComputerIPv4 { get; } = new(ConnectionCheckItemKind.ComputerIPAddress);
 
     /// <summary>
     /// Gets the computer IPv6 check (is checking / value / state).
     /// </summary>
-    public ConnectionCheckItem ComputerIPv6 { get; } = new();
+    public ConnectionCheckItem ComputerIPv6 { get; } = new(ConnectionCheckItemKind.ComputerIPAddress);
 
     /// <summary>
     /// Gets the computer DNS check (is checking / value / state).
     /// </summary>
-    public ConnectionCheckItem ComputerDNS { get; } = new();
+    public ConnectionCheckItem ComputerDNS { get; } = new(ConnectionCheckItemKind.DNSName);
 
     #endregion
 
@@ -60,17 +60,17 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
     /// <summary>
     /// Gets the router IPv4 check (is checking / value / state).
     /// </summary>
-    public ConnectionCheckItem RouterIPv4 { get; } = new();
+    public ConnectionCheckItem RouterIPv4 { get; } = new(ConnectionCheckItemKind.RouterIPAddress);
 
     /// <summary>
     /// Gets the router IPv6 check (is checking / value / state).
     /// </summary>
-    public ConnectionCheckItem RouterIPv6 { get; } = new();
+    public ConnectionCheckItem RouterIPv6 { get; } = new(ConnectionCheckItemKind.RouterIPAddress);
 
     /// <summary>
     /// Gets the router DNS check (is checking / value / state).
     /// </summary>
-    public ConnectionCheckItem RouterDNS { get; } = new();
+    public ConnectionCheckItem RouterDNS { get; } = new(ConnectionCheckItemKind.DNSName);
 
     #endregion
 
@@ -79,17 +79,17 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
     /// <summary>
     /// Gets the internet IPv4 check (is checking / value / state).
     /// </summary>
-    public ConnectionCheckItem InternetIPv4 { get; } = new();
+    public ConnectionCheckItem InternetIPv4 { get; } = new(ConnectionCheckItemKind.PublicIPAddress);
 
     /// <summary>
     /// Gets the internet IPv6 check (is checking / value / state).
     /// </summary>
-    public ConnectionCheckItem InternetIPv6 { get; } = new();
+    public ConnectionCheckItem InternetIPv6 { get; } = new(ConnectionCheckItemKind.PublicIPAddress);
 
     /// <summary>
     /// Gets the internet DNS check (is checking / value / state).
     /// </summary>
-    public ConnectionCheckItem InternetDNS { get; } = new();
+    public ConnectionCheckItem InternetDNS { get; } = new(ConnectionCheckItemKind.DNSName);
 
     #endregion
 
@@ -493,7 +493,8 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
                     (isPingSuccessful ? $"{pingInfo.IPAddress} ({pingInfo.Time} ms)" : "-/-");
 
         item.Complete(value, NetworkConnectionCheck.GetInternetResult(addressFamily, isPingSuccessful,
-            publicIPAddress, connectivityLevelTask.Result));
+            publicIPAddress, connectivityLevelTask.Result), publicIPAddress?.IPAddress?.ToString() ??
+                                                            (isPingSuccessful ? pingInfo.IPAddress.ToString() : null));
 
         return publicIPAddress?.IPAddress;
     }
