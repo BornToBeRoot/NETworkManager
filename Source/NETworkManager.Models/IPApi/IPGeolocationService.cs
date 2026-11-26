@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -90,10 +91,7 @@ public class IPGeolocationService : SingletonBase<IPGeolocationService>
                 if (!UpdateRateLimit(response.Headers))
                     Log.Warn("The rate limit headers (X-Rl, X-Ttl) of ip-api.com are missing or invalid.");
 
-                var json = await response.Content.ReadAsStringAsync();
-                var info = JsonConvert.DeserializeObject<IPGeolocationInfo>(json);
-
-                return new IPGeolocationResult(info);
+                return ParseResponse(await response.Content.ReadAsStringAsync());
             }
 
             // Consider the request as failed if the status code is not successful or 429.
@@ -115,6 +113,21 @@ public class IPGeolocationService : SingletonBase<IPGeolocationService>
         {
             return new IPGeolocationResult(ex);
         }
+    }
+
+    /// <summary>
+    ///     Parses the answer of the API.
+    /// </summary>
+    /// <param name="json">Body of the answer.</param>
+    /// <returns>IP geolocation information, an error if the body is empty (e.g. from a proxy or a captive portal).</returns>
+    /// <exception cref="JsonException">The body is not JSON.</exception>
+    public static IPGeolocationResult ParseResponse(string json)
+    {
+        var info = JsonConvert.DeserializeObject<IPGeolocationInfo>(json);
+
+        return info == null
+            ? new IPGeolocationResult(new InvalidDataException("The response of the API is empty."))
+            : new IPGeolocationResult(info);
     }
 
     /// <summary>

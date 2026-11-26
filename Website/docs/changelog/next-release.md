@@ -174,6 +174,7 @@ Release date: **xx.xx.2026**
 - Fixed the IP geolocation and DNS resolver widgets showing old values after the network changed (e.g. a VPN connected: the network connection showed the new public IP address, the IP geolocation the old one). They are checked again with the network connection: after a network change, and when the dashboard is shown again and the last check is at least 60 seconds old. [#3741](https://github.com/BornToBeRoot/NETworkManager/pull/3741)
 - Fixed the IP geolocation and DNS resolver widgets showing an empty result (and the error texts on top of it) after their check was enabled in the settings, until the refresh button was clicked. They are checked when the dashboard is shown again, also after the widget was shown again. [#3741](https://github.com/BornToBeRoot/NETworkManager/pull/3741)
 - Fixed the IP geolocation widget failing when a proxy removed the rate limit headers of ip-api.com. The result is shown. [#3741](https://github.com/BornToBeRoot/NETworkManager/pull/3741)
+- Fixed the DNS resolver widget showing "Object reference not set to an instance of an object" when edns.ip-api.com answered with an empty response (e.g. a proxy). An empty response of ip-api.com is shown as an error in both widgets. [#3741](https://github.com/BornToBeRoot/NETworkManager/pull/3741)
 
 **Status window**
 
@@ -189,11 +190,13 @@ Release date: **xx.xx.2026**
 - Fixed a query waiting up to 100 seconds when ip-api.com did not respond (e.g. a firewall that drops the request). It fails after 10 seconds. [#3741](https://github.com/BornToBeRoot/NETworkManager/pull/3741)
 - Fixed "Rate limit reached! Try again in ... seconds" always showing the whole time window of ip-api.com (e.g. 60 seconds) instead of the time that is left. [#3741](https://github.com/BornToBeRoot/NETworkManager/pull/3741)
 - Fixed every query failing with "The rate limit values couldn't be extracted from the http header..." when a proxy removed the rate limit headers of ip-api.com. The result is shown, the rate limit is still detected by ip-api.com's answer (HTTP 429). [#3741](https://github.com/BornToBeRoot/NETworkManager/pull/3741)
+- Fixed an empty response of ip-api.com (e.g. from a proxy) being shown as an empty result instead of an error. [#3741](https://github.com/BornToBeRoot/NETworkManager/pull/3741)
 
 **Traceroute**
 
 - Fixed the traceroute waiting up to 100 seconds per hop when the IP geolocation is enabled and ip-api.com did not respond (e.g. a firewall that drops the request). The geolocation of a hop fails after 10 seconds. [#3741](https://github.com/BornToBeRoot/NETworkManager/pull/3741)
 - Fixed the IP geolocation of every hop failing with "The rate limit values couldn't be extracted from the http header..." when a proxy removed the rate limit headers of ip-api.com. [#3741](https://github.com/BornToBeRoot/NETworkManager/pull/3741)
+- Fixed an empty response of ip-api.com (e.g. from a proxy) being shown as an empty IP geolocation of the hop instead of an error. [#3741](https://github.com/BornToBeRoot/NETworkManager/pull/3741)
 
 ## Dependencies, Refactoring & Documentation
 

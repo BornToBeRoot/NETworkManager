@@ -35,6 +35,26 @@ public class IPGeolocationServiceTests
         Assert.Equal(1, IPGeolocationService.GetRemainingSeconds(LastReached, 10, LastReached.AddMinutes(5)));
     }
 
+    [Fact]
+    public void ResponseIsParsed()
+    {
+        var result = IPGeolocationService.ParseResponse(
+            "{\"status\":\"success\",\"country\":\"Germany\",\"countryCode\":\"DE\",\"offset\":3600,\"query\":\"203.0.113.10\"}");
+
+        Assert.False(result.HasError);
+        Assert.Equal("Germany", result.Info.Country);
+        Assert.Equal(3600, result.Info.Offset);
+        Assert.Equal("203.0.113.10", result.Info.Query);
+    }
+
+    [Theory]
+    [InlineData("")]
+    [InlineData("null")]
+    public void EmptyResponseIsAnError(string json)
+    {
+        Assert.True(IPGeolocationService.ParseResponse(json).HasError);
+    }
+
     private static HttpResponseMessage CreateResponse(string xRl, string xTtl)
     {
         var response = new HttpResponseMessage();

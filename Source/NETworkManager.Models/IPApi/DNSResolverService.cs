@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
 using NETworkManager.Utilities;
@@ -42,10 +43,7 @@ public class DNSResolverService : SingletonBase<DNSResolverService>
 
             if (response.IsSuccessStatusCode)
             {
-                var json = await response.Content.ReadAsStringAsync();
-                var info = JsonConvert.DeserializeObject<DNSResolverDeserializationInfo>(json);
-
-                return new DNSResolverResult(DNSResolverInfo.Parse(info));
+                return ParseResponse(await response.Content.ReadAsStringAsync());
             }
 
             return new DNSResolverResult(new HttpRequestException(response.ReasonPhrase, null, response.StatusCode));
@@ -54,5 +52,20 @@ public class DNSResolverService : SingletonBase<DNSResolverService>
         {
             return new DNSResolverResult(ex);
         }
+    }
+
+    /// <summary>
+    ///     Parses the answer of the API.
+    /// </summary>
+    /// <param name="json">Body of the answer.</param>
+    /// <returns>DNS resolver information, an error if the body is empty (e.g. from a proxy or a captive portal).</returns>
+    /// <exception cref="JsonException">The body is not JSON.</exception>
+    public static DNSResolverResult ParseResponse(string json)
+    {
+        var info = JsonConvert.DeserializeObject<DNSResolverDeserializationInfo>(json);
+
+        return info == null
+            ? new DNSResolverResult(new InvalidDataException("The response of the API is empty."))
+            : new DNSResolverResult(DNSResolverInfo.Parse(info));
     }
 }
