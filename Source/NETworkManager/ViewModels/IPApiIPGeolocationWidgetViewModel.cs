@@ -1,6 +1,8 @@
 ﻿using System.Threading.Tasks;
 using System.Windows.Input;
 using log4net;
+using NETworkManager.Controls;
+using NETworkManager.Localization.Resources;
 using NETworkManager.Models.IPApi;
 using NETworkManager.Settings;
 using NETworkManager.Utilities;
@@ -36,6 +38,48 @@ public class IPApiIPGeolocationWidgetViewModel : ViewModelBase
     /// Gets the result of the IP geolocation check.
     /// </summary>
     public IPGeolocationResult Result
+    {
+        get;
+        private set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
+    /// Message of the last check, e.g. an error or the rate limit (shown below the header).
+    /// </summary>
+    public string StatusMessage
+    {
+        get;
+        private set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public StatusLevel StatusMessageLevel
+    {
+        get;
+        private set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public bool IsStatusMessageDisplayed
     {
         get;
         private set
@@ -99,25 +143,43 @@ public class IPApiIPGeolocationWidgetViewModel : ViewModelBase
             return;
 
         IsRunning = true;
+        IsStatusMessageDisplayed = false;
         Result = null;
 
         // Takes at least the refresh interval, so the reload animation is visible and the check can't be spammed -
         // the request runs at the same time
-        Result = await TaskHelper.WithMinimumDurationAsync(
+        var result = await TaskHelper.WithMinimumDurationAsync(
             () => ScreenshotData.IsEnabled
                 ? Task.FromResult(ScreenshotData.CreateIPGeolocationResult())
                 : IPGeolocationService.GetInstance().GetIPGeolocationAsync(),
             GlobalStaticConfiguration.ApplicationUIRefreshInterval);
 
-        // Log error
-        if (Result.HasError)
-            Log.Error($"ip-api.com error: {Result.ErrorMessage}, error code: {Result.ErrorCode}");
+        if (result.HasError)
+        {
+            Log.Error($"ip-api.com error: {result.ErrorMessage}, error code: {result.ErrorCode}");
 
-        // Log rate limit
-        if (Result.RateLimitIsReached)
-            Log.Warn($"ip-api.com rate limit reached. Try again in {Result.RateLimitRemainingTime} seconds.");
+            ShowStatusMessage(WebRequestErrorMessage.Get(IPGeolocationService.Host,
+                IPGeolocationService.RequestTimeout, result.Error), StatusLevel.Error);
+        }
+        else if (result.RateLimitIsReached)
+        {
+            Log.Warn($"ip-api.com rate limit reached. Try again in {result.RateLimitRemainingTime} seconds.");
+
+            ShowStatusMessage(Strings.IPApiRateLimitMessage, StatusLevel.Warning);
+        }
+        else
+        {
+            Result = result;
+        }
 
         IsRunning = false;
+    }
+
+    private void ShowStatusMessage(string message, StatusLevel level)
+    {
+        StatusMessage = message;
+        StatusMessageLevel = level;
+        IsStatusMessageDisplayed = true;
     }
 
     #endregion

@@ -95,7 +95,8 @@ public class IPGeolocationService : SingletonBase<IPGeolocationService>
 
             // Consider the request as failed if the status code is not successful or 429.
             if ((int)response.StatusCode != 429)
-                return new IPGeolocationResult(true, response.ReasonPhrase, (int)response.StatusCode);
+                return new IPGeolocationResult(new HttpRequestException(response.ReasonPhrase, null,
+                    response.StatusCode));
 
             // Code 429
             // We have already reached the rate limit (on the network)
@@ -109,7 +110,7 @@ public class IPGeolocationService : SingletonBase<IPGeolocationService>
         }
         catch (Exception ex)
         {
-            return new IPGeolocationResult(true, ex.Message, -1);
+            return new IPGeolocationResult(ex);
         }
     }
 

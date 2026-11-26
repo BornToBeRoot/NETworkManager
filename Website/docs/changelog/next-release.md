@@ -169,6 +169,7 @@ Release date: **xx.xx.2026**
 - Fixed one failed request (e.g. a short interruption of the connection or a proxy that rejects a large upload) ending the whole speed test. Like the official library, a failed request is skipped (a warning shows how many) and a request rate limited by Cloudflare (HTTP 429) is repeated up to three times. If all requests of a size fail, the larger sizes of the direction are skipped; the test only ends after three requests in a row without a response. [#3740](https://github.com/BornToBeRoot/NETworkManager/pull/3740)
 - Fixed the server of the speed test being empty at the start of a test or shown as `-/-, -/- (-/-)` when Cloudflare did not report it. It is shown as `-/-` like the ISP, with the full name in the tooltip. [#3740](https://github.com/BornToBeRoot/NETworkManager/pull/3740)
 - Fixed the sparkline of the speed test showing the first request twice (one point more than requests, the same value twice in the tooltip). [#3740](https://github.com/BornToBeRoot/NETworkManager/pull/3740)
+- Fixed the IP geolocation widget showing no reason when ip-api.com could not be reached (e.g. no network connection), and the DNS resolver widget showing the English error text of .NET. Both show a translated message below their header (e.g. no response within 10 seconds or the HTTP status code), like the speed test, and a request fails after 10 seconds without a response instead of 100 seconds. [#3741](https://github.com/BornToBeRoot/NETworkManager/pull/3741)
 
 **Status window**
 

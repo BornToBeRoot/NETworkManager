@@ -48,11 +48,11 @@ public class DNSResolverService : SingletonBase<DNSResolverService>
                 return new DNSResolverResult(DNSResolverInfo.Parse(info));
             }
 
-            return new DNSResolverResult(true, response.ReasonPhrase, (int)response.StatusCode);
+            return new DNSResolverResult(new HttpRequestException(response.ReasonPhrase, null, response.StatusCode));
         }
         catch (Exception ex)
         {
-            return new DNSResolverResult(true, ex.Message);
+            return new DNSResolverResult(ex);
         }
     }
 }

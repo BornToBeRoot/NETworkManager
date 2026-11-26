@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using System.Windows.Input;
+using NETworkManager.Controls;
 using NETworkManager.Models.IPApi;
 using NETworkManager.Settings;
 using NETworkManager.Utilities;
@@ -33,6 +34,48 @@ public class IPApiDNSResolverWidgetViewModel : ViewModelBase
     /// Gets the result of the DNS resolver check.
     /// </summary>
     public DNSResolverResult Result
+    {
+        get;
+        private set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
+    /// Message of the last check, e.g. an error or the rate limit (shown below the header).
+    /// </summary>
+    public string StatusMessage
+    {
+        get;
+        private set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public StatusLevel StatusMessageLevel
+    {
+        get;
+        private set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public bool IsStatusMessageDisplayed
     {
         get;
         private set
@@ -97,15 +140,28 @@ public class IPApiDNSResolverWidgetViewModel : ViewModelBase
             return;
 
         IsRunning = true;
+        IsStatusMessageDisplayed = false;
         Result = null;
 
         // Takes at least the refresh interval, so the reload animation is visible and the check can't be spammed -
         // the request runs at the same time
-        Result = await TaskHelper.WithMinimumDurationAsync(
+        var result = await TaskHelper.WithMinimumDurationAsync(
             () => ScreenshotData.IsEnabled
                 ? Task.FromResult(ScreenshotData.CreateDNSResolverResult())
                 : DNSResolverService.GetInstance().GetDNSResolverAsync(),
             GlobalStaticConfiguration.ApplicationUIRefreshInterval);
+
+        if (result.HasError)
+        {
+            StatusMessage = WebRequestErrorMessage.Get(DNSResolverService.Host, DNSResolverService.RequestTimeout,
+                result.Error);
+            StatusMessageLevel = StatusLevel.Error;
+            IsStatusMessageDisplayed = true;
+        }
+        else
+        {
+            Result = result;
+        }
 
         IsRunning = false;
     }

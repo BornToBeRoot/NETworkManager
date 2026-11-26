@@ -10,7 +10,6 @@
              xmlns:networkManager="clr-namespace:NETworkManager"
              xmlns:settings="clr-namespace:NETworkManager.Settings;assembly=NETworkManager.Settings"
              xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
-             xmlns:system="clr-namespace:System;assembly=mscorlib"
              xmlns:wpfHelpers="clr-namespace:NETworkManager.Utilities.WPF;assembly=NETworkManager.Utilities.WPF"
              mc:Ignorable="d" MinHeight="200"
              d:DataContext="{d:DesignInstance viewModels:IPApiDNSResolverWidgetViewModel}">
@@ -21,8 +20,6 @@
         <converters:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
         <converters:BooleanToVisibilityHiddenConverter x:Key="BooleanToVisibilityHiddenConverter" />
-        <converters:IntNotZeroToVisibilityCollapsedConverter x:Key="IntNotZeroToVisibilityCollapsedConverter" />
-        <converters:IntZeroToVisibilityCollapsedConverter x:Key="IntZeroToVisibilityCollapsedConverter" />
         <converters:StringNullOrEmptyToStringConverter x:Key="StringNullOrEmptyToStringConverter" />
     </UserControl.Resources>
     <Border Style="{StaticResource CardBorder}">
@@ -36,7 +33,8 @@
             </Grid.Resources>
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />                    
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
                 <Grid Grid.Row="0" Margin="10">
@@ -76,6 +74,10 @@
                         </Rectangle>
                     </Button>
                 </Grid>
+                <!-- Error of the last check -->
+                <icons:StatusMessageText Grid.Row="1" Margin="10,0,10,10"
+                                         Text="{Binding StatusMessage}" Level="{Binding StatusMessageLevel}"
+                                         Visibility="{Binding IsStatusMessageDisplayed, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
                 <Grid Grid.Column="0" Grid.Row="2" Margin="10"
                       Visibility="{Binding Source={x:Static Member=settings:SettingsManager.Current}, Path=Dashboard_CheckIPApiDNSResolver, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}">
                     <!-- Result-->
@@ -86,7 +88,8 @@
                                     <DataTrigger Binding="{Binding IsRunning}" Value="True">
                                         <Setter Property="Visibility" Value="Hidden" />
                                     </DataTrigger>
-                                    <DataTrigger Binding="{Binding Result.HasError}" Value="True">
+                                    <!-- No result: not checked yet or error (message below the header) -->
+                                    <DataTrigger Binding="{Binding Result}" Value="{x:Null}">
                                         <Setter Property="Visibility" Value="Hidden" />
                                     </DataTrigger>
                                 </Style.Triggers>
@@ -122,38 +125,6 @@
                         <TextBox Grid.Column="2" Grid.Row="5"
                                  Text="{Binding Result.Info.EdnsGeo, Converter={StaticResource StringNullOrEmptyToStringConverter}}" />
                     </Grid>
-                    <!-- Error message -->
-                    <StackPanel Grid.Column="0" Grid.Row="0" VerticalAlignment="Center">
-                        <StackPanel.Style>
-                            <Style TargetType="{x:Type StackPanel}">
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding IsRunning}" Value="True">
-                                        <Setter Property="Visibility" Value="Hidden" />
-                                    </DataTrigger>
-                                    <DataTrigger Binding="{Binding Result.HasError}" Value="False">
-                                        <Setter Property="Visibility" Value="Hidden" />
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </StackPanel.Style>
-                        <TextBlock Text="{Binding Result.ErrorMessage}" Style="{StaticResource MessageTextBlock}"
-                                   Visibility="{Binding Result.ErrorCode, Converter={StaticResource IntZeroToVisibilityCollapsedConverter}}"
-                                   Margin="0,0,0,10" />
-                        <TextBlock Style="{StaticResource MessageTextBlock}"
-                                   Visibility="{Binding Result.ErrorCode, Converter={StaticResource IntNotZeroToVisibilityCollapsedConverter}}"
-                                   Margin="0,0,0,10">
-                            <TextBlock.Text>
-                                <MultiBinding StringFormat="{}{0} {1}{3}{2}">
-                                    <Binding Source="{x:Static localization:Strings.HTTPStatusCode}" />
-                                    <Binding Path="Result.ErrorCode" />
-                                    <Binding Path="Result.ErrorMessage" />
-                                    <Binding Source="{x:Static system:Environment.NewLine}" />
-                                </MultiBinding>
-                            </TextBlock.Text>
-                        </TextBlock>
-                        <TextBlock Text="{x:Static localization:Strings.CheckNetworkConnectionTryAgainMessage}"
-                                   Style="{StaticResource MessageTextBlock}" />
-                    </StackPanel>
                     <!-- Loading indicator -->
                     <StackPanel Grid.Column="0" Grid.Row="0" VerticalAlignment="Center"
                                 Visibility="{Binding IsRunning, Converter={StaticResource BooleanToVisibilityHiddenConverter}}">
