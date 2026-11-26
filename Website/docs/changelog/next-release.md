@@ -161,6 +161,7 @@ Release date: **xx.xx.2026**
 - Fixed custom public IPv6 address APIs that answer with a JSON object (e.g. `{"ip":"2001:db8::1"}`) not being recognized. A custom API may answer with the IP address as plain text or in a JSON object; other answers (e.g. the HTML page of a captive portal) are no longer searched for an IP address. [#3734](https://github.com/BornToBeRoot/NETworkManager/pull/3734)
 - Fixed the speed test failing completely when the ISP / Cloudflare server could not be requested (`speed.cloudflare.com/meta`, e.g. an error of the server or a network without an ASN). The test continues, ISP and server are shown as `-/-`. [#PR](PRLINK)
 - Fixed the download speed of the speed test jumping above the result while the test runs (e.g. a short burst of data) and dropping at the end. The value shown is the result of the completed requests, only the first request is shown while it runs. [#PR](PRLINK)
+- Fixed the speed test running endlessly ("Measuring download speed...") when the connection was lost during the test (e.g. Wi-Fi disconnected). A request now fails after 15 seconds without a response or data. [#PR](PRLINK)
 
 **Status window**
 

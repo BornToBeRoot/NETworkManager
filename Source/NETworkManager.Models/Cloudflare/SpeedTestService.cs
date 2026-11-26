@@ -38,6 +38,12 @@ public class SpeedTestService
     private const double EstimatedHeaderFraction = 1.005;
 
     /// <summary>
+    /// A request fails if nothing happens for this time (no response, no data received or sent). Not a limit of the
+    /// whole request: a large download / upload on a slow connection takes longer.
+    /// </summary>
+    private static readonly TimeSpan RequestTimeout = TimeSpan.FromSeconds(15);
+
+    /// <summary>
     /// Minimum gap between mid-stream live throughput emissions, in ms.
     /// </summary>
     private const double LiveProgressIntervalMs = 250.0;
@@ -262,11 +268,14 @@ public class SpeedTestService
     {
         try
         {
-            using var response = await _client.GetAsync($"{BaseUrl}/meta", cancellationToken)
-                .ConfigureAwait(false);
-            response.EnsureSuccessStatusCode();
-            var json = await response.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
-            return JsonConvert.DeserializeObject<SpeedTestMetaInfo>(json);
+            return await WithTimeoutAsync(async timeout =>
+            {
+                using var response = await _client.GetAsync($"{BaseUrl}/meta", timeout.Token)
+                    .ConfigureAwait(false);
+                response.EnsureSuccessStatusCode();
+                var json = await response.Content.ReadAsStringAsync(timeout.Token).ConfigureAwait(false);
+                return JsonConvert.DeserializeObject<SpeedTestMetaInfo>(json);
+            }, cancellationToken).ConfigureAwait(false);
         }
         catch (Exception ex) when (ex is not OperationCanceledException)
         {
@@ -275,102 +284,136 @@ public class SpeedTestService
         }
     }
 
-    private async Task MeasureLatencyAsync(List<double> pings, CancellationToken cancellationToken)
-    {
-        var sw = Stopwatch.StartNew();
-        using var request = new HttpRequestMessage(HttpMethod.Get, $"{BaseUrl}/__down?bytes=0");
-        using var response = await _client
-            .SendAsync(request, HttpCompletionOption.ResponseHeadersRead, cancellationToken)
-            .ConfigureAwait(false);
-        sw.Stop();
-        var ttfb = sw.Elapsed.TotalMilliseconds;
-        response.EnsureSuccessStatusCode();
-        await response.Content.CopyToAsync(Stream.Null, cancellationToken).ConfigureAwait(false);
-
-        var serverTime = ParseServerTiming(response.Headers) ?? DefaultEstimatedServerTimeMs;
-        var ping = ttfb - serverTime;
-        if (ping < 0) ping = 0;
-        pings.Add(ping);
-    }
-
-    private async Task<(double Bps, double DurationMs)> MeasureDownloadAsync(int bytes,
-        CancellationToken cancellationToken, Action<double> onLiveBps)
-    {
-        var sw1 = Stopwatch.StartNew();
-        using var request = new HttpRequestMessage(HttpMethod.Get, $"{BaseUrl}/__down?bytes={bytes}");
-        using var response = await _client
-            .SendAsync(request, HttpCompletionOption.ResponseHeadersRead, cancellationToken)
-            .ConfigureAwait(false);
-        sw1.Stop();
-        var ttfb = sw1.Elapsed.TotalMilliseconds;
-        response.EnsureSuccessStatusCode();
-        var serverTime = ParseServerTiming(response.Headers) ?? DefaultEstimatedServerTimeMs;
-        var ping = ttfb - serverTime;
-        if (ping < 0) ping = 0;
-
-        var sw2 = Stopwatch.StartNew();
-        long bodyBytes;
-        double lastProgressMs = 0;
-        long lastProgressBytes = 0;
-        await using (var stream = await response.Content
-                         .ReadAsStreamAsync(cancellationToken).ConfigureAwait(false))
-        {
-            var buffer = new byte[81920];
-            long total = 0;
-            int read;
-            while ((read = await stream.ReadAsync(buffer, cancellationToken)
-                       .ConfigureAwait(false)) > 0)
-            {
-                total += read;
-                var elapsedMs = sw2.Elapsed.TotalMilliseconds;
-                if (onLiveBps != null && elapsedMs - lastProgressMs >= LiveProgressIntervalMs
-                                       && elapsedMs > 0)
-                {
-                    // Instantaneous throughput over the last interval (delta-based)
-                    var deltaBytes = total - lastProgressBytes;
-                    var deltaMs = elapsedMs - lastProgressMs;
-                    var liveBps = 8.0 * deltaBytes / (deltaMs / 1000.0);
-                    onLiveBps(liveBps);
-                    lastProgressMs = elapsedMs;
-                    lastProgressBytes = total;
-                }
-            }
-            bodyBytes = total;
-        }
-        sw2.Stop();
-        var bodyMs = sw2.Elapsed.TotalMilliseconds;
-
-        var downloadDurationMs = ping + bodyMs;
-        if (downloadDurationMs <= 0)
-            return (0.0, downloadDurationMs);
-
-        // Received bytes incl. an estimate of the headers (the official library uses the transfer size of the browser)
-        var bps = 8.0 * bodyBytes * EstimatedHeaderFraction / (downloadDurationMs / 1000.0);
-        return (bps, downloadDurationMs);
-    }
-
-    private async Task<(double Bps, double DurationMs)> MeasureUploadAsync(int bytes,
+    /// <summary>
+    /// Runs a request that fails with a <see cref="TimeoutException" /> if nothing happens for
+    /// <see cref="RequestTimeout" />. The request restarts the timeout (<c>CancelAfter</c>) whenever data is received or
+    /// sent.
+    /// </summary>
+    private static async Task<T> WithTimeoutAsync<T>(Func<CancellationTokenSource, Task<T>> request,
         CancellationToken cancellationToken)
     {
-        using var request = new HttpRequestMessage(HttpMethod.Post, $"{BaseUrl}/__up");
-        using var content = new ZeroStreamContent(bytes);
-        request.Content = content;
+        using var timeout = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+        timeout.CancelAfter(RequestTimeout);
 
-        var sw = Stopwatch.StartNew();
-        using var response = await _client
-            .SendAsync(request, HttpCompletionOption.ResponseHeadersRead, cancellationToken)
-            .ConfigureAwait(false);
-        sw.Stop();
-        var ttfb = sw.Elapsed.TotalMilliseconds;
-        response.EnsureSuccessStatusCode();
-        await response.Content.CopyToAsync(Stream.Null, cancellationToken).ConfigureAwait(false);
+        try
+        {
+            return await request(timeout).ConfigureAwait(false);
+        }
+        catch (OperationCanceledException) when (!cancellationToken.IsCancellationRequested)
+        {
+            throw new TimeoutException(
+                $"No response from {BaseUrl} within {RequestTimeout.TotalSeconds} seconds.");
+        }
+    }
 
-        var uploadDurationMs = ttfb;
-        if (uploadDurationMs <= 0)
-            return (0.0, uploadDurationMs);
+    private Task MeasureLatencyAsync(List<double> pings, CancellationToken cancellationToken)
+    {
+        return WithTimeoutAsync(async timeout =>
+        {
+            var sw = Stopwatch.StartNew();
+            using var request = new HttpRequestMessage(HttpMethod.Get, $"{BaseUrl}/__down?bytes=0");
+            using var response = await _client
+                .SendAsync(request, HttpCompletionOption.ResponseHeadersRead, timeout.Token)
+                .ConfigureAwait(false);
+            sw.Stop();
+            var ttfb = sw.Elapsed.TotalMilliseconds;
+            response.EnsureSuccessStatusCode();
+            await response.Content.CopyToAsync(Stream.Null, timeout.Token).ConfigureAwait(false);
 
-        var bps = 8.0 * bytes * EstimatedHeaderFraction / (uploadDurationMs / 1000.0);
-        return (bps, uploadDurationMs);
+            var serverTime = ParseServerTiming(response.Headers) ?? DefaultEstimatedServerTimeMs;
+            var ping = ttfb - serverTime;
+            if (ping < 0) ping = 0;
+            pings.Add(ping);
+
+            return true;
+        }, cancellationToken);
+    }
+
+    private Task<(double Bps, double DurationMs)> MeasureDownloadAsync(int bytes,
+        CancellationToken cancellationToken, Action<double> onLiveBps)
+    {
+        return WithTimeoutAsync(async timeout =>
+        {
+            var sw1 = Stopwatch.StartNew();
+            using var request = new HttpRequestMessage(HttpMethod.Get, $"{BaseUrl}/__down?bytes={bytes}");
+            using var response = await _client
+                .SendAsync(request, HttpCompletionOption.ResponseHeadersRead, timeout.Token)
+                .ConfigureAwait(false);
+            sw1.Stop();
+            var ttfb = sw1.Elapsed.TotalMilliseconds;
+            response.EnsureSuccessStatusCode();
+            var serverTime = ParseServerTiming(response.Headers) ?? DefaultEstimatedServerTimeMs;
+            var ping = ttfb - serverTime;
+            if (ping < 0) ping = 0;
+
+            var sw2 = Stopwatch.StartNew();
+            long bodyBytes;
+            double lastProgressMs = 0;
+            long lastProgressBytes = 0;
+            await using (var stream = await response.Content
+                             .ReadAsStreamAsync(timeout.Token).ConfigureAwait(false))
+            {
+                var buffer = new byte[81920];
+                long total = 0;
+                int read;
+                while ((read = await stream.ReadAsync(buffer, timeout.Token)
+                           .ConfigureAwait(false)) > 0)
+                {
+                    total += read;
+                    timeout.CancelAfter(RequestTimeout);
+                    var elapsedMs = sw2.Elapsed.TotalMilliseconds;
+                    if (onLiveBps != null && elapsedMs - lastProgressMs >= LiveProgressIntervalMs
+                                           && elapsedMs > 0)
+                    {
+                        // Instantaneous throughput over the last interval (delta-based)
+                        var deltaBytes = total - lastProgressBytes;
+                        var deltaMs = elapsedMs - lastProgressMs;
+                        var liveBps = 8.0 * deltaBytes / (deltaMs / 1000.0);
+                        onLiveBps(liveBps);
+                        lastProgressMs = elapsedMs;
+                        lastProgressBytes = total;
+                    }
+                }
+                bodyBytes = total;
+            }
+            sw2.Stop();
+            var bodyMs = sw2.Elapsed.TotalMilliseconds;
+
+            var downloadDurationMs = ping + bodyMs;
+            if (downloadDurationMs <= 0)
+                return (0.0, downloadDurationMs);
+
+            // Received bytes incl. an estimate of the headers (the official library uses the transfer size of the browser)
+            var bps = 8.0 * bodyBytes * EstimatedHeaderFraction / (downloadDurationMs / 1000.0);
+            return (bps, downloadDurationMs);
+        }, cancellationToken);
+    }
+
+    private Task<(double Bps, double DurationMs)> MeasureUploadAsync(int bytes,
+        CancellationToken cancellationToken)
+    {
+        return WithTimeoutAsync(async timeout =>
+        {
+            using var request = new HttpRequestMessage(HttpMethod.Post, $"{BaseUrl}/__up");
+            using var content = new ZeroStreamContent(bytes, () => timeout.CancelAfter(RequestTimeout));
+            request.Content = content;
+
+            var sw = Stopwatch.StartNew();
+            using var response = await _client
+                .SendAsync(request, HttpCompletionOption.ResponseHeadersRead, timeout.Token)
+                .ConfigureAwait(false);
+            sw.Stop();
+            var ttfb = sw.Elapsed.TotalMilliseconds;
+            response.EnsureSuccessStatusCode();
+            await response.Content.CopyToAsync(Stream.Null, timeout.Token).ConfigureAwait(false);
+
+            var uploadDurationMs = ttfb;
+            if (uploadDurationMs <= 0)
+                return (0.0, uploadDurationMs);
+
+            var bps = 8.0 * bytes * EstimatedHeaderFraction / (uploadDurationMs / 1000.0);
+            return (bps, uploadDurationMs);
+        }, cancellationToken);
     }
 
     #endregion
@@ -382,11 +425,15 @@ public class SpeedTestService
     private sealed class ZeroStreamContent : HttpContent
     {
         private readonly int _length;
+        private readonly Action _onWritten;
         private static readonly byte[] _chunk = new byte[81920];
 
-        internal ZeroStreamContent(int length)
+        /// <param name="length">Number of bytes.</param>
+        /// <param name="onWritten">Called after each written chunk (e.g. to restart a timeout).</param>
+        internal ZeroStreamContent(int length, Action onWritten)
         {
             _length = length;
+            _onWritten = onWritten;
             Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
             Headers.ContentLength = length;
         }
@@ -403,6 +450,7 @@ public class SpeedTestService
                 var toWrite = Math.Min(_chunk.Length, remaining);
                 await stream.WriteAsync(_chunk.AsMemory(0, toWrite), cancellationToken).ConfigureAwait(false);
                 remaining -= toWrite;
+                _onWritten?.Invoke();
             }
         }
 
