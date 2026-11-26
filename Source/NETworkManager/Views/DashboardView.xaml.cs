@@ -185,10 +185,11 @@ public partial class DashboardView
     }
 
     /// <summary>
-    ///     Settings used by the network connection check: a change marks it as outdated (checked when the dashboard is
-    ///     shown again). Other dashboard settings (e.g. the other widgets) keep the recheck interval.
+    ///     Settings used by the checks: a change marks them as outdated (checked when the dashboard is shown again, e.g.
+    ///     the IP geolocation right after its check was enabled). Other dashboard settings (e.g. the speed test widget)
+    ///     keep the recheck interval.
     /// </summary>
-    private static readonly HashSet<string> NetworkConnectionSettings =
+    private static readonly HashSet<string> CheckSettings =
     [
         nameof(SettingsInfo.Dashboard_PublicIPv4Address),
         nameof(SettingsInfo.Dashboard_PublicIPv6Address),
@@ -197,12 +198,16 @@ public partial class DashboardView
         nameof(SettingsInfo.Dashboard_CustomPublicIPv4AddressAPI),
         nameof(SettingsInfo.Dashboard_UseCustomPublicIPv6AddressAPI),
         nameof(SettingsInfo.Dashboard_CustomPublicIPv6AddressAPI),
-        nameof(SettingsInfo.Dashboard_ShowNetworkConnectionWidget)
+        nameof(SettingsInfo.Dashboard_ShowNetworkConnectionWidget),
+        nameof(SettingsInfo.Dashboard_CheckIPApiIPGeolocation),
+        nameof(SettingsInfo.Dashboard_ShowIPGeolocationWidget),
+        nameof(SettingsInfo.Dashboard_CheckIPApiDNSResolver),
+        nameof(SettingsInfo.Dashboard_ShowDNSResolverWidget)
     ];
 
     private void SettingsManager_PropertyChanged(object sender, PropertyChangedEventArgs e)
     {
-        if (e.PropertyName != null && NetworkConnectionSettings.Contains(e.PropertyName))
+        if (e.PropertyName != null && CheckSettings.Contains(e.PropertyName))
             _isOutdated = true;
 
         // A hidden speed test widget doesn't measure (no data is transferred in the background): cancel it right away,
