@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -9,6 +10,7 @@ using LiveChartsCore.Drawing;
 using LiveChartsCore.Kernel.Sketches;
 using LiveChartsCore.SkiaSharpView;
 using log4net;
+using NETworkManager.Controls;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models.Cloudflare;
 using NETworkManager.Settings;
@@ -75,7 +77,52 @@ public class SpeedTestWidgetViewModel : ViewModelBase
 
     public bool HasResult => Result != null;
 
+    /// <summary>
+    /// Phase of the running test (e.g. "Measuring download speed...").
+    /// </summary>
+    public string PhaseMessage
+    {
+        get;
+        private set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
+    /// Message after the test, e.g. canceled by the user or an error.
+    /// </summary>
     public string StatusMessage
+    {
+        get;
+        private set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public StatusLevel StatusMessageLevel
+    {
+        get;
+        private set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public bool IsStatusMessageDisplayed
     {
         get;
         private set
@@ -254,6 +301,30 @@ public class SpeedTestWidgetViewModel : ViewModelBase
         CurrentJitterMs = result.JitterMs;
     }
 
+    private void ShowStatusMessage(string message, StatusLevel level)
+    {
+        StatusMessage = message;
+        StatusMessageLevel = level;
+        IsStatusMessageDisplayed = true;
+    }
+
+    /// <summary>
+    /// Localized message for an error of the speed test (the exception text is logged).
+    /// </summary>
+    private static string GetErrorMessage(Exception ex)
+    {
+        var message = ex switch
+        {
+            TimeoutException => string.Format(Strings.XXXDidNotRespondWithinXXXSecondsMessage, SpeedTestService.Host,
+                SpeedTestService.RequestTimeout.TotalSeconds),
+            HttpRequestException { StatusCode: not null } httpEx => string.Format(Strings.CouldNotConnectToXXXReasonXXX,
+                SpeedTestService.Host, $"{Strings.HTTPStatusCode} {(int)httpEx.StatusCode}"),
+            _ => string.Format(Strings.CouldNotConnectToXXXMessage, SpeedTestService.Host)
+        };
+
+        return message + Environment.NewLine + Strings.CheckNetworkConnectionTryAgainMessage;
+    }
+
     private static void AddScreenshotSamples(ObservableCollection<double> samples, IEnumerable<double> values)
     {
         foreach (var value in values)
@@ -284,7 +355,8 @@ public class SpeedTestWidgetViewModel : ViewModelBase
         CurrentJitterMs = null;
         DownloadSamples.Clear();
         UploadSamples.Clear();
-        StatusMessage = Strings.FetchingMetadataDots;
+        IsStatusMessageDisplayed = false;
+        PhaseMessage = Strings.FetchingMetadataDots;
 
         if (ScreenshotData.IsEnabled)
         {
@@ -298,7 +370,7 @@ public class SpeedTestWidgetViewModel : ViewModelBase
 
         var progress = new Progress<SpeedTestProgress>(p =>
         {
-            StatusMessage = p.Phase switch
+            PhaseMessage = p.Phase switch
             {
                 SpeedTestPhase.FetchingMetadata => Strings.FetchingMetadataDots,
                 SpeedTestPhase.MeasuringLatency => Strings.MeasuringLatencyDots,
@@ -360,15 +432,13 @@ public class SpeedTestWidgetViewModel : ViewModelBase
         catch (OperationCanceledException)
         {
             // Partial results remain visible; everything resets at the start of the next run.
+            ShowStatusMessage(Strings.CanceledByUserMessage, StatusLevel.None);
         }
         catch (Exception ex)
         {
+            // Partial results remain visible, like after a cancel
             Log.Error("Speed test failed.", ex);
-            Result = new SpeedTestResult
-            {
-                HasError = true,
-                ErrorMessage = ex.Message
-            };
+            ShowStatusMessage(GetErrorMessage(ex), StatusLevel.Error);
         }
         finally
         {

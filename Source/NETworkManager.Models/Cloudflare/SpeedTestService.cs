@@ -23,7 +23,12 @@ public class SpeedTestService
 {
     private static readonly ILog Log = LogManager.GetLogger(typeof(SpeedTestService));
 
-    private const string BaseUrl = "https://speed.cloudflare.com";
+    /// <summary>
+    /// Host of the speed test.
+    /// </summary>
+    public const string Host = "speed.cloudflare.com";
+
+    private const string BaseUrl = "https://" + Host;
     private const string Origin = "https://speed.cloudflare.com";
 
     /// <summary>
@@ -41,7 +46,7 @@ public class SpeedTestService
     /// A request fails if nothing happens for this time (no response, no data received or sent). Not a limit of the
     /// whole request: a large download / upload on a slow connection takes longer.
     /// </summary>
-    private static readonly TimeSpan RequestTimeout = TimeSpan.FromSeconds(15);
+    public static readonly TimeSpan RequestTimeout = TimeSpan.FromSeconds(15);
 
     /// <summary>
     /// Minimum gap between mid-stream live throughput emissions, in ms.

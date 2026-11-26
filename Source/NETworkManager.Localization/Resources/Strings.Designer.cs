@@ -16714,6 +16714,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} did not respond within {1} seconds..
+        /// </summary>
+        public static string XXXDidNotRespondWithinXXXSecondsMessage {
+            get {
+                return ResourceManager.GetString("XXXDidNotRespondWithinXXXSecondsMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0} disconnected!.
         /// </summary>
         public static string XXXDisconnected {

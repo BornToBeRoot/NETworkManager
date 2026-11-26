@@ -28,7 +28,8 @@
             </Grid.Resources>
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />                    
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
                 <!-- Header: icon + title (left), status + action button (right) -->
@@ -50,15 +51,11 @@
                                    Style="{StaticResource MessageTextBlock}" 
                                    Margin="10,0,0,0" />
                     </StackPanel>
-                    <!-- Status (running): spinner + phase -->
+                    <!-- Phase (running): spinner + phase -->
                     <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center"
                                 Visibility="{Binding IsRunning, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
-                        <mah:ProgressRing Style="{StaticResource ProgressRingSmall}" IsActive="True"
-                                          Foreground="{DynamicResource MahApps.Brushes.Accent}" />
-                        <TextBlock Text="{Binding StatusMessage}"
-                                   Style="{StaticResource AccentTextBlock}"
-                                   Margin="10,0,0,0"                                   
-                                   VerticalAlignment="Center" />
+                        <mah:ProgressRing Style="{StaticResource ProgressRingSmall}" IsActive="True" />
+                        <TextBlock Text="{Binding PhaseMessage}" Margin="10,0,0,0" />
                     </StackPanel>
                     <!-- Action button (icon-only) -->
                     <Button Grid.Column="4" VerticalAlignment="Center"
@@ -110,8 +107,12 @@
                         </Rectangle>
                     </Button>
                 </Grid>
+                <!-- Status message after the test (canceled, error), the values of the test stay visible -->
+                <icons:StatusMessageText Grid.Row="1" Margin="10,0,10,10"
+                                         Text="{Binding StatusMessage}" Level="{Binding StatusMessageLevel}"
+                                         Visibility="{Binding IsStatusMessageDisplayed, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
                 <!-- Body -->
-                <Grid Grid.Row="1" Margin="0">
+                <Grid Grid.Row="2" Margin="0">
                     <!-- Disclaimer -->
                     <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center"
                                 Visibility="{Binding ShowDisclaimer, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
@@ -141,47 +142,8 @@
                             </Button.Content>
                         </Button>
                     </StackPanel>
-                    <!-- Error panel (same level as disclaimer — replaces data view entirely) -->
-                    <StackPanel VerticalAlignment="Center">
-                        <StackPanel.Style>
-                            <Style TargetType="{x:Type StackPanel}">
-                                <Setter Property="Visibility" Value="Collapsed" />
-                                <Style.Triggers>
-                                    <MultiDataTrigger>
-                                        <MultiDataTrigger.Conditions>
-                                            <Condition Binding="{Binding IsRunning}" Value="False" />
-                                            <Condition Binding="{Binding Result.HasError}" Value="True" />
-                                        </MultiDataTrigger.Conditions>
-                                        <Setter Property="Visibility" Value="Visible" />
-                                    </MultiDataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </StackPanel.Style>
-                        <TextBlock Text="{Binding Result.ErrorMessage}"
-                                   Style="{StaticResource MessageTextBlock}" Margin="0,0,0,10" />
-                        <TextBlock Text="{x:Static localization:Strings.CheckNetworkConnectionTryAgainMessage}"
-                                   Style="{StaticResource MessageTextBlock}" />
-                    </StackPanel>
-                    <!-- Test view: three equal columns (metadata / download / upload) -->
-                    <!-- Hidden when disclaimer is shown or when there is an error -->
-                    <Grid>
-                        <Grid.Style>
-                            <Style TargetType="{x:Type Grid}">
-                                <Setter Property="Visibility" Value="Visible" />
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding ShowDisclaimer}" Value="True">
-                                        <Setter Property="Visibility" Value="Collapsed" />
-                                    </DataTrigger>
-                                    <MultiDataTrigger>
-                                        <MultiDataTrigger.Conditions>
-                                            <Condition Binding="{Binding IsRunning}" Value="False" />
-                                            <Condition Binding="{Binding Result.HasError}" Value="True" />
-                                        </MultiDataTrigger.Conditions>
-                                        <Setter Property="Visibility" Value="Collapsed" />
-                                    </MultiDataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Grid.Style>
+                    <!-- Test view: three equal columns (metadata / download / upload), hidden while the disclaimer is shown -->
+                    <Grid Visibility="{Binding ShowDisclaimer, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="3*" />
                             <ColumnDefinition Width="20" />

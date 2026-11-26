@@ -5758,4 +5758,7 @@ Do you want to start the scan?</value>
   <data name="AllWidgetsAreHiddenMessage" xml:space="preserve">
     <value>All widgets are hidden. You can show them in the settings of the dashboard.</value>
   </data>
+  <data name="XXXDidNotRespondWithinXXXSecondsMessage" xml:space="preserve">
+    <value>{0} did not respond within {1} seconds.</value>
+  </data>
 </root>

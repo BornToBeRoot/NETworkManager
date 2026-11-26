@@ -58,14 +58,4 @@ public class SpeedTestResult
     /// IATA code of the Cloudflare PoP, e.g. "FRA".
     /// </summary>
     public string ServerIata { get; set; }
-
-    /// <summary>
-    /// Indicates that the speed test run failed.
-    /// </summary>
-    public bool HasError { get; set; }
-
-    /// <summary>
-    /// Error message when <see cref="HasError"/> is <c>true</c>.
-    /// </summary>
-    public string ErrorMessage { get; set; }
 }
