@@ -69,7 +69,7 @@
         <PackageReference Include="log4net" Version="3.6.0" />
         <PackageReference Include="MahApps.Metro" Version="2.4.11" />
         <PackageReference Include="MahApps.Metro.SimpleChildWindow" Version="2.2.1" />
-        <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.4314.35" />
+        <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.4370.26" />
         <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.3.1" />        
         <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.161" />
         <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
