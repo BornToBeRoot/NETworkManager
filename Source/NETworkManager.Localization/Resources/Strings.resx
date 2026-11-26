@@ -5764,4 +5764,7 @@ Do you want to start the scan?</value>
   <data name="XRequestsFailedAndWereSkippedMessage" xml:space="preserve">
     <value>{0} requests failed and were skipped. The result may be less accurate.</value>
   </data>
+  <data name="LastTestAtX" xml:space="preserve">
+    <value>Last test at {0}</value>
+  </data>
 </root>

@@ -60,6 +60,22 @@ public class SpeedTestWidgetViewModel : ViewModelBase
         }
     } = true;
 
+    /// <summary>
+    /// Time of the last completed test, <c>null</c> before the first one.
+    /// </summary>
+    public DateTime? LastTestTime
+    {
+        get;
+        private set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
     public SpeedTestResult Result
     {
         get;
@@ -317,6 +333,7 @@ public class SpeedTestWidgetViewModel : ViewModelBase
             AddSample(UploadSamples, _uploadXAxis, value);
 
         Result = result;
+        LastTestTime = DateTime.Now;
         CurrentDownloadMbps = result.DownloadMbps;
         CurrentUploadMbps = result.UploadMbps;
         CurrentLatencyMs = result.LatencyMs;
@@ -441,6 +458,7 @@ public class SpeedTestWidgetViewModel : ViewModelBase
         {
             var result = await _service.RunAsync(progress, _cts.Token);
             Result = result;
+            LastTestTime = DateTime.Now;
             CurrentDownloadMbps = result.DownloadMbps;
             CurrentUploadMbps = result.UploadMbps;
             CurrentLatencyMs = result.LatencyMs;

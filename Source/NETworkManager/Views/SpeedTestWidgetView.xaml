@@ -51,6 +51,13 @@
                                    Style="{StaticResource MessageTextBlock}" 
                                    Margin="10,0,0,0" />
                     </StackPanel>
+                    <!-- Time of the last test (not while running) -->
+                    <controls:RefreshStatusControl Grid.Column="1"
+                                                   LastRefreshTime="{Binding LastTestTime}"
+                                                   LastRefreshFormat="{x:Static localization:Strings.LastTestAtX}"
+                                                   IsRefreshing="{Binding IsRunning}"
+                                                   HorizontalAlignment="Right"
+                                                   Margin="10,0,0,0" />
                     <!-- Phase (running): spinner + phase -->
                     <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center"
                                 Visibility="{Binding IsRunning, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">

@@ -7719,6 +7719,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Last test at {0}.
+        /// </summary>
+        public static string LastTestAtX {
+            get {
+                return ResourceManager.GetString("LastTestAtX", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Last usable IP address.
         /// </summary>
         public static string LastUsableIPAddress {
