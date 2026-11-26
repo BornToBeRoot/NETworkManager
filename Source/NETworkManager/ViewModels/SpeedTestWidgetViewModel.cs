@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Net.Http;
 using System.Threading;
@@ -199,14 +198,23 @@ public class SpeedTestWidgetViewModel : ViewModelBase
     /// <summary>LiveCharts2 series for the upload sparkline.</summary>
     public ISeries[] UploadSeries { get; }
 
-    /// <summary>Hidden X-axes for the download sparkline (anchored at 0 so the first sample sits at the left edge).</summary>
-    public ICartesianAxis[] DownloadXAxes { get; } = [new Axis { IsVisible = false, MinLimit = 0, MinStep = 1 }];
+    /// <summary>
+    /// X axis of the download sparkline (sample index, hidden). From 0 to at least 1, so the first sample is at the left
+    /// edge instead of in the middle of the chart.
+    /// </summary>
+    private readonly Axis _downloadXAxis = new() { IsVisible = false, MinLimit = 0, MaxLimit = 1, MinStep = 1 };
+
+    /// <summary>X axis of the upload sparkline, see <see cref="_downloadXAxis" />.</summary>
+    private readonly Axis _uploadXAxis = new() { IsVisible = false, MinLimit = 0, MaxLimit = 1, MinStep = 1 };
+
+    /// <summary>Hidden X-axes for the download sparkline.</summary>
+    public ICartesianAxis[] DownloadXAxes { get; }
 
     /// <summary>Hidden Y-axes for the download sparkline.</summary>
     public ICartesianAxis[] DownloadYAxes { get; } = [new Axis { IsVisible = false, MinLimit = 0 }];
 
     /// <summary>Hidden X-axes for the upload sparkline.</summary>
-    public ICartesianAxis[] UploadXAxes { get; } = [new Axis { IsVisible = false, MinLimit = 0, MinStep = 1 }];
+    public ICartesianAxis[] UploadXAxes { get; }
 
     /// <summary>Hidden Y-axes for the upload sparkline.</summary>
     public ICartesianAxis[] UploadYAxes { get; } = [new Axis { IsVisible = false, MinLimit = 0 }];
@@ -217,6 +225,9 @@ public class SpeedTestWidgetViewModel : ViewModelBase
 
     public SpeedTestWidgetViewModel()
     {
+        DownloadXAxes = [_downloadXAxis];
+        UploadXAxes = [_uploadXAxis];
+
         var downloadColor = ChartColors.Primary;
         DownloadSeries =
         [
@@ -299,9 +310,11 @@ public class SpeedTestWidgetViewModel : ViewModelBase
     {
         var result = ScreenshotData.CreateSpeedTestResult();
 
-        // Seed the first point twice, like a real test (see RunAsync)
-        AddScreenshotSamples(DownloadSamples, ScreenshotData.CreateSpeedTestDownloadSamples());
-        AddScreenshotSamples(UploadSamples, ScreenshotData.CreateSpeedTestUploadSamples());
+        foreach (var value in ScreenshotData.CreateSpeedTestDownloadSamples())
+            AddSample(DownloadSamples, _downloadXAxis, value);
+
+        foreach (var value in ScreenshotData.CreateSpeedTestUploadSamples())
+            AddSample(UploadSamples, _uploadXAxis, value);
 
         Result = result;
         CurrentDownloadMbps = result.DownloadMbps;
@@ -334,15 +347,21 @@ public class SpeedTestWidgetViewModel : ViewModelBase
         return message + Environment.NewLine + Strings.CheckNetworkConnectionTryAgainMessage;
     }
 
-    private static void AddScreenshotSamples(ObservableCollection<double> samples, IEnumerable<double> values)
+    /// <summary>
+    /// Adds a sample (one completed request) to a sparkline and extends its X axis to the samples.
+    /// </summary>
+    private static void AddSample(ObservableCollection<double> samples, Axis xAxis, double value)
     {
-        foreach (var value in values)
-        {
-            if (samples.Count == 0)
-                samples.Add(value);
+        samples.Add(value);
+        xAxis.MaxLimit = Math.Max(1, samples.Count - 1);
+    }
 
-            samples.Add(value);
-        }
+    private void ClearSamples()
+    {
+        DownloadSamples.Clear();
+        UploadSamples.Clear();
+        _downloadXAxis.MaxLimit = 1;
+        _uploadXAxis.MaxLimit = 1;
     }
 
     private void AcceptDisclaimerAction()
@@ -362,8 +381,7 @@ public class SpeedTestWidgetViewModel : ViewModelBase
         CurrentUploadMbps = null;
         CurrentLatencyMs = null;
         CurrentJitterMs = null;
-        DownloadSamples.Clear();
-        UploadSamples.Clear();
+        ClearSamples();
         IsStatusMessageDisplayed = false;
         PhaseMessage = Strings.FetchingMetadataDots;
 
@@ -398,20 +416,10 @@ public class SpeedTestWidgetViewModel : ViewModelBase
                 CurrentJitterMs = p.JitterMs;
 
             if (p.NewDownloadSampleMbps.HasValue)
-            {
-                // Seed the first point twice so LiveCharts2 renders the sparkline
-                // anchored at x=0 rather than starting mid-chart on the first sample.
-                if (DownloadSamples.Count == 0)
-                    DownloadSamples.Add(p.NewDownloadSampleMbps.Value);
-                DownloadSamples.Add(p.NewDownloadSampleMbps.Value);
-            }
+                AddSample(DownloadSamples, _downloadXAxis, p.NewDownloadSampleMbps.Value);
+
             if (p.NewUploadSampleMbps.HasValue)
-            {
-                // Same workaround as above for the upload sparkline.
-                if (UploadSamples.Count == 0)
-                    UploadSamples.Add(p.NewUploadSampleMbps.Value);
-                UploadSamples.Add(p.NewUploadSampleMbps.Value);
-            }
+                AddSample(UploadSamples, _uploadXAxis, p.NewUploadSampleMbps.Value);
 
             if (p.Meta != null)
             {
