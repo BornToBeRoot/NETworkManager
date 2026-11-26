@@ -6,6 +6,7 @@ using System.Windows.Input;
 using log4net;
 using NETworkManager.Controls;
 using NETworkManager.Localization.Resources;
+using NETworkManager.Models;
 using NETworkManager.Models.IPApi;
 using NETworkManager.Settings;
 using NETworkManager.Utilities;
@@ -144,6 +145,27 @@ public class IPApiIPGeolocationWidgetViewModel : ViewModelBase
     /// Gets the command to copy all values as text, e.g. for a support request.
     /// </summary>
     public ICommand CopyAllCommand => new RelayCommand(_ => CopyAllAction(), _ => !IsRunning && Result?.Info != null);
+
+    /// <summary>
+    /// Gets the command to open the public IP address in another tool (parameter: <see cref="ApplicationName" />).
+    /// </summary>
+    public ICommand OpenIPAddressCommand => new RelayCommand(parameter => OpenApplication(parameter, Result?.Info?.Query),
+        _ => !string.IsNullOrEmpty(Result?.Info?.Query));
+
+    /// <summary>
+    /// Gets the command to open the PTR record in another tool (parameter: <see cref="ApplicationName" />).
+    /// </summary>
+    public ICommand OpenPTRRecordCommand => new RelayCommand(parameter => OpenApplication(parameter, Result?.Info?.Reverse),
+        _ => !string.IsNullOrEmpty(Result?.Info?.Reverse));
+
+    /// <summary>
+    /// Opens a value in another tool (context menu, parameter: <see cref="ApplicationName" />).
+    /// </summary>
+    private static void OpenApplication(object parameter, string target)
+    {
+        if (parameter is ApplicationName application && !string.IsNullOrEmpty(target))
+            NavigationManager.Open(application, target);
+    }
 
     /// <summary>
     /// Gets the command to enable the IP geolocation check (setting <c>Dashboard_CheckIPApiIPGeolocation</c>, off by default: ip-api.com receives

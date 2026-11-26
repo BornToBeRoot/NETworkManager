@@ -5,6 +5,7 @@ using System.Windows.Input;
 using log4net;
 using NETworkManager.Controls;
 using NETworkManager.Localization.Resources;
+using NETworkManager.Models;
 using NETworkManager.Models.IPApi;
 using NETworkManager.Settings;
 using NETworkManager.Utilities;
@@ -144,6 +145,27 @@ public class IPApiDNSResolverWidgetViewModel : ViewModelBase
     /// Gets the command to copy all values as text, e.g. for a support request.
     /// </summary>
     public ICommand CopyAllCommand => new RelayCommand(_ => CopyAllAction(), _ => !IsRunning && Result?.Info != null);
+
+    /// <summary>
+    /// Gets the command to open the IP address of the DNS server in another tool (parameter: <see cref="ApplicationName" />).
+    /// </summary>
+    public ICommand OpenDNSServerCommand => new RelayCommand(parameter => OpenApplication(parameter, Result?.Info?.DnsIp),
+        _ => !string.IsNullOrEmpty(Result?.Info?.DnsIp));
+
+    /// <summary>
+    /// Gets the command to open the EDNS client subnet in another tool (parameter: <see cref="ApplicationName" />).
+    /// </summary>
+    public ICommand OpenEDNSCommand => new RelayCommand(parameter => OpenApplication(parameter, Result?.Info?.EdnsIp),
+        _ => !string.IsNullOrEmpty(Result?.Info?.EdnsIp));
+
+    /// <summary>
+    /// Opens a value in another tool (context menu, parameter: <see cref="ApplicationName" />).
+    /// </summary>
+    private static void OpenApplication(object parameter, string target)
+    {
+        if (parameter is ApplicationName application && !string.IsNullOrEmpty(target))
+            NavigationManager.Open(application, target);
+    }
 
     /// <summary>
     /// Gets the command to enable the DNS resolver check (setting <c>Dashboard_CheckIPApiDNSResolver</c>, off by default: ip-api.com receives

@@ -76,6 +76,7 @@ Release date: **xx.xx.2026**
 - The IP geolocation widget shows when ip-api.com can be requested again after its rate limit was reached ("Rate limit reached! Try again in ... seconds", like the IP Geolocation tool), as a warning below its header. [#3741](https://github.com/BornToBeRoot/NETworkManager/pull/3741)
 - The IP geolocation and DNS resolver widgets show what they request from ip-api.com and an **Enable** button when their check is disabled (default), instead of "Check is disabled!". The button enables the check (like **Settings > Dashboard**) and checks right away. [#3741](https://github.com/BornToBeRoot/NETworkManager/pull/3741)
 - The IP geolocation and DNS resolver widgets show the time of the last check next to their refresh button, like the network connection, and have a new **Copy all** button that copies all values as text. [#3741](https://github.com/BornToBeRoot/NETworkManager/pull/3741)
+- The IP addresses of the IP geolocation and DNS resolver widgets (public IP address, DNS server, EDNS client subnet) can be opened in other tools via the context menu, like the network connection: Port Scanner, Ping Monitor, Traceroute, DNS Lookup, RDAP and IP Geolocation. The PTR record opens in the DNS Lookup. [#3741](https://github.com/BornToBeRoot/NETworkManager/pull/3741)
 
 **Status window**
 
