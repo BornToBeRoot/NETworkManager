@@ -25,13 +25,12 @@ public partial class DashboardView
     private bool _isViewVisible = true;
 
     /// <summary>
-    ///     The network or a setting of the network connection check changed while the dashboard was hidden: check again
-    ///     when it is shown.
+    ///     The network or a setting of a check changed while the dashboard was hidden: check again when it is shown.
     /// </summary>
     private bool _isOutdated;
 
     /// <summary>
-    ///     Start of the last network connection check, see <see cref="GlobalStaticConfiguration.Dashboard_RecheckInterval" />.
+    ///     Start of the last check, see <see cref="GlobalStaticConfiguration.Dashboard_RecheckInterval" />.
     /// </summary>
     private DateTime _lastCheck;
 
@@ -46,8 +45,9 @@ public partial class DashboardView
         // The settings are changed while the dashboard is hidden (settings view) - check again when it is shown
         SettingsManager.Current.PropertyChanged += SettingsManager_PropertyChanged;
 
-        // Check network connection on first open. Later re-opens are covered by OnViewVisible().
-        CheckNetworkConnection();
+        // Check on first open (the IP API widgets are already checking since they were created). Later re-opens are
+        // covered by OnViewVisible().
+        CheckWidgets();
     }
 
     public void OnViewVisible()
@@ -59,7 +59,7 @@ public partial class DashboardView
         // The widgets may have been shown or hidden in the settings
         ApplyWidgetSettings();
 
-        CheckNetworkConnectionIfOutdated();
+        CheckWidgetsIfOutdated();
     }
 
     /// <summary>
@@ -68,7 +68,7 @@ public partial class DashboardView
     public void OnMainWindowShown()
     {
         if (_isViewVisible)
-            CheckNetworkConnectionIfOutdated();
+            CheckWidgetsIfOutdated();
     }
 
     public void OnViewHide()
@@ -86,32 +86,42 @@ public partial class DashboardView
     public void OnNetworkChanged(bool isMainWindowShown)
     {
         if (_isViewVisible && isMainWindowShown)
-            CheckNetworkConnection();
+            CheckWidgets();
         else
             _isOutdated = true;
     }
 
     /// <summary>
-    ///     Checks the network connection again if something changed, or if the last check is older than the recheck
-    ///     interval (e.g. the public IP address may have changed) - not on every switch between the applications.
+    ///     Checks the widgets again if something changed, or if the last check is older than the recheck interval (e.g.
+    ///     the public IP address may have changed) - not on every switch between the applications.
     /// </summary>
-    private void CheckNetworkConnectionIfOutdated()
+    private void CheckWidgetsIfOutdated()
     {
         if (_isOutdated || DateTime.Now - _lastCheck >= GlobalStaticConfiguration.Dashboard_RecheckInterval)
-            CheckNetworkConnection();
+            CheckWidgets();
     }
 
-    private void CheckNetworkConnection()
+    /// <summary>
+    ///     Checks the network connection and the IP API widgets (the public IP address, and with it the IP geolocation
+    ///     and the DNS resolver, may have changed).
+    /// </summary>
+    private void CheckWidgets()
     {
-        // Hidden or not created yet: checked when it is shown (a changed setting marks the data as outdated, the widget
-        // is created in OnViewVisible)
-        if (!SettingsManager.Current.Dashboard_ShowNetworkConnectionWidget || _networkConnectionWidgetView == null)
-            return;
-
         _isOutdated = false;
         _lastCheck = DateTime.Now;
 
-        _networkConnectionWidgetView.Check();
+        // Hidden or not created yet: checked when it is shown (a changed setting marks the data as outdated, the widget
+        // is created in OnViewVisible). A widget whose check is disabled sends no request.
+        var settings = SettingsManager.Current;
+
+        if (settings.Dashboard_ShowNetworkConnectionWidget)
+            _networkConnectionWidgetView?.Check();
+
+        if (settings.Dashboard_ShowIPGeolocationWidget)
+            _ipApiIPGeolocationWidgetView?.Check();
+
+        if (settings.Dashboard_ShowDNSResolverWidget)
+            _ipApiDNSResolverWidgetView?.Check();
     }
 
     /// <summary>

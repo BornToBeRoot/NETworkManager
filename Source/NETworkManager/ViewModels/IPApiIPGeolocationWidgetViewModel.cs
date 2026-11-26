@@ -126,10 +126,14 @@ public class IPApiIPGeolocationWidgetViewModel : ViewModelBase
     #region Methods
 
     /// <summary>
-    /// Checks the IP geolocation.
+    /// Checks the IP geolocation (also called by the dashboard, e.g. after a network change).
     /// </summary>
-    private void Check()
+    public void Check()
     {
+        // Already checking, e.g. the network changed right after the widget was created
+        if (IsRunning)
+            return;
+
         _ = CheckAsync();
     }
 

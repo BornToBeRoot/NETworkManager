@@ -171,6 +171,7 @@ Release date: **xx.xx.2026**
 - Fixed the sparkline of the speed test showing the first request twice (one point more than requests, the same value twice in the tooltip). [#3740](https://github.com/BornToBeRoot/NETworkManager/pull/3740)
 - Fixed the IP geolocation widget showing no reason when ip-api.com could not be reached (e.g. no network connection), and the DNS resolver widget showing the English error text of .NET. Both show a translated message below their header (e.g. no response within 10 seconds or the HTTP status code), like the speed test, and a request fails after 10 seconds without a response instead of 100 seconds. [#3741](https://github.com/BornToBeRoot/NETworkManager/pull/3741)
 - Fixed the refresh button of the IP geolocation and DNS resolver widgets staying disabled after a check until the mouse was moved or a key was pressed. [#3741](https://github.com/BornToBeRoot/NETworkManager/pull/3741)
+- Fixed the IP geolocation and DNS resolver widgets showing old values after the network changed (e.g. a VPN connected: the network connection showed the new public IP address, the IP geolocation the old one). They are checked again with the network connection: after a network change, and when the dashboard is shown again and the last check is at least 60 seconds old. [#3741](https://github.com/BornToBeRoot/NETworkManager/pull/3741)
 
 **Status window**
 
