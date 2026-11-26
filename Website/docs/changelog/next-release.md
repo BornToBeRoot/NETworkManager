@@ -186,6 +186,7 @@ Release date: **xx.xx.2026**
 
 - Fixed the tab getting stuck (query disabled, input read-only, progress bar running) after an error or when the rate limit of ip-api.com was reached, until the tab was closed. [#3741](https://github.com/BornToBeRoot/NETworkManager/pull/3741)
 - Fixed a query waiting up to 100 seconds when ip-api.com did not respond (e.g. a firewall that drops the request). It fails after 10 seconds. [#3741](https://github.com/BornToBeRoot/NETworkManager/pull/3741)
+- Fixed "Rate limit reached! Try again in ... seconds" always showing the whole time window of ip-api.com (e.g. 60 seconds) instead of the time that is left. [#3741](https://github.com/BornToBeRoot/NETworkManager/pull/3741)
 
 **Traceroute**
 

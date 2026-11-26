@@ -69,7 +69,8 @@ public class IPGeolocationService : SingletonBase<IPGeolocationService>
     public async Task<IPGeolocationResult> GetIPGeolocationAsync(string ipAddressOrFqdn = "")
     {
         if (IsInRateLimit())
-            return new IPGeolocationResult(true, _rateLimitRemainingTime);
+            return new IPGeolocationResult(true,
+                GetRemainingSeconds(_rateLimitLastReached, _rateLimitRemainingTime, DateTime.Now));
 
         // If the url is empty, the current IP address from which the request is made is used.
         var url = $"{BaseUrl}/{ipAddressOrFqdn}?fields={Fields}";
@@ -115,6 +116,32 @@ public class IPGeolocationService : SingletonBase<IPGeolocationService>
     }
 
     /// <summary>
+    ///     End of the rate limit: the time window (<c>X-Ttl</c>) plus one second of margin.
+    /// </summary>
+    /// <param name="lastReached">Time when the rate limit was reached.</param>
+    /// <param name="remainingTime">Seconds until the time window resets (<c>X-Ttl</c>, 60 after HTTP 429).</param>
+    /// <returns>Time from which requests are sent again.</returns>
+    private static DateTime GetRateLimitEnd(DateTime lastReached, int remainingTime)
+    {
+        return lastReached.AddSeconds(remainingTime + 1);
+    }
+
+    /// <summary>
+    ///     Seconds until requests are sent again (shown as "try again in ... seconds"), counting down while the rate
+    ///     limit is reached instead of the whole time window.
+    /// </summary>
+    /// <param name="lastReached">Time when the rate limit was reached.</param>
+    /// <param name="remainingTime">Seconds until the time window resets (<c>X-Ttl</c>, 60 after HTTP 429).</param>
+    /// <param name="now">Current time.</param>
+    /// <returns>Seconds, rounded up, at least 1.</returns>
+    public static int GetRemainingSeconds(DateTime lastReached, int remainingTime, DateTime now)
+    {
+        var seconds = (int)Math.Ceiling((GetRateLimitEnd(lastReached, remainingTime) - now).TotalSeconds);
+
+        return Math.Max(1, seconds);
+    }
+
+    /// <summary>
     ///     Checks whether the rate limit is reached.
     /// </summary>
     /// <returns>True if the rate limit is reached, false otherwise.</returns>
@@ -128,7 +155,7 @@ public class IPGeolocationService : SingletonBase<IPGeolocationService>
         var lastReached = _rateLimitLastReached;
 
         // We are still in the rate limit
-        if (lastReached.AddSeconds(_rateLimitRemainingTime + 1) >= DateTime.Now)
+        if (GetRateLimitEnd(lastReached, _rateLimitRemainingTime) >= DateTime.Now)
             return true;
 
         // We are not in the rate limit anymore
