@@ -162,6 +162,7 @@ Release date: **xx.xx.2026**
 - Fixed the speed test failing completely when the ISP / Cloudflare server could not be requested (`speed.cloudflare.com/meta`, e.g. an error of the server or a network without an ASN). The test continues, ISP and server are shown as `-/-`. [#PR](PRLINK)
 - Fixed the download speed of the speed test jumping above the result while the test runs (e.g. a short burst of data) and dropping at the end. The value shown is the result of the completed requests, only the first request is shown while it runs. [#PR](PRLINK)
 - Fixed the speed test running endlessly ("Measuring download speed...") when the connection was lost during the test (e.g. Wi-Fi disconnected). A request now fails after 15 seconds without a response or data. [#PR](PRLINK)
+- Fixed `Enter` on the dashboard starting a speed test (up to about 1 GB of data on a fast connection) and `Esc` stopping it, e.g. after clicking a value of another widget. The speed test is only started and stopped with its button. [#PR](PRLINK)
 
 **Status window**
 

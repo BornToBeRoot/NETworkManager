@@ -13,7 +13,6 @@
              mc:Ignorable="d" MinHeight="200"
              d:DataContext="{d:DesignInstance viewModels:SpeedTestWidgetViewModel}">
     <UserControl.Resources>
-        <converters:BooleanReverseConverter x:Key="BooleanReverseConverter" />
         <converters:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
         <converters:NullableDoubleToStringConverter x:Key="NullableDoubleToStringConverter" />
@@ -65,9 +64,7 @@
                     <Button Grid.Column="4" VerticalAlignment="Center"
                             Command="{Binding RunCommand}"
                             Style="{StaticResource CleanButton}"
-                            Visibility="{Binding ShowDisclaimer, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}"
-                            IsDefault="{Binding IsRunning, Converter={StaticResource BooleanReverseConverter}}"
-                            IsCancel="{Binding IsRunning}">
+                            Visibility="{Binding ShowDisclaimer, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}">
                         <Button.ToolTip>
                             <TextBlock>
                                 <TextBlock.Style>
