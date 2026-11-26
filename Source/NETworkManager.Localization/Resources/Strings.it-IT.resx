@@ -2108,11 +2108,11 @@ Il tuo supporto aiuta il progetto a continuare e a crescere.</value>
 URL: https://api.github.com/</value>
   </data>
   <data name="HelpMessage_CheckPublicIPAddress" xml:space="preserve">
-    <value>The public IP address is determined via ipify.org.
+    <value>L'indirizzo IP pubblico è determinato tramite ipify.org.
 
-URL: https://api.ipify.org and https://api6.ipify.org
+URL: https://api.ipify.org e https://api6.ipify.org
 
-If disabled, the internet connection is only checked with a ping of the public IP address and the internet connectivity reported by Windows.</value>
+Se disabilitato, la connessione internet è controllata solo con un ping dell'indirizzo IP pubblico e della connettività internet segnalata da Windows.</value>
   </data>
   <data name="Privacy" xml:space="preserve">
     <value>Privacy</value>
@@ -2205,7 +2205,7 @@ Controlla la connessione di rete (firewall, proxy, ecc.).</value>
     <value>Usa API indirizzo IPv4 personalizzato</value>
   </data>
   <data name="HelpMessage_CustomPublicIPv4AddressAPI" xml:space="preserve">
-    <value>URL to a web service that can be reached via http or https and returns an IPv4 address e.g., "xx.xx.xx.xx" as response (plain text, or a JSON object with the address as a string value).</value>
+    <value>URL di un servizio web che può essere raggiunto tramite http o https e restituisce come risposta un indirizzo IPv4, ad esempio "xx. xx. xx. xx" (testo normale o oggetto JSON con l'indirizzo come valore stringa).</value>
   </data>
   <data name="CouldNotParsePublicIPAddressFromXXXMessage" xml:space="preserve">
     <value>Impossibile analizzare l'indirizzo IP pubblico da "{0}"!
@@ -3119,10 +3119,10 @@ Per archiviare le credenziali in modo sicuro abilita la crittografia del file de
     <value>Inserisci un indirizzo IPv6 valido!</value>
   </data>
   <data name="HelpMessage_PublicIPv4Address" xml:space="preserve">
-    <value>Public IPv4 address that is pinged to check the internet connection. The route to it is used to detect the local IPv4 address (of the network adapter that is used for the internet).</value>
+    <value>Indirizzo IPv4 pubblico su cui viene eseguito il ping per controllare la connessione internet. Il percorso verso di esso viene usato per rilevare l'indirizzo IPv4 locale (della scheda di rete usata per collegarsi a internet).</value>
   </data>
   <data name="HelpMessage_PublicIPv6Address" xml:space="preserve">
-    <value>Public IPv6 address that is pinged to check the internet connection. The route to it is used to detect the local IPv6 address (of the network adapter that is used for the internet).</value>
+    <value>Indirizzo IPv6 pubblico su cui viene eseguito il ping per controllare la connessione internet. Il route verso di esso viene usato per rilevare l'indirizzo IPv6 locale (della scheda di rete usata per coillegarsi a internet).</value>
   </data>
   <data name="PublicIPv4Address" xml:space="preserve">
     <value>Indirizzo IPv4 pubblico</value>
@@ -3354,7 +3354,7 @@ Se l'opzione viene nuovamente disabilitata, i valori non verranno più modificat
     <value>Server SNTP</value>
   </data>
   <data name="HelpMessage_CustomPublicIPv6AddressAPI" xml:space="preserve">
-    <value>URL to a web service that can be reached via http or https and returns an IPv6 address e.g., "xxxx:xx:xxx::xx" as response (plain text, or a JSON object with the address as a string value).</value>
+    <value>URL di un servizio web raggiungibile tramite http o https e restituisce come risposta un indirizzo IPv6, ad esempio "xxxx: xx: xxx:: xx" (testo normale o oggetto JSON con l'indirizzo come valore stringa).</value>
   </data>
   <data name="IPEndPoint" xml:space="preserve">
     <value>Terminale IP</value>
@@ -5800,60 +5800,60 @@ Vuoi avviare la scansione?</value>
     <value>Ricerca schede di rete...</value>
   </data>
   <data name="ConnectionCheckReason_NoIPv4Address" xml:space="preserve">
-    <value>No IPv4 address.</value>
+    <value>Nessun indirizzo IPv4.</value>
   </data>
   <data name="ConnectionCheckReason_IPv4LinkLocal" xml:space="preserve">
-    <value>Link-local address (169.254.x.x): the network adapter did not get an IPv4 address from a DHCP server.</value>
+    <value>Collegamento-indirizzo locale (169.254.x.x): la scheda di rete non ha ricevuto un indirizzo IPv4 da un server DHCP.</value>
   </data>
   <data name="ConnectionCheckReason_NoRoute" xml:space="preserve">
-    <value>No route to the internet (no default gateway). The address of the first active network adapter is shown.</value>
+    <value>Nessun route verso internet (nessun gateway predefinito). Viene visualizzato l'indirizzo della prima scheda di rete attiva.</value>
   </data>
   <data name="ConnectionCheckReason_IPv6NotAvailable" xml:space="preserve">
-    <value>No IPv6 connection. The network or the internet provider may not support IPv6.</value>
+    <value>Nessuna connessione IPv6. La rete o il provider internet potrebbero non supportare IPv6.</value>
   </data>
   <data name="ConnectionCheckReason_NoIPAddressToResolve" xml:space="preserve">
-    <value>No IP address to resolve.</value>
+    <value>Nessun indirizzo IP da risolvere.</value>
   </data>
   <data name="ConnectionCheckReason_PTRNotFound" xml:space="preserve">
-    <value>No DNS record (PTR) found for the IP address. Many networks don't have one, this is not an error.</value>
+    <value>Nessun record DNS (PTR) trovato per l'indirizzo IP. Molte reti non ne hanno una, questo non è un errore.</value>
   </data>
   <data name="ConnectionCheckReason_DNSError" xml:space="preserve">
-    <value>The DNS server did not answer or returned an error.</value>
+    <value>Il server DNS non ha risposto o ha restituito un errore.</value>
   </data>
   <data name="ConnectionCheckReason_NoGateway" xml:space="preserve">
-    <value>No default gateway found on the network adapter (e.g. a VPN connection without a gateway).</value>
+    <value>Nella scheda di rete non c'è nessun gateway predefinito (ad esempio una connessione VPN senza gateway).</value>
   </data>
   <data name="ConnectionCheckReason_GatewayNoReply" xml:space="preserve">
-    <value>The gateway did not reply to the ping. It may be offline or block ICMP.</value>
+    <value>Il gateway non ha risposto al ping. Potrebbe essere offline o bloccare ICMP.</value>
   </data>
   <data name="ConnectionCheckReason_PublicIPAddressPrivate" xml:space="preserve">
-    <value>The API returned a private IP address instead of the public one (e.g. the page of a hotspot / captive portal or a proxy).</value>
+    <value>L'API ha restituito un indirizzo IP privato invece di quello pubblico (ad esempio la pagina di un hotspot / captive portal o un proxy).</value>
   </data>
   <data name="ConnectionCheckReason_PublicIPAddressRequestFailed" xml:space="preserve">
-    <value>The public IP address could not be requested from the API (no answer, an error or no IP address in the answer).</value>
+    <value>L'indirizzo IP pubblico non può essere richiesto dall'API (nessuna risposta, un errore o nessun indirizzo IP nella risposta).</value>
   </data>
   <data name="ConnectionCheckReason_NameResolutionFailed" xml:space="preserve">
-    <value>The name of the public IP address API could not be resolved. Check the DNS server.</value>
+    <value>Impossibile risolvere il nome dell'API dell'indirizzo IP pubblico. Controlla il server DNS.</value>
   </data>
   <data name="ConnectionCheckReason_CaptivePortal" xml:space="preserve">
-    <value>Windows reports limited internet access (e.g. a hotspot / captive portal that requires a sign-in).</value>
+    <value>Windows segnala un accesso limitato a internet (ad esempio un hotspot / captive portal che richiede un accesso).</value>
   </data>
   <data name="ConnectionCheckReason_InternetAccessReportedByWindows" xml:space="preserve">
-    <value>No reply to the ping and no public IP address from the API, but Windows reports internet access. ICMP and the API may be blocked by a firewall or only reachable via a proxy.</value>
+    <value>Nessuna risposta al ping e nessun indirizzo IP pubblico dall'API, ma Windows segnala l'accesso a internet. ICMP e l'API possono essere bloccati da un firewall o raggiungibili solo tramite un proxy.</value>
   </data>
   <data name="ConnectionCheckReason_InternetNotReachable" xml:space="preserve">
-    <value>The internet is not reachable (no reply to the ping of the public IP address and no answer from the public IP address API).</value>
+    <value>Internet non è raggiungibile (nessuna risposta al ping dell'indirizzo IP pubblico e nessuna risposta dall'API dell'indirizzo IP pubblico).</value>
   </data>
   <data name="ConnectionCheckReason_PublicIPAddressCheckDisabled" xml:space="preserve">
-    <value>The public IP address is not requested (disabled in the settings).</value>
+    <value>L'indirizzo IP pubblico non è richiesto (è disabilitato nelle impostazioni).</value>
   </data>
   <data name="CopyAll" xml:space="preserve">
-    <value>Copy all</value>
+    <value>Copia tutto</value>
   </data>
   <data name="Widgets" xml:space="preserve">
-    <value>Widgets</value>
+    <value>Widget</value>
   </data>
   <data name="AllWidgetsAreHiddenMessage" xml:space="preserve">
-    <value>All widgets are hidden. You can show them in the settings of the dashboard.</value>
+    <value>Tutti i widget sono nascosti. Puoi visualizza nelle impostazioni del pannello.</value>
   </data>
 </root>
