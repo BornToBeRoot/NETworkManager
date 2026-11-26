@@ -32,6 +32,25 @@ public class SpeedTestCalculatorTests
     }
 
     [Fact]
+    public void CurrentBandwidthWithoutValuesIsNull()
+    {
+        Assert.Null(SpeedTestCalculator.CurrentBandwidth([], null));
+    }
+
+    [Fact]
+    public void CurrentBandwidthBeforeTheFirstSampleIsTheLiveValue()
+    {
+        Assert.Equal(50, SpeedTestCalculator.CurrentBandwidth([], 50));
+    }
+
+    [Fact]
+    public void CurrentBandwidthWithSamplesIgnoresAHigherLiveValue()
+    {
+        // A burst of the running request must not be shown above the result (P90 of the samples)
+        Assert.Equal(100, SpeedTestCalculator.CurrentBandwidth([100], 480));
+    }
+
+    [Fact]
     public void JitterOfFewerThanTwoPingsIsZero()
     {
         Assert.Equal(0, SpeedTestCalculator.Jitter([]));

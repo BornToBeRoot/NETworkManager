@@ -215,25 +215,8 @@ public class SpeedTestService
         if (progress == null)
             return;
 
-        // P90 of completed samples ⊔ current live instantaneous — consistent with
-        // the final result formula; live override applies only before the first sample.
-        double? downloadMbps = null;
-        if (downloadBps.Count > 0 || liveDownloadBpsOverride.HasValue)
-        {
-            var p90Bps = downloadBps.Count > 0 ? SpeedTestCalculator.Percentile(downloadBps, 0.9) : 0.0;
-            if (liveDownloadBpsOverride.HasValue && liveDownloadBpsOverride.Value > p90Bps)
-                p90Bps = liveDownloadBpsOverride.Value;
-            downloadMbps = p90Bps / 1_000_000.0;
-        }
-
-        double? uploadMbps = null;
-        if (uploadBps.Count > 0 || liveUploadBpsOverride.HasValue)
-        {
-            var p90Bps = uploadBps.Count > 0 ? SpeedTestCalculator.Percentile(uploadBps, 0.9) : 0.0;
-            if (liveUploadBpsOverride.HasValue && liveUploadBpsOverride.Value > p90Bps)
-                p90Bps = liveUploadBpsOverride.Value;
-            uploadMbps = p90Bps / 1_000_000.0;
-        }
+        var downloadMbps = SpeedTestCalculator.CurrentBandwidth(downloadBps, liveDownloadBpsOverride) / 1_000_000.0;
+        var uploadMbps = SpeedTestCalculator.CurrentBandwidth(uploadBps, liveUploadBpsOverride) / 1_000_000.0;
 
         double? latencyMs = pings.Count > 0 ? SpeedTestCalculator.Percentile(pings, 0.5) : null;
         double? jitterMs = pings.Count >= 2 ? SpeedTestCalculator.Jitter(pings) : null;

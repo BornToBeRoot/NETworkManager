@@ -58,6 +58,18 @@ public static class SpeedTestCalculator
     }
 
     /// <summary>
+    /// Bandwidth shown while the test runs: the 90th percentile of the completed requests (like the result). Before the
+    /// first request has completed, the throughput of the running request.
+    /// </summary>
+    /// <param name="samplesBps">Bandwidth of the completed requests (bit/s).</param>
+    /// <param name="liveBps">Throughput of the running request (bit/s), <c>null</c> if none.</param>
+    /// <returns>Bandwidth in bit/s, <c>null</c> if there is no value yet.</returns>
+    public static double? CurrentBandwidth(IReadOnlyCollection<double> samplesBps, double? liveBps)
+    {
+        return samplesBps.Count > 0 ? Percentile(samplesBps, 0.9) : liveBps;
+    }
+
+    /// <summary>
     /// Jitter: average absolute difference between consecutive latency samples.
     /// </summary>
     /// <param name="pings">Latency samples in the order they were measured.</param>
