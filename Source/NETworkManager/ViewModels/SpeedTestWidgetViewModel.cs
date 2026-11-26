@@ -388,7 +388,8 @@ public class SpeedTestWidgetViewModel : ViewModelBase
             _ => string.Format(Strings.CouldNotConnectToXXXMessage, SpeedTestService.Host)
         };
 
-        return message + Environment.NewLine + Strings.CheckNetworkConnectionTryAgainMessage;
+        // One message with its hint (a new line would look like a second message), wraps if the widget is narrow
+        return $"{message} {Strings.CheckNetworkConnectionTryAgainMessage}";
     }
 
     /// <summary>
