@@ -35,6 +35,16 @@ public class IPGeolocationServiceTests
         Assert.Equal(1, IPGeolocationService.GetRemainingSeconds(LastReached, 10, LastReached.AddMinutes(5)));
     }
 
+    [Theory]
+    [InlineData("", "http://ip-api.com/json/?fields=")]
+    [InlineData("8.8.8.8", "http://ip-api.com/json/8.8.8.8?fields=")]
+    [InlineData("2001:db8::1", "http://ip-api.com/json/2001:db8::1?fields=")]
+    [InlineData("example.com", "http://ip-api.com/json/example.com?fields=")]
+    public void UrlHasOneSlashBeforeTheQuery(string query, string expectedStart)
+    {
+        Assert.StartsWith(expectedStart, IPGeolocationService.GetUrl(query));
+    }
+
     [Fact]
     public void ResponseIsParsed()
     {

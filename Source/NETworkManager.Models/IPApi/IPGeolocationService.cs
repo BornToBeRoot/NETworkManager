@@ -76,8 +76,7 @@ public class IPGeolocationService : SingletonBase<IPGeolocationService>
             return new IPGeolocationResult(true,
                 GetRemainingSeconds(_rateLimitLastReached, _rateLimitRemainingTime, DateTime.Now));
 
-        // If the url is empty, the current IP address from which the request is made is used.
-        var url = $"{BaseUrl}/{ipAddressOrFqdn}?fields={Fields}";
+        var url = GetUrl(ipAddressOrFqdn);
 
         try
         {
@@ -113,6 +112,17 @@ public class IPGeolocationService : SingletonBase<IPGeolocationService>
         {
             return new IPGeolocationResult(ex);
         }
+    }
+
+    /// <summary>
+    ///     URL of the request (<c>http://ip-api.com/json/{query}?fields=...</c>).
+    /// </summary>
+    /// <param name="ipAddressOrFqdn">IP address or host name, empty for the public IP address of the computer.</param>
+    /// <returns>URL.</returns>
+    public static string GetUrl(string ipAddressOrFqdn)
+    {
+        // The base URL ends with a slash (no "json//" for the own IP address)
+        return $"{BaseUrl}{ipAddressOrFqdn}?fields={Fields}";
     }
 
     /// <summary>
