@@ -146,33 +146,41 @@ public class IPApiIPGeolocationWidgetViewModel : ViewModelBase
         IsStatusMessageDisplayed = false;
         Result = null;
 
-        // Takes at least the refresh interval, so the reload animation is visible and the check can't be spammed -
-        // the request runs at the same time
-        var result = await TaskHelper.WithMinimumDurationAsync(
-            () => ScreenshotData.IsEnabled
-                ? Task.FromResult(ScreenshotData.CreateIPGeolocationResult())
-                : IPGeolocationService.GetInstance().GetIPGeolocationAsync(),
-            GlobalStaticConfiguration.ApplicationUIRefreshInterval);
-
-        if (result.HasError)
+        try
         {
-            Log.Error($"ip-api.com error: {result.ErrorMessage}, error code: {result.ErrorCode}");
+            // Takes at least the refresh interval, so the reload animation is visible and the check can't be spammed -
+            // the request runs at the same time
+            var result = await TaskHelper.WithMinimumDurationAsync(
+                () => ScreenshotData.IsEnabled
+                    ? Task.FromResult(ScreenshotData.CreateIPGeolocationResult())
+                    : IPGeolocationService.GetInstance().GetIPGeolocationAsync(),
+                GlobalStaticConfiguration.ApplicationUIRefreshInterval);
 
-            ShowStatusMessage(WebRequestErrorMessage.Get(IPGeolocationService.Host,
-                IPGeolocationService.RequestTimeout, result.Error), StatusLevel.Error);
+            if (result.HasError)
+            {
+                Log.Error($"ip-api.com error: {result.ErrorMessage}, error code: {result.ErrorCode}");
+
+                ShowStatusMessage(WebRequestErrorMessage.Get(IPGeolocationService.Host,
+                    IPGeolocationService.RequestTimeout, result.Error), StatusLevel.Error);
+            }
+            else if (result.RateLimitIsReached)
+            {
+                Log.Warn($"ip-api.com rate limit reached. Try again in {result.RateLimitRemainingTime} seconds.");
+
+                ShowStatusMessage(Strings.IPApiRateLimitMessage, StatusLevel.Warning);
+            }
+            else
+            {
+                Result = result;
+            }
         }
-        else if (result.RateLimitIsReached)
+        finally
         {
-            Log.Warn($"ip-api.com rate limit reached. Try again in {result.RateLimitRemainingTime} seconds.");
+            IsRunning = false;
 
-            ShowStatusMessage(Strings.IPApiRateLimitMessage, StatusLevel.Warning);
+            // Enable the refresh button (CanExecute is otherwise only evaluated on the next input)
+            CommandManager.InvalidateRequerySuggested();
         }
-        else
-        {
-            Result = result;
-        }
-
-        IsRunning = false;
     }
 
     private void ShowStatusMessage(string message, StatusLevel level)

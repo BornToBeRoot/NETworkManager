@@ -143,27 +143,35 @@ public class IPApiDNSResolverWidgetViewModel : ViewModelBase
         IsStatusMessageDisplayed = false;
         Result = null;
 
-        // Takes at least the refresh interval, so the reload animation is visible and the check can't be spammed -
-        // the request runs at the same time
-        var result = await TaskHelper.WithMinimumDurationAsync(
-            () => ScreenshotData.IsEnabled
-                ? Task.FromResult(ScreenshotData.CreateDNSResolverResult())
-                : DNSResolverService.GetInstance().GetDNSResolverAsync(),
-            GlobalStaticConfiguration.ApplicationUIRefreshInterval);
-
-        if (result.HasError)
+        try
         {
-            StatusMessage = WebRequestErrorMessage.Get(DNSResolverService.Host, DNSResolverService.RequestTimeout,
-                result.Error);
-            StatusMessageLevel = StatusLevel.Error;
-            IsStatusMessageDisplayed = true;
-        }
-        else
-        {
-            Result = result;
-        }
+            // Takes at least the refresh interval, so the reload animation is visible and the check can't be spammed -
+            // the request runs at the same time
+            var result = await TaskHelper.WithMinimumDurationAsync(
+                () => ScreenshotData.IsEnabled
+                    ? Task.FromResult(ScreenshotData.CreateDNSResolverResult())
+                    : DNSResolverService.GetInstance().GetDNSResolverAsync(),
+                GlobalStaticConfiguration.ApplicationUIRefreshInterval);
 
-        IsRunning = false;
+            if (result.HasError)
+            {
+                StatusMessage = WebRequestErrorMessage.Get(DNSResolverService.Host, DNSResolverService.RequestTimeout,
+                    result.Error);
+                StatusMessageLevel = StatusLevel.Error;
+                IsStatusMessageDisplayed = true;
+            }
+            else
+            {
+                Result = result;
+            }
+        }
+        finally
+        {
+            IsRunning = false;
+
+            // Enable the refresh button (CanExecute is otherwise only evaluated on the next input)
+            CommandManager.InvalidateRequerySuggested();
+        }
     }
 
     #endregion
