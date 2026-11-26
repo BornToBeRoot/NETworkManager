@@ -1,4 +1,7 @@
 ﻿using System;
+using System.IO;
+using System.Net;
+using System.Net.Http;
 using NETworkManager.Models.Cloudflare;
 using Xunit;
 
@@ -108,6 +111,22 @@ public class SpeedTestCalculatorTests
     {
         Assert.Equal(TimeSpan.FromSeconds(60),
             SpeedTestCalculator.GetRetryDelay(TimeSpan.FromHours(1), null, Now));
+    }
+
+    [Fact]
+    public void HttpErrorIsNoConnectionFailure()
+    {
+        // e.g. a proxy rejects a large upload (413): the connection works, the test continues
+        Assert.False(SpeedTestCalculator.IsConnectionFailure(
+            new HttpRequestException("Payload too large", null, HttpStatusCode.RequestEntityTooLarge)));
+    }
+
+    [Fact]
+    public void NoResponseIsAConnectionFailure()
+    {
+        Assert.True(SpeedTestCalculator.IsConnectionFailure(new HttpRequestException("No such host is known.")));
+        Assert.True(SpeedTestCalculator.IsConnectionFailure(new IOException("Connection reset")));
+        Assert.True(SpeedTestCalculator.IsConnectionFailure(new TimeoutException()));
     }
 
     [Fact]

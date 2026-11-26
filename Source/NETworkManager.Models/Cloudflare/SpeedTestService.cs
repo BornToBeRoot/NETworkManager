@@ -55,8 +55,9 @@ public class SpeedTestService
     private const int MaxRetries = 3;
 
     /// <summary>
-    /// A failed request is skipped and the test continues (like the official library). After this number of failed
-    /// requests in a row (e.g. the connection is lost), the test ends with the error.
+    /// A failed request is skipped and the test continues (like the official library). After this number of requests in
+    /// a row without a connection (no response, e.g. the connection is lost), the test ends with the error. Requests
+    /// rejected by the server / a proxy (HTTP error) don't count: the connection works.
     /// </summary>
     private const int MaxConsecutiveFailedRequests = 3;
 
@@ -193,6 +194,8 @@ public class SpeedTestService
                 durations[(measurement.Type, measurement.Bytes)] = setDurations;
             }
 
+            var setSucceeded = false;
+
             for (var i = 0; i < measurement.Count; i++)
             {
                 var (success, (bps, durationMs)) = await TryRequestAsync(() => isDownload
@@ -204,6 +207,8 @@ public class SpeedTestService
 
                 if (!success)
                     continue;
+
+                setSucceeded = true;
 
                 // Requests without a speed are discarded (like the official library)
                 if (bps <= 0 || double.IsInfinity(bps))
@@ -229,7 +234,11 @@ public class SpeedTestService
                 }
             }
 
-            if (!measurement.BypassMinDuration &&
+            if (measurement.BypassMinDuration)
+                continue;
+
+            // All requests of the set failed (e.g. a proxy rejects uploads of this size): the larger sizes would fail too
+            if (!setSucceeded ||
                 SpeedTestCalculator.IsDirectionFinished(setDurations, BandwidthFinishRequestDurationMs))
                 finished.Add(measurement.Type);
         }
@@ -384,7 +393,9 @@ public class SpeedTestService
 
                 failures.Total++;
 
-                if (++failures.Consecutive >= MaxConsecutiveFailedRequests)
+                if (!SpeedTestCalculator.IsConnectionFailure(ex))
+                    failures.Consecutive = 0;
+                else if (++failures.Consecutive >= MaxConsecutiveFailedRequests)
                     throw;
 
                 Log.Warn("Speed test request failed and is skipped.", ex);

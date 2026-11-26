@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Net.Http;
 using System.Text.RegularExpressions;
 
 namespace NETworkManager.Models.Cloudflare;
@@ -102,6 +103,17 @@ public static class SpeedTestCalculator
             return TimeSpan.Zero;
 
         return delay > MaxRetryDelay ? MaxRetryDelay : delay;
+    }
+
+    /// <summary>
+    /// A request failed without a connection to the server (no response, connection lost, timeout), not because the
+    /// server or a proxy rejected it with an HTTP error.
+    /// </summary>
+    /// <param name="ex">Error of the request.</param>
+    /// <returns><c>true</c> if there was no response.</returns>
+    public static bool IsConnectionFailure(Exception ex)
+    {
+        return ex is not HttpRequestException { StatusCode: not null };
     }
 
     /// <summary>
