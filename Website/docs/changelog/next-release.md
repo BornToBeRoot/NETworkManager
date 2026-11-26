@@ -199,12 +199,14 @@ Release date: **xx.xx.2026**
 - Fixed an empty response of ip-api.com (e.g. from a proxy) being shown as an empty result instead of an error. [#3741](https://github.com/BornToBeRoot/NETworkManager/pull/3741)
 - Fixed the offset being shown as `-/-` for locations in UTC+0 (e.g. London in winter) and in seconds (e.g. `3600`). It is shown as `UTC+01:00`. A region without a code is shown without empty brackets. [#3741](https://github.com/BornToBeRoot/NETworkManager/pull/3741)
 - Fixed an IP address or host name without a geolocation (e.g. a private IP address like `192.168.1.1` or an invalid query) being shown as an empty result. A warning shows the reason of ip-api.com (e.g. `private range`). [#3741](https://github.com/BornToBeRoot/NETworkManager/pull/3741)
+- Fixed errors of ip-api.com being shown as the English error text of .NET (e.g. "The request was canceled due to the configured HttpClient.Timeout..."). A translated message is shown (e.g. no response within 10 seconds or the HTTP status code), like the dashboard. [#3741](https://github.com/BornToBeRoot/NETworkManager/pull/3741)
 
 **Traceroute**
 
 - Fixed the traceroute waiting up to 100 seconds per hop when the IP geolocation is enabled and ip-api.com did not respond (e.g. a firewall that drops the request). The geolocation of a hop fails after 10 seconds. [#3741](https://github.com/BornToBeRoot/NETworkManager/pull/3741)
 - Fixed the IP geolocation of every hop failing with "The rate limit values couldn't be extracted from the http header..." when a proxy removed the rate limit headers of ip-api.com. [#3741](https://github.com/BornToBeRoot/NETworkManager/pull/3741)
 - Fixed an empty response of ip-api.com (e.g. from a proxy) being shown as an empty IP geolocation of the hop instead of an error. [#3741](https://github.com/BornToBeRoot/NETworkManager/pull/3741)
+- Fixed errors of ip-api.com being shown as the English error text of .NET, once for every hop. A translated message is shown once per trace (e.g. no response within 10 seconds or the HTTP status code). [#3741](https://github.com/BornToBeRoot/NETworkManager/pull/3741)
 
 ## Dependencies, Refactoring & Documentation
 

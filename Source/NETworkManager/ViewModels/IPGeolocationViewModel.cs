@@ -258,7 +258,9 @@ public class IPGeolocationViewModel : ViewModelBase
             {
                 Log.Error($"ip-api.com error: {result.ErrorMessage}, error code: {result.ErrorCode}");
 
-                StatusMessage = $"ip-api.com: {result.ErrorMessage}";
+                // Translated (the exception text of .NET is logged), like the IP geolocation widget of the dashboard
+                StatusMessage = WebRequestErrorMessage.Get(IPGeolocationService.Host,
+                    IPGeolocationService.RequestTimeout, result.Error);
                 StatusMessageLevel = StatusLevel.Error;
                 IsStatusMessageDisplayed = true;
 
