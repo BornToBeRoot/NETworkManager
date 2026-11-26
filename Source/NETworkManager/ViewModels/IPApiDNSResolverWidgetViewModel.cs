@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using System.Windows.Input;
+using log4net;
 using NETworkManager.Controls;
 using NETworkManager.Models.IPApi;
 using NETworkManager.Settings;
@@ -13,6 +14,8 @@ namespace NETworkManager.ViewModels;
 public class IPApiDNSResolverWidgetViewModel : ViewModelBase
 {
     #region Variables
+
+    private static readonly ILog Log = LogManager.GetLogger(typeof(IPApiDNSResolverWidgetViewModel));
 
     /// <summary>
     /// Gets or sets a value indicating whether the check is running.
@@ -155,6 +158,8 @@ public class IPApiDNSResolverWidgetViewModel : ViewModelBase
 
             if (result.HasError)
             {
+                Log.Error($"edns.ip-api.com error: {result.ErrorMessage}, error code: {result.ErrorCode}");
+
                 StatusMessage = WebRequestErrorMessage.Get(DNSResolverService.Host, DNSResolverService.RequestTimeout,
                     result.Error);
                 StatusMessageLevel = StatusLevel.Error;
