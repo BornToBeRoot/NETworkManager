@@ -171,7 +171,10 @@ public class IPApiIPGeolocationWidgetViewModel : ViewModelBase
             {
                 Log.Warn($"ip-api.com rate limit reached. Try again in {result.RateLimitRemainingTime} seconds.");
 
-                ShowStatusMessage(Strings.IPApiRateLimitMessage, StatusLevel.Warning);
+                // Like the IP Geolocation tool and the traceroute
+                ShowStatusMessage(
+                    $"{IPGeolocationService.Host} {string.Format(Strings.RateLimitReachedTryAgainInXSeconds, result.RateLimitRemainingTime)}",
+                    StatusLevel.Warning);
             }
             else
             {

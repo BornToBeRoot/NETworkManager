@@ -7322,16 +7322,6 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ip-api.com rate limit reached (too many requests from your network)!
-        ///Try again in a few seconds..
-        /// </summary>
-        public static string IPApiRateLimitMessage {
-            get {
-                return ResourceManager.GetString("IPApiRateLimitMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to IP endpoint.
         /// </summary>
         public static string IPEndPoint {

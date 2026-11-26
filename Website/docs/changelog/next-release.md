@@ -73,6 +73,7 @@ Release date: **xx.xx.2026**
 - The speed test shows below its header when it was canceled or failed (translated, e.g. no response within 15 seconds or the HTTP status code) instead of replacing the measured values with the English error text of .NET: the values measured until then stay visible. The phase of the running test is no longer shown in the accent color. [#3740](https://github.com/BornToBeRoot/NETworkManager/pull/3740)
 - The speed test shows the time of the test ("Last test at ...") next to its buttons, like the network connection, so an old result is recognized (the tooltip shows the date). A canceled or failed test shows no time. [#3740](https://github.com/BornToBeRoot/NETworkManager/pull/3740)
 - New **Copy all** button in the speed test: copies download, upload, latency, jitter, ISP, server and the time of the test as text, like the network connection. [#3740](https://github.com/BornToBeRoot/NETworkManager/pull/3740)
+- The IP geolocation widget shows when ip-api.com can be requested again after its rate limit was reached ("Rate limit reached! Try again in ... seconds", like the IP Geolocation tool), as a warning below its header. [#3741](https://github.com/BornToBeRoot/NETworkManager/pull/3741)
 
 **Status window**
 
