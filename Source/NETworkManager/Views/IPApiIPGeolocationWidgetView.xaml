@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:networkManager="clr-namespace:NETworkManager"
+             xmlns:controls="clr-namespace:NETworkManager.Controls"
              xmlns:icons="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls"
              xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
              xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
@@ -55,27 +56,56 @@
                         <TextBlock Text="{x:Static localization:Strings.IPGeolocation}"
                                    Style="{StaticResource MessageTextBlock}" Margin="10,0,0,0" />
                     </StackPanel>
-                    <Button Grid.Column="2" Command="{Binding CheckCommand}"
-                            Style="{StaticResource CleanButton}"
-                            ToolTip="{x:Static localization:Strings.Refresh}"
-                            VerticalAlignment="Center">
-                        <Rectangle Width="20" Height="20"
-                                   wpfHelpers:ReloadAnimationHelper.IsReloading="{Binding IsRunning}">
-                            <Rectangle.OpacityMask>
-                                <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=RefreshCw}" />
-                            </Rectangle.OpacityMask>
-                            <Rectangle.Style>
-                                <Style TargetType="{x:Type Rectangle}">
-                                    <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
-                                            <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray5}" />
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Rectangle.Style>
-                        </Rectangle>
-                    </Button>
+                    <!-- Time of the last check (not while checking) -->
+                    <controls:RefreshStatusControl Grid.Column="1"
+                                                   LastRefreshTime="{Binding LastCheckTime}"
+                                                   IsRefreshing="{Binding IsRunning}"
+                                                   HorizontalAlignment="Right"
+                                                   Margin="10,0,10,0" />
+                    <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center">
+                        <Button Command="{Binding CopyAllCommand}"
+                                Style="{StaticResource CleanButton}"
+                                ToolTip="{x:Static localization:Strings.CopyAll}"
+                                VerticalAlignment="Center"
+                                Margin="0,0,10,0">
+                            <Rectangle Width="20" Height="20">
+                                <Rectangle.OpacityMask>
+                                    <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=Copy}" />
+                                </Rectangle.OpacityMask>
+                                <Rectangle.Style>
+                                    <Style TargetType="{x:Type Rectangle}">
+                                        <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
+                                                <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray5}" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Rectangle.Style>
+                            </Rectangle>
+                        </Button>
+                        <Button Command="{Binding CheckCommand}"
+                                Style="{StaticResource CleanButton}"
+                                ToolTip="{x:Static localization:Strings.Refresh}"
+                                VerticalAlignment="Center">
+                            <Rectangle Width="20" Height="20"
+                                       wpfHelpers:ReloadAnimationHelper.IsReloading="{Binding IsRunning}">
+                                <Rectangle.OpacityMask>
+                                    <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=RefreshCw}" />
+                                </Rectangle.OpacityMask>
+                                <Rectangle.Style>
+                                    <Style TargetType="{x:Type Rectangle}">
+                                        <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
+                                                <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray5}" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Rectangle.Style>
+                            </Rectangle>
+                        </Button>
+                    </StackPanel>
                 </Grid>
                 <!-- Error / rate limit of the last check -->
                 <icons:StatusMessageText Grid.Row="1" Margin="10,0,10,10"

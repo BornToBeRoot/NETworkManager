@@ -1,7 +1,10 @@
+using System;
+using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using log4net;
 using NETworkManager.Controls;
+using NETworkManager.Localization.Resources;
 using NETworkManager.Models.IPApi;
 using NETworkManager.Settings;
 using NETworkManager.Utilities;
@@ -37,6 +40,22 @@ public class IPApiDNSResolverWidgetViewModel : ViewModelBase
     /// Gets the result of the DNS resolver check.
     /// </summary>
     public DNSResolverResult Result
+    {
+        get;
+        private set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
+    /// Gets the time of the last successful check, <c>null</c> before it and while checking (the values belong to it).
+    /// </summary>
+    public DateTime? LastCheckTime
     {
         get;
         private set
@@ -122,10 +141,40 @@ public class IPApiDNSResolverWidgetViewModel : ViewModelBase
     public ICommand CheckCommand => new RelayCommand(_ => Check(), _ => !IsRunning);
 
     /// <summary>
+    /// Gets the command to copy all values as text, e.g. for a support request.
+    /// </summary>
+    public ICommand CopyAllCommand => new RelayCommand(_ => CopyAllAction(), _ => !IsRunning && Result?.Info != null);
+
+    /// <summary>
     /// Gets the command to enable the DNS resolver check (setting <c>Dashboard_CheckIPApiDNSResolver</c>, off by default: ip-api.com receives
     /// the IP address) and to check right away.
     /// </summary>
     public ICommand EnableCheckCommand => new RelayCommand(_ => EnableCheckAction());
+
+    private void CopyAllAction()
+    {
+        var info = Result.Info;
+        var text = new StringBuilder();
+
+        foreach (var (title, ip, geo) in new[]
+                 {
+                     (Strings.DNS, info.DnsIp, info.DnsGeo),
+                     (Strings.EDNS, info.EdnsIp, info.EdnsGeo)
+                 })
+        {
+            if (text.Length > 0)
+                text.AppendLine();
+
+            text.AppendLine(title);
+            text.AppendLine($"{Strings.IPAddress}: {FormatValue(ip)}");
+            text.AppendLine($"{Strings.Geolocation}: {FormatValue(geo)}");
+        }
+
+        ClipboardHelper.SetClipboard(text.ToString().TrimEnd());
+    }
+
+    // Like the widget: "-/-" for an empty value (e.g. no EDNS client subnet)
+    private static string FormatValue(string value) => string.IsNullOrEmpty(value) ? "-/-" : value;
 
     private void EnableCheckAction()
     {
@@ -162,6 +211,7 @@ public class IPApiDNSResolverWidgetViewModel : ViewModelBase
         IsRunning = true;
         IsStatusMessageDisplayed = false;
         Result = null;
+        LastCheckTime = null;
 
         try
         {
@@ -185,6 +235,7 @@ public class IPApiDNSResolverWidgetViewModel : ViewModelBase
             else
             {
                 Result = result;
+                LastCheckTime = DateTime.Now;
             }
         }
         finally
