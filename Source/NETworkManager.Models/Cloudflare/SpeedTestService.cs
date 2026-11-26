@@ -32,6 +32,9 @@ public class SpeedTestService
     private const double DefaultEstimatedServerTimeMs = 0.0;
     private const double BandwidthFinishRequestDurationMs = 1000.0;
     private const double BandwidthMinRequestDurationMs = 10.0;
+    /// <summary>
+    /// Bytes on the wire per payload byte (HTTP headers), like the official library.
+    /// </summary>
     private const double EstimatedHeaderFraction = 1.005;
 
     /// <summary>
@@ -336,13 +339,13 @@ public class SpeedTestService
         }
         sw2.Stop();
         var bodyMs = sw2.Elapsed.TotalMilliseconds;
-        var contentLength = response.Content.Headers.ContentLength ?? bodyBytes;
 
         var downloadDurationMs = ping + bodyMs;
         if (downloadDurationMs <= 0)
             return (0.0, downloadDurationMs);
 
-        var bps = 8.0 * contentLength / (downloadDurationMs / 1000.0);
+        // Received bytes incl. an estimate of the headers (the official library uses the transfer size of the browser)
+        var bps = 8.0 * bodyBytes * EstimatedHeaderFraction / (downloadDurationMs / 1000.0);
         return (bps, downloadDurationMs);
     }
 
