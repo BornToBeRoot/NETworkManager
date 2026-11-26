@@ -237,7 +237,7 @@
                             <TextBlock Grid.Column="0" Grid.Row="2"
                                        Text="{x:Static localization:Strings.PTRRecord}" />
                             <TextBox Grid.Column="2" Grid.Row="2"
-                                     Text="{Binding Result.Reverse, Converter={StaticResource StringNullOrEmptyToStringConverter}}" />
+                                     Text="{Binding Result.Reverse, Converter={StaticResource StringNullOrEmptyToStringConverter}}" FontFamily="{StaticResource Fonts.Family.Mono}" />
                             <TextBlock Grid.Column="0" Grid.Row="3" Text="{x:Static localization:Strings.ISP}" />
                             <TextBox Grid.Column="2" Grid.Row="3"
                                      Text="{Binding Result.Isp, Converter={StaticResource StringNullOrEmptyToStringConverter}}" />
