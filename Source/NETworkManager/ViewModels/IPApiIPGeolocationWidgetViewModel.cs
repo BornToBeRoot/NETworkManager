@@ -20,6 +20,11 @@ public class IPApiIPGeolocationWidgetViewModel : ViewModelBase
 {
     #region Variables
 
+    /// <summary>
+    /// A check was requested while a check was running (see <see cref="Check" />).
+    /// </summary>
+    private bool _recheckPending;
+
     private static readonly ILog Log = LogManager.GetLogger(typeof(IPApiIPGeolocationWidgetViewModel));
 
     /// <summary>
@@ -238,9 +243,13 @@ public class IPApiIPGeolocationWidgetViewModel : ViewModelBase
     /// </summary>
     public void Check()
     {
-        // Already checking, e.g. the network changed right after the widget was created
+        // Already checking, e.g. the network changed right after the widget was created: the running request may use
+        // the old network, check again once it has finished
         if (IsRunning)
+        {
+            _recheckPending = true;
             return;
+        }
 
         _ = CheckAsync();
     }
@@ -297,6 +306,13 @@ public class IPApiIPGeolocationWidgetViewModel : ViewModelBase
 
             // Enable the refresh button (CanExecute is otherwise only evaluated on the next input)
             CommandManager.InvalidateRequerySuggested();
+        }
+
+        // A check requested in the meantime (e.g. a network change)
+        if (_recheckPending)
+        {
+            _recheckPending = false;
+            Check();
         }
     }
 
