@@ -175,6 +175,7 @@ Release date: **xx.xx.2026**
 - Fixed the IP geolocation and DNS resolver widgets showing an empty result (and the error texts on top of it) after their check was enabled in the settings, until the refresh button was clicked. They are checked when the dashboard is shown again, also after the widget was shown again. [#3741](https://github.com/BornToBeRoot/NETworkManager/pull/3741)
 - Fixed the IP geolocation widget failing when a proxy removed the rate limit headers of ip-api.com. The result is shown. [#3741](https://github.com/BornToBeRoot/NETworkManager/pull/3741)
 - Fixed the DNS resolver widget showing "Object reference not set to an instance of an object" when edns.ip-api.com answered with an empty response (e.g. a proxy). An empty response of ip-api.com is shown as an error in both widgets. [#3741](https://github.com/BornToBeRoot/NETworkManager/pull/3741)
+- Fixed the offset of the IP geolocation widget being shown as `-/-` for locations in UTC+0 (e.g. London in winter) and in seconds (e.g. `3600`). It is shown as `UTC+01:00`. A region without a code is shown without empty brackets. [#3741](https://github.com/BornToBeRoot/NETworkManager/pull/3741)
 
 **Status window**
 
@@ -191,6 +192,7 @@ Release date: **xx.xx.2026**
 - Fixed "Rate limit reached! Try again in ... seconds" always showing the whole time window of ip-api.com (e.g. 60 seconds) instead of the time that is left. [#3741](https://github.com/BornToBeRoot/NETworkManager/pull/3741)
 - Fixed every query failing with "The rate limit values couldn't be extracted from the http header..." when a proxy removed the rate limit headers of ip-api.com. The result is shown, the rate limit is still detected by ip-api.com's answer (HTTP 429). [#3741](https://github.com/BornToBeRoot/NETworkManager/pull/3741)
 - Fixed an empty response of ip-api.com (e.g. from a proxy) being shown as an empty result instead of an error. [#3741](https://github.com/BornToBeRoot/NETworkManager/pull/3741)
+- Fixed the offset being shown as `-/-` for locations in UTC+0 (e.g. London in winter) and in seconds (e.g. `3600`). It is shown as `UTC+01:00`. A region without a code is shown without empty brackets. [#3741](https://github.com/BornToBeRoot/NETworkManager/pull/3741)
 
 **Traceroute**
 

@@ -1,4 +1,7 @@
-﻿namespace NETworkManager.Models.IPApi;
+﻿using System;
+using Newtonsoft.Json;
+
+namespace NETworkManager.Models.IPApi;
 
 /// <summary>
 ///     Class contains the IP geolocation information.
@@ -124,4 +127,54 @@ public class IPGeolocationInfo
     ///     IP address used for the query.
     /// </summary>
     public string Query { get; set; }
+
+    /// <summary>
+    ///     Continent with its code, e.g. <c>Europe (EU)</c>.
+    /// </summary>
+    [JsonIgnore]
+    public string ContinentWithCode => FormatNameWithCode(Continent, ContinentCode);
+
+    /// <summary>
+    ///     Country with its code, e.g. <c>Germany (DE)</c>.
+    /// </summary>
+    [JsonIgnore]
+    public string CountryWithCode => FormatNameWithCode(Country, CountryCode);
+
+    /// <summary>
+    ///     Region with its code, e.g. <c>Hesse (HE)</c>.
+    /// </summary>
+    [JsonIgnore]
+    public string RegionWithCode => FormatNameWithCode(RegionName, Region);
+
+    /// <summary>
+    ///     Offset from UTC, e.g. <c>UTC+01:00</c>.
+    /// </summary>
+    [JsonIgnore]
+    public string UtcOffset => FormatUtcOffset(Offset);
+
+    /// <summary>
+    ///     Name with its code in brackets, without empty brackets if the code is missing.
+    /// </summary>
+    /// <param name="name">Name, e.g. <c>Germany</c>.</param>
+    /// <param name="code">Code, e.g. <c>DE</c>.</param>
+    /// <returns>e.g. <c>Germany (DE)</c>, <c>null</c> if both are empty.</returns>
+    public static string FormatNameWithCode(string name, string code)
+    {
+        if (string.IsNullOrEmpty(name))
+            return string.IsNullOrEmpty(code) ? null : code;
+
+        return string.IsNullOrEmpty(code) ? name : $"{name} ({code})";
+    }
+
+    /// <summary>
+    ///     Offset from UTC (ip-api.com: seconds, incl. daylight saving time) as text.
+    /// </summary>
+    /// <param name="offsetSeconds">Offset in seconds, e.g. <c>3600</c>.</param>
+    /// <returns>e.g. <c>UTC+01:00</c>, <c>UTC+00:00</c> for 0, <c>UTC-03:30</c>.</returns>
+    public static string FormatUtcOffset(int offsetSeconds)
+    {
+        var offset = TimeSpan.FromSeconds(offsetSeconds);
+
+        return $"UTC{(offset < TimeSpan.Zero ? "-" : "+")}{offset:hh\\:mm}";
+    }
 }
