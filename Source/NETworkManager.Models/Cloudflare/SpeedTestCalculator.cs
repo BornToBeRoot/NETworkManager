@@ -30,6 +30,11 @@ public static class SpeedTestCalculator
     private const double ServerTimeMinDuration = 0.01;
 
     /// <summary>
+    /// Longest delay before a request that failed with HTTP 429 is repeated.
+    /// </summary>
+    private static readonly TimeSpan MaxRetryDelay = TimeSpan.FromSeconds(60);
+
+    /// <summary>
     /// Percentile of the values with linear interpolation between the two closest ranks.
     /// </summary>
     /// <param name="values">Values (unsorted).</param>
@@ -79,6 +84,24 @@ public static class SpeedTestCalculator
     public static bool IsDirectionFinished(IReadOnlyCollection<double> durationsMs, double finishRequestDurationMs)
     {
         return durationsMs.Count > 0 && durationsMs.Min() > finishRequestDurationMs;
+    }
+
+    /// <summary>
+    /// Delay before a request that failed with HTTP 429 is repeated, from the <c>Retry-After</c> header (like
+    /// <c>getRetryDelay</c> of the official library).
+    /// </summary>
+    /// <param name="delta">Delay of the header (seconds).</param>
+    /// <param name="date">Date of the header.</param>
+    /// <param name="now">Current time.</param>
+    /// <returns>Delay, 5 seconds without a header, at most 60 seconds (the test should not wait endlessly).</returns>
+    public static TimeSpan GetRetryDelay(TimeSpan? delta, DateTimeOffset? date, DateTimeOffset now)
+    {
+        var delay = delta ?? (date.HasValue ? date.Value - now : TimeSpan.FromSeconds(5));
+
+        if (delay < TimeSpan.Zero)
+            return TimeSpan.Zero;
+
+        return delay > MaxRetryDelay ? MaxRetryDelay : delay;
     }
 
     /// <summary>

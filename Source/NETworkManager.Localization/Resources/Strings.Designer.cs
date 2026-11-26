@@ -16669,6 +16669,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} requests failed and were skipped. The result may be less accurate..
+        /// </summary>
+        public static string XRequestsFailedAndWereSkippedMessage {
+            get {
+                return ResourceManager.GetString("XRequestsFailedAndWereSkippedMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0} Timed out.
         /// </summary>
         public static string XTimedOut {

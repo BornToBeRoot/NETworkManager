@@ -5761,4 +5761,7 @@ Do you want to start the scan?</value>
   <data name="XXXDidNotRespondWithinXXXSecondsMessage" xml:space="preserve">
     <value>{0} did not respond within {1} seconds.</value>
   </data>
+  <data name="XRequestsFailedAndWereSkippedMessage" xml:space="preserve">
+    <value>{0} requests failed and were skipped. The result may be less accurate.</value>
+  </data>
 </root>

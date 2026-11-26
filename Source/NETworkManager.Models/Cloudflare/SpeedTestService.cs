@@ -49,6 +49,18 @@ public class SpeedTestService
     public static readonly TimeSpan RequestTimeout = TimeSpan.FromSeconds(15);
 
     /// <summary>
+    /// A request that fails with HTTP 429 (too many requests) is repeated up to this number of times after the delay of
+    /// the server (<c>Retry-After</c>), like the official library.
+    /// </summary>
+    private const int MaxRetries = 3;
+
+    /// <summary>
+    /// A failed request is skipped and the test continues (like the official library). After this number of failed
+    /// requests in a row (e.g. the connection is lost), the test ends with the error.
+    /// </summary>
+    private const int MaxConsecutiveFailedRequests = 3;
+
+    /// <summary>
     /// Minimum gap between mid-stream live throughput emissions, in ms.
     /// </summary>
     private const double LiveProgressIntervalMs = 250.0;
@@ -130,6 +142,7 @@ public class SpeedTestService
         progress?.Report(new SpeedTestProgress(SpeedTestPhase.FetchingMetadata, Meta: meta));
         
         // 2. Latency, download and upload (official cloudflare/speedtest sequence)
+        var failures = new RequestFailures();
         var finished = new HashSet<MeasurementType>();
 
         // Duration of all requests per direction and size, decides whether a direction is finished
@@ -164,7 +177,8 @@ public class SpeedTestService
             {
                 for (var i = 0; i < measurement.Count; i++)
                 {
-                    await MeasureLatencyAsync(pings, cancellationToken).ConfigureAwait(false);
+                    await TryRequestAsync(() => MeasureLatencyAsync(pings, cancellationToken), failures,
+                        cancellationToken).ConfigureAwait(false);
                     Emit(progress, currentPhase, pings, downloadBps, uploadBps, null, null);
                 }
 
@@ -181,11 +195,15 @@ public class SpeedTestService
 
             for (var i = 0; i < measurement.Count; i++)
             {
-                var (bps, durationMs) = isDownload
-                    ? await MeasureDownloadAsync(measurement.Bytes, cancellationToken,
+                var (success, (bps, durationMs)) = await TryRequestAsync(() => isDownload
+                    ? MeasureDownloadAsync(measurement.Bytes, cancellationToken,
                         liveBps => Emit(progress, SpeedTestPhase.MeasuringDownload,
-                            pings, downloadBps, uploadBps, liveBps, null)).ConfigureAwait(false)
-                    : await MeasureUploadAsync(measurement.Bytes, cancellationToken).ConfigureAwait(false);
+                            pings, downloadBps, uploadBps, liveBps, null))
+                    : MeasureUploadAsync(measurement.Bytes, cancellationToken), failures, cancellationToken)
+                    .ConfigureAwait(false);
+
+                if (!success)
+                    continue;
 
                 // Requests without a speed are discarded (like the official library)
                 if (bps <= 0 || double.IsInfinity(bps))
@@ -228,7 +246,8 @@ public class SpeedTestService
             ClientCountry = meta?.Country,
             ServerCity = meta?.Colo?.City,
             ServerCountry = meta?.Colo?.Cca2,
-            ServerIata = meta?.Colo?.Iata
+            ServerIata = meta?.Colo?.Iata,
+            FailedRequests = failures.Total
         };
     }
 
@@ -277,7 +296,7 @@ public class SpeedTestService
             {
                 using var response = await _client.GetAsync($"{BaseUrl}/meta", timeout.Token)
                     .ConfigureAwait(false);
-                response.EnsureSuccessStatusCode();
+                EnsureSuccess(response);
                 var json = await response.Content.ReadAsStringAsync(timeout.Token).ConfigureAwait(false);
                 return JsonConvert.DeserializeObject<SpeedTestMetaInfo>(json);
             }, cancellationToken).ConfigureAwait(false);
@@ -311,7 +330,71 @@ public class SpeedTestService
         }
     }
 
-    private Task MeasureLatencyAsync(List<double> pings, CancellationToken cancellationToken)
+    /// <summary>
+    /// Failed requests of a test.
+    /// </summary>
+    private sealed class RequestFailures
+    {
+        public int Total { get; set; }
+        public int Consecutive { get; set; }
+    }
+
+    /// <summary>
+    /// The server asks to repeat the request later (HTTP 429).
+    /// </summary>
+    private sealed class TooManyRequestsException(TimeSpan retryAfter)
+        : HttpRequestException("Too many requests.", null, HttpStatusCode.TooManyRequests)
+    {
+        public TimeSpan RetryAfter { get; } = retryAfter;
+    }
+
+    private static void EnsureSuccess(HttpResponseMessage response)
+    {
+        if (response.StatusCode == HttpStatusCode.TooManyRequests)
+            throw new TooManyRequestsException(SpeedTestCalculator.GetRetryDelay(response.Headers.RetryAfter?.Delta,
+                response.Headers.RetryAfter?.Date, DateTimeOffset.UtcNow));
+
+        response.EnsureSuccessStatusCode();
+    }
+
+    /// <summary>
+    /// Runs a request of the test like the official library: HTTP 429 is repeated after the delay of the server (up to
+    /// <see cref="MaxRetries" /> times), another error skips the request. After <see cref="MaxConsecutiveFailedRequests" />
+    /// failed requests in a row the error is thrown (the test ends).
+    /// </summary>
+    /// <returns><c>false</c> if the request failed and was skipped.</returns>
+    private static async Task<(bool Success, T Value)> TryRequestAsync<T>(Func<Task<T>> request,
+        RequestFailures failures, CancellationToken cancellationToken)
+    {
+        for (var retry = 0;; retry++)
+        {
+            try
+            {
+                var value = await request().ConfigureAwait(false);
+                failures.Consecutive = 0;
+
+                return (true, value);
+            }
+            catch (TooManyRequestsException ex) when (retry < MaxRetries)
+            {
+                Log.Warn($"Speed test request rate limited (HTTP 429), retry in {ex.RetryAfter.TotalSeconds} s.");
+                await Task.Delay(ex.RetryAfter, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception ex) when (ex is HttpRequestException or IOException or TimeoutException)
+            {
+                failures.Total++;
+
+                if (++failures.Consecutive >= MaxConsecutiveFailedRequests)
+                    throw;
+
+                Log.Warn("Speed test request failed and is skipped.", ex);
+
+                return (false, default);
+            }
+        }
+    }
+
+    private Task<bool> MeasureLatencyAsync(List<double> pings, CancellationToken cancellationToken)
     {
         return WithTimeoutAsync(async timeout =>
         {
@@ -322,7 +405,7 @@ public class SpeedTestService
                 .ConfigureAwait(false);
             sw.Stop();
             var ttfb = sw.Elapsed.TotalMilliseconds;
-            response.EnsureSuccessStatusCode();
+            EnsureSuccess(response);
             await response.Content.CopyToAsync(Stream.Null, timeout.Token).ConfigureAwait(false);
 
             var serverTime = ParseServerTiming(response.Headers) ?? DefaultEstimatedServerTimeMs;
@@ -346,7 +429,7 @@ public class SpeedTestService
                 .ConfigureAwait(false);
             sw1.Stop();
             var ttfb = sw1.Elapsed.TotalMilliseconds;
-            response.EnsureSuccessStatusCode();
+            EnsureSuccess(response);
             var serverTime = ParseServerTiming(response.Headers) ?? DefaultEstimatedServerTimeMs;
             var ping = ttfb - serverTime;
             if (ping < 0) ping = 0;
@@ -409,7 +492,7 @@ public class SpeedTestService
                 .ConfigureAwait(false);
             sw.Stop();
             var ttfb = sw.Elapsed.TotalMilliseconds;
-            response.EnsureSuccessStatusCode();
+            EnsureSuccess(response);
             await response.Content.CopyToAsync(Stream.Null, timeout.Token).ConfigureAwait(false);
 
             var uploadDurationMs = ttfb;

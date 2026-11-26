@@ -428,6 +428,10 @@ public class SpeedTestWidgetViewModel : ViewModelBase
             CurrentUploadMbps = result.UploadMbps;
             CurrentLatencyMs = result.LatencyMs;
             CurrentJitterMs = result.JitterMs;
+
+            if (result.FailedRequests > 0)
+                ShowStatusMessage(string.Format(Strings.XRequestsFailedAndWereSkippedMessage, result.FailedRequests),
+                    StatusLevel.Warning);
         }
         catch (OperationCanceledException)
         {

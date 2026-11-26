@@ -1,4 +1,5 @@
-﻿using NETworkManager.Models.Cloudflare;
+﻿using System;
+using NETworkManager.Models.Cloudflare;
 using Xunit;
 
 namespace NETworkManager.Tests.Cloudflare;
@@ -73,6 +74,40 @@ public class SpeedTestCalculatorTests
     public void DirectionIsFinishedIfAllRequestsWereSlower()
     {
         Assert.True(SpeedTestCalculator.IsDirectionFinished([1200, 1100, 1300], 1000));
+    }
+
+    private static readonly DateTimeOffset Now = new(2026, 11, 26, 12, 0, 0, TimeSpan.Zero);
+
+    [Fact]
+    public void RetryDelayWithoutHeaderIsFiveSeconds()
+    {
+        Assert.Equal(TimeSpan.FromSeconds(5), SpeedTestCalculator.GetRetryDelay(null, null, Now));
+    }
+
+    [Fact]
+    public void RetryDelayIsTheDeltaOfTheHeader()
+    {
+        Assert.Equal(TimeSpan.FromSeconds(2), SpeedTestCalculator.GetRetryDelay(TimeSpan.FromSeconds(2), null, Now));
+    }
+
+    [Fact]
+    public void RetryDelayIsTheTimeUntilTheDateOfTheHeader()
+    {
+        Assert.Equal(TimeSpan.FromSeconds(10),
+            SpeedTestCalculator.GetRetryDelay(null, Now.AddSeconds(10), Now));
+    }
+
+    [Fact]
+    public void RetryDelayOfADateInThePastIsZero()
+    {
+        Assert.Equal(TimeSpan.Zero, SpeedTestCalculator.GetRetryDelay(null, Now.AddSeconds(-10), Now));
+    }
+
+    [Fact]
+    public void RetryDelayIsAtMostSixtySeconds()
+    {
+        Assert.Equal(TimeSpan.FromSeconds(60),
+            SpeedTestCalculator.GetRetryDelay(TimeSpan.FromHours(1), null, Now));
     }
 
     [Fact]

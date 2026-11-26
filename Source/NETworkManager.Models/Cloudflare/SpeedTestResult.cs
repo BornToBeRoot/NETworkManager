@@ -58,4 +58,9 @@ public class SpeedTestResult
     /// IATA code of the Cloudflare PoP, e.g. "FRA".
     /// </summary>
     public string ServerIata { get; set; }
+
+    /// <summary>
+    /// Number of requests that failed and were skipped (e.g. a short interruption of the connection).
+    /// </summary>
+    public int FailedRequests { get; set; }
 }
