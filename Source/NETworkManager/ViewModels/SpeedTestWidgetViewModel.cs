@@ -1,6 +1,7 @@
 using System;
 using System.Collections.ObjectModel;
 using System.Net.Http;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -238,6 +239,32 @@ public class SpeedTestWidgetViewModel : ViewModelBase
     public ICommand RunCommand => field ??= new RelayCommand(_ => RunAction());
 
     public ICommand AcceptDisclaimerCommand => field ??= new RelayCommand(_ => AcceptDisclaimerAction());
+
+    /// <summary>
+    /// Copies all values of the test (also of a canceled test), e.g. for a support request.
+    /// </summary>
+    public ICommand CopyAllCommand => field ??= new RelayCommand(_ => CopyAllAction(),
+        _ => !IsRunning && (Result != null || CurrentLatencyMs != null));
+
+    private void CopyAllAction()
+    {
+        static string Format(double? value, string format, string unit) =>
+            value.HasValue ? $"{value.Value.ToString(format)} {unit}" : "-/-";
+
+        var text = new StringBuilder();
+
+        text.AppendLine($"{Strings.Download}: {Format(CurrentDownloadMbps, "F1", "Mbps")}");
+        text.AppendLine($"{Strings.Upload}: {Format(CurrentUploadMbps, "F1", "Mbps")}");
+        text.AppendLine($"{Strings.Latency}: {Format(CurrentLatencyMs, "F0", "ms")}");
+        text.AppendLine($"{Strings.Jitter}: {Format(CurrentJitterMs, "F1", "ms")}");
+        text.AppendLine($"{Strings.ISP}: {Result?.Isp ?? "-/-"}");
+        text.AppendLine($"{Strings.Server}: {Result?.Server ?? "-/-"}");
+
+        if (LastTestTime is { } time)
+            text.AppendLine(string.Format(Strings.LastTestAtX, time.ToString("G")));
+
+        ClipboardHelper.SetClipboard(text.ToString().TrimEnd());
+    }
 
     public SpeedTestWidgetViewModel()
     {
