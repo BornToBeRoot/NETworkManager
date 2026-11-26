@@ -37,22 +37,6 @@ public class IPGeolocationResult
     }
 
     /// <summary>
-    ///     Create a new instance of <see cref="IPGeolocationResult" /> with an error message and an error code.
-    /// </summary>
-    /// <param name="hasError">Indicates if the IP geolocation information retrieval has failed.</param>
-    /// <param name="errorMessage">Error message if the IP geolocation information retrieval has failed.</param>
-    /// <param name="errorCode">
-    ///     Error code if the IP geolocation information retrieval has failed (or -1 if exception was
-    ///     thrown).
-    /// </param>
-    public IPGeolocationResult(bool hasError, string errorMessage, int errorCode)
-    {
-        HasError = hasError;
-        ErrorMessage = errorMessage;
-        ErrorCode = errorCode;
-    }
-
-    /// <summary>
     ///     Create a new instance of <see cref="IPGeolocationResult" /> for a failed request.
     /// </summary>
     /// <param name="error">
@@ -97,7 +81,7 @@ public class IPGeolocationResult
     public int ErrorCode { get; set; }
 
     /// <summary>
-    ///     Error of the request, mapped to a localized message by the view model (<c>null</c> if the answer was invalid).
+    ///     Error of the request, mapped to a localized message by the view model.
     /// </summary>
     public Exception Error { get; set; }
 }

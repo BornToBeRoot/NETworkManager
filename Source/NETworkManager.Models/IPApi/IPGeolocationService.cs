@@ -3,6 +3,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using log4net;
 using NETworkManager.Utilities;
 using Newtonsoft.Json;
 
@@ -14,6 +15,8 @@ namespace NETworkManager.Models.IPApi;
 /// </summary>
 public class IPGeolocationService : SingletonBase<IPGeolocationService>
 {
+    private static readonly ILog Log = LogManager.GetLogger(typeof(IPGeolocationService));
+
     /// <summary>
     ///     Base URL fo the ip-api free endpoint.
     /// </summary>
@@ -82,11 +85,10 @@ public class IPGeolocationService : SingletonBase<IPGeolocationService>
             // Check if the request was successful.
             if (response.IsSuccessStatusCode)
             {
-                // Update rate limit values.
+                // Update rate limit values. Without them (e.g. removed by a proxy) the answer is still used, the last
+                // values are kept (a 429 still stops the requests)
                 if (!UpdateRateLimit(response.Headers))
-                    return new IPGeolocationResult(true,
-                        "The rate limit values couldn't be extracted from the http header. The request was probably corrupted. Try again in a few seconds.",
-                        -1);
+                    Log.Warn("The rate limit headers (X-Rl, X-Ttl) of ip-api.com are missing or invalid.");
 
                 var json = await response.Content.ReadAsStringAsync();
                 var info = JsonConvert.DeserializeObject<IPGeolocationInfo>(json);
@@ -165,23 +167,31 @@ public class IPGeolocationService : SingletonBase<IPGeolocationService>
     }
 
     /// <summary>
+    ///     Reads the rate limit from the headers of the response.
+    /// </summary>
+    /// <param name="headers">Headers of the response.</param>
+    /// <param name="remainingRequests">Requests left in the time window (<c>X-Rl</c>).</param>
+    /// <param name="remainingTime">Seconds until the time window resets (<c>X-Ttl</c>).</param>
+    /// <returns><c>true</c> if both headers are present and valid.</returns>
+    public static bool TryParseRateLimit(HttpHeaders headers, out int remainingRequests, out int remainingTime)
+    {
+        remainingRequests = 0;
+        remainingTime = 0;
+
+        return headers.TryGetValues("X-Rl", out var xRl) &&
+               int.TryParse(xRl.FirstOrDefault(), out remainingRequests) &&
+               headers.TryGetValues("X-Ttl", out var xTtl) &&
+               int.TryParse(xTtl.FirstOrDefault(), out remainingTime);
+    }
+
+    /// <summary>
     ///     Updates the rate limit values.
     /// </summary>
     /// <param name="headers">Headers from the response.</param>
     /// <returns>True if the update was successful, false otherwise.</returns>
     private bool UpdateRateLimit(HttpHeaders headers)
     {
-        // Parse header data
-        if (!headers.TryGetValues("X-Rl", out var xRl))
-            return false;
-
-        if (!int.TryParse(xRl.ToArray()[0], out var remainingRequests))
-            return false;
-
-        if (!headers.TryGetValues("X-Ttl", out var xTtl))
-            return false;
-
-        if (!int.TryParse(xTtl.ToArray()[0], out var remainingTime))
+        if (!TryParseRateLimit(headers, out var remainingRequests, out var remainingTime))
             return false;
 
         _rateLimitRemainingTime = remainingTime;
