@@ -3086,9 +3086,6 @@ Enable profile file encryption in Settings&gt;Profile to store credentials secur
   <data name="ICMPv6" xml:space="preserve">
     <value>ICMPv6</value>
   </data>
-  <data name="CheckIsDisabled" xml:space="preserve">
-    <value>Check is disabled!</value>
-  </data>
   <data name="EnterValidIPv6Address" xml:space="preserve">
     <value>Enter a valid IPv6 address!</value>
   </data>
@@ -5762,5 +5759,13 @@ Do you want to start the scan?</value>
   </data>
   <data name="LastTestAtX" xml:space="preserve">
     <value>Last test at {0}</value>
+  </data>
+  <data name="IPGeolocationWidgetDisabledMessage" xml:space="preserve">
+    <value>Show the location and the internet provider of your public IP address with ip-api.com.
+ip-api.com receives your IP address (http, not encrypted).</value>
+  </data>
+  <data name="DNSResolverWidgetDisabledMessage" xml:space="preserve">
+    <value>Show the DNS server that resolves your requests with edns.ip-api.com.
+ip-api.com receives your IP address and the IP address of your DNS server.</value>
   </data>
 </root>

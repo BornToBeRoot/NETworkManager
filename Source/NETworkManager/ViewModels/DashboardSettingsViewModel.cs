@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using NETworkManager.Settings;
 
 namespace NETworkManager.ViewModels;
@@ -275,6 +276,22 @@ public class DashboardSettingsViewModel : ViewModelBase
         LoadSettings();
 
         _isLoading = false;
+
+        // The checks can also be enabled in the widgets (the settings view is created once)
+        SettingsManager.Current.PropertyChanged += SettingsManager_PropertyChanged;
+    }
+
+    private void SettingsManager_PropertyChanged(object sender, PropertyChangedEventArgs e)
+    {
+        switch (e.PropertyName)
+        {
+            case nameof(SettingsInfo.Dashboard_CheckIPApiIPGeolocation):
+                CheckIPApiIPGeolocationEnabled = SettingsManager.Current.Dashboard_CheckIPApiIPGeolocation;
+                break;
+            case nameof(SettingsInfo.Dashboard_CheckIPApiDNSResolver):
+                CheckIPApiDNSResolverEnabled = SettingsManager.Current.Dashboard_CheckIPApiDNSResolver;
+                break;
+        }
     }
 
     /// <summary>

@@ -74,6 +74,7 @@ Release date: **xx.xx.2026**
 - The speed test shows the time of the test ("Last test at ...") next to its buttons, like the network connection, so an old result is recognized (the tooltip shows the date). A canceled or failed test shows no time. [#3740](https://github.com/BornToBeRoot/NETworkManager/pull/3740)
 - New **Copy all** button in the speed test: copies download, upload, latency, jitter, ISP, server and the time of the test as text, like the network connection. [#3740](https://github.com/BornToBeRoot/NETworkManager/pull/3740)
 - The IP geolocation widget shows when ip-api.com can be requested again after its rate limit was reached ("Rate limit reached! Try again in ... seconds", like the IP Geolocation tool), as a warning below its header. [#3741](https://github.com/BornToBeRoot/NETworkManager/pull/3741)
+- The IP geolocation and DNS resolver widgets show what they request from ip-api.com and an **Enable** button when their check is disabled (default), instead of "Check is disabled!". The button enables the check (like **Settings > Dashboard**) and checks right away. [#3741](https://github.com/BornToBeRoot/NETworkManager/pull/3741)
 
 **Status window**
 

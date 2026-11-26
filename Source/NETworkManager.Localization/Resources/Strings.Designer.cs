@@ -2171,15 +2171,6 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Check is disabled!.
-        /// </summary>
-        public static string CheckIsDisabled {
-            get {
-                return ResourceManager.GetString("CheckIsDisabled", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Check your network adapter configuration (dns) and if your dns server is configured correctly..
         /// </summary>
         public static string CheckNetworkAdapterConfigurationAndDNSServerConfigurationMessage {
@@ -4105,6 +4096,16 @@ namespace NETworkManager.Localization.Resources {
         public static string DNSResolver {
             get {
                 return ResourceManager.GetString("DNSResolver", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show the DNS server that resolves your requests with edns.ip-api.com.
+        ///ip-api.com receives your IP address and the IP address of your DNS server..
+        /// </summary>
+        public static string DNSResolverWidgetDisabledMessage {
+            get {
+                return ResourceManager.GetString("DNSResolverWidgetDisabledMessage", resourceCulture);
             }
         }
         
@@ -7336,6 +7337,16 @@ namespace NETworkManager.Localization.Resources {
         public static string IPGeolocation {
             get {
                 return ResourceManager.GetString("IPGeolocation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show the location and the internet provider of your public IP address with ip-api.com.
+        ///ip-api.com receives your IP address (http, not encrypted)..
+        /// </summary>
+        public static string IPGeolocationWidgetDisabledMessage {
+            get {
+                return ResourceManager.GetString("IPGeolocationWidgetDisabledMessage", resourceCulture);
             }
         }
         

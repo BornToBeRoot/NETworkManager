@@ -121,6 +121,19 @@ public class IPApiIPGeolocationWidgetViewModel : ViewModelBase
     /// </summary>
     public ICommand CheckCommand => new RelayCommand(_ => Check(), _ => !IsRunning);
 
+    /// <summary>
+    /// Gets the command to enable the IP geolocation check (setting <c>Dashboard_CheckIPApiIPGeolocation</c>, off by default: ip-api.com receives
+    /// the IP address) and to check right away.
+    /// </summary>
+    public ICommand EnableCheckCommand => new RelayCommand(_ => EnableCheckAction());
+
+    private void EnableCheckAction()
+    {
+        SettingsManager.Current.Dashboard_CheckIPApiIPGeolocation = true;
+
+        Check();
+    }
+
     #endregion
 
     #region Methods
