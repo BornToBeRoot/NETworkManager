@@ -57,6 +57,24 @@ public class IPGeolocationServiceTests
         Assert.Equal("203.0.113.10", result.Info.Query);
     }
 
+    [Fact]
+    public void FailedQueryHasTheReason()
+    {
+        // HTTP 200, no error of the request: the IP Geolocation tool shows the reason, the traceroute an empty hop
+        var result = IPGeolocationService.ParseResponse(
+            "{\"status\":\"fail\",\"message\":\"private range\",\"query\":\"192.168.1.1\"}");
+
+        Assert.False(result.HasError);
+        Assert.True(result.Info.HasFailed);
+        Assert.Equal("private range", result.Info.Message);
+    }
+
+    [Fact]
+    public void SuccessfulQueryHasNotFailed()
+    {
+        Assert.False(IPGeolocationService.ParseResponse("{\"status\":\"success\"}").Info.HasFailed);
+    }
+
     [Theory]
     [InlineData("")]
     [InlineData("null")]

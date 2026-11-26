@@ -14,6 +14,19 @@ public class IPGeolocationInfo
     public string Status { get; set; }
 
     /// <summary>
+    ///     Reason if the query failed (<see cref="Status" /> <c>fail</c>), e.g. <c>private range</c>,
+    ///     <c>reserved range</c> or <c>invalid query</c>.
+    /// </summary>
+    public string Message { get; set; }
+
+    /// <summary>
+    ///     ip-api.com has no geolocation for the query (HTTP 200 with <see cref="Status" /> <c>fail</c>, e.g. a private
+    ///     IP address), see <see cref="Message" />.
+    /// </summary>
+    [JsonIgnore]
+    public bool HasFailed => string.Equals(Status, "fail", StringComparison.OrdinalIgnoreCase);
+
+    /// <summary>
     ///     Continent where the IP address is located.
     /// </summary>
     public string Continent { get; set; }

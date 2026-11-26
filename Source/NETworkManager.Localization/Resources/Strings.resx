@@ -5768,4 +5768,7 @@ ip-api.com receives your IP address (http, not encrypted).</value>
     <value>Show the DNS server that resolves your requests with edns.ip-api.com.
 ip-api.com receives your IP address and the IP address of your DNS server.</value>
   </data>
+  <data name="XXXHasNoIPGeolocationForXXXReasonXXX" xml:space="preserve">
+    <value>{0} has no IP geolocation for "{1}" ({2}).</value>
+  </data>
 </root>

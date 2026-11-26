@@ -277,6 +277,19 @@ public class IPGeolocationViewModel : ViewModelBase
                 return;
             }
 
+            // No geolocation for the query (HTTP 200, e.g. a private IP address): the reason instead of an empty result
+            if (result.Info.HasFailed)
+            {
+                Log.Warn($"ip-api.com has no geolocation for {Host}: {result.Info.Message}");
+
+                StatusMessage = string.Format(Strings.XXXHasNoIPGeolocationForXXXReasonXXX, IPGeolocationService.Host,
+                    Host, result.Info.Message);
+                StatusMessageLevel = StatusLevel.Warning;
+                IsStatusMessageDisplayed = true;
+
+                return;
+            }
+
             Result = result.Info;
             IsResultVisible = true;
 

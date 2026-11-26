@@ -197,6 +197,7 @@ Release date: **xx.xx.2026**
 - Fixed every query failing with "The rate limit values couldn't be extracted from the http header..." when a proxy removed the rate limit headers of ip-api.com. The result is shown, the rate limit is still detected by ip-api.com's answer (HTTP 429). [#3741](https://github.com/BornToBeRoot/NETworkManager/pull/3741)
 - Fixed an empty response of ip-api.com (e.g. from a proxy) being shown as an empty result instead of an error. [#3741](https://github.com/BornToBeRoot/NETworkManager/pull/3741)
 - Fixed the offset being shown as `-/-` for locations in UTC+0 (e.g. London in winter) and in seconds (e.g. `3600`). It is shown as `UTC+01:00`. A region without a code is shown without empty brackets. [#3741](https://github.com/BornToBeRoot/NETworkManager/pull/3741)
+- Fixed an IP address or host name without a geolocation (e.g. a private IP address like `192.168.1.1` or an invalid query) being shown as an empty result. A warning shows the reason of ip-api.com (e.g. `private range`). [#3741](https://github.com/BornToBeRoot/NETworkManager/pull/3741)
 
 **Traceroute**
 

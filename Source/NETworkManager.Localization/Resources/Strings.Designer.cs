@@ -16751,6 +16751,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} has no IP geolocation for &quot;{1}&quot; ({2})..
+        /// </summary>
+        public static string XXXHasNoIPGeolocationForXXXReasonXXX {
+            get {
+                return ResourceManager.GetString("XXXHasNoIPGeolocationForXXXReasonXXX", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &quot;{0}&quot; is not reachable via ICMP!.
         /// </summary>
         public static string XXXIsNotReachableViaICMPMessage {
