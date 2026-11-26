@@ -69,6 +69,7 @@ Release date: **xx.xx.2026**
 - A value of the network connection that is cut off in a narrow window (e.g. a long IPv6 address or DNS name) is shown completely in the tooltip. [#3734](https://github.com/BornToBeRoot/NETworkManager/pull/3734)
 - The network connection shows the time of the last check ("Reloaded at ...") next to the refresh button, like other tools. [#3734](https://github.com/BornToBeRoot/NETworkManager/pull/3734)
 - New **Copy all** button in the network connection: copies all values with the reasons of the states as text, e.g. for a support request. [#3734](https://github.com/BornToBeRoot/NETworkManager/pull/3734)
+- The speed test measures like the official [cloudflare/speedtest](https://github.com/cloudflare/speedtest) library, so the result is comparable with [speed.cloudflare.com](https://speed.cloudflare.com/): the server time is read from the request duration (`cfRequestDuration`) of the `server-timing` header instead of the first duration of any metric, without it no server time is subtracted (instead of 10 ms). [#PR](PRLINK)
 
 **Status window**
 

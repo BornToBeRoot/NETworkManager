@@ -59,6 +59,44 @@ public class SpeedTestCalculatorTests
     }
 
     [Fact]
+    public void ServerTimingIsTheRequestDurationAfterOtherMetrics()
+    {
+        Assert.Equal(12.5,
+            SpeedTestCalculator.ParseServerTiming(["cfL4;desc=\"?proto=TCP&rtt=11\";dur=5, cfRequestDuration;dur=12.5"]));
+    }
+
+    [Fact]
+    public void ServerTimingAcceptsTheShortName()
+    {
+        Assert.Equal(3, SpeedTestCalculator.ParseServerTiming(["cfReqDur;dur=3"]));
+    }
+
+    [Fact]
+    public void ServerTimingIsTheSumOfTheSpeedDurationsWithoutRequestDuration()
+    {
+        Assert.Equal(3.5, SpeedTestCalculator.ParseServerTiming(["cfSpeedA;dur=1.5, cfSpeedB;dur=2"])!.Value, 10);
+    }
+
+    [Fact]
+    public void ServerTimingReadsAllHeaderValues()
+    {
+        Assert.Equal(7, SpeedTestCalculator.ParseServerTiming(["cfL4;dur=1", "cfRequestDuration;dur=7"]));
+    }
+
+    [Fact]
+    public void ServerTimingOfOtherMetricsIsNull()
+    {
+        Assert.Null(SpeedTestCalculator.ParseServerTiming(["cfL4;dur=5, cfCacheStatus;dur=1"]));
+    }
+
+    [Fact]
+    public void ServerTimingUpToTheMinimumIsIgnored()
+    {
+        Assert.Equal(2, SpeedTestCalculator.ParseServerTiming(["cfRequestDuration;dur=0.01, cfSpeedA;dur=2"]));
+        Assert.Null(SpeedTestCalculator.ParseServerTiming(["cfSpeedA;dur=0.005"]));
+    }
+
+    [Fact]
     public void ServerTimingWithInvalidDurationIsNull()
     {
         Assert.Null(SpeedTestCalculator.ParseServerTiming(["cfRequestDuration;dur=."]));

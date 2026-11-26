@@ -12,7 +12,22 @@ namespace NETworkManager.Models.Cloudflare;
 /// </summary>
 public static class SpeedTestCalculator
 {
-    private static readonly Regex ServerTimingRegex = new(@"(?:^|;)\s*dur=([0-9.]+)", RegexOptions.Compiled);
+    /// <summary>
+    /// Server time of the request, e.g. <c>cfRequestDuration;dur=12.3</c>.
+    /// </summary>
+    private static readonly Regex RequestDurationRegex = new(@"(?:^|,\s*)cfReq(?:uest)?Dur(?:ation)?;\s*dur=([0-9.]+)",
+        RegexOptions.Compiled | RegexOptions.IgnoreCase);
+
+    /// <summary>
+    /// Parts of the server time (summed up if there is no request duration), e.g. <c>cfSpeedXyz;dur=1.2</c>.
+    /// </summary>
+    private static readonly Regex SpeedDurationRegex = new(@"(?:^|,\s*)cfSpeed[a-zA-Z]*;\s*dur=([0-9.]+)",
+        RegexOptions.Compiled | RegexOptions.IgnoreCase);
+
+    /// <summary>
+    /// Server times up to this value (ms) are ignored.
+    /// </summary>
+    private const double ServerTimeMinDuration = 0.01;
 
     /// <summary>
     /// Percentile of the values with linear interpolation between the two closest ranks.
@@ -61,24 +76,39 @@ public static class SpeedTestCalculator
     }
 
     /// <summary>
-    /// Time the server needed to process the request, from the <c>server-timing</c> header.
+    /// Time the server needed to process the request, from the <c>server-timing</c> header: the request duration
+    /// (<c>cfRequestDuration</c>), otherwise the sum of the <c>cfSpeed*</c> durations (like <c>cfGetServerTime</c> of the
+    /// official library).
     /// </summary>
     /// <param name="values">Values of the <c>server-timing</c> header.</param>
-    /// <returns>Server time in milliseconds, <c>null</c> if the header has no duration.</returns>
+    /// <returns>Server time in milliseconds, <c>null</c> if the header has no server time.</returns>
     public static double? ParseServerTiming(IEnumerable<string> values)
     {
         if (values == null)
             return null;
 
-        foreach (var value in values)
-        {
-            var match = ServerTimingRegex.Match(value);
+        var header = string.Join(", ", values);
 
-            if (match.Success && double.TryParse(match.Groups[1].Value, NumberStyles.Float,
-                    CultureInfo.InvariantCulture, out var duration))
-                return duration;
+        if (header.Length == 0)
+            return null;
+
+        var match = RequestDurationRegex.Match(header);
+
+        if (match.Success && TryParseDuration(match, out var requestDuration) &&
+            requestDuration > ServerTimeMinDuration)
+            return requestDuration;
+
+        double sum = 0;
+
+        foreach (Match speedMatch in SpeedDurationRegex.Matches(header))
+        {
+            if (TryParseDuration(speedMatch, out var duration))
+                sum += duration;
         }
 
-        return null;
+        return sum > ServerTimeMinDuration ? sum : null;
     }
+
+    private static bool TryParseDuration(Match match, out double duration) =>
+        double.TryParse(match.Groups[1].Value, NumberStyles.Float, CultureInfo.InvariantCulture, out duration);
 }

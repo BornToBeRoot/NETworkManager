@@ -23,7 +23,10 @@ public class SpeedTestService
     private const string BaseUrl = "https://speed.cloudflare.com";
     private const string Origin = "https://speed.cloudflare.com";
 
-    private const double DefaultEstimatedServerTimeMs = 10.0;
+    /// <summary>
+    /// Server time if the response has no <c>server-timing</c> header (<c>estimatedServerTime</c> of the official library).
+    /// </summary>
+    private const double DefaultEstimatedServerTimeMs = 0.0;
     private const double BandwidthFinishRequestDurationMs = 1000.0;
     private const double BandwidthMinRequestDurationMs = 10.0;
     private const double EstimatedHeaderFraction = 1.005;
