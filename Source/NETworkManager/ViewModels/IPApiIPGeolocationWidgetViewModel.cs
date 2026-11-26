@@ -294,6 +294,14 @@ public class IPApiIPGeolocationWidgetViewModel : ViewModelBase
                     $"{IPGeolocationService.Host} {string.Format(Strings.RateLimitReachedTryAgainInXSeconds, result.RateLimitRemainingTime)}",
                     StatusLevel.Warning);
             }
+            else if (result.Info.HasFailed)
+            {
+                // No geolocation for the public IP address (HTTP 200, e.g. a proxy / NAT64), like the IP Geolocation tool
+                Log.Warn($"ip-api.com has no geolocation for {result.Info.Query}: {result.Info.Message}");
+
+                ShowStatusMessage(string.Format(Strings.XXXHasNoIPGeolocationForXXXReasonXXX, IPGeolocationService.Host,
+                    result.Info.Query, result.Info.Message), StatusLevel.Warning);
+            }
             else
             {
                 Result = result;
