@@ -8,6 +8,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading;
 using System.Threading.Tasks;
+using log4net;
 using Newtonsoft.Json;
 
 namespace NETworkManager.Models.Cloudflare;
@@ -20,6 +21,8 @@ namespace NETworkManager.Models.Cloudflare;
 /// </summary>
 public class SpeedTestService
 {
+    private static readonly ILog Log = LogManager.GetLogger(typeof(SpeedTestService));
+
     private const string BaseUrl = "https://speed.cloudflare.com";
     private const string Origin = "https://speed.cloudflare.com";
 
@@ -247,13 +250,25 @@ public class SpeedTestService
     private static double? ParseServerTiming(HttpResponseHeaders headers) =>
         headers.TryGetValues("server-timing", out var values) ? SpeedTestCalculator.ParseServerTiming(values) : null;
 
+    /// <summary>
+    /// Requests the ISP and the Cloudflare server. Optional: an error is logged and the test continues without them.
+    /// </summary>
+    /// <returns>Metadata, <c>null</c> if the request failed.</returns>
     private async Task<SpeedTestMetaInfo> FetchMetaAsync(CancellationToken cancellationToken)
     {
-        using var response = await _client.GetAsync($"{BaseUrl}/meta", cancellationToken)
-            .ConfigureAwait(false);
-        response.EnsureSuccessStatusCode();
-        var json = await response.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
-        return JsonConvert.DeserializeObject<SpeedTestMetaInfo>(json);
+        try
+        {
+            using var response = await _client.GetAsync($"{BaseUrl}/meta", cancellationToken)
+                .ConfigureAwait(false);
+            response.EnsureSuccessStatusCode();
+            var json = await response.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
+            return JsonConvert.DeserializeObject<SpeedTestMetaInfo>(json);
+        }
+        catch (Exception ex) when (ex is not OperationCanceledException)
+        {
+            Log.Warn("Speed test metadata could not be requested.", ex);
+            return null;
+        }
     }
 
     private async Task MeasureLatencyAsync(List<double> pings, CancellationToken cancellationToken)

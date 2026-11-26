@@ -45,7 +45,7 @@ public class SpeedTestMetaInfo
     /// Autonomous System Number of the client's ISP.
     /// </summary>
     [JsonProperty("asn")]
-    public int Asn { get; set; }
+    public int? Asn { get; set; }
 
     /// <summary>
     /// Human-readable ISP name (e.g. "innogy TelNet").
