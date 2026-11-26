@@ -137,7 +137,7 @@ public class SpeedTestService
         var uploadBps = new List<double>();
 
         // 1. Metadata
-        Emit(progress, SpeedTestPhase.FetchingMetadata, pings, downloadBps, uploadBps, null, null);
+        Emit(progress, SpeedTestPhase.FetchingMetadata, pings, downloadBps, uploadBps, null);
         var meta = await FetchMetaAsync(cancellationToken).ConfigureAwait(false);
         progress?.Report(new SpeedTestProgress(SpeedTestPhase.FetchingMetadata, Meta: meta));
         
@@ -170,7 +170,7 @@ public class SpeedTestService
             if (phase != currentPhase)
             {
                 currentPhase = phase;
-                Emit(progress, currentPhase, pings, downloadBps, uploadBps, null, null);
+                Emit(progress, currentPhase, pings, downloadBps, uploadBps, null);
             }
 
             if (measurement.Type == MeasurementType.Latency)
@@ -179,7 +179,7 @@ public class SpeedTestService
                 {
                     await TryRequestAsync(() => MeasureLatencyAsync(pings, cancellationToken), failures,
                         cancellationToken).ConfigureAwait(false);
-                    Emit(progress, currentPhase, pings, downloadBps, uploadBps, null, null);
+                    Emit(progress, currentPhase, pings, downloadBps, uploadBps, null);
                 }
 
                 continue;
@@ -198,7 +198,7 @@ public class SpeedTestService
                 var (success, (bps, durationMs)) = await TryRequestAsync(() => isDownload
                     ? MeasureDownloadAsync(measurement.Bytes, cancellationToken,
                         liveBps => Emit(progress, SpeedTestPhase.MeasuringDownload,
-                            pings, downloadBps, uploadBps, liveBps, null))
+                            pings, downloadBps, uploadBps, liveBps))
                     : MeasureUploadAsync(measurement.Bytes, cancellationToken), failures, cancellationToken)
                     .ConfigureAwait(false);
 
@@ -218,13 +218,13 @@ public class SpeedTestService
                 if (isDownload)
                 {
                     downloadBps.Add(bps);
-                    Emit(progress, currentPhase, pings, downloadBps, uploadBps, null, null,
+                    Emit(progress, currentPhase, pings, downloadBps, uploadBps, null,
                         newDownloadSampleBps: bps);
                 }
                 else
                 {
                     uploadBps.Add(bps);
-                    Emit(progress, currentPhase, pings, downloadBps, uploadBps, null, null,
+                    Emit(progress, currentPhase, pings, downloadBps, uploadBps, null,
                         newUploadSampleBps: bps);
                 }
             }
@@ -253,21 +253,20 @@ public class SpeedTestService
 
     /// <summary>
     /// Builds and emits a <see cref="SpeedTestProgress"/> using current
-    /// sample lists. <paramref name="liveDownloadBpsOverride"/> and
-    /// <paramref name="liveUploadBpsOverride"/> let mid-stream callers
-    /// report an instantaneous estimate even before the first completed
-    /// sample is in the list.
+    /// sample lists. <paramref name="liveDownloadBpsOverride"/> lets the running
+    /// download report an instantaneous estimate before the first completed
+    /// sample is in the list (uploads only report completed samples).
     /// </summary>
     private static void Emit(IProgress<SpeedTestProgress> progress, SpeedTestPhase phase,
         List<double> pings, List<double> downloadBps, List<double> uploadBps,
-        double? liveDownloadBpsOverride, double? liveUploadBpsOverride,
+        double? liveDownloadBpsOverride,
         double? newDownloadSampleBps = null, double? newUploadSampleBps = null)
     {
         if (progress == null)
             return;
 
         var downloadMbps = SpeedTestCalculator.CurrentBandwidth(downloadBps, liveDownloadBpsOverride) / 1_000_000.0;
-        var uploadMbps = SpeedTestCalculator.CurrentBandwidth(uploadBps, liveUploadBpsOverride) / 1_000_000.0;
+        var uploadMbps = SpeedTestCalculator.CurrentBandwidth(uploadBps, null) / 1_000_000.0;
 
         double? latencyMs = pings.Count > 0 ? SpeedTestCalculator.Percentile(pings, 0.5) : null;
         double? jitterMs = pings.Count >= 2 ? SpeedTestCalculator.Jitter(pings) : null;
