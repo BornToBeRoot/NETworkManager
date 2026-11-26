@@ -207,7 +207,11 @@ public partial class DashboardView
 
     private void SettingsManager_PropertyChanged(object sender, PropertyChangedEventArgs e)
     {
-        if (e.PropertyName != null && CheckSettings.Contains(e.PropertyName))
+        // The "Enable" button of an IP API widget (dashboard visible) checks the widget itself, the others are up to date
+        var isEnabledInWidget = _isViewVisible && e.PropertyName is nameof(SettingsInfo.Dashboard_CheckIPApiIPGeolocation)
+            or nameof(SettingsInfo.Dashboard_CheckIPApiDNSResolver);
+
+        if (e.PropertyName != null && CheckSettings.Contains(e.PropertyName) && !isEnabledInWidget)
             _isOutdated = true;
 
         // A hidden speed test widget doesn't measure (no data is transferred in the background): cancel it right away,
