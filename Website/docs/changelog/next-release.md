@@ -178,6 +178,10 @@ Release date: **xx.xx.2026**
 - Fixed the status window being cut off on the left on small screens (e.g. 1280 x 720 with 150 % scaling). It is no longer wider than the screen. [#3734](https://github.com/BornToBeRoot/NETworkManager/pull/3734)
 - Fixed the status window opened by the user (e.g. from the tray icon) closing itself after a network change. It stays open and checks the network connection again. [#3734](https://github.com/BornToBeRoot/NETworkManager/pull/3734)
 
+**IP Geolocation**
+
+- Fixed the tab getting stuck (query disabled, input read-only, progress bar running) after an error or when the rate limit of ip-api.com was reached, until the tab was closed. [#PR](PRLINK)
+
 ## Dependencies, Refactoring & Documentation
 
 - Code cleanup & refactoring

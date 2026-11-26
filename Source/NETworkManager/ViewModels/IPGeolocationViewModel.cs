@@ -289,8 +289,11 @@ public class IPGeolocationViewModel : ViewModelBase
             StatusMessageLevel = StatusLevel.Error;
             IsStatusMessageDisplayed = true;
         }
-
-        IsRunning = false;
+        finally
+        {
+            // Also after an error or the rate limit (early return), otherwise the tab stays busy
+            IsRunning = false;
+        }
     }
 
     /// <summary>
