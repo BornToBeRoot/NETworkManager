@@ -436,6 +436,7 @@ public class SpeedTestWidgetViewModel : ViewModelBase
         {
             SetScreenshotData();
             IsRunning = false;
+            CommandManager.InvalidateRequerySuggested();
             return;
         }
 
@@ -510,6 +511,9 @@ public class SpeedTestWidgetViewModel : ViewModelBase
         finally
         {
             IsRunning = false;
+
+            // Enable copy all (CanExecute is otherwise only evaluated on the next input)
+            CommandManager.InvalidateRequerySuggested();
         }
     }
 }
