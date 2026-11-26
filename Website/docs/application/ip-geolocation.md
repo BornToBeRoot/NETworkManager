@@ -14,6 +14,8 @@ IP geolocation data is provided by [ip-api.com](https://ip-api.com/) and the API
 
 :::
 
+A private or reserved IP address (e.g. `192.168.1.1`) has no geolocation: a warning shows the reason of ip-api.com (e.g. `private range`). The free API endpoint allows 45 requests per minute from your network; when the limit is reached, a warning shows when the next query is possible. A query fails after 10 seconds without a response.
+
 ![IPGeolocation](../img/ip-geolocation.png)
 
 ### Example inputs
