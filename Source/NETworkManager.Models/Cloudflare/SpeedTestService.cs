@@ -6,7 +6,6 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
@@ -33,8 +32,6 @@ public class SpeedTestService
     /// Minimum gap between mid-stream live throughput emissions, in ms.
     /// </summary>
     private const double LiveProgressIntervalMs = 250.0;
-
-    private static readonly Regex ServerTimingRegex = new(@"(?:^|;)\s*dur=([0-9.]+)", RegexOptions.Compiled);
 
     private enum StepDirection { Download, Upload }
 
@@ -184,10 +181,10 @@ public class SpeedTestService
         // 6. Result
         return new SpeedTestResult
         {
-            DownloadMbps = downloadBps.Count > 0 ? Percentile(downloadBps, 0.9) / 1_000_000.0 : null,
-            UploadMbps   = uploadBps.Count   > 0 ? Percentile(uploadBps,   0.9) / 1_000_000.0 : null,
-            LatencyMs    = pings.Count        > 0 ? Percentile(pings, 0.5)                     : null,
-            JitterMs     = pings.Count       >= 2 ? Jitter(pings)                              : null,
+            DownloadMbps = downloadBps.Count > 0 ? SpeedTestCalculator.Percentile(downloadBps, 0.9) / 1_000_000.0 : null,
+            UploadMbps   = uploadBps.Count   > 0 ? SpeedTestCalculator.Percentile(uploadBps,   0.9) / 1_000_000.0 : null,
+            LatencyMs    = pings.Count        > 0 ? SpeedTestCalculator.Percentile(pings, 0.5)                     : null,
+            JitterMs     = pings.Count       >= 2 ? SpeedTestCalculator.Jitter(pings)                              : null,
             Isp = meta?.AsOrganization,
             ClientCity = meta?.City,
             ClientCountry = meta?.Country,
@@ -217,7 +214,7 @@ public class SpeedTestService
         double? downloadMbps = null;
         if (downloadBps.Count > 0 || liveDownloadBpsOverride.HasValue)
         {
-            var p90Bps = downloadBps.Count > 0 ? Percentile(downloadBps, 0.9) : 0.0;
+            var p90Bps = downloadBps.Count > 0 ? SpeedTestCalculator.Percentile(downloadBps, 0.9) : 0.0;
             if (liveDownloadBpsOverride.HasValue && liveDownloadBpsOverride.Value > p90Bps)
                 p90Bps = liveDownloadBpsOverride.Value;
             downloadMbps = p90Bps / 1_000_000.0;
@@ -226,14 +223,14 @@ public class SpeedTestService
         double? uploadMbps = null;
         if (uploadBps.Count > 0 || liveUploadBpsOverride.HasValue)
         {
-            var p90Bps = uploadBps.Count > 0 ? Percentile(uploadBps, 0.9) : 0.0;
+            var p90Bps = uploadBps.Count > 0 ? SpeedTestCalculator.Percentile(uploadBps, 0.9) : 0.0;
             if (liveUploadBpsOverride.HasValue && liveUploadBpsOverride.Value > p90Bps)
                 p90Bps = liveUploadBpsOverride.Value;
             uploadMbps = p90Bps / 1_000_000.0;
         }
 
-        double? latencyMs = pings.Count > 0 ? Percentile(pings, 0.5) : null;
-        double? jitterMs = pings.Count >= 2 ? Jitter(pings) : null;
+        double? latencyMs = pings.Count > 0 ? SpeedTestCalculator.Percentile(pings, 0.5) : null;
+        double? jitterMs = pings.Count >= 2 ? SpeedTestCalculator.Jitter(pings) : null;
 
         var newDownloadSampleMbps = newDownloadSampleBps / 1_000_000.0;
         var newUploadSampleMbps = newUploadSampleBps / 1_000_000.0;
@@ -243,6 +240,9 @@ public class SpeedTestService
     }
 
     #region Measurement primitives
+
+    private static double? ParseServerTiming(HttpResponseHeaders headers) =>
+        headers.TryGetValues("server-timing", out var values) ? SpeedTestCalculator.ParseServerTiming(values) : null;
 
     private async Task<SpeedTestMetaInfo> FetchMetaAsync(CancellationToken cancellationToken)
     {
@@ -265,7 +265,7 @@ public class SpeedTestService
         response.EnsureSuccessStatusCode();
         await response.Content.CopyToAsync(Stream.Null, cancellationToken).ConfigureAwait(false);
 
-        var serverTime = ParseServerTiming(response) ?? DefaultEstimatedServerTimeMs;
+        var serverTime = ParseServerTiming(response.Headers) ?? DefaultEstimatedServerTimeMs;
         var ping = ttfb - serverTime;
         if (ping < 0) ping = 0;
         pings.Add(ping);
@@ -282,7 +282,7 @@ public class SpeedTestService
         sw1.Stop();
         var ttfb = sw1.Elapsed.TotalMilliseconds;
         response.EnsureSuccessStatusCode();
-        var serverTime = ParseServerTiming(response) ?? DefaultEstimatedServerTimeMs;
+        var serverTime = ParseServerTiming(response.Headers) ?? DefaultEstimatedServerTimeMs;
         var ping = ttfb - serverTime;
         if (ping < 0) ping = 0;
 
@@ -349,51 +349,6 @@ public class SpeedTestService
 
         var bps = 8.0 * bytes * EstimatedHeaderFraction / (uploadDurationMs / 1000.0);
         return (bps, uploadDurationMs);
-    }
-
-    #endregion
-
-    #region Helpers
-
-    private static double? ParseServerTiming(HttpResponseMessage response)
-    {
-        if (!response.Headers.TryGetValues("server-timing", out var values))
-            return null;
-        foreach (var value in values)
-        {
-            var match = ServerTimingRegex.Match(value);
-            if (match.Success && double.TryParse(match.Groups[1].Value,
-                    System.Globalization.NumberStyles.Float,
-                    System.Globalization.CultureInfo.InvariantCulture, out var dur))
-                return dur;
-        }
-        return null;
-    }
-
-    private static double Percentile(List<double> values, double p)
-    {
-        if (values == null || values.Count == 0)
-            return 0.0;
-        var sorted = values.OrderBy(v => v).ToList();
-        if (sorted.Count == 1)
-            return sorted[0];
-        var rank = p * (sorted.Count - 1);
-        var lower = (int)Math.Floor(rank);
-        var upper = (int)Math.Ceiling(rank);
-        if (lower == upper)
-            return sorted[lower];
-        var weight = rank - lower;
-        return sorted[lower] * (1 - weight) + sorted[upper] * weight;
-    }
-
-    private static double Jitter(List<double> pings)
-    {
-        if (pings == null || pings.Count < 2)
-            return 0.0;
-        double sum = 0;
-        for (var i = 1; i < pings.Count; i++)
-            sum += Math.Abs(pings[i] - pings[i - 1]);
-        return sum / (pings.Count - 1);
     }
 
     #endregion
