@@ -142,7 +142,7 @@ The buttons in the header of the widget:
 - **Run speed test** (refresh icon) starts a new test, while a test runs the button stops it (**Stop**). The values measured until then stay visible.
 - **Copy all** copies all values and the time of the test as text, e.g. for a support request.
 
-While the test runs, the header shows the current phase (latency, download, upload), afterwards the time of the last test (**Last test at ...**, the tooltip shows the date). A canceled or failed test and requests that failed are shown below the header.
+While the test runs, the header shows the current phase (latency, download, upload), afterwards the time of the test (**Last test at ...**, the tooltip shows the date; not after a canceled or failed test). A canceled or failed test and requests that failed are shown below the header.
 
 The result includes:
 

@@ -421,6 +421,9 @@ public class SpeedTestWidgetViewModel : ViewModelBase
 
         IsRunning = true;
         Result = null;
+
+        // The time belongs to the values shown: a canceled / failed test shows its partial values without a time
+        LastTestTime = null;
         CurrentDownloadMbps = null;
         CurrentUploadMbps = null;
         CurrentLatencyMs = null;
