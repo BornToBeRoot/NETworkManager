@@ -39,30 +39,54 @@ public class SpeedTestService
     /// </summary>
     private const double LiveProgressIntervalMs = 250.0;
 
-    private enum StepDirection { Download, Upload }
+    private enum MeasurementType
+    {
+        Latency,
+        Download,
+        Upload
+    }
 
     /// <summary>
-    /// Interleaved download/upload sequence from <c>defaultConfig.js</c> of the
-    /// official cloudflare/speedtest library. The initial 100 KB download
-    /// (bypassMinDuration) is executed separately between the two latency phases.
+    /// A set of requests of the same type and size.
     /// </summary>
-    private static readonly (StepDirection Direction, int Bytes, int Count)[] Steps =
-    {
-        (StepDirection.Download, 100_000,     9),
-        (StepDirection.Download, 1_000_000,   8),
-        (StepDirection.Upload,   100_000,     8),
-        (StepDirection.Upload,   1_000_000,   6),
-        (StepDirection.Download, 10_000_000,  6),
-        (StepDirection.Upload,   10_000_000,  4),
-        (StepDirection.Download, 25_000_000,  4),
-        (StepDirection.Upload,   25_000_000,  4),
-        (StepDirection.Download, 100_000_000, 3),
-        (StepDirection.Upload,   50_000_000,  3),
-        (StepDirection.Download, 250_000_000, 2),
-    };
+    /// <param name="Type">Latency probes (empty download), download or upload.</param>
+    /// <param name="Count">Number of requests.</param>
+    /// <param name="Bytes">Size of the download / upload.</param>
+    /// <param name="BypassMinDuration">The set doesn't decide whether the direction is finished.</param>
+    private record Measurement(MeasurementType Type, int Count, int Bytes = 0, bool BypassMinDuration = false);
 
-    private const int LatencyInitialProbes = 1;
-    private const int LatencyMeasurementProbes = 20;
+    /// <summary>
+    /// Measurements of <c>defaultConfig</c> of the official cloudflare/speedtest library, in this order. A direction
+    /// (download / upload) is finished after a set whose fastest request took longer than
+    /// <see cref="BandwidthFinishRequestDurationMs" />: its larger sets are skipped, the latency probes run anyway.
+    /// </summary>
+    private static readonly Measurement[] Measurements =
+    [
+        new(MeasurementType.Latency, 2),
+        new(MeasurementType.Download, 1, 100_000, BypassMinDuration: true),
+        new(MeasurementType.Latency, 20),
+        new(MeasurementType.Download, 9, 100_000),
+        new(MeasurementType.Latency, 2),
+        new(MeasurementType.Download, 8, 1_000_000),
+        new(MeasurementType.Latency, 2),
+        new(MeasurementType.Upload, 8, 100_000),
+        new(MeasurementType.Latency, 2),
+        new(MeasurementType.Upload, 6, 1_000_000),
+        new(MeasurementType.Latency, 2),
+        new(MeasurementType.Download, 6, 10_000_000),
+        new(MeasurementType.Latency, 2),
+        new(MeasurementType.Upload, 4, 10_000_000),
+        new(MeasurementType.Latency, 2),
+        new(MeasurementType.Download, 4, 25_000_000),
+        new(MeasurementType.Latency, 2),
+        new(MeasurementType.Upload, 4, 25_000_000),
+        new(MeasurementType.Latency, 2),
+        new(MeasurementType.Download, 3, 100_000_000),
+        new(MeasurementType.Latency, 2),
+        new(MeasurementType.Upload, 3, 50_000_000),
+        new(MeasurementType.Latency, 2),
+        new(MeasurementType.Download, 2, 250_000_000)
+    ];
 
     private static readonly HttpClient _client = CreateClient();
 
@@ -91,100 +115,94 @@ public class SpeedTestService
         var meta = await FetchMetaAsync(cancellationToken).ConfigureAwait(false);
         progress?.Report(new SpeedTestProgress(SpeedTestPhase.FetchingMetadata, Meta: meta));
         
-        // 2. Initial latency probe (server-time estimation)
-        Emit(progress, SpeedTestPhase.MeasuringLatency, pings, downloadBps, uploadBps, null, null);
-        for (var i = 0; i < LatencyInitialProbes; i++)
-        {
-            await MeasureLatencyAsync(pings, cancellationToken).ConfigureAwait(false);
-            Emit(progress, SpeedTestPhase.MeasuringLatency, pings, downloadBps, uploadBps, null, null);
-        }
+        // 2. Latency, download and upload (official cloudflare/speedtest sequence)
+        var finished = new HashSet<MeasurementType>();
 
-        // 3. Initial download estimate (100 KB × 1 — bypassMinDuration, between the two latency phases)
-        Emit(progress, SpeedTestPhase.MeasuringDownload, pings, downloadBps, uploadBps, null, null);
+        // Duration of all requests per direction and size, decides whether a direction is finished
+        var durations = new Dictionary<(MeasurementType, int), List<double>>();
+
+        // The latency probes between the download / upload sets are short: keep showing the download / upload
+        var bandwidthStarted = false;
+        var currentPhase = SpeedTestPhase.FetchingMetadata;
+
+        foreach (var measurement in Measurements)
         {
-            var (bps, durationMs) = await MeasureDownloadAsync(100_000, cancellationToken,
-                liveBps => Emit(progress, SpeedTestPhase.MeasuringDownload,
-                    pings, downloadBps, uploadBps, liveBps, null)).ConfigureAwait(false);
-            if (durationMs >= BandwidthMinRequestDurationMs)
+            if (measurement.Type != MeasurementType.Latency && finished.Contains(measurement.Type))
+                continue;
+
+            if (measurement.Type != MeasurementType.Latency && !measurement.BypassMinDuration)
+                bandwidthStarted = true;
+
+            var phase = measurement.Type switch
             {
-                downloadBps.Add(bps);
-                Emit(progress, SpeedTestPhase.MeasuringDownload,
-                    pings, downloadBps, uploadBps, null, null,
-                    newDownloadSampleBps: bps);
-            }
-        }
+                MeasurementType.Download => SpeedTestPhase.MeasuringDownload,
+                MeasurementType.Upload => SpeedTestPhase.MeasuringUpload,
+                _ => bandwidthStarted ? currentPhase : SpeedTestPhase.MeasuringLatency
+            };
 
-        // 4. Proper unloaded latency measurement (20 probes)
-        Emit(progress, SpeedTestPhase.MeasuringLatency, pings, downloadBps, uploadBps, null, null);
-        for (var i = 0; i < LatencyMeasurementProbes; i++)
-        {
-            await MeasureLatencyAsync(pings, cancellationToken).ConfigureAwait(false);
-            Emit(progress, SpeedTestPhase.MeasuringLatency, pings, downloadBps, uploadBps, null, null);
-        }
-        
-        // 5. Interleaved download / upload (official cloudflare/speedtest sequence)
-        var downloadStopped = false;
-        var uploadStopped = false;
-        var currentPhase = SpeedTestPhase.MeasuringDownload;
-        Emit(progress, currentPhase, pings, downloadBps, uploadBps, null, null);
-
-        foreach (var step in Steps)
-        {
-            if (step.Direction == StepDirection.Download && downloadStopped) continue;
-            if (step.Direction == StepDirection.Upload   && uploadStopped)   continue;
-
-            var stepPhase = step.Direction == StepDirection.Download
-                ? SpeedTestPhase.MeasuringDownload
-                : SpeedTestPhase.MeasuringUpload;
-            if (stepPhase != currentPhase)
+            if (phase != currentPhase)
             {
-                currentPhase = stepPhase;
+                currentPhase = phase;
                 Emit(progress, currentPhase, pings, downloadBps, uploadBps, null, null);
             }
 
-            for (var i = 0; i < step.Count; i++)
+            if (measurement.Type == MeasurementType.Latency)
             {
-                if (step.Direction == StepDirection.Download)
+                for (var i = 0; i < measurement.Count; i++)
                 {
+                    await MeasureLatencyAsync(pings, cancellationToken).ConfigureAwait(false);
+                    Emit(progress, currentPhase, pings, downloadBps, uploadBps, null, null);
+                }
 
-                    var phaseSnapshot = currentPhase;
-                    var (bps, durationMs) = await MeasureDownloadAsync(step.Bytes, cancellationToken,
-                        liveBps => Emit(progress, phaseSnapshot,
-                            pings, downloadBps, uploadBps, liveBps, null)).ConfigureAwait(false);
-                    if (durationMs >= BandwidthMinRequestDurationMs)
-                    {
-                        downloadBps.Add(bps);
-                        Emit(progress, currentPhase,
-                            pings, downloadBps, uploadBps, null, null,
-                            newDownloadSampleBps: bps);
-                    }
-                    if (durationMs >= BandwidthFinishRequestDurationMs)
-                    {
-                        downloadStopped = true;
-                        break;
-                    }
+                continue;
+            }
+
+            var isDownload = measurement.Type == MeasurementType.Download;
+
+            if (!durations.TryGetValue((measurement.Type, measurement.Bytes), out var setDurations))
+            {
+                setDurations = [];
+                durations[(measurement.Type, measurement.Bytes)] = setDurations;
+            }
+
+            for (var i = 0; i < measurement.Count; i++)
+            {
+                var (bps, durationMs) = isDownload
+                    ? await MeasureDownloadAsync(measurement.Bytes, cancellationToken,
+                        liveBps => Emit(progress, SpeedTestPhase.MeasuringDownload,
+                            pings, downloadBps, uploadBps, liveBps, null)).ConfigureAwait(false)
+                    : await MeasureUploadAsync(measurement.Bytes, cancellationToken).ConfigureAwait(false);
+
+                // Requests without a speed are discarded (like the official library)
+                if (bps <= 0 || double.IsInfinity(bps))
+                    continue;
+
+                setDurations.Add(durationMs);
+
+                // Very short requests are too inaccurate for the result
+                if (durationMs < BandwidthMinRequestDurationMs)
+                    continue;
+
+                if (isDownload)
+                {
+                    downloadBps.Add(bps);
+                    Emit(progress, currentPhase, pings, downloadBps, uploadBps, null, null,
+                        newDownloadSampleBps: bps);
                 }
                 else
                 {
-                    var (bps, durationMs) = await MeasureUploadAsync(step.Bytes, cancellationToken)
-                        .ConfigureAwait(false);
-                    if (durationMs >= BandwidthMinRequestDurationMs)
-                    {
-                        uploadBps.Add(bps);
-                        Emit(progress, currentPhase,
-                            pings, downloadBps, uploadBps, null, null,
-                            newUploadSampleBps: bps);
-                    }
-                    if (durationMs >= BandwidthFinishRequestDurationMs)
-                    {
-                        uploadStopped = true;
-                        break;
-                    }
+                    uploadBps.Add(bps);
+                    Emit(progress, currentPhase, pings, downloadBps, uploadBps, null, null,
+                        newUploadSampleBps: bps);
                 }
             }
+
+            if (!measurement.BypassMinDuration &&
+                SpeedTestCalculator.IsDirectionFinished(setDurations, BandwidthFinishRequestDurationMs))
+                finished.Add(measurement.Type);
         }
 
-        // 6. Result
+        // 3. Result
         return new SpeedTestResult
         {
             DownloadMbps = downloadBps.Count > 0 ? SpeedTestCalculator.Percentile(downloadBps, 0.9) / 1_000_000.0 : null,

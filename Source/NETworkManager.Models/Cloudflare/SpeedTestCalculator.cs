@@ -70,6 +70,18 @@ public static class SpeedTestCalculator
     }
 
     /// <summary>
+    /// A direction (download / upload) is finished when even the fastest request of a set took longer than the finish
+    /// duration: the larger sets would take too long (<c>bandwidthFinishRequestDuration</c> of the official library).
+    /// </summary>
+    /// <param name="durationsMs">Duration of the requests of the set (ms).</param>
+    /// <param name="finishRequestDurationMs">Finish duration (ms).</param>
+    /// <returns><c>true</c> if the larger sets of the direction are skipped.</returns>
+    public static bool IsDirectionFinished(IReadOnlyCollection<double> durationsMs, double finishRequestDurationMs)
+    {
+        return durationsMs.Count > 0 && durationsMs.Min() > finishRequestDurationMs;
+    }
+
+    /// <summary>
     /// Jitter: average absolute difference between consecutive latency samples.
     /// </summary>
     /// <param name="pings">Latency samples in the order they were measured.</param>

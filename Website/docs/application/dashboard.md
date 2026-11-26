@@ -144,6 +144,8 @@ The result includes:
 - **ISP** — internet service provider as reported by Cloudflare
 - **Server location** — Cloudflare PoP (Point of Presence) handling the test
 
+The test measures like the official [cloudflare/speedtest](https://github.com/cloudflare/speedtest) library (used by [speed.cloudflare.com](https://speed.cloudflare.com/)), so the results are comparable: latency probes (empty downloads) and downloads / uploads of increasing size (100 kB up to 250 MB) one after the other, with a few latency probes between them. Download and upload are the 90th percentile of the requests that took at least 10 ms. A direction ends after a set of requests in which even the fastest request took longer than one second; the larger sizes are skipped. A test takes about 20–60 seconds depending on the connection.
+
 Before running the test, a privacy disclaimer informs the user that `speed.cloudflare.com` will receive requests with the client's IP address and network information. The disclaimer is shown again after restarting the app because acceptance is not currently persisted. See the [Cloudflare privacy policy](https://www.cloudflare.com/privacypolicy/) for details. The widget never contacts Cloudflare's telemetry endpoint (`aim.cloudflare.com/__log`).
 
 ## Troubleshooting and limits

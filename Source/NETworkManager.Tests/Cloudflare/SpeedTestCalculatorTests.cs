@@ -51,6 +51,31 @@ public class SpeedTestCalculatorTests
     }
 
     [Fact]
+    public void DirectionIsNotFinishedWithoutRequests()
+    {
+        Assert.False(SpeedTestCalculator.IsDirectionFinished([], 1000));
+    }
+
+    [Fact]
+    public void DirectionIsNotFinishedIfOneRequestWasFaster()
+    {
+        // The first slow request (e.g. TCP slow start) doesn't end the direction, the whole set decides
+        Assert.False(SpeedTestCalculator.IsDirectionFinished([1200, 900, 1100], 1000));
+    }
+
+    [Fact]
+    public void DirectionIsNotFinishedAtExactlyTheFinishDuration()
+    {
+        Assert.False(SpeedTestCalculator.IsDirectionFinished([1000, 1500], 1000));
+    }
+
+    [Fact]
+    public void DirectionIsFinishedIfAllRequestsWereSlower()
+    {
+        Assert.True(SpeedTestCalculator.IsDirectionFinished([1200, 1100, 1300], 1000));
+    }
+
+    [Fact]
     public void JitterOfFewerThanTwoPingsIsZero()
     {
         Assert.Equal(0, SpeedTestCalculator.Jitter([]));
