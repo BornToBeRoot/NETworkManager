@@ -18,7 +18,7 @@
         <Compile Include="..\GlobalAssemblyInfo.cs" Link="Properties\GlobalAssemblyInfo.cs" />
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="Lextm.SharpSnmpLib" Version="12.5.7" />
+        <PackageReference Include="Lextm.SharpSnmpLib" Version="12.5.8" />
         
     </ItemGroup>
     <ItemGroup>
