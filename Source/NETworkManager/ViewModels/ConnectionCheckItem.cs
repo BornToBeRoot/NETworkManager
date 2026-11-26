@@ -220,13 +220,11 @@ public class ConnectionCheckItem : PropertyChangedBase
         if (parameter is not ApplicationName applicationName || Target == null)
             return;
 
-        NavigationManager.Open(applicationName switch
-        {
-            ApplicationName.DNSLookup => new DNSLookupRequest { Target = Target },
-            ApplicationName.RDAP => new RDAPRequest { Target = Target },
-            ApplicationName.WebConsole => new ApplicationRequest(applicationName)
-                { Target = WebConsoleUrlHelper.CreateUrl(Target, Enumerable.Empty<int>()) },
-            _ => new ApplicationRequest(applicationName) { Target = Target }
-        });
+        // The router's web interface as URL
+        if (applicationName == ApplicationName.WebConsole)
+            NavigationManager.Open(new ApplicationRequest(applicationName)
+                { Target = WebConsoleUrlHelper.CreateUrl(Target, Enumerable.Empty<int>()) });
+        else
+            NavigationManager.Open(applicationName, Target);
     }
 }
