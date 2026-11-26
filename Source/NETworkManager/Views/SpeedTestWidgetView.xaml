@@ -174,15 +174,9 @@
                                      Text="{Binding Result.Isp, TargetNullValue=-/-, FallbackValue=-/-, Mode=OneWay}" />
                             <TextBlock Grid.Column="0" Grid.Row="2"
                                        Text="{x:Static localization:Strings.Server}" />
-                            <TextBox Grid.Column="2" Grid.Row="2">
-                                <TextBox.Text>
-                                    <MultiBinding StringFormat="{}{0}, {1} ({2})" Mode="OneWay">
-                                        <Binding Path="Result.ServerCity" TargetNullValue="-/-" />
-                                        <Binding Path="Result.ServerCountry" TargetNullValue="-/-" />
-                                        <Binding Path="Result.ServerIata" TargetNullValue="-/-" />
-                                    </MultiBinding>
-                                </TextBox.Text>
-                            </TextBox>
+                            <TextBox Grid.Column="2" Grid.Row="2"
+                                     ToolTip="{Binding Result.Server}"
+                                     Text="{Binding Result.Server, TargetNullValue=-/-, FallbackValue=-/-, Mode=OneWay}" />
                             <TextBlock Grid.Column="0" Grid.Row="4"
                                        Text="{x:Static localization:Strings.Latency}" />
                             <TextBox Grid.Column="2" Grid.Row="4"

@@ -1,3 +1,5 @@
+using System.Linq;
+
 namespace NETworkManager.Models.Cloudflare;
 
 /// <summary>
@@ -58,6 +60,23 @@ public class SpeedTestResult
     /// IATA code of the Cloudflare PoP, e.g. "FRA".
     /// </summary>
     public string ServerIata { get; set; }
+
+    /// <summary>
+    /// Cloudflare server for the UI, e.g. "Frankfurt-am-Main, DE (FRA)". <c>null</c> if unknown.
+    /// </summary>
+    public string Server
+    {
+        get
+        {
+            var location = string.Join(", ",
+                new[] { ServerCity, ServerCountry }.Where(x => !string.IsNullOrWhiteSpace(x)));
+
+            if (string.IsNullOrWhiteSpace(ServerIata))
+                return location.Length > 0 ? location : null;
+
+            return location.Length > 0 ? $"{location} ({ServerIata})" : ServerIata;
+        }
+    }
 
     /// <summary>
     /// Number of requests that failed and were skipped (e.g. a short interruption of the connection).

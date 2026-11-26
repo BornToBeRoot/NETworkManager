@@ -165,6 +165,7 @@ Release date: **xx.xx.2026**
 - Fixed the speed test running endlessly ("Measuring download speed...") when the connection was lost during the test (e.g. Wi-Fi disconnected). A request now fails after 15 seconds without a response or data. [#PR](PRLINK)
 - Fixed `Enter` on the dashboard starting a speed test (up to about 1 GB of data on a fast connection) and `Esc` stopping it, e.g. after clicking a value of another widget. The speed test is only started and stopped with its button. [#PR](PRLINK)
 - Fixed one failed request (e.g. a short interruption of the connection or a proxy that rejects a large upload) ending the whole speed test. Like the official library, a failed request is skipped (a warning shows how many) and a request rate limited by Cloudflare (HTTP 429) is repeated up to three times; the test only ends after three failed requests in a row. [#PR](PRLINK)
+- Fixed the server of the speed test being empty at the start of a test or shown as `-/-, -/- (-/-)` when Cloudflare did not report it. It is shown as `-/-` like the ISP, with the full name in the tooltip. [#PR](PRLINK)
 
 **Status window**
 
