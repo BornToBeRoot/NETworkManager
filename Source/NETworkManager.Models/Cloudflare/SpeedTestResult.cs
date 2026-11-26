@@ -1,3 +1,5 @@
+using System.Linq;
+
 namespace NETworkManager.Models.Cloudflare;
 
 /// <summary>
@@ -35,16 +37,6 @@ public class SpeedTestResult
     public string Isp { get; set; }
 
     /// <summary>
-    /// City of the client (Cloudflare meta <c>city</c>).
-    /// </summary>
-    public string ClientCity { get; set; }
-
-    /// <summary>
-    /// ISO 3166-1 alpha-2 country code of the client (Cloudflare meta <c>country</c>).
-    /// </summary>
-    public string ClientCountry { get; set; }
-
-    /// <summary>
     /// City of the Cloudflare PoP serving the test, e.g. "Frankfurt-am-Main".
     /// </summary>
     public string ServerCity { get; set; }
@@ -60,12 +52,24 @@ public class SpeedTestResult
     public string ServerIata { get; set; }
 
     /// <summary>
-    /// Indicates that the speed test run failed.
+    /// Cloudflare server for the UI, e.g. "Frankfurt-am-Main, DE (FRA)". <c>null</c> if unknown.
     /// </summary>
-    public bool HasError { get; set; }
+    public string Server
+    {
+        get
+        {
+            var location = string.Join(", ",
+                new[] { ServerCity, ServerCountry }.Where(x => !string.IsNullOrWhiteSpace(x)));
+
+            if (string.IsNullOrWhiteSpace(ServerIata))
+                return location.Length > 0 ? location : null;
+
+            return location.Length > 0 ? $"{location} ({ServerIata})" : ServerIata;
+        }
+    }
 
     /// <summary>
-    /// Error message when <see cref="HasError"/> is <c>true</c>.
+    /// Number of requests that failed and were skipped (e.g. a short interruption of the connection).
     /// </summary>
-    public string ErrorMessage { get; set; }
+    public int FailedRequests { get; set; }
 }

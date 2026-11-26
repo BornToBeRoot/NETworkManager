@@ -11,4 +11,12 @@ public partial class SpeedTestWidgetView
         InitializeComponent();
         DataContext = _viewModel;
     }
+
+    /// <summary>
+    ///     Cancels a running speed test (e.g. the widget was hidden in the settings).
+    /// </summary>
+    public void Cancel()
+    {
+        _viewModel.Cancel();
+    }
 }

@@ -6,9 +6,9 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
+using log4net;
 using Newtonsoft.Json;
 
 namespace NETworkManager.Models.Cloudflare;
@@ -21,45 +21,99 @@ namespace NETworkManager.Models.Cloudflare;
 /// </summary>
 public class SpeedTestService
 {
-    private const string BaseUrl = "https://speed.cloudflare.com";
+    private static readonly ILog Log = LogManager.GetLogger(typeof(SpeedTestService));
+
+    /// <summary>
+    /// Host of the speed test.
+    /// </summary>
+    public const string Host = "speed.cloudflare.com";
+
+    private const string BaseUrl = "https://" + Host;
     private const string Origin = "https://speed.cloudflare.com";
 
-    private const double DefaultEstimatedServerTimeMs = 10.0;
+    /// <summary>
+    /// Server time if the response has no <c>server-timing</c> header (<c>estimatedServerTime</c> of the official library).
+    /// </summary>
+    private const double DefaultEstimatedServerTimeMs = 0.0;
     private const double BandwidthFinishRequestDurationMs = 1000.0;
     private const double BandwidthMinRequestDurationMs = 10.0;
+    /// <summary>
+    /// Bytes on the wire per payload byte (HTTP headers), like the official library.
+    /// </summary>
     private const double EstimatedHeaderFraction = 1.005;
+
+    /// <summary>
+    /// A request fails if nothing happens for this time (no response, no data received or sent). Not a limit of the
+    /// whole request: a large download / upload on a slow connection takes longer.
+    /// </summary>
+    public static readonly TimeSpan RequestTimeout = TimeSpan.FromSeconds(15);
+
+    /// <summary>
+    /// A request that fails with HTTP 429 (too many requests) is repeated up to this number of times after the delay of
+    /// the server (<c>Retry-After</c>), like the official library.
+    /// </summary>
+    private const int MaxRetries = 3;
+
+    /// <summary>
+    /// A failed request is skipped and the test continues (like the official library). After this number of requests in
+    /// a row without a connection (no response, e.g. the connection is lost), the test ends with the error. Requests
+    /// rejected by the server / a proxy (HTTP error) don't count: the connection works.
+    /// </summary>
+    private const int MaxConsecutiveFailedRequests = 3;
 
     /// <summary>
     /// Minimum gap between mid-stream live throughput emissions, in ms.
     /// </summary>
     private const double LiveProgressIntervalMs = 250.0;
 
-    private static readonly Regex ServerTimingRegex = new(@"(?:^|;)\s*dur=([0-9.]+)", RegexOptions.Compiled);
-
-    private enum StepDirection { Download, Upload }
+    private enum MeasurementType
+    {
+        Latency,
+        Download,
+        Upload
+    }
 
     /// <summary>
-    /// Interleaved download/upload sequence from <c>defaultConfig.js</c> of the
-    /// official cloudflare/speedtest library. The initial 100 KB download
-    /// (bypassMinDuration) is executed separately between the two latency phases.
+    /// A set of requests of the same type and size.
     /// </summary>
-    private static readonly (StepDirection Direction, int Bytes, int Count)[] Steps =
-    {
-        (StepDirection.Download, 100_000,     9),
-        (StepDirection.Download, 1_000_000,   8),
-        (StepDirection.Upload,   100_000,     8),
-        (StepDirection.Upload,   1_000_000,   6),
-        (StepDirection.Download, 10_000_000,  6),
-        (StepDirection.Upload,   10_000_000,  4),
-        (StepDirection.Download, 25_000_000,  4),
-        (StepDirection.Upload,   25_000_000,  4),
-        (StepDirection.Download, 100_000_000, 3),
-        (StepDirection.Upload,   50_000_000,  3),
-        (StepDirection.Download, 250_000_000, 2),
-    };
+    /// <param name="Type">Latency probes (empty download), download or upload.</param>
+    /// <param name="Count">Number of requests.</param>
+    /// <param name="Bytes">Size of the download / upload.</param>
+    /// <param name="BypassMinDuration">The set doesn't decide whether the direction is finished.</param>
+    private record Measurement(MeasurementType Type, int Count, int Bytes = 0, bool BypassMinDuration = false);
 
-    private const int LatencyInitialProbes = 1;
-    private const int LatencyMeasurementProbes = 20;
+    /// <summary>
+    /// Measurements of <c>defaultConfig</c> of the official cloudflare/speedtest library, in this order. A direction
+    /// (download / upload) is finished after a set whose fastest request took longer than
+    /// <see cref="BandwidthFinishRequestDurationMs" />: its larger sets are skipped, the latency probes run anyway.
+    /// </summary>
+    private static readonly Measurement[] Measurements =
+    [
+        new(MeasurementType.Latency, 2),
+        new(MeasurementType.Download, 1, 100_000, BypassMinDuration: true),
+        new(MeasurementType.Latency, 20),
+        new(MeasurementType.Download, 9, 100_000),
+        new(MeasurementType.Latency, 2),
+        new(MeasurementType.Download, 8, 1_000_000),
+        new(MeasurementType.Latency, 2),
+        new(MeasurementType.Upload, 8, 100_000),
+        new(MeasurementType.Latency, 2),
+        new(MeasurementType.Upload, 6, 1_000_000),
+        new(MeasurementType.Latency, 2),
+        new(MeasurementType.Download, 6, 10_000_000),
+        new(MeasurementType.Latency, 2),
+        new(MeasurementType.Upload, 4, 10_000_000),
+        new(MeasurementType.Latency, 2),
+        new(MeasurementType.Download, 4, 25_000_000),
+        new(MeasurementType.Latency, 2),
+        new(MeasurementType.Upload, 4, 25_000_000),
+        new(MeasurementType.Latency, 2),
+        new(MeasurementType.Download, 3, 100_000_000),
+        new(MeasurementType.Latency, 2),
+        new(MeasurementType.Upload, 3, 50_000_000),
+        new(MeasurementType.Latency, 2),
+        new(MeasurementType.Download, 2, 250_000_000)
+    ];
 
     private static readonly HttpClient _client = CreateClient();
 
@@ -84,156 +138,145 @@ public class SpeedTestService
         var uploadBps = new List<double>();
 
         // 1. Metadata
-        Emit(progress, SpeedTestPhase.FetchingMetadata, pings, downloadBps, uploadBps, null, null);
+        Emit(progress, SpeedTestPhase.FetchingMetadata, pings, downloadBps, uploadBps, null);
         var meta = await FetchMetaAsync(cancellationToken).ConfigureAwait(false);
         progress?.Report(new SpeedTestProgress(SpeedTestPhase.FetchingMetadata, Meta: meta));
         
-        // 2. Initial latency probe (server-time estimation)
-        Emit(progress, SpeedTestPhase.MeasuringLatency, pings, downloadBps, uploadBps, null, null);
-        for (var i = 0; i < LatencyInitialProbes; i++)
-        {
-            await MeasureLatencyAsync(pings, cancellationToken).ConfigureAwait(false);
-            Emit(progress, SpeedTestPhase.MeasuringLatency, pings, downloadBps, uploadBps, null, null);
-        }
+        // 2. Latency, download and upload (official cloudflare/speedtest sequence)
+        var failures = new RequestFailures();
+        var finished = new HashSet<MeasurementType>();
 
-        // 3. Initial download estimate (100 KB × 1 — bypassMinDuration, between the two latency phases)
-        Emit(progress, SpeedTestPhase.MeasuringDownload, pings, downloadBps, uploadBps, null, null);
+        // Duration of all requests per direction and size, decides whether a direction is finished
+        var durations = new Dictionary<(MeasurementType, int), List<double>>();
+
+        // The latency probes between the download / upload sets are short: keep showing the download / upload
+        var bandwidthStarted = false;
+        var currentPhase = SpeedTestPhase.FetchingMetadata;
+
+        foreach (var measurement in Measurements)
         {
-            var (bps, durationMs) = await MeasureDownloadAsync(100_000, cancellationToken,
-                liveBps => Emit(progress, SpeedTestPhase.MeasuringDownload,
-                    pings, downloadBps, uploadBps, liveBps, null)).ConfigureAwait(false);
-            if (durationMs >= BandwidthMinRequestDurationMs)
+            if (measurement.Type != MeasurementType.Latency && finished.Contains(measurement.Type))
+                continue;
+
+            if (measurement.Type != MeasurementType.Latency && !measurement.BypassMinDuration)
+                bandwidthStarted = true;
+
+            var phase = measurement.Type switch
             {
-                downloadBps.Add(bps);
-                Emit(progress, SpeedTestPhase.MeasuringDownload,
-                    pings, downloadBps, uploadBps, null, null,
-                    newDownloadSampleBps: bps);
-            }
-        }
+                MeasurementType.Download => SpeedTestPhase.MeasuringDownload,
+                MeasurementType.Upload => SpeedTestPhase.MeasuringUpload,
+                _ => bandwidthStarted ? currentPhase : SpeedTestPhase.MeasuringLatency
+            };
 
-        // 4. Proper unloaded latency measurement (20 probes)
-        Emit(progress, SpeedTestPhase.MeasuringLatency, pings, downloadBps, uploadBps, null, null);
-        for (var i = 0; i < LatencyMeasurementProbes; i++)
-        {
-            await MeasureLatencyAsync(pings, cancellationToken).ConfigureAwait(false);
-            Emit(progress, SpeedTestPhase.MeasuringLatency, pings, downloadBps, uploadBps, null, null);
-        }
-        
-        // 5. Interleaved download / upload (official cloudflare/speedtest sequence)
-        var downloadStopped = false;
-        var uploadStopped = false;
-        var currentPhase = SpeedTestPhase.MeasuringDownload;
-        Emit(progress, currentPhase, pings, downloadBps, uploadBps, null, null);
-
-        foreach (var step in Steps)
-        {
-            if (step.Direction == StepDirection.Download && downloadStopped) continue;
-            if (step.Direction == StepDirection.Upload   && uploadStopped)   continue;
-
-            var stepPhase = step.Direction == StepDirection.Download
-                ? SpeedTestPhase.MeasuringDownload
-                : SpeedTestPhase.MeasuringUpload;
-            if (stepPhase != currentPhase)
+            if (phase != currentPhase)
             {
-                currentPhase = stepPhase;
-                Emit(progress, currentPhase, pings, downloadBps, uploadBps, null, null);
+                currentPhase = phase;
+                Emit(progress, currentPhase, pings, downloadBps, uploadBps, null);
             }
 
-            for (var i = 0; i < step.Count; i++)
+            if (measurement.Type == MeasurementType.Latency)
             {
-                if (step.Direction == StepDirection.Download)
+                for (var i = 0; i < measurement.Count; i++)
                 {
+                    await TryRequestAsync(() => MeasureLatencyAsync(pings, cancellationToken), failures,
+                        cancellationToken).ConfigureAwait(false);
+                    Emit(progress, currentPhase, pings, downloadBps, uploadBps, null);
+                }
 
-                    var phaseSnapshot = currentPhase;
-                    var (bps, durationMs) = await MeasureDownloadAsync(step.Bytes, cancellationToken,
-                        liveBps => Emit(progress, phaseSnapshot,
-                            pings, downloadBps, uploadBps, liveBps, null)).ConfigureAwait(false);
-                    if (durationMs >= BandwidthMinRequestDurationMs)
-                    {
-                        downloadBps.Add(bps);
-                        Emit(progress, currentPhase,
-                            pings, downloadBps, uploadBps, null, null,
-                            newDownloadSampleBps: bps);
-                    }
-                    if (durationMs >= BandwidthFinishRequestDurationMs)
-                    {
-                        downloadStopped = true;
-                        break;
-                    }
+                continue;
+            }
+
+            var isDownload = measurement.Type == MeasurementType.Download;
+
+            if (!durations.TryGetValue((measurement.Type, measurement.Bytes), out var setDurations))
+            {
+                setDurations = [];
+                durations[(measurement.Type, measurement.Bytes)] = setDurations;
+            }
+
+            var setSucceeded = false;
+
+            for (var i = 0; i < measurement.Count; i++)
+            {
+                var (success, (bps, durationMs)) = await TryRequestAsync(() => isDownload
+                    ? MeasureDownloadAsync(measurement.Bytes, cancellationToken,
+                        liveBps => Emit(progress, SpeedTestPhase.MeasuringDownload,
+                            pings, downloadBps, uploadBps, liveBps))
+                    : MeasureUploadAsync(measurement.Bytes, cancellationToken), failures, cancellationToken)
+                    .ConfigureAwait(false);
+
+                if (!success)
+                    continue;
+
+                setSucceeded = true;
+
+                // Requests without a speed are discarded (like the official library)
+                if (bps <= 0 || double.IsInfinity(bps))
+                    continue;
+
+                setDurations.Add(durationMs);
+
+                // Very short requests are too inaccurate for the result
+                if (durationMs < BandwidthMinRequestDurationMs)
+                    continue;
+
+                if (isDownload)
+                {
+                    downloadBps.Add(bps);
+                    Emit(progress, currentPhase, pings, downloadBps, uploadBps, null,
+                        newDownloadSampleBps: bps);
                 }
                 else
                 {
-                    var (bps, durationMs) = await MeasureUploadAsync(step.Bytes, cancellationToken)
-                        .ConfigureAwait(false);
-                    if (durationMs >= BandwidthMinRequestDurationMs)
-                    {
-                        uploadBps.Add(bps);
-                        Emit(progress, currentPhase,
-                            pings, downloadBps, uploadBps, null, null,
-                            newUploadSampleBps: bps);
-                    }
-                    if (durationMs >= BandwidthFinishRequestDurationMs)
-                    {
-                        uploadStopped = true;
-                        break;
-                    }
+                    uploadBps.Add(bps);
+                    Emit(progress, currentPhase, pings, downloadBps, uploadBps, null,
+                        newUploadSampleBps: bps);
                 }
             }
+
+            if (measurement.BypassMinDuration)
+                continue;
+
+            // All requests of the set failed (e.g. a proxy rejects uploads of this size): the larger sizes would fail too
+            if (!setSucceeded ||
+                SpeedTestCalculator.IsDirectionFinished(setDurations, BandwidthFinishRequestDurationMs))
+                finished.Add(measurement.Type);
         }
 
-        // 6. Result
+        // 3. Result
         return new SpeedTestResult
         {
-            DownloadMbps = downloadBps.Count > 0 ? Percentile(downloadBps, 0.9) / 1_000_000.0 : null,
-            UploadMbps   = uploadBps.Count   > 0 ? Percentile(uploadBps,   0.9) / 1_000_000.0 : null,
-            LatencyMs    = pings.Count        > 0 ? Percentile(pings, 0.5)                     : null,
-            JitterMs     = pings.Count       >= 2 ? Jitter(pings)                              : null,
+            DownloadMbps = downloadBps.Count > 0 ? SpeedTestCalculator.Percentile(downloadBps, 0.9) / 1_000_000.0 : null,
+            UploadMbps   = uploadBps.Count   > 0 ? SpeedTestCalculator.Percentile(uploadBps,   0.9) / 1_000_000.0 : null,
+            LatencyMs    = pings.Count        > 0 ? SpeedTestCalculator.Percentile(pings, 0.5)                     : null,
+            JitterMs     = pings.Count       >= 2 ? SpeedTestCalculator.Jitter(pings)                              : null,
             Isp = meta?.AsOrganization,
-            ClientCity = meta?.City,
-            ClientCountry = meta?.Country,
             ServerCity = meta?.Colo?.City,
             ServerCountry = meta?.Colo?.Cca2,
-            ServerIata = meta?.Colo?.Iata
+            ServerIata = meta?.Colo?.Iata,
+            FailedRequests = failures.Total
         };
     }
 
     /// <summary>
     /// Builds and emits a <see cref="SpeedTestProgress"/> using current
-    /// sample lists. <paramref name="liveDownloadBpsOverride"/> and
-    /// <paramref name="liveUploadBpsOverride"/> let mid-stream callers
-    /// report an instantaneous estimate even before the first completed
-    /// sample is in the list.
+    /// sample lists. <paramref name="liveDownloadBpsOverride"/> lets the running
+    /// download report an instantaneous estimate before the first completed
+    /// sample is in the list (uploads only report completed samples).
     /// </summary>
     private static void Emit(IProgress<SpeedTestProgress> progress, SpeedTestPhase phase,
         List<double> pings, List<double> downloadBps, List<double> uploadBps,
-        double? liveDownloadBpsOverride, double? liveUploadBpsOverride,
+        double? liveDownloadBpsOverride,
         double? newDownloadSampleBps = null, double? newUploadSampleBps = null)
     {
         if (progress == null)
             return;
 
-        // P90 of completed samples ⊔ current live instantaneous — consistent with
-        // the final result formula; live override applies only before the first sample.
-        double? downloadMbps = null;
-        if (downloadBps.Count > 0 || liveDownloadBpsOverride.HasValue)
-        {
-            var p90Bps = downloadBps.Count > 0 ? Percentile(downloadBps, 0.9) : 0.0;
-            if (liveDownloadBpsOverride.HasValue && liveDownloadBpsOverride.Value > p90Bps)
-                p90Bps = liveDownloadBpsOverride.Value;
-            downloadMbps = p90Bps / 1_000_000.0;
-        }
+        var downloadMbps = SpeedTestCalculator.CurrentBandwidth(downloadBps, liveDownloadBpsOverride) / 1_000_000.0;
+        var uploadMbps = SpeedTestCalculator.CurrentBandwidth(uploadBps, null) / 1_000_000.0;
 
-        double? uploadMbps = null;
-        if (uploadBps.Count > 0 || liveUploadBpsOverride.HasValue)
-        {
-            var p90Bps = uploadBps.Count > 0 ? Percentile(uploadBps, 0.9) : 0.0;
-            if (liveUploadBpsOverride.HasValue && liveUploadBpsOverride.Value > p90Bps)
-                p90Bps = liveUploadBpsOverride.Value;
-            uploadMbps = p90Bps / 1_000_000.0;
-        }
-
-        double? latencyMs = pings.Count > 0 ? Percentile(pings, 0.5) : null;
-        double? jitterMs = pings.Count >= 2 ? Jitter(pings) : null;
+        double? latencyMs = pings.Count > 0 ? SpeedTestCalculator.Percentile(pings, 0.5) : null;
+        double? jitterMs = pings.Count >= 2 ? SpeedTestCalculator.Jitter(pings) : null;
 
         var newDownloadSampleMbps = newDownloadSampleBps / 1_000_000.0;
         var newUploadSampleMbps = newUploadSampleBps / 1_000_000.0;
@@ -244,156 +287,232 @@ public class SpeedTestService
 
     #region Measurement primitives
 
+    private static double? ParseServerTiming(HttpResponseHeaders headers) =>
+        headers.TryGetValues("server-timing", out var values) ? SpeedTestCalculator.ParseServerTiming(values) : null;
+
+    /// <summary>
+    /// Requests the ISP and the Cloudflare server. Optional: an error is logged and the test continues without them.
+    /// </summary>
+    /// <returns>Metadata, <c>null</c> if the request failed.</returns>
     private async Task<SpeedTestMetaInfo> FetchMetaAsync(CancellationToken cancellationToken)
     {
-        using var response = await _client.GetAsync($"{BaseUrl}/meta", cancellationToken)
-            .ConfigureAwait(false);
-        response.EnsureSuccessStatusCode();
-        var json = await response.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
-        return JsonConvert.DeserializeObject<SpeedTestMetaInfo>(json);
-    }
-
-    private async Task MeasureLatencyAsync(List<double> pings, CancellationToken cancellationToken)
-    {
-        var sw = Stopwatch.StartNew();
-        using var request = new HttpRequestMessage(HttpMethod.Get, $"{BaseUrl}/__down?bytes=0");
-        using var response = await _client
-            .SendAsync(request, HttpCompletionOption.ResponseHeadersRead, cancellationToken)
-            .ConfigureAwait(false);
-        sw.Stop();
-        var ttfb = sw.Elapsed.TotalMilliseconds;
-        response.EnsureSuccessStatusCode();
-        await response.Content.CopyToAsync(Stream.Null, cancellationToken).ConfigureAwait(false);
-
-        var serverTime = ParseServerTiming(response) ?? DefaultEstimatedServerTimeMs;
-        var ping = ttfb - serverTime;
-        if (ping < 0) ping = 0;
-        pings.Add(ping);
-    }
-
-    private async Task<(double Bps, double DurationMs)> MeasureDownloadAsync(int bytes,
-        CancellationToken cancellationToken, Action<double> onLiveBps)
-    {
-        var sw1 = Stopwatch.StartNew();
-        using var request = new HttpRequestMessage(HttpMethod.Get, $"{BaseUrl}/__down?bytes={bytes}");
-        using var response = await _client
-            .SendAsync(request, HttpCompletionOption.ResponseHeadersRead, cancellationToken)
-            .ConfigureAwait(false);
-        sw1.Stop();
-        var ttfb = sw1.Elapsed.TotalMilliseconds;
-        response.EnsureSuccessStatusCode();
-        var serverTime = ParseServerTiming(response) ?? DefaultEstimatedServerTimeMs;
-        var ping = ttfb - serverTime;
-        if (ping < 0) ping = 0;
-
-        var sw2 = Stopwatch.StartNew();
-        long bodyBytes;
-        double lastProgressMs = 0;
-        long lastProgressBytes = 0;
-        await using (var stream = await response.Content
-                         .ReadAsStreamAsync(cancellationToken).ConfigureAwait(false))
+        try
         {
-            var buffer = new byte[81920];
-            long total = 0;
-            int read;
-            while ((read = await stream.ReadAsync(buffer, cancellationToken)
-                       .ConfigureAwait(false)) > 0)
+            return await WithTimeoutAsync(async timeout =>
             {
-                total += read;
-                var elapsedMs = sw2.Elapsed.TotalMilliseconds;
-                if (onLiveBps != null && elapsedMs - lastProgressMs >= LiveProgressIntervalMs
-                                       && elapsedMs > 0)
-                {
-                    // Instantaneous throughput over the last interval (delta-based)
-                    var deltaBytes = total - lastProgressBytes;
-                    var deltaMs = elapsedMs - lastProgressMs;
-                    var liveBps = 8.0 * deltaBytes / (deltaMs / 1000.0);
-                    onLiveBps(liveBps);
-                    lastProgressMs = elapsedMs;
-                    lastProgressBytes = total;
-                }
-            }
-            bodyBytes = total;
+                using var response = await _client.GetAsync($"{BaseUrl}/meta", timeout.Token)
+                    .ConfigureAwait(false);
+                EnsureSuccess(response);
+                var json = await response.Content.ReadAsStringAsync(timeout.Token).ConfigureAwait(false);
+                return JsonConvert.DeserializeObject<SpeedTestMetaInfo>(json);
+            }, cancellationToken).ConfigureAwait(false);
         }
-        sw2.Stop();
-        var bodyMs = sw2.Elapsed.TotalMilliseconds;
-        var contentLength = response.Content.Headers.ContentLength ?? bodyBytes;
-
-        var downloadDurationMs = ping + bodyMs;
-        if (downloadDurationMs <= 0)
-            return (0.0, downloadDurationMs);
-
-        var bps = 8.0 * contentLength / (downloadDurationMs / 1000.0);
-        return (bps, downloadDurationMs);
+        catch (Exception ex) when (ex is not OperationCanceledException)
+        {
+            Log.Warn("Speed test metadata could not be requested.", ex);
+            return null;
+        }
     }
 
-    private async Task<(double Bps, double DurationMs)> MeasureUploadAsync(int bytes,
+    /// <summary>
+    /// Runs a request that fails with a <see cref="TimeoutException" /> if nothing happens for
+    /// <see cref="RequestTimeout" />. The request restarts the timeout (<c>CancelAfter</c>) whenever data is received or
+    /// sent.
+    /// </summary>
+    private static async Task<T> WithTimeoutAsync<T>(Func<CancellationTokenSource, Task<T>> request,
         CancellationToken cancellationToken)
     {
-        using var request = new HttpRequestMessage(HttpMethod.Post, $"{BaseUrl}/__up");
-        using var content = new ZeroStreamContent(bytes);
-        request.Content = content;
+        using var timeout = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+        timeout.CancelAfter(RequestTimeout);
 
-        var sw = Stopwatch.StartNew();
-        using var response = await _client
-            .SendAsync(request, HttpCompletionOption.ResponseHeadersRead, cancellationToken)
-            .ConfigureAwait(false);
-        sw.Stop();
-        var ttfb = sw.Elapsed.TotalMilliseconds;
-        response.EnsureSuccessStatusCode();
-        await response.Content.CopyToAsync(Stream.Null, cancellationToken).ConfigureAwait(false);
-
-        var uploadDurationMs = ttfb;
-        if (uploadDurationMs <= 0)
-            return (0.0, uploadDurationMs);
-
-        var bps = 8.0 * bytes * EstimatedHeaderFraction / (uploadDurationMs / 1000.0);
-        return (bps, uploadDurationMs);
-    }
-
-    #endregion
-
-    #region Helpers
-
-    private static double? ParseServerTiming(HttpResponseMessage response)
-    {
-        if (!response.Headers.TryGetValues("server-timing", out var values))
-            return null;
-        foreach (var value in values)
+        try
         {
-            var match = ServerTimingRegex.Match(value);
-            if (match.Success && double.TryParse(match.Groups[1].Value,
-                    System.Globalization.NumberStyles.Float,
-                    System.Globalization.CultureInfo.InvariantCulture, out var dur))
-                return dur;
+            return await request(timeout).ConfigureAwait(false);
         }
-        return null;
+        catch (OperationCanceledException) when (!cancellationToken.IsCancellationRequested)
+        {
+            throw new TimeoutException(
+                $"No response from {BaseUrl} within {RequestTimeout.TotalSeconds} seconds.");
+        }
     }
 
-    private static double Percentile(List<double> values, double p)
+    /// <summary>
+    /// Failed requests of a test.
+    /// </summary>
+    private sealed class RequestFailures
     {
-        if (values == null || values.Count == 0)
-            return 0.0;
-        var sorted = values.OrderBy(v => v).ToList();
-        if (sorted.Count == 1)
-            return sorted[0];
-        var rank = p * (sorted.Count - 1);
-        var lower = (int)Math.Floor(rank);
-        var upper = (int)Math.Ceiling(rank);
-        if (lower == upper)
-            return sorted[lower];
-        var weight = rank - lower;
-        return sorted[lower] * (1 - weight) + sorted[upper] * weight;
+        public int Total { get; set; }
+        public int Consecutive { get; set; }
     }
 
-    private static double Jitter(List<double> pings)
+    /// <summary>
+    /// The server asks to repeat the request later (HTTP 429).
+    /// </summary>
+    private sealed class TooManyRequestsException(TimeSpan retryAfter)
+        : HttpRequestException("Too many requests.", null, HttpStatusCode.TooManyRequests)
     {
-        if (pings == null || pings.Count < 2)
-            return 0.0;
-        double sum = 0;
-        for (var i = 1; i < pings.Count; i++)
-            sum += Math.Abs(pings[i] - pings[i - 1]);
-        return sum / (pings.Count - 1);
+        public TimeSpan RetryAfter { get; } = retryAfter;
+    }
+
+    private static void EnsureSuccess(HttpResponseMessage response)
+    {
+        if (response.StatusCode == HttpStatusCode.TooManyRequests)
+            throw new TooManyRequestsException(SpeedTestCalculator.GetRetryDelay(response.Headers.RetryAfter?.Delta,
+                response.Headers.RetryAfter?.Date, DateTimeOffset.UtcNow));
+
+        response.EnsureSuccessStatusCode();
+    }
+
+    /// <summary>
+    /// Runs a request of the test like the official library: HTTP 429 is repeated after the delay of the server (up to
+    /// <see cref="MaxRetries" /> times), another error skips the request. After <see cref="MaxConsecutiveFailedRequests" />
+    /// failed requests in a row the error is thrown (the test ends).
+    /// </summary>
+    /// <returns><c>false</c> if the request failed and was skipped.</returns>
+    private static async Task<(bool Success, T Value)> TryRequestAsync<T>(Func<Task<T>> request,
+        RequestFailures failures, CancellationToken cancellationToken)
+    {
+        for (var retry = 0;; retry++)
+        {
+            try
+            {
+                var value = await request().ConfigureAwait(false);
+                failures.Consecutive = 0;
+
+                return (true, value);
+            }
+            catch (TooManyRequestsException ex) when (retry < MaxRetries)
+            {
+                Log.Warn($"Speed test request rate limited (HTTP 429), retry in {ex.RetryAfter.TotalSeconds} s.");
+                await Task.Delay(ex.RetryAfter, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception ex) when (ex is HttpRequestException or IOException or TimeoutException)
+            {
+                // Canceled by the user while data was transferred: the transport may report it as an IOException
+                cancellationToken.ThrowIfCancellationRequested();
+
+                failures.Total++;
+
+                if (!SpeedTestCalculator.IsConnectionFailure(ex))
+                    failures.Consecutive = 0;
+                else if (++failures.Consecutive >= MaxConsecutiveFailedRequests)
+                    throw;
+
+                Log.Warn("Speed test request failed and is skipped.", ex);
+
+                return (false, default);
+            }
+        }
+    }
+
+    private Task<bool> MeasureLatencyAsync(List<double> pings, CancellationToken cancellationToken)
+    {
+        return WithTimeoutAsync(async timeout =>
+        {
+            var sw = Stopwatch.StartNew();
+            using var request = new HttpRequestMessage(HttpMethod.Get, $"{BaseUrl}/__down?bytes=0");
+            using var response = await _client
+                .SendAsync(request, HttpCompletionOption.ResponseHeadersRead, timeout.Token)
+                .ConfigureAwait(false);
+            sw.Stop();
+            var ttfb = sw.Elapsed.TotalMilliseconds;
+            EnsureSuccess(response);
+            await response.Content.CopyToAsync(Stream.Null, timeout.Token).ConfigureAwait(false);
+
+            var serverTime = ParseServerTiming(response.Headers) ?? DefaultEstimatedServerTimeMs;
+            var ping = ttfb - serverTime;
+            if (ping < 0) ping = 0;
+            pings.Add(ping);
+
+            return true;
+        }, cancellationToken);
+    }
+
+    private Task<(double Bps, double DurationMs)> MeasureDownloadAsync(int bytes,
+        CancellationToken cancellationToken, Action<double> onLiveBps)
+    {
+        return WithTimeoutAsync(async timeout =>
+        {
+            var sw1 = Stopwatch.StartNew();
+            using var request = new HttpRequestMessage(HttpMethod.Get, $"{BaseUrl}/__down?bytes={bytes}");
+            using var response = await _client
+                .SendAsync(request, HttpCompletionOption.ResponseHeadersRead, timeout.Token)
+                .ConfigureAwait(false);
+            sw1.Stop();
+            var ttfb = sw1.Elapsed.TotalMilliseconds;
+            EnsureSuccess(response);
+            var serverTime = ParseServerTiming(response.Headers) ?? DefaultEstimatedServerTimeMs;
+            var ping = ttfb - serverTime;
+            if (ping < 0) ping = 0;
+
+            var sw2 = Stopwatch.StartNew();
+            long bodyBytes;
+            double lastProgressMs = 0;
+            long lastProgressBytes = 0;
+            await using (var stream = await response.Content
+                             .ReadAsStreamAsync(timeout.Token).ConfigureAwait(false))
+            {
+                var buffer = new byte[81920];
+                long total = 0;
+                int read;
+                while ((read = await stream.ReadAsync(buffer, timeout.Token)
+                           .ConfigureAwait(false)) > 0)
+                {
+                    total += read;
+                    timeout.CancelAfter(RequestTimeout);
+                    var elapsedMs = sw2.Elapsed.TotalMilliseconds;
+                    if (onLiveBps != null && elapsedMs - lastProgressMs >= LiveProgressIntervalMs
+                                           && elapsedMs > 0)
+                    {
+                        // Instantaneous throughput over the last interval (delta-based)
+                        var deltaBytes = total - lastProgressBytes;
+                        var deltaMs = elapsedMs - lastProgressMs;
+                        var liveBps = 8.0 * deltaBytes / (deltaMs / 1000.0);
+                        onLiveBps(liveBps);
+                        lastProgressMs = elapsedMs;
+                        lastProgressBytes = total;
+                    }
+                }
+                bodyBytes = total;
+            }
+            sw2.Stop();
+            var bodyMs = sw2.Elapsed.TotalMilliseconds;
+
+            var downloadDurationMs = ping + bodyMs;
+            if (downloadDurationMs <= 0)
+                return (0.0, downloadDurationMs);
+
+            // Received bytes incl. an estimate of the headers (the official library uses the transfer size of the browser)
+            var bps = 8.0 * bodyBytes * EstimatedHeaderFraction / (downloadDurationMs / 1000.0);
+            return (bps, downloadDurationMs);
+        }, cancellationToken);
+    }
+
+    private Task<(double Bps, double DurationMs)> MeasureUploadAsync(int bytes,
+        CancellationToken cancellationToken)
+    {
+        return WithTimeoutAsync(async timeout =>
+        {
+            using var request = new HttpRequestMessage(HttpMethod.Post, $"{BaseUrl}/__up");
+            using var content = new ZeroStreamContent(bytes, () => timeout.CancelAfter(RequestTimeout));
+            request.Content = content;
+
+            var sw = Stopwatch.StartNew();
+            using var response = await _client
+                .SendAsync(request, HttpCompletionOption.ResponseHeadersRead, timeout.Token)
+                .ConfigureAwait(false);
+            sw.Stop();
+            var ttfb = sw.Elapsed.TotalMilliseconds;
+            EnsureSuccess(response);
+            await response.Content.CopyToAsync(Stream.Null, timeout.Token).ConfigureAwait(false);
+
+            var uploadDurationMs = ttfb;
+            if (uploadDurationMs <= 0)
+                return (0.0, uploadDurationMs);
+
+            var bps = 8.0 * bytes * EstimatedHeaderFraction / (uploadDurationMs / 1000.0);
+            return (bps, uploadDurationMs);
+        }, cancellationToken);
     }
 
     #endregion
@@ -405,11 +524,15 @@ public class SpeedTestService
     private sealed class ZeroStreamContent : HttpContent
     {
         private readonly int _length;
+        private readonly Action _onWritten;
         private static readonly byte[] _chunk = new byte[81920];
 
-        internal ZeroStreamContent(int length)
+        /// <param name="length">Number of bytes.</param>
+        /// <param name="onWritten">Called after each written chunk (e.g. to restart a timeout).</param>
+        internal ZeroStreamContent(int length, Action onWritten)
         {
             _length = length;
+            _onWritten = onWritten;
             Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
             Headers.ContentLength = length;
         }
@@ -426,6 +549,7 @@ public class SpeedTestService
                 var toWrite = Math.Min(_chunk.Length, remaining);
                 await stream.WriteAsync(_chunk.AsMemory(0, toWrite), cancellationToken).ConfigureAwait(false);
                 remaining -= toWrite;
+                _onWritten?.Invoke();
             }
         }
 

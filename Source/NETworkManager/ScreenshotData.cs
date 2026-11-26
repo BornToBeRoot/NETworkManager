@@ -327,8 +327,6 @@ public static class ScreenshotData
             LatencyMs = 12.4,
             JitterMs = 1.8,
             Isp = Isp,
-            ClientCity = "Frankfurt am Main",
-            ClientCountry = "DE",
             ServerCity = "Frankfurt",
             ServerCountry = "DE",
             ServerIata = "FRA"

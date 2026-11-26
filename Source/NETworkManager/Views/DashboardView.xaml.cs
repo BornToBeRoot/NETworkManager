@@ -194,5 +194,11 @@ public partial class DashboardView
     {
         if (e.PropertyName != null && NetworkConnectionSettings.Contains(e.PropertyName))
             _isOutdated = true;
+
+        // A hidden speed test widget doesn't measure (no data is transferred in the background): cancel it right away,
+        // the dashboard is hidden while the settings are open
+        if (e.PropertyName == nameof(SettingsInfo.Dashboard_ShowSpeedTestWidget) &&
+            !SettingsManager.Current.Dashboard_ShowSpeedTestWidget)
+            _speedTestWidgetView?.Cancel();
     }
 }

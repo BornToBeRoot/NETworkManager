@@ -1,6 +1,7 @@
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Net.Http;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -9,6 +10,7 @@ using LiveChartsCore.Drawing;
 using LiveChartsCore.Kernel.Sketches;
 using LiveChartsCore.SkiaSharpView;
 using log4net;
+using NETworkManager.Controls;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models.Cloudflare;
 using NETworkManager.Settings;
@@ -59,6 +61,22 @@ public class SpeedTestWidgetViewModel : ViewModelBase
         }
     } = true;
 
+    /// <summary>
+    /// Time of the last completed test, <c>null</c> before the first one.
+    /// </summary>
+    public DateTime? LastTestTime
+    {
+        get;
+        private set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
     public SpeedTestResult Result
     {
         get;
@@ -75,7 +93,52 @@ public class SpeedTestWidgetViewModel : ViewModelBase
 
     public bool HasResult => Result != null;
 
+    /// <summary>
+    /// Phase of the running test (e.g. "Measuring download speed...").
+    /// </summary>
+    public string PhaseMessage
+    {
+        get;
+        private set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
+    /// Message after the test, e.g. canceled by the user or an error.
+    /// </summary>
     public string StatusMessage
+    {
+        get;
+        private set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public StatusLevel StatusMessageLevel
+    {
+        get;
+        private set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public bool IsStatusMessageDisplayed
     {
         get;
         private set
@@ -152,14 +215,23 @@ public class SpeedTestWidgetViewModel : ViewModelBase
     /// <summary>LiveCharts2 series for the upload sparkline.</summary>
     public ISeries[] UploadSeries { get; }
 
-    /// <summary>Hidden X-axes for the download sparkline (anchored at 0 so the first sample sits at the left edge).</summary>
-    public ICartesianAxis[] DownloadXAxes { get; } = [new Axis { IsVisible = false, MinLimit = 0, MinStep = 1 }];
+    /// <summary>
+    /// X axis of the download sparkline (sample index, hidden). From 0 to at least 1, so the first sample is at the left
+    /// edge instead of in the middle of the chart.
+    /// </summary>
+    private readonly Axis _downloadXAxis = new() { IsVisible = false, MinLimit = 0, MaxLimit = 1, MinStep = 1 };
+
+    /// <summary>X axis of the upload sparkline, see <see cref="_downloadXAxis" />.</summary>
+    private readonly Axis _uploadXAxis = new() { IsVisible = false, MinLimit = 0, MaxLimit = 1, MinStep = 1 };
+
+    /// <summary>Hidden X-axes for the download sparkline.</summary>
+    public ICartesianAxis[] DownloadXAxes { get; }
 
     /// <summary>Hidden Y-axes for the download sparkline.</summary>
     public ICartesianAxis[] DownloadYAxes { get; } = [new Axis { IsVisible = false, MinLimit = 0 }];
 
     /// <summary>Hidden X-axes for the upload sparkline.</summary>
-    public ICartesianAxis[] UploadXAxes { get; } = [new Axis { IsVisible = false, MinLimit = 0, MinStep = 1 }];
+    public ICartesianAxis[] UploadXAxes { get; }
 
     /// <summary>Hidden Y-axes for the upload sparkline.</summary>
     public ICartesianAxis[] UploadYAxes { get; } = [new Axis { IsVisible = false, MinLimit = 0 }];
@@ -168,8 +240,37 @@ public class SpeedTestWidgetViewModel : ViewModelBase
 
     public ICommand AcceptDisclaimerCommand => field ??= new RelayCommand(_ => AcceptDisclaimerAction());
 
+    /// <summary>
+    /// Copies all values of the test (also of a canceled test), e.g. for a support request.
+    /// </summary>
+    public ICommand CopyAllCommand => field ??= new RelayCommand(_ => CopyAllAction(),
+        _ => !IsRunning && (Result != null || CurrentLatencyMs != null));
+
+    private void CopyAllAction()
+    {
+        static string Format(double? value, string format, string unit) =>
+            value.HasValue ? $"{value.Value.ToString(format)} {unit}" : "-/-";
+
+        var text = new StringBuilder();
+
+        text.AppendLine($"{Strings.Download}: {Format(CurrentDownloadMbps, "F1", "Mbps")}");
+        text.AppendLine($"{Strings.Upload}: {Format(CurrentUploadMbps, "F1", "Mbps")}");
+        text.AppendLine($"{Strings.Latency}: {Format(CurrentLatencyMs, "F0", "ms")}");
+        text.AppendLine($"{Strings.Jitter}: {Format(CurrentJitterMs, "F1", "ms")}");
+        text.AppendLine($"{Strings.ISP}: {Result?.Isp ?? "-/-"}");
+        text.AppendLine($"{Strings.Server}: {Result?.Server ?? "-/-"}");
+
+        if (LastTestTime is { } time)
+            text.AppendLine(string.Format(Strings.LastTestAtX, time.ToString("G")));
+
+        ClipboardHelper.SetClipboard(text.ToString().TrimEnd());
+    }
+
     public SpeedTestWidgetViewModel()
     {
+        DownloadXAxes = [_downloadXAxis];
+        UploadXAxes = [_uploadXAxis];
+
         var downloadColor = ChartColors.Primary;
         DownloadSeries =
         [
@@ -226,7 +327,7 @@ public class SpeedTestWidgetViewModel : ViewModelBase
     {
         if (IsRunning)
         {
-            _cts?.Cancel();
+            Cancel();
             return;
         }
 
@@ -237,32 +338,75 @@ public class SpeedTestWidgetViewModel : ViewModelBase
     }
 
     /// <summary>
+    /// Cancels a running speed test, the values measured until then stay visible.
+    /// </summary>
+    public void Cancel()
+    {
+        if (IsRunning)
+            _cts?.Cancel();
+    }
+
+    /// <summary>
     /// Shows the sample result of <see cref="ScreenshotData" /> instead of running a real speed test.
     /// </summary>
     private void SetScreenshotData()
     {
         var result = ScreenshotData.CreateSpeedTestResult();
 
-        // Seed the first point twice, like a real test (see RunAsync)
-        AddScreenshotSamples(DownloadSamples, ScreenshotData.CreateSpeedTestDownloadSamples());
-        AddScreenshotSamples(UploadSamples, ScreenshotData.CreateSpeedTestUploadSamples());
+        foreach (var value in ScreenshotData.CreateSpeedTestDownloadSamples())
+            AddSample(DownloadSamples, _downloadXAxis, value);
+
+        foreach (var value in ScreenshotData.CreateSpeedTestUploadSamples())
+            AddSample(UploadSamples, _uploadXAxis, value);
 
         Result = result;
+        LastTestTime = DateTime.Now;
         CurrentDownloadMbps = result.DownloadMbps;
         CurrentUploadMbps = result.UploadMbps;
         CurrentLatencyMs = result.LatencyMs;
         CurrentJitterMs = result.JitterMs;
     }
 
-    private static void AddScreenshotSamples(ObservableCollection<double> samples, IEnumerable<double> values)
+    private void ShowStatusMessage(string message, StatusLevel level)
     {
-        foreach (var value in values)
-        {
-            if (samples.Count == 0)
-                samples.Add(value);
+        StatusMessage = message;
+        StatusMessageLevel = level;
+        IsStatusMessageDisplayed = true;
+    }
 
-            samples.Add(value);
-        }
+    /// <summary>
+    /// Localized message for an error of the speed test (the exception text is logged).
+    /// </summary>
+    private static string GetErrorMessage(Exception ex)
+    {
+        var message = ex switch
+        {
+            TimeoutException => string.Format(Strings.XXXDidNotRespondWithinXXXSecondsMessage, SpeedTestService.Host,
+                SpeedTestService.RequestTimeout.TotalSeconds),
+            HttpRequestException { StatusCode: not null } httpEx => string.Format(Strings.CouldNotConnectToXXXReasonXXX,
+                SpeedTestService.Host, $"{Strings.HTTPStatusCode} {(int)httpEx.StatusCode}"),
+            _ => string.Format(Strings.CouldNotConnectToXXXMessage, SpeedTestService.Host)
+        };
+
+        // One message with its hint (a new line would look like a second message), wraps if the widget is narrow
+        return $"{message} {Strings.CheckNetworkConnectionTryAgainMessage}";
+    }
+
+    /// <summary>
+    /// Adds a sample (one completed request) to a sparkline and extends its X axis to the samples.
+    /// </summary>
+    private static void AddSample(ObservableCollection<double> samples, Axis xAxis, double value)
+    {
+        samples.Add(value);
+        xAxis.MaxLimit = Math.Max(1, samples.Count - 1);
+    }
+
+    private void ClearSamples()
+    {
+        DownloadSamples.Clear();
+        UploadSamples.Clear();
+        _downloadXAxis.MaxLimit = 1;
+        _uploadXAxis.MaxLimit = 1;
     }
 
     private void AcceptDisclaimerAction()
@@ -278,18 +422,22 @@ public class SpeedTestWidgetViewModel : ViewModelBase
 
         IsRunning = true;
         Result = null;
+
+        // The time belongs to the values shown: a canceled / failed test shows its partial values without a time
+        LastTestTime = null;
         CurrentDownloadMbps = null;
         CurrentUploadMbps = null;
         CurrentLatencyMs = null;
         CurrentJitterMs = null;
-        DownloadSamples.Clear();
-        UploadSamples.Clear();
-        StatusMessage = Strings.FetchingMetadataDots;
+        ClearSamples();
+        IsStatusMessageDisplayed = false;
+        PhaseMessage = Strings.FetchingMetadataDots;
 
         if (ScreenshotData.IsEnabled)
         {
             SetScreenshotData();
             IsRunning = false;
+            CommandManager.InvalidateRequerySuggested();
             return;
         }
 
@@ -298,7 +446,7 @@ public class SpeedTestWidgetViewModel : ViewModelBase
 
         var progress = new Progress<SpeedTestProgress>(p =>
         {
-            StatusMessage = p.Phase switch
+            PhaseMessage = p.Phase switch
             {
                 SpeedTestPhase.FetchingMetadata => Strings.FetchingMetadataDots,
                 SpeedTestPhase.MeasuringLatency => Strings.MeasuringLatencyDots,
@@ -317,30 +465,18 @@ public class SpeedTestWidgetViewModel : ViewModelBase
                 CurrentJitterMs = p.JitterMs;
 
             if (p.NewDownloadSampleMbps.HasValue)
-            {
-                // Seed the first point twice so LiveCharts2 renders the sparkline
-                // anchored at x=0 rather than starting mid-chart on the first sample.
-                if (DownloadSamples.Count == 0)
-                    DownloadSamples.Add(p.NewDownloadSampleMbps.Value);
-                DownloadSamples.Add(p.NewDownloadSampleMbps.Value);
-            }
+                AddSample(DownloadSamples, _downloadXAxis, p.NewDownloadSampleMbps.Value);
+
             if (p.NewUploadSampleMbps.HasValue)
-            {
-                // Same workaround as above for the upload sparkline.
-                if (UploadSamples.Count == 0)
-                    UploadSamples.Add(p.NewUploadSampleMbps.Value);
-                UploadSamples.Add(p.NewUploadSampleMbps.Value);
-            }
+                AddSample(UploadSamples, _uploadXAxis, p.NewUploadSampleMbps.Value);
 
             if (p.Meta != null)
             {
                 // Populate Result with metadata-only fields so the UI can
-                // show ISP / location / server while measurements are still running.
+                // show ISP / server while measurements are still running.
                 Result = new SpeedTestResult
                 {
                     Isp = p.Meta.AsOrganization,
-                    ClientCity = p.Meta.City,
-                    ClientCountry = p.Meta.Country,
                     ServerCity = p.Meta.Colo?.City,
                     ServerCountry = p.Meta.Colo?.Cca2,
                     ServerIata = p.Meta.Colo?.Iata
@@ -352,27 +488,33 @@ public class SpeedTestWidgetViewModel : ViewModelBase
         {
             var result = await _service.RunAsync(progress, _cts.Token);
             Result = result;
+            LastTestTime = DateTime.Now;
             CurrentDownloadMbps = result.DownloadMbps;
             CurrentUploadMbps = result.UploadMbps;
             CurrentLatencyMs = result.LatencyMs;
             CurrentJitterMs = result.JitterMs;
+
+            if (result.FailedRequests > 0)
+                ShowStatusMessage(string.Format(Strings.XRequestsFailedAndWereSkippedMessage, result.FailedRequests),
+                    StatusLevel.Warning);
         }
         catch (OperationCanceledException)
         {
             // Partial results remain visible; everything resets at the start of the next run.
+            ShowStatusMessage(Strings.CanceledByUserMessage, StatusLevel.None);
         }
         catch (Exception ex)
         {
+            // Partial results remain visible, like after a cancel
             Log.Error("Speed test failed.", ex);
-            Result = new SpeedTestResult
-            {
-                HasError = true,
-                ErrorMessage = ex.Message
-            };
+            ShowStatusMessage(GetErrorMessage(ex), StatusLevel.Error);
         }
         finally
         {
             IsRunning = false;
+
+            // Enable copy all (CanExecute is otherwise only evaluated on the next input)
+            CommandManager.InvalidateRequerySuggested();
         }
     }
 }

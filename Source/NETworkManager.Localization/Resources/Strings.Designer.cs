@@ -7719,6 +7719,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Last test at {0}.
+        /// </summary>
+        public static string LastTestAtX {
+            get {
+                return ResourceManager.GetString("LastTestAtX", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Last usable IP address.
         /// </summary>
         public static string LastUsableIPAddress {
@@ -16669,6 +16678,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} requests failed and were skipped. The result may be less accurate..
+        /// </summary>
+        public static string XRequestsFailedAndWereSkippedMessage {
+            get {
+                return ResourceManager.GetString("XRequestsFailedAndWereSkippedMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0} Timed out.
         /// </summary>
         public static string XTimedOut {
@@ -16710,6 +16728,15 @@ namespace NETworkManager.Localization.Resources {
         public static string XXXDetectedAsLocalIPAddressMessage {
             get {
                 return ResourceManager.GetString("XXXDetectedAsLocalIPAddressMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} did not respond within {1} seconds..
+        /// </summary>
+        public static string XXXDidNotRespondWithinXXXSecondsMessage {
+            get {
+                return ResourceManager.GetString("XXXDidNotRespondWithinXXXSecondsMessage", resourceCulture);
             }
         }
         

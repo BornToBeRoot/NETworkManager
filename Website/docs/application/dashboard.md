@@ -125,7 +125,7 @@ Enables or disables the detection of the DNS resolver in use via [`ip-api.com`](
 
 ### Widgets
 
-Show or hide the widgets on the dashboard: **Network connection**, **Speed Test**, **IP geolocation** and **DNS resolver**. A hidden widget doesn't check anything (e.g. no request is sent to `ip-api.com`); a speed test that is already running when the widget is hidden is completed. If one of IP geolocation and DNS resolver is hidden, the other one uses the whole width. The status window always shows the network connection.
+Show or hide the widgets on the dashboard: **Network connection**, **Speed Test**, **IP geolocation** and **DNS resolver**. A hidden widget doesn't check anything (e.g. no request is sent to `ip-api.com`); a speed test that is running when the widget is hidden is canceled. If one of IP geolocation and DNS resolver is hidden, the other one uses the whole width. The status window always shows the network connection.
 
 **Type:** `Boolean`
 
@@ -133,22 +133,33 @@ Show or hide the widgets on the dashboard: **Network connection**, **Speed Test*
 
 ## Speed Test
 
-The **Speed Test** widget measures the current connection's download and upload speed, latency, and jitter against [`speed.cloudflare.com`](https://speed.cloudflare.com/). The test is **user-initiated** — it does not run automatically on dashboard load. Click **Speed Test** to run a measurement.
+The **Speed Test** widget measures the download and upload speed, latency and jitter of the current connection against [`speed.cloudflare.com`](https://speed.cloudflare.com/). The test only runs when you start it, not when the dashboard is opened.
+
+Before the first test, a privacy disclaimer informs you that `speed.cloudflare.com` receives requests with your IP address and network information. Click **Speed Test** to accept it and run the first test. The disclaimer is shown again after restarting the application (the acceptance is not saved). See the [Cloudflare privacy policy](https://www.cloudflare.com/privacypolicy/) for details. The widget never contacts Cloudflare's telemetry endpoint (`aim.cloudflare.com`).
+
+The buttons in the header of the widget:
+
+- **Run speed test** (refresh icon) starts a new test, while a test runs the button stops it (**Stop**). The values measured until then stay visible.
+- **Copy all** copies all values and the time of the test as text, e.g. for a support request.
+
+While the test runs, the header shows the current phase (latency, download, upload), afterwards the time of the test (**Last test at ...**, the tooltip shows the date; not after a canceled or failed test). A canceled or failed test and requests that failed are shown below the header.
 
 The result includes:
 
-- **Download** speed in Mbps
-- **Upload** speed in Mbps
-- **Latency** in ms (unloaded, 50th percentile of latency probes)
-- **Jitter** in ms (average consecutive delta between latency samples)
+- **Download** speed in Mbps, with a chart of the requests (hover over it to see the speed of a request)
+- **Upload** speed in Mbps, with a chart of the requests
+- **Latency** in ms (unloaded, 50th percentile of the latency probes)
+- **Jitter** in ms (average difference between consecutive latency probes)
 - **ISP** — internet service provider as reported by Cloudflare
-- **Server location** — Cloudflare PoP (Point of Presence) handling the test
+- **Server** — Cloudflare server (city, country and airport code) that handles the test
 
-Before running the test, a privacy disclaimer informs the user that `speed.cloudflare.com` will receive requests with the client's IP address and network information. The disclaimer is shown again after restarting the app because acceptance is not currently persisted. See the [Cloudflare privacy policy](https://www.cloudflare.com/privacypolicy/) for details. The widget never contacts Cloudflare's telemetry endpoint (`aim.cloudflare.com/__log`).
+The test measures like the official [cloudflare/speedtest](https://github.com/cloudflare/speedtest) library (used by [speed.cloudflare.com](https://speed.cloudflare.com/)), so the results are comparable: latency probes (empty downloads) and downloads / uploads of increasing size (100 kB up to 250 MB) one after the other, with a few latency probes between them. Download and upload are the 90th percentile of the requests that took at least 10 ms; the speed shown while a download runs is the result of the completed requests (only the first request is shown while it runs). A direction ends after a set of requests in which even the fastest request took longer than one second; the larger sizes are skipped.
+
+A test takes about 15 seconds on a fast connection and up to 1–2 minutes on a slow one. It transfers a lot of data on a fast connection: up to about 1 GB download and 300 MB upload (1 Gbit/s), keep this in mind on a metered connection (e.g. mobile data).
 
 ## Troubleshooting and limits
 
 - The local IP address is detected by the route to the [Public IPv4 address](#public-ipv4-address) / [Public IPv6 address](#public-ipv6-address) (no packet is sent), otherwise from the first active network interface. With several network adapters (e.g. LAN and VPN), set an address that is routed via the adapter you want to see.
 - The internet is shown as reachable if the [Public IPv4 address](#public-ipv4-address) / [Public IPv6 address](#public-ipv6-address) replies to the ping or the public IP address could be requested from `api.ipify.org` / `api6.ipify.org` (or the [custom API](#use-custom-ipv4-address-api)). If both are blocked (e.g. by a firewall, or websites are only reachable via a proxy), the internet is shown as a warning if Windows reports internet access (IPv4), otherwise as not reachable; use another public IP address / API. The IP geolocation and the DNS resolver are requested from `ip-api.com` (45 requests per minute).
 - Without IPv6 connectivity (or no IPv6 from the internet provider), the IPv6 checks are shown as information (gray) and skipped, the IPv4 checks are not affected.
-- The [Speed Test](#speed-test) measures the connection to the nearest Cloudflare server. A VPN, a proxy or other traffic on the network at the same time lowers the result.
+- The [Speed Test](#speed-test) measures the connection to the nearest Cloudflare server. A VPN, a proxy or other traffic on the network at the same time lowers the result. A request of the speed test fails after 15 seconds without a response or data (e.g. the connection was lost). Like the official library, a failed request is skipped (shown as a warning after the test) and a request that is rate limited by Cloudflare (HTTP 429) is repeated up to three times; if all requests of a size fail (e.g. a proxy rejects large uploads), the larger sizes of the direction are skipped. After three requests in a row without a response the test ends with the error.

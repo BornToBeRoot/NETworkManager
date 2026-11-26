@@ -13,7 +13,6 @@
              mc:Ignorable="d" MinHeight="200"
              d:DataContext="{d:DesignInstance viewModels:SpeedTestWidgetViewModel}">
     <UserControl.Resources>
-        <converters:BooleanReverseConverter x:Key="BooleanReverseConverter" />
         <converters:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
         <converters:NullableDoubleToStringConverter x:Key="NullableDoubleToStringConverter" />
@@ -29,7 +28,8 @@
             </Grid.Resources>
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />                    
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
                 <!-- Header: icon + title (left), status + action button (right) -->
@@ -51,70 +51,98 @@
                                    Style="{StaticResource MessageTextBlock}" 
                                    Margin="10,0,0,0" />
                     </StackPanel>
-                    <!-- Status (running): spinner + phase -->
+                    <!-- Time of the last test (not while running) -->
+                    <controls:RefreshStatusControl Grid.Column="1"
+                                                   LastRefreshTime="{Binding LastTestTime}"
+                                                   LastRefreshFormat="{x:Static localization:Strings.LastTestAtX}"
+                                                   IsRefreshing="{Binding IsRunning}"
+                                                   HorizontalAlignment="Right"
+                                                   Margin="10,0,0,0" />
+                    <!-- Phase (running): spinner + phase -->
                     <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center"
                                 Visibility="{Binding IsRunning, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
-                        <mah:ProgressRing Style="{StaticResource ProgressRingSmall}" IsActive="True"
-                                          Foreground="{DynamicResource MahApps.Brushes.Accent}" />
-                        <TextBlock Text="{Binding StatusMessage}"
-                                   Style="{StaticResource AccentTextBlock}"
-                                   Margin="10,0,0,0"                                   
-                                   VerticalAlignment="Center" />
+                        <mah:ProgressRing Style="{StaticResource ProgressRingSmall}" IsActive="True" />
+                        <TextBlock Text="{Binding PhaseMessage}" Margin="10,0,0,0" />
                     </StackPanel>
-                    <!-- Action button (icon-only) -->
-                    <Button Grid.Column="4" VerticalAlignment="Center"
-                            Command="{Binding RunCommand}"
-                            Style="{StaticResource CleanButton}"
-                            Visibility="{Binding ShowDisclaimer, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}"
-                            IsDefault="{Binding IsRunning, Converter={StaticResource BooleanReverseConverter}}"
-                            IsCancel="{Binding IsRunning}">
-                        <Button.ToolTip>
-                            <TextBlock>
-                                <TextBlock.Style>
-                                    <Style TargetType="{x:Type TextBlock}">
-                                        <Setter Property="Text" Value="{x:Static localization:Strings.RunSpeedTest}" />
+                    <!-- Copy all + run / stop (icon-only), after the disclaimer -->
+                    <StackPanel Grid.Column="4" Orientation="Horizontal" VerticalAlignment="Center"
+                                Visibility="{Binding ShowDisclaimer, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}">
+                        <Button Command="{Binding CopyAllCommand}"
+                                Style="{StaticResource CleanButton}"
+                                ToolTip="{x:Static localization:Strings.CopyAll}"
+                                VerticalAlignment="Center"
+                                Margin="0,0,10,0">
+                            <Rectangle Width="20" Height="20">
+                                <Rectangle.OpacityMask>
+                                    <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=Copy}" />
+                                </Rectangle.OpacityMask>
+                                <Rectangle.Style>
+                                    <Style TargetType="{x:Type Rectangle}">
+                                        <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
                                         <Style.Triggers>
-                                            <DataTrigger Binding="{Binding IsRunning}" Value="True">
-                                                <Setter Property="Text" Value="{x:Static localization:Strings.Stop}" />
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
+                                                <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray5}" />
                                             </DataTrigger>
                                         </Style.Triggers>
                                     </Style>
-                                </TextBlock.Style>
-                            </TextBlock>
-                        </Button.ToolTip>
-                        <Rectangle Width="20" Height="20">
-                            <Rectangle.Resources>
-                                <VisualBrush x:Key="VisualRefresh" Stretch="Uniform"
-                                             Visual="{icons:Lucide Kind=RefreshCw}" />
-                                <VisualBrush x:Key="VisualClose" Stretch="Uniform"
-                                             Visual="{icons:Lucide Kind=X}" />
-                            </Rectangle.Resources>
-                            <Rectangle.Style>
-                                <Style TargetType="{x:Type Rectangle}">
-                                    <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
-                                    <Setter Property="OpacityMask" Value="{StaticResource VisualRefresh}" />
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding IsRunning}" Value="True">
-                                            <Setter Property="OpacityMask" Value="{StaticResource VisualClose}" />
-                                        </DataTrigger>
-                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
-                                            <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray5}" />
-                                        </DataTrigger>
-                                        <MultiDataTrigger>
-                                            <MultiDataTrigger.Conditions>
-                                                <Condition Binding="{Binding IsRunning}" Value="True" />
-                                                <Condition Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True" />
-                                            </MultiDataTrigger.Conditions>
-                                            <Setter Property="Fill" Value="{DynamicResource Brushes.Status.Error}" />
-                                        </MultiDataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Rectangle.Style>
-                        </Rectangle>
-                    </Button>
+                                </Rectangle.Style>
+                            </Rectangle>
+                        </Button>
+                        <Button VerticalAlignment="Center"
+                                Command="{Binding RunCommand}"
+                                Style="{StaticResource CleanButton}">
+                            <Button.ToolTip>
+                                <TextBlock>
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="Text" Value="{x:Static localization:Strings.RunSpeedTest}" />
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsRunning}" Value="True">
+                                                    <Setter Property="Text" Value="{x:Static localization:Strings.Stop}" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </Button.ToolTip>
+                            <Rectangle Width="20" Height="20">
+                                <Rectangle.Resources>
+                                    <VisualBrush x:Key="VisualRefresh" Stretch="Uniform"
+                                                 Visual="{icons:Lucide Kind=RefreshCw}" />
+                                    <VisualBrush x:Key="VisualClose" Stretch="Uniform"
+                                                 Visual="{icons:Lucide Kind=X}" />
+                                </Rectangle.Resources>
+                                <Rectangle.Style>
+                                    <Style TargetType="{x:Type Rectangle}">
+                                        <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
+                                        <Setter Property="OpacityMask" Value="{StaticResource VisualRefresh}" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding IsRunning}" Value="True">
+                                                <Setter Property="OpacityMask" Value="{StaticResource VisualClose}" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
+                                                <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray5}" />
+                                            </DataTrigger>
+                                            <MultiDataTrigger>
+                                                <MultiDataTrigger.Conditions>
+                                                    <Condition Binding="{Binding IsRunning}" Value="True" />
+                                                    <Condition Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True" />
+                                                </MultiDataTrigger.Conditions>
+                                                <Setter Property="Fill" Value="{DynamicResource Brushes.Status.Error}" />
+                                            </MultiDataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Rectangle.Style>
+                            </Rectangle>
+                        </Button>
+                    </StackPanel>
                 </Grid>
+                <!-- Status message after the test (canceled, error), the values of the test stay visible -->
+                <icons:StatusMessageText Grid.Row="1" Margin="10,0,10,10"
+                                         Text="{Binding StatusMessage}" Level="{Binding StatusMessageLevel}"
+                                         Visibility="{Binding IsStatusMessageDisplayed, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
                 <!-- Body -->
-                <Grid Grid.Row="1" Margin="0">
+                <Grid Grid.Row="2" Margin="0">
                     <!-- Disclaimer -->
                     <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center"
                                 Visibility="{Binding ShowDisclaimer, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
@@ -144,47 +172,8 @@
                             </Button.Content>
                         </Button>
                     </StackPanel>
-                    <!-- Error panel (same level as disclaimer — replaces data view entirely) -->
-                    <StackPanel VerticalAlignment="Center">
-                        <StackPanel.Style>
-                            <Style TargetType="{x:Type StackPanel}">
-                                <Setter Property="Visibility" Value="Collapsed" />
-                                <Style.Triggers>
-                                    <MultiDataTrigger>
-                                        <MultiDataTrigger.Conditions>
-                                            <Condition Binding="{Binding IsRunning}" Value="False" />
-                                            <Condition Binding="{Binding Result.HasError}" Value="True" />
-                                        </MultiDataTrigger.Conditions>
-                                        <Setter Property="Visibility" Value="Visible" />
-                                    </MultiDataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </StackPanel.Style>
-                        <TextBlock Text="{Binding Result.ErrorMessage}"
-                                   Style="{StaticResource MessageTextBlock}" Margin="0,0,0,10" />
-                        <TextBlock Text="{x:Static localization:Strings.CheckNetworkConnectionTryAgainMessage}"
-                                   Style="{StaticResource MessageTextBlock}" />
-                    </StackPanel>
-                    <!-- Test view: three equal columns (metadata / download / upload) -->
-                    <!-- Hidden when disclaimer is shown or when there is an error -->
-                    <Grid>
-                        <Grid.Style>
-                            <Style TargetType="{x:Type Grid}">
-                                <Setter Property="Visibility" Value="Visible" />
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding ShowDisclaimer}" Value="True">
-                                        <Setter Property="Visibility" Value="Collapsed" />
-                                    </DataTrigger>
-                                    <MultiDataTrigger>
-                                        <MultiDataTrigger.Conditions>
-                                            <Condition Binding="{Binding IsRunning}" Value="False" />
-                                            <Condition Binding="{Binding Result.HasError}" Value="True" />
-                                        </MultiDataTrigger.Conditions>
-                                        <Setter Property="Visibility" Value="Collapsed" />
-                                    </MultiDataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Grid.Style>
+                    <!-- Test view: three equal columns (metadata / download / upload), hidden while the disclaimer is shown -->
+                    <Grid Visibility="{Binding ShowDisclaimer, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="3*" />
                             <ColumnDefinition Width="20" />
@@ -215,15 +204,9 @@
                                      Text="{Binding Result.Isp, TargetNullValue=-/-, FallbackValue=-/-, Mode=OneWay}" />
                             <TextBlock Grid.Column="0" Grid.Row="2"
                                        Text="{x:Static localization:Strings.Server}" />
-                            <TextBox Grid.Column="2" Grid.Row="2">
-                                <TextBox.Text>
-                                    <MultiBinding StringFormat="{}{0}, {1} ({2})" Mode="OneWay">
-                                        <Binding Path="Result.ServerCity" TargetNullValue="-/-" />
-                                        <Binding Path="Result.ServerCountry" TargetNullValue="-/-" />
-                                        <Binding Path="Result.ServerIata" TargetNullValue="-/-" />
-                                    </MultiBinding>
-                                </TextBox.Text>
-                            </TextBox>
+                            <TextBox Grid.Column="2" Grid.Row="2"
+                                     ToolTip="{Binding Result.Server}"
+                                     Text="{Binding Result.Server, TargetNullValue=-/-, FallbackValue=-/-, Mode=OneWay}" />
                             <TextBlock Grid.Column="0" Grid.Row="4"
                                        Text="{x:Static localization:Strings.Latency}" />
                             <TextBox Grid.Column="2" Grid.Row="4"
