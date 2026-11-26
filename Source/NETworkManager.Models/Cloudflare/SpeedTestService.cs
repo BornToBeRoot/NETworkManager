@@ -202,8 +202,8 @@ public class SpeedTestService
                     ? MeasureDownloadAsync(measurement.Bytes, cancellationToken,
                         liveBps => Emit(progress, SpeedTestPhase.MeasuringDownload,
                             pings, downloadBps, uploadBps, liveBps))
-                    : MeasureUploadAsync(measurement.Bytes, cancellationToken), failures, cancellationToken)
-                    .ConfigureAwait(false);
+                    : MeasureUploadAsync(measurement.Bytes, cancellationToken), failures, cancellationToken,
+                    () => IsServerReachableAsync(cancellationToken)).ConfigureAwait(false);
 
                 if (!success)
                     continue;
@@ -366,11 +366,15 @@ public class SpeedTestService
     /// <summary>
     /// Runs a request of the test like the official library: HTTP 429 is repeated after the delay of the server (up to
     /// <see cref="MaxRetries" /> times), another error skips the request. After <see cref="MaxConsecutiveFailedRequests" />
-    /// failed requests in a row the error is thrown (the test ends).
+    /// failed requests in a row without a response the error is thrown (the test ends) - unless the server still
+    /// answers a small request: then only this size fails (e.g. a proxy that closes the connection of large uploads
+    /// instead of answering HTTP 413) and the direction ends after the set.
     /// </summary>
+    /// <param name="isServerReachable">Checks whether the server answers (download / upload), <c>null</c> for the
+    ///     latency probes (they are small requests themselves).</param>
     /// <returns><c>false</c> if the request failed and was skipped.</returns>
     private static async Task<(bool Success, T Value)> TryRequestAsync<T>(Func<Task<T>> request,
-        RequestFailures failures, CancellationToken cancellationToken)
+        RequestFailures failures, CancellationToken cancellationToken, Func<Task<bool>> isServerReachable = null)
     {
         for (var retry = 0;; retry++)
         {
@@ -394,14 +398,49 @@ public class SpeedTestService
                 failures.Total++;
 
                 if (!SpeedTestCalculator.IsConnectionFailure(ex))
+                {
                     failures.Consecutive = 0;
+                }
                 else if (++failures.Consecutive >= MaxConsecutiveFailedRequests)
-                    throw;
+                {
+                    if (isServerReachable == null || !await isServerReachable().ConfigureAwait(false))
+                        throw;
+
+                    // The connection works, only requests of this size fail: skip them (the set fails)
+                    Log.Warn("Speed test requests of this size fail, but the server answers small requests.");
+                    failures.Consecutive = 0;
+                }
 
                 Log.Warn("Speed test request failed and is skipped.", ex);
 
                 return (false, default);
             }
+        }
+    }
+
+    /// <summary>
+    /// Checks whether the server answers a small request (an empty download, not measured).
+    /// </summary>
+    /// <returns><c>false</c> if there is no response (e.g. the connection was lost).</returns>
+    private async Task<bool> IsServerReachableAsync(CancellationToken cancellationToken)
+    {
+        try
+        {
+            return await WithTimeoutAsync(async timeout =>
+            {
+                using var request = new HttpRequestMessage(HttpMethod.Get, $"{BaseUrl}/__down?bytes=0");
+                using var response = await _client
+                    .SendAsync(request, HttpCompletionOption.ResponseHeadersRead, timeout.Token)
+                    .ConfigureAwait(false);
+
+                return true;
+            }, cancellationToken).ConfigureAwait(false);
+        }
+        catch (Exception ex) when (ex is HttpRequestException or IOException or TimeoutException)
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+
+            return false;
         }
     }
 

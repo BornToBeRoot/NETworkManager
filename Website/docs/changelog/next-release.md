@@ -181,6 +181,7 @@ Release date: **xx.xx.2026**
 - Fixed the DNS resolver widget showing "Object reference not set to an instance of an object" when edns.ip-api.com answered with an empty response (e.g. a proxy). An empty response of ip-api.com is shown as an error in both widgets. [#3741](https://github.com/BornToBeRoot/NETworkManager/pull/3741)
 - Fixed the offset of the IP geolocation widget being shown as `-/-` for locations in UTC+0 (e.g. London in winter) and in seconds (e.g. `3600`). It is shown as `UTC+01:00`. A region without a code is shown without empty brackets. [#3741](https://github.com/BornToBeRoot/NETworkManager/pull/3741)
 - Fixed the IP geolocation widget showing an empty result when ip-api.com had no geolocation for the public IP address (e.g. behind a proxy). A warning shows the reason, like the IP Geolocation tool. [#3741](https://github.com/BornToBeRoot/NETworkManager/pull/3741)
+- Fixed the speed test ending with "Could not connect to speed.cloudflare.com" when a proxy closed the connection of large uploads (instead of rejecting them with an HTTP error). After three requests in a row without a response, the test only ends if the server doesn't answer a small request either; otherwise the larger sizes of the direction are skipped. [#3741](https://github.com/BornToBeRoot/NETworkManager/pull/3741)
 
 **Status window**
 
