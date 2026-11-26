@@ -181,6 +181,11 @@ Release date: **xx.xx.2026**
 **IP Geolocation**
 
 - Fixed the tab getting stuck (query disabled, input read-only, progress bar running) after an error or when the rate limit of ip-api.com was reached, until the tab was closed. [#PR](PRLINK)
+- Fixed a query waiting up to 100 seconds when ip-api.com did not respond (e.g. a firewall that drops the request). It fails after 10 seconds. [#PR](PRLINK)
+
+**Traceroute**
+
+- Fixed the traceroute waiting up to 100 seconds per hop when the IP geolocation is enabled and ip-api.com did not respond (e.g. a firewall that drops the request). The geolocation of a hop fails after 10 seconds. [#PR](PRLINK)
 
 ## Dependencies, Refactoring & Documentation
 

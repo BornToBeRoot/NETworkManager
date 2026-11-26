@@ -25,7 +25,19 @@ public class IPGeolocationService : SingletonBase<IPGeolocationService>
     private const string Fields =
         "status,message,continent,continentCode,country,countryCode,region,regionName,city,district,zip,lat,lon,timezone,offset,currency,isp,org,as,asname,reverse,mobile,proxy,hosting,query";
 
-    private readonly HttpClient _client = new();
+    /// <summary>
+    ///     Host of the API (shown in messages).
+    /// </summary>
+    public const string Host = "ip-api.com";
+
+    /// <summary>
+    ///     Time until a request fails without a response (instead of the 100 seconds of <see cref="HttpClient" />, e.g.
+    ///     if a firewall drops the request or for each hop of the traceroute), like the public IP address request of the
+    ///     network connection widget.
+    /// </summary>
+    public static readonly TimeSpan RequestTimeout = TimeSpan.FromSeconds(10);
+
+    private readonly HttpClient _client = new() { Timeout = RequestTimeout };
 
     /// <summary>
     ///     Indicates whether we have reached the rate limit.

@@ -17,7 +17,18 @@ public class DNSResolverService : SingletonBase<DNSResolverService>
     /// </summary>
     private const string BaseUrl = "https://edns.ip-api.com/json";
 
-    private readonly HttpClient _client = new();
+    /// <summary>
+    ///     Host of the API (shown in messages).
+    /// </summary>
+    public const string Host = "edns.ip-api.com";
+
+    /// <summary>
+    ///     Time until a request fails without a response (instead of the 100 seconds of <see cref="HttpClient" />, e.g.
+    ///     if a firewall drops the request), like the public IP address request of the network connection widget.
+    /// </summary>
+    public static readonly TimeSpan RequestTimeout = TimeSpan.FromSeconds(10);
+
+    private readonly HttpClient _client = new() { Timeout = RequestTimeout };
 
     /// <summary>
     ///     Gets the IP DNS details from the API asynchronously.
