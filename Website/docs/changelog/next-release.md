@@ -35,7 +35,7 @@ Release date: **xx.xx.2026**
 
 **Dashboard**
 
-- The widgets of the dashboard (Network connection, Speed Test, IP geolocation, DNS resolver) can be hidden in the settings (**Settings > Dashboard > Widgets**). A hidden widget doesn't check anything (a running speed test is completed). [#3734](https://github.com/BornToBeRoot/NETworkManager/pull/3734)
+- The widgets of the dashboard (Network connection, Speed Test, IP geolocation, DNS resolver) can be hidden in the settings (**Settings > Dashboard > Widgets**). A hidden widget doesn't check anything (a running speed test is canceled). [#3734](https://github.com/BornToBeRoot/NETworkManager/pull/3734)
 
 ## Improvements
 

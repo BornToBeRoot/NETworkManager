@@ -273,7 +273,7 @@ public class SpeedTestWidgetViewModel : ViewModelBase
     {
         if (IsRunning)
         {
-            _cts?.Cancel();
+            Cancel();
             return;
         }
 
@@ -281,6 +281,15 @@ public class SpeedTestWidgetViewModel : ViewModelBase
             return;
 
         _ = RunAsync();
+    }
+
+    /// <summary>
+    /// Cancels a running speed test, the values measured until then stay visible.
+    /// </summary>
+    public void Cancel()
+    {
+        if (IsRunning)
+            _cts?.Cancel();
     }
 
     /// <summary>
