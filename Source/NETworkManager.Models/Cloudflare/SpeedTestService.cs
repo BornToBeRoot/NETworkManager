@@ -379,6 +379,9 @@ public class SpeedTestService
             }
             catch (Exception ex) when (ex is HttpRequestException or IOException or TimeoutException)
             {
+                // Canceled by the user while data was transferred: the transport may report it as an IOException
+                cancellationToken.ThrowIfCancellationRequested();
+
                 failures.Total++;
 
                 if (++failures.Consecutive >= MaxConsecutiveFailedRequests)
