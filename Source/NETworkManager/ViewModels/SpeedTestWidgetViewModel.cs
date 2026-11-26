@@ -468,12 +468,10 @@ public class SpeedTestWidgetViewModel : ViewModelBase
             if (p.Meta != null)
             {
                 // Populate Result with metadata-only fields so the UI can
-                // show ISP / location / server while measurements are still running.
+                // show ISP / server while measurements are still running.
                 Result = new SpeedTestResult
                 {
                     Isp = p.Meta.AsOrganization,
-                    ClientCity = p.Meta.City,
-                    ClientCountry = p.Meta.Country,
                     ServerCity = p.Meta.Colo?.City,
                     ServerCountry = p.Meta.Colo?.Cca2,
                     ServerIata = p.Meta.Colo?.Iata

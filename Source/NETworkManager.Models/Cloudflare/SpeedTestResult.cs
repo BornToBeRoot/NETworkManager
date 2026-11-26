@@ -37,16 +37,6 @@ public class SpeedTestResult
     public string Isp { get; set; }
 
     /// <summary>
-    /// City of the client (Cloudflare meta <c>city</c>).
-    /// </summary>
-    public string ClientCity { get; set; }
-
-    /// <summary>
-    /// ISO 3166-1 alpha-2 country code of the client (Cloudflare meta <c>country</c>).
-    /// </summary>
-    public string ClientCountry { get; set; }
-
-    /// <summary>
     /// City of the Cloudflare PoP serving the test, e.g. "Frankfurt-am-Main".
     /// </summary>
     public string ServerCity { get; set; }

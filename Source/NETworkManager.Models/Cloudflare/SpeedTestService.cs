@@ -242,8 +242,6 @@ public class SpeedTestService
             LatencyMs    = pings.Count        > 0 ? SpeedTestCalculator.Percentile(pings, 0.5)                     : null,
             JitterMs     = pings.Count       >= 2 ? SpeedTestCalculator.Jitter(pings)                              : null,
             Isp = meta?.AsOrganization,
-            ClientCity = meta?.City,
-            ClientCountry = meta?.Country,
             ServerCity = meta?.Colo?.City,
             ServerCountry = meta?.Colo?.Cca2,
             ServerIata = meta?.Colo?.Iata,
