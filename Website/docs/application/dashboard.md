@@ -179,7 +179,7 @@ The buttons in the header of the widgets:
 
 The header shows the time of the last check (not after an error). An error (e.g. no response within 10 seconds or the HTTP status code) or the rate limit of `ip-api.com` (45 requests per minute from your network, with the time until it can be requested again) is shown below the header.
 
-Right-click an IP address (public IP address, DNS server, EDNS client subnet) to open it in the **Port Scanner**, **Ping Monitor**, **Traceroute**, **DNS Lookup**, **RDAP** or **IP Geolocation**, and the PTR record in the **DNS Lookup**. **Copy** copies the selected text.
+Right-click an IP address (public IP address, DNS server) to open it in the **Port Scanner**, **Ping Monitor**, **Traceroute**, **DNS Lookup**, **RDAP** or **IP Geolocation**, the EDNS client subnet (a network address, not a host) in **RDAP** or **IP Geolocation**, and the PTR record in the **DNS Lookup**. **Copy** copies the selected text.
 
 ## Troubleshooting and limits
 

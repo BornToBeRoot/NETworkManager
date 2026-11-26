@@ -152,7 +152,7 @@
                         <TextBlock Grid.Column="0" Grid.Row="4" Text="{x:Static localization:Strings.IPAddress}" />
                         <TextBox Grid.Column="2" Grid.Row="4"
                                  Text="{Binding Result.Info.EdnsIp, Converter={StaticResource StringNullOrEmptyToStringConverter}}" FontFamily="{StaticResource Fonts.Family.Mono}"
-                                 ContextMenu="{StaticResource OpenIPAddressContextMenu}" Tag="{Binding OpenEDNSCommand}" />
+                                 ContextMenu="{StaticResource OpenSubnetAddressContextMenu}" Tag="{Binding OpenEDNSCommand}" />
                         <TextBlock Grid.Column="0" Grid.Row="5" Text="{x:Static localization:Strings.Geolocation}" />
                         <TextBox Grid.Column="2" Grid.Row="5"
                                  Text="{Binding Result.Info.EdnsGeo, Converter={StaticResource StringNullOrEmptyToStringConverter}}" />
