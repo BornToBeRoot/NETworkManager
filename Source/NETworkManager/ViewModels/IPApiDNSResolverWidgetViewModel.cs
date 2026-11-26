@@ -235,9 +235,16 @@ public class IPApiDNSResolverWidgetViewModel : ViewModelBase
     /// </summary>
     private async Task CheckAsync()
     {
-        // Check is disabled via settings
+        // Check is disabled via settings (the dashboard checks again when it is shown after the setting changed): no
+        // values, message or time of an earlier check next to the "Enable" button
         if (!SettingsManager.Current.Dashboard_CheckIPApiDNSResolver)
+        {
+            IsStatusMessageDisplayed = false;
+            Result = null;
+            LastCheckTime = null;
+
             return;
+        }
 
         IsRunning = true;
         IsStatusMessageDisplayed = false;
