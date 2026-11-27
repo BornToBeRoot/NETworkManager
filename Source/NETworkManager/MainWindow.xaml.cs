@@ -1831,8 +1831,10 @@ public sealed partial class MainWindow : INotifyPropertyChanged
 
         Show();
 
-        // The dashboard may be outdated (e.g. a network change while in the tray)
-        _dashboardView?.OnMainWindowShown();
+        // The dashboard may be outdated (e.g. a network change while in the tray). Still minimized (minimized to the
+        // tray): checked when it is restored (StateChanged), not while it is minimized
+        if (WindowState != WindowState.Minimized)
+            _dashboardView?.OnMainWindowShown();
 
         _notifyIcon.Visible = SettingsManager.Current.TrayIcon_AlwaysShowIcon;
     }
