@@ -476,7 +476,8 @@ public class LatencyTargetViewModel : ViewModelBase
     {
         ClearHistory();
 
-        ResolvedIPAddress = Host;
+        // Host is "Gateway" for the gateway: a sample IP address to open / copy (context menu)
+        ResolvedIPAddress = Info.IsGateway ? ScreenshotData.RouterIPv4 : Host;
 
         foreach (var sample in samples)
             AddSample(sample, sample.IsSuccess
