@@ -106,7 +106,9 @@ public class IPGeolocationService : SingletonBase<IPGeolocationService>
             _rateLimitRemainingRequests = 0;
             _rateLimitLastReached = DateTime.Now;
 
-            return new IPGeolocationResult(true, _rateLimitRemainingTime);
+            // Like the following requests (incl. the margin), so the time left counts down (61, 60, ...)
+            return new IPGeolocationResult(true,
+                GetRemainingSeconds(_rateLimitLastReached, _rateLimitRemainingTime, DateTime.Now));
         }
         catch (Exception ex)
         {
