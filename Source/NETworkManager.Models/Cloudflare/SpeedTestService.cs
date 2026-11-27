@@ -447,7 +447,10 @@ public class SpeedTestService
                 {
                     failures.ConsecutiveInSet++;
 
-                    if (++failures.Consecutive >= MaxConsecutiveFailedRequests)
+                    // Also when only the set reaches the limit (download / upload, the counter in a row was reset by
+                    // an earlier check of the server after failed latency probes): no more timeouts of this size
+                    if (++failures.Consecutive >= MaxConsecutiveFailedRequests ||
+                        (isServerReachable != null && failures.ConsecutiveInSet >= MaxConsecutiveFailedRequests))
                     {
                         if (isServerReachable == null || !await isServerReachable().ConfigureAwait(false))
                             throw;
