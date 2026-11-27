@@ -177,6 +177,9 @@
                 </Binding>
             </TextBox.Text>
         </TextBox>
+        <TextBlock Text="{x:Static localization:Strings.SpeedTest}" Style="{StaticResource HeaderTextBlock}" />
+        <mah:ToggleSwitch Header="{x:Static localization:Strings.ShowWidget}"
+                          IsOn="{Binding ShowSpeedTestWidget}" Margin="0,0,0,20" />
         <TextBlock Text="{x:Static localization:Strings.Latency}" Style="{StaticResource HeaderTextBlock}" />
         <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
             <mah:ToggleSwitch IsOn="{Binding ShowLatencyWidget}"
@@ -315,9 +318,6 @@
                 </Grid>
             </Button.Content>
         </Button>
-        <TextBlock Text="{x:Static localization:Strings.SpeedTest}" Style="{StaticResource HeaderTextBlock}" />
-        <mah:ToggleSwitch Header="{x:Static localization:Strings.ShowWidget}"
-                          IsOn="{Binding ShowSpeedTestWidget}" Margin="0,0,0,20" />
         <TextBlock Text="{x:Static localization:Strings.IPGeolocation}" Style="{StaticResource HeaderTextBlock}" />
         <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
             <mah:ToggleSwitch IsOn="{Binding ShowIPGeolocationWidget}"

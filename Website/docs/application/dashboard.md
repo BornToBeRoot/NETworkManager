@@ -115,6 +115,16 @@ Override the default IPv6 address API to resolve the public IP address. The API 
 | [`https://api6.ipify.org`](https://api6.ipify.org/) | Plain text |
 | [`https://api64.ipify.org?format=json`](https://api64.ipify.org?format=json) | JSON `{"ip":"xxxx:xx:xxx::xx"}` (IPv6 if available, otherwise IPv4 - then the answer is not accepted) |
 
+### Speed Test {#settings-speed-test}
+
+#### Show widget {#show-speed-test-widget}
+
+Show or hide the **Speed Test** widget on the dashboard. A speed test that is running when the widget is hidden is canceled.
+
+**Type:** `Boolean`
+
+**Default:** `Enabled`
+
 ### Latency {#settings-latency}
 
 #### Show widget {#show-latency-widget}
@@ -179,16 +189,6 @@ Up to six targets of the widget, in this order. **Add...** adds a target, right-
 
 Use IP addresses if possible: the widget then still works when the DNS server doesn't (that's when you want to see whether the internet works). For an internal or air-gapped network, see [Internal and air-gapped networks](#internal-and-air-gapped-networks).
 
-### Speed Test {#settings-speed-test}
-
-#### Show widget {#show-speed-test-widget}
-
-Show or hide the **Speed Test** widget on the dashboard. A speed test that is running when the widget is hidden is canceled.
-
-**Type:** `Boolean`
-
-**Default:** `Enabled`
-
 ### IP geolocation {#settings-ip-geolocation}
 
 #### Show widget {#show-ip-geolocation-widget}
@@ -231,6 +231,32 @@ Enables or disables the detection of the DNS resolver in use via [`ip-api.com`](
 
 **Default:** `Disabled`
 
+## Speed Test
+
+The **Speed Test** widget measures the download and upload speed, latency and jitter of the current connection against [`speed.cloudflare.com`](https://speed.cloudflare.com/). The test only runs when you start it, not when the dashboard is opened.
+
+Before the first test, a privacy disclaimer informs you that `speed.cloudflare.com` receives requests with your IP address and network information. Click **Speed Test** to accept it and run the first test. The disclaimer is shown again after restarting the application (the acceptance is not saved). See the [Cloudflare privacy policy](https://www.cloudflare.com/privacypolicy/) for details. The widget never contacts Cloudflare's telemetry endpoint (`aim.cloudflare.com`).
+
+The buttons in the header of the widget:
+
+- **Run speed test** (refresh icon) starts a new test, while a test runs the button stops it (**Stop**). The values measured until then stay visible.
+- **Copy all** copies all values and the time of the test as text, e.g. for a support request.
+
+While the test runs, the header shows the current phase (latency, download, upload), afterwards the time of the test (**Last test at ...**, the tooltip shows the date; not after a canceled or failed test). A canceled or failed test and requests that failed are shown below the header.
+
+The result includes:
+
+- **Download** speed in Mbps, with a chart of the requests (hover over it to see the speed of a request)
+- **Upload** speed in Mbps, with a chart of the requests
+- **Latency** in ms (unloaded, 50th percentile of the latency probes)
+- **Jitter** in ms (average difference between consecutive latency probes)
+- **ISP** — internet service provider as reported by Cloudflare
+- **Server** — Cloudflare server (city, country and airport code) that handles the test
+
+The test measures like the official [cloudflare/speedtest](https://github.com/cloudflare/speedtest) library (used by [speed.cloudflare.com](https://speed.cloudflare.com/)), so the results are comparable: latency probes (empty downloads) and downloads / uploads of increasing size (100 kB up to 250 MB) one after the other, with a few latency probes between them. Download and upload are the 90th percentile of the requests that took at least 10 ms; the speed shown while a download runs is the result of the completed requests (only the first request is shown while it runs). A direction ends after a set of requests in which even the fastest request took longer than one second; the larger sizes are skipped.
+
+A test takes about 15 seconds on a fast connection and up to 1–2 minutes on a slow one. It transfers a lot of data on a fast connection: up to about 1 GB download and 300 MB upload (1 Gbit/s), keep this in mind on a metered connection (e.g. mobile data).
+
 ## Latency
 
 The **Latency** widget pings up to six targets on the internet or in your network and shows one line per target with its name, the round-trip time of the last ping and a chart of the last 60 seconds, like the dashboard of a router or gateway. By default it is shown to the right of the [Speed Test](#speed-test) (1/3 of the width, the targets one below the other). In a narrow window (less than about 900 pixels for the dashboard) or without the speed test it gets its own row below the speed test, with the targets side by side (up to three per line); see [Position](#position). By default these are the public DNS resolvers of Cloudflare (`1.1.1.1`), Google (`8.8.8.8`) and Quad9 (`9.9.9.9`): they answer pings reliably and are close to every user (anycast). The targets can be changed in the [settings](#targets), e.g. the default gateway (router) or your own servers, see [Internal and air-gapped networks](#internal-and-air-gapped-networks). Without targets the widget shows **Configure**, which opens the settings.
@@ -257,32 +283,6 @@ A target can be any IP address or host name, also in your own network. Without a
 - a host behind a WAN / VPN link (e.g. a server at another site), to see its latency.
 
 Internal and internet targets can be mixed (e.g. gateway, server, `1.1.1.1`): if only the internet targets fail, the problem is the internet connection, not your network. Use IP addresses if possible, they also work when the DNS server doesn't. Pings to your own hosts don't go to a third party; the check is still disabled by default, because the default targets are on the internet.
-
-## Speed Test
-
-The **Speed Test** widget measures the download and upload speed, latency and jitter of the current connection against [`speed.cloudflare.com`](https://speed.cloudflare.com/). The test only runs when you start it, not when the dashboard is opened.
-
-Before the first test, a privacy disclaimer informs you that `speed.cloudflare.com` receives requests with your IP address and network information. Click **Speed Test** to accept it and run the first test. The disclaimer is shown again after restarting the application (the acceptance is not saved). See the [Cloudflare privacy policy](https://www.cloudflare.com/privacypolicy/) for details. The widget never contacts Cloudflare's telemetry endpoint (`aim.cloudflare.com`).
-
-The buttons in the header of the widget:
-
-- **Run speed test** (refresh icon) starts a new test, while a test runs the button stops it (**Stop**). The values measured until then stay visible.
-- **Copy all** copies all values and the time of the test as text, e.g. for a support request.
-
-While the test runs, the header shows the current phase (latency, download, upload), afterwards the time of the test (**Last test at ...**, the tooltip shows the date; not after a canceled or failed test). A canceled or failed test and requests that failed are shown below the header.
-
-The result includes:
-
-- **Download** speed in Mbps, with a chart of the requests (hover over it to see the speed of a request)
-- **Upload** speed in Mbps, with a chart of the requests
-- **Latency** in ms (unloaded, 50th percentile of the latency probes)
-- **Jitter** in ms (average difference between consecutive latency probes)
-- **ISP** — internet service provider as reported by Cloudflare
-- **Server** — Cloudflare server (city, country and airport code) that handles the test
-
-The test measures like the official [cloudflare/speedtest](https://github.com/cloudflare/speedtest) library (used by [speed.cloudflare.com](https://speed.cloudflare.com/)), so the results are comparable: latency probes (empty downloads) and downloads / uploads of increasing size (100 kB up to 250 MB) one after the other, with a few latency probes between them. Download and upload are the 90th percentile of the requests that took at least 10 ms; the speed shown while a download runs is the result of the completed requests (only the first request is shown while it runs). A direction ends after a set of requests in which even the fastest request took longer than one second; the larger sizes are skipped.
-
-A test takes about 15 seconds on a fast connection and up to 1–2 minutes on a slow one. It transfers a lot of data on a fast connection: up to about 1 GB download and 300 MB upload (1 Gbit/s), keep this in mind on a metered connection (e.g. mobile data).
 
 ## IP geolocation
 
