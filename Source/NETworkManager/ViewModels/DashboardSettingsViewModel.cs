@@ -206,6 +206,177 @@ public class DashboardSettingsViewModel : ViewModelBase
     }
 
     /// <summary>
+    /// Gets or sets a value indicating whether the internet latency widget is shown on the dashboard.
+    /// </summary>
+    public bool ShowInternetLatencyWidget
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            if (!_isLoading)
+                SettingsManager.Current.Dashboard_ShowInternetLatencyWidget = value;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
+    /// Gets or sets a value indicating whether the internet latency widget pings its targets.
+    /// </summary>
+    public bool CheckInternetLatencyEnabled
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            if (!_isLoading)
+                SettingsManager.Current.Dashboard_CheckInternetLatency = value;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
+    /// Gets or sets the time in seconds between the reply of a ping and the next ping of a target.
+    /// </summary>
+    public int InternetLatencyInterval
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            if (!_isLoading)
+                SettingsManager.Current.Dashboard_InternetLatencyInterval = value;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
+    /// Gets or sets the name of the internet latency target 1.
+    /// </summary>
+    public string InternetLatencyTarget1Name
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            if (!_isLoading)
+                SettingsManager.Current.Dashboard_InternetLatencyTarget1Name = value;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
+    /// Gets or sets the host name or IP address of the internet latency target 1 (empty: not shown).
+    /// </summary>
+    public string InternetLatencyTarget1Host
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            if (!_isLoading)
+                SettingsManager.Current.Dashboard_InternetLatencyTarget1Host = value;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
+    /// Gets or sets the name of the internet latency target 2.
+    /// </summary>
+    public string InternetLatencyTarget2Name
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            if (!_isLoading)
+                SettingsManager.Current.Dashboard_InternetLatencyTarget2Name = value;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
+    /// Gets or sets the host name or IP address of the internet latency target 2 (empty: not shown).
+    /// </summary>
+    public string InternetLatencyTarget2Host
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            if (!_isLoading)
+                SettingsManager.Current.Dashboard_InternetLatencyTarget2Host = value;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
+    /// Gets or sets the name of the internet latency target 3.
+    /// </summary>
+    public string InternetLatencyTarget3Name
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            if (!_isLoading)
+                SettingsManager.Current.Dashboard_InternetLatencyTarget3Name = value;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
+    /// Gets or sets the host name or IP address of the internet latency target 3 (empty: not shown).
+    /// </summary>
+    public string InternetLatencyTarget3Host
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            if (!_isLoading)
+                SettingsManager.Current.Dashboard_InternetLatencyTarget3Host = value;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
     /// Gets or sets a value indicating whether the speed test widget is shown on the dashboard.
     /// </summary>
     public bool ShowSpeedTestWidget
@@ -291,6 +462,9 @@ public class DashboardSettingsViewModel : ViewModelBase
             case nameof(SettingsInfo.Dashboard_CheckIPApiDNSResolver):
                 CheckIPApiDNSResolverEnabled = SettingsManager.Current.Dashboard_CheckIPApiDNSResolver;
                 break;
+            case nameof(SettingsInfo.Dashboard_CheckInternetLatency):
+                CheckInternetLatencyEnabled = SettingsManager.Current.Dashboard_CheckInternetLatency;
+                break;
         }
     }
 
@@ -309,6 +483,15 @@ public class DashboardSettingsViewModel : ViewModelBase
         CheckIPApiIPGeolocationEnabled = SettingsManager.Current.Dashboard_CheckIPApiIPGeolocation;
         CheckIPApiDNSResolverEnabled = SettingsManager.Current.Dashboard_CheckIPApiDNSResolver;
         ShowNetworkConnectionWidget = SettingsManager.Current.Dashboard_ShowNetworkConnectionWidget;
+        ShowInternetLatencyWidget = SettingsManager.Current.Dashboard_ShowInternetLatencyWidget;
+        CheckInternetLatencyEnabled = SettingsManager.Current.Dashboard_CheckInternetLatency;
+        InternetLatencyInterval = SettingsManager.Current.Dashboard_InternetLatencyInterval;
+        InternetLatencyTarget1Name = SettingsManager.Current.Dashboard_InternetLatencyTarget1Name;
+        InternetLatencyTarget1Host = SettingsManager.Current.Dashboard_InternetLatencyTarget1Host;
+        InternetLatencyTarget2Name = SettingsManager.Current.Dashboard_InternetLatencyTarget2Name;
+        InternetLatencyTarget2Host = SettingsManager.Current.Dashboard_InternetLatencyTarget2Host;
+        InternetLatencyTarget3Name = SettingsManager.Current.Dashboard_InternetLatencyTarget3Name;
+        InternetLatencyTarget3Host = SettingsManager.Current.Dashboard_InternetLatencyTarget3Host;
         ShowSpeedTestWidget = SettingsManager.Current.Dashboard_ShowSpeedTestWidget;
         ShowIPGeolocationWidget = SettingsManager.Current.Dashboard_ShowIPGeolocationWidget;
         ShowDNSResolverWidget = SettingsManager.Current.Dashboard_ShowDNSResolverWidget;
