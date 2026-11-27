@@ -18,8 +18,9 @@
         <converters:StringNullOrEmptyToStringConverter x:Key="StringNullOrEmptyToStringConverter" />
         <converters:StringIsNotNullOrEmptyToVisibilityCollapsedConverter
             x:Key="StringIsNotNullOrEmptyToVisibilityCollapsedConverter" />
-        <!-- Open the host in another tool, copy it -->
-        <ContextMenu x:Key="TargetContextMenu" MinWidth="150"
+        <!-- Open the host in another tool, copy it. One menu per tile, bound to the target of the clicked tile -->
+        <ContextMenu x:Key="TargetContextMenu" x:Shared="False" MinWidth="150"
+                     DataContext="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource Self}}"
                      d:DataContext="{d:DesignInstance viewModels:InternetLatencyTargetViewModel}">
             <MenuItem Header="{x:Static localization:Strings.PingMonitor}" Command="{Binding OpenCommand}"
                       CommandParameter="{x:Static models:ApplicationName.PingMonitor}">
