@@ -16,10 +16,10 @@
                 <ScrollViewer HorizontalScrollBarVisibility="Disabled" Margin="10">
                     <StackPanel x:Name="StackPanelWidgets">
                         <ContentControl x:Name="ContentControlNetworkConnection" />
-                        <!-- Speed test (2/3) and internet latency (1/3) side by side, or one below the other: narrow
-                             window or speed test hidden (internet latency below the speed test) or position "own row"
-                             (internet latency above the speed test), set in the code-behind -->
-                        <Grid x:Name="GridSpeedTestInternetLatency">
+                        <!-- Speed test (2/3) and latency (1/3) side by side, or one below the other: narrow
+                             window or speed test hidden (latency below the speed test) or position "own row"
+                             (latency above the speed test), set in the code-behind -->
+                        <Grid x:Name="GridSpeedTestLatency">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="10" />
@@ -32,7 +32,7 @@
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
                             <ContentControl x:Name="ContentControlSpeedTest" />
-                            <ContentControl x:Name="ContentControlInternetLatency" />
+                            <ContentControl x:Name="ContentControlLatency" />
                         </Grid>
                         <!-- IP geolocation (2/3) and DNS resolver (1/3) side by side, the remaining one spans the row;
                              one below the other in a narrow window, set in the code-behind -->

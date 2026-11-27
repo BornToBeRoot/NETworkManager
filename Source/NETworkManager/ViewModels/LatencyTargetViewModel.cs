@@ -24,14 +24,14 @@ using NETworkManager.Utilities;
 namespace NETworkManager.ViewModels;
 
 /// <summary>
-/// One target of the internet latency widget: resolves the host, pings it in a loop while the widget runs and keeps
+/// One target of the latency widget: resolves the host, pings it in a loop while the widget runs and keeps
 /// the pings of the last minute for the value, the statistics and the chart.
 /// </summary>
-public class InternetLatencyTargetViewModel : ViewModelBase
+public class LatencyTargetViewModel : ViewModelBase
 {
     #region Variables
 
-    private static readonly ILog Log = LogManager.GetLogger(typeof(InternetLatencyTargetViewModel));
+    private static readonly ILog Log = LogManager.GetLogger(typeof(LatencyTargetViewModel));
 
     /// <summary>
     /// Time until a host name that could not be resolved is resolved again (e.g. the DNS server of a new network is
@@ -39,14 +39,14 @@ public class InternetLatencyTargetViewModel : ViewModelBase
     /// </summary>
     private static readonly TimeSpan ResolveRetryInterval = TimeSpan.FromSeconds(5);
 
-    // Range of the interval in seconds (Settings > Dashboard > Internet latency)
+    // Range of the interval in seconds (Settings > Dashboard > Latency)
     public const int MinInterval = 1;
     public const int MaxInterval = 10;
 
     // All times are UTC: a clock change (daylight saving time, NTP correction) doesn't move the time window
 
     /// <summary>
-    /// Pings in the time window (<see cref="GlobalStaticConfiguration.Dashboard_InternetLatencyWindow" />), the oldest
+    /// Pings in the time window (<see cref="GlobalStaticConfiguration.Dashboard_LatencyWindow" />), the oldest
     /// first.
     /// </summary>
     private readonly List<LatencySample> _samples = [];
@@ -172,11 +172,11 @@ public class InternetLatencyTargetViewModel : ViewModelBase
     #region Constructor
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="InternetLatencyTargetViewModel" /> class.
+    /// Initializes a new instance of the <see cref="LatencyTargetViewModel" /> class.
     /// </summary>
     /// <param name="name">Name of the target, empty to show the host.</param>
     /// <param name="host">Host name or IP address of the target.</param>
-    public InternetLatencyTargetViewModel(string name, string host)
+    public LatencyTargetViewModel(string name, string host)
     {
         Host = host;
         Name = string.IsNullOrWhiteSpace(name) ? host : name.Trim();
@@ -263,7 +263,7 @@ public class InternetLatencyTargetViewModel : ViewModelBase
                 catch (Exception ex) when (ex is not OperationCanceledException)
                 {
                     // An unexpected error is a failed ping: the loop goes on (the task is not awaited by anyone)
-                    Log.Error($"Internet latency: ping of {ipAddress} failed.", ex);
+                    Log.Error($"Latency: ping of {ipAddress} failed.", ex);
                     pingInfo = new PingInfo(DateTime.UtcNow, ipAddress, System.Net.NetworkInformation.IPStatus.Unknown);
                 }
 
@@ -274,7 +274,7 @@ public class InternetLatencyTargetViewModel : ViewModelBase
                     pingInfo.Time), pingInfo.Status);
 
                 // Range of the settings (a value edited in the settings file: no tight loop, no invalid delay)
-                await Task.Delay(TimeSpan.FromSeconds(Math.Clamp(SettingsManager.Current.Dashboard_InternetLatencyInterval,
+                await Task.Delay(TimeSpan.FromSeconds(Math.Clamp(SettingsManager.Current.Dashboard_LatencyInterval,
                     MinInterval, MaxInterval)), cancellationToken);
             }
         }
@@ -321,7 +321,7 @@ public class InternetLatencyTargetViewModel : ViewModelBase
         catch (Exception ex) when (ex is not OperationCanceledException)
         {
             // E.g. the DNS client is not configured: an error like a failed lookup (the task is not awaited by anyone)
-            Log.Error($"Internet latency: resolving {Host} failed.", ex);
+            Log.Error($"Latency: resolving {Host} failed.", ex);
 
             error = string.Format(Strings.CouldNotResolveIPAddressFor, Host);
         }
@@ -332,7 +332,7 @@ public class InternetLatencyTargetViewModel : ViewModelBase
         Value = "-/-";
         StatusLevel = StatusLevel.Error;
 
-        Log.Warn($"Internet latency: {ErrorMessage}");
+        Log.Warn($"Latency: {ErrorMessage}");
 
         return null;
     }
@@ -386,7 +386,7 @@ public class InternetLatencyTargetViewModel : ViewModelBase
     /// </summary>
     private void TrimToWindow(DateTime now)
     {
-        var window = GlobalStaticConfiguration.Dashboard_InternetLatencyWindow;
+        var window = GlobalStaticConfiguration.Dashboard_LatencyWindow;
 
         LatencyStatistics.RemoveOutdated(_samples, now, window);
 
@@ -465,7 +465,7 @@ public class InternetLatencyTargetViewModel : ViewModelBase
     /// </summary>
     private void UpdateXAxis(DateTime now)
     {
-        _xAxis.MinLimit = (now - GlobalStaticConfiguration.Dashboard_InternetLatencyWindow).Ticks;
+        _xAxis.MinLimit = (now - GlobalStaticConfiguration.Dashboard_LatencyWindow).Ticks;
         _xAxis.MaxLimit = now.Ticks;
     }
 

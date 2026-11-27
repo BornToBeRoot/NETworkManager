@@ -7,23 +7,23 @@ using NETworkManager.Models.Network;
 namespace NETworkManager.Converters;
 
 /// <summary>
-///     Convert <see cref="InternetLatencyPosition" /> to translated <see cref="string" />.
+///     Convert <see cref="LatencyPosition" /> to translated <see cref="string" />.
 /// </summary>
-public sealed class InternetLatencyPositionToStringConverter : IValueConverter
+public sealed class LatencyPositionToStringConverter : IValueConverter
 {
     /// <summary>
-    ///     Convert <see cref="InternetLatencyPosition" /> to translated <see cref="string" />.
+    ///     Convert <see cref="LatencyPosition" /> to translated <see cref="string" />.
     /// </summary>
-    /// <param name="value">Object from type <see cref="InternetLatencyPosition" />.</param>
+    /// <param name="value">Object from type <see cref="LatencyPosition" />.</param>
     /// <param name="targetType"></param>
     /// <param name="parameter"></param>
     /// <param name="culture"></param>
-    /// <returns>Translated <see cref="InternetLatencyPosition" />.</returns>
+    /// <returns>Translated <see cref="LatencyPosition" />.</returns>
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        return value is not InternetLatencyPosition position
+        return value is not LatencyPosition position
             ? "-/-"
-            : ResourceTranslator.Translate(ResourceIdentifier.InternetLatencyPosition, position);
+            : ResourceTranslator.Translate(ResourceIdentifier.LatencyPosition, position);
     }
 
     /// <summary>

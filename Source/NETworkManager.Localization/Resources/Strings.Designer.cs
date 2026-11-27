@@ -2162,20 +2162,20 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Check internet latency.
-        /// </summary>
-        public static string CheckInternetLatency {
-            get {
-                return ResourceManager.GetString("CheckInternetLatency", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Check IP geolocation.
         /// </summary>
         public static string CheckIPGeolocation {
             get {
                 return ResourceManager.GetString("CheckIPGeolocation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Check latency.
+        /// </summary>
+        public static string CheckLatency {
+            get {
+                return ResourceManager.GetString("CheckLatency", resourceCulture);
             }
         }
         
@@ -6351,15 +6351,6 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Pings the targets only while the dashboard is shown (not in the background, not while the window is minimized or in the tray)..
-        /// </summary>
-        public static string HelpMessage_CheckInternetLatency {
-            get {
-                return ResourceManager.GetString("HelpMessage_CheckInternetLatency", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to The IP geolocation is determined via ip-api.com.
         ///
         ///URL: http://ip-api.com/.
@@ -6367,6 +6358,15 @@ namespace NETworkManager.Localization.Resources {
         public static string HelpMessage_CheckIPGeolocation {
             get {
                 return ResourceManager.GetString("HelpMessage_CheckIPGeolocation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pings the targets only while the dashboard is shown (not in the background, not while the window is minimized or in the tray)..
+        /// </summary>
+        public static string HelpMessage_CheckLatency {
+            get {
+                return ResourceManager.GetString("HelpMessage_CheckLatency", resourceCulture);
             }
         }
         
@@ -6467,9 +6467,9 @@ namespace NETworkManager.Localization.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Time between the reply (or timeout) of a ping and the next ping of the target..
         /// </summary>
-        public static string HelpMessage_InternetLatencyInterval {
+        public static string HelpMessage_LatencyInterval {
             get {
-                return ResourceManager.GetString("HelpMessage_InternetLatencyInterval", resourceCulture);
+                return ResourceManager.GetString("HelpMessage_LatencyInterval", resourceCulture);
             }
         }
         
@@ -6478,9 +6478,9 @@ namespace NETworkManager.Localization.Resources {
         ///
         ///Own row: below the network connection, the targets side by side..
         /// </summary>
-        public static string HelpMessage_InternetLatencyPosition {
+        public static string HelpMessage_LatencyPosition {
             get {
-                return ResourceManager.GetString("HelpMessage_InternetLatencyPosition", resourceCulture);
+                return ResourceManager.GetString("HelpMessage_LatencyPosition", resourceCulture);
             }
         }
         
@@ -6740,20 +6740,20 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Shows the widget on the dashboard. It only pings the targets if the check is enabled (below or with the &quot;Enable&quot; button of the widget). A hidden widget sends nothing..
-        /// </summary>
-        public static string HelpMessage_ShowInternetLatencyWidget {
-            get {
-                return ResourceManager.GetString("HelpMessage_ShowInternetLatencyWidget", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Shows the widget on the dashboard. It only sends a request to ip-api.com if the check is enabled (below, in the welcome dialog or with the &quot;Enable&quot; button of the widget), otherwise it shows what it would request. A hidden widget sends no request..
         /// </summary>
         public static string HelpMessage_ShowIPApiWidget {
             get {
                 return ResourceManager.GetString("HelpMessage_ShowIPApiWidget", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Shows the widget on the dashboard. It only pings the targets if the check is enabled (below or with the &quot;Enable&quot; button of the widget). A hidden widget sends nothing..
+        /// </summary>
+        public static string HelpMessage_ShowLatencyWidget {
+            get {
+                return ResourceManager.GetString("HelpMessage_ShowLatencyWidget", resourceCulture);
             }
         }
         
@@ -7361,43 +7361,6 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Internet latency.
-        /// </summary>
-        public static string InternetLatency {
-            get {
-                return ResourceManager.GetString("InternetLatency", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Next to the speed test.
-        /// </summary>
-        public static string InternetLatencyPosition_NextToSpeedTest {
-            get {
-                return ResourceManager.GetString("InternetLatencyPosition_NextToSpeedTest", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Own row.
-        /// </summary>
-        public static string InternetLatencyPosition_OwnRow {
-            get {
-                return ResourceManager.GetString("InternetLatencyPosition_OwnRow", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Show the latency to targets on the internet (e.g. Cloudflare, Google and Quad9), updated live while the dashboard is shown.
-        ///The targets receive a ping (ICMP echo request) every few seconds..
-        /// </summary>
-        public static string InternetLatencyWidgetDisabledMessage {
-            get {
-                return ResourceManager.GetString("InternetLatencyWidgetDisabledMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Interval (seconds).
         /// </summary>
         public static string IntervalInSeconds {
@@ -7854,6 +7817,34 @@ namespace NETworkManager.Localization.Resources {
         public static string Latency {
             get {
                 return ResourceManager.GetString("Latency", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Next to the speed test.
+        /// </summary>
+        public static string LatencyPosition_NextToSpeedTest {
+            get {
+                return ResourceManager.GetString("LatencyPosition_NextToSpeedTest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Own row.
+        /// </summary>
+        public static string LatencyPosition_OwnRow {
+            get {
+                return ResourceManager.GetString("LatencyPosition_OwnRow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show the latency to targets on the internet or in your network (e.g. Cloudflare, Google and Quad9 or your router), updated live while the dashboard is shown.
+        ///The targets receive a ping (ICMP echo request) every few seconds..
+        /// </summary>
+        public static string LatencyWidgetDisabledMessage {
+            get {
+                return ResourceManager.GetString("LatencyWidgetDisabledMessage", resourceCulture);
             }
         }
         
@@ -9597,9 +9588,9 @@ namespace NETworkManager.Localization.Resources {
         /// <summary>
         ///   Looks up a localized string similar to No targets configured. Add them in the settings of the dashboard..
         /// </summary>
-        public static string NoInternetLatencyTargetsConfiguredMessage {
+        public static string NoLatencyTargetsConfiguredMessage {
             get {
-                return ResourceManager.GetString("NoInternetLatencyTargetsConfiguredMessage", resourceCulture);
+                return ResourceManager.GetString("NoLatencyTargetsConfiguredMessage", resourceCulture);
             }
         }
         

@@ -16,7 +16,7 @@ public partial class DashboardView
 
     // Widgets are created when they are shown the first time (e.g. a hidden IP API widget sends no request)
     private NetworkConnectionWidgetView _networkConnectionWidgetView;
-    private InternetLatencyWidgetView _internetLatencyWidgetView;
+    private LatencyWidgetView _latencyWidgetView;
     private IPApiIPGeolocationWidgetView _ipApiIPGeolocationWidgetView;
     private IPApiDNSResolverWidgetView _ipApiDNSResolverWidgetView;
     private SpeedTestWidgetView _speedTestWidgetView;
@@ -35,12 +35,12 @@ public partial class DashboardView
     // columns fit without being squeezed. Otherwise the widgets of the row are shown one below the other with the full
     // width. Not a MinWidth of the widget: in its own row it gets the width of the window.
     private const double SpeedTestMinWidth = 600; // Three columns (ISP / server, download, upload)
-    private const double InternetLatencyMinWidth = 280; // Dot, name, value and a short chart per line
+    private const double LatencyMinWidth = 280; // Dot, name, value and a short chart per line
     private const double IPGeolocationMinWidth = 600; // Location and network side by side
     private const double DNSResolverMinWidth = 400; // Header: title, "Reloaded at ...", copy and refresh buttons
 
     /// <summary>
-    ///     Rows shown side by side (speed test / internet latency, IP geolocation / DNS resolver) at the current width:
+    ///     Rows shown side by side (speed test / latency, IP geolocation / DNS resolver) at the current width:
     ///     the layout is only arranged again when this changes, not on every resize.
     /// </summary>
     private (bool SpeedTestRow, bool IPApiRow) _sideBySide;
@@ -57,7 +57,7 @@ public partial class DashboardView
 
         // Show the widgets
         ApplyWidgetSettings();
-        UpdateInternetLatency();
+        UpdateLatency();
 
         // Side by side or one below the other: only when a row changes, not on every resize
         StackPanelWidgets.SizeChanged += (_, e) =>
@@ -82,7 +82,7 @@ public partial class DashboardView
 
         // The widgets may have been shown or hidden in the settings
         ApplyWidgetSettings();
-        UpdateInternetLatency();
+        UpdateLatency();
 
         CheckWidgetsIfOutdated();
     }
@@ -96,16 +96,16 @@ public partial class DashboardView
             return;
 
         CheckWidgetsIfOutdated();
-        UpdateInternetLatency();
+        UpdateLatency();
     }
 
     /// <summary>
-    ///     Called by the main window when it is minimized or hidden to the tray: the internet latency widget stops
+    ///     Called by the main window when it is minimized or hidden to the tray: the latency widget stops
     ///     pinging (no live values in the background).
     /// </summary>
     public void OnMainWindowHidden()
     {
-        UpdateInternetLatency();
+        UpdateLatency();
     }
 
     public void OnViewHide()
@@ -114,7 +114,7 @@ public partial class DashboardView
 
         _viewModel.OnViewHide();
 
-        UpdateInternetLatency();
+        UpdateLatency();
     }
 
     /// <summary>
@@ -131,7 +131,7 @@ public partial class DashboardView
 
         // Resolve the host names again and remove the history (another route, e.g. a VPN) - only while it runs, it
         // starts fresh anyway when the dashboard is shown again
-        _internetLatencyWidgetView?.Restart();
+        _latencyWidgetView?.Restart();
     }
 
     /// <summary>
@@ -177,8 +177,8 @@ public partial class DashboardView
 
         _networkConnectionWidgetView = ShowWidget(ContentControlNetworkConnection,
             settings.Dashboard_ShowNetworkConnectionWidget, _networkConnectionWidgetView);
-        _internetLatencyWidgetView = ShowWidget(ContentControlInternetLatency,
-            settings.Dashboard_ShowInternetLatencyWidget, _internetLatencyWidgetView);
+        _latencyWidgetView = ShowWidget(ContentControlLatency,
+            settings.Dashboard_ShowLatencyWidget, _latencyWidgetView);
         _speedTestWidgetView = ShowWidget(ContentControlSpeedTest, settings.Dashboard_ShowSpeedTestWidget,
             _speedTestWidgetView);
         _ipApiIPGeolocationWidgetView = ShowWidget(ContentControlIPApiIPGeolocation,
@@ -201,14 +201,14 @@ public partial class DashboardView
 
         // Next to the speed test (right, 1/3) if the dashboard is wide enough, otherwise its own row below the speed
         // test. Own row: above the speed test (below the network connection).
-        var isNextToSpeedTest = settings.Dashboard_InternetLatencyPosition == InternetLatencyPosition.OwnRow
-            ? ArrangeRow(GridSpeedTestInternetLatency, ContentControlInternetLatency, ContentControlSpeedTest, false)
-            : ArrangeRow(GridSpeedTestInternetLatency, ContentControlSpeedTest, ContentControlInternetLatency,
+        var isNextToSpeedTest = settings.Dashboard_LatencyPosition == LatencyPosition.OwnRow
+            ? ArrangeRow(GridSpeedTestLatency, ContentControlLatency, ContentControlSpeedTest, false)
+            : ArrangeRow(GridSpeedTestLatency, ContentControlSpeedTest, ContentControlLatency,
                 _sideBySide.SpeedTestRow);
 
         // Next to the speed test the targets are always one below the other (not decided by the width of the widget:
         // 1/3 of a maximized window is wide enough for them side by side)
-        _internetLatencyWidgetView?.SetNextToOtherWidget(isNextToSpeedTest);
+        _latencyWidgetView?.SetNextToOtherWidget(isNextToSpeedTest);
 
         // IP geolocation (2/3) and DNS resolver (1/3) side by side if the dashboard is wide enough (the DNS resolver
         // is too narrow otherwise), the remaining one spans the row
@@ -216,7 +216,7 @@ public partial class DashboardView
 
         // Gap of 10 between the visible widgets (not below the last one, the scroll viewer has a margin of 10)
         var visibleWidgets = new FrameworkElement[]
-                { ContentControlNetworkConnection, GridSpeedTestInternetLatency, GridIPApi }
+                { ContentControlNetworkConnection, GridSpeedTestLatency, GridIPApi }
             .Where(x => x.Visibility == Visibility.Visible)
             .ToList();
 
@@ -232,7 +232,7 @@ public partial class DashboardView
     /// <param name="width">Width of the dashboard (the widgets).</param>
     private static (bool SpeedTestRow, bool IPApiRow) GetSideBySide(double width)
     {
-        return (FitsSideBySide(width, SpeedTestMinWidth, InternetLatencyMinWidth),
+        return (FitsSideBySide(width, SpeedTestMinWidth, LatencyMinWidth),
             FitsSideBySide(width, IPGeolocationMinWidth, DNSResolverMinWidth));
     }
 
@@ -286,18 +286,18 @@ public partial class DashboardView
     }
 
     /// <summary>
-    ///     Starts the pings of the internet latency widget while it is shown and enabled, the dashboard is the selected
+    ///     Starts the pings of the latency widget while it is shown and enabled, the dashboard is the selected
     ///     application and the main window is shown (not minimized, not in the tray); stops them otherwise.
     /// </summary>
-    private void UpdateInternetLatency()
+    private void UpdateLatency()
     {
         var settings = SettingsManager.Current;
 
-        if (_isViewVisible && IsMainWindowShown() && settings.Dashboard_ShowInternetLatencyWidget &&
-            settings.Dashboard_CheckInternetLatency)
-            _internetLatencyWidgetView?.Start();
+        if (_isViewVisible && IsMainWindowShown() && settings.Dashboard_ShowLatencyWidget &&
+            settings.Dashboard_CheckLatency)
+            _latencyWidgetView?.Start();
         else
-            _internetLatencyWidgetView?.Stop();
+            _latencyWidgetView?.Stop();
     }
 
     /// <summary>
@@ -360,10 +360,10 @@ public partial class DashboardView
         if (e.PropertyName != null && CheckSettings.Contains(e.PropertyName) && !isEnabledInWidget)
             _isOutdated = true;
 
-        // Internet latency: start / stop right away (e.g. the "Enable" button of the widget, or hidden in the settings)
-        if (e.PropertyName is nameof(SettingsInfo.Dashboard_ShowInternetLatencyWidget)
-            or nameof(SettingsInfo.Dashboard_CheckInternetLatency))
-            UpdateInternetLatency();
+        // Latency: start / stop right away (e.g. the "Enable" button of the widget, or hidden in the settings)
+        if (e.PropertyName is nameof(SettingsInfo.Dashboard_ShowLatencyWidget)
+            or nameof(SettingsInfo.Dashboard_CheckLatency))
+            UpdateLatency();
 
         // A hidden speed test widget doesn't measure (no data is transferred in the background): cancel it right away,
         // the dashboard is hidden while the settings are open

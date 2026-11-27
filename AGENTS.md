@@ -622,7 +622,7 @@ WebView2) can't be animated, clipped or put in transparent windows.
 
 ### Dashboard widgets
 
-The dashboard (`Views/DashboardView.xaml(.cs)`) hosts the widgets: network connection, internet latency, speed test,
+The dashboard (`Views/DashboardView.xaml(.cs)`) hosts the widgets: network connection, latency, speed test,
 IP geolocation, DNS resolver. Each widget is `<Name>WidgetView` + `<Name>WidgetViewModel` in a `CardBorder`.
 
 **Look**: header with a 32 px Lucide icon + title (`MessageTextBlock`) and icon buttons on the right (Copy all, Refresh
@@ -645,9 +645,9 @@ values in `Fonts.Family.Mono`, states with `StatusDot`); values open in other to
   check is at least `Dashboard_RecheckInterval` (60 s) old. "Shown again" = another tool / the settings were shown, or
   the window is restored from minimized / the tray - not maximize / restore down. A check requested while one runs
   is queued (`_recheckPending`) and dropped if the widget was hidden meanwhile.
-- *Live widgets* (internet latency) only run while the widget is shown and enabled, the dashboard is the selected view
+- *Live widgets* (latency) only run while the widget is shown and enabled, the dashboard is the selected view
   and the main window is shown (`OnViewHide`, `OnMainWindowHidden` from `MainWindow` on minimize / tray). They keep
-  the values of their time window (60 s, `Dashboard_InternetLatencyWindow`) across pauses (a gap in the chart, not
+  the values of their time window (60 s, `Dashboard_LatencyWindow`) across pauses (a gap in the chart, not
   counted as lost) and start empty after a network change or when their check is disabled.
 - The speed test only runs when started; hiding it cancels a running test.
 
@@ -657,15 +657,15 @@ values in `Fonts.Family.Mono`, states with `StatusDot`); values open in other to
   sideBySide)` puts them side by side (first 2/3, second 1/3) or one below the other with the full width (gap 10); a
   hidden widget leaves no space, the other one spans the row.
 - Side by side only if both fit: each widget has the width it needs next to another one (`SpeedTestMinWidth` 600,
-  `InternetLatencyMinWidth` 280, `IPGeolocationMinWidth` 600, `DNSResolverMinWidth` 400 for its header) and
+  `LatencyMinWidth` 280, `IPGeolocationMinWidth` 600, `DNSResolverMinWidth` 400 for its header) and
   `FitsSideBySide` checks first ≥ 2/3 and second ≥ 1/3 of the row (speed test / latency from ~905 px, IP geolocation /
   DNS resolver from ~1220 px). These are not `MinWidth`s of the widgets: in their own row they get the window width.
 - The layout is arranged again only when a row changes between side by side and stacked (`SizeChanged` of the
   widgets panel compares `GetSideBySide`), and after setting changes (`ApplyWidgetSettings` in `OnViewVisible`).
-- A widget whose content depends on its place is told by the dashboard (e.g. `InternetLatencyWidgetView
+- A widget whose content depends on its place is told by the dashboard (e.g. `LatencyWidgetView
   .SetNextToOtherWidget`: targets one below the other next to the speed test), not only by its own width (1/3 of a
   maximized window is wide); its own width only decides in its own row (`IsCompact` below 500 px).
-- Position settings per widget (e.g. `Dashboard_InternetLatencyPosition`: next to the speed test / own row) instead
+- Position settings per widget (e.g. `Dashboard_LatencyPosition`: next to the speed test / own row) instead
   of a free layout. Next to another widget = right (1/3), like the DNS resolver next to the IP geolocation.
 
 **New widget**: settings (`Show`, opt-in `Check` if it contacts a third party, defaults in

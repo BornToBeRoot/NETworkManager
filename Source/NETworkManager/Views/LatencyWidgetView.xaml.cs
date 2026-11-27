@@ -3,7 +3,7 @@ using NETworkManager.ViewModels;
 
 namespace NETworkManager.Views;
 
-public partial class InternetLatencyWidgetView
+public partial class LatencyWidgetView
 {
     /// <summary>
     ///     Below this width the targets are shown one below the other also in their own row (narrow window).
@@ -16,11 +16,11 @@ public partial class InternetLatencyWidgetView
     private bool _isNextToOtherWidget;
 
     public static readonly DependencyProperty IsCompactProperty = DependencyProperty.Register(nameof(IsCompact),
-        typeof(bool), typeof(InternetLatencyWidgetView), new PropertyMetadata(false));
+        typeof(bool), typeof(LatencyWidgetView), new PropertyMetadata(false));
 
-    private readonly InternetLatencyWidgetViewModel _viewModel = new();
+    private readonly LatencyWidgetViewModel _viewModel = new();
 
-    public InternetLatencyWidgetView()
+    public LatencyWidgetView()
     {
         InitializeComponent();
         DataContext = _viewModel;

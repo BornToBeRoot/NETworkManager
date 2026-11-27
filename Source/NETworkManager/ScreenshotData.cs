@@ -366,14 +366,14 @@ public static class ScreenshotData
 
     #endregion
 
-    #region Internet latency
+    #region Latency
 
     /// <summary>
-    /// Creates the pings of the last minute of an internet latency target (like the default targets Cloudflare,
+    /// Creates the pings of the last minute of an latency target (like the default targets Cloudflare,
     /// Google and Quad9): a reply every 2 seconds with a few milliseconds of variation, ending now.
     /// </summary>
     /// <param name="index">Index of the target (0-2), each has its own latency.</param>
-    public static IEnumerable<LatencySample> CreateInternetLatencySamples(int index)
+    public static IEnumerable<LatencySample> CreateLatencySamples(int index)
     {
         long[] baseTimes = [9, 8, 10];
         var baseTime = baseTimes[index % baseTimes.Length];

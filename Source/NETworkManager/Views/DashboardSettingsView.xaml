@@ -10,7 +10,7 @@
              xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
              mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:DashboardSettingsViewModel}">
     <UserControl.Resources>
-        <converters:InternetLatencyPositionToStringConverter x:Key="InternetLatencyPositionToStringConverter" />
+        <converters:LatencyPositionToStringConverter x:Key="LatencyPositionToStringConverter" />
     </UserControl.Resources>
     <StackPanel>
         <TextBlock Text="{x:Static localization:Strings.NetworkConnection}" Style="{StaticResource HeaderTextBlock}" />
@@ -172,12 +172,12 @@
                 </Binding>
             </TextBox.Text>
         </TextBox>
-        <TextBlock Text="{x:Static localization:Strings.InternetLatency}" Style="{StaticResource HeaderTextBlock}" />
+        <TextBlock Text="{x:Static localization:Strings.Latency}" Style="{StaticResource HeaderTextBlock}" />
         <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
-            <mah:ToggleSwitch IsOn="{Binding ShowInternetLatencyWidget}"
+            <mah:ToggleSwitch IsOn="{Binding ShowLatencyWidget}"
                               Header="{x:Static localization:Strings.ShowWidget}" />
             <Rectangle Width="24" Height="24" VerticalAlignment="Top"
-                       ToolTip="{x:Static localization:Strings.HelpMessage_ShowInternetLatencyWidget}"
+                       ToolTip="{x:Static localization:Strings.HelpMessage_ShowLatencyWidget}"
                        Style="{StaticResource HelpImageRectangle}" Margin="10,0,0,0">
                 <Rectangle.Resources>
                     <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource HelpToolTip}" />
@@ -188,28 +188,28 @@
             <TextBlock Text="{x:Static localization:Strings.Position}"
                        Style="{DynamicResource DefaultTextBlock}" />
             <Rectangle Width="24" Height="24"
-                       ToolTip="{x:Static localization:Strings.HelpMessage_InternetLatencyPosition}"
+                       ToolTip="{x:Static localization:Strings.HelpMessage_LatencyPosition}"
                        Style="{StaticResource HelpImageRectangle}" Margin="10,0,0,0">
                 <Rectangle.Resources>
                     <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource HelpToolTip}" />
                 </Rectangle.Resources>
             </Rectangle>
         </StackPanel>
-        <ComboBox ItemsSource="{Binding InternetLatencyPositions}" SelectedItem="{Binding InternetLatencyPosition}"
-                  IsEnabled="{Binding ShowInternetLatencyWidget}"
+        <ComboBox ItemsSource="{Binding LatencyPositions}" SelectedItem="{Binding LatencyPosition}"
+                  IsEnabled="{Binding ShowLatencyWidget}"
                   Width="250" HorizontalAlignment="Left" Margin="0,0,0,10">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
-                    <TextBlock Text="{Binding Converter={StaticResource InternetLatencyPositionToStringConverter}}" />
+                    <TextBlock Text="{Binding Converter={StaticResource LatencyPositionToStringConverter}}" />
                 </DataTemplate>
             </ComboBox.ItemTemplate>
         </ComboBox>
         <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
-            <mah:ToggleSwitch IsOn="{Binding CheckInternetLatencyEnabled}"
-                              Header="{x:Static localization:Strings.CheckInternetLatency}"
-                              IsEnabled="{Binding ShowInternetLatencyWidget}" />
+            <mah:ToggleSwitch IsOn="{Binding CheckLatencyEnabled}"
+                              Header="{x:Static localization:Strings.CheckLatency}"
+                              IsEnabled="{Binding ShowLatencyWidget}" />
             <Rectangle Width="24" Height="24" VerticalAlignment="Top"
-                       ToolTip="{x:Static localization:Strings.HelpMessage_CheckInternetLatency}"
+                       ToolTip="{x:Static localization:Strings.HelpMessage_CheckLatency}"
                        Style="{StaticResource HelpImageRectangle}" Margin="10,0,0,0">
                 <Rectangle.Resources>
                     <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource HelpToolTip}" />
@@ -220,15 +220,15 @@
             <TextBlock Text="{x:Static localization:Strings.IntervalInSeconds}"
                        Style="{DynamicResource DefaultTextBlock}" />
             <Rectangle Width="24" Height="24"
-                       ToolTip="{x:Static localization:Strings.HelpMessage_InternetLatencyInterval}"
+                       ToolTip="{x:Static localization:Strings.HelpMessage_LatencyInterval}"
                        Style="{StaticResource HelpImageRectangle}" Margin="10,0,0,0">
                 <Rectangle.Resources>
                     <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource HelpToolTip}" />
                 </Rectangle.Resources>
             </Rectangle>
         </StackPanel>
-        <!-- Range: InternetLatencyTargetViewModel.MinInterval / MaxInterval -->
-        <mah:NumericUpDown Value="{Binding InternetLatencyInterval}" Minimum="1" Maximum="10" Interval="1"
+        <!-- Range: LatencyTargetViewModel.MinInterval / MaxInterval -->
+        <mah:NumericUpDown Value="{Binding LatencyInterval}" Minimum="1" Maximum="10" Interval="1"
                            Width="250" HorizontalAlignment="Left" Margin="0,0,0,10" />
         <TextBlock Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10">
             <Run Text="{x:Static localization:Strings.Target}" />
@@ -237,12 +237,12 @@
         <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
             <TextBox Width="150" Style="{StaticResource DefaultTextBox}"
                      mah:TextBoxHelper.Watermark="{x:Static localization:Strings.Name}"
-                     Text="{Binding InternetLatencyTarget1Name, UpdateSourceTrigger=PropertyChanged}" />
+                     Text="{Binding LatencyTarget1Name, UpdateSourceTrigger=PropertyChanged}" />
             <TextBox Width="250" Margin="10,0,0,0" Style="{StaticResource DefaultTextBox}"
                      mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleHostnameOrIPAddress}"
                      FontFamily="{StaticResource Fonts.Family.Mono}">
                 <TextBox.Text>
-                    <Binding Path="InternetLatencyTarget1Host" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                    <Binding Path="LatencyTarget1Host" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
                             <validators:EmptyOrIPAddressOrHostnameValidator ValidatesOnTargetUpdated="True" />
                         </Binding.ValidationRules>
@@ -257,12 +257,12 @@
         <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
             <TextBox Width="150" Style="{StaticResource DefaultTextBox}"
                      mah:TextBoxHelper.Watermark="{x:Static localization:Strings.Name}"
-                     Text="{Binding InternetLatencyTarget2Name, UpdateSourceTrigger=PropertyChanged}" />
+                     Text="{Binding LatencyTarget2Name, UpdateSourceTrigger=PropertyChanged}" />
             <TextBox Width="250" Margin="10,0,0,0" Style="{StaticResource DefaultTextBox}"
                      mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleHostnameOrIPAddress}"
                      FontFamily="{StaticResource Fonts.Family.Mono}">
                 <TextBox.Text>
-                    <Binding Path="InternetLatencyTarget2Host" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                    <Binding Path="LatencyTarget2Host" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
                             <validators:EmptyOrIPAddressOrHostnameValidator ValidatesOnTargetUpdated="True" />
                         </Binding.ValidationRules>
@@ -277,12 +277,12 @@
         <StackPanel Orientation="Horizontal" Margin="0,0,0,20">
             <TextBox Width="150" Style="{StaticResource DefaultTextBox}"
                      mah:TextBoxHelper.Watermark="{x:Static localization:Strings.Name}"
-                     Text="{Binding InternetLatencyTarget3Name, UpdateSourceTrigger=PropertyChanged}" />
+                     Text="{Binding LatencyTarget3Name, UpdateSourceTrigger=PropertyChanged}" />
             <TextBox Width="250" Margin="10,0,0,0" Style="{StaticResource DefaultTextBox}"
                      mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleHostnameOrIPAddress}"
                      FontFamily="{StaticResource Fonts.Family.Mono}">
                 <TextBox.Text>
-                    <Binding Path="InternetLatencyTarget3Host" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                    <Binding Path="LatencyTarget3Host" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
                             <validators:EmptyOrIPAddressOrHostnameValidator ValidatesOnTargetUpdated="True" />
                         </Binding.ValidationRules>

@@ -1,4 +1,4 @@
-<UserControl x:Class="NETworkManager.Views.InternetLatencyWidgetView"
+<UserControl x:Class="NETworkManager.Views.LatencyWidgetView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:icons="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls"
@@ -10,8 +10,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:settings="clr-namespace:NETworkManager.Settings;assembly=NETworkManager.Settings"
              xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
-             mc:Ignorable="d" x:Name="UserControlInternetLatency"
-             d:DataContext="{d:DesignInstance viewModels:InternetLatencyWidgetViewModel}">
+             mc:Ignorable="d" x:Name="UserControlLatency"
+             d:DataContext="{d:DesignInstance viewModels:LatencyWidgetViewModel}">
     <UserControl.Resources>
         <converters:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
@@ -21,7 +21,7 @@
         <!-- Open the host in another tool, copy it. One menu per tile, bound to the target of the clicked tile -->
         <ContextMenu x:Key="TargetContextMenu" x:Shared="False" MinWidth="150"
                      DataContext="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource Self}}"
-                     d:DataContext="{d:DesignInstance viewModels:InternetLatencyTargetViewModel}">
+                     d:DataContext="{d:DesignInstance viewModels:LatencyTargetViewModel}">
             <MenuItem Header="{x:Static localization:Strings.PingMonitor}" Command="{Binding OpenCommand}"
                       CommandParameter="{x:Static models:ApplicationName.PingMonitor}">
                 <MenuItem.Icon>
@@ -82,14 +82,14 @@
                             <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=Activity}" />
                         </Rectangle.OpacityMask>
                     </Rectangle>
-                    <TextBlock Text="{x:Static localization:Strings.InternetLatency}"
+                    <TextBlock Text="{x:Static localization:Strings.Latency}"
                                Style="{StaticResource MessageTextBlock}" Margin="10,0,0,0" />
                 </StackPanel>
                 <Button Grid.Column="1" Command="{Binding CopyAllCommand}"
                         Style="{StaticResource CleanButton}"
                         ToolTip="{x:Static localization:Strings.CopyAll}"
                         VerticalAlignment="Center"
-                        Visibility="{Binding Source={x:Static Member=settings:SettingsManager.Current}, Path=Dashboard_CheckInternetLatency, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+                        Visibility="{Binding Source={x:Static Member=settings:SettingsManager.Current}, Path=Dashboard_CheckLatency, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
                     <Rectangle Width="20" Height="20">
                         <Rectangle.OpacityMask>
                             <VisualBrush Stretch="Uniform" Visual="{icons:Lucide Kind=Copy}" />
@@ -110,7 +110,7 @@
             <!-- Targets side by side (wide, own row) or one below the other (narrow, next to the speed test), see
                  IsCompact; check enabled -->
             <Grid Grid.Row="1" Margin="10"
-                  Visibility="{Binding Source={x:Static Member=settings:SettingsManager.Current}, Path=Dashboard_CheckInternetLatency, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+                  Visibility="{Binding Source={x:Static Member=settings:SettingsManager.Current}, Path=Dashboard_CheckLatency, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
                 <ItemsControl ItemsSource="{Binding Targets}" AlternationCount="3" Grid.IsSharedSizeScope="True"
                               Visibility="{Binding HasTargets, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
                     <ItemsControl.Style>
@@ -126,7 +126,7 @@
                                 </Setter.Value>
                             </Setter>
                             <Style.Triggers>
-                                <DataTrigger Binding="{Binding IsCompact, ElementName=UserControlInternetLatency}" Value="True">
+                                <DataTrigger Binding="{Binding IsCompact, ElementName=UserControlLatency}" Value="True">
                                     <!-- The gap below the last row is part of the margin of 10 -->
                                     <Setter Property="Margin" Value="0,0,0,-5" />
                                     <Setter Property="ItemsPanel">
@@ -141,7 +141,7 @@
                         </Style>
                     </ItemsControl.Style>
                     <ItemsControl.ItemTemplate>
-                        <DataTemplate DataType="{x:Type viewModels:InternetLatencyTargetViewModel}">
+                        <DataTemplate DataType="{x:Type viewModels:LatencyTargetViewModel}">
                             <!-- One line per target: dot, name, value, chart. Transparent background: the tooltip and
                                  the context menu work on the whole target -->
                             <Border Background="Transparent" ContextMenu="{StaticResource TargetContextMenu}">
@@ -157,7 +157,7 @@
                                             </DataTrigger>
                                             <!-- Narrow: one below the other, no dividers; rows like the network
                                                  connection (height 26, gap 5) -->
-                                            <DataTrigger Binding="{Binding IsCompact, ElementName=UserControlInternetLatency}" Value="True">
+                                            <DataTrigger Binding="{Binding IsCompact, ElementName=UserControlLatency}" Value="True">
                                                 <Setter Property="Padding" Value="0,0,0,5" />
                                                 <Setter Property="BorderThickness" Value="0" />
                                             </DataTrigger>
@@ -239,14 +239,14 @@
                 </ItemsControl>
                 <!-- All hosts empty -->
                 <icons:EmptyStateMessage Icon="Activity"
-                                         Text="{x:Static localization:Strings.NoInternetLatencyTargetsConfiguredMessage}"
+                                         Text="{x:Static localization:Strings.NoLatencyTargetsConfiguredMessage}"
                                          HorizontalAlignment="Center"
                                          Visibility="{Binding HasTargets, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" />
             </Grid>
             <!-- Check disabled (default): enable it here or in the settings -->
             <StackPanel Grid.Row="1" Margin="10" HorizontalAlignment="Center"
-                        Visibility="{Binding Source={x:Static Member=settings:SettingsManager.Current}, Path=Dashboard_CheckInternetLatency, Converter={StaticResource ResourceKey=BooleanReverseToVisibilityCollapsedConverter}}">
-                <TextBlock Text="{x:Static localization:Strings.InternetLatencyWidgetDisabledMessage}"
+                        Visibility="{Binding Source={x:Static Member=settings:SettingsManager.Current}, Path=Dashboard_CheckLatency, Converter={StaticResource ResourceKey=BooleanReverseToVisibilityCollapsedConverter}}">
+                <TextBlock Text="{x:Static localization:Strings.LatencyWidgetDisabledMessage}"
                            Style="{StaticResource MessageTextBlock}" Margin="0,0,0,10" />
                 <Button Command="{Binding EnableCheckCommand}" HorizontalAlignment="Center">
                     <Button.Resources>

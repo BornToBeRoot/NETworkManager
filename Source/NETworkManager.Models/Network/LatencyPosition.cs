@@ -1,9 +1,9 @@
 namespace NETworkManager.Models.Network;
 
 /// <summary>
-///     Position of the internet latency widget on the dashboard.
+///     Position of the latency widget on the dashboard.
 /// </summary>
-public enum InternetLatencyPosition
+public enum LatencyPosition
 {
     /// <summary>
     ///     Right next to the speed test (1/3 of the width, the targets one below the other). In a narrow window (or

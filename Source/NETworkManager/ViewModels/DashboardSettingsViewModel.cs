@@ -209,9 +209,9 @@ public class DashboardSettingsViewModel : ViewModelBase
     }
 
     /// <summary>
-    /// Gets or sets a value indicating whether the internet latency widget is shown on the dashboard.
+    /// Gets or sets a value indicating whether the latency widget is shown on the dashboard.
     /// </summary>
-    public bool ShowInternetLatencyWidget
+    public bool ShowLatencyWidget
     {
         get;
         set
@@ -220,7 +220,7 @@ public class DashboardSettingsViewModel : ViewModelBase
                 return;
 
             if (!_isLoading)
-                SettingsManager.Current.Dashboard_ShowInternetLatencyWidget = value;
+                SettingsManager.Current.Dashboard_ShowLatencyWidget = value;
 
             field = value;
             OnPropertyChanged();
@@ -228,14 +228,14 @@ public class DashboardSettingsViewModel : ViewModelBase
     }
 
     /// <summary>
-    /// Gets the positions of the internet latency widget.
+    /// Gets the positions of the latency widget.
     /// </summary>
-    public IEnumerable<InternetLatencyPosition> InternetLatencyPositions => Enum.GetValues<InternetLatencyPosition>();
+    public IEnumerable<LatencyPosition> LatencyPositions => Enum.GetValues<LatencyPosition>();
 
     /// <summary>
-    /// Gets or sets the position of the internet latency widget (next to the speed test or own row).
+    /// Gets or sets the position of the latency widget (next to the speed test or own row).
     /// </summary>
-    public InternetLatencyPosition InternetLatencyPosition
+    public LatencyPosition LatencyPosition
     {
         get;
         set
@@ -244,7 +244,7 @@ public class DashboardSettingsViewModel : ViewModelBase
                 return;
 
             if (!_isLoading)
-                SettingsManager.Current.Dashboard_InternetLatencyPosition = value;
+                SettingsManager.Current.Dashboard_LatencyPosition = value;
 
             field = value;
             OnPropertyChanged();
@@ -252,9 +252,9 @@ public class DashboardSettingsViewModel : ViewModelBase
     }
 
     /// <summary>
-    /// Gets or sets a value indicating whether the internet latency widget pings its targets.
+    /// Gets or sets a value indicating whether the latency widget pings its targets.
     /// </summary>
-    public bool CheckInternetLatencyEnabled
+    public bool CheckLatencyEnabled
     {
         get;
         set
@@ -263,7 +263,7 @@ public class DashboardSettingsViewModel : ViewModelBase
                 return;
 
             if (!_isLoading)
-                SettingsManager.Current.Dashboard_CheckInternetLatency = value;
+                SettingsManager.Current.Dashboard_CheckLatency = value;
 
             field = value;
             OnPropertyChanged();
@@ -273,7 +273,7 @@ public class DashboardSettingsViewModel : ViewModelBase
     /// <summary>
     /// Gets or sets the time in seconds between the reply of a ping and the next ping of a target.
     /// </summary>
-    public int InternetLatencyInterval
+    public int LatencyInterval
     {
         get;
         set
@@ -282,7 +282,7 @@ public class DashboardSettingsViewModel : ViewModelBase
                 return;
 
             if (!_isLoading)
-                SettingsManager.Current.Dashboard_InternetLatencyInterval = value;
+                SettingsManager.Current.Dashboard_LatencyInterval = value;
 
             field = value;
             OnPropertyChanged();
@@ -290,9 +290,9 @@ public class DashboardSettingsViewModel : ViewModelBase
     }
 
     /// <summary>
-    /// Gets or sets the name of the internet latency target 1.
+    /// Gets or sets the name of the latency target 1.
     /// </summary>
-    public string InternetLatencyTarget1Name
+    public string LatencyTarget1Name
     {
         get;
         set
@@ -301,7 +301,7 @@ public class DashboardSettingsViewModel : ViewModelBase
                 return;
 
             if (!_isLoading)
-                SettingsManager.Current.Dashboard_InternetLatencyTarget1Name = value;
+                SettingsManager.Current.Dashboard_LatencyTarget1Name = value;
 
             field = value;
             OnPropertyChanged();
@@ -309,9 +309,9 @@ public class DashboardSettingsViewModel : ViewModelBase
     }
 
     /// <summary>
-    /// Gets or sets the host name or IP address of the internet latency target 1 (empty: not shown).
+    /// Gets or sets the host name or IP address of the latency target 1 (empty: not shown).
     /// </summary>
-    public string InternetLatencyTarget1Host
+    public string LatencyTarget1Host
     {
         get;
         set
@@ -320,7 +320,7 @@ public class DashboardSettingsViewModel : ViewModelBase
                 return;
 
             if (!_isLoading)
-                SettingsManager.Current.Dashboard_InternetLatencyTarget1Host = value;
+                SettingsManager.Current.Dashboard_LatencyTarget1Host = value;
 
             field = value;
             OnPropertyChanged();
@@ -328,9 +328,9 @@ public class DashboardSettingsViewModel : ViewModelBase
     }
 
     /// <summary>
-    /// Gets or sets the name of the internet latency target 2.
+    /// Gets or sets the name of the latency target 2.
     /// </summary>
-    public string InternetLatencyTarget2Name
+    public string LatencyTarget2Name
     {
         get;
         set
@@ -339,7 +339,7 @@ public class DashboardSettingsViewModel : ViewModelBase
                 return;
 
             if (!_isLoading)
-                SettingsManager.Current.Dashboard_InternetLatencyTarget2Name = value;
+                SettingsManager.Current.Dashboard_LatencyTarget2Name = value;
 
             field = value;
             OnPropertyChanged();
@@ -347,9 +347,9 @@ public class DashboardSettingsViewModel : ViewModelBase
     }
 
     /// <summary>
-    /// Gets or sets the host name or IP address of the internet latency target 2 (empty: not shown).
+    /// Gets or sets the host name or IP address of the latency target 2 (empty: not shown).
     /// </summary>
-    public string InternetLatencyTarget2Host
+    public string LatencyTarget2Host
     {
         get;
         set
@@ -358,7 +358,7 @@ public class DashboardSettingsViewModel : ViewModelBase
                 return;
 
             if (!_isLoading)
-                SettingsManager.Current.Dashboard_InternetLatencyTarget2Host = value;
+                SettingsManager.Current.Dashboard_LatencyTarget2Host = value;
 
             field = value;
             OnPropertyChanged();
@@ -366,9 +366,9 @@ public class DashboardSettingsViewModel : ViewModelBase
     }
 
     /// <summary>
-    /// Gets or sets the name of the internet latency target 3.
+    /// Gets or sets the name of the latency target 3.
     /// </summary>
-    public string InternetLatencyTarget3Name
+    public string LatencyTarget3Name
     {
         get;
         set
@@ -377,7 +377,7 @@ public class DashboardSettingsViewModel : ViewModelBase
                 return;
 
             if (!_isLoading)
-                SettingsManager.Current.Dashboard_InternetLatencyTarget3Name = value;
+                SettingsManager.Current.Dashboard_LatencyTarget3Name = value;
 
             field = value;
             OnPropertyChanged();
@@ -385,9 +385,9 @@ public class DashboardSettingsViewModel : ViewModelBase
     }
 
     /// <summary>
-    /// Gets or sets the host name or IP address of the internet latency target 3 (empty: not shown).
+    /// Gets or sets the host name or IP address of the latency target 3 (empty: not shown).
     /// </summary>
-    public string InternetLatencyTarget3Host
+    public string LatencyTarget3Host
     {
         get;
         set
@@ -396,7 +396,7 @@ public class DashboardSettingsViewModel : ViewModelBase
                 return;
 
             if (!_isLoading)
-                SettingsManager.Current.Dashboard_InternetLatencyTarget3Host = value;
+                SettingsManager.Current.Dashboard_LatencyTarget3Host = value;
 
             field = value;
             OnPropertyChanged();
@@ -489,8 +489,8 @@ public class DashboardSettingsViewModel : ViewModelBase
             case nameof(SettingsInfo.Dashboard_CheckIPApiDNSResolver):
                 CheckIPApiDNSResolverEnabled = SettingsManager.Current.Dashboard_CheckIPApiDNSResolver;
                 break;
-            case nameof(SettingsInfo.Dashboard_CheckInternetLatency):
-                CheckInternetLatencyEnabled = SettingsManager.Current.Dashboard_CheckInternetLatency;
+            case nameof(SettingsInfo.Dashboard_CheckLatency):
+                CheckLatencyEnabled = SettingsManager.Current.Dashboard_CheckLatency;
                 break;
         }
     }
@@ -510,16 +510,16 @@ public class DashboardSettingsViewModel : ViewModelBase
         CheckIPApiIPGeolocationEnabled = SettingsManager.Current.Dashboard_CheckIPApiIPGeolocation;
         CheckIPApiDNSResolverEnabled = SettingsManager.Current.Dashboard_CheckIPApiDNSResolver;
         ShowNetworkConnectionWidget = SettingsManager.Current.Dashboard_ShowNetworkConnectionWidget;
-        ShowInternetLatencyWidget = SettingsManager.Current.Dashboard_ShowInternetLatencyWidget;
-        CheckInternetLatencyEnabled = SettingsManager.Current.Dashboard_CheckInternetLatency;
-        InternetLatencyPosition = SettingsManager.Current.Dashboard_InternetLatencyPosition;
-        InternetLatencyInterval = SettingsManager.Current.Dashboard_InternetLatencyInterval;
-        InternetLatencyTarget1Name = SettingsManager.Current.Dashboard_InternetLatencyTarget1Name;
-        InternetLatencyTarget1Host = SettingsManager.Current.Dashboard_InternetLatencyTarget1Host;
-        InternetLatencyTarget2Name = SettingsManager.Current.Dashboard_InternetLatencyTarget2Name;
-        InternetLatencyTarget2Host = SettingsManager.Current.Dashboard_InternetLatencyTarget2Host;
-        InternetLatencyTarget3Name = SettingsManager.Current.Dashboard_InternetLatencyTarget3Name;
-        InternetLatencyTarget3Host = SettingsManager.Current.Dashboard_InternetLatencyTarget3Host;
+        ShowLatencyWidget = SettingsManager.Current.Dashboard_ShowLatencyWidget;
+        CheckLatencyEnabled = SettingsManager.Current.Dashboard_CheckLatency;
+        LatencyPosition = SettingsManager.Current.Dashboard_LatencyPosition;
+        LatencyInterval = SettingsManager.Current.Dashboard_LatencyInterval;
+        LatencyTarget1Name = SettingsManager.Current.Dashboard_LatencyTarget1Name;
+        LatencyTarget1Host = SettingsManager.Current.Dashboard_LatencyTarget1Host;
+        LatencyTarget2Name = SettingsManager.Current.Dashboard_LatencyTarget2Name;
+        LatencyTarget2Host = SettingsManager.Current.Dashboard_LatencyTarget2Host;
+        LatencyTarget3Name = SettingsManager.Current.Dashboard_LatencyTarget3Name;
+        LatencyTarget3Host = SettingsManager.Current.Dashboard_LatencyTarget3Host;
         ShowSpeedTestWidget = SettingsManager.Current.Dashboard_ShowSpeedTestWidget;
         ShowIPGeolocationWidget = SettingsManager.Current.Dashboard_ShowIPGeolocationWidget;
         ShowDNSResolverWidget = SettingsManager.Current.Dashboard_ShowDNSResolverWidget;

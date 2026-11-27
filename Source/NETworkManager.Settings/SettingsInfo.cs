@@ -1063,7 +1063,7 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     } = GlobalStaticConfiguration.Dashboard_CheckIPApiDNSResolver;
 
-    public bool Dashboard_CheckInternetLatency
+    public bool Dashboard_CheckLatency
     {
         get;
         set
@@ -1074,9 +1074,9 @@ public class SettingsInfo : INotifyPropertyChanged
             field = value;
             OnPropertyChanged();
         }
-    } = GlobalStaticConfiguration.Dashboard_CheckInternetLatency;
+    } = GlobalStaticConfiguration.Dashboard_CheckLatency;
 
-    public InternetLatencyPosition Dashboard_InternetLatencyPosition
+    public LatencyPosition Dashboard_LatencyPosition
     {
         get;
         set
@@ -1087,9 +1087,9 @@ public class SettingsInfo : INotifyPropertyChanged
             field = value;
             OnPropertyChanged();
         }
-    } = GlobalStaticConfiguration.Dashboard_InternetLatencyPosition;
+    } = GlobalStaticConfiguration.Dashboard_LatencyPosition;
 
-    public int Dashboard_InternetLatencyInterval
+    public int Dashboard_LatencyInterval
     {
         get;
         set
@@ -1100,9 +1100,9 @@ public class SettingsInfo : INotifyPropertyChanged
             field = value;
             OnPropertyChanged();
         }
-    } = GlobalStaticConfiguration.Dashboard_InternetLatencyInterval;
+    } = GlobalStaticConfiguration.Dashboard_LatencyInterval;
 
-    public string Dashboard_InternetLatencyTarget1Name
+    public string Dashboard_LatencyTarget1Name
     {
         get;
         set
@@ -1113,9 +1113,9 @@ public class SettingsInfo : INotifyPropertyChanged
             field = value;
             OnPropertyChanged();
         }
-    } = GlobalStaticConfiguration.Dashboard_InternetLatencyTarget1Name;
+    } = GlobalStaticConfiguration.Dashboard_LatencyTarget1Name;
 
-    public string Dashboard_InternetLatencyTarget1Host
+    public string Dashboard_LatencyTarget1Host
     {
         get;
         set
@@ -1126,9 +1126,9 @@ public class SettingsInfo : INotifyPropertyChanged
             field = value;
             OnPropertyChanged();
         }
-    } = GlobalStaticConfiguration.Dashboard_InternetLatencyTarget1Host;
+    } = GlobalStaticConfiguration.Dashboard_LatencyTarget1Host;
 
-    public string Dashboard_InternetLatencyTarget2Name
+    public string Dashboard_LatencyTarget2Name
     {
         get;
         set
@@ -1139,9 +1139,9 @@ public class SettingsInfo : INotifyPropertyChanged
             field = value;
             OnPropertyChanged();
         }
-    } = GlobalStaticConfiguration.Dashboard_InternetLatencyTarget2Name;
+    } = GlobalStaticConfiguration.Dashboard_LatencyTarget2Name;
 
-    public string Dashboard_InternetLatencyTarget2Host
+    public string Dashboard_LatencyTarget2Host
     {
         get;
         set
@@ -1152,9 +1152,9 @@ public class SettingsInfo : INotifyPropertyChanged
             field = value;
             OnPropertyChanged();
         }
-    } = GlobalStaticConfiguration.Dashboard_InternetLatencyTarget2Host;
+    } = GlobalStaticConfiguration.Dashboard_LatencyTarget2Host;
 
-    public string Dashboard_InternetLatencyTarget3Name
+    public string Dashboard_LatencyTarget3Name
     {
         get;
         set
@@ -1165,9 +1165,9 @@ public class SettingsInfo : INotifyPropertyChanged
             field = value;
             OnPropertyChanged();
         }
-    } = GlobalStaticConfiguration.Dashboard_InternetLatencyTarget3Name;
+    } = GlobalStaticConfiguration.Dashboard_LatencyTarget3Name;
 
-    public string Dashboard_InternetLatencyTarget3Host
+    public string Dashboard_LatencyTarget3Host
     {
         get;
         set
@@ -1178,7 +1178,7 @@ public class SettingsInfo : INotifyPropertyChanged
             field = value;
             OnPropertyChanged();
         }
-    } = GlobalStaticConfiguration.Dashboard_InternetLatencyTarget3Host;
+    } = GlobalStaticConfiguration.Dashboard_LatencyTarget3Host;
 
     public bool Dashboard_ShowNetworkConnectionWidget
     {
@@ -1193,7 +1193,7 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     } = GlobalStaticConfiguration.Dashboard_ShowNetworkConnectionWidget;
 
-    public bool Dashboard_ShowInternetLatencyWidget
+    public bool Dashboard_ShowLatencyWidget
     {
         get;
         set
@@ -1204,7 +1204,7 @@ public class SettingsInfo : INotifyPropertyChanged
             field = value;
             OnPropertyChanged();
         }
-    } = GlobalStaticConfiguration.Dashboard_ShowInternetLatencyWidget;
+    } = GlobalStaticConfiguration.Dashboard_ShowLatencyWidget;
 
     public bool Dashboard_ShowSpeedTestWidget
     {

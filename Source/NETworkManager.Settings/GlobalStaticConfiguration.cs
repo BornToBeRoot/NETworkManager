@@ -139,17 +139,17 @@ public static class GlobalStaticConfiguration
     public static string Dashboard_PublicIPv6AddressAPI => "https://api6.ipify.org";
     public static bool Dashboard_CheckIPApiIPGeolocation => false;
     public static bool Dashboard_CheckIPApiDNSResolver => false;
-    public static bool Dashboard_CheckInternetLatency => false;
-    public static InternetLatencyPosition Dashboard_InternetLatencyPosition => InternetLatencyPosition.NextToSpeedTest;
-    public static int Dashboard_InternetLatencyInterval => 2;
-    public static string Dashboard_InternetLatencyTarget1Name => "Cloudflare";
-    public static string Dashboard_InternetLatencyTarget1Host => "1.1.1.1";
-    public static string Dashboard_InternetLatencyTarget2Name => "Google";
-    public static string Dashboard_InternetLatencyTarget2Host => "8.8.8.8";
-    public static string Dashboard_InternetLatencyTarget3Name => "Quad9";
-    public static string Dashboard_InternetLatencyTarget3Host => "9.9.9.9";
+    public static bool Dashboard_CheckLatency => false;
+    public static LatencyPosition Dashboard_LatencyPosition => LatencyPosition.NextToSpeedTest;
+    public static int Dashboard_LatencyInterval => 2;
+    public static string Dashboard_LatencyTarget1Name => "Cloudflare";
+    public static string Dashboard_LatencyTarget1Host => "1.1.1.1";
+    public static string Dashboard_LatencyTarget2Name => "Google";
+    public static string Dashboard_LatencyTarget2Host => "8.8.8.8";
+    public static string Dashboard_LatencyTarget3Name => "Quad9";
+    public static string Dashboard_LatencyTarget3Host => "9.9.9.9";
     public static bool Dashboard_ShowNetworkConnectionWidget => true;
-    public static bool Dashboard_ShowInternetLatencyWidget => true;
+    public static bool Dashboard_ShowLatencyWidget => true;
     public static bool Dashboard_ShowSpeedTestWidget => true;
     public static bool Dashboard_ShowIPGeolocationWidget => true;
     public static bool Dashboard_ShowDNSResolverWidget => true;
@@ -161,11 +161,11 @@ public static class GlobalStaticConfiguration
     public static TimeSpan Dashboard_RecheckInterval => TimeSpan.FromSeconds(60);
 
     /// <summary>
-    ///     Time window of the chart and the statistics of the internet latency widget.
+    ///     Time window of the chart and the statistics of the latency widget.
     /// </summary>
-    public static TimeSpan Dashboard_InternetLatencyWindow => TimeSpan.FromSeconds(60);
+    public static TimeSpan Dashboard_LatencyWindow => TimeSpan.FromSeconds(60);
 
-    // Ping of the gateway and the public IP address (also the targets of the internet latency widget)
+    // Ping of the gateway and the public IP address (also the targets of the latency widget)
     public static int Dashboard_PingTimeout => 2000;
     public static int Dashboard_PingAttempts => 2;
     public static int Dashboard_PingBuffer => 32;

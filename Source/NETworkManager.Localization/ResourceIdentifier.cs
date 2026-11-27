@@ -8,7 +8,7 @@ public enum ResourceIdentifier
     ApplicationName,
     ConnectionCheckReason,
     LLDPCDPProtocol,
-    InternetLatencyPosition,
+    LatencyPosition,
     IPStatus,
     PortState,
     ProfileName,

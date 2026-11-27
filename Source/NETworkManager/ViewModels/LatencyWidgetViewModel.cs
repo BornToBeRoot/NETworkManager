@@ -9,10 +9,10 @@ using NETworkManager.Utilities;
 namespace NETworkManager.ViewModels;
 
 /// <summary>
-/// View model for the internet latency widget: pings up to three targets live while the dashboard is shown. The
+/// View model for the latency widget: pings up to three targets live while the dashboard is shown. The
 /// dashboard starts and stops it (<see cref="Start" />, <see cref="Stop" />).
 /// </summary>
-public class InternetLatencyWidgetViewModel : ViewModelBase
+public class LatencyWidgetViewModel : ViewModelBase
 {
     #region Variables
 
@@ -29,7 +29,7 @@ public class InternetLatencyWidgetViewModel : ViewModelBase
     /// <summary>
     /// Gets the configured targets (a target without a host is not shown).
     /// </summary>
-    public ObservableCollection<InternetLatencyTargetViewModel> Targets { get; } = [];
+    public ObservableCollection<LatencyTargetViewModel> Targets { get; } = [];
 
     /// <summary>
     /// Gets a value indicating whether a target is configured.
@@ -57,9 +57,9 @@ public class InternetLatencyWidgetViewModel : ViewModelBase
     #region Constructor
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="InternetLatencyWidgetViewModel" /> class.
+    /// Initializes a new instance of the <see cref="LatencyWidgetViewModel" /> class.
     /// </summary>
-    public InternetLatencyWidgetViewModel()
+    public LatencyWidgetViewModel()
     {
         LoadTargets();
 
@@ -76,11 +76,11 @@ public class InternetLatencyWidgetViewModel : ViewModelBase
     #region ICommands & Actions
 
     /// <summary>
-    /// Gets the command to enable the check (setting <c>Dashboard_CheckInternetLatency</c>, off by default). The
+    /// Gets the command to enable the check (setting <c>Dashboard_CheckLatency</c>, off by default). The
     /// dashboard starts the widget when the setting changes.
     /// </summary>
     public ICommand EnableCheckCommand =>
-        new RelayCommand(_ => SettingsManager.Current.Dashboard_CheckInternetLatency = true);
+        new RelayCommand(_ => SettingsManager.Current.Dashboard_CheckLatency = true);
 
     /// <summary>
     /// Gets the command to copy the values and statistics of all targets as text.
@@ -107,17 +107,17 @@ public class InternetLatencyWidgetViewModel : ViewModelBase
     /// Starts the pings of all targets (if the check is enabled).
     /// </summary>
     /// <param name="keepHistory">Keep the pings of the last minute, see
-    ///     <see cref="InternetLatencyTargetViewModel.RunAsync" />.</param>
+    ///     <see cref="LatencyTargetViewModel.RunAsync" />.</param>
     private void Start(bool keepHistory)
     {
-        if (IsRunning || !SettingsManager.Current.Dashboard_CheckInternetLatency)
+        if (IsRunning || !SettingsManager.Current.Dashboard_CheckLatency)
             return;
 
         // Sample values instead of real pings
         if (ScreenshotData.IsEnabled)
         {
             foreach (var (target, index) in Targets.Select((x, i) => (x, i)))
-                target.SetSamples(ScreenshotData.CreateInternetLatencySamples(index));
+                target.SetSamples(ScreenshotData.CreateLatencySamples(index));
 
             return;
         }
@@ -172,13 +172,13 @@ public class InternetLatencyWidgetViewModel : ViewModelBase
 
         foreach (var (name, host) in new[]
                  {
-                     (settings.Dashboard_InternetLatencyTarget1Name, settings.Dashboard_InternetLatencyTarget1Host),
-                     (settings.Dashboard_InternetLatencyTarget2Name, settings.Dashboard_InternetLatencyTarget2Host),
-                     (settings.Dashboard_InternetLatencyTarget3Name, settings.Dashboard_InternetLatencyTarget3Host)
+                     (settings.Dashboard_LatencyTarget1Name, settings.Dashboard_LatencyTarget1Host),
+                     (settings.Dashboard_LatencyTarget2Name, settings.Dashboard_LatencyTarget2Host),
+                     (settings.Dashboard_LatencyTarget3Name, settings.Dashboard_LatencyTarget3Host)
                  })
         {
             if (!string.IsNullOrWhiteSpace(host))
-                Targets.Add(new InternetLatencyTargetViewModel(name, host.Trim()));
+                Targets.Add(new LatencyTargetViewModel(name, host.Trim()));
         }
 
         HasTargets = Targets.Count > 0;
@@ -187,8 +187,8 @@ public class InternetLatencyWidgetViewModel : ViewModelBase
     private void SettingsManager_PropertyChanged(object sender, PropertyChangedEventArgs e)
     {
         // Check disabled: no old values when it is enabled again (the dashboard stops the pings)
-        if (e.PropertyName == nameof(SettingsInfo.Dashboard_CheckInternetLatency) &&
-            !SettingsManager.Current.Dashboard_CheckInternetLatency)
+        if (e.PropertyName == nameof(SettingsInfo.Dashboard_CheckLatency) &&
+            !SettingsManager.Current.Dashboard_CheckLatency)
         {
             foreach (var target in Targets)
                 target.ClearHistory();
@@ -197,7 +197,7 @@ public class InternetLatencyWidgetViewModel : ViewModelBase
         }
 
         // A changed target: create the targets again, a running widget pings the new ones right away
-        if (e.PropertyName == null || !e.PropertyName.StartsWith("Dashboard_InternetLatencyTarget"))
+        if (e.PropertyName == null || !e.PropertyName.StartsWith("Dashboard_LatencyTarget"))
             return;
 
         var wasRunning = IsRunning;

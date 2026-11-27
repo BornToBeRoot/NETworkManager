@@ -5,7 +5,7 @@ using System.Linq;
 namespace NETworkManager.Models.Network;
 
 /// <summary>
-///     Result of one ping of a latency target (internet latency widget of the dashboard).
+///     Result of one ping of a latency target (latency widget of the dashboard).
 /// </summary>
 /// <param name="Timestamp">Time of the ping (UTC: a clock change doesn't move the time window).</param>
 /// <param name="IsSuccess">The target replied.</param>
