@@ -372,19 +372,22 @@ public static class ScreenshotData
     /// Creates the pings of the last minute of a latency target (like the default targets: the gateway, Cloudflare,
     /// Google and Quad9): a reply every 2 seconds with a few milliseconds of variation, ending now.
     /// </summary>
-    /// <param name="index">Index of the target (the gateway first), each has its own latency.</param>
-    /// <param name="isGateway">The default gateway (about 1 ms, in the local network).</param>
+    /// <param name="index">Index of the target in the list (without the gateway), each has its own latency.</param>
+    /// <param name="isGateway">The default gateway: mostly below 1 ms (shown as "&lt;1 ms"), some 1 ms replies.</param>
     public static IEnumerable<LatencySample> CreateLatencySamples(int index, bool isGateway)
     {
         long[] baseTimes = [9, 8, 10];
-        var baseTime = isGateway ? 1 : baseTimes[index % baseTimes.Length];
         var now = DateTime.UtcNow; // like the widget (time window in UTC)
 
         for (var i = 30; i >= 0; i--)
         {
-            var variation = Math.Round(1.5 * Math.Sin((i + index * 7) * 0.9) + Math.Cos((i + index) * 2.3));
+            var time = isGateway
+                ? Math.Max(0, (long)Math.Round(0.6 * Math.Sin(i * 0.9) + 0.4 * Math.Cos(i * 2.3),
+                    MidpointRounding.AwayFromZero))
+                : Math.Max(1, baseTimes[index % baseTimes.Length] +
+                              (long)Math.Round(1.5 * Math.Sin((i + index * 7) * 0.9) + Math.Cos((i + index) * 2.3)));
 
-            yield return new LatencySample(now.AddSeconds(-i * 2), true, Math.Max(1, baseTime + (long)variation));
+            yield return new LatencySample(now.AddSeconds(-i * 2), true, time);
         }
     }
 

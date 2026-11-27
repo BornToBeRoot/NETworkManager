@@ -146,8 +146,12 @@ public class LatencyWidgetViewModel : ViewModelBase
         // Sample values instead of real pings
         if (ScreenshotData.IsEnabled)
         {
-            foreach (var (target, index) in Targets.Select((x, i) => (x, i)))
-                target.SetSamples(ScreenshotData.CreateLatencySamples(index, target.IsGateway));
+            // Index in the list (without the gateway): Cloudflare, Google and Quad9 keep their sample latencies
+            var index = 0;
+
+            foreach (var target in Targets)
+                target.SetSamples(ScreenshotData.CreateLatencySamples(target.IsGateway ? 0 : index++,
+                    target.IsGateway));
 
             return;
         }
