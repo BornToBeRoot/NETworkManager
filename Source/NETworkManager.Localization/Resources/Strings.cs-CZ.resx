@@ -3086,17 +3086,14 @@ Pověření v profilu budou bezpečnější.</value>
   <data name="ICMPv6" xml:space="preserve">
     <value>ICMPv6</value>
   </data>
-  <data name="CheckIsDisabled" xml:space="preserve">
-    <value>Check is disabled!</value>
-  </data>
   <data name="EnterValidIPv6Address" xml:space="preserve">
     <value>Enter a valid IPv6 address!</value>
   </data>
   <data name="HelpMessage_PublicIPv4Address" xml:space="preserve">
-    <value>Public IPv4 address that is pinged to check the internet connection. The route to it is used to detect the local IPv4 address (of the network adapter that is used for the internet).</value>
+    <value>Public IPv4 address (not the one of your computer) that is pinged to check the internet connection. The route to it is used to detect the local IPv4 address (of the network adapter that is used for the internet).</value>
   </data>
   <data name="HelpMessage_PublicIPv6Address" xml:space="preserve">
-    <value>Public IPv6 address that is pinged to check the internet connection. The route to it is used to detect the local IPv6 address (of the network adapter that is used for the internet).</value>
+    <value>Public IPv6 address (not the one of your computer) that is pinged to check the internet connection. The route to it is used to detect the local IPv6 address (of the network adapter that is used for the internet).</value>
   </data>
   <data name="PublicIPv4Address" xml:space="preserve">
     <value>Public IPv4 address</value>
@@ -3749,10 +3746,6 @@ URL: http://ip-api.com/</value>
   </data>
   <data name="CheckNetworkConnectionTryAgainMessage" xml:space="preserve">
     <value>Check your network connection and try again in a few seconds.</value>
-  </data>
-  <data name="IPApiRateLimitMessage" xml:space="preserve">
-    <value>ip-api.com rate limit reached (too many requests from your network)!
-Try again in a few seconds.</value>
   </data>
   <data name="HTTPStatusCode" xml:space="preserve">
     <value>HTTP status code</value>
@@ -5752,9 +5745,6 @@ Do you want to start the scan?</value>
   <data name="CopyAll" xml:space="preserve">
     <value>Copy all</value>
   </data>
-  <data name="Widgets" xml:space="preserve">
-    <value>Widgets</value>
-  </data>
   <data name="AllWidgetsAreHiddenMessage" xml:space="preserve">
     <value>All widgets are hidden. You can show them in the settings of the dashboard.</value>
   </data>
@@ -5766,5 +5756,28 @@ Do you want to start the scan?</value>
   </data>
   <data name="LastTestAtX" xml:space="preserve">
     <value>Last test at {0}</value>
+  </data>
+  <data name="IPGeolocationWidgetDisabledMessage" xml:space="preserve">
+    <value>Show the location and the internet provider of your public IP address with ip-api.com.
+ip-api.com receives your IP address (http, not encrypted).</value>
+  </data>
+  <data name="DNSResolverWidgetDisabledMessage" xml:space="preserve">
+    <value>Show the DNS server that resolves your requests with edns.ip-api.com.
+ip-api.com receives your IP address and the IP address of your DNS server.</value>
+  </data>
+  <data name="XXXHasNoIPGeolocationForXXXReasonXXX" xml:space="preserve">
+    <value>{0} has no IP geolocation for "{1}" ({2}).</value>
+  </data>
+  <data name="ShowWidget" xml:space="preserve">
+    <value>Show widget</value>
+  </data>
+  <data name="HelpMessage_ShowNetworkConnectionWidget" xml:space="preserve">
+    <value>Shows the widget on the dashboard. The status window always shows the network connection.</value>
+  </data>
+  <data name="HelpMessage_ShowIPApiWidget" xml:space="preserve">
+    <value>Shows the widget on the dashboard. It only sends a request to ip-api.com if the check is enabled (below, in the welcome dialog or with the "Enable" button of the widget), otherwise it shows what it would request. A hidden widget sends no request.</value>
+  </data>
+  <data name="NetworkConnectionWidgetAndStatusWindowUseTheseSettingsMessage" xml:space="preserve">
+    <value>The network connection widget and the status window use these settings to check the internet.</value>
   </data>
 </root>

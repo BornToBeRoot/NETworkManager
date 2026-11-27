@@ -3112,17 +3112,14 @@ Per archiviare le credenziali in modo sicuro abilita la crittografia del file de
   <data name="ICMPv6" xml:space="preserve">
     <value>ICMPv6</value>
   </data>
-  <data name="CheckIsDisabled" xml:space="preserve">
-    <value>Il controllo è disabilitato</value>
-  </data>
   <data name="EnterValidIPv6Address" xml:space="preserve">
     <value>Inserisci un indirizzo IPv6 valido!</value>
   </data>
   <data name="HelpMessage_PublicIPv4Address" xml:space="preserve">
-    <value>Indirizzo IPv4 pubblico su cui viene eseguito il ping per controllare la connessione internet. Il percorso verso di esso viene usato per rilevare l'indirizzo IPv4 locale (della scheda di rete usata per collegarsi a internet).</value>
+    <value>Public IPv4 address (not the one of your computer) that is pinged to check the internet connection. The route to it is used to detect the local IPv4 address (of the network adapter that is used for the internet).</value>
   </data>
   <data name="HelpMessage_PublicIPv6Address" xml:space="preserve">
-    <value>Indirizzo IPv6 pubblico su cui viene eseguito il ping per controllare la connessione internet. Il route verso di esso viene usato per rilevare l'indirizzo IPv6 locale (della scheda di rete usata per coillegarsi a internet).</value>
+    <value>Public IPv6 address (not the one of your computer) that is pinged to check the internet connection. The route to it is used to detect the local IPv6 address (of the network adapter that is used for the internet).</value>
   </data>
   <data name="PublicIPv4Address" xml:space="preserve">
     <value>Indirizzo IPv4 pubblico</value>
@@ -3835,10 +3832,6 @@ Nessun dato viene inviato ll'autore in nessun momento.</value>
   </data>
   <data name="CheckNetworkConnectionTryAgainMessage" xml:space="preserve">
     <value>Controlla la connessione di rete e riprova tra qualche secondo.</value>
-  </data>
-  <data name="IPApiRateLimitMessage" xml:space="preserve">
-    <value>Raggiunto limite ip-api.com (troppe richieste dal questa rete)!
-Riprova tra qualche secondo.</value>
   </data>
   <data name="HTTPStatusCode" xml:space="preserve">
     <value>Codice stato HTTP</value>
@@ -5850,9 +5843,6 @@ Vuoi avviare la scansione?</value>
   <data name="CopyAll" xml:space="preserve">
     <value>Copia tutto</value>
   </data>
-  <data name="Widgets" xml:space="preserve">
-    <value>Widget</value>
-  </data>
   <data name="AllWidgetsAreHiddenMessage" xml:space="preserve">
     <value>Tutti i widget sono nascosti. Puoi visualizza nelle impostazioni del pannello.</value>
   </data>
@@ -5864,5 +5854,28 @@ Vuoi avviare la scansione?</value>
   </data>
   <data name="LastTestAtX" xml:space="preserve">
     <value>Ultimo test alle {0}</value>
+  </data>
+  <data name="IPGeolocationWidgetDisabledMessage" xml:space="preserve">
+    <value>Show the location and the internet provider of your public IP address with ip-api.com.
+ip-api.com receives your IP address (http, not encrypted).</value>
+  </data>
+  <data name="DNSResolverWidgetDisabledMessage" xml:space="preserve">
+    <value>Show the DNS server that resolves your requests with edns.ip-api.com.
+ip-api.com receives your IP address and the IP address of your DNS server.</value>
+  </data>
+  <data name="XXXHasNoIPGeolocationForXXXReasonXXX" xml:space="preserve">
+    <value>{0} has no IP geolocation for "{1}" ({2}).</value>
+  </data>
+  <data name="ShowWidget" xml:space="preserve">
+    <value>Show widget</value>
+  </data>
+  <data name="HelpMessage_ShowNetworkConnectionWidget" xml:space="preserve">
+    <value>Shows the widget on the dashboard. The status window always shows the network connection.</value>
+  </data>
+  <data name="HelpMessage_ShowIPApiWidget" xml:space="preserve">
+    <value>Shows the widget on the dashboard. It only sends a request to ip-api.com if the check is enabled (below, in the welcome dialog or with the "Enable" button of the widget), otherwise it shows what it would request. A hidden widget sends no request.</value>
+  </data>
+  <data name="NetworkConnectionWidgetAndStatusWindowUseTheseSettingsMessage" xml:space="preserve">
+    <value>The network connection widget and the status window use these settings to check the internet.</value>
   </data>
 </root>
