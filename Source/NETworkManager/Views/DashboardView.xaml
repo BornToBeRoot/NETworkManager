@@ -16,8 +16,9 @@
                 <ScrollViewer HorizontalScrollBarVisibility="Disabled" Margin="10">
                     <StackPanel x:Name="StackPanelWidgets">
                         <ContentControl x:Name="ContentControlNetworkConnection" />
-                        <!-- Speed test (2/3) and internet latency (1/3) side by side, or one below the other (narrow
-                             window, internet latency in its own row above the speed test), set in the code-behind -->
+                        <!-- Speed test (2/3) and internet latency (1/3) side by side, or one below the other: narrow
+                             window or speed test hidden (internet latency below the speed test) or position "own row"
+                             (internet latency above the speed test), set in the code-behind -->
                         <Grid x:Name="GridSpeedTestInternetLatency">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
