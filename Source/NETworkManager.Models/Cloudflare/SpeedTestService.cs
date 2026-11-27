@@ -195,15 +195,24 @@ public class SpeedTestService
             }
 
             var setSucceeded = false;
+            var setSizeFailed = false;
 
             for (var i = 0; i < measurement.Count; i++)
             {
-                var (success, (bps, durationMs)) = await TryRequestAsync(() => isDownload
+                var (success, sizeFailed, (bps, durationMs)) = await TryRequestAsync(() => isDownload
                     ? MeasureDownloadAsync(measurement.Bytes, cancellationToken,
                         liveBps => Emit(progress, SpeedTestPhase.MeasuringDownload,
                             pings, downloadBps, uploadBps, liveBps))
                     : MeasureUploadAsync(measurement.Bytes, cancellationToken), failures, cancellationToken,
                     () => IsServerReachableAsync(cancellationToken)).ConfigureAwait(false);
+
+                // The server answers small requests, but requests of this size fail without a response: the remaining
+                // requests of the set would each wait for the timeout too
+                if (sizeFailed)
+                {
+                    setSizeFailed = true;
+                    break;
+                }
 
                 if (!success)
                     continue;
@@ -237,8 +246,9 @@ public class SpeedTestService
             if (measurement.BypassMinDuration)
                 continue;
 
-            // All requests of the set failed (e.g. a proxy rejects uploads of this size): the larger sizes would fail too
-            if (!setSucceeded ||
+            // All requests of the set failed (e.g. a proxy rejects uploads of this size), or requests of this size fail
+            // without a response: the larger sizes would fail too
+            if (!setSucceeded || setSizeFailed ||
                 SpeedTestCalculator.IsDirectionFinished(setDurations, BandwidthFinishRequestDurationMs))
                 finished.Add(measurement.Type);
         }
@@ -368,12 +378,13 @@ public class SpeedTestService
     /// <see cref="MaxRetries" /> times), another error skips the request. After <see cref="MaxConsecutiveFailedRequests" />
     /// failed requests in a row without a response the error is thrown (the test ends) - unless the server still
     /// answers a small request: then only this size fails (e.g. a proxy that closes the connection of large uploads
-    /// instead of answering HTTP 413) and the direction ends after the set.
+    /// instead of answering HTTP 413), the rest of the set is skipped and the direction ends.
     /// </summary>
     /// <param name="isServerReachable">Checks whether the server answers (download / upload), <c>null</c> for the
     ///     latency probes (they are small requests themselves).</param>
-    /// <returns><c>false</c> if the request failed and was skipped.</returns>
-    private static async Task<(bool Success, T Value)> TryRequestAsync<T>(Func<Task<T>> request,
+    /// <returns><c>Success</c> <c>false</c> if the request failed and was skipped, <c>SizeFailed</c> <c>true</c> if
+    ///     requests of this size fail while the server answers small requests (skip the rest of the set).</returns>
+    private static async Task<(bool Success, bool SizeFailed, T Value)> TryRequestAsync<T>(Func<Task<T>> request,
         RequestFailures failures, CancellationToken cancellationToken, Func<Task<bool>> isServerReachable = null)
     {
         for (var retry = 0;; retry++)
@@ -383,7 +394,7 @@ public class SpeedTestService
                 var value = await request().ConfigureAwait(false);
                 failures.Consecutive = 0;
 
-                return (true, value);
+                return (true, false, value);
             }
             catch (TooManyRequestsException ex) when (retry < MaxRetries)
             {
@@ -407,13 +418,15 @@ public class SpeedTestService
                         throw;
 
                     // The connection works, only requests of this size fail: skip them (the set fails)
-                    Log.Warn("Speed test requests of this size fail, but the server answers small requests.");
+                    Log.Warn("Speed test requests of this size fail, but the server answers small requests.", ex);
                     failures.Consecutive = 0;
+
+                    return (false, true, default);
                 }
 
                 Log.Warn("Speed test request failed and is skipped.", ex);
 
-                return (false, default);
+                return (false, false, default);
             }
         }
     }
