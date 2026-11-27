@@ -5702,69 +5702,69 @@ Cloudflareは、お客様のIPアドレスおよびネットワーク情報を�
     <value>ネットワークアダプターを検索しています...</value>
   </data>
   <data name="ConnectionCheckReason_NoIPv4Address" xml:space="preserve">
-    <value>No IPv4 address.</value>
+    <value>IPv4アドレスがありません。</value>
   </data>
   <data name="ConnectionCheckReason_IPv4LinkLocal" xml:space="preserve">
-    <value>Link-local address (169.254.x.x): the network adapter did not get an IPv4 address from a DHCP server.</value>
+    <value>リンクローカルアドレス (169.254.x.x): ネットワークアダプターが DHCP サーバーから IPv4 アドレスを取得できませんでした。</value>
   </data>
   <data name="ConnectionCheckReason_NoRoute" xml:space="preserve">
-    <value>No route to the internet (no default gateway). The address of the first active network adapter is shown.</value>
+    <value>インターネットへのルートがありません (デフォルトゲートウェイがありません)。最初のアクティブなネットワークアダプターのアドレスを表示しています。</value>
   </data>
   <data name="ConnectionCheckReason_IPv6NotAvailable" xml:space="preserve">
-    <value>No IPv6 connection. The network or the internet provider may not support IPv6.</value>
+    <value>IPv6 接続がありません。ネットワークまたはインターネットプロバイダーが IPv6 をサポートしていない可能性があります。</value>
   </data>
   <data name="ConnectionCheckReason_NoIPAddressToResolve" xml:space="preserve">
-    <value>No IP address to resolve.</value>
+    <value>解決する IP アドレスがありません。</value>
   </data>
   <data name="ConnectionCheckReason_PTRNotFound" xml:space="preserve">
-    <value>No DNS record (PTR) found for the IP address. Many networks don't have one, this is not an error.</value>
+    <value>IP アドレスの DNS レコード (PTR) が見つかりませんでした。多くのネットワークには存在しないため、これはエラーではありません。</value>
   </data>
   <data name="ConnectionCheckReason_DNSError" xml:space="preserve">
-    <value>The DNS server did not answer or returned an error.</value>
+    <value>DNS サーバーが応答しなかったか、エラーを返しました。</value>
   </data>
   <data name="ConnectionCheckReason_NoGateway" xml:space="preserve">
-    <value>No default gateway found on the network adapter (e.g. a VPN connection without a gateway).</value>
+    <value>ネットワークアダプターにデフォルトゲートウェイが見つかりません (例 : ゲートウェイのない VPN 接続)。</value>
   </data>
   <data name="ConnectionCheckReason_GatewayNoReply" xml:space="preserve">
-    <value>The gateway did not reply to the ping. It may be offline or block ICMP.</value>
+    <value>ゲートウェイが ping に応答しませんでした。オフラインであるか、ICMP をブロックしている可能性があります。</value>
   </data>
   <data name="ConnectionCheckReason_PublicIPAddressPrivate" xml:space="preserve">
-    <value>The API returned a private IP address instead of the public one (e.g. the page of a hotspot / captive portal or a proxy).</value>
+    <value>API がパブリック IP アドレスではなくプライベート IP アドレスを返しました (例 : ホットスポット／キャプティブポータルのページやプロキシ)。</value>
   </data>
   <data name="ConnectionCheckReason_PublicIPAddressRequestFailed" xml:space="preserve">
-    <value>The public IP address could not be requested from the API (no answer, an error or no IP address in the answer).</value>
+    <value>API からパブリック IP アドレスを要求できませんでした (応答なし、エラー、または応答に IP アドレスが含まれていません)。</value>
   </data>
   <data name="ConnectionCheckReason_NameResolutionFailed" xml:space="preserve">
-    <value>The name of the public IP address API could not be resolved. Check the DNS server.</value>
+    <value>パブリックIPアドレス API の名前を解決できませんでした。DNS サーバーを確認してください。</value>
   </data>
   <data name="ConnectionCheckReason_CaptivePortal" xml:space="preserve">
-    <value>Windows reports limited internet access (e.g. a hotspot / captive portal that requires a sign-in).</value>
+    <value>Windows がインターネットアクセスが制限されていると報告しています (例 : サインインが必要なホットスポット/キャプティブポータル)。</value>
   </data>
   <data name="ConnectionCheckReason_InternetAccessReportedByWindows" xml:space="preserve">
-    <value>No reply to the ping and no public IP address from the API, but Windows reports internet access. ICMP and the API may be blocked by a firewall or only reachable via a proxy.</value>
+    <value>ping への応答も API からのパブリック IP アドレスもありませんが、Windows はインターネットアクセスがあると報告しています。ICMP と API がファイアウォールでブロックされているか、プロキシ経由でのみ到達可能な可能性があります。</value>
   </data>
   <data name="ConnectionCheckReason_InternetNotReachable" xml:space="preserve">
-    <value>The internet is not reachable (no reply to the ping of the public IP address and no answer from the public IP address API).</value>
+    <value>インターネットに到達できません (パブリック IP アドレスへの ping への応答も、パブリック IP アドレス API からの応答もありません)。</value>
   </data>
   <data name="ConnectionCheckReason_PublicIPAddressCheckDisabled" xml:space="preserve">
-    <value>The public IP address is not requested (disabled in the settings).</value>
+    <value>パブリック IP アドレスを要求していません (設定で無効になっています)。</value>
   </data>
   <data name="CopyAll" xml:space="preserve">
-    <value>Copy all</value>
+    <value>すべてコピー</value>
   </data>
   <data name="Widgets" xml:space="preserve">
-    <value>Widgets</value>
+    <value>ウィジェット</value>
   </data>
   <data name="AllWidgetsAreHiddenMessage" xml:space="preserve">
-    <value>All widgets are hidden. You can show them in the settings of the dashboard.</value>
+    <value>すべてのウィジェットが非表示になっています。ダッシュボードの設定で表示できます。</value>
   </data>
   <data name="XXXDidNotRespondWithinXXXSecondsMessage" xml:space="preserve">
-    <value>{0} did not respond within {1} seconds.</value>
+    <value>{0} は {1} 秒以内に応答しませんでした。</value>
   </data>
   <data name="XRequestsFailedAndWereSkippedMessage" xml:space="preserve">
-    <value>{0} requests failed and were skipped. The result may be less accurate.</value>
+    <value>{0} 件のリクエストが失敗したためスキップされました。結果の精度が低下する可能性があります。</value>
   </data>
   <data name="LastTestAtX" xml:space="preserve">
-    <value>Last test at {0}</value>
+    <value>最終テスト : {0}</value>
   </data>
 </root>
