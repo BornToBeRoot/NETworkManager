@@ -1598,6 +1598,12 @@ public sealed partial class MainWindow : INotifyPropertyChanged
             OpenStatusWindowCommand.Execute(null);
     }
 
+    /// <summary>
+    ///     Window state before the last change: only a restore from minimized shows the window again (not maximize /
+    ///     restore down). The window never starts minimized (the saved position is normal or maximized).
+    /// </summary>
+    private WindowState _previousWindowState = WindowState.Normal;
+
     private void MetroWindowMain_StateChanged(object sender, EventArgs e)
     {
         // Keep the fixed size in screenshot mode (e.g. double-click on the title bar)
@@ -1607,10 +1613,16 @@ public sealed partial class MainWindow : INotifyPropertyChanged
             return;
         }
 
+        var wasMinimized = _previousWindowState == WindowState.Minimized;
+        _previousWindowState = WindowState;
+
         if (WindowState != WindowState.Minimized)
         {
-            // Restored: the dashboard may be outdated (e.g. a network change while minimized)
-            _dashboardView?.OnMainWindowShown();
+            // Restored from minimized: the dashboard may be outdated (e.g. a network change while minimized). Maximize /
+            // restore down: the window was shown all the time, the widgets are not checked again
+            if (wasMinimized)
+                _dashboardView?.OnMainWindowShown();
+
             return;
         }
 
