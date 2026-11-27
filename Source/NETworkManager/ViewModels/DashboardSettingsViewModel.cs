@@ -415,10 +415,11 @@ public class DashboardSettingsViewModel : ViewModelBase
             var targets = SettingsManager.Current.Dashboard_LatencyTargets;
             var index = targets.IndexOf(selected);
 
+            // Deleted meanwhile (e.g. the settings were replaced): not added again, the list may be full
             if (index < 0)
-                targets.Add(target);
-            else
-                targets[index] = target;
+                return;
+
+            targets[index] = target;
 
             SelectedLatencyTarget = target;
         });
