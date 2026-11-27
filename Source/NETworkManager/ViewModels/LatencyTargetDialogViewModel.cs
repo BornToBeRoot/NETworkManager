@@ -24,7 +24,6 @@ public class LatencyTargetDialogViewModel : ViewModelBase
 
         Name = target?.Name;
         Host = target?.Host;
-        IsGateway = target?.IsGateway ?? false;
     }
 
     /// <summary>
@@ -54,7 +53,7 @@ public class LatencyTargetDialogViewModel : ViewModelBase
     }
 
     /// <summary>
-    /// Gets or sets the IP address or host name (not used for the gateway).
+    /// Gets or sets the IP address or host name.
     /// </summary>
     public string Host
     {
@@ -70,26 +69,10 @@ public class LatencyTargetDialogViewModel : ViewModelBase
     }
 
     /// <summary>
-    /// Gets or sets a value indicating whether the default gateway is pinged instead of a host.
-    /// </summary>
-    public bool IsGateway
-    {
-        get;
-        set
-        {
-            if (value == field)
-                return;
-
-            field = value;
-            OnPropertyChanged();
-        }
-    }
-
-    /// <summary>
-    /// Target of the dialog (the host is not saved for the gateway).
+    /// Target of the dialog.
     /// </summary>
     public LatencyTargetInfo ToTarget()
     {
-        return new LatencyTargetInfo(Name?.Trim(), IsGateway ? null : Host?.Trim(), IsGateway);
+        return new LatencyTargetInfo(Name?.Trim(), Host?.Trim());
     }
 }

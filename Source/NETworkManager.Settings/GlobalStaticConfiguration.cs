@@ -145,8 +145,13 @@ public static class GlobalStaticConfiguration
     public static int Dashboard_LatencyInterval => 2;
 
     /// <summary>
-    ///     Default targets of the latency widget (public DNS resolvers: answer pings reliably, anycast). The gateway is
-    ///     not a default, it can be added in the settings.
+    ///     Ping the default gateway in the latency widget (first line, in front of the targets): shows whether a
+    ///     problem is the local network or the internet, and works without internet (no third party).
+    /// </summary>
+    public static bool Dashboard_LatencyPingGateway => true;
+
+    /// <summary>
+    ///     Default targets of the latency widget (public DNS resolvers: answer pings reliably, anycast).
     /// </summary>
     public static List<LatencyTargetInfo> Dashboard_LatencyTargets =>
     [
@@ -156,9 +161,10 @@ public static class GlobalStaticConfiguration
     ];
 
     /// <summary>
-    ///     Maximum number of targets of the latency widget (a status widget, not a Ping Monitor).
+    ///     Maximum number of targets of the latency widget, without the default gateway (a status widget, not a Ping
+    ///     Monitor: up to 6 lines with the gateway).
     /// </summary>
-    public static int Dashboard_LatencyMaxTargets => 6;
+    public static int Dashboard_LatencyMaxTargets => 5;
 
     public static bool Dashboard_ShowNetworkConnectionWidget => true;
     public static bool Dashboard_ShowLatencyWidget => true;

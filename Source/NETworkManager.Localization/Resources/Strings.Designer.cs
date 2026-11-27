@@ -6501,7 +6501,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Pings the default gateway (router) of the network adapter that is used for the internet instead of a host. It is detected again when the pings start, e.g. after a network change (VPN, another Wi-Fi)..
+        ///   Looks up a localized string similar to Pings the default gateway (router) of the network adapter that is used for the internet, in the first line in front of the targets. If only the targets fail, the problem is the internet connection, not your network. It is detected again when the pings start, e.g. after a network change (VPN, another Wi-Fi)..
         /// </summary>
         public static string HelpMessage_LatencyGateway {
             get {
@@ -6530,7 +6530,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Up to 6 targets: IP addresses or host names on the internet or in your network (e.g. the router, a server). In an internal or air-gapped network, replace the default targets on the internet with your own hosts..
+        ///   Looks up a localized string similar to Up to 5 targets: IP addresses or host names on the internet or in your network (e.g. a server). In an internal or air-gapped network, replace the default targets on the internet with your own hosts..
         /// </summary>
         public static string HelpMessage_LatencyTargets {
             get {
@@ -7893,7 +7893,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Show the latency to targets on the internet or in your network (e.g. Cloudflare, Google and Quad9 or your router), updated live while the dashboard is shown.
+        ///   Looks up a localized string similar to Show the latency to your router and to targets on the internet or in your network (e.g. Cloudflare, Google and Quad9), updated live while the dashboard is shown.
         ///The targets receive a ping (ICMP echo request) every few seconds..
         /// </summary>
         public static string LatencyWidgetDisabledMessage {
@@ -10465,6 +10465,15 @@ namespace NETworkManager.Localization.Resources {
         public static string Ping {
             get {
                 return ResourceManager.GetString("Ping", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ping default gateway.
+        /// </summary>
+        public static string PingDefaultGateway {
+            get {
+                return ResourceManager.GetString("PingDefaultGateway", resourceCulture);
             }
         }
         
@@ -16078,15 +16087,6 @@ namespace NETworkManager.Localization.Resources {
         public static string UseCustomThemes {
             get {
                 return ResourceManager.GetString("UseCustomThemes", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Use default gateway.
-        /// </summary>
-        public static string UseDefaultGateway {
-            get {
-                return ResourceManager.GetString("UseDefaultGateway", resourceCulture);
             }
         }
         

@@ -68,9 +68,16 @@ public class LatencyTargetViewModel : ViewModelBase
     public string Host { get; }
 
     /// <summary>
-    /// Gets the target of the settings (the widget keeps the target when the list changes and it is the same).
+    /// Gets the target of the settings (the widget keeps the target when the list changes and it is the same),
+    /// <c>null</c> for the default gateway.
     /// </summary>
     public LatencyTargetInfo Info { get; }
+
+    /// <summary>
+    /// Gets a value indicating whether the default gateway is pinged (setting <c>Dashboard_LatencyPingGateway</c>,
+    /// detected when the pings start, see <see cref="ResolvedIPAddress" />).
+    /// </summary>
+    public bool IsGateway => Info == null;
 
     /// <summary>
     /// Gets the pinged IP address (resolved from the host), <c>null</c> before it is resolved.
@@ -175,12 +182,12 @@ public class LatencyTargetViewModel : ViewModelBase
     /// <summary>
     /// Initializes a new instance of the <see cref="LatencyTargetViewModel" /> class.
     /// </summary>
-    /// <param name="info">Target of the settings (a host or the default gateway).</param>
+    /// <param name="info">Target of the settings, <c>null</c> for the default gateway.</param>
     public LatencyTargetViewModel(LatencyTargetInfo info)
     {
         Info = info;
-        Host = info.IsGateway ? Strings.Gateway : info.Host?.Trim();
-        Name = string.IsNullOrWhiteSpace(info.Name) ? Host : info.Name.Trim();
+        Host = IsGateway ? Strings.Gateway : info.Host?.Trim();
+        Name = IsGateway || string.IsNullOrWhiteSpace(info.Name) ? Host : info.Name.Trim();
 
         XAxes = [_xAxis];
 
@@ -223,7 +230,7 @@ public class LatencyTargetViewModel : ViewModelBase
     /// Host that is opened / copied: the host, or the detected IP address of the gateway (<c>null</c> before it is
     /// detected).
     /// </summary>
-    private string Target => Info.IsGateway ? ResolvedIPAddress : Host;
+    private string Target => IsGateway ? ResolvedIPAddress : Host;
 
     #endregion
 
@@ -298,7 +305,7 @@ public class LatencyTargetViewModel : ViewModelBase
     /// <returns>IP address, <c>null</c> if the host name could not be resolved (the error is shown).</returns>
     private async Task<IPAddress> ResolveAsync(CancellationToken cancellationToken)
     {
-        if (Info.IsGateway)
+        if (IsGateway)
             return await DetectGatewayAsync(cancellationToken);
 
         if (IPAddress.TryParse(Host, out var ipAddress))
@@ -477,7 +484,7 @@ public class LatencyTargetViewModel : ViewModelBase
         ClearHistory();
 
         // Host is "Gateway" for the gateway: a sample IP address to open / copy (context menu)
-        ResolvedIPAddress = Info.IsGateway ? ScreenshotData.RouterIPv4 : Host;
+        ResolvedIPAddress = IsGateway ? ScreenshotData.RouterIPv4 : Host;
 
         foreach (var sample in samples)
             AddSample(sample, sample.IsSuccess

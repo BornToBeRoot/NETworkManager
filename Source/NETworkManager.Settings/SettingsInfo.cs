@@ -1102,6 +1102,19 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     } = GlobalStaticConfiguration.Dashboard_LatencyInterval;
 
+    public bool Dashboard_LatencyPingGateway
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.Dashboard_LatencyPingGateway;
+
     public ObservableCollection<LatencyTargetInfo> Dashboard_LatencyTargets
     {
         get;

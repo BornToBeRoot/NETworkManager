@@ -299,6 +299,25 @@ public class DashboardSettingsViewModel : ViewModelBase
     }
 
     /// <summary>
+    /// Gets or sets a value indicating whether the latency widget pings the default gateway (first line).
+    /// </summary>
+    public bool LatencyPingGateway
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            if (!_isLoading)
+                SettingsManager.Current.Dashboard_LatencyPingGateway = value;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
     /// Gets the targets of the latency widget.
     /// </summary>
     public ICollectionView LatencyTargets { get; } =
@@ -521,6 +540,7 @@ public class DashboardSettingsViewModel : ViewModelBase
         CheckLatencyEnabled = SettingsManager.Current.Dashboard_CheckLatency;
         LatencyPosition = SettingsManager.Current.Dashboard_LatencyPosition;
         LatencyInterval = SettingsManager.Current.Dashboard_LatencyInterval;
+        LatencyPingGateway = SettingsManager.Current.Dashboard_LatencyPingGateway;
         ShowSpeedTestWidget = SettingsManager.Current.Dashboard_ShowSpeedTestWidget;
         ShowIPGeolocationWidget = SettingsManager.Current.Dashboard_ShowIPGeolocationWidget;
         ShowDNSResolverWidget = SettingsManager.Current.Dashboard_ShowDNSResolverWidget;

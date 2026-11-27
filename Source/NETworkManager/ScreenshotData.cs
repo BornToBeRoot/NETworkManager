@@ -369,14 +369,15 @@ public static class ScreenshotData
     #region Latency
 
     /// <summary>
-    /// Creates the pings of the last minute of an latency target (like the default targets Cloudflare,
+    /// Creates the pings of the last minute of a latency target (like the default targets: the gateway, Cloudflare,
     /// Google and Quad9): a reply every 2 seconds with a few milliseconds of variation, ending now.
     /// </summary>
-    /// <param name="index">Index of the target (0-2), each has its own latency.</param>
-    public static IEnumerable<LatencySample> CreateLatencySamples(int index)
+    /// <param name="index">Index of the target (the gateway first), each has its own latency.</param>
+    /// <param name="isGateway">The default gateway (about 1 ms, in the local network).</param>
+    public static IEnumerable<LatencySample> CreateLatencySamples(int index, bool isGateway)
     {
         long[] baseTimes = [9, 8, 10];
-        var baseTime = baseTimes[index % baseTimes.Length];
+        var baseTime = isGateway ? 1 : baseTimes[index % baseTimes.Length];
         var now = DateTime.UtcNow; // like the widget (time window in UTC)
 
         for (var i = 30; i >= 0; i--)

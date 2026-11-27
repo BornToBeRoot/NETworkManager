@@ -14,7 +14,6 @@
              mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:DashboardSettingsViewModel}">
     <UserControl.Resources>
         <converters:LatencyPositionToStringConverter x:Key="LatencyPositionToStringConverter" />
-        <converters:LatencyTargetToHostConverter x:Key="LatencyTargetToHostConverter" />
         <wpfHelpers:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
     </UserControl.Resources>
     <StackPanel>
@@ -239,6 +238,17 @@
         <mah:NumericUpDown Value="{Binding LatencyInterval}" Minimum="1" Maximum="10" Interval="1"
                            Width="250" HorizontalAlignment="Left" Margin="0,0,0,10" />
         <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+            <mah:ToggleSwitch IsOn="{Binding LatencyPingGateway}"
+                              Header="{x:Static localization:Strings.PingDefaultGateway}" />
+            <Rectangle Width="24" Height="24" VerticalAlignment="Top"
+                       ToolTip="{x:Static localization:Strings.HelpMessage_LatencyGateway}"
+                       Style="{StaticResource HelpImageRectangle}" Margin="10,0,0,0">
+                <Rectangle.Resources>
+                    <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource HelpToolTip}" />
+                </Rectangle.Resources>
+            </Rectangle>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
             <TextBlock Text="{x:Static localization:Strings.Targets}" Style="{DynamicResource DefaultTextBlock}" />
             <Rectangle Width="24" Height="24" ToolTip="{x:Static localization:Strings.HelpMessage_LatencyTargets}"
                        Style="{StaticResource HelpImageRectangle}" Margin="10,0,0,0">
@@ -278,7 +288,7 @@
                                     Binding="{Binding (network:LatencyTargetInfo.Name)}"
                                     CanUserSort="False" MinWidth="200" />
                 <DataGridTextColumn Header="{x:Static localization:Strings.Host}" FontFamily="{StaticResource Fonts.Family.Mono}"
-                                    Binding="{Binding Converter={StaticResource LatencyTargetToHostConverter}}"
+                                    Binding="{Binding (network:LatencyTargetInfo.Host)}"
                                     CanUserSort="False" MinWidth="250" />
             </DataGrid.Columns>
             <DataGrid.InputBindings>

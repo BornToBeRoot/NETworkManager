@@ -169,15 +169,22 @@ Time between the reply (or the timeout of 2 seconds) of a ping and the next ping
 
 **Default:** `2`
 
+#### Ping default gateway
+
+Ping the default gateway (router) of the network adapter that is used for the internet (the route to the [Public IPv4 address](#public-ipv4-address)), in the first line in front of the [targets](#targets). If only the targets fail, the problem is the internet connection, not your network. The gateway is detected again when the pings start, e.g. after a network change (VPN, another Wi-Fi). Without a gateway (e.g. a VPN without a gateway) the line is gray.
+
+**Type:** `Boolean`
+
+**Default:** `Enabled`
+
 #### Targets
 
-Up to six targets of the widget, in this order. **Add...** adds a target, right-click a target (or **F2** / **Del**, double-click) to edit or delete it. A target has:
+Up to five targets of the widget (in addition to the [default gateway](#ping-default-gateway)), in this order. **Add...** adds a target (disabled when the list is full), right-click a target (or **F2** / **Del**, double-click) to edit or delete it. A target has:
 
 - **Name**: shown in the widget (the host if it is empty).
-- **Use default gateway**: ping the default gateway (router) of the network adapter that is used for the internet (the route to the [Public IPv4 address](#public-ipv4-address)) instead of a host. It is detected again when the pings start, e.g. after a network change. Not a default target, add it if you need it.
-- **Host**: IP address or host name (not used for the default gateway).
+- **Host**: IP address or host name.
 
-**Type:** List of `NETworkManager.Models.Network.LatencyTargetInfo` (name, host, use default gateway)
+**Type:** List of `NETworkManager.Models.Network.LatencyTargetInfo` (name, host)
 
 **Default:**
 
@@ -259,7 +266,7 @@ A test takes about 15 seconds on a fast connection and up to 1–2 minutes on a 
 
 ## Latency
 
-The **Latency** widget pings up to six targets on the internet or in your network and shows one line per target with its name, the round-trip time of the last ping and a chart of the last 60 seconds, like the dashboard of a router or gateway. By default it is shown to the right of the [Speed Test](#speed-test) (1/3 of the width, the targets one below the other). In a narrow window (less than about 900 pixels for the dashboard) or without the speed test it gets its own row below the speed test, with the targets side by side (up to three per line); see [Position](#position). By default these are the public DNS resolvers of Cloudflare (`1.1.1.1`), Google (`8.8.8.8`) and Quad9 (`9.9.9.9`): they answer pings reliably and are close to every user (anycast). The targets can be changed in the [settings](#targets), e.g. the default gateway (router) or your own servers, see [Internal and air-gapped networks](#internal-and-air-gapped-networks). Without targets the widget shows **Configure**, which opens the settings.
+The **Latency** widget pings the default gateway (router) and up to five targets on the internet or in your network and shows one line per target with its name, the round-trip time of the last ping and a chart of the last 60 seconds, like the dashboard of a router or gateway. By default it is shown to the right of the [Speed Test](#speed-test) (1/3 of the width, the targets one below the other). In a narrow window (less than about 900 pixels for the dashboard) or without the speed test it gets its own row below the speed test, with the targets side by side (up to three per line); see [Position](#position). By default these are the default gateway (first line, see [Ping default gateway](#ping-default-gateway)) and the public DNS resolvers of Cloudflare (`1.1.1.1`), Google (`8.8.8.8`) and Quad9 (`9.9.9.9`): they answer pings reliably and are close to every user (anycast). If only the internet targets fail, the problem is the internet connection, not your network. The targets can be changed in the [settings](#targets), e.g. your own servers, see [Internal and air-gapped networks](#internal-and-air-gapped-networks). Without the gateway and targets the widget shows **Configure**, which opens the settings.
 
 The check is disabled by default: the widget shows what it does and an **Enable** button, which enables the check (like [Check latency](#check-latency)) and starts right away.
 
@@ -270,19 +277,18 @@ The targets are only pinged while the dashboard is shown: not when you switch to
 | Green | The last ping was answered |
 | Yellow | The last ping was answered, but a ping was lost in the last minute |
 | Red | The last ping was not answered (the status is shown, e.g. timed out) or the host name could not be resolved |
-| Gray | Not pinged yet, or no default gateway found for the gateway target (e.g. a VPN without a gateway; it is detected again later) |
+| Gray | Not pinged yet, or no default gateway found (e.g. a VPN without a gateway; it is detected again later) |
 
 A lost ping is a gap in the chart. Hover over a target to see the host, the IP address and the minimum / average / maximum round-trip time and the packet loss of the last minute. Right-click a target to open it in the **Ping Monitor**, **Traceroute** or **DNS Lookup**, **Copy** copies the host (the IP address of the gateway). The **Copy all** button copies the values and statistics of all targets as text.
 
 ### Internal and air-gapped networks
 
-A target can be any IP address or host name, also in your own network. Without access to the internet (e.g. an internal or air-gapped network, or a lab), the default targets on the internet always time out: replace them with your own hosts in the [settings](#targets), e.g.:
+A target can be any IP address or host name, also in your own network. Without access to the internet (e.g. an internal or air-gapped network, or a lab), the default targets on the internet always time out: replace them with your own hosts in the [settings](#targets) (the [default gateway](#ping-default-gateway) is pinged anyway and follows a network change), e.g.:
 
-- the **default gateway** (router): add a target with **Use default gateway**, the widget pings the current gateway and follows a network change (VPN, another Wi-Fi),
 - a domain controller, a DNS server or an important server,
 - a host behind a WAN / VPN link (e.g. a server at another site), to see its latency.
 
-Internal and internet targets can be mixed (e.g. gateway, server, `1.1.1.1`): if only the internet targets fail, the problem is the internet connection, not your network. Use IP addresses if possible, they also work when the DNS server doesn't. Pings to your own hosts don't go to a third party; the check is still disabled by default, because the default targets are on the internet.
+Internal and internet targets can be mixed (e.g. a server and `1.1.1.1`): if only the internet targets fail, the problem is the internet connection, not your network. Use IP addresses if possible, they also work when the DNS server doesn't. Pings to the gateway and your own hosts don't go to a third party; the check is still disabled by default, because the default targets are on the internet.
 
 ## IP geolocation
 

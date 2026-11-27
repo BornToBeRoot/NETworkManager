@@ -147,7 +147,7 @@ public class LatencyWidgetViewModel : ViewModelBase
         if (ScreenshotData.IsEnabled)
         {
             foreach (var (target, index) in Targets.Select((x, i) => (x, i)))
-                target.SetSamples(ScreenshotData.CreateLatencySamples(index));
+                target.SetSamples(ScreenshotData.CreateLatencySamples(index, target.IsGateway));
 
             return;
         }
@@ -192,7 +192,7 @@ public class LatencyWidgetViewModel : ViewModelBase
     }
 
     /// <summary>
-    /// Creates the targets from the settings.
+    /// Creates the targets from the settings: the default gateway first (if enabled), then the targets of the list.
     /// </summary>
     private void LoadTargets()
     {
@@ -205,11 +205,21 @@ public class LatencyWidgetViewModel : ViewModelBase
 
         Targets.Clear();
 
+        if (SettingsManager.Current.Dashboard_LatencyPingGateway)
+        {
+            var gateway = previous.FirstOrDefault(x => x.IsGateway);
+
+            if (gateway != null)
+                previous.Remove(gateway);
+
+            Targets.Add(gateway ?? new LatencyTargetViewModel(null));
+        }
+
         foreach (var info in SettingsManager.Current.Dashboard_LatencyTargets
-                     .Where(x => x.IsGateway || !string.IsNullOrWhiteSpace(x.Host))
+                     .Where(x => !string.IsNullOrWhiteSpace(x.Host))
                      .Take(GlobalStaticConfiguration.Dashboard_LatencyMaxTargets))
         {
-            var target = previous.FirstOrDefault(x => x.Info.IsSameTarget(info));
+            var target = previous.FirstOrDefault(x => !x.IsGateway && x.Info.IsSameTarget(info));
 
             if (target != null)
                 previous.Remove(target);
@@ -238,6 +248,9 @@ public class LatencyWidgetViewModel : ViewModelBase
             // The list was replaced (e.g. settings imported or reset)
             case nameof(SettingsInfo.Dashboard_LatencyTargets):
                 SubscribeTargets();
+                LoadTargets();
+                break;
+            case nameof(SettingsInfo.Dashboard_LatencyPingGateway):
                 LoadTargets();
                 break;
         }

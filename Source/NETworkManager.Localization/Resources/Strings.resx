@@ -5796,7 +5796,7 @@ ip-api.com receives your IP address and the IP address of your DNS server.</valu
     <value>Shows the widget on the dashboard. It only pings the targets if the check is enabled (below or with the "Enable" button of the widget). A hidden widget sends nothing.</value>
   </data>
   <data name="LatencyWidgetDisabledMessage" xml:space="preserve">
-    <value>Show the latency to targets on the internet or in your network (e.g. Cloudflare, Google and Quad9 or your router), updated live while the dashboard is shown.
+    <value>Show the latency to your router and to targets on the internet or in your network (e.g. Cloudflare, Google and Quad9), updated live while the dashboard is shown.
 The targets receive a ping (ICMP echo request) every few seconds.</value>
   </data>
   <data name="HelpMessage_LatencyInterval" xml:space="preserve">
@@ -5831,13 +5831,13 @@ Own row: below the network connection, the targets side by side.</value>
   <data name="DeleteTargetMessage" xml:space="preserve">
     <value>The selected target will be deleted permanently.</value>
   </data>
-  <data name="UseDefaultGateway" xml:space="preserve">
-    <value>Use default gateway</value>
+  <data name="PingDefaultGateway" xml:space="preserve">
+    <value>Ping default gateway</value>
   </data>
   <data name="HelpMessage_LatencyGateway" xml:space="preserve">
-    <value>Pings the default gateway (router) of the network adapter that is used for the internet instead of a host. It is detected again when the pings start, e.g. after a network change (VPN, another Wi-Fi).</value>
+    <value>Pings the default gateway (router) of the network adapter that is used for the internet, in the first line in front of the targets. If only the targets fail, the problem is the internet connection, not your network. It is detected again when the pings start, e.g. after a network change (VPN, another Wi-Fi).</value>
   </data>
   <data name="HelpMessage_LatencyTargets" xml:space="preserve">
-    <value>Up to 6 targets: IP addresses or host names on the internet or in your network (e.g. the router, a server). In an internal or air-gapped network, replace the default targets on the internet with your own hosts.</value>
+    <value>Up to 5 targets: IP addresses or host names on the internet or in your network (e.g. a server). In an internal or air-gapped network, replace the default targets on the internet with your own hosts.</value>
   </data>
 </root>
