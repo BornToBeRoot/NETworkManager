@@ -183,6 +183,7 @@ Release date: **xx.xx.2026**
 - Fixed the offset of the IP geolocation widget being shown as `-/-` for locations in UTC+0 (e.g. London in winter) and in seconds (e.g. `3600`). It is shown as `UTC+01:00`. A region without a code is shown without empty brackets. [#3741](https://github.com/BornToBeRoot/NETworkManager/pull/3741)
 - Fixed the IP geolocation widget showing an empty result when ip-api.com had no geolocation for the public IP address (e.g. behind a proxy). A warning shows the reason, like the IP Geolocation tool. [#3741](https://github.com/BornToBeRoot/NETworkManager/pull/3741)
 - Fixed the speed test ending with "Could not connect to speed.cloudflare.com" when a proxy closed the connection of large uploads (instead of rejecting them with an HTTP error). After three requests in a row without a response, the test only ends if the server doesn't answer a small request either; otherwise the remaining requests of this size and the larger sizes of the direction are skipped. [#3741](https://github.com/BornToBeRoot/NETworkManager/pull/3741)
+- Fixed the network connection, IP geolocation and DNS resolver widgets showing the public IP address and location of the previous network after a network change (e.g. a VPN connected shortly after the last check): every check uses a new connection instead of a kept-alive connection of the old network. [#3741](https://github.com/BornToBeRoot/NETworkManager/pull/3741)
 
 **Status window**
 
@@ -191,12 +192,14 @@ Release date: **xx.xx.2026**
 - Fixed the status window being hidden right after it was opened from the tray icon when the countdown of a previous network change had just ended. [#3734](https://github.com/BornToBeRoot/NETworkManager/pull/3734)
 - Fixed the status window being cut off on the left on small screens (e.g. 1280 x 720 with 150 % scaling). It is no longer wider than the screen. [#3734](https://github.com/BornToBeRoot/NETworkManager/pull/3734)
 - Fixed the status window opened by the user (e.g. from the tray icon) closing itself after a network change. It stays open and checks the network connection again. [#3734](https://github.com/BornToBeRoot/NETworkManager/pull/3734)
+- Fixed the network connection showing the public IP address of the previous network after a network change (e.g. a VPN connected shortly after the last check): every check uses a new connection instead of a kept-alive connection of the old network. [#3741](https://github.com/BornToBeRoot/NETworkManager/pull/3741)
 
 **IP Geolocation**
 
 - Fixed the tab getting stuck (query disabled, input read-only, progress bar running) after an error or when the rate limit of ip-api.com was reached, until the tab was closed. [#3741](https://github.com/BornToBeRoot/NETworkManager/pull/3741)
 - Fixed a query waiting up to 100 seconds when ip-api.com did not respond (e.g. a firewall that drops the request). It fails after 10 seconds. [#3741](https://github.com/BornToBeRoot/NETworkManager/pull/3741)
 - Fixed "Rate limit reached! Try again in ... seconds" always showing the whole time window of ip-api.com (e.g. 60 seconds) instead of the time that is left. [#3741](https://github.com/BornToBeRoot/NETworkManager/pull/3741)
+- Fixed ip-api.com being blocked for 60 seconds after it answered "too many requests" (HTTP 429), even if its time window ended a few seconds later. The time left reported by ip-api.com is used. [#3741](https://github.com/BornToBeRoot/NETworkManager/pull/3741)
 - Fixed every query failing with "The rate limit values couldn't be extracted from the http header..." when a proxy removed the rate limit headers of ip-api.com. The result is shown, the rate limit is still detected by ip-api.com's answer (HTTP 429). [#3741](https://github.com/BornToBeRoot/NETworkManager/pull/3741)
 - Fixed an empty response of ip-api.com (e.g. from a proxy) being shown as an empty result instead of an error. [#3741](https://github.com/BornToBeRoot/NETworkManager/pull/3741)
 - Fixed the offset being shown as `-/-` for locations in UTC+0 (e.g. London in winter) and in seconds (e.g. `3600`). It is shown as `UTC+01:00`. A region without a code is shown without empty brackets. [#3741](https://github.com/BornToBeRoot/NETworkManager/pull/3741)
@@ -207,6 +210,7 @@ Release date: **xx.xx.2026**
 
 - Fixed the traceroute waiting up to 100 seconds per hop when the IP geolocation is enabled and ip-api.com did not respond (e.g. a firewall that drops the request). The geolocation of a hop fails after 10 seconds. [#3741](https://github.com/BornToBeRoot/NETworkManager/pull/3741)
 - Fixed the IP geolocation of every hop failing with "The rate limit values couldn't be extracted from the http header..." when a proxy removed the rate limit headers of ip-api.com. [#3741](https://github.com/BornToBeRoot/NETworkManager/pull/3741)
+- Fixed the IP geolocation of the hops being blocked for 60 seconds after ip-api.com answered "too many requests" (HTTP 429), even if its time window ended a few seconds later. The time left reported by ip-api.com is used. [#3741](https://github.com/BornToBeRoot/NETworkManager/pull/3741)
 - Fixed an empty response of ip-api.com (e.g. from a proxy) being shown as an empty IP geolocation of the hop instead of an error. [#3741](https://github.com/BornToBeRoot/NETworkManager/pull/3741)
 - Fixed errors of ip-api.com being shown as the English error text of .NET, once for every hop. A translated message is shown once per trace (e.g. no response within 10 seconds or the HTTP status code). [#3741](https://github.com/BornToBeRoot/NETworkManager/pull/3741)
 
