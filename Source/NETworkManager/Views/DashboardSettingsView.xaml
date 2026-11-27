@@ -9,7 +9,30 @@
              xmlns:validators="clr-namespace:NETworkManager.Validators;assembly=NETworkManager.Validators"
              mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:DashboardSettingsViewModel}">
     <StackPanel>
-        <TextBlock Text="{x:Static localization:Strings.Dashboard}" Style="{StaticResource HeaderTextBlock}" />
+        <TextBlock Text="{x:Static localization:Strings.NetworkConnection}" Style="{StaticResource HeaderTextBlock}" />
+        <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+            <mah:ToggleSwitch IsOn="{Binding ShowNetworkConnectionWidget}"
+                              Header="{x:Static localization:Strings.ShowWidget}" />
+            <Rectangle Width="24" Height="24" VerticalAlignment="Top"
+                       ToolTip="{x:Static localization:Strings.HelpMessage_ShowNetworkConnectionWidget}"
+                       Style="{StaticResource HelpImageRectangle}" Margin="10,0,0,0">
+                <Rectangle.Resources>
+                    <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource HelpToolTip}" />
+                </Rectangle.Resources>
+            </Rectangle>
+        </StackPanel>
+        <Grid Margin="0,0,0,10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="10" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Rectangle Grid.Column="0" Style="{StaticResource InfoImageRectangle}" Width="24" Height="24"
+                       HorizontalAlignment="Right" />
+            <TextBlock Grid.Column="2"
+                       Text="{x:Static localization:Strings.NetworkConnectionWidgetAndStatusWindowUseTheseSettingsMessage}"
+                       TextWrapping="Wrap" Style="{StaticResource InfoTextBlock}" />
+        </Grid>
         <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
             <TextBlock Text="{x:Static localization:Strings.PublicIPv4Address}"
                        Style="{DynamicResource DefaultTextBlock}" />
@@ -119,7 +142,7 @@
         </StackPanel>
         <TextBox Width="250" HorizontalAlignment="Left"
                  mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExamplePublicIPv6AddressAPI}" FontFamily="{StaticResource Fonts.Family.Mono}"
-                 Margin="0,0,0,10">
+                 Margin="0,0,0,20">
             <TextBox.Style>
                 <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}">
                     <Setter Property="IsEnabled" Value="False" />
@@ -145,9 +168,25 @@
                 </Binding>
             </TextBox.Text>
         </TextBox>
+        <TextBlock Text="{x:Static localization:Strings.SpeedTest}" Style="{StaticResource HeaderTextBlock}" />
+        <mah:ToggleSwitch Header="{x:Static localization:Strings.ShowWidget}"
+                          IsOn="{Binding ShowSpeedTestWidget}" Margin="0,0,0,20" />
+        <TextBlock Text="{x:Static localization:Strings.IPGeolocation}" Style="{StaticResource HeaderTextBlock}" />
         <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+            <mah:ToggleSwitch IsOn="{Binding ShowIPGeolocationWidget}"
+                              Header="{x:Static localization:Strings.ShowWidget}" />
+            <Rectangle Width="24" Height="24" VerticalAlignment="Top"
+                       ToolTip="{x:Static localization:Strings.HelpMessage_ShowIPApiWidget}"
+                       Style="{StaticResource HelpImageRectangle}" Margin="10,0,0,0">
+                <Rectangle.Resources>
+                    <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource HelpToolTip}" />
+                </Rectangle.Resources>
+            </Rectangle>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Margin="0,0,0,20">
             <mah:ToggleSwitch IsOn="{Binding CheckIPApiIPGeolocationEnabled}"
-                              Header="{x:Static localization:Strings.CheckIPGeolocation}" />
+                              Header="{x:Static localization:Strings.CheckIPGeolocation}"
+                              IsEnabled="{Binding ShowIPGeolocationWidget}" />
             <Rectangle Width="24" Height="24" VerticalAlignment="Top"
                        ToolTip="{x:Static localization:Strings.HelpMessage_CheckIPGeolocation}"
                        Style="{StaticResource HelpImageRectangle}" Margin="10,0,0,0">
@@ -156,9 +195,22 @@
                 </Rectangle.Resources>
             </Rectangle>
         </StackPanel>
+        <TextBlock Text="{x:Static localization:Strings.DNSResolver}" Style="{StaticResource HeaderTextBlock}" />
         <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+            <mah:ToggleSwitch IsOn="{Binding ShowDNSResolverWidget}"
+                              Header="{x:Static localization:Strings.ShowWidget}" />
+            <Rectangle Width="24" Height="24" VerticalAlignment="Top"
+                       ToolTip="{x:Static localization:Strings.HelpMessage_ShowIPApiWidget}"
+                       Style="{StaticResource HelpImageRectangle}" Margin="10,0,0,0">
+                <Rectangle.Resources>
+                    <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource HelpToolTip}" />
+                </Rectangle.Resources>
+            </Rectangle>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
             <mah:ToggleSwitch IsOn="{Binding CheckIPApiDNSResolverEnabled}"
-                              Header="{x:Static localization:Strings.CheckDNSResolver}" />
+                              Header="{x:Static localization:Strings.CheckDNSResolver}"
+                              IsEnabled="{Binding ShowDNSResolverWidget}" />
             <Rectangle Width="24" Height="24" VerticalAlignment="Top"
                        ToolTip="{x:Static localization:Strings.HelpMessage_CheckDNSResolver}"
                        Style="{StaticResource HelpImageRectangle}" Margin="10,0,0,0">
@@ -167,14 +219,5 @@
                 </Rectangle.Resources>
             </Rectangle>
         </StackPanel>
-        <TextBlock Text="{x:Static localization:Strings.Widgets}" Style="{StaticResource HeaderTextBlock}" />
-        <mah:ToggleSwitch Header="{x:Static localization:Strings.NetworkConnection}"
-                          IsOn="{Binding ShowNetworkConnectionWidget}" Margin="0,0,0,10" />
-        <mah:ToggleSwitch Header="{x:Static localization:Strings.SpeedTest}"
-                          IsOn="{Binding ShowSpeedTestWidget}" Margin="0,0,0,10" />
-        <mah:ToggleSwitch Header="{x:Static localization:Strings.IPGeolocation}"
-                          IsOn="{Binding ShowIPGeolocationWidget}" Margin="0,0,0,10" />
-        <mah:ToggleSwitch Header="{x:Static localization:Strings.DNSResolver}"
-                          IsOn="{Binding ShowDNSResolverWidget}" />
     </StackPanel>
 </UserControl>

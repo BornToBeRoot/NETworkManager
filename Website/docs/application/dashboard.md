@@ -41,23 +41,37 @@ Open the tool with `dashboard`. The command accepts no target and no profile, se
 
 ## Settings
 
-### Public IPv4 address
+The settings are grouped by widget, in the order of the dashboard. **Show widget** shows or hides a widget; the IP geolocation and DNS resolver widgets also have a switch for their check (they are shown by default, but only send a request to `ip-api.com` after the check was enabled).
 
-Public IPv4 address that is pinged to check the internet connection. The route to this address is used to detect the local IPv4 address (no packet is sent for this), so it should be routed via the network adapter that is used for the internet.
+### Network connection {#settings-network-connection}
+
+The network connection widget and the [status window](../settings/status.md) use these settings to check the internet. They also apply while the widget is hidden.
+
+#### Show widget {#show-network-connection-widget}
+
+Show or hide the **Network connection** widget on the dashboard. A hidden widget doesn't check anything; the status window always shows the network connection.
+
+**Type:** `Boolean`
+
+**Default:** `Enabled`
+
+#### Public IPv4 address
+
+Public IPv4 address (not the one of your computer) that is pinged to check the internet connection. The route to this address is used to detect the local IPv4 address (no packet is sent for this), so it should be routed via the network adapter that is used for the internet.
 
 **Type:** `String`
 
 **Default:** `1.1.1.1`
 
-### Public IPv6 address
+#### Public IPv6 address
 
-Public IPv6 address that is pinged to check the internet connection. The route to this address is used to detect the local IPv6 address (no packet is sent for this), so it should be routed via the network adapter that is used for the internet.
+Public IPv6 address (not the one of your computer) that is pinged to check the internet connection. The route to this address is used to detect the local IPv6 address (no packet is sent for this), so it should be routed via the network adapter that is used for the internet.
 
 **Type:** `String`
 
 **Default:** `2606:4700:4700::1111`
 
-### Check public IP address
+#### Check public IP address
 
 Enables or disables the resolution of the public IP address via [`api.ipify.org`](https://www.ipify.org/) and [`api6.ipify.org`](https://www.ipify.org/). If disabled, the internet is only checked with the ping of the [Public IPv4 address](#public-ipv4-address) / [Public IPv6 address](#public-ipv6-address) and the connectivity reported by Windows.
 
@@ -65,7 +79,7 @@ Enables or disables the resolution of the public IP address via [`api.ipify.org`
 
 **Default:** `Enabled`
 
-### Use custom IPv4 address API
+#### Use custom IPv4 address API
 
 Override the default IPv4 address API to resolve the public IP address. The API should return only a plain text IPv4 address like `xx.xx.xx.xx`, or a JSON object with the address as a string value like `{"ip":"xx.xx.xx.xx"}`. Other answers (e.g. an HTML page) are not accepted.
 
@@ -86,7 +100,7 @@ Override the default IPv4 address API to resolve the public IP address. The API 
 
 Many APIs also return JSON with more information (e.g. `https://ipinfo.io/json`, `https://ifconfig.co/json`, `http://ip-api.com/json`), the first string value that is an IP address is used. An API that returns `key=value` lines (e.g. `https://1.1.1.1/cdn-cgi/trace`) is not supported.
 
-### Use custom IPv6 address API
+#### Use custom IPv6 address API
 
 Override the default IPv6 address API to resolve the public IP address. The API should return only a plain text IPv6 address like `xxxx:xx:xxx::xx`, or a JSON object with the address as a string value like `{"ip":"xxxx:xx:xxx::xx"}`. Other answers (e.g. an HTML page) are not accepted.
 
@@ -101,9 +115,29 @@ Override the default IPv6 address API to resolve the public IP address. The API 
 | [`https://api6.ipify.org`](https://api6.ipify.org/) | Plain text |
 | [`https://api64.ipify.org?format=json`](https://api64.ipify.org?format=json) | JSON `{"ip":"xxxx:xx:xxx::xx"}` (IPv6 if available, otherwise IPv4 - then the answer is not accepted) |
 
-### Check IP geolocation
+### Speed Test {#settings-speed-test}
 
-Enables or disables the resolution of the IP geolocation via [`ip-api.com`](https://ip-api.com/).
+#### Show widget {#show-speed-test-widget}
+
+Show or hide the **Speed Test** widget on the dashboard. A speed test that is running when the widget is hidden is canceled.
+
+**Type:** `Boolean`
+
+**Default:** `Enabled`
+
+### IP geolocation {#settings-ip-geolocation}
+
+#### Show widget {#show-ip-geolocation-widget}
+
+Show or hide the **IP geolocation** widget on the dashboard. A hidden widget sends no request to `ip-api.com`, the [DNS resolver](#dns-resolver) widget then uses the whole width. A shown widget whose check is disabled shows what it requests and an **Enable** button.
+
+**Type:** `Boolean`
+
+**Default:** `Enabled`
+
+#### Check IP geolocation
+
+Enables or disables the resolution of the IP geolocation via [`ip-api.com`](https://ip-api.com/). The check can also be enabled in the welcome dialog or with the **Enable** button of the widget. The switch is disabled while the widget is hidden (the value is kept).
 
 :::note
 
@@ -115,21 +149,23 @@ The free API endpoint is limited to 45 requests per minute, supports only the `h
 
 **Default:** `Disabled`
 
-### Check DNS resolver
+### DNS resolver {#settings-dns-resolver}
 
-Enables or disables the detection of the DNS resolver in use via [`ip-api.com`](https://ip-api.com/).
+#### Show widget {#show-dns-resolver-widget}
+
+Show or hide the **DNS resolver** widget on the dashboard. A hidden widget sends no request to `ip-api.com`, the [IP geolocation](#ip-geolocation) widget then uses the whole width. A shown widget whose check is disabled shows what it requests and an **Enable** button.
+
+**Type:** `Boolean`
+
+**Default:** `Enabled`
+
+#### Check DNS resolver
+
+Enables or disables the detection of the DNS resolver in use via [`ip-api.com`](https://ip-api.com/). The check can also be enabled in the welcome dialog or with the **Enable** button of the widget. The switch is disabled while the widget is hidden (the value is kept).
 
 **Type:** `Boolean`
 
 **Default:** `Disabled`
-
-### Widgets
-
-Show or hide the widgets on the dashboard: **Network connection**, **Speed Test**, **IP geolocation** and **DNS resolver**. A hidden widget doesn't check anything (e.g. no request is sent to `ip-api.com`); a speed test that is running when the widget is hidden is canceled. If one of IP geolocation and DNS resolver is hidden, the other one uses the whole width. The status window always shows the network connection.
-
-**Type:** `Boolean`
-
-**Default:** `Enabled` (all widgets)
 
 ## Speed Test
 
