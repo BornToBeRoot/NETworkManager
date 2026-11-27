@@ -34,6 +34,12 @@ public class InternetLatencyTargetViewModel : ViewModelBase
     private static readonly ILog Log = LogManager.GetLogger(typeof(InternetLatencyTargetViewModel));
 
     /// <summary>
+    /// Time until a host name that could not be resolved is resolved again (e.g. the DNS server of a new network is
+    /// not reachable yet right after a network change).
+    /// </summary>
+    private static readonly TimeSpan ResolveRetryInterval = TimeSpan.FromSeconds(5);
+
+    /// <summary>
     /// Pings in the time window (<see cref="GlobalStaticConfiguration.Dashboard_InternetLatencyWindow" />), the oldest
     /// first.
     /// </summary>
@@ -228,8 +234,13 @@ public class InternetLatencyTargetViewModel : ViewModelBase
         {
             var ipAddress = await ResolveAsync(cancellationToken);
 
-            if (ipAddress == null)
-                return;
+            // Not resolved: try again until it works (the error is shown meanwhile)
+            while (ipAddress == null)
+            {
+                await Task.Delay(ResolveRetryInterval, cancellationToken);
+
+                ipAddress = await ResolveAsync(cancellationToken);
+            }
 
             var buffer = new byte[GlobalStaticConfiguration.Dashboard_PingBuffer];
 
@@ -274,8 +285,9 @@ public class InternetLatencyTargetViewModel : ViewModelBase
 
         if (dnsResult.HasError)
         {
-            // Checked again with the next start (e.g. a network change or when the dashboard is shown again)
+            // Resolved again after ResolveRetryInterval; no IP address of an earlier run next to the error
             ErrorMessage = DNSClientHelper.FormatDNSClientResultError(Host, dnsResult);
+            ResolvedIPAddress = null;
             StatusLevel = StatusLevel.Error;
 
             Log.Warn($"Internet latency: {ErrorMessage}");
@@ -283,6 +295,7 @@ public class InternetLatencyTargetViewModel : ViewModelBase
             return null;
         }
 
+        ErrorMessage = null;
         ResolvedIPAddress = dnsResult.Value.ToString();
 
         return dnsResult.Value;
@@ -431,6 +444,7 @@ public class InternetLatencyTargetViewModel : ViewModelBase
         Value = "-/-";
         StatusLevel = StatusLevel.None;
         ErrorMessage = null;
+        ResolvedIPAddress = null;
         Statistics = LatencyStatistics.Calculate([]);
     }
 
