@@ -5857,12 +5857,12 @@ Vuoi avviare la scansione?</value>
     <value>Tutti i widget sono nascosti. Puoi visualizza nelle impostazioni del pannello.</value>
   </data>
   <data name="XXXDidNotRespondWithinXXXSecondsMessage" xml:space="preserve">
-    <value>{0} did not respond within {1} seconds.</value>
+    <value>{0} non ha risposto entro {1} secondi.</value>
   </data>
   <data name="XRequestsFailedAndWereSkippedMessage" xml:space="preserve">
-    <value>{0} requests failed and were skipped. The result may be less accurate.</value>
+    <value>{0} richieste non sono riuscite e sono state ignorate. Il risultato potrebbe essere meno accurato.</value>
   </data>
   <data name="LastTestAtX" xml:space="preserve">
-    <value>Last test at {0}</value>
+    <value>Ultimo test alle {0}</value>
   </data>
 </root>
