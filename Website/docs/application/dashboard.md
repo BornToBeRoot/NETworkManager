@@ -6,7 +6,7 @@ keywords: [NETworkManager, dashboard, network status, network connection, networ
 
 # Dashboard
 
-The **Dashboard** shows the status of your computer's current network connection to provide a quick overview of the most important information. Whenever the local network adapter changes state (e.g. an Ethernet cable is plugged in, Wi-Fi or VPN connects), the dashboard checks connectivity to the router and the internet. The [IP geolocation](#ip-geolocation) and the [DNS resolver](#dns-resolver) are checked again together with the network connection (the public IP address may have changed, e.g. a VPN connected). When you switch back to the dashboard (or show the window again from the tray / taskbar), the widgets are only checked again if the last check is at least 60 seconds old (e.g. the public IP address may have changed) or the network or a setting of a check (e.g. the public IP address) has changed in the meantime, so switching between the tools doesn't send a request each time. **F5** or the refresh button of a widget always checks it again.
+The **Dashboard** shows the status of your computer's current network connection to provide a quick overview of the most important information. Whenever the local network adapter changes state (e.g. an Ethernet cable is plugged in, Wi-Fi or VPN connects), the dashboard checks connectivity to the router and the internet. The [IP geolocation](#ip-geolocation) and the [DNS resolver](#dns-resolver) are checked again together with the network connection (the public IP address may have changed, e.g. a VPN connected). When you switch back to the dashboard (or show the window again from the tray / taskbar), the widgets are only checked again if the last check is at least 60 seconds old (e.g. the public IP address may have changed) or the network or a setting of a check (e.g. the public IP address) has changed in the meantime, so switching between the tools doesn't send a request each time. **F5** or the refresh button of a widget always checks it again. The [Internet latency](#internet-latency) widget is updated live while the dashboard is shown.
 
 ![Dashboard](../img/dashboard.png)
 
@@ -115,6 +115,48 @@ Override the default IPv6 address API to resolve the public IP address. The API 
 | [`https://api6.ipify.org`](https://api6.ipify.org/) | Plain text |
 | [`https://api64.ipify.org?format=json`](https://api64.ipify.org?format=json) | JSON `{"ip":"xxxx:xx:xxx::xx"}` (IPv6 if available, otherwise IPv4 - then the answer is not accepted) |
 
+### Internet latency {#settings-internet-latency}
+
+#### Show widget {#show-internet-latency-widget}
+
+Show or hide the **Internet latency** widget on the dashboard. A hidden widget doesn't ping anything. A shown widget whose check is disabled shows what it does and an **Enable** button.
+
+**Type:** `Boolean`
+
+**Default:** `Enabled`
+
+#### Check internet latency
+
+Enables or disables the pings of the targets. The targets are only pinged while the dashboard is shown (not in the background, not while the window is minimized or in the tray). The check can also be enabled with the **Enable** button of the widget. The switch is disabled while the widget is hidden (the value is kept).
+
+**Type:** `Boolean`
+
+**Default:** `Disabled`
+
+#### Interval (seconds)
+
+Time between the reply (or the timeout of 2 seconds) of a ping and the next ping of a target.
+
+**Type:** `Integer` [Min `1`, Max `10`]
+
+**Default:** `2`
+
+#### Targets
+
+Name and host (IP address or host name) of up to three targets. The name is shown in the widget (the host if it is empty). A target without a host is not shown, the other targets use the width.
+
+**Type:** `String` (name and host of each target)
+
+**Default:**
+
+| Target | Name | Host |
+|--------|------|------|
+| 1 | `Cloudflare` | `1.1.1.1` |
+| 2 | `Google` | `8.8.8.8` |
+| 3 | `Quad9` | `9.9.9.9` |
+
+Use IP addresses if possible: the widget then still works when the DNS server doesn't (that's when you want to see whether the internet works).
+
 ### Speed Test {#settings-speed-test}
 
 #### Show widget {#show-speed-test-widget}
@@ -166,6 +208,23 @@ Enables or disables the detection of the DNS resolver in use via [`ip-api.com`](
 **Type:** `Boolean`
 
 **Default:** `Disabled`
+
+## Internet latency
+
+The **Internet latency** widget pings up to three targets on the internet and shows, side by side, their name, the round-trip time of the last ping and a chart of the last 60 seconds, like the dashboard of a router or gateway. By default these are the public DNS resolvers of Cloudflare (`1.1.1.1`), Google (`8.8.8.8`) and Quad9 (`9.9.9.9`): they answer pings reliably and are close to every user (anycast). The targets can be changed in the [settings](#settings-internet-latency).
+
+The check is disabled by default: the widget shows what it does and an **Enable** button, which enables the check (like [Check internet latency](#check-internet-latency)) and starts right away.
+
+The targets are only pinged while the dashboard is shown: not when you switch to another tool or the settings, and not while the window is minimized or in the tray. When the dashboard is shown again, the values and the chart start again (no history in the background). Each target is pinged on its own (timeout 2 seconds), the next ping follows after the [interval](#interval-seconds) (default 2 seconds), so a slow target doesn't delay the others. A host name is resolved once with the DNS settings of the application (IPv4 is preferred, see the network settings) and again after a network change.
+
+| Dot | Meaning |
+|-----|---------|
+| Green | The last ping was answered |
+| Yellow | The last ping was answered, but a ping was lost in the last minute |
+| Red | The last ping was not answered (the status is shown, e.g. timed out) or the host name could not be resolved |
+| Gray | Not pinged yet |
+
+A lost ping is a gap in the chart. Hover over a target to see the host, the IP address and the minimum / average / maximum round-trip time and the packet loss of the last minute. Right-click a target to open it in the **Ping Monitor**, **Traceroute** or **DNS Lookup**, **Copy** copies the host. The **Copy all** button copies the values and statistics of all targets as text.
 
 ## Speed Test
 
@@ -222,4 +281,5 @@ Right-click an IP address (public IP address, DNS server) to open it in the **Po
 - The local IP address is detected by the route to the [Public IPv4 address](#public-ipv4-address) / [Public IPv6 address](#public-ipv6-address) (no packet is sent), otherwise from the first active network interface. With several network adapters (e.g. LAN and VPN), set an address that is routed via the adapter you want to see.
 - The internet is shown as reachable if the [Public IPv4 address](#public-ipv4-address) / [Public IPv6 address](#public-ipv6-address) replies to the ping or the public IP address could be requested from `api.ipify.org` / `api6.ipify.org` (or the [custom API](#use-custom-ipv4-address-api)). If both are blocked (e.g. by a firewall, or websites are only reachable via a proxy), the internet is shown as a warning if Windows reports internet access (IPv4), otherwise as not reachable; use another public IP address / API. The IP geolocation and the DNS resolver are requested from `ip-api.com` (45 requests per minute, a request fails after 10 seconds without a response).
 - Without IPv6 connectivity (or no IPv6 from the internet provider), the IPv6 checks are shown as information (gray) and skipped, the IPv4 checks are not affected.
+- The [Internet latency](#internet-latency) widget uses ICMP (ping). A firewall, a VPN or a network that blocks ICMP shows the targets as timed out (red) although websites work; the network connection shows the internet as reachable via the public IP address API in that case.
 - The [Speed Test](#speed-test) measures the connection to the nearest Cloudflare server. A VPN, a proxy or other traffic on the network at the same time lowers the result. A request of the speed test fails after 15 seconds without a response or data (e.g. the connection was lost). Like the official library, a failed request is skipped (shown as a warning after the test) and a request that is rate limited by Cloudflare (HTTP 429) is repeated up to three times (then the test ends with the error); if all requests of a size fail (e.g. a proxy rejects large uploads), the larger sizes of the direction are skipped. After three requests in a row without a response the test ends with the error, unless the server still answers a small request: if three requests of the same size failed (e.g. a proxy closes the connection of large uploads), the remaining requests of this size and the larger sizes of the direction are skipped, otherwise (e.g. the latency probes before failed during a short Wi-Fi drop) only the failed request is skipped. If no request succeeds at all (e.g. a proxy rejects all requests to `speed.cloudflare.com` with HTTP 403), the test ends with the error.
