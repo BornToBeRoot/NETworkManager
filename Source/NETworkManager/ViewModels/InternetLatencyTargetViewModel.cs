@@ -43,6 +43,8 @@ public class InternetLatencyTargetViewModel : ViewModelBase
     public const int MinInterval = 1;
     public const int MaxInterval = 10;
 
+    // All times are UTC: a clock change (daylight saving time, NTP correction) doesn't move the time window
+
     /// <summary>
     /// Pings in the time window (<see cref="GlobalStaticConfiguration.Dashboard_InternetLatencyWindow" />), the oldest
     /// first.
@@ -195,7 +197,7 @@ public class InternetLatencyTargetViewModel : ViewModelBase
             }
         ];
 
-        UpdateXAxis(DateTime.Now);
+        UpdateXAxis(DateTime.UtcNow);
     }
 
     #endregion
@@ -262,13 +264,13 @@ public class InternetLatencyTargetViewModel : ViewModelBase
                 {
                     // An unexpected error is a failed ping: the loop goes on (the task is not awaited by anyone)
                     Log.Error($"Internet latency: ping of {ipAddress} failed.", ex);
-                    pingInfo = new PingInfo(DateTime.Now, ipAddress, System.Net.NetworkInformation.IPStatus.Unknown);
+                    pingInfo = new PingInfo(DateTime.UtcNow, ipAddress, System.Net.NetworkInformation.IPStatus.Unknown);
                 }
 
                 if (cancellationToken.IsCancellationRequested)
                     return;
 
-                AddSample(new LatencySample(DateTime.Now, pingInfo.Status == System.Net.NetworkInformation.IPStatus.Success,
+                AddSample(new LatencySample(DateTime.UtcNow, pingInfo.Status == System.Net.NetworkInformation.IPStatus.Success,
                     pingInfo.Time), pingInfo.Status);
 
                 // Range of the settings (a value edited in the settings file: no tight loop, no invalid delay)
@@ -344,7 +346,7 @@ public class InternetLatencyTargetViewModel : ViewModelBase
     /// </summary>
     private void ResumeHistory()
     {
-        var now = DateTime.Now;
+        var now = DateTime.UtcNow;
 
         ErrorMessage = null;
 
@@ -455,7 +457,7 @@ public class InternetLatencyTargetViewModel : ViewModelBase
     {
         _samples.Clear();
         _chartValues.Clear();
-        UpdateXAxis(DateTime.Now);
+        UpdateXAxis(DateTime.UtcNow);
 
         Value = "-/-";
         StatusLevel = StatusLevel.None;

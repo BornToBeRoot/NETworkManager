@@ -7,7 +7,7 @@ namespace NETworkManager.Models.Network;
 /// <summary>
 ///     Result of one ping of a latency target (internet latency widget of the dashboard).
 /// </summary>
-/// <param name="Timestamp">Time of the ping.</param>
+/// <param name="Timestamp">Time of the ping (UTC: a clock change doesn't move the time window).</param>
 /// <param name="IsSuccess">The target replied.</param>
 /// <param name="Time">Round-trip time in milliseconds (0 without a reply).</param>
 public readonly record struct LatencySample(DateTime Timestamp, bool IsSuccess, long Time);

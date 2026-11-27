@@ -377,7 +377,7 @@ public static class ScreenshotData
     {
         long[] baseTimes = [9, 8, 10];
         var baseTime = baseTimes[index % baseTimes.Length];
-        var now = DateTime.Now;
+        var now = DateTime.UtcNow; // like the widget (time window in UTC)
 
         for (var i = 30; i >= 0; i--)
         {
