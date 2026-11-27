@@ -1614,6 +1614,9 @@ public sealed partial class MainWindow : INotifyPropertyChanged
             return;
         }
 
+        // Minimized: no live values in the background (internet latency)
+        _dashboardView?.OnMainWindowHidden();
+
         if (SettingsManager.Current.Window_MinimizeToTrayInsteadOfTaskbar)
             HideWindowToTray();
     }
@@ -1805,6 +1808,9 @@ public sealed partial class MainWindow : INotifyPropertyChanged
             _notifyIcon.Visible = true;
 
         Hide();
+
+        // No live values in the background (internet latency)
+        _dashboardView?.OnMainWindowHidden();
     }
 
     private void ShowWindowFromTray()

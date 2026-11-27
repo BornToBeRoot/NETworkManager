@@ -16,6 +16,7 @@
                 <ScrollViewer HorizontalScrollBarVisibility="Disabled" Margin="10">
                     <StackPanel>
                         <ContentControl x:Name="ContentControlNetworkConnection" />
+                        <ContentControl x:Name="ContentControlInternetLatency" />
                         <ContentControl x:Name="ContentControlSpeedTest" />
                         <!-- IP geolocation (2/3) and DNS resolver (1/3), the remaining one spans the row -->
                         <Grid x:Name="GridIPApi">

@@ -15,6 +15,7 @@ public partial class DashboardView
 
     // Widgets are created when they are shown the first time (e.g. a hidden IP API widget sends no request)
     private NetworkConnectionWidgetView _networkConnectionWidgetView;
+    private InternetLatencyWidgetView _internetLatencyWidgetView;
     private IPApiIPGeolocationWidgetView _ipApiIPGeolocationWidgetView;
     private IPApiDNSResolverWidgetView _ipApiDNSResolverWidgetView;
     private SpeedTestWidgetView _speedTestWidgetView;
@@ -41,6 +42,7 @@ public partial class DashboardView
 
         // Show the widgets
         ApplyWidgetSettings();
+        UpdateInternetLatency();
 
         // The settings are changed while the dashboard is hidden (settings view) - check again when it is shown
         SettingsManager.Current.PropertyChanged += SettingsManager_PropertyChanged;
@@ -58,6 +60,7 @@ public partial class DashboardView
 
         // The widgets may have been shown or hidden in the settings
         ApplyWidgetSettings();
+        UpdateInternetLatency();
 
         CheckWidgetsIfOutdated();
     }
@@ -67,8 +70,20 @@ public partial class DashboardView
     /// </summary>
     public void OnMainWindowShown()
     {
-        if (_isViewVisible)
-            CheckWidgetsIfOutdated();
+        if (!_isViewVisible)
+            return;
+
+        CheckWidgetsIfOutdated();
+        UpdateInternetLatency();
+    }
+
+    /// <summary>
+    ///     Called by the main window when it is minimized or hidden to the tray: the internet latency widget stops
+    ///     pinging (no live values in the background).
+    /// </summary>
+    public void OnMainWindowHidden()
+    {
+        UpdateInternetLatency();
     }
 
     public void OnViewHide()
@@ -76,6 +91,8 @@ public partial class DashboardView
         _isViewVisible = false;
 
         _viewModel.OnViewHide();
+
+        UpdateInternetLatency();
     }
 
     /// <summary>
@@ -89,6 +106,10 @@ public partial class DashboardView
             CheckWidgets();
         else
             _isOutdated = true;
+
+        // Resolve the host names again and remove the history (another route, e.g. a VPN) - only while it runs, it
+        // starts fresh anyway when the dashboard is shown again
+        _internetLatencyWidgetView?.Restart();
     }
 
     /// <summary>
@@ -134,6 +155,8 @@ public partial class DashboardView
 
         _networkConnectionWidgetView = ShowWidget(ContentControlNetworkConnection,
             settings.Dashboard_ShowNetworkConnectionWidget, _networkConnectionWidgetView);
+        _internetLatencyWidgetView = ShowWidget(ContentControlInternetLatency,
+            settings.Dashboard_ShowInternetLatencyWidget, _internetLatencyWidgetView);
         _speedTestWidgetView = ShowWidget(ContentControlSpeedTest, settings.Dashboard_ShowSpeedTestWidget,
             _speedTestWidgetView);
         _ipApiIPGeolocationWidgetView = ShowWidget(ContentControlIPApiIPGeolocation,
@@ -153,7 +176,7 @@ public partial class DashboardView
 
         // Gap of 10 between the visible widgets (not below the last one, the scroll viewer has a margin of 10)
         var visibleWidgets = new FrameworkElement[]
-                { ContentControlNetworkConnection, ContentControlSpeedTest, GridIPApi }
+                { ContentControlNetworkConnection, ContentControlInternetLatency, ContentControlSpeedTest, GridIPApi }
             .Where(x => x.Visibility == Visibility.Visible)
             .ToList();
 
@@ -161,6 +184,30 @@ public partial class DashboardView
             visibleWidgets[i].Margin = new Thickness(0, 0, 0, i < visibleWidgets.Count - 1 ? 10 : 0);
 
         EmptyStateMessageNoWidgets.Visibility = visibleWidgets.Count == 0 ? Visibility.Visible : Visibility.Collapsed;
+    }
+
+    /// <summary>
+    ///     Starts the pings of the internet latency widget while it is shown and enabled, the dashboard is the selected
+    ///     application and the main window is shown (not minimized, not in the tray); stops them otherwise.
+    /// </summary>
+    private void UpdateInternetLatency()
+    {
+        var settings = SettingsManager.Current;
+
+        if (_isViewVisible && IsMainWindowShown() && settings.Dashboard_ShowInternetLatencyWidget &&
+            settings.Dashboard_CheckInternetLatency)
+            _internetLatencyWidgetView?.Start();
+        else
+            _internetLatencyWidgetView?.Stop();
+    }
+
+    /// <summary>
+    ///     The main window is shown (not minimized, not hidden to the tray).
+    /// </summary>
+    private static bool IsMainWindowShown()
+    {
+        return Application.Current?.MainWindow is not { } window ||
+               (window.IsVisible && window.WindowState != WindowState.Minimized);
     }
 
     /// <summary>
@@ -213,6 +260,11 @@ public partial class DashboardView
 
         if (e.PropertyName != null && CheckSettings.Contains(e.PropertyName) && !isEnabledInWidget)
             _isOutdated = true;
+
+        // Internet latency: start / stop right away (e.g. the "Enable" button of the widget, or hidden in the settings)
+        if (e.PropertyName is nameof(SettingsInfo.Dashboard_ShowInternetLatencyWidget)
+            or nameof(SettingsInfo.Dashboard_CheckInternetLatency))
+            UpdateInternetLatency();
 
         // A hidden speed test widget doesn't measure (no data is transferred in the background): cancel it right away,
         // the dashboard is hidden while the settings are open
