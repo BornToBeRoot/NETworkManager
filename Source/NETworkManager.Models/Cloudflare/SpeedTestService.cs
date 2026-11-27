@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Runtime.ExceptionServices;
 using System.Threading;
 using System.Threading.Tasks;
 using log4net;
@@ -253,6 +254,11 @@ public class SpeedTestService
                 finished.Add(measurement.Type);
         }
 
+        // Every request was rejected (e.g. a proxy answers HTTP 403): the error of the test, not an empty result with a
+        // warning (requests without a response end the test earlier)
+        if (pings.Count == 0 && downloadBps.Count == 0 && uploadBps.Count == 0 && failures.LastError != null)
+            ExceptionDispatchInfo.Capture(failures.LastError).Throw();
+
         // 3. Result
         return new SpeedTestResult
         {
@@ -353,6 +359,11 @@ public class SpeedTestService
     {
         public int Total { get; set; }
         public int Consecutive { get; set; }
+
+        /// <summary>
+        /// Error of the last failed request (thrown if no request of the test succeeded).
+        /// </summary>
+        public Exception LastError { get; set; }
     }
 
     /// <summary>
@@ -407,6 +418,7 @@ public class SpeedTestService
                 cancellationToken.ThrowIfCancellationRequested();
 
                 failures.Total++;
+                failures.LastError = ex;
 
                 if (!SpeedTestCalculator.IsConnectionFailure(ex))
                 {
