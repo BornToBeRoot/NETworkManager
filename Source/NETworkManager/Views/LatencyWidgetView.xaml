@@ -16,6 +16,7 @@
         <converters:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
         <converters:StringNullOrEmptyToStringConverter x:Key="StringNullOrEmptyToStringConverter" />
+        <converters:LatencyTimeToStringConverter x:Key="LatencyTimeToStringConverter" />
         <converters:StringIsNotNullOrEmptyToVisibilityCollapsedConverter
             x:Key="StringIsNotNullOrEmptyToVisibilityCollapsedConverter" />
         <!-- Open the host in another tool, copy it. One menu per tile, bound to the target of the clicked tile -->
@@ -190,13 +191,13 @@
                                                    FontFamily="{StaticResource Fonts.Family.Mono}" />
                                         <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.Minimum}" />
                                         <TextBlock Grid.Column="2" Grid.Row="2"
-                                                   Text="{Binding Statistics.Minimum, StringFormat='{}{0} ms', TargetNullValue='-/-'}" />
+                                                   Text="{Binding Statistics.Minimum, Converter={StaticResource LatencyTimeToStringConverter}}" />
                                         <TextBlock Grid.Column="0" Grid.Row="3" Text="{x:Static localization:Strings.AverageTime}" />
                                         <TextBlock Grid.Column="2" Grid.Row="3"
-                                                   Text="{Binding Statistics.Average, StringFormat='{}{0:F0} ms', TargetNullValue='-/-'}" />
+                                                   Text="{Binding Statistics.Average, Converter={StaticResource LatencyTimeToStringConverter}}" />
                                         <TextBlock Grid.Column="0" Grid.Row="4" Text="{x:Static localization:Strings.Maximum}" />
                                         <TextBlock Grid.Column="2" Grid.Row="4"
-                                                   Text="{Binding Statistics.Maximum, StringFormat='{}{0} ms', TargetNullValue='-/-'}" />
+                                                   Text="{Binding Statistics.Maximum, Converter={StaticResource LatencyTimeToStringConverter}}" />
                                         <TextBlock Grid.Column="0" Grid.Row="5" Text="{x:Static localization:Strings.PacketLoss}" />
                                         <TextBlock Grid.Column="2" Grid.Row="5"
                                                    Text="{Binding Statistics.PacketLoss, StringFormat='{}{0:F0} %'}" />

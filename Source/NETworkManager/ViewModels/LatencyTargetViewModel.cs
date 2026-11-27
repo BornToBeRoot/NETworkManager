@@ -521,9 +521,8 @@ public class LatencyTargetViewModel : ViewModelBase
               $"{Strings.PacketLoss} {stats.PacketLoss.ToString("F0", CultureInfo.CurrentCulture)} %";
     }
 
-    // Like the tooltip ("F0": halves are rounded up, not to the even number like Math.Round)
-    private static string FormatTime(double? milliseconds) =>
-        milliseconds.HasValue ? $"{milliseconds.Value.ToString("F0", CultureInfo.CurrentCulture)} ms" : "-/-";
+    // Like the tooltip (LatencyTimeToStringConverter): "<1 ms" for the gateway
+    private static string FormatTime(double? milliseconds) => LatencyStatistics.FormatTime(milliseconds);
 
     /// <summary>
     /// Moves the X axis to the time window up to <paramref name="now" />.

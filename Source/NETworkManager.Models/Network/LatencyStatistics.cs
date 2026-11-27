@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 
 namespace NETworkManager.Models.Network;
@@ -111,6 +112,23 @@ public static class LatencyStatistics
     public static TimeSpan GetRetryDelay(int failedAttempts)
     {
         return RetryDelays[Math.Clamp(failedAttempts - 1, 0, RetryDelays.Length - 1)];
+    }
+
+    /// <summary>
+    ///     Formats a round-trip time for the widget: rounded to whole milliseconds, <c>&lt;1 ms</c> if it rounds to 0
+    ///     (e.g. the gateway, like <see cref="Ping.TimeToString" />), <c>-/-</c> without a value.
+    /// </summary>
+    /// <param name="milliseconds">Round-trip time (or average) in milliseconds, <c>null</c> without a reply.</param>
+    /// <returns>Formatted time, e.g. <c>&lt;1 ms</c>, <c>9 ms</c>.</returns>
+    public static string FormatTime(double? milliseconds)
+    {
+        if (!milliseconds.HasValue)
+            return "-/-";
+
+        // Halves are rounded up (e.g. an average of 8.5 ms is 9 ms; "F0" and Math.Round would round to the even number)
+        var rounded = Math.Round(milliseconds.Value, MidpointRounding.AwayFromZero);
+
+        return rounded < 1 ? "<1 ms" : $"{rounded.ToString("F0", CultureInfo.CurrentCulture)} ms";
     }
 
     /// <summary>

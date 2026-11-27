@@ -103,4 +103,22 @@ public class LatencyStatisticsTests
 
         Assert.Equal(2, samples.Count);
     }
+
+    [Theory]
+    [InlineData(0d, "<1 ms")]
+    [InlineData(0.4d, "<1 ms")]
+    [InlineData(0.5d, "1 ms")]
+    [InlineData(9d, "9 ms")]
+    [InlineData(9.5d, "10 ms")]
+    [InlineData(8.5d, "9 ms")]
+    public void FormatTimeShowsLessThanOneMillisecond(double milliseconds, string expected)
+    {
+        Assert.Equal(expected, LatencyStatistics.FormatTime(milliseconds));
+    }
+
+    [Fact]
+    public void FormatTimeWithoutValue()
+    {
+        Assert.Equal("-/-", LatencyStatistics.FormatTime(null));
+    }
 }

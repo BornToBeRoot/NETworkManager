@@ -279,7 +279,7 @@ The targets are only pinged while the dashboard is shown: not when you switch to
 | Red | The last ping was not answered (the status is shown, e.g. timed out) or the host name could not be resolved |
 | Gray | Not pinged yet, or no default gateway found (e.g. a VPN without a gateway; it is detected again later) |
 
-A lost ping is a gap in the chart. Hover over a target to see the host, the IP address and the minimum / average / maximum round-trip time and the packet loss of the last minute. Right-click a target to open it in the **Ping Monitor**, **Traceroute** or **DNS Lookup**, **Copy** copies the host (the IP address of the gateway). The **Copy all** button copies the values and statistics of all targets as text.
+A reply below 1 ms (e.g. the gateway) is shown as `<1 ms`. A lost ping is a gap in the chart. Hover over a target to see the host, the IP address and the minimum / average / maximum round-trip time and the packet loss of the last minute. Right-click a target to open it in the **Ping Monitor**, **Traceroute** or **DNS Lookup**, **Copy** copies the host (the IP address of the gateway). The **Copy all** button copies the values and statistics of all targets as text.
 
 ### Internal and air-gapped networks
 
