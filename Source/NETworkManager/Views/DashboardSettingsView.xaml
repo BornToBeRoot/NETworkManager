@@ -227,6 +227,7 @@
                 </Rectangle.Resources>
             </Rectangle>
         </StackPanel>
+        <!-- Range: InternetLatencyTargetViewModel.MinInterval / MaxInterval -->
         <mah:NumericUpDown Value="{Binding InternetLatencyInterval}" Minimum="1" Maximum="10" Interval="1"
                            Width="250" HorizontalAlignment="Left" Margin="0,0,0,10" />
         <TextBlock Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10">

@@ -39,6 +39,10 @@ public class InternetLatencyTargetViewModel : ViewModelBase
     /// </summary>
     private static readonly TimeSpan ResolveRetryInterval = TimeSpan.FromSeconds(5);
 
+    // Range of the interval in seconds (Settings > Dashboard > Internet latency)
+    public const int MinInterval = 1;
+    public const int MaxInterval = 10;
+
     /// <summary>
     /// Pings in the time window (<see cref="GlobalStaticConfiguration.Dashboard_InternetLatencyWindow" />), the oldest
     /// first.
@@ -246,9 +250,20 @@ public class InternetLatencyTargetViewModel : ViewModelBase
 
             while (!cancellationToken.IsCancellationRequested)
             {
-                // Continues on the UI thread (the values are bound)
-                var pingInfo = await PingProbe.PingAsync(ipAddress, GlobalStaticConfiguration.Dashboard_PingTimeout, 1,
-                    buffer, cancellationToken);
+                PingInfo pingInfo;
+
+                try
+                {
+                    // Continues on the UI thread (the values are bound)
+                    pingInfo = await PingProbe.PingAsync(ipAddress, GlobalStaticConfiguration.Dashboard_PingTimeout, 1,
+                        buffer, cancellationToken);
+                }
+                catch (Exception ex) when (ex is not OperationCanceledException)
+                {
+                    // An unexpected error is a failed ping: the loop goes on (the task is not awaited by anyone)
+                    Log.Error($"Internet latency: ping of {ipAddress} failed.", ex);
+                    pingInfo = new PingInfo(DateTime.Now, ipAddress, System.Net.NetworkInformation.IPStatus.Unknown);
+                }
 
                 if (cancellationToken.IsCancellationRequested)
                     return;
@@ -256,8 +271,9 @@ public class InternetLatencyTargetViewModel : ViewModelBase
                 AddSample(new LatencySample(DateTime.Now, pingInfo.Status == System.Net.NetworkInformation.IPStatus.Success,
                     pingInfo.Time), pingInfo.Status);
 
-                await Task.Delay(TimeSpan.FromSeconds(SettingsManager.Current.Dashboard_InternetLatencyInterval),
-                    cancellationToken);
+                // Range of the settings (a value edited in the settings file: no tight loop, no invalid delay)
+                await Task.Delay(TimeSpan.FromSeconds(Math.Clamp(SettingsManager.Current.Dashboard_InternetLatencyInterval,
+                    MinInterval, MaxInterval)), cancellationToken);
             }
         }
         catch (OperationCanceledException)
