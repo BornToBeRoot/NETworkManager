@@ -297,6 +297,12 @@ public class LatencyTargetViewModel : ViewModelBase
         {
             // Stopped
         }
+        catch (Exception ex)
+        {
+            // Not expected (ping and lookup errors are handled above): the task is not awaited by anyone, so log it
+            // instead of losing it - this target stops until the pings start again (e.g. the dashboard is shown again)
+            Log.Error($"Latency: pinging {Host} stopped.", ex);
+        }
     }
 
     /// <summary>
