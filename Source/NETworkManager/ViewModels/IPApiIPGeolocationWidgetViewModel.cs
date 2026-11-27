@@ -323,11 +323,14 @@ public class IPApiIPGeolocationWidgetViewModel : ViewModelBase
             CommandManager.InvalidateRequerySuggested();
         }
 
-        // A check requested in the meantime (e.g. a network change)
+        // A check requested in the meantime (e.g. a network change). A hidden widget doesn't check anything: it is
+        // checked when it is shown again (the setting marks the dashboard as outdated)
         if (_recheckPending)
         {
             _recheckPending = false;
-            Check();
+
+            if (SettingsManager.Current.Dashboard_ShowIPGeolocationWidget)
+                Check();
         }
     }
 
