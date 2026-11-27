@@ -198,6 +198,11 @@ public class SpeedTestService
             var setSucceeded = false;
             var setSizeFailed = false;
 
+            // Failures of the latency probes before (e.g. a short Wi-Fi drop) don't count for this size: otherwise one
+            // failed request could end the direction. A lost connection still ends the test (3 failures in the set or
+            // in the latency probes)
+            failures.Consecutive = 0;
+
             for (var i = 0; i < measurement.Count; i++)
             {
                 var (success, sizeFailed, (bps, durationMs)) = await TryRequestAsync(() => isDownload
