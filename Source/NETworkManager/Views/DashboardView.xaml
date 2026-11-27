@@ -33,7 +33,8 @@
                             <ContentControl x:Name="ContentControlSpeedTest" />
                             <ContentControl x:Name="ContentControlInternetLatency" />
                         </Grid>
-                        <!-- IP geolocation (2/3) and DNS resolver (1/3), the remaining one spans the row -->
+                        <!-- IP geolocation (2/3) and DNS resolver (1/3) side by side, the remaining one spans the row;
+                             one below the other in a narrow window, set in the code-behind -->
                         <Grid x:Name="GridIPApi">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
@@ -42,8 +43,12 @@
                                 <ColumnDefinition Width="10" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
-                            <ContentControl x:Name="ContentControlIPApiIPGeolocation" Grid.Column="0" Grid.ColumnSpan="3" />
-                            <ContentControl x:Name="ContentControlIPApiDNSResolver" Grid.Column="4" />
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <ContentControl x:Name="ContentControlIPApiIPGeolocation" />
+                            <ContentControl x:Name="ContentControlIPApiDNSResolver" />
                         </Grid>
                     </StackPanel>
                 </ScrollViewer>

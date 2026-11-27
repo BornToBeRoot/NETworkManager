@@ -206,15 +206,9 @@ public partial class DashboardView
         else
             ArrangeRow(GridSpeedTestInternetLatency, ContentControlSpeedTest, ContentControlInternetLatency, _isWide);
 
-        // IP geolocation (2/3) and DNS resolver (1/3) in one row, the remaining one spans the row
-        var showIPGeolocation = settings.Dashboard_ShowIPGeolocationWidget;
-        var showDNSResolver = settings.Dashboard_ShowDNSResolverWidget;
-
-        GridIPApi.Visibility = showIPGeolocation || showDNSResolver ? Visibility.Visible : Visibility.Collapsed;
-
-        Grid.SetColumnSpan(ContentControlIPApiIPGeolocation, showDNSResolver ? 3 : 5);
-        Grid.SetColumn(ContentControlIPApiDNSResolver, showIPGeolocation ? 4 : 0);
-        Grid.SetColumnSpan(ContentControlIPApiDNSResolver, showIPGeolocation ? 1 : 5);
+        // IP geolocation (2/3) and DNS resolver (1/3) side by side if the dashboard is wide enough (the DNS resolver
+        // is too narrow otherwise), the remaining one spans the row
+        ArrangeRow(GridIPApi, ContentControlIPApiIPGeolocation, ContentControlIPApiDNSResolver, _isWide);
 
         // Gap of 10 between the visible widgets (not below the last one, the scroll viewer has a margin of 10)
         var visibleWidgets = new FrameworkElement[]

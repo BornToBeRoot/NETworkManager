@@ -189,7 +189,7 @@ Show or hide the **Speed Test** widget on the dashboard. A speed test that is ru
 
 #### Show widget {#show-ip-geolocation-widget}
 
-Show or hide the **IP geolocation** widget on the dashboard. A hidden widget sends no request to `ip-api.com`, the [DNS resolver](#dns-resolver) widget then uses the whole width. A shown widget whose check is disabled shows what it requests and an **Enable** button.
+Show or hide the **IP geolocation** widget on the dashboard. A hidden widget sends no request to `ip-api.com`, the [DNS resolver](#dns-resolver) widget then uses the whole width. In a narrow window (less than about 900 pixels for the dashboard) both widgets are shown one below the other. A shown widget whose check is disabled shows what it requests and an **Enable** button.
 
 **Type:** `Boolean`
 
@@ -213,7 +213,7 @@ The free API endpoint is limited to 45 requests per minute, supports only the `h
 
 #### Show widget {#show-dns-resolver-widget}
 
-Show or hide the **DNS resolver** widget on the dashboard. A hidden widget sends no request to `ip-api.com`, the [IP geolocation](#ip-geolocation) widget then uses the whole width. A shown widget whose check is disabled shows what it requests and an **Enable** button.
+Show or hide the **DNS resolver** widget on the dashboard. A hidden widget sends no request to `ip-api.com`, the [IP geolocation](#ip-geolocation) widget then uses the whole width. In a narrow window (less than about 900 pixels for the dashboard) both widgets are shown one below the other. A shown widget whose check is disabled shows what it requests and an **Enable** button.
 
 **Type:** `Boolean`
 
