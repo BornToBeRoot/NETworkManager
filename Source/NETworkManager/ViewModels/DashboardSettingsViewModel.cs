@@ -1,4 +1,7 @@
+using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using NETworkManager.Models.Network;
 using NETworkManager.Settings;
 
 namespace NETworkManager.ViewModels;
@@ -218,6 +221,30 @@ public class DashboardSettingsViewModel : ViewModelBase
 
             if (!_isLoading)
                 SettingsManager.Current.Dashboard_ShowInternetLatencyWidget = value;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
+    /// Gets the positions of the internet latency widget.
+    /// </summary>
+    public IEnumerable<InternetLatencyPosition> InternetLatencyPositions => Enum.GetValues<InternetLatencyPosition>();
+
+    /// <summary>
+    /// Gets or sets the position of the internet latency widget (next to the speed test or own row).
+    /// </summary>
+    public InternetLatencyPosition InternetLatencyPosition
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            if (!_isLoading)
+                SettingsManager.Current.Dashboard_InternetLatencyPosition = value;
 
             field = value;
             OnPropertyChanged();
@@ -485,6 +512,7 @@ public class DashboardSettingsViewModel : ViewModelBase
         ShowNetworkConnectionWidget = SettingsManager.Current.Dashboard_ShowNetworkConnectionWidget;
         ShowInternetLatencyWidget = SettingsManager.Current.Dashboard_ShowInternetLatencyWidget;
         CheckInternetLatencyEnabled = SettingsManager.Current.Dashboard_CheckInternetLatency;
+        InternetLatencyPosition = SettingsManager.Current.Dashboard_InternetLatencyPosition;
         InternetLatencyInterval = SettingsManager.Current.Dashboard_InternetLatencyInterval;
         InternetLatencyTarget1Name = SettingsManager.Current.Dashboard_InternetLatencyTarget1Name;
         InternetLatencyTarget1Host = SettingsManager.Current.Dashboard_InternetLatencyTarget1Host;

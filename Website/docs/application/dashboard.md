@@ -125,6 +125,24 @@ Show or hide the **Internet latency** widget on the dashboard. A hidden widget d
 
 **Default:** `Enabled`
 
+#### Position
+
+Where the widget is shown on the dashboard:
+
+- **Next to the speed test**: to the right of the speed test (1/3 of the width), the targets one below the other. If the dashboard is narrower than about 900 pixels (or the speed test is hidden), the widget gets its own row below the speed test.
+- **Own row**: below the network connection, the targets side by side.
+
+The targets are shown one below the other whenever the widget is narrower than about 500 pixels.
+
+**Type:** `NETworkManager.Models.Network.InternetLatencyPosition`
+
+**Default:** `NextToSpeedTest`
+
+**Possible values:**
+
+- `NextToSpeedTest`
+- `OwnRow`
+
 #### Check internet latency
 
 Enables or disables the pings of the targets. The targets are only pinged while the dashboard is shown (not in the background, not while the window is minimized or in the tray). The check can also be enabled with the **Enable** button of the widget. The switch is disabled while the widget is hidden (the value is kept).
@@ -143,7 +161,7 @@ Time between the reply (or the timeout of 2 seconds) of a ping and the next ping
 
 #### Targets
 
-Name and host (IP address or host name) of up to three targets. The name is shown in the widget (the host if it is empty). A target without a host is not shown, the other targets use the width.
+Name and host (IP address or host name) of up to three targets. The name is shown in the widget (the host if it is empty). A target without a host is not shown, the other targets use the space.
 
 **Type:** `String` (name and host of each target)
 
@@ -211,7 +229,7 @@ Enables or disables the detection of the DNS resolver in use via [`ip-api.com`](
 
 ## Internet latency
 
-The **Internet latency** widget pings up to three targets on the internet and shows, side by side, their name, the round-trip time of the last ping and a chart of the last 60 seconds, like the dashboard of a router or gateway. By default these are the public DNS resolvers of Cloudflare (`1.1.1.1`), Google (`8.8.8.8`) and Quad9 (`9.9.9.9`): they answer pings reliably and are close to every user (anycast). The targets can be changed in the [settings](#settings-internet-latency).
+The **Internet latency** widget pings up to three targets on the internet and shows one line per target with its name, the round-trip time of the last ping and a chart of the last 60 seconds, like the dashboard of a router or gateway. By default it is shown to the right of the [Speed Test](#speed-test) (1/3 of the width, the targets one below the other). In a narrow window (less than about 900 pixels for the dashboard) or without the speed test it gets its own row below the speed test, with the targets side by side; see [Position](#position). By default these are the public DNS resolvers of Cloudflare (`1.1.1.1`), Google (`8.8.8.8`) and Quad9 (`9.9.9.9`): they answer pings reliably and are close to every user (anycast). The targets can be changed in the [settings](#settings-internet-latency).
 
 The check is disabled by default: the widget shows what it does and an **Enable** button, which enables the check (like [Check internet latency](#check-internet-latency)) and starts right away.
 

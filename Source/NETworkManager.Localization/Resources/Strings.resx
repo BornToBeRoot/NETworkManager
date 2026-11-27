@@ -5808,4 +5808,18 @@ The targets receive a ping (ICMP echo request) every few seconds.</value>
   <data name="NoInternetLatencyTargetsConfiguredMessage" xml:space="preserve">
     <value>No targets configured. Add them in the settings of the dashboard.</value>
   </data>
+  <data name="Position" xml:space="preserve">
+    <value>Position</value>
+  </data>
+  <data name="InternetLatencyPosition_NextToSpeedTest" xml:space="preserve">
+    <value>Next to the speed test</value>
+  </data>
+  <data name="InternetLatencyPosition_OwnRow" xml:space="preserve">
+    <value>Own row</value>
+  </data>
+  <data name="HelpMessage_InternetLatencyPosition" xml:space="preserve">
+    <value>Next to the speed test: on the right of the speed test (1/3 of the width), the targets one below the other. In a narrow window or without the speed test, the widget gets its own row below the speed test.
+
+Own row: below the network connection, the targets side by side.</value>
+  </data>
 </root>

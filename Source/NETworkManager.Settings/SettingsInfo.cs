@@ -1076,6 +1076,19 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     } = GlobalStaticConfiguration.Dashboard_CheckInternetLatency;
 
+    public InternetLatencyPosition Dashboard_InternetLatencyPosition
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.Dashboard_InternetLatencyPosition;
+
     public int Dashboard_InternetLatencyInterval
     {
         get;

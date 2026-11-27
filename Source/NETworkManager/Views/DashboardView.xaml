@@ -14,10 +14,25 @@
                 <!-- Widgets one below the other with a gap of 10 between the visible ones (set in the code-behind, hidden
                      widgets leave no gap), see the settings Dashboard_Show*Widget -->
                 <ScrollViewer HorizontalScrollBarVisibility="Disabled" Margin="10">
-                    <StackPanel>
+                    <StackPanel x:Name="StackPanelWidgets">
                         <ContentControl x:Name="ContentControlNetworkConnection" />
-                        <ContentControl x:Name="ContentControlInternetLatency" />
-                        <ContentControl x:Name="ContentControlSpeedTest" />
+                        <!-- Speed test (2/3) and internet latency (1/3) side by side, or one below the other (narrow
+                             window, internet latency in its own row above the speed test), set in the code-behind -->
+                        <Grid x:Name="GridSpeedTestInternetLatency">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="10" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="10" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <ContentControl x:Name="ContentControlSpeedTest" />
+                            <ContentControl x:Name="ContentControlInternetLatency" />
+                        </Grid>
                         <!-- IP geolocation (2/3) and DNS resolver (1/3), the remaining one spans the row -->
                         <Grid x:Name="GridIPApi">
                             <Grid.ColumnDefinitions>

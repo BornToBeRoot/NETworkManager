@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using NETworkManager.Models.Network;
 using NETworkManager.Settings;
 using NETworkManager.ViewModels;
 
@@ -31,6 +32,17 @@ public partial class DashboardView
     private bool _isOutdated;
 
     /// <summary>
+    ///     Minimum width of the dashboard for two widgets side by side (2/3 + 1/3): the speed test needs about 600 px for
+    ///     its columns. Below it, the widgets are shown one below the other with the full width.
+    /// </summary>
+    private const double SideBySideMinWidth = 900;
+
+    /// <summary>
+    ///     The dashboard is wide enough for two widgets side by side, see <see cref="SideBySideMinWidth" />.
+    /// </summary>
+    private bool _isWide;
+
+    /// <summary>
     ///     Start of the last check, see <see cref="GlobalStaticConfiguration.Dashboard_RecheckInterval" />.
     /// </summary>
     private DateTime _lastCheck;
@@ -43,6 +55,18 @@ public partial class DashboardView
         // Show the widgets
         ApplyWidgetSettings();
         UpdateInternetLatency();
+
+        // Side by side or one below the other: only when the width crosses the threshold, not on every resize
+        StackPanelWidgets.SizeChanged += (_, e) =>
+        {
+            var isWide = e.NewSize.Width >= SideBySideMinWidth;
+
+            if (isWide == _isWide)
+                return;
+
+            _isWide = isWide;
+            ApplyLayout();
+        };
 
         // The settings are changed while the dashboard is hidden (settings view) - check again when it is shown
         SettingsManager.Current.PropertyChanged += SettingsManager_PropertyChanged;
@@ -164,6 +188,24 @@ public partial class DashboardView
         _ipApiDNSResolverWidgetView = ShowWidget(ContentControlIPApiDNSResolver,
             settings.Dashboard_ShowDNSResolverWidget, _ipApiDNSResolverWidgetView);
 
+        ApplyLayout();
+    }
+
+    /// <summary>
+    ///     Arranges the visible widgets: side by side or one below the other (position setting, width of the dashboard)
+    ///     and the gaps between them.
+    /// </summary>
+    private void ApplyLayout()
+    {
+        var settings = SettingsManager.Current;
+
+        // Next to the speed test (right, 1/3) if the dashboard is wide enough, otherwise its own row below the speed
+        // test. Own row: above the speed test (below the network connection).
+        if (settings.Dashboard_InternetLatencyPosition == InternetLatencyPosition.OwnRow)
+            ArrangeRow(GridSpeedTestInternetLatency, ContentControlInternetLatency, ContentControlSpeedTest, false);
+        else
+            ArrangeRow(GridSpeedTestInternetLatency, ContentControlSpeedTest, ContentControlInternetLatency, _isWide);
+
         // IP geolocation (2/3) and DNS resolver (1/3) in one row, the remaining one spans the row
         var showIPGeolocation = settings.Dashboard_ShowIPGeolocationWidget;
         var showDNSResolver = settings.Dashboard_ShowDNSResolverWidget;
@@ -176,7 +218,7 @@ public partial class DashboardView
 
         // Gap of 10 between the visible widgets (not below the last one, the scroll viewer has a margin of 10)
         var visibleWidgets = new FrameworkElement[]
-                { ContentControlNetworkConnection, ContentControlInternetLatency, ContentControlSpeedTest, GridIPApi }
+                { ContentControlNetworkConnection, GridSpeedTestInternetLatency, GridIPApi }
             .Where(x => x.Visibility == Visibility.Visible)
             .ToList();
 
@@ -184,6 +226,38 @@ public partial class DashboardView
             visibleWidgets[i].Margin = new Thickness(0, 0, 0, i < visibleWidgets.Count - 1 ? 10 : 0);
 
         EmptyStateMessageNoWidgets.Visibility = visibleWidgets.Count == 0 ? Visibility.Visible : Visibility.Collapsed;
+    }
+
+    /// <summary>
+    ///     Arranges two widgets of a row (grid with 5 columns: 2/3, gap, 1/3 and 2 rows): side by side if both are shown
+    ///     and <paramref name="sideBySide" />, otherwise one below the other with the full width (gap of 10). A hidden
+    ///     widget leaves no space; the row is hidden if both are.
+    /// </summary>
+    /// <param name="row">Grid of the row.</param>
+    /// <param name="first">Left (2/3) or upper widget.</param>
+    /// <param name="second">Right (1/3) or lower widget.</param>
+    /// <param name="sideBySide">Show the widgets side by side (if both are shown).</param>
+    private static void ArrangeRow(FrameworkElement row, FrameworkElement first, FrameworkElement second,
+        bool sideBySide)
+    {
+        var showFirst = first.Visibility == Visibility.Visible;
+        var showSecond = second.Visibility == Visibility.Visible;
+
+        row.Visibility = showFirst || showSecond ? Visibility.Visible : Visibility.Collapsed;
+
+        var isSideBySide = sideBySide && showFirst && showSecond;
+
+        Grid.SetRow(first, 0);
+        Grid.SetColumn(first, 0);
+        Grid.SetColumnSpan(first, isSideBySide ? 3 : 5);
+        first.Margin = new Thickness(0);
+
+        var isBelow = showFirst && !isSideBySide;
+
+        Grid.SetRow(second, isBelow ? 1 : 0);
+        Grid.SetColumn(second, isSideBySide ? 4 : 0);
+        Grid.SetColumnSpan(second, isSideBySide ? 1 : 5);
+        second.Margin = new Thickness(0, isBelow ? 10 : 0, 0, 0);
     }
 
     /// <summary>

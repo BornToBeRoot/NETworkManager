@@ -140,6 +140,7 @@ public static class GlobalStaticConfiguration
     public static bool Dashboard_CheckIPApiIPGeolocation => false;
     public static bool Dashboard_CheckIPApiDNSResolver => false;
     public static bool Dashboard_CheckInternetLatency => false;
+    public static InternetLatencyPosition Dashboard_InternetLatencyPosition => InternetLatencyPosition.NextToSpeedTest;
     public static int Dashboard_InternetLatencyInterval => 2;
     public static string Dashboard_InternetLatencyTarget1Name => "Cloudflare";
     public static string Dashboard_InternetLatencyTarget1Host => "1.1.1.1";

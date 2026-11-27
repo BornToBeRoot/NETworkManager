@@ -6474,6 +6474,17 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Next to the speed test: on the right of the speed test (1/3 of the width), the targets one below the other. In a narrow window or without the speed test, the widget gets its own row below the speed test.
+        ///
+        ///Own row: below the network connection, the targets side by side..
+        /// </summary>
+        public static string HelpMessage_InternetLatencyPosition {
+            get {
+                return ResourceManager.GetString("HelpMessage_InternetLatencyPosition", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Number of backups that are retained before the oldest one is deleted..
         /// </summary>
         public static string HelpMessage_MaximumNumberOfBackups {
@@ -7355,6 +7366,24 @@ namespace NETworkManager.Localization.Resources {
         public static string InternetLatency {
             get {
                 return ResourceManager.GetString("InternetLatency", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Next to the speed test.
+        /// </summary>
+        public static string InternetLatencyPosition_NextToSpeedTest {
+            get {
+                return ResourceManager.GetString("InternetLatencyPosition_NextToSpeedTest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Own row.
+        /// </summary>
+        public static string InternetLatencyPosition_OwnRow {
+            get {
+                return ResourceManager.GetString("InternetLatencyPosition_OwnRow", resourceCulture);
             }
         }
         
@@ -10652,6 +10681,15 @@ namespace NETworkManager.Localization.Resources {
         public static string PortStatus {
             get {
                 return ResourceManager.GetString("PortStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Position.
+        /// </summary>
+        public static string Position {
+            get {
+                return ResourceManager.GetString("Position", resourceCulture);
             }
         }
         
