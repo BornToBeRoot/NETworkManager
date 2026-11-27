@@ -446,13 +446,19 @@ public class DashboardSettingsViewModel : ViewModelBase
 
     private async Task DeleteLatencyTargetAction()
     {
+        var target = SelectedLatencyTarget;
+
+        // Prefixed with "- " like the bulleted list of other deletes (see DialogHelper.FormatItemList)
+        var item = string.IsNullOrWhiteSpace(target.Name) ? target.Host : $"{target.Name} ({target.Host})";
+
         var result = await DialogHelper.ShowConfirmationMessageAsync(Application.Current.MainWindow,
-            Strings.DeleteTarget, Strings.DeleteTargetMessage, ChildWindowIcon.Info, Strings.Delete);
+            Strings.DeleteTarget, string.Format(Strings.DeleteTargetMessage, $"- {item}"), ChildWindowIcon.Info,
+            Strings.Delete);
 
         if (!result)
             return;
 
-        SettingsManager.Current.Dashboard_LatencyTargets.Remove(SelectedLatencyTarget);
+        SettingsManager.Current.Dashboard_LatencyTargets.Remove(target);
     }
 
     /// <summary>

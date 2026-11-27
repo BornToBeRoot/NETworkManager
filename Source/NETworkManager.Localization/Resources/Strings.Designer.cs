@@ -3812,7 +3812,9 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The selected target will be deleted permanently..
+        ///   Looks up a localized string similar to The selected target is permanently deleted:
+        ///
+        ///{0}.
         /// </summary>
         public static string DeleteTargetMessage {
             get {

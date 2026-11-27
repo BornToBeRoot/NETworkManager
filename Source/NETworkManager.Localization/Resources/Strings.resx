@@ -5829,7 +5829,9 @@ Own row: below the network connection, the targets side by side.</value>
     <value>Delete target</value>
   </data>
   <data name="DeleteTargetMessage" xml:space="preserve">
-    <value>The selected target will be deleted permanently.</value>
+    <value>The selected target is permanently deleted:
+
+{0}</value>
   </data>
   <data name="PingDefaultGateway" xml:space="preserve">
     <value>Ping default gateway</value>
