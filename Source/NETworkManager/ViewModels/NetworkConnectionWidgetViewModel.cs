@@ -32,7 +32,10 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
     /// <summary>
     /// Shared, timeout-bound HTTP client used to detect the public IPv4/IPv6 address.
     /// </summary>
-    private static readonly HttpClient PublicIPHttpClient = new() { Timeout = TimeSpan.FromSeconds(10) };
+    // A new connection per request (no keep-alive): a check right after a network change (e.g. a VPN connected) must
+    // not reuse a connection of the old network, which would return the old public IP address
+    private static readonly HttpClient PublicIPHttpClient = new()
+        { Timeout = TimeSpan.FromSeconds(10), DefaultRequestHeaders = { ConnectionClose = true } };
 
     /// <summary>
     /// Data sent with the ping of the gateway and the public IP address.

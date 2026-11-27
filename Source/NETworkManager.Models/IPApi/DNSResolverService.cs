@@ -29,7 +29,10 @@ public class DNSResolverService : SingletonBase<DNSResolverService>
     /// </summary>
     public static readonly TimeSpan RequestTimeout = TimeSpan.FromSeconds(10);
 
-    private readonly HttpClient _client = new() { Timeout = RequestTimeout };
+    // A new connection per request (no keep-alive): a check right after a network change (e.g. a VPN connected) must
+    // not reuse a connection of the old network, which would return the old public IP address
+    private readonly HttpClient _client = new()
+        { Timeout = RequestTimeout, DefaultRequestHeaders = { ConnectionClose = true } };
 
     /// <summary>
     ///     Gets the IP DNS details from the API asynchronously.
