@@ -2162,6 +2162,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Check internet latency.
+        /// </summary>
+        public static string CheckInternetLatency {
+            get {
+                return ResourceManager.GetString("CheckInternetLatency", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Check IP geolocation.
         /// </summary>
         public static string CheckIPGeolocation {
@@ -6342,6 +6351,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Pings the targets only while the dashboard is shown (not in the background, not while the window is minimized or in the tray)..
+        /// </summary>
+        public static string HelpMessage_CheckInternetLatency {
+            get {
+                return ResourceManager.GetString("HelpMessage_CheckInternetLatency", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The IP geolocation is determined via ip-api.com.
         ///
         ///URL: http://ip-api.com/.
@@ -6443,6 +6461,15 @@ namespace NETworkManager.Localization.Resources {
         public static string HelpMessage_GuessTheOperatingSystemFromTheTTL {
             get {
                 return ResourceManager.GetString("HelpMessage_GuessTheOperatingSystemFromTheTTL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Time between the reply (or timeout) of a ping and the next ping of the target..
+        /// </summary>
+        public static string HelpMessage_InternetLatencyInterval {
+            get {
+                return ResourceManager.GetString("HelpMessage_InternetLatencyInterval", resourceCulture);
             }
         }
         
@@ -6698,6 +6725,15 @@ namespace NETworkManager.Localization.Resources {
         public static string HelpMessage_ScanForNetBIOS {
             get {
                 return ResourceManager.GetString("HelpMessage_ScanForNetBIOS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Shows the widget on the dashboard. It only pings the targets if the check is enabled (below or with the &quot;Enable&quot; button of the widget). A hidden widget sends nothing..
+        /// </summary>
+        public static string HelpMessage_ShowInternetLatencyWidget {
+            get {
+                return ResourceManager.GetString("HelpMessage_ShowInternetLatencyWidget", resourceCulture);
             }
         }
         
@@ -7310,6 +7346,34 @@ namespace NETworkManager.Localization.Resources {
         public static string Internet {
             get {
                 return ResourceManager.GetString("Internet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Internet latency.
+        /// </summary>
+        public static string InternetLatency {
+            get {
+                return ResourceManager.GetString("InternetLatency", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show the latency to targets on the internet (e.g. Cloudflare, Google and Quad9), updated live while the dashboard is shown.
+        ///The targets receive a ping (ICMP echo request) every few seconds..
+        /// </summary>
+        public static string InternetLatencyWidgetDisabledMessage {
+            get {
+                return ResourceManager.GetString("InternetLatencyWidgetDisabledMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Interval (seconds).
+        /// </summary>
+        public static string IntervalInSeconds {
+            get {
+                return ResourceManager.GetString("IntervalInSeconds", resourceCulture);
             }
         }
         
@@ -9498,6 +9562,15 @@ namespace NETworkManager.Localization.Resources {
         public static string NoFirewallRulesFoundMessage {
             get {
                 return ResourceManager.GetString("NoFirewallRulesFoundMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No targets configured. Add them in the settings of the dashboard..
+        /// </summary>
+        public static string NoInternetLatencyTargetsConfiguredMessage {
+            get {
+                return ResourceManager.GetString("NoInternetLatencyTargetsConfiguredMessage", resourceCulture);
             }
         }
         
@@ -15004,6 +15077,15 @@ namespace NETworkManager.Localization.Resources {
         public static string Tags {
             get {
                 return ResourceManager.GetString("Tags", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Target.
+        /// </summary>
+        public static string Target {
+            get {
+                return ResourceManager.GetString("Target", resourceCulture);
             }
         }
         

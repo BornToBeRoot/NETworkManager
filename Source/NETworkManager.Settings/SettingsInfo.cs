@@ -1063,6 +1063,110 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     } = GlobalStaticConfiguration.Dashboard_CheckIPApiDNSResolver;
 
+    public bool Dashboard_CheckInternetLatency
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.Dashboard_CheckInternetLatency;
+
+    public int Dashboard_InternetLatencyInterval
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.Dashboard_InternetLatencyInterval;
+
+    public string Dashboard_InternetLatencyTarget1Name
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.Dashboard_InternetLatencyTarget1Name;
+
+    public string Dashboard_InternetLatencyTarget1Host
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.Dashboard_InternetLatencyTarget1Host;
+
+    public string Dashboard_InternetLatencyTarget2Name
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.Dashboard_InternetLatencyTarget2Name;
+
+    public string Dashboard_InternetLatencyTarget2Host
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.Dashboard_InternetLatencyTarget2Host;
+
+    public string Dashboard_InternetLatencyTarget3Name
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.Dashboard_InternetLatencyTarget3Name;
+
+    public string Dashboard_InternetLatencyTarget3Host
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.Dashboard_InternetLatencyTarget3Host;
+
     public bool Dashboard_ShowNetworkConnectionWidget
     {
         get;
@@ -1075,6 +1179,19 @@ public class SettingsInfo : INotifyPropertyChanged
             OnPropertyChanged();
         }
     } = GlobalStaticConfiguration.Dashboard_ShowNetworkConnectionWidget;
+
+    public bool Dashboard_ShowInternetLatencyWidget
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.Dashboard_ShowInternetLatencyWidget;
 
     public bool Dashboard_ShowSpeedTestWidget
     {

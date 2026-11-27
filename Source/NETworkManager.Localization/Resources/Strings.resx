@@ -5780,4 +5780,32 @@ ip-api.com receives your IP address and the IP address of your DNS server.</valu
   <data name="NetworkConnectionWidgetAndStatusWindowUseTheseSettingsMessage" xml:space="preserve">
     <value>The network connection widget and the status window use these settings to check the internet.</value>
   </data>
+  <data name="InternetLatency" xml:space="preserve">
+    <value>Internet latency</value>
+  </data>
+  <data name="CheckInternetLatency" xml:space="preserve">
+    <value>Check internet latency</value>
+  </data>
+  <data name="HelpMessage_CheckInternetLatency" xml:space="preserve">
+    <value>Pings the targets only while the dashboard is shown (not in the background, not while the window is minimized or in the tray).</value>
+  </data>
+  <data name="HelpMessage_ShowInternetLatencyWidget" xml:space="preserve">
+    <value>Shows the widget on the dashboard. It only pings the targets if the check is enabled (below or with the "Enable" button of the widget). A hidden widget sends nothing.</value>
+  </data>
+  <data name="InternetLatencyWidgetDisabledMessage" xml:space="preserve">
+    <value>Show the latency to targets on the internet (e.g. Cloudflare, Google and Quad9), updated live while the dashboard is shown.
+The targets receive a ping (ICMP echo request) every few seconds.</value>
+  </data>
+  <data name="IntervalInSeconds" xml:space="preserve">
+    <value>Interval (seconds)</value>
+  </data>
+  <data name="HelpMessage_InternetLatencyInterval" xml:space="preserve">
+    <value>Time between the reply (or timeout) of a ping and the next ping of the target.</value>
+  </data>
+  <data name="Target" xml:space="preserve">
+    <value>Target</value>
+  </data>
+  <data name="NoInternetLatencyTargetsConfiguredMessage" xml:space="preserve">
+    <value>No targets configured. Add them in the settings of the dashboard.</value>
+  </data>
 </root>
