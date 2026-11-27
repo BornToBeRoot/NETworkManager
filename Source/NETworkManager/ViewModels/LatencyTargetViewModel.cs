@@ -337,6 +337,9 @@ public class LatencyTargetViewModel : ViewModelBase
             error = string.Format(Strings.CouldNotResolveIPAddressFor, Host);
         }
 
+        // Stopped meanwhile (the lookup can't be canceled): a new run may already use this target, its values stay
+        cancellationToken.ThrowIfCancellationRequested();
+
         // Resolved again later (see RunAsync); no IP address or value of an earlier run next to the error
         ErrorMessage = error;
         ResolvedIPAddress = null;
