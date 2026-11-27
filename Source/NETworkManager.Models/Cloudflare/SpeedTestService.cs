@@ -386,7 +386,7 @@ public class SpeedTestService
 
     /// <summary>
     /// Runs a request of the test like the official library: HTTP 429 is repeated after the delay of the server (up to
-    /// <see cref="MaxRetries" /> times), another error skips the request. After <see cref="MaxConsecutiveFailedRequests" />
+    /// <see cref="MaxRetries" /> times, then the test ends), another error skips the request. After <see cref="MaxConsecutiveFailedRequests" />
     /// failed requests in a row without a response the error is thrown (the test ends) - unless the server still
     /// answers a small request: then only this size fails (e.g. a proxy that closes the connection of large uploads
     /// instead of answering HTTP 413), the rest of the set is skipped and the direction ends.
@@ -411,6 +411,14 @@ public class SpeedTestService
             {
                 Log.Warn($"Speed test request rate limited (HTTP 429), retry in {ex.RetryAfter.TotalSeconds} s.");
                 await Task.Delay(ex.RetryAfter, cancellationToken).ConfigureAwait(false);
+            }
+            catch (TooManyRequestsException)
+            {
+                // Still rate limited after the retries: the next requests would be too (each waiting up to a minute
+                // per retry), end the test with the error
+                Log.Warn("Speed test request still rate limited (HTTP 429) after the retries, the test ends.");
+
+                throw;
             }
             catch (Exception ex) when (ex is HttpRequestException or IOException or TimeoutException)
             {
