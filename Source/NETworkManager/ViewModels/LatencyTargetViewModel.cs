@@ -347,10 +347,11 @@ public class LatencyTargetViewModel : ViewModelBase
         // Stopped meanwhile (the lookup can't be canceled): a new run may already use this target, its values stay
         cancellationToken.ThrowIfCancellationRequested();
 
-        // Resolved again later (see RunAsync); no IP address or value of an earlier run next to the error
+        // Resolved again later (see RunAsync); no IP address, value, statistics or chart of an earlier run next to the
+        // error (e.g. resumed after a pause while the DNS server doesn't work)
+        ClearHistory();
+
         ErrorMessage = error;
-        ResolvedIPAddress = null;
-        Value = "-/-";
         StatusLevel = StatusLevel.Error;
 
         Log.Warn($"Latency: {ErrorMessage}");
@@ -392,11 +393,11 @@ public class LatencyTargetViewModel : ViewModelBase
             return gateway;
         }
 
-        // Not an error of the target: gray, like the network connection without a gateway
+        // Not an error of the target: gray, like the network connection without a gateway (no values of the gateway
+        // of an earlier network)
+        ClearHistory();
+
         ErrorMessage = Strings.ConnectionCheckReason_NoGateway;
-        ResolvedIPAddress = null;
-        Value = "-/-";
-        StatusLevel = StatusLevel.None;
 
         return null;
     }
