@@ -10,6 +10,7 @@ using NETworkManager.Models.RDAP;
 using NETworkManager.Models.RemoteDesktop;
 using NETworkManager.Utilities;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
@@ -142,12 +143,23 @@ public static class GlobalStaticConfiguration
     public static bool Dashboard_CheckLatency => false;
     public static LatencyPosition Dashboard_LatencyPosition => LatencyPosition.NextToSpeedTest;
     public static int Dashboard_LatencyInterval => 2;
-    public static string Dashboard_LatencyTarget1Name => "Cloudflare";
-    public static string Dashboard_LatencyTarget1Host => "1.1.1.1";
-    public static string Dashboard_LatencyTarget2Name => "Google";
-    public static string Dashboard_LatencyTarget2Host => "8.8.8.8";
-    public static string Dashboard_LatencyTarget3Name => "Quad9";
-    public static string Dashboard_LatencyTarget3Host => "9.9.9.9";
+
+    /// <summary>
+    ///     Default targets of the latency widget (public DNS resolvers: answer pings reliably, anycast). The gateway is
+    ///     not a default, it can be added in the settings.
+    /// </summary>
+    public static List<LatencyTargetInfo> Dashboard_LatencyTargets =>
+    [
+        new("Cloudflare", "1.1.1.1"),
+        new("Google", "8.8.8.8"),
+        new("Quad9", "9.9.9.9")
+    ];
+
+    /// <summary>
+    ///     Maximum number of targets of the latency widget (a status widget, not a Ping Monitor).
+    /// </summary>
+    public static int Dashboard_LatencyMaxTargets => 6;
+
     public static bool Dashboard_ShowNetworkConnectionWidget => true;
     public static bool Dashboard_ShowLatencyWidget => true;
     public static bool Dashboard_ShowSpeedTestWidget => true;

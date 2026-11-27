@@ -62,9 +62,15 @@ public class LatencyTargetViewModel : ViewModelBase
     public string Name { get; }
 
     /// <summary>
-    /// Gets the host name or IP address of the target.
+    /// Gets the host name or IP address of the target ("Gateway" for the default gateway, see
+    /// <see cref="ResolvedIPAddress" />).
     /// </summary>
     public string Host { get; }
+
+    /// <summary>
+    /// Gets the target of the settings (the widget keeps the target when the list changes and it is the same).
+    /// </summary>
+    public LatencyTargetInfo Info { get; }
 
     /// <summary>
     /// Gets the pinged IP address (resolved from the host), <c>null</c> before it is resolved.
@@ -169,12 +175,12 @@ public class LatencyTargetViewModel : ViewModelBase
     /// <summary>
     /// Initializes a new instance of the <see cref="LatencyTargetViewModel" /> class.
     /// </summary>
-    /// <param name="name">Name of the target, empty to show the host.</param>
-    /// <param name="host">Host name or IP address of the target.</param>
-    public LatencyTargetViewModel(string name, string host)
+    /// <param name="info">Target of the settings (a host or the default gateway).</param>
+    public LatencyTargetViewModel(LatencyTargetInfo info)
     {
-        Host = host;
-        Name = string.IsNullOrWhiteSpace(name) ? host : name.Trim();
+        Info = info;
+        Host = info.IsGateway ? Strings.Gateway : info.Host?.Trim();
+        Name = string.IsNullOrWhiteSpace(info.Name) ? Host : info.Name.Trim();
 
         XAxes = [_xAxis];
 
@@ -204,14 +210,20 @@ public class LatencyTargetViewModel : ViewModelBase
     /// </summary>
     public ICommand OpenCommand => new RelayCommand(parameter =>
     {
-        if (parameter is ApplicationName application)
-            NavigationManager.Open(application, Host);
-    });
+        if (parameter is ApplicationName application && Target != null)
+            NavigationManager.Open(application, Target);
+    }, _ => Target != null);
 
     /// <summary>
     /// Gets the command to copy the host.
     /// </summary>
-    public ICommand CopyCommand => new RelayCommand(_ => ClipboardHelper.SetClipboard(Host));
+    public ICommand CopyCommand => new RelayCommand(_ => ClipboardHelper.SetClipboard(Target), _ => Target != null);
+
+    /// <summary>
+    /// Host that is opened / copied: the host, or the detected IP address of the gateway (<c>null</c> before it is
+    /// detected).
+    /// </summary>
+    private string Target => Info.IsGateway ? ResolvedIPAddress : Host;
 
     #endregion
 
@@ -286,6 +298,9 @@ public class LatencyTargetViewModel : ViewModelBase
     /// <returns>IP address, <c>null</c> if the host name could not be resolved (the error is shown).</returns>
     private async Task<IPAddress> ResolveAsync(CancellationToken cancellationToken)
     {
+        if (Info.IsGateway)
+            return await DetectGatewayAsync(cancellationToken);
+
         if (IPAddress.TryParse(Host, out var ipAddress))
         {
             ResolvedIPAddress = ipAddress.ToString();
@@ -329,6 +344,49 @@ public class LatencyTargetViewModel : ViewModelBase
         StatusLevel = StatusLevel.Error;
 
         Log.Warn($"Latency: {ErrorMessage}");
+
+        return null;
+    }
+
+    /// <summary>
+    /// Detects the default gateway of the network adapter that is used for the internet (route to the public IPv4
+    /// address of the network connection settings), like the network connection check.
+    /// </summary>
+    /// <returns>Gateway, <c>null</c> if there is none (e.g. a VPN without a gateway; shown as information, detected
+    ///     again later).</returns>
+    private async Task<IPAddress> DetectGatewayAsync(CancellationToken cancellationToken)
+    {
+        IPAddress gateway = null;
+
+        try
+        {
+            var remote = IPAddress.TryParse(SettingsManager.Current.Dashboard_PublicIPv4Address, out var address)
+                ? address
+                : IPAddress.Parse(GlobalStaticConfiguration.Dashboard_PublicIPv4Address);
+
+            gateway = await NetworkInterface.DetectGatewayBasedOnRoutingAsync(remote);
+        }
+        catch (Exception ex) when (ex is not OperationCanceledException)
+        {
+            Log.Error("Latency: detecting the default gateway failed.", ex);
+        }
+
+        cancellationToken.ThrowIfCancellationRequested();
+
+        if (gateway != null)
+        {
+            ErrorMessage = null;
+            ResolvedIPAddress = gateway.ToString();
+            UpdateStatistics();
+
+            return gateway;
+        }
+
+        // Not an error of the target: gray, like the network connection without a gateway
+        ErrorMessage = Strings.ConnectionCheckReason_NoGateway;
+        ResolvedIPAddress = null;
+        Value = "-/-";
+        StatusLevel = StatusLevel.None;
 
         return null;
     }

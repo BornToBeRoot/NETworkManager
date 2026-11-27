@@ -1,6 +1,15 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Data;
+using System.Windows.Input;
+using MahApps.Metro.SimpleChildWindow;
+using NETworkManager.Controls;
+using NETworkManager.Localization.Resources;
+using NETworkManager.Utilities;
+using NETworkManager.Views;
 using NETworkManager.Models.Network;
 using NETworkManager.Settings;
 
@@ -290,113 +299,21 @@ public class DashboardSettingsViewModel : ViewModelBase
     }
 
     /// <summary>
-    /// Gets or sets the name of the latency target 1.
+    /// Gets the targets of the latency widget.
     /// </summary>
-    public string LatencyTarget1Name
-    {
-        get;
-        set
-        {
-            if (value == field)
-                return;
-
-            if (!_isLoading)
-                SettingsManager.Current.Dashboard_LatencyTarget1Name = value;
-
-            field = value;
-            OnPropertyChanged();
-        }
-    }
+    public ICollectionView LatencyTargets { get; } =
+        CollectionViewSource.GetDefaultView(SettingsManager.Current.Dashboard_LatencyTargets);
 
     /// <summary>
-    /// Gets or sets the host name or IP address of the latency target 1 (empty: not shown).
+    /// Gets or sets the selected target of the latency widget.
     /// </summary>
-    public string LatencyTarget1Host
+    public LatencyTargetInfo SelectedLatencyTarget
     {
         get;
         set
         {
             if (value == field)
                 return;
-
-            if (!_isLoading)
-                SettingsManager.Current.Dashboard_LatencyTarget1Host = value;
-
-            field = value;
-            OnPropertyChanged();
-        }
-    }
-
-    /// <summary>
-    /// Gets or sets the name of the latency target 2.
-    /// </summary>
-    public string LatencyTarget2Name
-    {
-        get;
-        set
-        {
-            if (value == field)
-                return;
-
-            if (!_isLoading)
-                SettingsManager.Current.Dashboard_LatencyTarget2Name = value;
-
-            field = value;
-            OnPropertyChanged();
-        }
-    }
-
-    /// <summary>
-    /// Gets or sets the host name or IP address of the latency target 2 (empty: not shown).
-    /// </summary>
-    public string LatencyTarget2Host
-    {
-        get;
-        set
-        {
-            if (value == field)
-                return;
-
-            if (!_isLoading)
-                SettingsManager.Current.Dashboard_LatencyTarget2Host = value;
-
-            field = value;
-            OnPropertyChanged();
-        }
-    }
-
-    /// <summary>
-    /// Gets or sets the name of the latency target 3.
-    /// </summary>
-    public string LatencyTarget3Name
-    {
-        get;
-        set
-        {
-            if (value == field)
-                return;
-
-            if (!_isLoading)
-                SettingsManager.Current.Dashboard_LatencyTarget3Name = value;
-
-            field = value;
-            OnPropertyChanged();
-        }
-    }
-
-    /// <summary>
-    /// Gets or sets the host name or IP address of the latency target 3 (empty: not shown).
-    /// </summary>
-    public string LatencyTarget3Host
-    {
-        get;
-        set
-        {
-            if (value == field)
-                return;
-
-            if (!_isLoading)
-                SettingsManager.Current.Dashboard_LatencyTarget3Host = value;
 
             field = value;
             OnPropertyChanged();
@@ -462,6 +379,95 @@ public class DashboardSettingsViewModel : ViewModelBase
 
     #endregion
 
+    #region ICommands & Actions
+
+    /// <summary>
+    /// Gets the command to add a target of the latency widget (up to the maximum).
+    /// </summary>
+    public ICommand AddLatencyTargetCommand => new RelayCommand(_ => AddLatencyTargetAction().ConfigureAwait(false),
+        _ => SettingsManager.Current.Dashboard_LatencyTargets.Count < GlobalStaticConfiguration.Dashboard_LatencyMaxTargets);
+
+    /// <summary>
+    /// Gets the command to edit the selected target.
+    /// </summary>
+    public ICommand EditLatencyTargetCommand => new RelayCommand(_ => EditLatencyTargetAction().ConfigureAwait(false),
+        _ => SelectedLatencyTarget != null);
+
+    /// <summary>
+    /// Gets the command to delete the selected target.
+    /// </summary>
+    public ICommand DeleteLatencyTargetCommand => new RelayCommand(
+        _ => DeleteLatencyTargetAction().ConfigureAwait(false), _ => SelectedLatencyTarget != null);
+
+    private Task AddLatencyTargetAction()
+    {
+        return ShowLatencyTargetDialog(Strings.AddTarget, null,
+            target => SettingsManager.Current.Dashboard_LatencyTargets.Add(target));
+    }
+
+    private Task EditLatencyTargetAction()
+    {
+        var selected = SelectedLatencyTarget;
+
+        // Replaced at the same position (the order of the widget stays)
+        return ShowLatencyTargetDialog(Strings.EditTarget, selected, target =>
+        {
+            var targets = SettingsManager.Current.Dashboard_LatencyTargets;
+            var index = targets.IndexOf(selected);
+
+            if (index < 0)
+                targets.Add(target);
+            else
+                targets[index] = target;
+
+            SelectedLatencyTarget = target;
+        });
+    }
+
+    private async Task DeleteLatencyTargetAction()
+    {
+        var result = await DialogHelper.ShowConfirmationMessageAsync(Application.Current.MainWindow,
+            Strings.DeleteTarget, Strings.DeleteTargetMessage, ChildWindowIcon.Info, Strings.Delete);
+
+        if (!result)
+            return;
+
+        SettingsManager.Current.Dashboard_LatencyTargets.Remove(SelectedLatencyTarget);
+    }
+
+    /// <summary>
+    /// Shows the dialog to add or edit a target.
+    /// </summary>
+    /// <param name="title">Title of the dialog.</param>
+    /// <param name="target">Target to edit, <c>null</c> to add one.</param>
+    /// <param name="save">Saves the target of the dialog.</param>
+    private static async Task ShowLatencyTargetDialog(string title, LatencyTargetInfo target,
+        Action<LatencyTargetInfo> save)
+    {
+        var childWindow = new LatencyTargetChildWindow();
+
+        var childWindowViewModel = new LatencyTargetDialogViewModel(instance =>
+        {
+            childWindow.IsOpen = false;
+            ConfigurationManager.Current.IsChildWindowOpen = false;
+
+            save(instance.ToTarget());
+        }, _ =>
+        {
+            childWindow.IsOpen = false;
+            ConfigurationManager.Current.IsChildWindowOpen = false;
+        }, target);
+
+        childWindow.Title = title;
+        childWindow.DataContext = childWindowViewModel;
+
+        ConfigurationManager.Current.IsChildWindowOpen = true;
+
+        await Application.Current.MainWindow.ShowChildWindowAsync(childWindow);
+    }
+
+    #endregion
+
     #region Contructor, load settings
 
     /// <summary>
@@ -514,12 +520,6 @@ public class DashboardSettingsViewModel : ViewModelBase
         CheckLatencyEnabled = SettingsManager.Current.Dashboard_CheckLatency;
         LatencyPosition = SettingsManager.Current.Dashboard_LatencyPosition;
         LatencyInterval = SettingsManager.Current.Dashboard_LatencyInterval;
-        LatencyTarget1Name = SettingsManager.Current.Dashboard_LatencyTarget1Name;
-        LatencyTarget1Host = SettingsManager.Current.Dashboard_LatencyTarget1Host;
-        LatencyTarget2Name = SettingsManager.Current.Dashboard_LatencyTarget2Name;
-        LatencyTarget2Host = SettingsManager.Current.Dashboard_LatencyTarget2Host;
-        LatencyTarget3Name = SettingsManager.Current.Dashboard_LatencyTarget3Name;
-        LatencyTarget3Host = SettingsManager.Current.Dashboard_LatencyTarget3Host;
         ShowSpeedTestWidget = SettingsManager.Current.Dashboard_ShowSpeedTestWidget;
         ShowIPGeolocationWidget = SettingsManager.Current.Dashboard_ShowIPGeolocationWidget;
         ShowDNSResolverWidget = SettingsManager.Current.Dashboard_ShowDNSResolverWidget;

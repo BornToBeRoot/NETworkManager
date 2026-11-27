@@ -1,8 +1,11 @@
+using System;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
 using System.Threading;
 using System.Windows.Input;
+using NETworkManager.Models.Network;
 using NETworkManager.Settings;
 using NETworkManager.Utilities;
 
@@ -32,8 +35,28 @@ public class LatencyWidgetViewModel : ViewModelBase
     public ObservableCollection<LatencyTargetViewModel> Targets { get; } = [];
 
     /// <summary>
-    /// Gets a value indicating whether a target is configured.
+    /// Target list of the settings whose changes are followed, see <see cref="SubscribeTargets" />.
     /// </summary>
+    private ObservableCollection<LatencyTargetInfo> _subscribedTargets;
+
+    /// <summary>
+    /// Gets the number of targets per line when they are side by side (own row): up to 3.
+    /// </summary>
+    public int WideColumns
+    {
+        get;
+        private set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = 1;
+
+    /// <summary>
+    /// Gets a value indicating whether a target is configured.
     public bool HasTargets
     {
         get;
@@ -61,6 +84,7 @@ public class LatencyWidgetViewModel : ViewModelBase
     /// </summary>
     public LatencyWidgetViewModel()
     {
+        SubscribeTargets();
         LoadTargets();
 
         SettingsManager.Current.PropertyChanged += SettingsManager_PropertyChanged;
@@ -81,6 +105,11 @@ public class LatencyWidgetViewModel : ViewModelBase
     /// </summary>
     public ICommand EnableCheckCommand =>
         new RelayCommand(_ => SettingsManager.Current.Dashboard_CheckLatency = true);
+
+    /// <summary>
+    /// Gets the command to open the settings of the dashboard (no targets configured).
+    /// </summary>
+    public ICommand ConfigureCommand => new RelayCommand(_ => NavigationManager.OpenSettings());
 
     /// <summary>
     /// Gets the command to copy the values and statistics of all targets as text.
@@ -166,47 +195,68 @@ public class LatencyWidgetViewModel : ViewModelBase
     /// </summary>
     private void LoadTargets()
     {
-        var settings = SettingsManager.Current;
+        var wasRunning = IsRunning;
+
+        Stop();
+
+        // Unchanged targets keep their pings of the last minute (e.g. another target was added)
+        var previous = Targets.ToList();
 
         Targets.Clear();
 
-        foreach (var (name, host) in new[]
-                 {
-                     (settings.Dashboard_LatencyTarget1Name, settings.Dashboard_LatencyTarget1Host),
-                     (settings.Dashboard_LatencyTarget2Name, settings.Dashboard_LatencyTarget2Host),
-                     (settings.Dashboard_LatencyTarget3Name, settings.Dashboard_LatencyTarget3Host)
-                 })
+        foreach (var info in SettingsManager.Current.Dashboard_LatencyTargets
+                     .Where(x => x.IsGateway || !string.IsNullOrWhiteSpace(x.Host))
+                     .Take(GlobalStaticConfiguration.Dashboard_LatencyMaxTargets))
         {
-            if (!string.IsNullOrWhiteSpace(host))
-                Targets.Add(new LatencyTargetViewModel(name, host.Trim()));
+            var target = previous.FirstOrDefault(x => x.Info.IsSameTarget(info));
+
+            if (target != null)
+                previous.Remove(target);
+
+            Targets.Add(target ?? new LatencyTargetViewModel(info));
         }
 
         HasTargets = Targets.Count > 0;
+
+        // Side by side: up to 3 per line, more targets in a second line
+        WideColumns = Math.Clamp(Targets.Count, 1, 3);
+
+        if (wasRunning)
+            Start();
     }
 
     private void SettingsManager_PropertyChanged(object sender, PropertyChangedEventArgs e)
     {
-        // Check disabled: no old values when it is enabled again (the dashboard stops the pings)
-        if (e.PropertyName == nameof(SettingsInfo.Dashboard_CheckLatency) &&
-            !SettingsManager.Current.Dashboard_CheckLatency)
+        switch (e.PropertyName)
         {
-            foreach (var target in Targets)
-                target.ClearHistory();
-
-            return;
+            // Check disabled: no old values when it is enabled again (the dashboard stops the pings)
+            case nameof(SettingsInfo.Dashboard_CheckLatency) when !SettingsManager.Current.Dashboard_CheckLatency:
+                foreach (var target in Targets)
+                    target.ClearHistory();
+                break;
+            // The list was replaced (e.g. settings imported or reset)
+            case nameof(SettingsInfo.Dashboard_LatencyTargets):
+                SubscribeTargets();
+                LoadTargets();
+                break;
         }
+    }
 
-        // A changed target: create the targets again, a running widget pings the new ones right away
-        if (e.PropertyName == null || !e.PropertyName.StartsWith("Dashboard_LatencyTarget"))
-            return;
+    /// <summary>
+    /// Follows the changes of the target list (add, edit, delete in the settings).
+    /// </summary>
+    private void SubscribeTargets()
+    {
+        if (_subscribedTargets != null)
+            _subscribedTargets.CollectionChanged -= Targets_CollectionChanged;
 
-        var wasRunning = IsRunning;
+        _subscribedTargets = SettingsManager.Current.Dashboard_LatencyTargets;
+        _subscribedTargets.CollectionChanged += Targets_CollectionChanged;
+    }
 
-        Stop();
+    private void Targets_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+    {
         LoadTargets();
-
-        if (wasRunning)
-            Start();
     }
 
     #endregion

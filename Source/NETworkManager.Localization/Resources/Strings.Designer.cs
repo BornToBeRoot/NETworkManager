@@ -898,6 +898,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add target.
+        /// </summary>
+        public static string AddTarget {
+            get {
+                return ResourceManager.GetString("AddTarget", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Adjust screen.
         /// </summary>
         public static string AdjustScreen {
@@ -3794,6 +3803,24 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Delete target.
+        /// </summary>
+        public static string DeleteTarget {
+            get {
+                return ResourceManager.GetString("DeleteTarget", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The selected target will be deleted permanently..
+        /// </summary>
+        public static string DeleteTargetMessage {
+            get {
+                return ResourceManager.GetString("DeleteTargetMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Description.
         /// </summary>
         public static string Description {
@@ -4485,6 +4512,15 @@ namespace NETworkManager.Localization.Resources {
         public static string EditSNTPServer {
             get {
                 return ResourceManager.GetString("EditSNTPServer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit target.
+        /// </summary>
+        public static string EditTarget {
+            get {
+                return ResourceManager.GetString("EditTarget", resourceCulture);
             }
         }
         
@@ -6465,6 +6501,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Pings the default gateway (router) of the network adapter that is used for the internet instead of a host. It is detected again when the pings start, e.g. after a network change (VPN, another Wi-Fi)..
+        /// </summary>
+        public static string HelpMessage_LatencyGateway {
+            get {
+                return ResourceManager.GetString("HelpMessage_LatencyGateway", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Time between the reply (or timeout) of a ping and the next ping of the target..
         /// </summary>
         public static string HelpMessage_LatencyInterval {
@@ -6481,6 +6526,15 @@ namespace NETworkManager.Localization.Resources {
         public static string HelpMessage_LatencyPosition {
             get {
                 return ResourceManager.GetString("HelpMessage_LatencyPosition", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Up to 6 targets: IP addresses or host names on the internet or in your network (e.g. the router, a server). In an internal or air-gapped network, replace the default targets on the internet with your own hosts..
+        /// </summary>
+        public static string HelpMessage_LatencyTargets {
+            get {
+                return ResourceManager.GetString("HelpMessage_LatencyTargets", resourceCulture);
             }
         }
         
@@ -9586,7 +9640,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to No targets configured. Add them in the settings of the dashboard..
+        ///   Looks up a localized string similar to No targets configured..
         /// </summary>
         public static string NoLatencyTargetsConfiguredMessage {
             get {
@@ -15110,11 +15164,11 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Target.
+        ///   Looks up a localized string similar to Targets.
         /// </summary>
-        public static string Target {
+        public static string Targets {
             get {
-                return ResourceManager.GetString("Target", resourceCulture);
+                return ResourceManager.GetString("Targets", resourceCulture);
             }
         }
         
@@ -16024,6 +16078,15 @@ namespace NETworkManager.Localization.Resources {
         public static string UseCustomThemes {
             get {
                 return ResourceManager.GetString("UseCustomThemes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use default gateway.
+        /// </summary>
+        public static string UseDefaultGateway {
+            get {
+                return ResourceManager.GetString("UseDefaultGateway", resourceCulture);
             }
         }
         

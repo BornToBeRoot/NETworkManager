@@ -1102,7 +1102,7 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     } = GlobalStaticConfiguration.Dashboard_LatencyInterval;
 
-    public string Dashboard_LatencyTarget1Name
+    public ObservableCollection<LatencyTargetInfo> Dashboard_LatencyTargets
     {
         get;
         set
@@ -1110,75 +1110,11 @@ public class SettingsInfo : INotifyPropertyChanged
             if (value == field)
                 return;
 
+            UpdateCollectionChanged(field, value);
             field = value;
             OnPropertyChanged();
         }
-    } = GlobalStaticConfiguration.Dashboard_LatencyTarget1Name;
-
-    public string Dashboard_LatencyTarget1Host
-    {
-        get;
-        set
-        {
-            if (value == field)
-                return;
-
-            field = value;
-            OnPropertyChanged();
-        }
-    } = GlobalStaticConfiguration.Dashboard_LatencyTarget1Host;
-
-    public string Dashboard_LatencyTarget2Name
-    {
-        get;
-        set
-        {
-            if (value == field)
-                return;
-
-            field = value;
-            OnPropertyChanged();
-        }
-    } = GlobalStaticConfiguration.Dashboard_LatencyTarget2Name;
-
-    public string Dashboard_LatencyTarget2Host
-    {
-        get;
-        set
-        {
-            if (value == field)
-                return;
-
-            field = value;
-            OnPropertyChanged();
-        }
-    } = GlobalStaticConfiguration.Dashboard_LatencyTarget2Host;
-
-    public string Dashboard_LatencyTarget3Name
-    {
-        get;
-        set
-        {
-            if (value == field)
-                return;
-
-            field = value;
-            OnPropertyChanged();
-        }
-    } = GlobalStaticConfiguration.Dashboard_LatencyTarget3Name;
-
-    public string Dashboard_LatencyTarget3Host
-    {
-        get;
-        set
-        {
-            if (value == field)
-                return;
-
-            field = value;
-            OnPropertyChanged();
-        }
-    } = GlobalStaticConfiguration.Dashboard_LatencyTarget3Host;
+    } = [.. GlobalStaticConfiguration.Dashboard_LatencyTargets];
 
     public bool Dashboard_ShowNetworkConnectionWidget
     {
@@ -4970,6 +4906,9 @@ public class SettingsInfo : INotifyPropertyChanged
     {
         // General
         General_ApplicationList.CollectionChanged += CollectionChanged;
+
+        // Dashboard
+        Dashboard_LatencyTargets.CollectionChanged += CollectionChanged;
 
         // Run command
         RunCommand_History.CollectionChanged += CollectionChanged;
