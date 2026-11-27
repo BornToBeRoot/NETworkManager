@@ -201,11 +201,14 @@ public partial class DashboardView
 
         // Next to the speed test (right, 1/3) if the dashboard is wide enough, otherwise its own row below the speed
         // test. Own row: above the speed test (below the network connection).
-        if (settings.Dashboard_InternetLatencyPosition == InternetLatencyPosition.OwnRow)
-            ArrangeRow(GridSpeedTestInternetLatency, ContentControlInternetLatency, ContentControlSpeedTest, false);
-        else
-            ArrangeRow(GridSpeedTestInternetLatency, ContentControlSpeedTest, ContentControlInternetLatency,
+        var isNextToSpeedTest = settings.Dashboard_InternetLatencyPosition == InternetLatencyPosition.OwnRow
+            ? ArrangeRow(GridSpeedTestInternetLatency, ContentControlInternetLatency, ContentControlSpeedTest, false)
+            : ArrangeRow(GridSpeedTestInternetLatency, ContentControlSpeedTest, ContentControlInternetLatency,
                 _sideBySide.SpeedTestRow);
+
+        // Next to the speed test the targets are always one below the other (not decided by the width of the widget:
+        // 1/3 of a maximized window is wide enough for them side by side)
+        _internetLatencyWidgetView?.SetNextToOtherWidget(isNextToSpeedTest);
 
         // IP geolocation (2/3) and DNS resolver (1/3) side by side if the dashboard is wide enough (the DNS resolver
         // is too narrow otherwise), the remaining one spans the row
@@ -256,7 +259,8 @@ public partial class DashboardView
     /// <param name="first">Left (2/3) or upper widget.</param>
     /// <param name="second">Right (1/3) or lower widget.</param>
     /// <param name="sideBySide">Show the widgets side by side (if both are shown).</param>
-    private static void ArrangeRow(FrameworkElement row, FrameworkElement first, FrameworkElement second,
+    /// <returns><c>true</c> if the widgets are shown side by side.</returns>
+    private static bool ArrangeRow(FrameworkElement row, FrameworkElement first, FrameworkElement second,
         bool sideBySide)
     {
         var showFirst = first.Visibility == Visibility.Visible;
@@ -277,6 +281,8 @@ public partial class DashboardView
         Grid.SetColumn(second, isSideBySide ? 4 : 0);
         Grid.SetColumnSpan(second, isSideBySide ? 1 : 5);
         second.Margin = new Thickness(0, isBelow ? 10 : 0, 0, 0);
+
+        return isSideBySide;
     }
 
     /// <summary>

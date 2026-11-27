@@ -6,10 +6,14 @@ namespace NETworkManager.Views;
 public partial class InternetLatencyWidgetView
 {
     /// <summary>
-    ///     Below this width the targets are shown one below the other (e.g. next to the speed test), otherwise side by
-    ///     side (own row).
+    ///     Below this width the targets are shown one below the other also in their own row (narrow window).
     /// </summary>
     private const double CompactWidth = 500;
+
+    /// <summary>
+    ///     The widget is shown next to another widget (1/3 of the width), see <see cref="SetNextToOtherWidget" />.
+    /// </summary>
+    private bool _isNextToOtherWidget;
 
     public static readonly DependencyProperty IsCompactProperty = DependencyProperty.Register(nameof(IsCompact),
         typeof(bool), typeof(InternetLatencyWidgetView), new PropertyMetadata(false));
@@ -24,17 +28,34 @@ public partial class InternetLatencyWidgetView
         SizeChanged += (_, e) =>
         {
             if (e.WidthChanged)
-                IsCompact = e.NewSize.Width < CompactWidth;
+                UpdateIsCompact();
         };
     }
 
     /// <summary>
-    ///     The widget is narrow: the targets are shown one below the other.
+    ///     The targets are shown one below the other: next to another widget (always, also in a wide window) or if the
+    ///     widget is narrow; otherwise side by side (own row).
     /// </summary>
     public bool IsCompact
     {
         get => (bool)GetValue(IsCompactProperty);
         private set => SetValue(IsCompactProperty, value);
+    }
+
+    /// <summary>
+    ///     Called by the dashboard when the widget is placed next to another widget (the speed test) or in its own row.
+    /// </summary>
+    /// <param name="isNextToOtherWidget">The widget is shown next to another widget.</param>
+    public void SetNextToOtherWidget(bool isNextToOtherWidget)
+    {
+        _isNextToOtherWidget = isNextToOtherWidget;
+
+        UpdateIsCompact();
+    }
+
+    private void UpdateIsCompact()
+    {
+        IsCompact = _isNextToOtherWidget || ActualWidth < CompactWidth;
     }
 
     /// <summary>
