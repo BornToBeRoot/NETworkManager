@@ -127,7 +127,8 @@
                             </Setter>
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding IsCompact, ElementName=UserControlInternetLatency}" Value="True">
-                                    <Setter Property="Margin" Value="0" />
+                                    <!-- The gap below the last row is part of the margin of 10 -->
+                                    <Setter Property="Margin" Value="0,0,0,-5" />
                                     <Setter Property="ItemsPanel">
                                         <Setter.Value>
                                             <ItemsPanelTemplate>
@@ -154,9 +155,10 @@
                                             <DataTrigger Binding="{Binding (ItemsControl.AlternationIndex), RelativeSource={RelativeSource AncestorType={x:Type ContentPresenter}}}" Value="0">
                                                 <Setter Property="BorderBrush" Value="Transparent" />
                                             </DataTrigger>
-                                            <!-- Narrow: one below the other, no dividers -->
+                                            <!-- Narrow: one below the other, no dividers; rows like the network
+                                                 connection (height 26, gap 5) -->
                                             <DataTrigger Binding="{Binding IsCompact, ElementName=UserControlInternetLatency}" Value="True">
-                                                <Setter Property="Padding" Value="0,4" />
+                                                <Setter Property="Padding" Value="0,0,0,5" />
                                                 <Setter Property="BorderThickness" Value="0" />
                                             </DataTrigger>
                                         </Style.Triggers>
@@ -206,7 +208,7 @@
                                 </Border.ToolTip>
                                 <!-- Name and value columns have the same width in all targets (values aligned when they
                                      are one below the other), the chart gets the rest -->
-                                <Grid>
+                                <Grid MinHeight="26">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto" />
                                         <ColumnDefinition Width="Auto" SharedSizeGroup="Name" MaxWidth="150" />
@@ -214,11 +216,12 @@
                                         <ColumnDefinition Width="*" MinWidth="0" />
                                     </Grid.ColumnDefinitions>
                                     <Ellipse Grid.Column="0" Style="{StaticResource StatusDot}" Tag="{Binding StatusLevel}" />
-                                    <TextBlock Grid.Column="1" Text="{Binding Name}" Style="{StaticResource DefaultTextBlock}"
-                                               VerticalAlignment="Center" TextTrimming="CharacterEllipsis" />
+                                    <TextBlock Grid.Column="1" Text="{Binding Name}" Style="{StaticResource CenterTextBlock}"
+                                               TextTrimming="CharacterEllipsis" />
+                                    <!-- Value bold like the values of the other widgets (network connection, IP API) -->
                                     <TextBlock Grid.Column="2" Text="{Binding Value}"
-                                               Style="{StaticResource MessageTextBlock}"
-                                               HorizontalAlignment="Right" TextAlignment="Right" TextWrapping="NoWrap"
+                                               Style="{StaticResource CenterTextBlock}" FontWeight="Bold"
+                                               HorizontalAlignment="Right" TextAlignment="Right"
                                                Margin="10,0,10,0" />
                                     <lvc:CartesianChart Grid.Column="3" Height="24"
                                                         Background="Transparent"
