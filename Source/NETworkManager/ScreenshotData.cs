@@ -365,4 +365,27 @@ public static class ScreenshotData
     }
 
     #endregion
+
+    #region Internet latency
+
+    /// <summary>
+    /// Creates the pings of the last minute of an internet latency target (like the default targets Cloudflare,
+    /// Google and Quad9): a reply every 2 seconds with a few milliseconds of variation, ending now.
+    /// </summary>
+    /// <param name="index">Index of the target (0-2), each has its own latency.</param>
+    public static IEnumerable<LatencySample> CreateInternetLatencySamples(int index)
+    {
+        long[] baseTimes = [9, 8, 10];
+        var baseTime = baseTimes[index % baseTimes.Length];
+        var now = DateTime.Now;
+
+        for (var i = 30; i >= 0; i--)
+        {
+            var variation = Math.Round(1.5 * Math.Sin((i + index * 7) * 0.9) + Math.Cos((i + index) * 2.3));
+
+            yield return new LatencySample(now.AddSeconds(-i * 2), true, Math.Max(1, baseTime + (long)variation));
+        }
+    }
+
+    #endregion
 }
