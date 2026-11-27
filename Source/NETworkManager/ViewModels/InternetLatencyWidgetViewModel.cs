@@ -22,6 +22,11 @@ public class InternetLatencyWidgetViewModel : ViewModelBase
     private CancellationTokenSource _cancellationTokenSource;
 
     /// <summary>
+    /// The network changed while the widget didn't run: the next start removes the pings of the last minute.
+    /// </summary>
+    private bool _isHistoryOutdated;
+
+    /// <summary>
     /// Gets the configured targets (a target without a host is not shown).
     /// </summary>
     public ObservableCollection<InternetLatencyTargetViewModel> Targets { get; } = [];
@@ -90,9 +95,20 @@ public class InternetLatencyWidgetViewModel : ViewModelBase
     #region Methods
 
     /// <summary>
-    /// Starts the pings of all targets (if the check is enabled). Called by the dashboard when it is shown.
+    /// Starts the pings of all targets (if the check is enabled). Called by the dashboard when it is shown. The pings
+    /// of the last minute are kept (the pause is a gap in the chart).
     /// </summary>
     public void Start()
+    {
+        Start(true);
+    }
+
+    /// <summary>
+    /// Starts the pings of all targets (if the check is enabled).
+    /// </summary>
+    /// <param name="keepHistory">Keep the pings of the last minute, see
+    ///     <see cref="InternetLatencyTargetViewModel.RunAsync" />.</param>
+    private void Start(bool keepHistory)
     {
         if (IsRunning || !SettingsManager.Current.Dashboard_CheckInternetLatency)
             return;
@@ -108,8 +124,11 @@ public class InternetLatencyWidgetViewModel : ViewModelBase
 
         _cancellationTokenSource = new CancellationTokenSource();
 
+        keepHistory &= !_isHistoryOutdated;
+        _isHistoryOutdated = false;
+
         foreach (var target in Targets)
-            _ = target.RunAsync(_cancellationTokenSource.Token);
+            _ = target.RunAsync(keepHistory, _cancellationTokenSource.Token);
     }
 
     /// <summary>
@@ -126,16 +145,20 @@ public class InternetLatencyWidgetViewModel : ViewModelBase
     }
 
     /// <summary>
-    /// Starts again if it runs: the host names are resolved again and the history is removed (e.g. after a network
-    /// change, the targets may be reached via another route).
+    /// Starts again if it runs: the host names are resolved again and the pings of the last minute are removed (e.g.
+    /// after a network change, the targets may be reached via another route). If it doesn't run, the next start
+    /// removes them.
     /// </summary>
     public void Restart()
     {
         if (!IsRunning)
+        {
+            _isHistoryOutdated = true;
             return;
+        }
 
         Stop();
-        Start();
+        Start(false);
     }
 
     /// <summary>
@@ -163,6 +186,16 @@ public class InternetLatencyWidgetViewModel : ViewModelBase
 
     private void SettingsManager_PropertyChanged(object sender, PropertyChangedEventArgs e)
     {
+        // Check disabled: no old values when it is enabled again (the dashboard stops the pings)
+        if (e.PropertyName == nameof(SettingsInfo.Dashboard_CheckInternetLatency) &&
+            !SettingsManager.Current.Dashboard_CheckInternetLatency)
+        {
+            foreach (var target in Targets)
+                target.ClearHistory();
+
+            return;
+        }
+
         // A changed target: create the targets again, a running widget pings the new ones right away
         if (e.PropertyName == null || !e.PropertyName.StartsWith("Dashboard_InternetLatencyTarget"))
             return;

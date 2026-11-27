@@ -211,13 +211,18 @@ public class InternetLatencyTargetViewModel : ViewModelBase
     #region Methods
 
     /// <summary>
-    /// Resolves the host and pings it until the token is canceled. The pings of an earlier run are removed (no
-    /// history while the widget doesn't run).
+    /// Resolves the host and pings it until the token is canceled.
     /// </summary>
+    /// <param name="keepHistory">Keep the pings of the last minute (resumed after a pause, e.g. another tool was
+    ///     shown): the pause is a gap in the chart and doesn't count as lost pings. Otherwise they are removed (e.g.
+    ///     after a network change the latencies of another route would be mixed).</param>
     /// <param name="cancellationToken">Stops the pings (dashboard hidden, check disabled, network changed).</param>
-    public async Task RunAsync(CancellationToken cancellationToken)
+    public async Task RunAsync(bool keepHistory, CancellationToken cancellationToken)
     {
-        Clear();
+        if (keepHistory)
+            ResumeHistory();
+        else
+            ClearHistory();
 
         try
         {
@@ -290,23 +295,62 @@ public class InternetLatencyTargetViewModel : ViewModelBase
     /// <param name="status">Status of the ping (shown if it failed).</param>
     private void AddSample(LatencySample sample, System.Net.NetworkInformation.IPStatus status)
     {
-        var window = GlobalStaticConfiguration.Dashboard_InternetLatencyWindow;
-
         _samples.Add(sample);
-        LatencyStatistics.RemoveOutdated(_samples, sample.Timestamp, window);
-
         _chartValues.Add(new DateTimePoint(sample.Timestamp, sample.IsSuccess ? sample.Time : null));
 
-        // Keep one point before the window, so the line starts at the left edge
-        while (_chartValues.Count > 1 && _chartValues[1].DateTime < sample.Timestamp - window)
-            _chartValues.RemoveAt(0);
-
+        TrimToWindow(sample.Timestamp);
         UpdateXAxis(sample.Timestamp);
 
         Value = sample.IsSuccess
             ? FormatTime(sample.Time)
             : ResourceTranslator.Translate(ResourceIdentifier.IPStatus, status);
 
+        UpdateStatistics();
+    }
+
+    /// <summary>
+    /// Continues after a pause: removes the pings older than the time window and ends the line of the chart at the
+    /// last ping (a gap until the next one). The last value stays until the next ping, unless it is outside the
+    /// window.
+    /// </summary>
+    private void ResumeHistory()
+    {
+        var now = DateTime.Now;
+
+        ErrorMessage = null;
+
+        TrimToWindow(now);
+
+        if (_chartValues.Count > 0 && _chartValues[^1].Value != null)
+            _chartValues.Add(new DateTimePoint(_chartValues[^1].DateTime.AddMilliseconds(1), null));
+
+        UpdateXAxis(now);
+
+        if (_samples.Count == 0)
+            Value = "-/-";
+
+        UpdateStatistics();
+    }
+
+    /// <summary>
+    /// Removes the pings and chart points older than the time window.
+    /// </summary>
+    private void TrimToWindow(DateTime now)
+    {
+        var window = GlobalStaticConfiguration.Dashboard_InternetLatencyWindow;
+
+        LatencyStatistics.RemoveOutdated(_samples, now, window);
+
+        // Keep one point before the window, so the line starts at the left edge
+        while (_chartValues.Count > 1 && _chartValues[1].DateTime < now - window)
+            _chartValues.RemoveAt(0);
+    }
+
+    /// <summary>
+    /// Updates the status dot and the statistics from the pings in the time window.
+    /// </summary>
+    private void UpdateStatistics()
+    {
         StatusLevel = LatencyStatistics.GetState(_samples) switch
         {
             LatencyState.Ok => StatusLevel.Success,
@@ -324,7 +368,7 @@ public class InternetLatencyTargetViewModel : ViewModelBase
     /// <param name="samples">Pings, the oldest first.</param>
     public void SetSamples(IEnumerable<LatencySample> samples)
     {
-        Clear();
+        ClearHistory();
 
         ResolvedIPAddress = Host;
 
@@ -376,9 +420,9 @@ public class InternetLatencyTargetViewModel : ViewModelBase
     }
 
     /// <summary>
-    /// Removes the pings, the value, the status and the error.
+    /// Removes the pings, the value, the status and the error (e.g. the check was disabled).
     /// </summary>
-    private void Clear()
+    public void ClearHistory()
     {
         _samples.Clear();
         _chartValues.Clear();
