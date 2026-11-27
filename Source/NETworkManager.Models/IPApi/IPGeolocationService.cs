@@ -105,7 +105,8 @@ public class IPGeolocationService : SingletonBase<IPGeolocationService>
             // We have already reached the rate limit (on the network). The time until the window resets (X-Ttl) is
             // used if the answer has it, otherwise the default value.
             _rateLimitIsReached = true;
-            _rateLimitRemainingTime = TryParseRateLimit(response.Headers, out _, out var remainingTime) && remainingTime > 0
+            _rateLimitRemainingTime = response.Headers.TryGetValues("X-Ttl", out var xTtl) &&
+                                      int.TryParse(xTtl.FirstOrDefault(), out var remainingTime) && remainingTime >= 0
                 ? remainingTime
                 : 60;
             _rateLimitRemainingRequests = 0;
