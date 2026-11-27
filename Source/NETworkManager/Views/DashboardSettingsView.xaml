@@ -309,9 +309,19 @@
             </DataGrid.RowStyle>
         </DataGrid>
         <Button Command="{Binding AddLatencyTargetCommand}"
-                Style="{StaticResource ImageWithTextButton}"
                 HorizontalAlignment="Left"
                 Margin="0,0,0,20">
+            <Button.Style>
+                <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
+                    <!-- Disabled at the maximum number of targets: say why -->
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsLatencyTargetLimitReached}" Value="True">
+                            <Setter Property="ToolTip" Value="{Binding LatencyTargetLimitReachedMessage}" />
+                            <Setter Property="ToolTipService.ShowOnDisabled" Value="True" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
             <Button.Content>
                 <Grid>
                     <Grid.ColumnDefinitions>

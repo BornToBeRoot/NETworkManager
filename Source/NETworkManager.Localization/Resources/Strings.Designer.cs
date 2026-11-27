@@ -7895,6 +7895,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The maximum of {0} targets is reached. Delete a target to add another one..
+        /// </summary>
+        public static string LatencyTargetLimitReachedMessage {
+            get {
+                return ResourceManager.GetString("LatencyTargetLimitReachedMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Show the latency to your router and to targets on the internet or in your network (e.g. Cloudflare, Google and Quad9), updated live while the dashboard is shown.
         ///The targets receive a ping (ICMP echo request) every few seconds..
         /// </summary>

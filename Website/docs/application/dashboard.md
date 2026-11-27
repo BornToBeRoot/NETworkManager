@@ -179,7 +179,7 @@ Ping the default gateway (router) of the network adapter that is used for the in
 
 #### Targets
 
-Up to five targets of the widget (in addition to the [default gateway](#ping-default-gateway)), in this order. **Add...** adds a target (disabled when the list is full), right-click a target (or **F2** / **Del**, double-click) to edit or delete it. A target has:
+Up to five targets of the widget (in addition to the [default gateway](#ping-default-gateway)), in this order. **Add...** adds a target (disabled when the list is full, its tooltip says why), right-click a target (or **F2** / **Del**, double-click) to edit or delete it. A target has:
 
 - **Name**: shown in the widget (the host if it is empty).
 - **Host**: IP address or host name.

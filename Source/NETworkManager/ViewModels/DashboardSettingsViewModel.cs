@@ -324,6 +324,29 @@ public class DashboardSettingsViewModel : ViewModelBase
         CollectionViewSource.GetDefaultView(SettingsManager.Current.Dashboard_LatencyTargets);
 
     /// <summary>
+    /// Gets a value indicating whether the list holds the maximum number of targets (Add is disabled, its tooltip
+    /// says why).
+    /// </summary>
+    public bool IsLatencyTargetLimitReached
+    {
+        get;
+        private set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
+    /// Gets the tooltip of the disabled Add button (maximum number of targets reached).
+    /// </summary>
+    public string LatencyTargetLimitReachedMessage { get; } = string.Format(Strings.LatencyTargetLimitReachedMessage,
+        GlobalStaticConfiguration.Dashboard_LatencyMaxTargets);
+
+    /// <summary>
     /// Gets or sets the selected target of the latency widget.
     /// </summary>
     public LatencyTargetInfo SelectedLatencyTarget
@@ -404,7 +427,7 @@ public class DashboardSettingsViewModel : ViewModelBase
     /// Gets the command to add a target of the latency widget (up to the maximum).
     /// </summary>
     public ICommand AddLatencyTargetCommand => new RelayCommand(_ => AddLatencyTargetAction().ConfigureAwait(false),
-        _ => SettingsManager.Current.Dashboard_LatencyTargets.Count < GlobalStaticConfiguration.Dashboard_LatencyMaxTargets);
+        _ => !IsLatencyTargetLimitReached);
 
     /// <summary>
     /// Gets the command to edit the selected target.
@@ -509,6 +532,15 @@ public class DashboardSettingsViewModel : ViewModelBase
 
         // The checks can also be enabled in the widgets (the settings view is created once)
         SettingsManager.Current.PropertyChanged += SettingsManager_PropertyChanged;
+
+        SettingsManager.Current.Dashboard_LatencyTargets.CollectionChanged += (_, _) => UpdateLatencyTargetLimit();
+        UpdateLatencyTargetLimit();
+    }
+
+    private void UpdateLatencyTargetLimit()
+    {
+        IsLatencyTargetLimitReached = SettingsManager.Current.Dashboard_LatencyTargets.Count >=
+                                      GlobalStaticConfiguration.Dashboard_LatencyMaxTargets;
     }
 
     private void SettingsManager_PropertyChanged(object sender, PropertyChangedEventArgs e)

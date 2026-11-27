@@ -5833,6 +5833,9 @@ Own row: below the network connection, the targets side by side.</value>
 
 {0}</value>
   </data>
+  <data name="LatencyTargetLimitReachedMessage" xml:space="preserve">
+    <value>The maximum of {0} targets is reached. Delete a target to add another one.</value>
+  </data>
   <data name="PingDefaultGateway" xml:space="preserve">
     <value>Ping default gateway</value>
   </data>
