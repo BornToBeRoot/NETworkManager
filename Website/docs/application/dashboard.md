@@ -6,7 +6,7 @@ keywords: [NETworkManager, dashboard, network status, network connection, networ
 
 # Dashboard
 
-The **Dashboard** shows the status of your computer's current network connection to provide a quick overview of the most important information. Whenever the local network adapter changes state (e.g. an Ethernet cable is plugged in, Wi-Fi or VPN connects), the dashboard checks connectivity to the router and the internet. When you switch back to the dashboard (or show the window again from the tray / taskbar), the network connection is only checked again if the last check is at least 60 seconds old (e.g. the public IP address may have changed) or the network or a setting of the network connection (e.g. the public IP address) has changed in the meantime, so switching between the tools doesn't send a request each time. **F5** or the refresh button always checks again.
+The **Dashboard** shows the status of your computer's current network connection to provide a quick overview of the most important information. Whenever the local network adapter changes state (e.g. an Ethernet cable is plugged in, Wi-Fi or VPN connects), the dashboard checks connectivity to the router and the internet. The [IP geolocation](#ip-geolocation) and the [DNS resolver](#dns-resolver) are checked again together with the network connection (the public IP address may have changed, e.g. a VPN connected). When you switch back to the dashboard (or show the window again from the tray / taskbar), the widgets are only checked again if the last check is at least 60 seconds old (e.g. the public IP address may have changed) or the network or a setting of a check (e.g. the public IP address) has changed in the meantime, so switching between the tools doesn't send a request each time. **F5** or the refresh button of a widget always checks it again.
 
 ![Dashboard](../img/dashboard.png)
 
@@ -31,7 +31,7 @@ Right-click a value to open it in another tool: an IP address in the **Port Scan
 
 :::note
 
-`F5` only works while the **Network connection** widget has the focus (e.g. click into it first). The other widgets are refreshed with their refresh button.
+`F5` only works while the widget has the focus (e.g. click into it first). It checks the **Network connection**, **IP geolocation** or **DNS resolver** widget again; the speed test is only started with its button.
 
 :::
 
@@ -41,23 +41,37 @@ Open the tool with `dashboard`. The command accepts no target and no profile, se
 
 ## Settings
 
-### Public IPv4 address
+The settings are grouped by widget, in the order of the dashboard. **Show widget** shows or hides a widget; the IP geolocation and DNS resolver widgets also have a switch for their check (they are shown by default, but only send a request to `ip-api.com` after the check was enabled).
 
-Public IPv4 address that is pinged to check the internet connection. The route to this address is used to detect the local IPv4 address (no packet is sent for this), so it should be routed via the network adapter that is used for the internet.
+### Network connection {#settings-network-connection}
+
+The network connection widget and the [status window](../settings/status.md) use these settings to check the internet. They also apply while the widget is hidden.
+
+#### Show widget {#show-network-connection-widget}
+
+Show or hide the **Network connection** widget on the dashboard. A hidden widget doesn't check anything; the status window always shows the network connection.
+
+**Type:** `Boolean`
+
+**Default:** `Enabled`
+
+#### Public IPv4 address
+
+Public IPv4 address (not the one of your computer) that is pinged to check the internet connection. The route to this address is used to detect the local IPv4 address (no packet is sent for this), so it should be routed via the network adapter that is used for the internet.
 
 **Type:** `String`
 
 **Default:** `1.1.1.1`
 
-### Public IPv6 address
+#### Public IPv6 address
 
-Public IPv6 address that is pinged to check the internet connection. The route to this address is used to detect the local IPv6 address (no packet is sent for this), so it should be routed via the network adapter that is used for the internet.
+Public IPv6 address (not the one of your computer) that is pinged to check the internet connection. The route to this address is used to detect the local IPv6 address (no packet is sent for this), so it should be routed via the network adapter that is used for the internet.
 
 **Type:** `String`
 
 **Default:** `2606:4700:4700::1111`
 
-### Check public IP address
+#### Check public IP address
 
 Enables or disables the resolution of the public IP address via [`api.ipify.org`](https://www.ipify.org/) and [`api6.ipify.org`](https://www.ipify.org/). If disabled, the internet is only checked with the ping of the [Public IPv4 address](#public-ipv4-address) / [Public IPv6 address](#public-ipv6-address) and the connectivity reported by Windows.
 
@@ -65,7 +79,7 @@ Enables or disables the resolution of the public IP address via [`api.ipify.org`
 
 **Default:** `Enabled`
 
-### Use custom IPv4 address API
+#### Use custom IPv4 address API
 
 Override the default IPv4 address API to resolve the public IP address. The API should return only a plain text IPv4 address like `xx.xx.xx.xx`, or a JSON object with the address as a string value like `{"ip":"xx.xx.xx.xx"}`. Other answers (e.g. an HTML page) are not accepted.
 
@@ -86,7 +100,7 @@ Override the default IPv4 address API to resolve the public IP address. The API 
 
 Many APIs also return JSON with more information (e.g. `https://ipinfo.io/json`, `https://ifconfig.co/json`, `http://ip-api.com/json`), the first string value that is an IP address is used. An API that returns `key=value` lines (e.g. `https://1.1.1.1/cdn-cgi/trace`) is not supported.
 
-### Use custom IPv6 address API
+#### Use custom IPv6 address API
 
 Override the default IPv6 address API to resolve the public IP address. The API should return only a plain text IPv6 address like `xxxx:xx:xxx::xx`, or a JSON object with the address as a string value like `{"ip":"xxxx:xx:xxx::xx"}`. Other answers (e.g. an HTML page) are not accepted.
 
@@ -101,9 +115,29 @@ Override the default IPv6 address API to resolve the public IP address. The API 
 | [`https://api6.ipify.org`](https://api6.ipify.org/) | Plain text |
 | [`https://api64.ipify.org?format=json`](https://api64.ipify.org?format=json) | JSON `{"ip":"xxxx:xx:xxx::xx"}` (IPv6 if available, otherwise IPv4 - then the answer is not accepted) |
 
-### Check IP geolocation
+### Speed Test {#settings-speed-test}
 
-Enables or disables the resolution of the IP geolocation via [`ip-api.com`](https://ip-api.com/).
+#### Show widget {#show-speed-test-widget}
+
+Show or hide the **Speed Test** widget on the dashboard. A speed test that is running when the widget is hidden is canceled.
+
+**Type:** `Boolean`
+
+**Default:** `Enabled`
+
+### IP geolocation {#settings-ip-geolocation}
+
+#### Show widget {#show-ip-geolocation-widget}
+
+Show or hide the **IP geolocation** widget on the dashboard. A hidden widget sends no request to `ip-api.com`, the [DNS resolver](#dns-resolver) widget then uses the whole width. A shown widget whose check is disabled shows what it requests and an **Enable** button.
+
+**Type:** `Boolean`
+
+**Default:** `Enabled`
+
+#### Check IP geolocation
+
+Enables or disables the resolution of the IP geolocation via [`ip-api.com`](https://ip-api.com/). The check can also be enabled in the welcome dialog or with the **Enable** button of the widget. The switch is disabled while the widget is hidden (the value is kept).
 
 :::note
 
@@ -115,21 +149,23 @@ The free API endpoint is limited to 45 requests per minute, supports only the `h
 
 **Default:** `Disabled`
 
-### Check DNS resolver
+### DNS resolver {#settings-dns-resolver}
 
-Enables or disables the detection of the DNS resolver in use via [`ip-api.com`](https://ip-api.com/).
+#### Show widget {#show-dns-resolver-widget}
+
+Show or hide the **DNS resolver** widget on the dashboard. A hidden widget sends no request to `ip-api.com`, the [IP geolocation](#ip-geolocation) widget then uses the whole width. A shown widget whose check is disabled shows what it requests and an **Enable** button.
+
+**Type:** `Boolean`
+
+**Default:** `Enabled`
+
+#### Check DNS resolver
+
+Enables or disables the detection of the DNS resolver in use via [`ip-api.com`](https://ip-api.com/). The check can also be enabled in the welcome dialog or with the **Enable** button of the widget. The switch is disabled while the widget is hidden (the value is kept).
 
 **Type:** `Boolean`
 
 **Default:** `Disabled`
-
-### Widgets
-
-Show or hide the widgets on the dashboard: **Network connection**, **Speed Test**, **IP geolocation** and **DNS resolver**. A hidden widget doesn't check anything (e.g. no request is sent to `ip-api.com`); a speed test that is running when the widget is hidden is canceled. If one of IP geolocation and DNS resolver is hidden, the other one uses the whole width. The status window always shows the network connection.
-
-**Type:** `Boolean`
-
-**Default:** `Enabled` (all widgets)
 
 ## Speed Test
 
@@ -157,9 +193,33 @@ The test measures like the official [cloudflare/speedtest](https://github.com/cl
 
 A test takes about 15 seconds on a fast connection and up to 1–2 minutes on a slow one. It transfers a lot of data on a fast connection: up to about 1 GB download and 300 MB upload (1 Gbit/s), keep this in mind on a metered connection (e.g. mobile data).
 
+## IP geolocation
+
+The **IP geolocation** widget shows the location and the network of your public IPv4 address from [`ip-api.com`](https://ip-api.com/) (the same values as the [IP Geolocation](ip-geolocation.md) tool):
+
+- **Location**: continent, country, region, city, district, zip code, latitude / longitude, time zone, offset from UTC (e.g. `UTC+01:00`, incl. daylight saving time) and currency
+- **Network**: IP address, PTR record, ISP, organization, ASN / AS name, and whether the IP address belongs to a hosting provider, a proxy / VPN or a mobile network
+
+## DNS resolver
+
+The **DNS resolver** widget shows the DNS server that resolves the requests of your computer on the internet, detected with [`edns.ip-api.com`](https://ip-api.com/docs/dns): its IP address and geolocation (**DNS**), and the client subnet that the DNS server forwards (**EDNS**, e.g. `203.0.113.0`, `-/-` if it doesn't send one). If you use the DNS server of your router or internet provider, this is the server the requests are forwarded to (e.g. `1.1.1.1` or a server of the provider), not the router.
+
+## IP geolocation and DNS resolver
+
+Both checks send your IP address to `ip-api.com` and are disabled by default (welcome dialog). A widget whose check is disabled shows what it requests and an **Enable** button, which enables the check (like [Check IP geolocation](#check-ip-geolocation) / [Check DNS resolver](#check-dns-resolver)) and checks right away.
+
+The buttons in the header of the widgets:
+
+- **Copy all** copies all values as text, e.g. for a support request.
+- **Refresh** checks again (also **F5** while the widget has the focus).
+
+The header shows the time of the last check (not after an error). An error (e.g. no response within 10 seconds or the HTTP status code) or the rate limit of `ip-api.com` (45 requests per minute from your network, with the time until it can be requested again) is shown below the header.
+
+Right-click an IP address (public IP address, DNS server) to open it in the **Port Scanner**, **Ping Monitor**, **Traceroute**, **DNS Lookup**, **RDAP** or **IP Geolocation**, the EDNS client subnet (a network address, not a host) in **RDAP** or **IP Geolocation**, and the PTR record in the **DNS Lookup**. **Copy** copies the selected text.
+
 ## Troubleshooting and limits
 
 - The local IP address is detected by the route to the [Public IPv4 address](#public-ipv4-address) / [Public IPv6 address](#public-ipv6-address) (no packet is sent), otherwise from the first active network interface. With several network adapters (e.g. LAN and VPN), set an address that is routed via the adapter you want to see.
-- The internet is shown as reachable if the [Public IPv4 address](#public-ipv4-address) / [Public IPv6 address](#public-ipv6-address) replies to the ping or the public IP address could be requested from `api.ipify.org` / `api6.ipify.org` (or the [custom API](#use-custom-ipv4-address-api)). If both are blocked (e.g. by a firewall, or websites are only reachable via a proxy), the internet is shown as a warning if Windows reports internet access (IPv4), otherwise as not reachable; use another public IP address / API. The IP geolocation and the DNS resolver are requested from `ip-api.com` (45 requests per minute).
+- The internet is shown as reachable if the [Public IPv4 address](#public-ipv4-address) / [Public IPv6 address](#public-ipv6-address) replies to the ping or the public IP address could be requested from `api.ipify.org` / `api6.ipify.org` (or the [custom API](#use-custom-ipv4-address-api)). If both are blocked (e.g. by a firewall, or websites are only reachable via a proxy), the internet is shown as a warning if Windows reports internet access (IPv4), otherwise as not reachable; use another public IP address / API. The IP geolocation and the DNS resolver are requested from `ip-api.com` (45 requests per minute, a request fails after 10 seconds without a response).
 - Without IPv6 connectivity (or no IPv6 from the internet provider), the IPv6 checks are shown as information (gray) and skipped, the IPv4 checks are not affected.
-- The [Speed Test](#speed-test) measures the connection to the nearest Cloudflare server. A VPN, a proxy or other traffic on the network at the same time lowers the result. A request of the speed test fails after 15 seconds without a response or data (e.g. the connection was lost). Like the official library, a failed request is skipped (shown as a warning after the test) and a request that is rate limited by Cloudflare (HTTP 429) is repeated up to three times; if all requests of a size fail (e.g. a proxy rejects large uploads), the larger sizes of the direction are skipped. After three requests in a row without a response the test ends with the error.
+- The [Speed Test](#speed-test) measures the connection to the nearest Cloudflare server. A VPN, a proxy or other traffic on the network at the same time lowers the result. A request of the speed test fails after 15 seconds without a response or data (e.g. the connection was lost). Like the official library, a failed request is skipped (shown as a warning after the test) and a request that is rate limited by Cloudflare (HTTP 429) is repeated up to three times (then the test ends with the error); if all requests of a size fail (e.g. a proxy rejects large uploads), the larger sizes of the direction are skipped. After three requests in a row without a response the test ends with the error, unless the server still answers a small request: if three requests of the same size failed (e.g. a proxy closes the connection of large uploads), the remaining requests of this size and the larger sizes of the direction are skipped, otherwise (e.g. the latency probes before failed during a short Wi-Fi drop) only the failed request is skipped. If no request succeeds at all (e.g. a proxy rejects all requests to `speed.cloudflare.com` with HTTP 403), the test ends with the error.

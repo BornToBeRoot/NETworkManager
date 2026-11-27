@@ -1,8 +1,10 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using log4net;
 using NETworkManager.Utilities;
 using Newtonsoft.Json;
 
@@ -14,6 +16,8 @@ namespace NETworkManager.Models.IPApi;
 /// </summary>
 public class IPGeolocationService : SingletonBase<IPGeolocationService>
 {
+    private static readonly ILog Log = LogManager.GetLogger(typeof(IPGeolocationService));
+
     /// <summary>
     ///     Base URL fo the ip-api free endpoint.
     /// </summary>
@@ -25,7 +29,22 @@ public class IPGeolocationService : SingletonBase<IPGeolocationService>
     private const string Fields =
         "status,message,continent,continentCode,country,countryCode,region,regionName,city,district,zip,lat,lon,timezone,offset,currency,isp,org,as,asname,reverse,mobile,proxy,hosting,query";
 
-    private readonly HttpClient _client = new();
+    /// <summary>
+    ///     Host of the API (shown in messages).
+    /// </summary>
+    public const string Host = "ip-api.com";
+
+    /// <summary>
+    ///     Time until a request fails without a response (instead of the 100 seconds of <see cref="HttpClient" />, e.g.
+    ///     if a firewall drops the request or for each hop of the traceroute), like the public IP address request of the
+    ///     network connection widget.
+    /// </summary>
+    public static readonly TimeSpan RequestTimeout = TimeSpan.FromSeconds(10);
+
+    // A new connection per request (no keep-alive): a check right after a network change (e.g. a VPN connected) must
+    // not reuse a connection of the old network, which would return the old public IP address
+    private readonly HttpClient _client = new()
+        { Timeout = RequestTimeout, DefaultRequestHeaders = { ConnectionClose = true } };
 
     /// <summary>
     ///     Indicates whether we have reached the rate limit.
@@ -57,10 +76,10 @@ public class IPGeolocationService : SingletonBase<IPGeolocationService>
     public async Task<IPGeolocationResult> GetIPGeolocationAsync(string ipAddressOrFqdn = "")
     {
         if (IsInRateLimit())
-            return new IPGeolocationResult(true, _rateLimitRemainingTime);
+            return new IPGeolocationResult(true,
+                GetRemainingSeconds(_rateLimitLastReached, _rateLimitRemainingTime, DateTime.Now));
 
-        // If the url is empty, the current IP address from which the request is made is used.
-        var url = $"{BaseUrl}/{ipAddressOrFqdn}?fields={Fields}";
+        var url = GetUrl(ipAddressOrFqdn);
 
         try
         {
@@ -69,36 +88,90 @@ public class IPGeolocationService : SingletonBase<IPGeolocationService>
             // Check if the request was successful.
             if (response.IsSuccessStatusCode)
             {
-                // Update rate limit values.
+                // Update rate limit values. Without them (e.g. removed by a proxy) the answer is still used, the last
+                // values are kept (a 429 still stops the requests)
                 if (!UpdateRateLimit(response.Headers))
-                    return new IPGeolocationResult(true,
-                        "The rate limit values couldn't be extracted from the http header. The request was probably corrupted. Try again in a few seconds.",
-                        -1);
+                    Log.Warn("The rate limit headers (X-Rl, X-Ttl) of ip-api.com are missing or invalid.");
 
-                var json = await response.Content.ReadAsStringAsync();
-                var info = JsonConvert.DeserializeObject<IPGeolocationInfo>(json);
-
-                return new IPGeolocationResult(info);
+                return ParseResponse(await response.Content.ReadAsStringAsync());
             }
 
             // Consider the request as failed if the status code is not successful or 429.
             if ((int)response.StatusCode != 429)
-                return new IPGeolocationResult(true, response.ReasonPhrase, (int)response.StatusCode);
+                return new IPGeolocationResult(new HttpRequestException(response.ReasonPhrase, null,
+                    response.StatusCode));
 
             // Code 429
-            // We have already reached the rate limit (on the network)
-            // Since we don't get any information about the remaining time, we set it to the default value.
+            // We have already reached the rate limit (on the network). The time until the window resets (X-Ttl) is
+            // used if the answer has it, otherwise the default value.
             _rateLimitIsReached = true;
-            _rateLimitRemainingTime = 60;
+            _rateLimitRemainingTime = response.Headers.TryGetValues("X-Ttl", out var xTtl) &&
+                                      int.TryParse(xTtl.FirstOrDefault(), out var remainingTime) && remainingTime >= 0
+                ? remainingTime
+                : 60;
             _rateLimitRemainingRequests = 0;
             _rateLimitLastReached = DateTime.Now;
 
-            return new IPGeolocationResult(true, _rateLimitRemainingTime);
+            // Like the following requests (incl. the margin), so the time left counts down (61, 60, ...)
+            return new IPGeolocationResult(true,
+                GetRemainingSeconds(_rateLimitLastReached, _rateLimitRemainingTime, DateTime.Now));
         }
         catch (Exception ex)
         {
-            return new IPGeolocationResult(true, ex.Message, -1);
+            return new IPGeolocationResult(ex);
         }
+    }
+
+    /// <summary>
+    ///     URL of the request (<c>http://ip-api.com/json/{query}?fields=...</c>).
+    /// </summary>
+    /// <param name="ipAddressOrFqdn">IP address or host name, empty for the public IP address of the computer.</param>
+    /// <returns>URL.</returns>
+    public static string GetUrl(string ipAddressOrFqdn)
+    {
+        // The base URL ends with a slash (no "json//" for the own IP address)
+        return $"{BaseUrl}{ipAddressOrFqdn}?fields={Fields}";
+    }
+
+    /// <summary>
+    ///     Parses the answer of the API.
+    /// </summary>
+    /// <param name="json">Body of the answer.</param>
+    /// <returns>IP geolocation information, an error if the body is empty (e.g. from a proxy or a captive portal).</returns>
+    /// <exception cref="JsonException">The body is not JSON.</exception>
+    public static IPGeolocationResult ParseResponse(string json)
+    {
+        var info = JsonConvert.DeserializeObject<IPGeolocationInfo>(json);
+
+        return info == null
+            ? new IPGeolocationResult(new InvalidDataException("The response of the API is empty."))
+            : new IPGeolocationResult(info);
+    }
+
+    /// <summary>
+    ///     End of the rate limit: the time window (<c>X-Ttl</c>) plus one second of margin.
+    /// </summary>
+    /// <param name="lastReached">Time when the rate limit was reached.</param>
+    /// <param name="remainingTime">Seconds until the time window resets (<c>X-Ttl</c>, 60 after HTTP 429).</param>
+    /// <returns>Time from which requests are sent again.</returns>
+    private static DateTime GetRateLimitEnd(DateTime lastReached, int remainingTime)
+    {
+        return lastReached.AddSeconds(remainingTime + 1);
+    }
+
+    /// <summary>
+    ///     Seconds until requests are sent again (shown as "try again in ... seconds"), counting down while the rate
+    ///     limit is reached instead of the whole time window.
+    /// </summary>
+    /// <param name="lastReached">Time when the rate limit was reached.</param>
+    /// <param name="remainingTime">Seconds until the time window resets (<c>X-Ttl</c>, 60 after HTTP 429).</param>
+    /// <param name="now">Current time.</param>
+    /// <returns>Seconds, rounded up, at least 1.</returns>
+    public static int GetRemainingSeconds(DateTime lastReached, int remainingTime, DateTime now)
+    {
+        var seconds = (int)Math.Ceiling((GetRateLimitEnd(lastReached, remainingTime) - now).TotalSeconds);
+
+        return Math.Max(1, seconds);
     }
 
     /// <summary>
@@ -115,7 +188,7 @@ public class IPGeolocationService : SingletonBase<IPGeolocationService>
         var lastReached = _rateLimitLastReached;
 
         // We are still in the rate limit
-        if (lastReached.AddSeconds(_rateLimitRemainingTime + 1) >= DateTime.Now)
+        if (GetRateLimitEnd(lastReached, _rateLimitRemainingTime) >= DateTime.Now)
             return true;
 
         // We are not in the rate limit anymore
@@ -125,23 +198,31 @@ public class IPGeolocationService : SingletonBase<IPGeolocationService>
     }
 
     /// <summary>
+    ///     Reads the rate limit from the headers of the response.
+    /// </summary>
+    /// <param name="headers">Headers of the response.</param>
+    /// <param name="remainingRequests">Requests left in the time window (<c>X-Rl</c>).</param>
+    /// <param name="remainingTime">Seconds until the time window resets (<c>X-Ttl</c>).</param>
+    /// <returns><c>true</c> if both headers are present and valid.</returns>
+    public static bool TryParseRateLimit(HttpHeaders headers, out int remainingRequests, out int remainingTime)
+    {
+        remainingRequests = 0;
+        remainingTime = 0;
+
+        return headers.TryGetValues("X-Rl", out var xRl) &&
+               int.TryParse(xRl.FirstOrDefault(), out remainingRequests) &&
+               headers.TryGetValues("X-Ttl", out var xTtl) &&
+               int.TryParse(xTtl.FirstOrDefault(), out remainingTime);
+    }
+
+    /// <summary>
     ///     Updates the rate limit values.
     /// </summary>
     /// <param name="headers">Headers from the response.</param>
     /// <returns>True if the update was successful, false otherwise.</returns>
     private bool UpdateRateLimit(HttpHeaders headers)
     {
-        // Parse header data
-        if (!headers.TryGetValues("X-Rl", out var xRl))
-            return false;
-
-        if (!int.TryParse(xRl.ToArray()[0], out var remainingRequests))
-            return false;
-
-        if (!headers.TryGetValues("X-Ttl", out var xTtl))
-            return false;
-
-        if (!int.TryParse(xTtl.ToArray()[0], out var remainingTime))
+        if (!TryParseRateLimit(headers, out var remainingRequests, out var remainingTime))
             return false;
 
         _rateLimitRemainingTime = remainingTime;

@@ -258,7 +258,9 @@ public class IPGeolocationViewModel : ViewModelBase
             {
                 Log.Error($"ip-api.com error: {result.ErrorMessage}, error code: {result.ErrorCode}");
 
-                StatusMessage = $"ip-api.com: {result.ErrorMessage}";
+                // Translated (the exception text of .NET is logged), like the IP geolocation widget of the dashboard
+                StatusMessage = WebRequestErrorMessage.Get(IPGeolocationService.Host,
+                    IPGeolocationService.RequestTimeout, result.Error);
                 StatusMessageLevel = StatusLevel.Error;
                 IsStatusMessageDisplayed = true;
 
@@ -277,6 +279,19 @@ public class IPGeolocationViewModel : ViewModelBase
                 return;
             }
 
+            // No geolocation for the query (HTTP 200, e.g. a private IP address): the reason instead of an empty result
+            if (result.Info.HasFailed)
+            {
+                Log.Warn($"ip-api.com has no geolocation for {Host}: {result.Info.Message}");
+
+                StatusMessage = string.Format(Strings.XXXHasNoIPGeolocationForXXXReasonXXX, IPGeolocationService.Host,
+                    Host, result.Info.Message);
+                StatusMessageLevel = StatusLevel.Warning;
+                IsStatusMessageDisplayed = true;
+
+                return;
+            }
+
             Result = result.Info;
             IsResultVisible = true;
 
@@ -289,8 +304,11 @@ public class IPGeolocationViewModel : ViewModelBase
             StatusMessageLevel = StatusLevel.Error;
             IsStatusMessageDisplayed = true;
         }
-
-        IsRunning = false;
+        finally
+        {
+            // Also after an error or the rate limit (early return), otherwise the tab stays busy
+            IsRunning = false;
+        }
     }
 
     /// <summary>

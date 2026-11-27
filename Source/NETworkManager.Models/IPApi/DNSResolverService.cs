@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
 using NETworkManager.Utilities;
@@ -17,7 +18,21 @@ public class DNSResolverService : SingletonBase<DNSResolverService>
     /// </summary>
     private const string BaseUrl = "https://edns.ip-api.com/json";
 
-    private readonly HttpClient _client = new();
+    /// <summary>
+    ///     Host of the API (shown in messages).
+    /// </summary>
+    public const string Host = "edns.ip-api.com";
+
+    /// <summary>
+    ///     Time until a request fails without a response (instead of the 100 seconds of <see cref="HttpClient" />, e.g.
+    ///     if a firewall drops the request), like the public IP address request of the network connection widget.
+    /// </summary>
+    public static readonly TimeSpan RequestTimeout = TimeSpan.FromSeconds(10);
+
+    // A new connection per request (no keep-alive): a check right after a network change (e.g. a VPN connected) must
+    // not reuse a connection of the old network, which would return the old public IP address
+    private readonly HttpClient _client = new()
+        { Timeout = RequestTimeout, DefaultRequestHeaders = { ConnectionClose = true } };
 
     /// <summary>
     ///     Gets the IP DNS details from the API asynchronously.
@@ -31,17 +46,29 @@ public class DNSResolverService : SingletonBase<DNSResolverService>
 
             if (response.IsSuccessStatusCode)
             {
-                var json = await response.Content.ReadAsStringAsync();
-                var info = JsonConvert.DeserializeObject<DNSResolverDeserializationInfo>(json);
-
-                return new DNSResolverResult(DNSResolverInfo.Parse(info));
+                return ParseResponse(await response.Content.ReadAsStringAsync());
             }
 
-            return new DNSResolverResult(true, response.ReasonPhrase, (int)response.StatusCode);
+            return new DNSResolverResult(new HttpRequestException(response.ReasonPhrase, null, response.StatusCode));
         }
         catch (Exception ex)
         {
-            return new DNSResolverResult(true, ex.Message);
+            return new DNSResolverResult(ex);
         }
+    }
+
+    /// <summary>
+    ///     Parses the answer of the API.
+    /// </summary>
+    /// <param name="json">Body of the answer.</param>
+    /// <returns>DNS resolver information, an error if the body is empty (e.g. from a proxy or a captive portal).</returns>
+    /// <exception cref="JsonException">The body is not JSON.</exception>
+    public static DNSResolverResult ParseResponse(string json)
+    {
+        var info = JsonConvert.DeserializeObject<DNSResolverDeserializationInfo>(json);
+
+        return info == null
+            ? new DNSResolverResult(new InvalidDataException("The response of the API is empty."))
+            : new DNSResolverResult(DNSResolverInfo.Parse(info));
     }
 }

@@ -2171,15 +2171,6 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Check is disabled!.
-        /// </summary>
-        public static string CheckIsDisabled {
-            get {
-                return ResourceManager.GetString("CheckIsDisabled", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Check your network adapter configuration (dns) and if your dns server is configured correctly..
         /// </summary>
         public static string CheckNetworkAdapterConfigurationAndDNSServerConfigurationMessage {
@@ -4105,6 +4096,16 @@ namespace NETworkManager.Localization.Resources {
         public static string DNSResolver {
             get {
                 return ResourceManager.GetString("DNSResolver", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show the DNS server that resolves your requests with edns.ip-api.com.
+        ///ip-api.com receives your IP address and the IP address of your DNS server..
+        /// </summary>
+        public static string DNSResolverWidgetDisabledMessage {
+            get {
+                return ResourceManager.GetString("DNSResolverWidgetDisabledMessage", resourceCulture);
             }
         }
         
@@ -6554,7 +6555,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Public IPv4 address that is pinged to check the internet connection. The route to it is used to detect the local IPv4 address (of the network adapter that is used for the internet)..
+        ///   Looks up a localized string similar to Public IPv4 address (not the one of your computer) that is pinged to check the internet connection. The route to it is used to detect the local IPv4 address (of the network adapter that is used for the internet)..
         /// </summary>
         public static string HelpMessage_PublicIPv4Address {
             get {
@@ -6563,7 +6564,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Public IPv6 address that is pinged to check the internet connection. The route to it is used to detect the local IPv6 address (of the network adapter that is used for the internet)..
+        ///   Looks up a localized string similar to Public IPv6 address (not the one of your computer) that is pinged to check the internet connection. The route to it is used to detect the local IPv6 address (of the network adapter that is used for the internet)..
         /// </summary>
         public static string HelpMessage_PublicIPv6Address {
             get {
@@ -6697,6 +6698,24 @@ namespace NETworkManager.Localization.Resources {
         public static string HelpMessage_ScanForNetBIOS {
             get {
                 return ResourceManager.GetString("HelpMessage_ScanForNetBIOS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Shows the widget on the dashboard. It only sends a request to ip-api.com if the check is enabled (below, in the welcome dialog or with the &quot;Enable&quot; button of the widget), otherwise it shows what it would request. A hidden widget sends no request..
+        /// </summary>
+        public static string HelpMessage_ShowIPApiWidget {
+            get {
+                return ResourceManager.GetString("HelpMessage_ShowIPApiWidget", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Shows the widget on the dashboard. The status window always shows the network connection..
+        /// </summary>
+        public static string HelpMessage_ShowNetworkConnectionWidget {
+            get {
+                return ResourceManager.GetString("HelpMessage_ShowNetworkConnectionWidget", resourceCulture);
             }
         }
         
@@ -7322,16 +7341,6 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ip-api.com rate limit reached (too many requests from your network)!
-        ///Try again in a few seconds..
-        /// </summary>
-        public static string IPApiRateLimitMessage {
-            get {
-                return ResourceManager.GetString("IPApiRateLimitMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to IP endpoint.
         /// </summary>
         public static string IPEndPoint {
@@ -7346,6 +7355,16 @@ namespace NETworkManager.Localization.Resources {
         public static string IPGeolocation {
             get {
                 return ResourceManager.GetString("IPGeolocation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show the location and the internet provider of your public IP address with ip-api.com.
+        ///ip-api.com receives your IP address (http, not encrypted)..
+        /// </summary>
+        public static string IPGeolocationWidgetDisabledMessage {
+            get {
+                return ResourceManager.GetString("IPGeolocationWidgetDisabledMessage", resourceCulture);
             }
         }
         
@@ -9164,6 +9183,15 @@ namespace NETworkManager.Localization.Resources {
         public static string NetworkConnectionType {
             get {
                 return ResourceManager.GetString("NetworkConnectionType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The network connection widget and the status window use these settings to check the internet..
+        /// </summary>
+        public static string NetworkConnectionWidgetAndStatusWindowUseTheseSettingsMessage {
+            get {
+                return ResourceManager.GetString("NetworkConnectionWidgetAndStatusWindowUseTheseSettingsMessage", resourceCulture);
             }
         }
         
@@ -14250,6 +14278,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Show widget.
+        /// </summary>
+        public static string ShowWidget {
+            get {
+                return ResourceManager.GetString("ShowWidget", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Show window contents while dragging.
         /// </summary>
         public static string ShowWindowContentsWhileDragging {
@@ -16307,15 +16344,6 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Widgets.
-        /// </summary>
-        public static string Widgets {
-            get {
-                return ResourceManager.GetString("Widgets", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Width.
         /// </summary>
         public static string Width {
@@ -16746,6 +16774,15 @@ namespace NETworkManager.Localization.Resources {
         public static string XXXDisconnected {
             get {
                 return ResourceManager.GetString("XXXDisconnected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} has no IP geolocation for &quot;{1}&quot; ({2})..
+        /// </summary>
+        public static string XXXHasNoIPGeolocationForXXXReasonXXX {
+            get {
+                return ResourceManager.GetString("XXXHasNoIPGeolocationForXXXReasonXXX", resourceCulture);
             }
         }
         

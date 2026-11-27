@@ -1,4 +1,7 @@
-﻿namespace NETworkManager.Models.IPApi;
+﻿using System;
+using System.Net.Http;
+
+namespace NETworkManager.Models.IPApi;
 
 /// <summary>
 ///     Class contains the result of the IP geolocation information retrieval.
@@ -34,19 +37,17 @@ public class IPGeolocationResult
     }
 
     /// <summary>
-    ///     Create a new instance of <see cref="IPGeolocationResult" /> with an error message and an error code.
+    ///     Create a new instance of <see cref="IPGeolocationResult" /> for a failed request.
     /// </summary>
-    /// <param name="hasError">Indicates if the IP geolocation information retrieval has failed.</param>
-    /// <param name="errorMessage">Error message if the IP geolocation information retrieval has failed.</param>
-    /// <param name="errorCode">
-    ///     Error code if the IP geolocation information retrieval has failed (or -1 if exception was
-    ///     thrown).
+    /// <param name="error">
+    ///     Error of the request (<see cref="HttpRequestException" /> with the status code for an HTTP error).
     /// </param>
-    public IPGeolocationResult(bool hasError, string errorMessage, int errorCode)
+    public IPGeolocationResult(Exception error)
     {
-        HasError = hasError;
-        ErrorMessage = errorMessage;
-        ErrorCode = errorCode;
+        HasError = true;
+        Error = error;
+        ErrorMessage = error.Message;
+        ErrorCode = error is HttpRequestException { StatusCode: not null } httpEx ? (int)httpEx.StatusCode : -1;
     }
 
     /// <summary>
@@ -78,4 +79,9 @@ public class IPGeolocationResult
     ///     Error code if the IP geolocation information retrieval has failed.
     /// </summary>
     public int ErrorCode { get; set; }
+
+    /// <summary>
+    ///     Error of the request, mapped to a localized message by the view model.
+    /// </summary>
+    public Exception Error { get; set; }
 }

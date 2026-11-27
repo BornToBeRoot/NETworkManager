@@ -13,4 +13,9 @@ public partial class IPApiDNSResolverWidgetView
         DataContext = _viewModel;
     }
 
+    public void Check()
+    {
+        _viewModel.Check();
+    }
+
 }

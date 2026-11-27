@@ -36,6 +36,22 @@ public static class NavigationManager
     }
 
     /// <summary>
+    ///     Opens an application with a target (IP address or host name), e.g. from the context menu of a value ("open in
+    ///     other tool"). DNS Lookup and RDAP get their own request (record type / query type from the target).
+    /// </summary>
+    /// <param name="application">Application to open.</param>
+    /// <param name="target">IP address or host name.</param>
+    public static void Open(ApplicationName application, string target)
+    {
+        Open(application switch
+        {
+            ApplicationName.DNSLookup => new DNSLookupRequest { Target = target },
+            ApplicationName.RDAP => new RDAPRequest { Target = target },
+            _ => new ApplicationRequest(application) { Target = target }
+        });
+    }
+
+    /// <summary>
     ///     Opens the settings of the current application.
     /// </summary>
     public static void OpenSettings()

@@ -35,7 +35,7 @@ Release date: **xx.xx.2026**
 
 **Dashboard**
 
-- The widgets of the dashboard (Network connection, Speed Test, IP geolocation, DNS resolver) can be hidden in the settings (**Settings > Dashboard > Widgets**). A hidden widget doesn't check anything (a running speed test is canceled). [#3734](https://github.com/BornToBeRoot/NETworkManager/pull/3734)
+- The widgets of the dashboard (Network connection, Speed Test, IP geolocation, DNS resolver) can be hidden in the settings (**Settings > Dashboard**). A hidden widget doesn't check anything (a running speed test is canceled). [#3734](https://github.com/BornToBeRoot/NETworkManager/pull/3734)
 
 ## Improvements
 
@@ -73,6 +73,11 @@ Release date: **xx.xx.2026**
 - The speed test shows below its header when it was canceled or failed (translated, e.g. no response within 15 seconds or the HTTP status code) instead of replacing the measured values with the English error text of .NET: the values measured until then stay visible. The phase of the running test is no longer shown in the accent color. [#3740](https://github.com/BornToBeRoot/NETworkManager/pull/3740)
 - The speed test shows the time of the test ("Last test at ...") next to its buttons, like the network connection, so an old result is recognized (the tooltip shows the date). A canceled or failed test shows no time. [#3740](https://github.com/BornToBeRoot/NETworkManager/pull/3740)
 - New **Copy all** button in the speed test: copies download, upload, latency, jitter, ISP, server and the time of the test as text, like the network connection. [#3740](https://github.com/BornToBeRoot/NETworkManager/pull/3740)
+- The IP geolocation widget shows when ip-api.com can be requested again after its rate limit was reached ("Rate limit reached! Try again in ... seconds", like the IP Geolocation tool), as a warning below its header. [#3741](https://github.com/BornToBeRoot/NETworkManager/pull/3741)
+- The IP geolocation and DNS resolver widgets show what they request from ip-api.com and an **Enable** button when their check is disabled (default), instead of "Check is disabled!". The button enables the check (like **Settings > Dashboard**) and checks right away. [#3741](https://github.com/BornToBeRoot/NETworkManager/pull/3741)
+- **Settings > Dashboard** is grouped by widget (Network connection, Speed Test, IP geolocation, DNS resolver), each with **Show widget** and the settings of its check. **Check IP geolocation** / **Check DNS resolver** are disabled while their widget is hidden (a hidden widget sends no request), and a note shows that the network connection settings (public IP addresses, public IP address API) are also used by the status window. [#3741](https://github.com/BornToBeRoot/NETworkManager/pull/3741)
+- The IP geolocation and DNS resolver widgets show the time of the last check next to their refresh button, like the network connection, and have a new **Copy all** button that copies all values as text. [#3741](https://github.com/BornToBeRoot/NETworkManager/pull/3741)
+- The IP addresses of the IP geolocation and DNS resolver widgets (public IP address, DNS server) can be opened in other tools via the context menu, like the network connection: Port Scanner, Ping Monitor, Traceroute, DNS Lookup, RDAP and IP Geolocation. The EDNS client subnet opens in RDAP and IP Geolocation, the PTR record in the DNS Lookup. [#3741](https://github.com/BornToBeRoot/NETworkManager/pull/3741)
 
 **Status window**
 
@@ -169,6 +174,16 @@ Release date: **xx.xx.2026**
 - Fixed one failed request (e.g. a short interruption of the connection or a proxy that rejects a large upload) ending the whole speed test. Like the official library, a failed request is skipped (a warning shows how many) and a request rate limited by Cloudflare (HTTP 429) is repeated up to three times. If all requests of a size fail, the larger sizes of the direction are skipped; the test only ends after three requests in a row without a response. [#3740](https://github.com/BornToBeRoot/NETworkManager/pull/3740)
 - Fixed the server of the speed test being empty at the start of a test or shown as `-/-, -/- (-/-)` when Cloudflare did not report it. It is shown as `-/-` like the ISP, with the full name in the tooltip. [#3740](https://github.com/BornToBeRoot/NETworkManager/pull/3740)
 - Fixed the sparkline of the speed test showing the first request twice (one point more than requests, the same value twice in the tooltip). [#3740](https://github.com/BornToBeRoot/NETworkManager/pull/3740)
+- Fixed the IP geolocation widget showing no reason when ip-api.com could not be reached (e.g. no network connection), and the DNS resolver widget showing the English error text of .NET. Both show a translated message below their header (e.g. no response within 10 seconds or the HTTP status code), like the speed test, and a request fails after 10 seconds without a response instead of 100 seconds. [#3741](https://github.com/BornToBeRoot/NETworkManager/pull/3741)
+- Fixed the refresh button of the IP geolocation and DNS resolver widgets staying disabled after a check until the mouse was moved or a key was pressed. [#3741](https://github.com/BornToBeRoot/NETworkManager/pull/3741)
+- Fixed the IP geolocation and DNS resolver widgets showing old values after the network changed (e.g. a VPN connected: the network connection showed the new public IP address, the IP geolocation the old one). They are checked again with the network connection: after a network change, and when the dashboard is shown again and the last check is at least 60 seconds old. [#3741](https://github.com/BornToBeRoot/NETworkManager/pull/3741)
+- Fixed the IP geolocation and DNS resolver widgets showing an empty result (and the error texts on top of it) after their check was enabled in the settings, until the refresh button was clicked. They are checked when the dashboard is shown again, also after the widget was shown again. [#3741](https://github.com/BornToBeRoot/NETworkManager/pull/3741)
+- Fixed the IP geolocation widget failing when a proxy removed the rate limit headers of ip-api.com. The result is shown. [#3741](https://github.com/BornToBeRoot/NETworkManager/pull/3741)
+- Fixed the DNS resolver widget showing "Object reference not set to an instance of an object" when edns.ip-api.com answered with an empty response (e.g. a proxy). An empty response of ip-api.com is shown as an error in both widgets. [#3741](https://github.com/BornToBeRoot/NETworkManager/pull/3741)
+- Fixed the offset of the IP geolocation widget being shown as `-/-` for locations in UTC+0 (e.g. London in winter) and in seconds (e.g. `3600`). It is shown as `UTC+01:00`. A region without a code is shown without empty brackets. [#3741](https://github.com/BornToBeRoot/NETworkManager/pull/3741)
+- Fixed the IP geolocation widget showing an empty result when ip-api.com had no geolocation for the public IP address (e.g. behind a proxy). A warning shows the reason, like the IP Geolocation tool. [#3741](https://github.com/BornToBeRoot/NETworkManager/pull/3741)
+- Fixed the speed test ending with "Could not connect to speed.cloudflare.com" when a proxy closed the connection of large uploads (instead of rejecting them with an HTTP error). After three requests in a row without a response, the test only ends if the server doesn't answer a small request either; otherwise the remaining requests of this size and the larger sizes of the direction are skipped. [#3741](https://github.com/BornToBeRoot/NETworkManager/pull/3741)
+- Fixed the network connection, IP geolocation and DNS resolver widgets showing the public IP address and location of the previous network after a network change (e.g. a VPN connected shortly after the last check): every check uses a new connection instead of a kept-alive connection of the old network. [#3741](https://github.com/BornToBeRoot/NETworkManager/pull/3741)
 
 **Status window**
 
@@ -177,6 +192,27 @@ Release date: **xx.xx.2026**
 - Fixed the status window being hidden right after it was opened from the tray icon when the countdown of a previous network change had just ended. [#3734](https://github.com/BornToBeRoot/NETworkManager/pull/3734)
 - Fixed the status window being cut off on the left on small screens (e.g. 1280 x 720 with 150 % scaling). It is no longer wider than the screen. [#3734](https://github.com/BornToBeRoot/NETworkManager/pull/3734)
 - Fixed the status window opened by the user (e.g. from the tray icon) closing itself after a network change. It stays open and checks the network connection again. [#3734](https://github.com/BornToBeRoot/NETworkManager/pull/3734)
+- Fixed the network connection showing the public IP address of the previous network after a network change (e.g. a VPN connected shortly after the last check): every check uses a new connection instead of a kept-alive connection of the old network. [#3741](https://github.com/BornToBeRoot/NETworkManager/pull/3741)
+
+**IP Geolocation**
+
+- Fixed the tab getting stuck (query disabled, input read-only, progress bar running) after an error or when the rate limit of ip-api.com was reached, until the tab was closed. [#3741](https://github.com/BornToBeRoot/NETworkManager/pull/3741)
+- Fixed a query waiting up to 100 seconds when ip-api.com did not respond (e.g. a firewall that drops the request). It fails after 10 seconds. [#3741](https://github.com/BornToBeRoot/NETworkManager/pull/3741)
+- Fixed "Rate limit reached! Try again in ... seconds" always showing the whole time window of ip-api.com (e.g. 60 seconds) instead of the time that is left. [#3741](https://github.com/BornToBeRoot/NETworkManager/pull/3741)
+- Fixed ip-api.com being blocked for 60 seconds after it answered "too many requests" (HTTP 429), even if its time window ended a few seconds later. The time left reported by ip-api.com is used. [#3741](https://github.com/BornToBeRoot/NETworkManager/pull/3741)
+- Fixed every query failing with "The rate limit values couldn't be extracted from the http header..." when a proxy removed the rate limit headers of ip-api.com. The result is shown, the rate limit is still detected by ip-api.com's answer (HTTP 429). [#3741](https://github.com/BornToBeRoot/NETworkManager/pull/3741)
+- Fixed an empty response of ip-api.com (e.g. from a proxy) being shown as an empty result instead of an error. [#3741](https://github.com/BornToBeRoot/NETworkManager/pull/3741)
+- Fixed the offset being shown as `-/-` for locations in UTC+0 (e.g. London in winter) and in seconds (e.g. `3600`). It is shown as `UTC+01:00`. A region without a code is shown without empty brackets. [#3741](https://github.com/BornToBeRoot/NETworkManager/pull/3741)
+- Fixed an IP address or host name without a geolocation (e.g. a private IP address like `192.168.1.1` or an invalid query) being shown as an empty result. A warning shows the reason of ip-api.com (e.g. `private range`). [#3741](https://github.com/BornToBeRoot/NETworkManager/pull/3741)
+- Fixed errors of ip-api.com being shown as the English error text of .NET (e.g. "The request was canceled due to the configured HttpClient.Timeout..."). A translated message is shown (e.g. no response within 10 seconds or the HTTP status code), like the dashboard. [#3741](https://github.com/BornToBeRoot/NETworkManager/pull/3741)
+
+**Traceroute**
+
+- Fixed the traceroute waiting up to 100 seconds per hop when the IP geolocation is enabled and ip-api.com did not respond (e.g. a firewall that drops the request). The geolocation of a hop fails after 10 seconds. [#3741](https://github.com/BornToBeRoot/NETworkManager/pull/3741)
+- Fixed the IP geolocation of every hop failing with "The rate limit values couldn't be extracted from the http header..." when a proxy removed the rate limit headers of ip-api.com. [#3741](https://github.com/BornToBeRoot/NETworkManager/pull/3741)
+- Fixed the IP geolocation of the hops being blocked for 60 seconds after ip-api.com answered "too many requests" (HTTP 429), even if its time window ended a few seconds later. The time left reported by ip-api.com is used. [#3741](https://github.com/BornToBeRoot/NETworkManager/pull/3741)
+- Fixed an empty response of ip-api.com (e.g. from a proxy) being shown as an empty IP geolocation of the hop instead of an error. [#3741](https://github.com/BornToBeRoot/NETworkManager/pull/3741)
+- Fixed errors of ip-api.com being shown as the English error text of .NET, once for every hop. A translated message is shown once per trace (e.g. no response within 10 seconds or the HTTP status code). [#3741](https://github.com/BornToBeRoot/NETworkManager/pull/3741)
 
 ## Dependencies, Refactoring & Documentation
 

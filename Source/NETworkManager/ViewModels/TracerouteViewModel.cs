@@ -5,6 +5,7 @@ using NETworkManager.Controls;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models;
 using NETworkManager.Models.Export;
+using NETworkManager.Models.IPApi;
 using NETworkManager.Models.Network;
 using NETworkManager.Models.RDAP;
 using NETworkManager.Settings;
@@ -148,6 +149,11 @@ public class TracerouteViewModel : ViewModelBase
     } = new ArrayList();
 
     private bool _ipGeolocationRateLimitIsReached;
+
+    /// <summary>
+    ///     The error of the IP geolocation was shown (once per trace, e.g. not for every hop while ip-api.com is down).
+    /// </summary>
+    private bool _ipGeolocationErrorIsShown;
 
     /// <summary>
     /// Gets or sets a value indicating whether the status message is displayed.
@@ -401,6 +407,7 @@ public class TracerouteViewModel : ViewModelBase
     private async Task StartTrace()
     {
         _ipGeolocationRateLimitIsReached = false;
+        _ipGeolocationErrorIsShown = false;
         StatusMessage = string.Empty;
         StatusMessageLevel = StatusLevel.None;
         IsStatusMessageDisplayed = false;
@@ -542,7 +549,14 @@ public class TracerouteViewModel : ViewModelBase
                 Log.Error(
                     $"ip-api.com error: {e.Args.IPGeolocationResult.ErrorMessage}, error code: {e.Args.IPGeolocationResult.ErrorCode}");
 
-                DisplayStatusMessage($"ip-api.com: {e.Args.IPGeolocationResult.ErrorMessage}");
+                // Translated (the exception text of .NET is logged), like the IP geolocation widget of the dashboard
+                if (!_ipGeolocationErrorIsShown)
+                {
+                    _ipGeolocationErrorIsShown = true;
+
+                    DisplayStatusMessage(WebRequestErrorMessage.Get(IPGeolocationService.Host,
+                        IPGeolocationService.RequestTimeout, e.Args.IPGeolocationResult.Error));
+                }
             }
 
             // Check rate limit 

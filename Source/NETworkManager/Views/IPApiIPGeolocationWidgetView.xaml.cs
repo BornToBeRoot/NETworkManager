@@ -12,4 +12,9 @@ public partial class IPApiIPGeolocationWidgetView
         DataContext = _viewModel;
     }
 
+    public void Check()
+    {
+        _viewModel.Check();
+    }
+
 }

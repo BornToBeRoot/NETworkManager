@@ -1,6 +1,5 @@
 using System;
 using System.Collections.ObjectModel;
-using System.Net.Http;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -375,24 +374,6 @@ public class SpeedTestWidgetViewModel : ViewModelBase
     }
 
     /// <summary>
-    /// Localized message for an error of the speed test (the exception text is logged).
-    /// </summary>
-    private static string GetErrorMessage(Exception ex)
-    {
-        var message = ex switch
-        {
-            TimeoutException => string.Format(Strings.XXXDidNotRespondWithinXXXSecondsMessage, SpeedTestService.Host,
-                SpeedTestService.RequestTimeout.TotalSeconds),
-            HttpRequestException { StatusCode: not null } httpEx => string.Format(Strings.CouldNotConnectToXXXReasonXXX,
-                SpeedTestService.Host, $"{Strings.HTTPStatusCode} {(int)httpEx.StatusCode}"),
-            _ => string.Format(Strings.CouldNotConnectToXXXMessage, SpeedTestService.Host)
-        };
-
-        // One message with its hint (a new line would look like a second message), wraps if the widget is narrow
-        return $"{message} {Strings.CheckNetworkConnectionTryAgainMessage}";
-    }
-
-    /// <summary>
     /// Adds a sample (one completed request) to a sparkline and extends its X axis to the samples.
     /// </summary>
     private static void AddSample(ObservableCollection<double> samples, Axis xAxis, double value)
@@ -507,7 +488,9 @@ public class SpeedTestWidgetViewModel : ViewModelBase
         {
             // Partial results remain visible, like after a cancel
             Log.Error("Speed test failed.", ex);
-            ShowStatusMessage(GetErrorMessage(ex), StatusLevel.Error);
+            ShowStatusMessage(
+                WebRequestErrorMessage.Get(SpeedTestService.Host, SpeedTestService.RequestTimeout, ex),
+                StatusLevel.Error);
         }
         finally
         {
