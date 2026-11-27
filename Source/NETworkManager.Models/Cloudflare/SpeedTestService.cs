@@ -198,10 +198,9 @@ public class SpeedTestService
             var setSucceeded = false;
             var setSizeFailed = false;
 
-            // Failures of the latency probes before (e.g. a short Wi-Fi drop) don't count for this size: otherwise one
-            // failed request could end the direction. A lost connection still ends the test (3 failures in the set or
-            // in the latency probes)
-            failures.Consecutive = 0;
+            // Only failures of this set decide that the size fails (not the latency probes before it, e.g. a short
+            // Wi-Fi drop). The failures in a row across the sets still end the test when the connection is lost
+            failures.ConsecutiveInSet = 0;
 
             for (var i = 0; i < measurement.Count; i++)
             {
@@ -366,6 +365,11 @@ public class SpeedTestService
         public int Consecutive { get; set; }
 
         /// <summary>
+        /// Failures in a row without a response in the current download / upload set.
+        /// </summary>
+        public int ConsecutiveInSet { get; set; }
+
+        /// <summary>
         /// Error of the last failed request (thrown if no request of the test succeeded).
         /// </summary>
         public Exception LastError { get; set; }
@@ -409,6 +413,7 @@ public class SpeedTestService
             {
                 var value = await request().ConfigureAwait(false);
                 failures.Consecutive = 0;
+                failures.ConsecutiveInSet = 0;
 
                 return (true, false, value);
             }
@@ -436,17 +441,30 @@ public class SpeedTestService
                 if (!SpeedTestCalculator.IsConnectionFailure(ex))
                 {
                     failures.Consecutive = 0;
+                    failures.ConsecutiveInSet = 0;
                 }
-                else if (++failures.Consecutive >= MaxConsecutiveFailedRequests)
+                else
                 {
-                    if (isServerReachable == null || !await isServerReachable().ConfigureAwait(false))
-                        throw;
+                    failures.ConsecutiveInSet++;
 
-                    // The connection works, only requests of this size fail: skip them (the set fails)
-                    Log.Warn("Speed test requests of this size fail, but the server answers small requests.", ex);
-                    failures.Consecutive = 0;
+                    if (++failures.Consecutive >= MaxConsecutiveFailedRequests)
+                    {
+                        if (isServerReachable == null || !await isServerReachable().ConfigureAwait(false))
+                            throw;
 
-                    return (false, true, default);
+                        failures.Consecutive = 0;
+
+                        // The connection works. Only requests of this size failed: skip them (the set fails), otherwise
+                        // (failures of the latency probes before) only this request is skipped
+                        if (failures.ConsecutiveInSet >= MaxConsecutiveFailedRequests)
+                        {
+                            Log.Warn("Speed test requests of this size fail, but the server answers small requests.",
+                                ex);
+                            failures.ConsecutiveInSet = 0;
+
+                            return (false, true, default);
+                        }
+                    }
                 }
 
                 Log.Warn("Speed test request failed and is skipped.", ex);
