@@ -5833,6 +5833,11 @@ Own row: below the network connection, the targets side by side.</value>
 
 {0}</value>
   </data>
+  <data name="HelpMessage_WelcomeCheckLatency" xml:space="preserve">
+    <value>The latency widget of the dashboard pings the default gateway and its targets every few seconds while the dashboard is shown.
+
+Default targets: Cloudflare (1.1.1.1), Google (8.8.8.8) and Quad9 (9.9.9.9)</value>
+  </data>
   <data name="LatencyTargetLimitReachedMessage" xml:space="preserve">
     <value>The maximum of {0} targets is reached. Delete a target to add another one.</value>
   </data>

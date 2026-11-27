@@ -155,7 +155,7 @@ The targets are shown one below the other whenever the widget is narrower than a
 
 #### Check latency
 
-Enables or disables the pings of the targets. The targets are only pinged while the dashboard is shown (not in the background, not while the window is minimized or in the tray). The check can also be enabled with the **Enable** button of the widget. The switch is disabled while the widget is hidden (the value is kept).
+Enables or disables the pings of the targets. The targets are only pinged while the dashboard is shown (not in the background, not while the window is minimized or in the tray). The check can also be enabled in the welcome dialog or with the **Enable** button of the widget. The switch is disabled while the widget is hidden (the value is kept).
 
 **Type:** `Boolean`
 
@@ -268,7 +268,7 @@ A test takes about 15 seconds on a fast connection and up to 1–2 minutes on a 
 
 The **Latency** widget pings the default gateway (router) and up to five targets on the internet or in your network and shows one line per target with its name, the round-trip time of the last ping and a chart of the last 60 seconds, like the dashboard of a router or gateway. By default it is shown to the right of the [Speed Test](#speed-test) (1/3 of the width, the targets one below the other). In a narrow window (less than about 900 pixels for the dashboard) or without the speed test it gets its own row below the speed test, with the targets side by side (up to three per line); see [Position](#position). By default these are the default gateway (first line, see [Ping default gateway](#ping-default-gateway)) and the public DNS resolvers of Cloudflare (`1.1.1.1`), Google (`8.8.8.8`) and Quad9 (`9.9.9.9`): they answer pings reliably and are close to every user (anycast). If only the internet targets fail, the problem is the internet connection, not your network. The targets can be changed in the [settings](#targets), e.g. your own servers, see [Internal and air-gapped networks](#internal-and-air-gapped-networks). Without the gateway and targets the widget shows **Configure**, which opens the settings.
 
-The check is disabled by default: the widget shows what it does and an **Enable** button, which enables the check (like [Check latency](#check-latency)) and starts right away.
+The check is disabled by default (it can be enabled in the welcome dialog): the widget shows what it does and an **Enable** button, which enables the check (like [Check latency](#check-latency)) and starts right away.
 
 The targets are only pinged while the dashboard is shown: not when you switch to another tool or the settings, and not while the window is minimized or in the tray. When the dashboard is shown again, the pings continue: the pings of the last minute stay, the pause is a gap in the chart and doesn't count as lost pings (nothing is pinged in the background). After a network change (e.g. a VPN connected, the targets may be reached via another route) and when the check is disabled, the values and the chart start again. Each target is pinged on its own (timeout 2 seconds), the next ping follows after the [interval](#interval-seconds) (default 2 seconds), so a slow target doesn't delay the others. A host name is resolved with the DNS settings of the application (IPv4 is preferred, see the network settings) whenever the pings start (the dashboard is shown, after a network change); if it can't be resolved, it is tried again after 5, 15 and 30 seconds and then every minute (a broken DNS server doesn't get a query every few seconds).
 

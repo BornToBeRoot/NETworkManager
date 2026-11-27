@@ -500,6 +500,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
                 // Set settings based on user choice
                 SettingsManager.Current.Update_CheckForUpdatesAtStartup = instance.CheckForUpdatesAtStartup;
                 SettingsManager.Current.Dashboard_CheckPublicIPAddress = instance.CheckPublicIPAddress;
+                SettingsManager.Current.Dashboard_CheckLatency = instance.CheckLatency;
                 SettingsManager.Current.Dashboard_CheckIPApiIPGeolocation =
                     instance.CheckIPApiIPGeolocation;
                 SettingsManager.Current.Dashboard_CheckIPApiDNSResolver = instance.CheckIPApiDNSResolver;

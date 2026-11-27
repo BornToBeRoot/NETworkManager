@@ -6850,6 +6850,17 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The latency widget of the dashboard pings the default gateway and its targets every few seconds while the dashboard is shown.
+        ///
+        ///Default targets: Cloudflare (1.1.1.1), Google (8.8.8.8) and Quad9 (9.9.9.9).
+        /// </summary>
+        public static string HelpMessage_WelcomeCheckLatency {
+            get {
+                return ResourceManager.GetString("HelpMessage_WelcomeCheckLatency", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Only when the networks are scanned automatically (&quot;Automatically update every&quot;) and WiFi is shown: one notification per scan with the changes since the previous scan of the adapter..
         /// </summary>
         public static string HelpMessage_WiFiChangesNotification {

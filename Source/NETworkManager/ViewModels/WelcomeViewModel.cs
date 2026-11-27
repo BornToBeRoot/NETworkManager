@@ -47,6 +47,19 @@ public class WelcomeViewModel : ViewModelBase
         }
     } = GlobalStaticConfiguration.Dashboard_CheckPublicIPAddress;
 
+    public bool CheckLatency
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.Dashboard_CheckLatency;
+
     public bool CheckIPApiIPGeolocation
     {
         get;
