@@ -456,8 +456,9 @@ public class InternetLatencyTargetViewModel : ViewModelBase
               $"{Strings.PacketLoss} {stats.PacketLoss.ToString("F0", CultureInfo.CurrentCulture)} %";
     }
 
+    // Like the tooltip ("F0": halves are rounded up, not to the even number like Math.Round)
     private static string FormatTime(double? milliseconds) =>
-        milliseconds.HasValue ? $"{Math.Round(milliseconds.Value).ToString(CultureInfo.CurrentCulture)} ms" : "-/-";
+        milliseconds.HasValue ? $"{milliseconds.Value.ToString("F0", CultureInfo.CurrentCulture)} ms" : "-/-";
 
     /// <summary>
     /// Moves the X axis to the time window up to <paramref name="now" />.
