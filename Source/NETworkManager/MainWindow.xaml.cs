@@ -489,7 +489,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
         // Show welcome dialog
         if (SettingsManager.Current.WelcomeDialog_Show)
         {
-            var childWindow = new WelcomeChildWindow();
+            var childWindow = new WelcomeChildWindow(this);
 
             var viewModel = new WelcomeViewModel(instance =>
             {
@@ -532,7 +532,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
         }
         else if (SettingsManager.Current.UpgradeDialog_Show)
         {
-            var childWindow = new UpgradeChildWindow();
+            var childWindow = new UpgradeChildWindow(this);
 
             var viewModel = new UpgradeViewModel(instance =>
             {
