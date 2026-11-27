@@ -12,7 +12,7 @@ using NETworkManager.Utilities;
 namespace NETworkManager.ViewModels;
 
 /// <summary>
-/// View model for the latency widget: pings up to three targets live while the dashboard is shown. The
+/// View model for the latency widget: pings its targets live while the dashboard is shown. The
 /// dashboard starts and stops it (<see cref="Start" />, <see cref="Stop" />).
 /// </summary>
 public class LatencyWidgetViewModel : ViewModelBase
@@ -57,6 +57,7 @@ public class LatencyWidgetViewModel : ViewModelBase
 
     /// <summary>
     /// Gets a value indicating whether a target is configured.
+    /// </summary>
     public bool HasTargets
     {
         get;
