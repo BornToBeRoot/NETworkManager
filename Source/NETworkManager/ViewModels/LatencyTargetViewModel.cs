@@ -33,11 +33,6 @@ public class LatencyTargetViewModel : ViewModelBase
 
     private static readonly ILog Log = LogManager.GetLogger(typeof(LatencyTargetViewModel));
 
-    /// <summary>
-    /// Time until a host name that could not be resolved is resolved again (e.g. the DNS server of a new network is
-    /// not reachable yet right after a network change).
-    /// </summary>
-    private static readonly TimeSpan ResolveRetryInterval = TimeSpan.FromSeconds(5);
 
     // Range of the interval in seconds (Settings > Dashboard > Latency)
     public const int MinInterval = 1;
@@ -240,10 +235,11 @@ public class LatencyTargetViewModel : ViewModelBase
         {
             var ipAddress = await ResolveAsync(cancellationToken);
 
-            // Not resolved: try again until it works (the error is shown meanwhile)
-            while (ipAddress == null)
+            // Not resolved (e.g. the DNS server of a new network is not reachable yet right after a network change):
+            // try again until it works, 5, 15, 30 s, then every minute (the error is shown meanwhile)
+            for (var failedAttempts = 1; ipAddress == null; failedAttempts++)
             {
-                await Task.Delay(ResolveRetryInterval, cancellationToken);
+                await Task.Delay(LatencyStatistics.GetRetryDelay(failedAttempts), cancellationToken);
 
                 ipAddress = await ResolveAsync(cancellationToken);
             }
@@ -326,7 +322,7 @@ public class LatencyTargetViewModel : ViewModelBase
             error = string.Format(Strings.CouldNotResolveIPAddressFor, Host);
         }
 
-        // Resolved again after ResolveRetryInterval; no IP address or value of an earlier run next to the error
+        // Resolved again later (see RunAsync); no IP address or value of an earlier run next to the error
         ErrorMessage = error;
         ResolvedIPAddress = null;
         Value = "-/-";

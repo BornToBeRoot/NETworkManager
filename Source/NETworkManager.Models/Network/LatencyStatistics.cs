@@ -92,6 +92,28 @@ public static class LatencyStatistics
     }
 
     /// <summary>
+    ///     Delays until a failed name lookup (or gateway detection) of a target is tried again: 5, 15, 30 seconds, then
+    ///     every 60 seconds - a broken DNS server doesn't get a query every few seconds.
+    /// </summary>
+    private static readonly TimeSpan[] RetryDelays =
+    [
+        TimeSpan.FromSeconds(5),
+        TimeSpan.FromSeconds(15),
+        TimeSpan.FromSeconds(30),
+        TimeSpan.FromSeconds(60)
+    ];
+
+    /// <summary>
+    ///     Delay until the next attempt after <paramref name="failedAttempts" /> failed attempts in a row.
+    /// </summary>
+    /// <param name="failedAttempts">Failed attempts in a row (1 after the first one).</param>
+    /// <returns>Delay (5, 15, 30, then 60 seconds).</returns>
+    public static TimeSpan GetRetryDelay(int failedAttempts)
+    {
+        return RetryDelays[Math.Clamp(failedAttempts - 1, 0, RetryDelays.Length - 1)];
+    }
+
+    /// <summary>
     ///     Removes the pings older than the time window (the list is ordered by time).
     /// </summary>
     /// <param name="samples">Pings, the oldest first.</param>

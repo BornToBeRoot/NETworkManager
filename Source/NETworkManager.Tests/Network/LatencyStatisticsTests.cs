@@ -72,6 +72,18 @@ public class LatencyStatisticsTests
         Assert.Equal(LatencyState.Failed, LatencyStatistics.GetState([Reply(0, 9), Reply(2, 8), Lost(4)]));
     }
 
+    [Theory]
+    [InlineData(0, 5)]
+    [InlineData(1, 5)]
+    [InlineData(2, 15)]
+    [InlineData(3, 30)]
+    [InlineData(4, 60)]
+    [InlineData(100, 60)]
+    public void RetryDelayBacksOffToOneMinute(int failedAttempts, int expectedSeconds)
+    {
+        Assert.Equal(TimeSpan.FromSeconds(expectedSeconds), LatencyStatistics.GetRetryDelay(failedAttempts));
+    }
+
     [Fact]
     public void RemoveOutdatedKeepsTheTimeWindow()
     {
