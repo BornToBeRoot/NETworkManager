@@ -10,7 +10,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:settings="clr-namespace:NETworkManager.Settings;assembly=NETworkManager.Settings"
              xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
-             mc:Ignorable="d"
+             mc:Ignorable="d" x:Name="UserControlInternetLatency"
              d:DataContext="{d:DesignInstance viewModels:InternetLatencyWidgetViewModel}">
     <UserControl.Resources>
         <converters:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
@@ -107,26 +107,62 @@
                     </Rectangle>
                 </Button>
             </Grid>
-            <!-- Targets side by side (check enabled) -->
+            <!-- Targets side by side (wide, own row) or one below the other (narrow, next to the speed test), see
+                 IsCompact; check enabled -->
             <Grid Grid.Row="1" Margin="10"
                   Visibility="{Binding Source={x:Static Member=settings:SettingsManager.Current}, Path=Dashboard_CheckInternetLatency, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
-                <ItemsControl ItemsSource="{Binding Targets}" Margin="-5,0"
+                <ItemsControl ItemsSource="{Binding Targets}" AlternationCount="3" Grid.IsSharedSizeScope="True"
                               Visibility="{Binding HasTargets, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <UniformGrid Rows="1" />
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.Style>
+                        <Style TargetType="{x:Type ItemsControl}">
+                            <!-- Wide: the dividers between the targets have a padding of 10, the first target starts at
+                                 the left edge -->
+                            <Setter Property="Margin" Value="-10,0,0,0" />
+                            <Setter Property="ItemsPanel">
+                                <Setter.Value>
+                                    <ItemsPanelTemplate>
+                                        <UniformGrid Rows="1" />
+                                    </ItemsPanelTemplate>
+                                </Setter.Value>
+                            </Setter>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsCompact, ElementName=UserControlInternetLatency}" Value="True">
+                                    <Setter Property="Margin" Value="0" />
+                                    <Setter Property="ItemsPanel">
+                                        <Setter.Value>
+                                            <ItemsPanelTemplate>
+                                                <UniformGrid Columns="1" />
+                                            </ItemsPanelTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ItemsControl.Style>
                     <ItemsControl.ItemTemplate>
                         <DataTemplate DataType="{x:Type viewModels:InternetLatencyTargetViewModel}">
-                            <!-- Transparent background: the tooltip and the context menu work on the whole tile -->
-                            <Grid Margin="5,0" Background="Transparent"
-                                  ContextMenu="{StaticResource TargetContextMenu}">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="Auto" />
-                                </Grid.RowDefinitions>
-                                <Grid.ToolTip>
+                            <!-- One line per target: dot, name, value, chart. Transparent background: the tooltip and
+                                 the context menu work on the whole target -->
+                            <Border Background="Transparent" ContextMenu="{StaticResource TargetContextMenu}">
+                                <Border.Style>
+                                    <Style TargetType="{x:Type Border}">
+                                        <!-- Wide: divider in front of every target except the first -->
+                                        <Setter Property="Padding" Value="10,0" />
+                                        <Setter Property="BorderThickness" Value="1,0,0,0" />
+                                        <Setter Property="BorderBrush" Value="{DynamicResource Brushes.Surface.Border}" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding (ItemsControl.AlternationIndex), RelativeSource={RelativeSource AncestorType={x:Type ContentPresenter}}}" Value="0">
+                                                <Setter Property="BorderBrush" Value="Transparent" />
+                                            </DataTrigger>
+                                            <!-- Narrow: one below the other, no dividers -->
+                                            <DataTrigger Binding="{Binding IsCompact, ElementName=UserControlInternetLatency}" Value="True">
+                                                <Setter Property="Padding" Value="0,4" />
+                                                <Setter Property="BorderThickness" Value="0" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Border.Style>
+                                <Border.ToolTip>
                                     <Grid>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="Auto" />
@@ -167,29 +203,34 @@
                                                    Foreground="{DynamicResource Brushes.Status.Error}"
                                                    Visibility="{Binding ErrorMessage, Converter={StaticResource StringIsNotNullOrEmptyToVisibilityCollapsedConverter}}" />
                                     </Grid>
-                                </Grid.ToolTip>
-                                <Grid Grid.Row="0">
+                                </Border.ToolTip>
+                                <!-- Name and value columns have the same width in all targets (values aligned when they
+                                     are one below the other), the chart gets the rest -->
+                                <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto" />
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" SharedSizeGroup="Name" MaxWidth="150" />
+                                        <ColumnDefinition Width="Auto" SharedSizeGroup="Value" />
+                                        <ColumnDefinition Width="*" MinWidth="0" />
                                     </Grid.ColumnDefinitions>
                                     <Ellipse Grid.Column="0" Style="{StaticResource StatusDot}" Tag="{Binding StatusLevel}" />
                                     <TextBlock Grid.Column="1" Text="{Binding Name}" Style="{StaticResource DefaultTextBlock}"
                                                VerticalAlignment="Center" TextTrimming="CharacterEllipsis" />
                                     <TextBlock Grid.Column="2" Text="{Binding Value}"
-                                               Style="{StaticResource MessageTextBlock}" Margin="10,0,0,0" />
+                                               Style="{StaticResource MessageTextBlock}"
+                                               HorizontalAlignment="Right" TextAlignment="Right" TextWrapping="NoWrap"
+                                               Margin="10,0,10,0" />
+                                    <lvc:CartesianChart Grid.Column="3" Height="24"
+                                                        Background="Transparent"
+                                                        Series="{Binding Series}"
+                                                        XAxes="{Binding XAxes}"
+                                                        YAxes="{Binding YAxes}"
+                                                        DrawMarginFrame="{x:Null}"
+                                                        TooltipPosition="Hidden"
+                                                        AnimationsSpeed="00:00:00"
+                                                        RenderOptions.BitmapScalingMode="NearestNeighbor" />
                                 </Grid>
-                                <lvc:CartesianChart Grid.Row="1" Height="40" Margin="0,5,0,0"
-                                                    Background="Transparent"
-                                                    Series="{Binding Series}"
-                                                    XAxes="{Binding XAxes}"
-                                                    YAxes="{Binding YAxes}"
-                                                    DrawMarginFrame="{x:Null}"
-                                                    TooltipPosition="Hidden"
-                                                    AnimationsSpeed="00:00:00"
-                                                    RenderOptions.BitmapScalingMode="NearestNeighbor" />
-                            </Grid>
+                            </Border>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
