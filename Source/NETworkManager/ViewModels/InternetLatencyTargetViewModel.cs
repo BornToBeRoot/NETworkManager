@@ -296,27 +296,45 @@ public class InternetLatencyTargetViewModel : ViewModelBase
             return ipAddress;
         }
 
-        var dnsResult = await DNSClientHelper.ResolveAorAaaaAsync(Host,
-            SettingsManager.Current.Network_ResolveHostnamePreferIPv4);
+        string error;
 
-        cancellationToken.ThrowIfCancellationRequested();
-
-        if (dnsResult.HasError)
+        try
         {
-            // Resolved again after ResolveRetryInterval; no IP address of an earlier run next to the error
-            ErrorMessage = DNSClientHelper.FormatDNSClientResultError(Host, dnsResult);
-            ResolvedIPAddress = null;
-            StatusLevel = StatusLevel.Error;
+            var dnsResult = await DNSClientHelper.ResolveAorAaaaAsync(Host,
+                SettingsManager.Current.Network_ResolveHostnamePreferIPv4);
 
-            Log.Warn($"Internet latency: {ErrorMessage}");
+            cancellationToken.ThrowIfCancellationRequested();
 
-            return null;
+            if (!dnsResult.HasError)
+            {
+                ErrorMessage = null;
+                ResolvedIPAddress = dnsResult.Value.ToString();
+
+                // Status from the pings of the time window again (not red until the next ping)
+                UpdateStatistics();
+
+                return dnsResult.Value;
+            }
+
+            error = DNSClientHelper.FormatDNSClientResultError(Host, dnsResult);
+        }
+        catch (Exception ex) when (ex is not OperationCanceledException)
+        {
+            // E.g. the DNS client is not configured: an error like a failed lookup (the task is not awaited by anyone)
+            Log.Error($"Internet latency: resolving {Host} failed.", ex);
+
+            error = string.Format(Strings.CouldNotResolveIPAddressFor, Host);
         }
 
-        ErrorMessage = null;
-        ResolvedIPAddress = dnsResult.Value.ToString();
+        // Resolved again after ResolveRetryInterval; no IP address or value of an earlier run next to the error
+        ErrorMessage = error;
+        ResolvedIPAddress = null;
+        Value = "-/-";
+        StatusLevel = StatusLevel.Error;
 
-        return dnsResult.Value;
+        Log.Warn($"Internet latency: {ErrorMessage}");
+
+        return null;
     }
 
     /// <summary>
