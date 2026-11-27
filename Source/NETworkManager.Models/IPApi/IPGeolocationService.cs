@@ -102,10 +102,12 @@ public class IPGeolocationService : SingletonBase<IPGeolocationService>
                     response.StatusCode));
 
             // Code 429
-            // We have already reached the rate limit (on the network)
-            // Since we don't get any information about the remaining time, we set it to the default value.
+            // We have already reached the rate limit (on the network). The time until the window resets (X-Ttl) is
+            // used if the answer has it, otherwise the default value.
             _rateLimitIsReached = true;
-            _rateLimitRemainingTime = 60;
+            _rateLimitRemainingTime = TryParseRateLimit(response.Headers, out _, out var remainingTime) && remainingTime > 0
+                ? remainingTime
+                : 60;
             _rateLimitRemainingRequests = 0;
             _rateLimitLastReached = DateTime.Now;
 
