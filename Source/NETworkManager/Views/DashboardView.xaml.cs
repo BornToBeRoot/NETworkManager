@@ -45,8 +45,8 @@ public partial class DashboardView
         // The settings are changed while the dashboard is hidden (settings view) - check again when it is shown
         SettingsManager.Current.PropertyChanged += SettingsManager_PropertyChanged;
 
-        // Check on first open (the IP API widgets are already checking since they were created). Later re-opens are
-        // covered by OnViewVisible().
+        // Check on first open (the widgets don't check when they are created). Later re-opens and widgets shown the
+        // first time (the setting marks the dashboard as outdated) are covered by OnViewVisible().
         CheckWidgets();
     }
 

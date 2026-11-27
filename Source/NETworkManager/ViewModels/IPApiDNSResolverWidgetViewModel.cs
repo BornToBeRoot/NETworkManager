@@ -121,12 +121,12 @@ public class IPApiDNSResolverWidgetViewModel : ViewModelBase
     #region Constructor, load settings
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="IPApiDNSResolverWidgetViewModel"/> class.
+    /// Initializes a new instance of the <see cref="IPApiDNSResolverWidgetViewModel"/> class. The dashboard starts the check (the
+    /// widget is created when it is shown the first time).
     /// </summary>
     public IPApiDNSResolverWidgetViewModel()
     {
         LoadSettings();
-        Check();
     }
 
     /// <summary>

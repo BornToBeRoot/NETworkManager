@@ -122,12 +122,12 @@ public class IPApiIPGeolocationWidgetViewModel : ViewModelBase
     #region Constructor, load settings
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="IPApiIPGeolocationWidgetViewModel"/> class.
+    /// Initializes a new instance of the <see cref="IPApiIPGeolocationWidgetViewModel"/> class. The dashboard starts the check (the
+    /// widget is created when it is shown the first time).
     /// </summary>
     public IPApiIPGeolocationWidgetViewModel()
     {
         LoadSettings();
-        Check();
     }
 
     /// <summary>
