@@ -633,8 +633,11 @@ values in `Fonts.Family.Mono`, states with `StatusDot`); values open in other to
 **Show / enable**:
 - `Dashboard_Show<Name>Widget` shows / hides a widget (default shown). The view is created when it is shown the
   first time (`ShowWidget`); a hidden widget doesn't check or send anything.
-- A widget that sends data to a third party (ip-api.com, pings to the internet) is opt-in: `Dashboard_Check<Name>`
-  off by default; while it is off the widget shows what it would do and an **Enable** button that sets the setting.
+- Privacy defaults: a single connectivity ping per check is on by default (network connection: `Dashboard_PingPublicIPAddress`,
+  can be disabled). Anything that sends the IP address to a web service (ipify, ip-api.com) or runs continuously
+  (latency pings) is opt-in: `Dashboard_Check<Name>` off by default; while it is off the widget shows what it would
+  do and an **Enable** button that sets the setting (the network connection shows the pinged address instead).
+  A changed default only applies to new installations (saved settings keep their value).
 - Settings > Dashboard has one section per widget in the order of the dashboard; the check switch is disabled while
   the widget is hidden (the value is kept).
 

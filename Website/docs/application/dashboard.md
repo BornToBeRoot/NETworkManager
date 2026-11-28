@@ -81,11 +81,11 @@ Public IPv6 address (not the one of your computer) that is pinged to check the i
 
 #### Check public IP address
 
-Enables or disables the request of the public IP address via [`api.ipify.org`](https://www.ipify.org/) and [`api6.ipify.org`](https://www.ipify.org/) (or a [custom API](#use-custom-ipv4-address-api)) with every check; the service receives your IP address. If disabled, the internet is only checked with the [ping](#ping-public-ip-address) of the [Public IPv4 address](#public-ipv4-address) / [Public IPv6 address](#public-ipv6-address) and the connectivity reported by Windows. If both are disabled, only the connectivity reported by Windows is used. The check can also be disabled in the welcome dialog.
+Enables or disables the request of the public IP address via [`api.ipify.org`](https://www.ipify.org/) and [`api6.ipify.org`](https://www.ipify.org/) (or a [custom API](#use-custom-ipv4-address-api)) with every check; the service receives your IP address. If disabled, the internet is only checked with the [ping](#ping-public-ip-address) of the [Public IPv4 address](#public-ipv4-address) / [Public IPv6 address](#public-ipv6-address) and the connectivity reported by Windows. If both are disabled, only the connectivity reported by Windows is used. The check is disabled by default (it can be enabled in the welcome dialog): the internet value is then the pinged address with the round-trip time, without the DNS name of the public IP address.
 
 **Type:** `Boolean`
 
-**Default:** `Enabled`
+**Default:** `Disabled`
 
 #### Use custom IPv4 address API
 
