@@ -6436,7 +6436,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Requests your public IP address with every check of the network connection to show it and to see if the internet is reachable. The service receives your IP address.
+        ///   Looks up a localized string similar to Requests your public IP address with every check of the network connection (dashboard and status window) to show it and to see if the internet is reachable. The service receives your IP address.
         ///
         ///Default: ipify.org (https://api.ipify.org and https://api6.ipify.org), can be changed in the settings.
         ///
@@ -6658,7 +6658,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Pings a public IP address with every check of the network connection to see if the internet is reachable. The target receives a ping (ICMP echo request).
+        ///   Looks up a localized string similar to Pings a public IP address with every check of the network connection (dashboard and status window) to see if the internet is reachable. The target receives a ping (ICMP echo request).
         ///
         ///Default: Cloudflare (1.1.1.1 and 2606:4700:4700::1111), can be changed in the settings.
         ///
@@ -6854,7 +6854,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Shows the widget on the dashboard. The status window always shows the network connection..
+        ///   Looks up a localized string similar to Shows the widget on the dashboard. A hidden widget doesn&apos;t check anything, but the status window still checks the network connection (e.g. on a network change, see Settings &gt; Status)..
         /// </summary>
         public static string HelpMessage_ShowNetworkConnectionWidget {
             get {
@@ -9398,7 +9398,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The network connection widget and the status window use these settings to check the internet..
+        ///   Looks up a localized string similar to The network connection widget and the status window use these settings to check the internet, also while the widget is hidden..
         /// </summary>
         public static string NetworkConnectionWidgetAndStatusWindowUseTheseSettingsMessage {
             get {
@@ -15107,6 +15107,15 @@ namespace NETworkManager.Localization.Resources {
         public static string StatusWindow {
             get {
                 return ResourceManager.GetString("StatusWindow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The status window checks the network connection with the settings of Dashboard &gt; Network connection (ping and public IP address)..
+        /// </summary>
+        public static string StatusWindowUsesDashboardSettingsMessage {
+            get {
+                return ResourceManager.GetString("StatusWindowUsesDashboardSettingsMessage", resourceCulture);
             }
         }
         

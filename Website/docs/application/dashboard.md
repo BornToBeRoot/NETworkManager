@@ -49,7 +49,7 @@ The network connection widget and the [status window](../settings/status.md) use
 
 #### Show widget {#show-network-connection-widget}
 
-Show or hide the **Network connection** widget on the dashboard. A hidden widget doesn't check anything; the status window always shows the network connection.
+Show or hide the **Network connection** widget on the dashboard. A hidden widget doesn't check anything; the status window still checks the network connection with these settings (e.g. on a network change, see [Status](../settings/status.md)).
 
 **Type:** `Boolean`
 

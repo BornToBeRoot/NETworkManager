@@ -2090,7 +2090,7 @@ If you enjoy it, please consider supporting its development — whether by leavi
 URL: https://api.github.com/</value>
   </data>
   <data name="HelpMessage_CheckPublicIPAddress" xml:space="preserve">
-    <value>Requests your public IP address with every check of the network connection to show it and to see if the internet is reachable. The service receives your IP address.
+    <value>Requests your public IP address with every check of the network connection (dashboard and status window) to show it and to see if the internet is reachable. The service receives your IP address.
 
 Default: ipify.org (https://api.ipify.org and https://api6.ipify.org), can be changed in the settings.
 
@@ -5772,13 +5772,13 @@ ip-api.com receives your IP address and the IP address of your DNS server.</valu
     <value>Show widget</value>
   </data>
   <data name="HelpMessage_ShowNetworkConnectionWidget" xml:space="preserve">
-    <value>Shows the widget on the dashboard. The status window always shows the network connection.</value>
+    <value>Shows the widget on the dashboard. A hidden widget doesn't check anything, but the status window still checks the network connection (e.g. on a network change, see Settings &gt; Status).</value>
   </data>
   <data name="HelpMessage_ShowIPApiWidget" xml:space="preserve">
     <value>Shows the widget on the dashboard. It only sends a request to ip-api.com if the check is enabled (below, in the welcome dialog or with the "Enable" button of the widget), otherwise it shows what it would request. A hidden widget sends no request.</value>
   </data>
   <data name="NetworkConnectionWidgetAndStatusWindowUseTheseSettingsMessage" xml:space="preserve">
-    <value>The network connection widget and the status window use these settings to check the internet.</value>
+    <value>The network connection widget and the status window use these settings to check the internet, also while the widget is hidden.</value>
   </data>
   <data name="IntervalInSeconds" xml:space="preserve">
     <value>Interval (seconds)</value>
@@ -5854,7 +5854,7 @@ Default targets: Cloudflare (1.1.1.1), Google (8.8.8.8) and Quad9 (9.9.9.9), can
     <value>Ping public IP address</value>
   </data>
   <data name="HelpMessage_PingPublicIPAddress" xml:space="preserve">
-    <value>Pings a public IP address with every check of the network connection to see if the internet is reachable. The target receives a ping (ICMP echo request).
+    <value>Pings a public IP address with every check of the network connection (dashboard and status window) to see if the internet is reachable. The target receives a ping (ICMP echo request).
 
 Default: Cloudflare (1.1.1.1 and 2606:4700:4700::1111), can be changed in the settings.
 
@@ -5873,5 +5873,8 @@ If the ping and the public IP address check are disabled, only the internet conn
     <value>Requests the location and the internet provider of your public IP address (dashboard) and of the hops of a trace (traceroute) from ip-api.com. ip-api.com receives these IP addresses (http, not encrypted).
 
 URL: http://ip-api.com/</value>
+  </data>
+  <data name="StatusWindowUsesDashboardSettingsMessage" xml:space="preserve">
+    <value>The status window checks the network connection with the settings of Dashboard &gt; Network connection (ping and public IP address).</value>
   </data>
 </root>
