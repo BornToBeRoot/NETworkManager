@@ -972,6 +972,19 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     } = GlobalStaticConfiguration.Dashboard_PublicIPv6Address;
 
+    public bool Dashboard_PingPublicIPAddress
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.Dashboard_PingPublicIPAddress;
+
     public bool Dashboard_CheckPublicIPAddress
     {
         get;

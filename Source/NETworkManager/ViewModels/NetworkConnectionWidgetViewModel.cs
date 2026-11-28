@@ -542,7 +542,7 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
 
     /// <summary>
     /// Checks the internet connection of an address family: ping of the public IP address (setting) and the public IP
-    /// address API (if enabled) at the same time, see <see cref="NetworkConnectionCheck.GetInternetResult" />.
+    /// address API (each if enabled) at the same time, see <see cref="NetworkConnectionCheck.GetInternetResult" />.
     /// </summary>
     /// <param name="item">Item of the internet check (IPv4 or IPv6).</param>
     /// <param name="addressFamily">IPv4 or IPv6.</param>
@@ -552,9 +552,11 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
     private static async Task<IPAddress> CheckInternetAsync(ConnectionCheckItem item, AddressFamily addressFamily,
         Task<InternetConnectivityLevel> connectivityLevelTask)
     {
-        var pingTask = PingPublicIPAddressAsync(addressFamily == AddressFamily.InterNetwork
-            ? SettingsManager.Current.Dashboard_PublicIPv4Address
-            : SettingsManager.Current.Dashboard_PublicIPv6Address, addressFamily);
+        var pingTask = SettingsManager.Current.Dashboard_PingPublicIPAddress
+            ? PingPublicIPAddressAsync(addressFamily == AddressFamily.InterNetwork
+                ? SettingsManager.Current.Dashboard_PublicIPv4Address
+                : SettingsManager.Current.Dashboard_PublicIPv6Address, addressFamily)
+            : Task.FromResult<PingInfo>(null);
 
         var publicIPAddressTask = SettingsManager.Current.Dashboard_CheckPublicIPAddress
             ? RequestPublicIPAddressAsync(addressFamily)
@@ -566,6 +568,9 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
         var publicIPAddress = publicIPAddressTask.Result;
         var isPingSuccessful = pingInfo is { Status: IPStatus.Success };
 
+        // Not pinged (disabled): decided by the API and Windows. An invalid address in the settings counts as failed.
+        bool? pingResult = SettingsManager.Current.Dashboard_PingPublicIPAddress ? isPingSuccessful : null;
+
         // Public IP address (API), otherwise the pinged address with the round-trip time
         var value = publicIPAddress?.IPAddress?.ToString() ??
                     (isPingSuccessful ? $"{pingInfo.IPAddress} ({pingInfo.Time} ms)" : "-/-");
@@ -574,7 +579,7 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
         // captive portal) and not the pinged address (e.g. 1.1.1.1, it is not the IP address of the user)
         var publicIP = publicIPAddress is { Status: PublicIPAddressCheckStatus.Success } ? publicIPAddress.IPAddress : null;
 
-        item.Complete(value, NetworkConnectionCheck.GetInternetResult(addressFamily, isPingSuccessful,
+        item.Complete(value, NetworkConnectionCheck.GetInternetResult(addressFamily, pingResult,
             publicIPAddress, connectivityLevelTask.Result), publicIP?.ToString() ?? string.Empty);
 
         return publicIP;

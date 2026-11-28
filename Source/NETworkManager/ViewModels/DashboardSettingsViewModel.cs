@@ -66,6 +66,25 @@ public class DashboardSettingsViewModel : ViewModelBase
     }
 
     /// <summary>
+    /// Gets or sets a value indicating whether the public IP address (setting) is pinged to check the internet.
+    /// </summary>
+    public bool PingPublicIPAddressEnabled
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            if (!_isLoading)
+                SettingsManager.Current.Dashboard_PingPublicIPAddress = value;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
     /// Gets or sets a value indicating whether checking public IP address is enabled.
     /// </summary>
     public bool CheckPublicIPAddressEnabled
@@ -566,6 +585,7 @@ public class DashboardSettingsViewModel : ViewModelBase
     {
         PublicIPv4Address = SettingsManager.Current.Dashboard_PublicIPv4Address;
         PublicIPv6Address = SettingsManager.Current.Dashboard_PublicIPv6Address;
+        PingPublicIPAddressEnabled = SettingsManager.Current.Dashboard_PingPublicIPAddress;
         CheckPublicIPAddressEnabled = SettingsManager.Current.Dashboard_CheckPublicIPAddress;
         UsePublicIPv4AddressCustomAPI = SettingsManager.Current.Dashboard_UseCustomPublicIPv4AddressAPI;
         CustomPublicIPv4AddressAPI = SettingsManager.Current.Dashboard_CustomPublicIPv4AddressAPI;

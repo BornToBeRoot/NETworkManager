@@ -12,12 +12,12 @@ The **Dashboard** shows the status of your computer's current network connection
 
 ## Network connection
 
-The **Network connection** widget (also shown in the status window) checks the connection of the computer, the gateway / router and the internet, each for IPv4, IPv6 and DNS. The gateway is pinged (2 attempts with a timeout of 2 seconds, like the IP Scanner). The internet is checked with a ping of the [Public IPv4 address](#public-ipv4-address) / [Public IPv6 address](#public-ipv6-address), the public IP address from [`api.ipify.org`](https://www.ipify.org/) (if [Check public IP address](#check-public-ip-address) is enabled) and the internet connectivity reported by Windows (detects a hotspot / captive portal that requires a sign-in). The value is the public IP address, or the pinged address with the round-trip time if the public IP address is not requested. The icon in front of each value shows the result, hover over it to see the reason. **DNS** is the DNS name (PTR record) of the IPv4 address, or of the IPv6 address if the IPv4 address has none:
+The **Network connection** widget (also shown in the status window) checks the connection of the computer, the gateway / router and the internet, each for IPv4, IPv6 and DNS. The gateway is pinged (2 attempts with a timeout of 2 seconds, like the IP Scanner). The internet is checked with a ping of the [Public IPv4 address](#public-ipv4-address) / [Public IPv6 address](#public-ipv6-address) (default Cloudflare `1.1.1.1` / `2606:4700:4700::1111`, if [Ping public IP address](#ping-public-ip-address) is enabled), the public IP address from [`api.ipify.org`](https://www.ipify.org/) (or a [custom API](#use-custom-ipv4-address-api), if [Check public IP address](#check-public-ip-address) is enabled) and the internet connectivity reported by Windows (detects a hotspot / captive portal that requires a sign-in). With the ping and the public IP address disabled, only Windows decides (IPv4, IPv6 is not checked then). The value is the public IP address, or the pinged address with the round-trip time if the public IP address is not requested. The icon in front of each value shows the result, hover over it to see the reason. **DNS** is the DNS name (PTR record) of the IPv4 address, or of the IPv6 address if the IPv4 address has none:
 
 | Icon | Meaning |
 |------|---------|
 | Green | OK |
-| Yellow | Works partly or may not work, e.g. the computer has only a link-local IPv4 address (`169.254.x.x`, no address from a DHCP server) or no route to the internet (the address of the first active network adapter is shown), the gateway did not reply to the ping (it may block ICMP), the network adapter has no gateway (e.g. a VPN connection), the public IP address API returned a private IP address (e.g. the page of a hotspot / captive portal or a proxy), Windows reports a hotspot / captive portal (IPv4, unless the public IP address API returned a public IP address), the ping works but the public IP address API doesn't, or the ping and the API fail but Windows reports internet access (e.g. both are blocked by a firewall or only reachable via a proxy) |
+| Yellow | Works partly or may not work, e.g. the computer has only a link-local IPv4 address (`169.254.x.x`, no address from a DHCP server) or no route to the internet (the address of the first active network adapter is shown), the gateway did not reply to the ping (it may block ICMP), the network adapter has no gateway (e.g. a VPN connection), the public IP address API returned a private IP address (e.g. the page of a hotspot / captive portal or a proxy), Windows reports a hotspot / captive portal (IPv4, unless the public IP address API returned a public IP address), the ping works but the public IP address API doesn't, or the ping or the API fail but Windows reports internet access (e.g. ICMP or the API are blocked by a firewall or only reachable via a proxy) |
 | Red | Failed, e.g. the computer has no IPv4 address, the DNS server did not answer, or the internet is not reachable |
 | Gray | Information, e.g. no IPv6 connection: the network or the internet provider may not support IPv6 (the IPv6 checks of the router and the internet are skipped), or no DNS name (PTR record) for the IP address, which many networks don't have |
 
@@ -55,9 +55,17 @@ Show or hide the **Network connection** widget on the dashboard. A hidden widget
 
 **Default:** `Enabled`
 
+#### Ping public IP address
+
+Enables or disables the ping of the [Public IPv4 address](#public-ipv4-address) / [Public IPv6 address](#public-ipv6-address) (default Cloudflare) to check if the internet is reachable. The address receives a ping (ICMP echo request) with every check. If disabled, the internet is only checked with the [public IP address](#check-public-ip-address) and the connectivity reported by Windows. The addresses are still used to detect the local IP address (the route, no packet is sent for this). The ping can also be disabled in the welcome dialog.
+
+**Type:** `Boolean`
+
+**Default:** `Enabled`
+
 #### Public IPv4 address
 
-Public IPv4 address (not the one of your computer) that is pinged to check the internet connection. The route to this address is used to detect the local IPv4 address (no packet is sent for this), so it should be routed via the network adapter that is used for the internet.
+Public IPv4 address (not the one of your computer) that is pinged to check the internet connection (if [enabled](#ping-public-ip-address)). The route to this address is used to detect the local IPv4 address (no packet is sent for this), so it should be routed via the network adapter that is used for the internet.
 
 **Type:** `String`
 
@@ -65,7 +73,7 @@ Public IPv4 address (not the one of your computer) that is pinged to check the i
 
 #### Public IPv6 address
 
-Public IPv6 address (not the one of your computer) that is pinged to check the internet connection. The route to this address is used to detect the local IPv6 address (no packet is sent for this), so it should be routed via the network adapter that is used for the internet.
+Public IPv6 address (not the one of your computer) that is pinged to check the internet connection (if [enabled](#ping-public-ip-address)). The route to this address is used to detect the local IPv6 address (no packet is sent for this), so it should be routed via the network adapter that is used for the internet.
 
 **Type:** `String`
 
@@ -73,7 +81,7 @@ Public IPv6 address (not the one of your computer) that is pinged to check the i
 
 #### Check public IP address
 
-Enables or disables the resolution of the public IP address via [`api.ipify.org`](https://www.ipify.org/) and [`api6.ipify.org`](https://www.ipify.org/). If disabled, the internet is only checked with the ping of the [Public IPv4 address](#public-ipv4-address) / [Public IPv6 address](#public-ipv6-address) and the connectivity reported by Windows.
+Enables or disables the request of the public IP address via [`api.ipify.org`](https://www.ipify.org/) and [`api6.ipify.org`](https://www.ipify.org/) (or a [custom API](#use-custom-ipv4-address-api)) with every check; the service receives your IP address. If disabled, the internet is only checked with the [ping](#ping-public-ip-address) of the [Public IPv4 address](#public-ipv4-address) / [Public IPv6 address](#public-ipv6-address) and the connectivity reported by Windows. If both are disabled, only the connectivity reported by Windows is used. The check can also be disabled in the welcome dialog.
 
 **Type:** `Boolean`
 

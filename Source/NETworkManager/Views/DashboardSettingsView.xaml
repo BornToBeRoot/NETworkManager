@@ -42,6 +42,17 @@
                        TextWrapping="Wrap" Style="{StaticResource InfoTextBlock}" />
         </Grid>
         <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+            <mah:ToggleSwitch IsOn="{Binding PingPublicIPAddressEnabled}"
+                              Header="{x:Static localization:Strings.PingPublicIPAddress}" />
+            <Rectangle Width="24" Height="24" VerticalAlignment="Top"
+                       ToolTip="{x:Static localization:Strings.HelpMessage_PingPublicIPAddress}"
+                       Style="{StaticResource HelpImageRectangle}" Margin="10,0,0,0">
+                <Rectangle.Resources>
+                    <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource HelpToolTip}" />
+                </Rectangle.Resources>
+            </Rectangle>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
             <TextBlock Text="{x:Static localization:Strings.PublicIPv4Address}"
                        Style="{DynamicResource DefaultTextBlock}" />
             <Rectangle Width="24" Height="24" ToolTip="{x:Static localization:Strings.HelpMessage_PublicIPv4Address}"

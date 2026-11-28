@@ -78,15 +78,31 @@ public enum ConnectionCheckReason
     CaptivePortal,
 
     /// <summary>
-    ///     The ping and the public IP address API failed, but Windows reports internet access (e.g. ICMP and the API are
-    ///     blocked by a firewall or only reachable via a proxy).
+    ///     The enabled checks (ping, public IP address API) failed, but Windows reports internet access (e.g. ICMP or the
+    ///     API are blocked by a firewall or only reachable via a proxy).
     /// </summary>
     InternetAccessReportedByWindows,
 
     /// <summary>
-    ///     The internet is not reachable (no reply to the ping, no answer from the API).
+    ///     The internet is not reachable (no reply to the ping, no answer from the API if enabled).
     /// </summary>
     InternetNotReachable,
+
+    /// <summary>
+    ///     The ping and the public IP address are disabled in the settings and Windows reports internet access.
+    /// </summary>
+    InternetAccessReportedByWindowsOnly,
+
+    /// <summary>
+    ///     The ping and the public IP address are disabled in the settings and Windows reports no internet access.
+    /// </summary>
+    NoInternetAccessReportedByWindows,
+
+    /// <summary>
+    ///     The internet connection is not checked: the ping and the public IP address are disabled in the settings (IPv6,
+    ///     or Windows doesn't report the connectivity).
+    /// </summary>
+    InternetCheckDisabled,
 
     /// <summary>
     ///     The public IP address is not requested (disabled in the settings).

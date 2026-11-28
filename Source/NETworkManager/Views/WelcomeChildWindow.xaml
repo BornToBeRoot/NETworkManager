@@ -68,6 +68,18 @@
                     </Rectangle>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                    <mah:ToggleSwitch IsOn="{Binding PingPublicIPAddress}"
+                                      Header="{x:Static Member=localization:Strings.PingPublicIPAddress}" />
+                    <Rectangle Width="24" Height="24" VerticalAlignment="Top"
+                               ToolTip="{x:Static Member=localization:Strings.HelpMessage_PingPublicIPAddress}"
+                               Style="{StaticResource ResourceKey=HelpImageRectangle}" Margin="10,0,0,0">
+                        <Rectangle.Resources>
+                            <Style TargetType="{x:Type TypeName=ToolTip}"
+                                   BasedOn="{StaticResource ResourceKey=HelpToolTip}" />
+                        </Rectangle.Resources>
+                    </Rectangle>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
                     <mah:ToggleSwitch IsOn="{Binding CheckPublicIPAddress}"
                                       Header="{x:Static Member=localization:Strings.CheckPublicIPAddress}" />
                     <Rectangle Width="24" Height="24" VerticalAlignment="Top"

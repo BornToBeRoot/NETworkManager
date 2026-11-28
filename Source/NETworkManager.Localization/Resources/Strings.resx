@@ -2090,11 +2090,11 @@ If you enjoy it, please consider supporting its development — whether by leavi
 URL: https://api.github.com/</value>
   </data>
   <data name="HelpMessage_CheckPublicIPAddress" xml:space="preserve">
-    <value>The public IP address is determined via ipify.org.
+    <value>Requests your public IP address with every check of the network connection to show it and to see if the internet is reachable. The service receives your IP address.
 
-URL: https://api.ipify.org and https://api6.ipify.org
+Default: ipify.org (https://api.ipify.org and https://api6.ipify.org), can be changed in the settings.
 
-If disabled, the internet connection is only checked with a ping of the public IP address and the internet connectivity reported by Windows.</value>
+If the ping and the public IP address check are disabled, only the internet connectivity reported by Windows is used.</value>
   </data>
   <data name="Privacy" xml:space="preserve">
     <value>Privacy</value>
@@ -3090,10 +3090,10 @@ Enable profile file encryption in Settings&gt;Profile to store credentials secur
     <value>Enter a valid IPv6 address!</value>
   </data>
   <data name="HelpMessage_PublicIPv4Address" xml:space="preserve">
-    <value>Public IPv4 address (not the one of your computer) that is pinged to check the internet connection. The route to it is used to detect the local IPv4 address (of the network adapter that is used for the internet).</value>
+    <value>Public IPv4 address (not the one of your computer) that is pinged to check the internet connection (if enabled). The route to it is used to detect the local IPv4 address (of the network adapter that is used for the internet), nothing is sent for this.</value>
   </data>
   <data name="HelpMessage_PublicIPv6Address" xml:space="preserve">
-    <value>Public IPv6 address (not the one of your computer) that is pinged to check the internet connection. The route to it is used to detect the local IPv6 address (of the network adapter that is used for the internet).</value>
+    <value>Public IPv6 address (not the one of your computer) that is pinged to check the internet connection (if enabled). The route to it is used to detect the local IPv6 address (of the network adapter that is used for the internet), nothing is sent for this.</value>
   </data>
   <data name="PublicIPv4Address" xml:space="preserve">
     <value>Public IPv4 address</value>
@@ -5734,10 +5734,10 @@ Do you want to start the scan?</value>
     <value>Windows reports limited internet access (e.g. a hotspot / captive portal that requires a sign-in).</value>
   </data>
   <data name="ConnectionCheckReason_InternetAccessReportedByWindows" xml:space="preserve">
-    <value>No reply to the ping and no public IP address from the API, but Windows reports internet access. ICMP and the API may be blocked by a firewall or only reachable via a proxy.</value>
+    <value>The ping or the public IP address check failed, but Windows reports internet access. ICMP or the API may be blocked by a firewall or only reachable via a proxy.</value>
   </data>
   <data name="ConnectionCheckReason_InternetNotReachable" xml:space="preserve">
-    <value>The internet is not reachable (no reply to the ping of the public IP address and no answer from the public IP address API).</value>
+    <value>The internet is not reachable (no reply to the ping of the public IP address, no answer from the public IP address API if enabled).</value>
   </data>
   <data name="ConnectionCheckReason_PublicIPAddressCheckDisabled" xml:space="preserve">
     <value>The public IP address is not requested (disabled in the settings).</value>
@@ -5849,5 +5849,24 @@ Default targets: Cloudflare (1.1.1.1), Google (8.8.8.8) and Quad9 (9.9.9.9)</val
   </data>
   <data name="HelpMessage_LatencyTargets" xml:space="preserve">
     <value>Up to 5 targets: IP addresses or host names on the internet or in your network (e.g. a server). In an internal or air-gapped network, replace the default targets on the internet with your own hosts.</value>
+  </data>
+  <data name="PingPublicIPAddress" xml:space="preserve">
+    <value>Ping public IP address</value>
+  </data>
+  <data name="HelpMessage_PingPublicIPAddress" xml:space="preserve">
+    <value>Pings a public IP address with every check of the network connection to see if the internet is reachable. The target receives a ping (ICMP echo request).
+
+Default: Cloudflare (1.1.1.1 and 2606:4700:4700::1111), can be changed in the settings.
+
+If the ping and the public IP address check are disabled, only the internet connectivity reported by Windows is used.</value>
+  </data>
+  <data name="ConnectionCheckReason_InternetAccessReportedByWindowsOnly" xml:space="preserve">
+    <value>Windows reports internet access. The ping and the public IP address check are disabled in the settings.</value>
+  </data>
+  <data name="ConnectionCheckReason_NoInternetAccessReportedByWindows" xml:space="preserve">
+    <value>Windows reports no internet access. The ping and the public IP address check are disabled in the settings.</value>
+  </data>
+  <data name="ConnectionCheckReason_InternetCheckDisabled" xml:space="preserve">
+    <value>Not checked: the ping and the public IP address check are disabled in the settings.</value>
   </data>
 </root>

@@ -135,6 +135,7 @@ public static class GlobalStaticConfiguration
     // Application: Dashboard
     public static string Dashboard_PublicIPv4Address => "1.1.1.1";
     public static string Dashboard_PublicIPv6Address => "2606:4700:4700::1111";
+    public static bool Dashboard_PingPublicIPAddress => true;
     public static bool Dashboard_CheckPublicIPAddress => true;
     public static string Dashboard_PublicIPv4AddressAPI => "https://api.ipify.org";
     public static string Dashboard_PublicIPv6AddressAPI => "https://api6.ipify.org";

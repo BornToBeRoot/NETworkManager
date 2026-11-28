@@ -34,6 +34,19 @@ public class WelcomeViewModel : ViewModelBase
         }
     } = GlobalStaticConfiguration.Update_CheckForUpdatesAtStartup;
 
+    public bool PingPublicIPAddress
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.Dashboard_PingPublicIPAddress;
+
     public bool CheckPublicIPAddress
     {
         get;

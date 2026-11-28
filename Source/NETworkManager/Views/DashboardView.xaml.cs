@@ -326,6 +326,7 @@ public partial class DashboardView
     [
         nameof(SettingsInfo.Dashboard_PublicIPv4Address),
         nameof(SettingsInfo.Dashboard_PublicIPv6Address),
+        nameof(SettingsInfo.Dashboard_PingPublicIPAddress),
         nameof(SettingsInfo.Dashboard_CheckPublicIPAddress),
         nameof(SettingsInfo.Dashboard_UseCustomPublicIPv4AddressAPI),
         nameof(SettingsInfo.Dashboard_CustomPublicIPv4AddressAPI),

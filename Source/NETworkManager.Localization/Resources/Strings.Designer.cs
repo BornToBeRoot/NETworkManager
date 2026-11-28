@@ -2657,7 +2657,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to No reply to the ping and no public IP address from the API, but Windows reports internet access. ICMP and the API may be blocked by a firewall or only reachable via a proxy..
+        ///   Looks up a localized string similar to The ping or the public IP address check failed, but Windows reports internet access. ICMP or the API may be blocked by a firewall or only reachable via a proxy..
         /// </summary>
         public static string ConnectionCheckReason_InternetAccessReportedByWindows {
             get {
@@ -2666,7 +2666,25 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The internet is not reachable (no reply to the ping of the public IP address and no answer from the public IP address API)..
+        ///   Looks up a localized string similar to Windows reports internet access. The ping and the public IP address check are disabled in the settings..
+        /// </summary>
+        public static string ConnectionCheckReason_InternetAccessReportedByWindowsOnly {
+            get {
+                return ResourceManager.GetString("ConnectionCheckReason_InternetAccessReportedByWindowsOnly", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Not checked: the ping and the public IP address check are disabled in the settings..
+        /// </summary>
+        public static string ConnectionCheckReason_InternetCheckDisabled {
+            get {
+                return ResourceManager.GetString("ConnectionCheckReason_InternetCheckDisabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The internet is not reachable (no reply to the ping of the public IP address, no answer from the public IP address API if enabled)..
         /// </summary>
         public static string ConnectionCheckReason_InternetNotReachable {
             get {
@@ -2707,6 +2725,15 @@ namespace NETworkManager.Localization.Resources {
         public static string ConnectionCheckReason_NoGateway {
             get {
                 return ResourceManager.GetString("ConnectionCheckReason_NoGateway", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Windows reports no internet access. The ping and the public IP address check are disabled in the settings..
+        /// </summary>
+        public static string ConnectionCheckReason_NoInternetAccessReportedByWindows {
+            get {
+                return ResourceManager.GetString("ConnectionCheckReason_NoInternetAccessReportedByWindows", resourceCulture);
             }
         }
         
@@ -6409,11 +6436,11 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The public IP address is determined via ipify.org.
+        ///   Looks up a localized string similar to Requests your public IP address with every check of the network connection to show it and to see if the internet is reachable. The service receives your IP address.
         ///
-        ///URL: https://api.ipify.org and https://api6.ipify.org
+        ///Default: ipify.org (https://api.ipify.org and https://api6.ipify.org), can be changed in the settings.
         ///
-        ///If disabled, the internet connection is only checked with a ping of the public IP address and the internet connectivity reported by Windows..
+        ///If the ping and the public IP address check are disabled, only the internet connectivity reported by Windows is used..
         /// </summary>
         public static string HelpMessage_CheckPublicIPAddress {
             get {
@@ -6631,6 +6658,19 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Pings a public IP address with every check of the network connection to see if the internet is reachable. The target receives a ping (ICMP echo request).
+        ///
+        ///Default: Cloudflare (1.1.1.1 and 2606:4700:4700::1111), can be changed in the settings.
+        ///
+        ///If the ping and the public IP address check are disabled, only the internet connectivity reported by Windows is used..
+        /// </summary>
+        public static string HelpMessage_PingPublicIPAddress {
+            get {
+                return ResourceManager.GetString("HelpMessage_PingPublicIPAddress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Host threads × port threads can be at most 8,192 connections at the same time (every connection uses a local port, this is half of them). Many connections at the same time may be blocked by a firewall or overload small routers..
         /// </summary>
         public static string HelpMessage_PortScannerMaxThreads {
@@ -6649,7 +6689,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Public IPv4 address (not the one of your computer) that is pinged to check the internet connection. The route to it is used to detect the local IPv4 address (of the network adapter that is used for the internet)..
+        ///   Looks up a localized string similar to Public IPv4 address (not the one of your computer) that is pinged to check the internet connection (if enabled). The route to it is used to detect the local IPv4 address (of the network adapter that is used for the internet), nothing is sent for this..
         /// </summary>
         public static string HelpMessage_PublicIPv4Address {
             get {
@@ -6658,7 +6698,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Public IPv6 address (not the one of your computer) that is pinged to check the internet connection. The route to it is used to detect the local IPv6 address (of the network adapter that is used for the internet)..
+        ///   Looks up a localized string similar to Public IPv6 address (not the one of your computer) that is pinged to check the internet connection (if enabled). The route to it is used to detect the local IPv6 address (of the network adapter that is used for the internet), nothing is sent for this..
         /// </summary>
         public static string HelpMessage_PublicIPv6Address {
             get {
@@ -10550,6 +10590,15 @@ namespace NETworkManager.Localization.Resources {
         public static string PingMonitorNotification {
             get {
                 return ResourceManager.GetString("PingMonitorNotification", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ping public IP address.
+        /// </summary>
+        public static string PingPublicIPAddress {
+            get {
+                return ResourceManager.GetString("PingPublicIPAddress", resourceCulture);
             }
         }
         
