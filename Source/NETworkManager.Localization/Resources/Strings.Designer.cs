@@ -6394,7 +6394,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The DNS resolver is determined via ip-api.com.
+        ///   Looks up a localized string similar to Requests the DNS server that resolves your requests from edns.ip-api.com with every check. ip-api.com receives your IP address and the IP address of your DNS server.
         ///
         ///URL: https://edns.ip-api.com/.
         /// </summary>
@@ -6416,7 +6416,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The IP geolocation is determined via ip-api.com.
+        ///   Looks up a localized string similar to Requests the location and the internet provider of your public IP address from ip-api.com with every check. ip-api.com receives your IP address (http, not encrypted).
         ///
         ///URL: http://ip-api.com/.
         /// </summary>
@@ -6427,7 +6427,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Pings the targets only while the dashboard is shown (not in the background, not while the window is minimized or in the tray)..
+        ///   Looks up a localized string similar to Pings the default gateway and the targets every few seconds, only while the dashboard is shown (not in the background, not while the window is minimized or in the tray). The targets receive a ping (ICMP echo request)..
         /// </summary>
         public static string HelpMessage_CheckLatency {
             get {
@@ -6845,7 +6845,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Shows the widget on the dashboard. It only pings the targets if the check is enabled (below or with the &quot;Enable&quot; button of the widget). A hidden widget sends nothing..
+        ///   Looks up a localized string similar to Shows the widget on the dashboard. It only pings the default gateway and the targets if the check is enabled (below, in the welcome dialog or with the &quot;Enable&quot; button of the widget), otherwise it shows what it would ping. A hidden widget sends nothing..
         /// </summary>
         public static string HelpMessage_ShowLatencyWidget {
             get {
@@ -6890,9 +6890,20 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The latency widget of the dashboard pings the default gateway and its targets every few seconds while the dashboard is shown.
+        ///   Looks up a localized string similar to Requests the location and the internet provider of your public IP address (dashboard) and of the hops of a trace (traceroute) from ip-api.com. ip-api.com receives these IP addresses (http, not encrypted).
         ///
-        ///Default targets: Cloudflare (1.1.1.1), Google (8.8.8.8) and Quad9 (9.9.9.9).
+        ///URL: http://ip-api.com/.
+        /// </summary>
+        public static string HelpMessage_WelcomeCheckIPGeolocation {
+            get {
+                return ResourceManager.GetString("HelpMessage_WelcomeCheckIPGeolocation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pings the default gateway and the targets of the latency widget every few seconds while the dashboard is shown. The targets receive a ping (ICMP echo request).
+        ///
+        ///Default targets: Cloudflare (1.1.1.1), Google (8.8.8.8) and Quad9 (9.9.9.9), can be changed in the settings..
         /// </summary>
         public static string HelpMessage_WelcomeCheckLatency {
             get {

@@ -107,7 +107,7 @@
                     <mah:ToggleSwitch IsOn="{Binding CheckIPApiIPGeolocation}"
                                       Header="{x:Static Member=localization:Strings.CheckIPGeolocation}" />
                     <Rectangle Width="24" Height="24" VerticalAlignment="Top"
-                               ToolTip="{x:Static Member=localization:Strings.HelpMessage_CheckIPGeolocation}"
+                               ToolTip="{x:Static Member=localization:Strings.HelpMessage_WelcomeCheckIPGeolocation}"
                                Style="{StaticResource ResourceKey=HelpImageRectangle}" Margin="10,0,0,0">
                         <Rectangle.Resources>
                             <Style TargetType="{x:Type TypeName=ToolTip}"

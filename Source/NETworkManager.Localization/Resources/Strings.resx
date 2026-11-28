@@ -3726,12 +3726,12 @@ If the option is disabled again, the values are no longer modified. However, the
     <value>Show map</value>
   </data>
   <data name="HelpMessage_CheckDNSResolver" xml:space="preserve">
-    <value>The DNS resolver is determined via ip-api.com.
+    <value>Requests the DNS server that resolves your requests from edns.ip-api.com with every check. ip-api.com receives your IP address and the IP address of your DNS server.
 
 URL: https://edns.ip-api.com/</value>
   </data>
   <data name="HelpMessage_CheckIPGeolocation" xml:space="preserve">
-    <value>The IP geolocation is determined via ip-api.com.
+    <value>Requests the location and the internet provider of your public IP address from ip-api.com with every check. ip-api.com receives your IP address (http, not encrypted).
 
 URL: http://ip-api.com/</value>
   </data>
@@ -5790,10 +5790,10 @@ ip-api.com receives your IP address and the IP address of your DNS server.</valu
     <value>Check latency</value>
   </data>
   <data name="HelpMessage_CheckLatency" xml:space="preserve">
-    <value>Pings the targets only while the dashboard is shown (not in the background, not while the window is minimized or in the tray).</value>
+    <value>Pings the default gateway and the targets every few seconds, only while the dashboard is shown (not in the background, not while the window is minimized or in the tray). The targets receive a ping (ICMP echo request).</value>
   </data>
   <data name="HelpMessage_ShowLatencyWidget" xml:space="preserve">
-    <value>Shows the widget on the dashboard. It only pings the targets if the check is enabled (below or with the "Enable" button of the widget). A hidden widget sends nothing.</value>
+    <value>Shows the widget on the dashboard. It only pings the default gateway and the targets if the check is enabled (below, in the welcome dialog or with the "Enable" button of the widget), otherwise it shows what it would ping. A hidden widget sends nothing.</value>
   </data>
   <data name="LatencyWidgetDisabledMessage" xml:space="preserve">
     <value>Show the latency to your router and to targets on the internet or in your network (e.g. Cloudflare, Google and Quad9), updated live while the dashboard is shown.
@@ -5834,9 +5834,9 @@ Own row: below the network connection, the targets side by side.</value>
 {0}</value>
   </data>
   <data name="HelpMessage_WelcomeCheckLatency" xml:space="preserve">
-    <value>The latency widget of the dashboard pings the default gateway and its targets every few seconds while the dashboard is shown.
+    <value>Pings the default gateway and the targets of the latency widget every few seconds while the dashboard is shown. The targets receive a ping (ICMP echo request).
 
-Default targets: Cloudflare (1.1.1.1), Google (8.8.8.8) and Quad9 (9.9.9.9)</value>
+Default targets: Cloudflare (1.1.1.1), Google (8.8.8.8) and Quad9 (9.9.9.9), can be changed in the settings.</value>
   </data>
   <data name="LatencyTargetLimitReachedMessage" xml:space="preserve">
     <value>The maximum of {0} targets is reached. Delete a target to add another one.</value>
@@ -5868,5 +5868,10 @@ If the ping and the public IP address check are disabled, only the internet conn
   </data>
   <data name="ConnectionCheckReason_InternetCheckDisabled" xml:space="preserve">
     <value>Not checked: the ping and the public IP address check are disabled in the settings.</value>
+  </data>
+  <data name="HelpMessage_WelcomeCheckIPGeolocation" xml:space="preserve">
+    <value>Requests the location and the internet provider of your public IP address (dashboard) and of the hops of a trace (traceroute) from ip-api.com. ip-api.com receives these IP addresses (http, not encrypted).
+
+URL: http://ip-api.com/</value>
   </data>
 </root>
