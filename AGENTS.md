@@ -656,12 +656,12 @@ values in `Fonts.Family.Mono`, states with `StatusDot`); values open in other to
   that can hold two widgets is a `Grid` with the columns `* 10 * 10 *` and two rows: `ArrangeRow(row, first, second,
   sideBySide)` puts them side by side (first 2/3, second 1/3) or one below the other with the full width (gap 10); a
   hidden widget leaves no space, the other one spans the row.
-- Side by side only if both fit: each widget has the width it needs next to another one (`SpeedTestMinWidth` 600,
-  `LatencyMinWidth` 280, `IPGeolocationMinWidth` 600, `DNSResolverMinWidth` 400 for its header) and
-  `FitsSideBySide` checks first ≥ 2/3 and second ≥ 1/3 of the row (speed test / latency from ~905 px, IP geolocation /
-  DNS resolver from ~1220 px). These are not `MinWidth`s of the widgets: in their own row they get the window width.
-- The layout is arranged again only when a row changes between side by side and stacked (`SizeChanged` of the
-  widgets panel compares `GetSideBySide`), and after setting changes (`ApplyWidgetSettings` in `OnViewVisible`).
+- Side by side only if both fit: `IsSideBySide` checks first ≥ 2/3 (`FirstWidgetMinWidth` 600: speed test, IP
+  geolocation) and second ≥ 1/3 (`SecondWidgetMinWidth` 280: latency, DNS resolver) of the row. Both rows use the
+  same widths and switch together (~905 px), so the speed test and the IP geolocation always have the same width.
+  These are not `MinWidth`s of the widgets: in their own row they get the window width.
+- The layout is arranged again only when the rows change between side by side and stacked (`SizeChanged` of the
+  widgets panel compares `IsSideBySide`), and after setting changes (`ApplyWidgetSettings` in `OnViewVisible`).
 - A widget whose content depends on its place is told by the dashboard (e.g. `LatencyWidgetView
   .SetNextToOtherWidget`: targets one below the other next to the speed test), not only by its own width (1/3 of a
   maximized window is wide); its own width only decides in its own row (`IsCompact` below 500 px).

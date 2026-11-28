@@ -31,19 +31,18 @@ public partial class DashboardView
     /// </summary>
     private bool _isOutdated;
 
-    // Width a widget needs to be shown side by side with another one (2/3 + 1/3, see ArrangeRow): its header and
-    // columns fit without being squeezed. Otherwise the widgets of the row are shown one below the other with the full
-    // width. Not a MinWidth of the widget: in its own row it gets the width of the window.
-    private const double SpeedTestMinWidth = 600; // Three columns (ISP / server, download, upload)
-    private const double LatencyMinWidth = 280; // Dot, name, value and a short chart per line
-    private const double IPGeolocationMinWidth = 600; // Location and network side by side
-    private const double DNSResolverMinWidth = 400; // Header: title, "Reloaded at ...", copy and refresh buttons
+    // Width the widgets of a row need to be shown side by side (2/3 + 1/3, see ArrangeRow). Otherwise the widgets of
+    // the row are shown one below the other with the full width. Both rows (speed test / latency, IP geolocation / DNS
+    // resolver) use the same width, so they switch together (from about 905 px) and the speed test and the IP
+    // geolocation always have the same width. Not a MinWidth of the widget: in its own row it gets the window width.
+    private const double FirstWidgetMinWidth = 600; // Speed test: three columns, IP geolocation: location and network
+    private const double SecondWidgetMinWidth = 280; // Latency: dot, name, value and a short chart per line
 
     /// <summary>
-    ///     Rows shown side by side (speed test / latency, IP geolocation / DNS resolver) at the current width:
-    ///     the layout is only arranged again when this changes, not on every resize.
+    ///     The rows are shown side by side at the current width: the layout is only arranged again when this changes,
+    ///     not on every resize.
     /// </summary>
-    private (bool SpeedTestRow, bool IPApiRow) _sideBySide;
+    private bool _isSideBySide;
 
     /// <summary>
     ///     Start of the last check, see <see cref="GlobalStaticConfiguration.Dashboard_RecheckInterval" />.
@@ -62,7 +61,7 @@ public partial class DashboardView
         // Side by side or one below the other: only when a row changes, not on every resize
         StackPanelWidgets.SizeChanged += (_, e) =>
         {
-            if (e.WidthChanged && GetSideBySide(e.NewSize.Width) != _sideBySide)
+            if (e.WidthChanged && IsSideBySide(e.NewSize.Width) != _isSideBySide)
                 ApplyLayout();
         };
 
@@ -197,14 +196,14 @@ public partial class DashboardView
     {
         var settings = SettingsManager.Current;
 
-        _sideBySide = GetSideBySide(StackPanelWidgets.ActualWidth);
+        _isSideBySide = IsSideBySide(StackPanelWidgets.ActualWidth);
 
         // Next to the speed test (right, 1/3) if the dashboard is wide enough, otherwise its own row below the speed
         // test. Own row: above the speed test (below the network connection).
         var isNextToSpeedTest = settings.Dashboard_LatencyPosition == LatencyPosition.OwnRow
             ? ArrangeRow(GridSpeedTestLatency, ContentControlLatency, ContentControlSpeedTest, false)
             : ArrangeRow(GridSpeedTestLatency, ContentControlSpeedTest, ContentControlLatency,
-                _sideBySide.SpeedTestRow);
+                _isSideBySide);
 
         // Next to the speed test the targets are always one below the other (not decided by the width of the widget:
         // 1/3 of a maximized window is wide enough for them side by side)
@@ -212,7 +211,7 @@ public partial class DashboardView
 
         // IP geolocation (2/3) and DNS resolver (1/3) side by side if the dashboard is wide enough (the DNS resolver
         // is too narrow otherwise), the remaining one spans the row
-        ArrangeRow(GridIPApi, ContentControlIPApiIPGeolocation, ContentControlIPApiDNSResolver, _sideBySide.IPApiRow);
+        ArrangeRow(GridIPApi, ContentControlIPApiIPGeolocation, ContentControlIPApiDNSResolver, _isSideBySide);
 
         // Gap of 10 between the visible widgets (not below the last one, the scroll viewer has a margin of 10)
         var visibleWidgets = new FrameworkElement[]
@@ -227,27 +226,15 @@ public partial class DashboardView
     }
 
     /// <summary>
-    ///     Which rows can be shown side by side at the width of the dashboard.
+    ///     The widgets of a row fit side by side at the width of the dashboard: the first one in 2/3 and the second
+    ///     one in 1/3 of the width (columns <c>* 10 * 10 *</c> of the row).
     /// </summary>
     /// <param name="width">Width of the dashboard (the widgets).</param>
-    private static (bool SpeedTestRow, bool IPApiRow) GetSideBySide(double width)
-    {
-        return (FitsSideBySide(width, SpeedTestMinWidth, LatencyMinWidth),
-            FitsSideBySide(width, IPGeolocationMinWidth, DNSResolverMinWidth));
-    }
-
-    /// <summary>
-    ///     Both widgets fit side by side: the first one in 2/3 and the second one in 1/3 of the width (columns
-    ///     <c>* 10 * 10 *</c> of the row).
-    /// </summary>
-    /// <param name="width">Width of the row.</param>
-    /// <param name="firstMinWidth">Width the first (left) widget needs.</param>
-    /// <param name="secondMinWidth">Width the second (right) widget needs.</param>
-    private static bool FitsSideBySide(double width, double firstMinWidth, double secondMinWidth)
+    private static bool IsSideBySide(double width)
     {
         var column = (width - 20) / 3;
 
-        return 2 * column + 10 >= firstMinWidth && column >= secondMinWidth;
+        return 2 * column + 10 >= FirstWidgetMinWidth && column >= SecondWidgetMinWidth;
     }
 
     /// <summary>
