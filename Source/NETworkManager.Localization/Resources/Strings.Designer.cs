@@ -16537,7 +16537,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to To provide additional features, third party services are used that are not operated by me. You can deselect them below. No data is transferred to me at any time..
+        ///   Looks up a localized string similar to Some features use third-party services. You can turn them off below. NETworkManager doesn&apos;t collect any data, nothing is sent to the developers..
         /// </summary>
         public static string WelcomePrivacyMessage {
             get {

@@ -3736,7 +3736,7 @@ URL: https://edns.ip-api.com/</value>
 URL: http://ip-api.com/</value>
   </data>
   <data name="WelcomePrivacyMessage" xml:space="preserve">
-    <value>To provide additional features, third party services are used that are not operated by me. You can deselect them below. No data is transferred to me at any time.</value>
+    <value>Some features use third-party services. You can turn them off below. NETworkManager doesn't collect any data, nothing is sent to the developers.</value>
   </data>
   <data name="CheckingDNSResolverDots" xml:space="preserve">
     <value>Checking DNS resolver...</value>
