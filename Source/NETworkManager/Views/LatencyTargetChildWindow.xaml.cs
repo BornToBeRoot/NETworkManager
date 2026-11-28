@@ -13,6 +13,10 @@ public partial class LatencyTargetChildWindow
 
     private void ChildWindow_OnLoaded(object sender, RoutedEventArgs e)
     {
-        Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle, new Action(delegate { TextBoxName.Focus(); }));
+        Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle, new Action(delegate
+        {
+            TextBoxName.Focus();
+            TextBoxName.CaretIndex = TextBoxName.Text.Length;
+        }));
     }
 }

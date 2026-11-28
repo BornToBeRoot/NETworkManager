@@ -21,6 +21,7 @@ public partial class ImportAdComputersChildWindow
         Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle, new Action(delegate
         {
             TextBoxLdapSearchBase.Focus();
+            TextBoxLdapSearchBase.CaretIndex = TextBoxLdapSearchBase.Text.Length;
         }));
     }
 }

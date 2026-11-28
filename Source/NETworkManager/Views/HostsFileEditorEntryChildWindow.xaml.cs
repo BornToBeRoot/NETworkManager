@@ -17,10 +17,12 @@ public partial class HostsFileEditorEntryChildWindow
         Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle, new Action(delegate
         {
             // Bulk edit only allows changing the comment
-            if (DataContext is HostsFileEditorEntryViewModel { IsBulkEdit: true })
-                TextBoxComment.Focus();
-            else
-                TextBoxIPAddress.Focus();
+            var textBox = DataContext is HostsFileEditorEntryViewModel { IsBulkEdit: true }
+                ? TextBoxComment
+                : TextBoxIPAddress;
+
+            textBox.Focus();
+            textBox.CaretIndex = textBox.Text.Length;
         }));
     }
 }

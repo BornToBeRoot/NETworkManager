@@ -14,7 +14,11 @@ public partial class ImportCsvFileChildWindow
 
     private void ChildWindow_OnLoaded(object sender, RoutedEventArgs e)
     {
-        Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle, new Action(delegate { TextBoxFilePath.Focus(); }));
+        Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle, new Action(delegate
+        {
+            TextBoxFilePath.Focus();
+            TextBoxFilePath.CaretIndex = TextBoxFilePath.Text.Length;
+        }));
     }
 
     /// <summary>

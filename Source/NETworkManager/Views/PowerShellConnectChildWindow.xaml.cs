@@ -18,7 +18,10 @@ public partial class PowerShellConnectChildWindow
             if (ComboBoxHost.Visibility == Visibility.Visible)
                 ComboBoxHost.Focus();
             else
+            {
                 TextBoxCommand.Focus();
+                TextBoxCommand.CaretIndex = TextBoxCommand.Text.Length;
+            }
         }));
     }
 }

@@ -15,6 +15,7 @@ public partial class ExportChildWindow
         Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle, new Action(delegate
         {
             TextBoxExportFilePath.Focus();
+            TextBoxExportFilePath.CaretIndex = TextBoxExportFilePath.Text.Length;
         }));
     }
 }

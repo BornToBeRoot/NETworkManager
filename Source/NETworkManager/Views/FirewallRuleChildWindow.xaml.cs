@@ -16,6 +16,7 @@ public partial class FirewallRuleChildWindow
         Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle, new Action(delegate
         {
             TextBoxName.Focus();
+            TextBoxName.CaretIndex = TextBoxName.Text.Length;
         }));
     }
 }
