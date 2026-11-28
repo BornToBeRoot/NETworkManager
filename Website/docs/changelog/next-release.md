@@ -143,6 +143,19 @@ Release date: **xx.xx.2026**
 **Hosts File Editor**
 
 - Fixed the last column (comment) not filling the remaining width. [#3719](https://github.com/BornToBeRoot/NETworkManager/pull/3719)
+- Fixed the cursor being placed at the start of the IP address (or the comment when editing several entries) when the dialog opens, instead of after the existing text. [21ce40c](https://github.com/BornToBeRoot/NETworkManager/commit/21ce40c0dcf9873d3977422cabb776c5f273b2b4)
+
+**Firewall**
+
+- Fixed the cursor being placed at the start of the name when editing a rule, instead of after the existing text. [21ce40c](https://github.com/BornToBeRoot/NETworkManager/commit/21ce40c0dcf9873d3977422cabb776c5f273b2b4)
+
+**PowerShell**
+
+- Fixed the cursor being placed at the start of the command in the **Connect** dialog, instead of after the existing text. [21ce40c](https://github.com/BornToBeRoot/NETworkManager/commit/21ce40c0dcf9873d3977422cabb776c5f273b2b4)
+
+**Export**
+
+- Fixed the cursor being placed at the start of the file path when the export dialog opens, instead of after the existing text. [21ce40c](https://github.com/BornToBeRoot/NETworkManager/commit/21ce40c0dcf9873d3977422cabb776c5f273b2b4)
 
 **Settings**
 
@@ -153,6 +166,7 @@ Release date: **xx.xx.2026**
 
 - Fixed the profile list not filling the width of the grid: the name column fills the remaining width. [#3719](https://github.com/BornToBeRoot/NETworkManager/pull/3719)
 - Fixed the first profile being selected after a profile was edited, instead of the edited profile (profile list of the tools and **Settings > Profiles**). [#3728](https://github.com/BornToBeRoot/NETworkManager/pull/3728)
+- Fixed the cursor being placed at the start of the file path / LDAP search base when the CSV / Active Directory import dialog opens, instead of after the existing text. [21ce40c](https://github.com/BornToBeRoot/NETworkManager/commit/21ce40c0dcf9873d3977422cabb776c5f273b2b4)
 
 **Port Scanner**
 
