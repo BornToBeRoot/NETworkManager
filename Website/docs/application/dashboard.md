@@ -35,6 +35,84 @@ Right-click a value to open it in another tool: an IP address in the **Port Scan
 
 :::
 
+## Speed Test
+
+The **Speed Test** widget measures the download and upload speed, latency and jitter of the current connection against [`speed.cloudflare.com`](https://speed.cloudflare.com/). The test only runs when you start it, not when the dashboard is opened.
+
+Before the first test, a privacy disclaimer informs you that `speed.cloudflare.com` receives requests with your IP address and network information. Click **Speed Test** to accept it and run the first test. The disclaimer is shown again after restarting the application (the acceptance is not saved). See the [Cloudflare privacy policy](https://www.cloudflare.com/privacypolicy/) for details. The widget never contacts Cloudflare's telemetry endpoint (`aim.cloudflare.com`).
+
+The buttons in the header of the widget:
+
+- **Run speed test** (refresh icon) starts a new test, while a test runs the button stops it (**Stop**). The values measured until then stay visible.
+- **Copy all** copies all values and the time of the test as text, e.g. for a support request.
+
+While the test runs, the header shows the current phase (latency, download, upload), afterwards the time of the test (**Last test at ...**, the tooltip shows the date; not after a canceled or failed test). A canceled or failed test and requests that failed are shown below the header.
+
+The result includes:
+
+- **Download** speed in Mbps, with a chart of the requests (hover over it to see the speed of a request)
+- **Upload** speed in Mbps, with a chart of the requests
+- **Latency** in ms (unloaded, 50th percentile of the latency probes)
+- **Jitter** in ms (average difference between consecutive latency probes)
+- **ISP** — internet service provider as reported by Cloudflare
+- **Server** — Cloudflare server (city, country and airport code) that handles the test
+
+The test measures like the official [cloudflare/speedtest](https://github.com/cloudflare/speedtest) library (used by [speed.cloudflare.com](https://speed.cloudflare.com/)), so the results are comparable: latency probes (empty downloads) and downloads / uploads of increasing size (100 kB up to 250 MB) one after the other, with a few latency probes between them. Download and upload are the 90th percentile of the requests that took at least 10 ms; the speed shown while a download runs is the result of the completed requests (only the first request is shown while it runs). A direction ends after a set of requests in which even the fastest request took longer than one second; the larger sizes are skipped.
+
+A test takes about 15 seconds on a fast connection and up to 1–2 minutes on a slow one. It transfers a lot of data on a fast connection: up to about 1 GB download and 300 MB upload (1 Gbit/s), keep this in mind on a metered connection (e.g. mobile data).
+
+## Latency
+
+The **Latency** widget pings the default gateway (router) and up to five targets on the internet or in your network and shows one line per target with its name, the round-trip time of the last ping and a chart of the last 60 seconds, like the dashboard of a router or gateway. By default it is shown to the right of the [Speed Test](#speed-test) (1/3 of the width, the targets one below the other). In a narrow window (less than about 900 pixels for the dashboard) or without the speed test it gets its own row below the speed test, with the targets side by side (up to three per line); see [Position](#position). By default these are the default gateway (first line, see [Ping default gateway](#ping-default-gateway)) and the public DNS resolvers of Cloudflare (`1.1.1.1`), Google (`8.8.8.8`) and Quad9 (`9.9.9.9`): they answer pings reliably and are close to every user (anycast). If only the internet targets fail, the problem is the internet connection, not your network. The targets can be changed in the [settings](#targets), e.g. your own servers, see [Internal and air-gapped networks](#internal-and-air-gapped-networks). Without the gateway and targets the widget shows **Configure**, which opens the settings.
+
+The check is disabled by default (it can be enabled in the welcome dialog): the widget shows what it does and an **Enable** button, which enables the check (like [Check latency](#check-latency)) and starts right away.
+
+The targets are only pinged while the dashboard is shown: not when you switch to another tool or the settings, and not while the window is minimized or in the tray. When the dashboard is shown again, the pings continue: the pings of the last minute stay, the pause is a gap in the chart and doesn't count as lost pings (nothing is pinged in the background). After a network change (e.g. a VPN connected, the targets may be reached via another route) and when the check is disabled, the values and the chart start again. Each target is pinged on its own (timeout 2 seconds), the next ping follows after the [interval](#interval-seconds) (default 2 seconds), so a slow target doesn't delay the others. A host name is resolved with the DNS settings of the application (IPv4 is preferred, see the network settings) and the default gateway is detected whenever the pings start; if it can't be resolved, it is tried again after 5, 15 and 30 seconds and then every minute (a broken DNS server doesn't get a query every few seconds), and its values and chart start again.
+
+The pings (with the name lookups) start when the dashboard is shown with the check enabled: when the dashboard is opened (also when the application starts with it), when you switch back to it from another tool or the settings, when the window is shown again (restored from minimized / the tray), when the check is enabled (**Enable** or the setting) and when the widget is shown. They start again (names resolved again) after a network change and when the [targets](#targets) or [Ping default gateway](#ping-default-gateway) change; a change in the settings applies when the dashboard is shown again (it is hidden while the settings are open), unchanged targets keep their values. A new [interval](#interval-seconds) applies from the next ping, without a new start. Nothing is pinged or resolved while the dashboard is hidden.
+
+| Dot | Meaning |
+|-----|---------|
+| Green | The last ping was answered |
+| Yellow | The last ping was answered, but a ping was lost in the last minute |
+| Red | The last ping was not answered (the status is shown, e.g. timed out) or the host name could not be resolved |
+| Gray | Not pinged yet, or no default gateway found (e.g. a VPN without a gateway; it is detected again later) |
+
+A reply below 1 ms (e.g. the gateway) is shown as `<1 ms`. A lost ping is a gap in the chart. Hover over a target to see the host, the IP address and the minimum / average / maximum round-trip time and the packet loss of the last minute. Right-click a target to open it in the **Ping Monitor**, **Traceroute** or **DNS Lookup**, **Copy** copies the host (the IP address of the gateway). The **Copy all** button copies the values and statistics of all targets as text.
+
+### Internal and air-gapped networks
+
+A target can be any IP address or host name, also in your own network. Without access to the internet (e.g. an internal or air-gapped network, or a lab), the default targets on the internet always time out: replace them with your own hosts in the [settings](#targets) (the [default gateway](#ping-default-gateway) is pinged anyway and follows a network change), e.g.:
+
+- a domain controller, a DNS server or an important server,
+- a host behind a WAN / VPN link (e.g. a server at another site), to see its latency.
+
+Internal and internet targets can be mixed (e.g. a server and `1.1.1.1`): if only the internet targets fail, the problem is the internet connection, not your network. Use IP addresses if possible, they also work when the DNS server doesn't. Pings to the gateway and your own hosts don't go to a third party; the check is still disabled by default, because the default targets are on the internet.
+
+## IP geolocation
+
+The **IP geolocation** widget shows the location and the network of your public IPv4 address from [`ip-api.com`](https://ip-api.com/) (the same values as the [IP Geolocation](ip-geolocation.md) tool):
+
+- **Location**: continent, country, region, city, district, zip code, latitude / longitude, time zone, offset from UTC (e.g. `UTC+01:00`, incl. daylight saving time) and currency
+- **Network**: IP address, PTR record, ISP, organization, ASN / AS name, and whether the IP address belongs to a hosting provider, a proxy / VPN or a mobile network
+
+## DNS resolver
+
+The **DNS resolver** widget shows the DNS server that resolves the requests of your computer on the internet, detected with [`edns.ip-api.com`](https://ip-api.com/docs/dns): its IP address and geolocation (**DNS**), and the client subnet that the DNS server forwards (**EDNS**, e.g. `203.0.113.0`, `-/-` if it doesn't send one). If you use the DNS server of your router or internet provider, this is the server the requests are forwarded to (e.g. `1.1.1.1` or a server of the provider), not the router.
+
+## IP geolocation and DNS resolver
+
+Both checks send your IP address to `ip-api.com` and are disabled by default (welcome dialog). A widget whose check is disabled shows what it requests and an **Enable** button, which enables the check (like [Check IP geolocation](#check-ip-geolocation) / [Check DNS resolver](#check-dns-resolver)) and checks right away.
+
+The buttons in the header of the widgets:
+
+- **Copy all** copies all values as text, e.g. for a support request.
+- **Refresh** checks again (also **F5** while the widget has the focus).
+
+The header shows the time of the last check (not after an error). An error (e.g. no response within 10 seconds or the HTTP status code) or the rate limit of `ip-api.com` (45 requests per minute from your network, with the time until it can be requested again) is shown below the header.
+
+Right-click an IP address (public IP address, DNS server) to open it in the **Port Scanner**, **Ping Monitor**, **Traceroute**, **DNS Lookup**, **RDAP** or **IP Geolocation**, the EDNS client subnet (a network address, not a host) in **RDAP** or **IP Geolocation**, and the PTR record in the **DNS Lookup**. **Copy** copies the selected text.
+
 ## Run command
 
 Open the tool with `dashboard`. The command accepts no target and no profile, see [Run Command](../run-command.md).
@@ -245,84 +323,6 @@ Enables or disables the detection of the DNS resolver in use via [`ip-api.com`](
 **Type:** `Boolean`
 
 **Default:** `Disabled`
-
-## Speed Test
-
-The **Speed Test** widget measures the download and upload speed, latency and jitter of the current connection against [`speed.cloudflare.com`](https://speed.cloudflare.com/). The test only runs when you start it, not when the dashboard is opened.
-
-Before the first test, a privacy disclaimer informs you that `speed.cloudflare.com` receives requests with your IP address and network information. Click **Speed Test** to accept it and run the first test. The disclaimer is shown again after restarting the application (the acceptance is not saved). See the [Cloudflare privacy policy](https://www.cloudflare.com/privacypolicy/) for details. The widget never contacts Cloudflare's telemetry endpoint (`aim.cloudflare.com`).
-
-The buttons in the header of the widget:
-
-- **Run speed test** (refresh icon) starts a new test, while a test runs the button stops it (**Stop**). The values measured until then stay visible.
-- **Copy all** copies all values and the time of the test as text, e.g. for a support request.
-
-While the test runs, the header shows the current phase (latency, download, upload), afterwards the time of the test (**Last test at ...**, the tooltip shows the date; not after a canceled or failed test). A canceled or failed test and requests that failed are shown below the header.
-
-The result includes:
-
-- **Download** speed in Mbps, with a chart of the requests (hover over it to see the speed of a request)
-- **Upload** speed in Mbps, with a chart of the requests
-- **Latency** in ms (unloaded, 50th percentile of the latency probes)
-- **Jitter** in ms (average difference between consecutive latency probes)
-- **ISP** — internet service provider as reported by Cloudflare
-- **Server** — Cloudflare server (city, country and airport code) that handles the test
-
-The test measures like the official [cloudflare/speedtest](https://github.com/cloudflare/speedtest) library (used by [speed.cloudflare.com](https://speed.cloudflare.com/)), so the results are comparable: latency probes (empty downloads) and downloads / uploads of increasing size (100 kB up to 250 MB) one after the other, with a few latency probes between them. Download and upload are the 90th percentile of the requests that took at least 10 ms; the speed shown while a download runs is the result of the completed requests (only the first request is shown while it runs). A direction ends after a set of requests in which even the fastest request took longer than one second; the larger sizes are skipped.
-
-A test takes about 15 seconds on a fast connection and up to 1–2 minutes on a slow one. It transfers a lot of data on a fast connection: up to about 1 GB download and 300 MB upload (1 Gbit/s), keep this in mind on a metered connection (e.g. mobile data).
-
-## Latency
-
-The **Latency** widget pings the default gateway (router) and up to five targets on the internet or in your network and shows one line per target with its name, the round-trip time of the last ping and a chart of the last 60 seconds, like the dashboard of a router or gateway. By default it is shown to the right of the [Speed Test](#speed-test) (1/3 of the width, the targets one below the other). In a narrow window (less than about 900 pixels for the dashboard) or without the speed test it gets its own row below the speed test, with the targets side by side (up to three per line); see [Position](#position). By default these are the default gateway (first line, see [Ping default gateway](#ping-default-gateway)) and the public DNS resolvers of Cloudflare (`1.1.1.1`), Google (`8.8.8.8`) and Quad9 (`9.9.9.9`): they answer pings reliably and are close to every user (anycast). If only the internet targets fail, the problem is the internet connection, not your network. The targets can be changed in the [settings](#targets), e.g. your own servers, see [Internal and air-gapped networks](#internal-and-air-gapped-networks). Without the gateway and targets the widget shows **Configure**, which opens the settings.
-
-The check is disabled by default (it can be enabled in the welcome dialog): the widget shows what it does and an **Enable** button, which enables the check (like [Check latency](#check-latency)) and starts right away.
-
-The targets are only pinged while the dashboard is shown: not when you switch to another tool or the settings, and not while the window is minimized or in the tray. When the dashboard is shown again, the pings continue: the pings of the last minute stay, the pause is a gap in the chart and doesn't count as lost pings (nothing is pinged in the background). After a network change (e.g. a VPN connected, the targets may be reached via another route) and when the check is disabled, the values and the chart start again. Each target is pinged on its own (timeout 2 seconds), the next ping follows after the [interval](#interval-seconds) (default 2 seconds), so a slow target doesn't delay the others. A host name is resolved with the DNS settings of the application (IPv4 is preferred, see the network settings) and the default gateway is detected whenever the pings start; if it can't be resolved, it is tried again after 5, 15 and 30 seconds and then every minute (a broken DNS server doesn't get a query every few seconds), and its values and chart start again.
-
-The pings (with the name lookups) start when the dashboard is shown with the check enabled: when the dashboard is opened (also when the application starts with it), when you switch back to it from another tool or the settings, when the window is shown again (restored from minimized / the tray), when the check is enabled (**Enable** or the setting) and when the widget is shown. They start again (names resolved again) after a network change and when the [targets](#targets) or [Ping default gateway](#ping-default-gateway) change; a change in the settings applies when the dashboard is shown again (it is hidden while the settings are open), unchanged targets keep their values. A new [interval](#interval-seconds) applies from the next ping, without a new start. Nothing is pinged or resolved while the dashboard is hidden.
-
-| Dot | Meaning |
-|-----|---------|
-| Green | The last ping was answered |
-| Yellow | The last ping was answered, but a ping was lost in the last minute |
-| Red | The last ping was not answered (the status is shown, e.g. timed out) or the host name could not be resolved |
-| Gray | Not pinged yet, or no default gateway found (e.g. a VPN without a gateway; it is detected again later) |
-
-A reply below 1 ms (e.g. the gateway) is shown as `<1 ms`. A lost ping is a gap in the chart. Hover over a target to see the host, the IP address and the minimum / average / maximum round-trip time and the packet loss of the last minute. Right-click a target to open it in the **Ping Monitor**, **Traceroute** or **DNS Lookup**, **Copy** copies the host (the IP address of the gateway). The **Copy all** button copies the values and statistics of all targets as text.
-
-### Internal and air-gapped networks
-
-A target can be any IP address or host name, also in your own network. Without access to the internet (e.g. an internal or air-gapped network, or a lab), the default targets on the internet always time out: replace them with your own hosts in the [settings](#targets) (the [default gateway](#ping-default-gateway) is pinged anyway and follows a network change), e.g.:
-
-- a domain controller, a DNS server or an important server,
-- a host behind a WAN / VPN link (e.g. a server at another site), to see its latency.
-
-Internal and internet targets can be mixed (e.g. a server and `1.1.1.1`): if only the internet targets fail, the problem is the internet connection, not your network. Use IP addresses if possible, they also work when the DNS server doesn't. Pings to the gateway and your own hosts don't go to a third party; the check is still disabled by default, because the default targets are on the internet.
-
-## IP geolocation
-
-The **IP geolocation** widget shows the location and the network of your public IPv4 address from [`ip-api.com`](https://ip-api.com/) (the same values as the [IP Geolocation](ip-geolocation.md) tool):
-
-- **Location**: continent, country, region, city, district, zip code, latitude / longitude, time zone, offset from UTC (e.g. `UTC+01:00`, incl. daylight saving time) and currency
-- **Network**: IP address, PTR record, ISP, organization, ASN / AS name, and whether the IP address belongs to a hosting provider, a proxy / VPN or a mobile network
-
-## DNS resolver
-
-The **DNS resolver** widget shows the DNS server that resolves the requests of your computer on the internet, detected with [`edns.ip-api.com`](https://ip-api.com/docs/dns): its IP address and geolocation (**DNS**), and the client subnet that the DNS server forwards (**EDNS**, e.g. `203.0.113.0`, `-/-` if it doesn't send one). If you use the DNS server of your router or internet provider, this is the server the requests are forwarded to (e.g. `1.1.1.1` or a server of the provider), not the router.
-
-## IP geolocation and DNS resolver
-
-Both checks send your IP address to `ip-api.com` and are disabled by default (welcome dialog). A widget whose check is disabled shows what it requests and an **Enable** button, which enables the check (like [Check IP geolocation](#check-ip-geolocation) / [Check DNS resolver](#check-dns-resolver)) and checks right away.
-
-The buttons in the header of the widgets:
-
-- **Copy all** copies all values as text, e.g. for a support request.
-- **Refresh** checks again (also **F5** while the widget has the focus).
-
-The header shows the time of the last check (not after an error). An error (e.g. no response within 10 seconds or the HTTP status code) or the rate limit of `ip-api.com` (45 requests per minute from your network, with the time until it can be requested again) is shown below the header.
-
-Right-click an IP address (public IP address, DNS server) to open it in the **Port Scanner**, **Ping Monitor**, **Traceroute**, **DNS Lookup**, **RDAP** or **IP Geolocation**, the EDNS client subnet (a network address, not a host) in **RDAP** or **IP Geolocation**, and the PTR record in the **DNS Lookup**. **Copy** copies the selected text.
 
 ## Troubleshooting and limits
 

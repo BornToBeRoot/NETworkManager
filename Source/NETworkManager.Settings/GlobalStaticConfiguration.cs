@@ -1,6 +1,5 @@
 ﻿using DnsClient;
 using Lextm.SharpSnmpLib.Messaging;
-using NETworkManager.Models;
 using NETworkManager.Models.Appearance;
 using NETworkManager.Models.Export;
 using NETworkManager.Models.Network;
@@ -136,7 +135,7 @@ public static class GlobalStaticConfiguration
     public static string Dashboard_PublicIPv4Address => "1.1.1.1";
     public static string Dashboard_PublicIPv6Address => "2606:4700:4700::1111";
     public static bool Dashboard_PingPublicIPAddress => true;
-    public static bool Dashboard_CheckPublicIPAddress => false; // Opt-in: sends the IP address to a web service
+    public static bool Dashboard_CheckPublicIPAddress => false;
     public static string Dashboard_PublicIPv4AddressAPI => "https://api.ipify.org";
     public static string Dashboard_PublicIPv6AddressAPI => "https://api6.ipify.org";
     public static bool Dashboard_CheckIPApiIPGeolocation => false;
@@ -144,27 +143,13 @@ public static class GlobalStaticConfiguration
     public static bool Dashboard_CheckLatency => false;
     public static LatencyPosition Dashboard_LatencyPosition => LatencyPosition.NextToSpeedTest;
     public static int Dashboard_LatencyInterval => 2;
-
-    /// <summary>
-    ///     Ping the default gateway in the latency widget (first line, in front of the targets): shows whether a
-    ///     problem is the local network or the internet, and works without internet (no third party).
-    /// </summary>
     public static bool Dashboard_LatencyPingGateway => true;
-
-    /// <summary>
-    ///     Default targets of the latency widget (public DNS resolvers: answer pings reliably, anycast).
-    /// </summary>
     public static List<LatencyTargetInfo> Dashboard_LatencyTargets =>
     [
         new("Cloudflare", "1.1.1.1"),
         new("Google", "8.8.8.8"),
         new("Quad9", "9.9.9.9")
     ];
-
-    /// <summary>
-    ///     Maximum number of targets of the latency widget, without the default gateway (a status widget, not a Ping
-    ///     Monitor: up to 6 lines with the gateway).
-    /// </summary>
     public static int Dashboard_LatencyMaxTargets => 5;
 
     public static bool Dashboard_ShowNetworkConnectionWidget => true;
