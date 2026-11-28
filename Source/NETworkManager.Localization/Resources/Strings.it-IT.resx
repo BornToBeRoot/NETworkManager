@@ -3116,10 +3116,10 @@ Per archiviare le credenziali in modo sicuro abilita la crittografia del file de
     <value>Inserisci un indirizzo IPv6 valido!</value>
   </data>
   <data name="HelpMessage_PublicIPv4Address" xml:space="preserve">
-    <value>Public IPv4 address (not the one of your computer) that is pinged to check the internet connection. The route to it is used to detect the local IPv4 address (of the network adapter that is used for the internet).</value>
+    <value>Indirizzo IPv4 pubblico (non quello del computer) verso  cui viene eseguito il ping per verificare la connessione internet. Il percorso verso di esso viene usato per rilevare l'indirizzo IPv4 locale (della scheda di rete usata per internet).</value>
   </data>
   <data name="HelpMessage_PublicIPv6Address" xml:space="preserve">
-    <value>Public IPv6 address (not the one of your computer) that is pinged to check the internet connection. The route to it is used to detect the local IPv6 address (of the network adapter that is used for the internet).</value>
+    <value>Indirizzo IPv6 pubblico (non quello del computer) verso cui viene eseguito il ping per verificare la connessione internet. Il percorso verso di esso viene usato per rilevare l'indirizzo IPv6 locale (della scheda di rete usata per internet).</value>
   </data>
   <data name="PublicIPv4Address" xml:space="preserve">
     <value>Indirizzo IPv4 pubblico</value>
@@ -5856,26 +5856,26 @@ Vuoi avviare la scansione?</value>
     <value>Ultimo test alle {0}</value>
   </data>
   <data name="IPGeolocationWidgetDisabledMessage" xml:space="preserve">
-    <value>Show the location and the internet provider of your public IP address with ip-api.com.
-ip-api.com receives your IP address (http, not encrypted).</value>
+    <value>Visualizza la posizione e il provider internet dell'indirizzo IP pubblico con ip-api.com.
+ip-api.com riceve l'indirizzo IP (http, non crittografato).</value>
   </data>
   <data name="DNSResolverWidgetDisabledMessage" xml:space="preserve">
-    <value>Show the DNS server that resolves your requests with edns.ip-api.com.
-ip-api.com receives your IP address and the IP address of your DNS server.</value>
+    <value>Visualizza il server DNS che risolve le richieste con edns.ip-api.com.
+ip-api.com riceve l'indirizzo IP del computer e l'indirizzo IP del server DNS.</value>
   </data>
   <data name="XXXHasNoIPGeolocationForXXXReasonXXX" xml:space="preserve">
-    <value>{0} has no IP geolocation for "{1}" ({2}).</value>
+    <value>{0} non ha geolocalizzazione IP per '{1}' ({2}).</value>
   </data>
   <data name="ShowWidget" xml:space="preserve">
-    <value>Show widget</value>
+    <value>Visualizza widget</value>
   </data>
   <data name="HelpMessage_ShowNetworkConnectionWidget" xml:space="preserve">
-    <value>Shows the widget on the dashboard. The status window always shows the network connection.</value>
+    <value>Visualizza il widget nel pannello. La finestra di stato visualizza sempre la connessione di rete.</value>
   </data>
   <data name="HelpMessage_ShowIPApiWidget" xml:space="preserve">
-    <value>Shows the widget on the dashboard. It only sends a request to ip-api.com if the check is enabled (below, in the welcome dialog or with the "Enable" button of the widget), otherwise it shows what it would request. A hidden widget sends no request.</value>
+    <value>Visualizza il widget nel pannello. Invia una richiesta a ip-api.com solo se il check è abilitato (sotto, nella finestra di benvenuto o con il pulsante 'Abilita' del widget), altrimenti visualizza cosa richiederebbe. Un widget nascosto non invia alcuna richiesta.</value>
   </data>
   <data name="NetworkConnectionWidgetAndStatusWindowUseTheseSettingsMessage" xml:space="preserve">
-    <value>The network connection widget and the status window use these settings to check the internet.</value>
+    <value>Il widget della connessione di rete e la finestra di stato usano queste impostazioni per controllare internet.</value>
   </data>
 </root>
