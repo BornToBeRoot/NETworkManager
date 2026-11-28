@@ -512,17 +512,27 @@ public class LatencyTargetViewModel : ViewModelBase
     }
 
     /// <summary>
-    /// Text of the copy all button: name, host, IP address, last value and statistics.
+    /// Text of the copy all button: name, host, IP address, last value and statistics. The host and the IP address
+    /// are only added if they differ from the name (a target without a name, the gateway).
     /// </summary>
     public string ToCopyText()
     {
-        var host = ResolvedIPAddress == null || ResolvedIPAddress == Host ? Host : $"{Host}, {ResolvedIPAddress}";
+        var details = new List<string>();
+
+        // The host of the gateway is its name, a target without a name is named after its host
+        if (!IsGateway && Host != Name)
+            details.Add(Host);
+
+        if (ResolvedIPAddress != null && ResolvedIPAddress != Host)
+            details.Add(ResolvedIPAddress);
+
+        var label = details.Count == 0 ? Name : $"{Name} ({string.Join(", ", details)})";
         var value = ErrorMessage ?? Value;
         var stats = Statistics;
 
         return stats.Count == 0
-            ? $"{Name} ({host}): {value}"
-            : $"{Name} ({host}): {value} - {Strings.Minimum} {FormatTime(stats.Minimum)}, " +
+            ? $"{label}: {value}"
+            : $"{label}: {value} - {Strings.Minimum} {FormatTime(stats.Minimum)}, " +
               $"{Strings.AverageTime} {FormatTime(stats.Average)}, " +
               $"{Strings.Maximum} {FormatTime(stats.Maximum)}, " +
               $"{Strings.PacketLoss} {stats.PacketLoss.ToString("F0", CultureInfo.CurrentCulture)} %";
