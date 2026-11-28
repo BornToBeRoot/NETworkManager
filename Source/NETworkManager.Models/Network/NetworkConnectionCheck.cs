@@ -124,46 +124,64 @@ public static class NetworkConnectionCheck
 
     /// <summary>
     ///     State of the internet connection (IPv4 or IPv6) from three sources: the ping of the public IP address
-    ///     (setting), the public IP address API (if enabled) and the connectivity reported by Windows.
+    ///     (setting, if enabled), the public IP address API (if enabled) and the connectivity reported by Windows.
     /// </summary>
     /// <remarks>
     ///     A public IP address from the API is OK (the HTTPS request reached the internet), even if Windows reports a
     ///     captive portal (e.g. a proxy or web filter intercepts the probe of Windows). Otherwise a captive portal
-    ///     (Windows, only used for IPv4) is a warning, also if the ping works (a captive portal may let ICMP through); a reply to the ping is OK; a private IP address from the API is a warning, as is a
-    ///     failed API when the ping works (e.g. the API is blocked). If both fail but Windows reports internet access (only used for IPv4, Windows doesn't report it per
-    ///     address family), ICMP and the API may be blocked: warning. Otherwise critical.
+    ///     (Windows, only used for IPv4) is a warning, also if the ping works (a captive portal may let ICMP through); a
+    ///     reply to the ping is OK; a private IP address from the API is a warning, as is a failed API when the ping
+    ///     works (e.g. the API is blocked). If the enabled checks fail but Windows reports internet access (only used for
+    ///     IPv4, Windows doesn't report it per address family), ICMP or the API may be blocked: warning. Otherwise
+    ///     critical. With the ping and the API disabled, only Windows decides (IPv4); IPv6 is not checked then (info).
     /// </remarks>
     /// <param name="addressFamily">IPv4 or IPv6.</param>
-    /// <param name="isPingSuccessful">The public IP address (setting) replied to the ping.</param>
+    /// <param name="isPingSuccessful">The public IP address (setting) replied to the ping, or <c>null</c> if the ping is
+    ///     disabled.</param>
     /// <param name="publicIPAddress">Result of the API, or <c>null</c> if disabled.</param>
     /// <param name="connectivityLevel">Internet connectivity reported by Windows.</param>
     /// <returns>State and reason.</returns>
-    public static ConnectionCheckResult GetInternetResult(AddressFamily addressFamily, bool isPingSuccessful,
+    public static ConnectionCheckResult GetInternetResult(AddressFamily addressFamily, bool? isPingSuccessful,
         PublicIPAddressCheckResult publicIPAddress, InternetConnectivityLevel connectivityLevel)
     {
         if (publicIPAddress is { Status: PublicIPAddressCheckStatus.Success })
             return new ConnectionCheckResult(ConnectionState.OK);
 
         // Windows doesn't report the connectivity per address family (a captive portal is IPv4 in practice)
-        if (addressFamily == AddressFamily.InterNetwork &&
-            connectivityLevel == InternetConnectivityLevel.ConstrainedInternetAccess)
+        var isIPv4 = addressFamily == AddressFamily.InterNetwork;
+
+        if (isIPv4 && connectivityLevel == InternetConnectivityLevel.ConstrainedInternetAccess)
             return new ConnectionCheckResult(ConnectionState.Warning, ConnectionCheckReason.CaptivePortal);
 
         if (publicIPAddress is { Status: PublicIPAddressCheckStatus.PrivateIPAddress })
             return GetPublicIPAddressResult(publicIPAddress);
 
-        if (isPingSuccessful)
+        if (isPingSuccessful == true)
             return publicIPAddress == null
                 ? new ConnectionCheckResult(ConnectionState.OK)
                 : new ConnectionCheckResult(ConnectionState.Warning, GetPublicIPAddressResult(publicIPAddress).Reason);
 
-        if (addressFamily == AddressFamily.InterNetwork &&
-            connectivityLevel == InternetConnectivityLevel.InternetAccess)
+        // Ping and API disabled: only the connectivity reported by Windows (IPv4)
+        if (isPingSuccessful == null && publicIPAddress == null)
+            return isIPv4
+                ? connectivityLevel switch
+                {
+                    InternetConnectivityLevel.InternetAccess => new ConnectionCheckResult(ConnectionState.OK,
+                        ConnectionCheckReason.InternetAccessReportedByWindowsOnly),
+                    InternetConnectivityLevel.None or InternetConnectivityLevel.LocalAccess => new ConnectionCheckResult(
+                        ConnectionState.Critical, ConnectionCheckReason.NoInternetAccessReportedByWindows),
+                    _ => new ConnectionCheckResult(ConnectionState.Info, ConnectionCheckReason.InternetCheckDisabled)
+                }
+                : new ConnectionCheckResult(ConnectionState.Info, ConnectionCheckReason.InternetCheckDisabled);
+
+        if (isIPv4 && connectivityLevel == InternetConnectivityLevel.InternetAccess)
             return new ConnectionCheckResult(ConnectionState.Warning,
                 ConnectionCheckReason.InternetAccessReportedByWindows);
 
-        return publicIPAddress is { Status: PublicIPAddressCheckStatus.NameResolutionFailed }
-            ? new ConnectionCheckResult(ConnectionState.Critical, ConnectionCheckReason.NameResolutionFailed)
-            : new ConnectionCheckResult(ConnectionState.Critical, ConnectionCheckReason.InternetNotReachable);
+        // Ping disabled: the reason of the failed API (e.g. name resolution failed, request failed)
+        if (isPingSuccessful == null || publicIPAddress is { Status: PublicIPAddressCheckStatus.NameResolutionFailed })
+            return GetPublicIPAddressResult(publicIPAddress);
+
+        return new ConnectionCheckResult(ConnectionState.Critical, ConnectionCheckReason.InternetNotReachable);
     }
 }

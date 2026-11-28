@@ -155,7 +155,18 @@ public class NetworkConnectionCheckTests
     [InlineData(false, PublicIPAddressCheckStatus.RequestFailed, InternetConnectivityLevel.LocalAccess, ConnectionState.Critical, ConnectionCheckReason.InternetNotReachable)]
     [InlineData(false, PublicIPAddressCheckStatus.InvalidResponse, InternetConnectivityLevel.Unknown, ConnectionState.Critical, ConnectionCheckReason.InternetNotReachable)]
     [InlineData(false, PublicIPAddressCheckStatus.NameResolutionFailed, InternetConnectivityLevel.None, ConnectionState.Critical, ConnectionCheckReason.NameResolutionFailed)]
-    public void GetInternetResult_IPv4(bool isPingSuccessful, PublicIPAddressCheckStatus? apiStatus,
+    // Ping disabled: API and Windows decide
+    [InlineData(null, PublicIPAddressCheckStatus.Success, InternetConnectivityLevel.LocalAccess, ConnectionState.OK, ConnectionCheckReason.None)]
+    [InlineData(null, PublicIPAddressCheckStatus.RequestFailed, InternetConnectivityLevel.InternetAccess, ConnectionState.Warning, ConnectionCheckReason.InternetAccessReportedByWindows)]
+    [InlineData(null, PublicIPAddressCheckStatus.RequestFailed, InternetConnectivityLevel.LocalAccess, ConnectionState.Critical, ConnectionCheckReason.PublicIPAddressRequestFailed)]
+    [InlineData(null, PublicIPAddressCheckStatus.NameResolutionFailed, InternetConnectivityLevel.None, ConnectionState.Critical, ConnectionCheckReason.NameResolutionFailed)]
+    // Ping and API disabled: only Windows
+    [InlineData(null, null, InternetConnectivityLevel.InternetAccess, ConnectionState.OK, ConnectionCheckReason.InternetAccessReportedByWindowsOnly)]
+    [InlineData(null, null, InternetConnectivityLevel.ConstrainedInternetAccess, ConnectionState.Warning, ConnectionCheckReason.CaptivePortal)]
+    [InlineData(null, null, InternetConnectivityLevel.LocalAccess, ConnectionState.Critical, ConnectionCheckReason.NoInternetAccessReportedByWindows)]
+    [InlineData(null, null, InternetConnectivityLevel.None, ConnectionState.Critical, ConnectionCheckReason.NoInternetAccessReportedByWindows)]
+    [InlineData(null, null, InternetConnectivityLevel.Unknown, ConnectionState.Info, ConnectionCheckReason.InternetCheckDisabled)]
+    public void GetInternetResult_IPv4(bool? isPingSuccessful, PublicIPAddressCheckStatus? apiStatus,
         InternetConnectivityLevel level, ConnectionState state, ConnectionCheckReason reason)
     {
         Assert.Equal(new ConnectionCheckResult(state, reason),
@@ -171,6 +182,15 @@ public class NetworkConnectionCheckTests
         Assert.Equal(new ConnectionCheckResult(state, reason),
             NetworkConnectionCheck.GetInternetResult(AddressFamily.InterNetworkV6, isPingSuccessful, null,
                 InternetConnectivityLevel.ConstrainedInternetAccess));
+    }
+
+    [Fact]
+    public void GetInternetResult_IPv6_NotCheckedWithoutPingAndAPI()
+    {
+        // Windows doesn't report the connectivity per address family
+        Assert.Equal(new ConnectionCheckResult(ConnectionState.Info, ConnectionCheckReason.InternetCheckDisabled),
+            NetworkConnectionCheck.GetInternetResult(AddressFamily.InterNetworkV6, null, null,
+                InternetConnectivityLevel.InternetAccess));
     }
 
     [Fact]

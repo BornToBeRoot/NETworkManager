@@ -331,6 +331,21 @@ public sealed class NetworkInterface
     }
 
     /// <summary>
+    /// Detects the default gateway of the network adapter that is used to reach the remote IP address (the route to
+    /// it, then the gateway of the local IP address, like the network connection check of the dashboard).
+    /// </summary>
+    /// <param name="remoteIPAddress">Remote IP address, e.g. the public IPv4 address of the dashboard settings.</param>
+    /// <returns>Default gateway, or <c>null</c> if there is no route or the adapter has no gateway (e.g. a VPN).</returns>
+    public static async Task<IPAddress> DetectGatewayBasedOnRoutingAsync(IPAddress remoteIPAddress)
+    {
+        var localIPAddress = await DetectLocalIPAddressBasedOnRoutingAsync(remoteIPAddress).ConfigureAwait(false);
+
+        return localIPAddress == null
+            ? null
+            : await DetectGatewayFromLocalIPAddressAsync(localIPAddress).ConfigureAwait(false);
+    }
+
+    /// <summary>
     /// Determines the local IP address that would be used to route traffic to the specified remote IP address.
     /// </summary>
     /// <remarks>This method creates a UDP socket to determine the local IP address selected by the system's

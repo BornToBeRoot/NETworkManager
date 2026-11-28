@@ -972,6 +972,19 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     } = GlobalStaticConfiguration.Dashboard_PublicIPv6Address;
 
+    public bool Dashboard_PingPublicIPAddress
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.Dashboard_PingPublicIPAddress;
+
     public bool Dashboard_CheckPublicIPAddress
     {
         get;
@@ -1063,6 +1076,72 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     } = GlobalStaticConfiguration.Dashboard_CheckIPApiDNSResolver;
 
+    public bool Dashboard_CheckLatency
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.Dashboard_CheckLatency;
+
+    public LatencyPosition Dashboard_LatencyPosition
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.Dashboard_LatencyPosition;
+
+    public int Dashboard_LatencyInterval
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.Dashboard_LatencyInterval;
+
+    public bool Dashboard_LatencyPingGateway
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.Dashboard_LatencyPingGateway;
+
+    public ObservableCollection<LatencyTargetInfo> Dashboard_LatencyTargets
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            UpdateCollectionChanged(field, value);
+            field = value;
+            OnPropertyChanged();
+        }
+    } = [.. GlobalStaticConfiguration.Dashboard_LatencyTargets];
+
     public bool Dashboard_ShowNetworkConnectionWidget
     {
         get;
@@ -1075,6 +1154,19 @@ public class SettingsInfo : INotifyPropertyChanged
             OnPropertyChanged();
         }
     } = GlobalStaticConfiguration.Dashboard_ShowNetworkConnectionWidget;
+
+    public bool Dashboard_ShowLatencyWidget
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.Dashboard_ShowLatencyWidget;
 
     public bool Dashboard_ShowSpeedTestWidget
     {
@@ -4840,6 +4932,9 @@ public class SettingsInfo : INotifyPropertyChanged
     {
         // General
         General_ApplicationList.CollectionChanged += CollectionChanged;
+
+        // Dashboard
+        Dashboard_LatencyTargets.CollectionChanged += CollectionChanged;
 
         // Run command
         RunCommand_History.CollectionChanged += CollectionChanged;

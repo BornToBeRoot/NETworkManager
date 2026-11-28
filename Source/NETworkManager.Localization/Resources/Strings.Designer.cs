@@ -898,6 +898,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add target.
+        /// </summary>
+        public static string AddTarget {
+            get {
+                return ResourceManager.GetString("AddTarget", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Adjust screen.
         /// </summary>
         public static string AdjustScreen {
@@ -2171,6 +2180,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Check latency.
+        /// </summary>
+        public static string CheckLatency {
+            get {
+                return ResourceManager.GetString("CheckLatency", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Check your network adapter configuration (dns) and if your dns server is configured correctly..
         /// </summary>
         public static string CheckNetworkAdapterConfigurationAndDNSServerConfigurationMessage {
@@ -2639,7 +2657,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to No reply to the ping and no public IP address from the API, but Windows reports internet access. ICMP and the API may be blocked by a firewall or only reachable via a proxy..
+        ///   Looks up a localized string similar to The ping or the public IP address check failed, but Windows reports internet access. ICMP or the API may be blocked by a firewall or only reachable via a proxy..
         /// </summary>
         public static string ConnectionCheckReason_InternetAccessReportedByWindows {
             get {
@@ -2648,7 +2666,25 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The internet is not reachable (no reply to the ping of the public IP address and no answer from the public IP address API)..
+        ///   Looks up a localized string similar to Windows reports internet access. The ping and the public IP address check are disabled in the settings..
+        /// </summary>
+        public static string ConnectionCheckReason_InternetAccessReportedByWindowsOnly {
+            get {
+                return ResourceManager.GetString("ConnectionCheckReason_InternetAccessReportedByWindowsOnly", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Not checked: the ping and the public IP address check are disabled in the settings..
+        /// </summary>
+        public static string ConnectionCheckReason_InternetCheckDisabled {
+            get {
+                return ResourceManager.GetString("ConnectionCheckReason_InternetCheckDisabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The internet is not reachable (no reply to the ping of the public IP address, no answer from the public IP address API if enabled)..
         /// </summary>
         public static string ConnectionCheckReason_InternetNotReachable {
             get {
@@ -2689,6 +2725,15 @@ namespace NETworkManager.Localization.Resources {
         public static string ConnectionCheckReason_NoGateway {
             get {
                 return ResourceManager.GetString("ConnectionCheckReason_NoGateway", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Windows reports no internet access. The ping and the public IP address check are disabled in the settings..
+        /// </summary>
+        public static string ConnectionCheckReason_NoInternetAccessReportedByWindows {
+            get {
+                return ResourceManager.GetString("ConnectionCheckReason_NoInternetAccessReportedByWindows", resourceCulture);
             }
         }
         
@@ -3785,6 +3830,26 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Delete target.
+        /// </summary>
+        public static string DeleteTarget {
+            get {
+                return ResourceManager.GetString("DeleteTarget", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The selected target is permanently deleted:
+        ///
+        ///{0}.
+        /// </summary>
+        public static string DeleteTargetMessage {
+            get {
+                return ResourceManager.GetString("DeleteTargetMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Description.
         /// </summary>
         public static string Description {
@@ -4476,6 +4541,15 @@ namespace NETworkManager.Localization.Resources {
         public static string EditSNTPServer {
             get {
                 return ResourceManager.GetString("EditSNTPServer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit target.
+        /// </summary>
+        public static string EditTarget {
+            get {
+                return ResourceManager.GetString("EditTarget", resourceCulture);
             }
         }
         
@@ -6320,7 +6394,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The DNS resolver is determined via ip-api.com.
+        ///   Looks up a localized string similar to Requests the DNS server that resolves your requests from edns.ip-api.com with every check. ip-api.com receives your IP address and the IP address of your DNS server.
         ///
         ///URL: https://edns.ip-api.com/.
         /// </summary>
@@ -6342,7 +6416,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The IP geolocation is determined via ip-api.com.
+        ///   Looks up a localized string similar to Requests the location and the internet provider of your public IP address from ip-api.com with every check. ip-api.com receives your IP address (http, not encrypted).
         ///
         ///URL: http://ip-api.com/.
         /// </summary>
@@ -6353,11 +6427,20 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The public IP address is determined via ipify.org.
+        ///   Looks up a localized string similar to Pings the default gateway and the targets every few seconds, only while the dashboard is shown (not in the background, not while the window is minimized or in the tray). The targets receive a ping (ICMP echo request)..
+        /// </summary>
+        public static string HelpMessage_CheckLatency {
+            get {
+                return ResourceManager.GetString("HelpMessage_CheckLatency", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Requests your public IP address with every check of the network connection (dashboard and status window) to show it and to see if the internet is reachable. The service receives your IP address.
         ///
-        ///URL: https://api.ipify.org and https://api6.ipify.org
+        ///Default: ipify.org (https://api.ipify.org and https://api6.ipify.org), can be changed in the settings.
         ///
-        ///If disabled, the internet connection is only checked with a ping of the public IP address and the internet connectivity reported by Windows..
+        ///If the ping and the public IP address check are disabled, only the internet connectivity reported by Windows is used..
         /// </summary>
         public static string HelpMessage_CheckPublicIPAddress {
             get {
@@ -6443,6 +6526,44 @@ namespace NETworkManager.Localization.Resources {
         public static string HelpMessage_GuessTheOperatingSystemFromTheTTL {
             get {
                 return ResourceManager.GetString("HelpMessage_GuessTheOperatingSystemFromTheTTL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pings the default gateway (router) of the network adapter that is used for the internet, in the first line in front of the targets. If only the targets fail, the problem is the internet connection, not your network. It is detected again when the pings start, e.g. after a network change (VPN, another Wi-Fi)..
+        /// </summary>
+        public static string HelpMessage_LatencyGateway {
+            get {
+                return ResourceManager.GetString("HelpMessage_LatencyGateway", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Time between the reply (or timeout) of a ping and the next ping of the target..
+        /// </summary>
+        public static string HelpMessage_LatencyInterval {
+            get {
+                return ResourceManager.GetString("HelpMessage_LatencyInterval", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Next to the speed test: on the right of the speed test (1/3 of the width), the targets one below the other. In a narrow window or without the speed test, the widget gets its own row below the speed test.
+        ///
+        ///Own row: below the network connection, the targets side by side..
+        /// </summary>
+        public static string HelpMessage_LatencyPosition {
+            get {
+                return ResourceManager.GetString("HelpMessage_LatencyPosition", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Up to 5 targets: IP addresses or host names on the internet or in your network (e.g. a server). In an internal or air-gapped network, replace the default targets on the internet with your own hosts..
+        /// </summary>
+        public static string HelpMessage_LatencyTargets {
+            get {
+                return ResourceManager.GetString("HelpMessage_LatencyTargets", resourceCulture);
             }
         }
         
@@ -6537,6 +6658,19 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Pings a public IP address with every check of the network connection (dashboard and status window) to see if the internet is reachable. The target receives a ping (ICMP echo request).
+        ///
+        ///Default: Cloudflare (1.1.1.1 and 2606:4700:4700::1111), can be changed in the settings.
+        ///
+        ///If the ping and the public IP address check are disabled, only the internet connectivity reported by Windows is used..
+        /// </summary>
+        public static string HelpMessage_PingPublicIPAddress {
+            get {
+                return ResourceManager.GetString("HelpMessage_PingPublicIPAddress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Host threads × port threads can be at most 8,192 connections at the same time (every connection uses a local port, this is half of them). Many connections at the same time may be blocked by a firewall or overload small routers..
         /// </summary>
         public static string HelpMessage_PortScannerMaxThreads {
@@ -6555,7 +6689,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Public IPv4 address (not the one of your computer) that is pinged to check the internet connection. The route to it is used to detect the local IPv4 address (of the network adapter that is used for the internet)..
+        ///   Looks up a localized string similar to Public IPv4 address (not the one of your computer) that is pinged to check the internet connection (if enabled). The route to it is used to detect the local IPv4 address (of the network adapter that is used for the internet), nothing is sent for this..
         /// </summary>
         public static string HelpMessage_PublicIPv4Address {
             get {
@@ -6564,7 +6698,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Public IPv6 address (not the one of your computer) that is pinged to check the internet connection. The route to it is used to detect the local IPv6 address (of the network adapter that is used for the internet)..
+        ///   Looks up a localized string similar to Public IPv6 address (not the one of your computer) that is pinged to check the internet connection (if enabled). The route to it is used to detect the local IPv6 address (of the network adapter that is used for the internet), nothing is sent for this..
         /// </summary>
         public static string HelpMessage_PublicIPv6Address {
             get {
@@ -6711,7 +6845,16 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Shows the widget on the dashboard. The status window always shows the network connection..
+        ///   Looks up a localized string similar to Shows the widget on the dashboard. It only pings the default gateway and the targets if the check is enabled (below, in the welcome dialog or with the &quot;Enable&quot; button of the widget), otherwise it shows what it would ping. A hidden widget sends nothing..
+        /// </summary>
+        public static string HelpMessage_ShowLatencyWidget {
+            get {
+                return ResourceManager.GetString("HelpMessage_ShowLatencyWidget", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Shows the widget on the dashboard. A hidden widget doesn&apos;t check anything, but the status window still checks the network connection (e.g. on a network change, see Settings &gt; Status)..
         /// </summary>
         public static string HelpMessage_ShowNetworkConnectionWidget {
             get {
@@ -6743,6 +6886,28 @@ namespace NETworkManager.Localization.Resources {
         public static string HelpMessage_UseCustomThemes {
             get {
                 return ResourceManager.GetString("HelpMessage_UseCustomThemes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Requests the location and the internet provider of your public IP address (dashboard) and of the hops of a trace (traceroute) from ip-api.com. ip-api.com receives these IP addresses (http, not encrypted).
+        ///
+        ///URL: http://ip-api.com/.
+        /// </summary>
+        public static string HelpMessage_WelcomeCheckIPGeolocation {
+            get {
+                return ResourceManager.GetString("HelpMessage_WelcomeCheckIPGeolocation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pings the default gateway and the targets of the latency widget every few seconds while the dashboard is shown. The targets receive a ping (ICMP echo request).
+        ///
+        ///Default targets: Cloudflare (1.1.1.1), Google (8.8.8.8) and Quad9 (9.9.9.9), can be changed in the settings..
+        /// </summary>
+        public static string HelpMessage_WelcomeCheckLatency {
+            get {
+                return ResourceManager.GetString("HelpMessage_WelcomeCheckLatency", resourceCulture);
             }
         }
         
@@ -7314,6 +7479,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Interval (seconds).
+        /// </summary>
+        public static string IntervalInSeconds {
+            get {
+                return ResourceManager.GetString("IntervalInSeconds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to IP address.
         /// </summary>
         public static string IPAddress {
@@ -7761,6 +7935,43 @@ namespace NETworkManager.Localization.Resources {
         public static string Latency {
             get {
                 return ResourceManager.GetString("Latency", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Next to the speed test.
+        /// </summary>
+        public static string LatencyPosition_NextToSpeedTest {
+            get {
+                return ResourceManager.GetString("LatencyPosition_NextToSpeedTest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Own row.
+        /// </summary>
+        public static string LatencyPosition_OwnRow {
+            get {
+                return ResourceManager.GetString("LatencyPosition_OwnRow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The maximum of {0} targets is reached. Delete a target to add another one..
+        /// </summary>
+        public static string LatencyTargetLimitReachedMessage {
+            get {
+                return ResourceManager.GetString("LatencyTargetLimitReachedMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show the latency to your router and to targets on the internet or in your network (e.g. Cloudflare, Google and Quad9), updated live while the dashboard is shown.
+        ///The targets receive a ping (ICMP echo request) every few seconds..
+        /// </summary>
+        public static string LatencyWidgetDisabledMessage {
+            get {
+                return ResourceManager.GetString("LatencyWidgetDisabledMessage", resourceCulture);
             }
         }
         
@@ -9187,7 +9398,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The network connection widget and the status window use these settings to check the internet..
+        ///   Looks up a localized string similar to The network connection widget and the status window use these settings to check the internet, also while the widget is hidden..
         /// </summary>
         public static string NetworkConnectionWidgetAndStatusWindowUseTheseSettingsMessage {
             get {
@@ -9498,6 +9709,15 @@ namespace NETworkManager.Localization.Resources {
         public static string NoFirewallRulesFoundMessage {
             get {
                 return ResourceManager.GetString("NoFirewallRulesFoundMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No targets configured..
+        /// </summary>
+        public static string NoLatencyTargetsConfiguredMessage {
+            get {
+                return ResourceManager.GetString("NoLatencyTargetsConfiguredMessage", resourceCulture);
             }
         }
         
@@ -10322,6 +10542,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ping default gateway.
+        /// </summary>
+        public static string PingDefaultGateway {
+            get {
+                return ResourceManager.GetString("PingDefaultGateway", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ping details.
         /// </summary>
         public static string PingDetails {
@@ -10372,6 +10601,15 @@ namespace NETworkManager.Localization.Resources {
         public static string PingMonitorNotification {
             get {
                 return ResourceManager.GetString("PingMonitorNotification", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ping public IP address.
+        /// </summary>
+        public static string PingPublicIPAddress {
+            get {
+                return ResourceManager.GetString("PingPublicIPAddress", resourceCulture);
             }
         }
         
@@ -10579,6 +10817,15 @@ namespace NETworkManager.Localization.Resources {
         public static string PortStatus {
             get {
                 return ResourceManager.GetString("PortStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Position.
+        /// </summary>
+        public static string Position {
+            get {
+                return ResourceManager.GetString("Position", resourceCulture);
             }
         }
         
@@ -14864,6 +15111,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The status window checks the network connection with the settings of Dashboard &gt; Network connection (ping and public IP address)..
+        /// </summary>
+        public static string StatusWindowUsesDashboardSettingsMessage {
+            get {
+                return ResourceManager.GetString("StatusWindowUsesDashboardSettingsMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Steel.
         /// </summary>
         public static string Steel {
@@ -15004,6 +15260,15 @@ namespace NETworkManager.Localization.Resources {
         public static string Tags {
             get {
                 return ResourceManager.GetString("Tags", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Targets.
+        /// </summary>
+        public static string Targets {
+            get {
+                return ResourceManager.GetString("Targets", resourceCulture);
             }
         }
         
@@ -16281,7 +16546,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to To provide additional features, third party services are used that are not operated by me. You can deselect them below. No data is transferred to me at any time..
+        ///   Looks up a localized string similar to Some features use third-party services. You can turn them off below. NETworkManager doesn&apos;t collect any data, nothing is sent to the developers..
         /// </summary>
         public static string WelcomePrivacyMessage {
             get {

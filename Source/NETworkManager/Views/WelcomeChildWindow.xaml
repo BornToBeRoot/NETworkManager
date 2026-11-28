@@ -11,8 +11,7 @@
              xmlns:simpleChildWindow="clr-namespace:MahApps.Metro.SimpleChildWindow;assembly=MahApps.Metro.SimpleChildWindow"
              Style="{StaticResource DefaultChildWindow}"
              ShowTitleBar="False"
-             ChildWindowWidth="650"
-             ChildWindowMaxWidth="650"
+             ChildWindowMaxWidth="750"
              ChildWindowMaxHeight="800"
              CloseByEscape="False"               
              Padding="20"
@@ -69,6 +68,18 @@
                     </Rectangle>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                    <mah:ToggleSwitch IsOn="{Binding PingPublicIPAddress}"
+                                      Header="{x:Static Member=localization:Strings.PingPublicIPAddress}" />
+                    <Rectangle Width="24" Height="24" VerticalAlignment="Top"
+                               ToolTip="{x:Static Member=localization:Strings.HelpMessage_PingPublicIPAddress}"
+                               Style="{StaticResource ResourceKey=HelpImageRectangle}" Margin="10,0,0,0">
+                        <Rectangle.Resources>
+                            <Style TargetType="{x:Type TypeName=ToolTip}"
+                                   BasedOn="{StaticResource ResourceKey=HelpToolTip}" />
+                        </Rectangle.Resources>
+                    </Rectangle>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
                     <mah:ToggleSwitch IsOn="{Binding CheckPublicIPAddress}"
                                       Header="{x:Static Member=localization:Strings.CheckPublicIPAddress}" />
                     <Rectangle Width="24" Height="24" VerticalAlignment="Top"
@@ -81,10 +92,22 @@
                     </Rectangle>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                    <mah:ToggleSwitch IsOn="{Binding CheckLatency}"
+                                      Header="{x:Static Member=localization:Strings.CheckLatency}" />
+                    <Rectangle Width="24" Height="24" VerticalAlignment="Top"
+                               ToolTip="{x:Static Member=localization:Strings.HelpMessage_WelcomeCheckLatency}"
+                               Style="{StaticResource ResourceKey=HelpImageRectangle}" Margin="10,0,0,0">
+                        <Rectangle.Resources>
+                            <Style TargetType="{x:Type TypeName=ToolTip}"
+                                   BasedOn="{StaticResource ResourceKey=HelpToolTip}" />
+                        </Rectangle.Resources>
+                    </Rectangle>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
                     <mah:ToggleSwitch IsOn="{Binding CheckIPApiIPGeolocation}"
                                       Header="{x:Static Member=localization:Strings.CheckIPGeolocation}" />
                     <Rectangle Width="24" Height="24" VerticalAlignment="Top"
-                               ToolTip="{x:Static Member=localization:Strings.HelpMessage_CheckIPGeolocation}"
+                               ToolTip="{x:Static Member=localization:Strings.HelpMessage_WelcomeCheckIPGeolocation}"
                                Style="{StaticResource ResourceKey=HelpImageRectangle}" Margin="10,0,0,0">
                         <Rectangle.Resources>
                             <Style TargetType="{x:Type TypeName=ToolTip}"

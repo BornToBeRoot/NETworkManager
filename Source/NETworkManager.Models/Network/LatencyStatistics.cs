@@ -1,0 +1,150 @@
+using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
+
+namespace NETworkManager.Models.Network;
+
+/// <summary>
+///     Result of one ping of a latency target (latency widget of the dashboard).
+/// </summary>
+/// <param name="Timestamp">Time of the ping (UTC: a clock change doesn't move the time window).</param>
+/// <param name="IsSuccess">The target replied.</param>
+/// <param name="Time">Round-trip time in milliseconds (0 without a reply).</param>
+public readonly record struct LatencySample(DateTime Timestamp, bool IsSuccess, long Time);
+
+/// <summary>
+///     State of a latency target, shown as the status dot of the widget.
+/// </summary>
+public enum LatencyState
+{
+    /// <summary>
+    ///     Not pinged yet.
+    /// </summary>
+    None,
+
+    /// <summary>
+    ///     The last ping was answered and no ping was lost in the time window.
+    /// </summary>
+    Ok,
+
+    /// <summary>
+    ///     The last ping was answered, but a ping was lost in the time window.
+    /// </summary>
+    Lost,
+
+    /// <summary>
+    ///     The last ping was not answered (e.g. timeout, unreachable).
+    /// </summary>
+    Failed
+}
+
+/// <summary>
+///     Statistics of the pings of a latency target in the time window.
+/// </summary>
+/// <param name="Count">Number of pings.</param>
+/// <param name="Lost">Pings without a reply.</param>
+/// <param name="Minimum">Lowest round-trip time, <c>null</c> without a reply.</param>
+/// <param name="Average">Average round-trip time of the replies, <c>null</c> without a reply.</param>
+/// <param name="Maximum">Highest round-trip time, <c>null</c> without a reply.</param>
+public sealed record LatencyStatisticsInfo(int Count, int Lost, long? Minimum, double? Average, long? Maximum)
+{
+    /// <summary>
+    ///     Pings without a reply in percent (0 without pings).
+    /// </summary>
+    public double PacketLoss => Count == 0 ? 0 : (double)Lost / Count * 100;
+}
+
+/// <summary>
+///     Statistics and state of the pings of a latency target.
+/// </summary>
+public static class LatencyStatistics
+{
+    /// <summary>
+    ///     Calculates the statistics of the pings.
+    /// </summary>
+    /// <param name="samples">Pings in the time window.</param>
+    /// <returns>Statistics, all values <c>null</c> without a reply.</returns>
+    public static LatencyStatisticsInfo Calculate(IReadOnlyCollection<LatencySample> samples)
+    {
+        var replies = samples.Where(x => x.IsSuccess).Select(x => x.Time).ToList();
+
+        return replies.Count == 0
+            ? new LatencyStatisticsInfo(samples.Count, samples.Count, null, null, null)
+            : new LatencyStatisticsInfo(samples.Count, samples.Count - replies.Count, replies.Min(), replies.Average(),
+                replies.Max());
+    }
+
+    /// <summary>
+    ///     State of the target: the last ping decides whether it is reachable, a lost ping in the time window is a
+    ///     warning.
+    /// </summary>
+    /// <param name="samples">Pings in the time window, the last one is the newest.</param>
+    /// <returns>State of the target.</returns>
+    public static LatencyState GetState(IReadOnlyList<LatencySample> samples)
+    {
+        if (samples.Count == 0)
+            return LatencyState.None;
+
+        if (!samples[^1].IsSuccess)
+            return LatencyState.Failed;
+
+        return samples.Any(x => !x.IsSuccess) ? LatencyState.Lost : LatencyState.Ok;
+    }
+
+    /// <summary>
+    ///     Delays until a failed name lookup (or gateway detection) of a target is tried again: 5, 15, 30 seconds, then
+    ///     every 60 seconds - a broken DNS server doesn't get a query every few seconds.
+    /// </summary>
+    private static readonly TimeSpan[] RetryDelays =
+    [
+        TimeSpan.FromSeconds(5),
+        TimeSpan.FromSeconds(15),
+        TimeSpan.FromSeconds(30),
+        TimeSpan.FromSeconds(60)
+    ];
+
+    /// <summary>
+    ///     Delay until the next attempt after <paramref name="failedAttempts" /> failed attempts in a row.
+    /// </summary>
+    /// <param name="failedAttempts">Failed attempts in a row (1 after the first one).</param>
+    /// <returns>Delay (5, 15, 30, then 60 seconds).</returns>
+    public static TimeSpan GetRetryDelay(int failedAttempts)
+    {
+        return RetryDelays[Math.Clamp(failedAttempts - 1, 0, RetryDelays.Length - 1)];
+    }
+
+    /// <summary>
+    ///     Formats a round-trip time for the widget: rounded to whole milliseconds, <c>&lt;1 ms</c> if it rounds to 0
+    ///     (e.g. the gateway, like <see cref="Ping.TimeToString" />), <c>-/-</c> without a value.
+    /// </summary>
+    /// <param name="milliseconds">Round-trip time (or average) in milliseconds, <c>null</c> without a reply.</param>
+    /// <returns>Formatted time, e.g. <c>&lt;1 ms</c>, <c>9 ms</c>.</returns>
+    public static string FormatTime(double? milliseconds)
+    {
+        if (!milliseconds.HasValue)
+            return "-/-";
+
+        // Halves are rounded up (e.g. an average of 8.5 ms is 9 ms; "F0" and Math.Round would round to the even number)
+        var rounded = Math.Round(milliseconds.Value, MidpointRounding.AwayFromZero);
+
+        return rounded < 1 ? "<1 ms" : $"{rounded.ToString("F0", CultureInfo.CurrentCulture)} ms";
+    }
+
+    /// <summary>
+    ///     Removes the pings older than the time window (the list is ordered by time).
+    /// </summary>
+    /// <param name="samples">Pings, the oldest first.</param>
+    /// <param name="now">Current time.</param>
+    /// <param name="window">Time window, e.g. 60 seconds.</param>
+    public static void RemoveOutdated(List<LatencySample> samples, DateTime now, TimeSpan window)
+    {
+        var cutoff = now - window;
+        var count = 0;
+
+        while (count < samples.Count && samples[count].Timestamp < cutoff)
+            count++;
+
+        samples.RemoveRange(0, count);
+    }
+}

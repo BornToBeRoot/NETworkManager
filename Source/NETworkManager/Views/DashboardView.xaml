@@ -14,10 +14,28 @@
                 <!-- Widgets one below the other with a gap of 10 between the visible ones (set in the code-behind, hidden
                      widgets leave no gap), see the settings Dashboard_Show*Widget -->
                 <ScrollViewer HorizontalScrollBarVisibility="Disabled" Margin="10">
-                    <StackPanel>
+                    <StackPanel x:Name="StackPanelWidgets">
                         <ContentControl x:Name="ContentControlNetworkConnection" />
-                        <ContentControl x:Name="ContentControlSpeedTest" />
-                        <!-- IP geolocation (2/3) and DNS resolver (1/3), the remaining one spans the row -->
+                        <!-- Speed test (2/3) and latency (1/3) side by side, or one below the other: narrow
+                             window or speed test hidden (latency below the speed test) or position "own row"
+                             (latency above the speed test), set in the code-behind -->
+                        <Grid x:Name="GridSpeedTestLatency">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="10" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="10" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <ContentControl x:Name="ContentControlSpeedTest" />
+                            <ContentControl x:Name="ContentControlLatency" />
+                        </Grid>
+                        <!-- IP geolocation (2/3) and DNS resolver (1/3) side by side, the remaining one spans the row;
+                             one below the other in a narrow window, set in the code-behind -->
                         <Grid x:Name="GridIPApi">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
@@ -26,8 +44,12 @@
                                 <ColumnDefinition Width="10" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
-                            <ContentControl x:Name="ContentControlIPApiIPGeolocation" Grid.Column="0" Grid.ColumnSpan="3" />
-                            <ContentControl x:Name="ContentControlIPApiDNSResolver" Grid.Column="4" />
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <ContentControl x:Name="ContentControlIPApiIPGeolocation" />
+                            <ContentControl x:Name="ContentControlIPApiDNSResolver" />
                         </Grid>
                     </StackPanel>
                 </ScrollViewer>
